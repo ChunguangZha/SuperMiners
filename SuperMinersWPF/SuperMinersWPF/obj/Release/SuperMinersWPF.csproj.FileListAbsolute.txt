@@ -32,3 +32,6 @@ F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.cspr
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.baml
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.config
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb

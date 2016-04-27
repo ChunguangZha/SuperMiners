@@ -21,3 +21,6 @@ F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.SuperMinersService.resources
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Utility\WinInputPassword.baml
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Utility\WinInputPassword.g.cs
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\SuperMinersServerApplication.exe.config
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.exe
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.pdb
