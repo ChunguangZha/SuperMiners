@@ -1,0 +1,5 @@
+F:\My Work\WinForm\SuperMinersWeb\SuperMinersWeb\bin\SuperMinersWeb.dll
+F:\My Work\WinForm\SuperMinersWeb\SuperMinersWeb\bin\SuperMinersWeb.pdb
+F:\My Work\WinForm\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.dll
+F:\My Work\WinForm\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.pdb
+F:\My Work\WinForm\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.csprojResolveAssemblyReference.cache

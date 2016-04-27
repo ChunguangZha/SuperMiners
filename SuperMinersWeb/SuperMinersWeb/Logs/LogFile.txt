@@ -1,0 +1,10 @@
+Error:  [2016/4/10 16:42:54] ---- Log: Init Client Failed。
+Exc.Message: 提供的 URI 方案“http”无效，应为“net.tcp”。
+参数名: viaExc.Stack:    在 System.ServiceModel.Channels.TransportChannelFactory`1.ValidateScheme(Uri via)
+   在 System.ServiceModel.Channels.ConnectionOrientedTransportChannelFactory`1.OnCreateChannel(EndpointAddress address, Uri via)
+   在 System.ServiceModel.Channels.ChannelFactoryBase`1.InternalCreateChannel(EndpointAddress address, Uri via)
+   在 System.ServiceModel.Channels.ChannelFactoryBase`1.CreateChannel(EndpointAddress address, Uri via)
+   在 System.ServiceModel.Channels.ServiceChannelFactory.ServiceChannelFactoryOverDuplexSession.CreateInnerChannelBinder(EndpointAddress to, Uri via)
+   在 System.ServiceModel.Channels.ServiceChannelFactory.CreateServiceChannel(EndpointAddress address, Uri via)
+   在 System.ServiceModel.Channels.ServiceChannelFactory.CreateChannel(Type channelType, EndpointAddress address, Uri via)
+   在 System.ServiceModel.ChannelFactory`1.CreateChannel(EndpointAddress address, Uri

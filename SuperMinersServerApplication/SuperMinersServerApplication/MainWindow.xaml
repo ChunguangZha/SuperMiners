@@ -1,0 +1,295 @@
+﻿<Window x:Class="SuperMinersServerApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:SuperMinersServerApplication.MyControl"
+        Loaded="Window_Loaded"
+        Title="服务器配置" Height="500" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="服务控制">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="87*"/>
+                        <RowDefinition Height="355*"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="服务状态">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="40"></ColumnDefinition>
+                                <ColumnDefinition Width="430"></ColumnDefinition>
+                                <ColumnDefinition Width="120"></ColumnDefinition>
+                                <ColumnDefinition Width="100*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Height="32" HorizontalAlignment="Center" Margin="0" Name="imgStarted" Stretch="Fill" VerticalAlignment="Center" Width="32" Source="Images/ServerUp.png" />
+                            <Image Grid.Column="0" Height="32" HorizontalAlignment="Center" Margin="0" Name="imgStopped" Stretch="Fill" VerticalAlignment="Center" Width="32" Source="Images/ServerDown.png" />
+                            <Label Grid.Column="1" Content="服务状态:" Height="23" HorizontalAlignment="Stretch" Margin="5,0" Name="label2" VerticalAlignment="Top" FontSize="12" Padding="2" VerticalContentAlignment="Center" />
+                            <Label Grid.Column="1" Name="lblServiceWasStarted" Content="服务正在运行..." Height="23" HorizontalAlignment="Stretch" Margin="5,25,5,0" VerticalAlignment="Top" FontSize="12" Padding="2" VerticalContentAlignment="Center" FontWeight="Bold" />
+                            <Label Grid.Column="1" Name="lblServiceWasStopped" Content="服务已经停止" Height="23" HorizontalAlignment="Stretch" Margin="5,25,5,0" VerticalAlignment="Top" FontSize="12" Padding="2" VerticalContentAlignment="Center" FontWeight="Bold" />
+                            <ProgressBar Grid.Column="1" Height="23" HorizontalAlignment="Stretch" Margin="5,25,5,0" Name="progressbar" VerticalAlignment="Top" Visibility="Hidden" IsIndeterminate="True" />
+                            <Button Name="btnStartService" Grid.Column="2" Height="23" HorizontalAlignment="Stretch" Margin="5,25,5,0" VerticalAlignment="Top" Click="btnStartService_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Images/Start.png" Width="16" Height="16" />
+                                    <TextBlock TextAlignment="Center" Height="15">启动服务</TextBlock>
+                                </StackPanel>
+                            </Button>
+                            <Button Name="btnStopService" Grid.Column="2" Height="23" HorizontalAlignment="Stretch" Margin="5,25,5,0" VerticalAlignment="Top" Click="btnStopService_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Images/Stop.png" Width="16" Height="16" />
+                                    <TextBlock TextAlignment="Center" Height="15">停止服务</TextBlock>
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.Row="1" Header="日志">
+                        <ListBox Name="listboxLogs"/>
+                    </GroupBox>
+                </Grid>
+            </TabItem>
+            <TabItem Header="配  置">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TabControl Name="tabcontrolConfig">
+                        <TabItem Name="tabitemRegisterUser" Header="注册用户">
+                            <Grid>
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="同一IP最大允许注册玩家数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Column="1" Value="{Binding UserCountCreateByOneIP, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="赠送新注册玩家贡献值：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding GiveToNewUserExp, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="赠送新注册玩家金币：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding GiveToNewUserGoldCoin, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="赠送新注册玩家矿山：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding GiveToNewUserMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="赠送新注册玩家矿工：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding GiveToNewUserMiners, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="赠送新注册玩家矿石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding GiveToNewUserStones, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Name="tabitemAwardReferrer" Header="推荐人奖励">
+                            <Grid>
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="500">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderBrush="LightGray" BorderThickness="1,1,1,0">
+                                        <TextBlock Text="推荐级别" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励贡献值" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励金币" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励矿山" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="4" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励矿工" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励矿石" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <Border Grid.Column="6" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                        <TextBlock Text="奖励钻石" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </Border>
+                                    <ListBox Grid.Row="1" Grid.ColumnSpan="7" ItemsSource="{Binding InnerListAwardReferrerConfig}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Border BorderBrush="LightGray" BorderThickness="1,1,1,0">
+                                                        <TextBlock Text="{Binding ReferLevel}" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center"/>
+                                                    </Border>
+                                                    <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerExp, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center" />
+                                                    </Border>
+                                                    <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerGoldCoin, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                    </Border>
+                                                    <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerMines, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                    </Border>
+                                                    <Border Grid.Column="4" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerMiners, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                    </Border>
+                                                    <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerStones, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                    </Border>
+                                                    <Border Grid.Column="6" BorderBrush="LightGray" BorderThickness="0,1,1,0">
+                                                        <my:NumericTextBox Value="{Binding AwardReferrerDiamond, Mode=TwoWay}" DecimalPlaces="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                    <StackPanel Grid.Row="2" Grid.ColumnSpan="7" Orientation="Horizontal">
+                                        <TextBlock Text="设置推荐人奖励层级：" Margin="10,5"/>
+                                        <ComboBox Name="cmdAwardLevel" Width="50" SelectedIndex="{Binding AwardLevelFrom0, Mode=TwoWay}">
+                                            <ComboBoxItem Content="1"/>
+                                            <ComboBoxItem Content="2"/>
+                                            <ComboBoxItem Content="3"/>
+                                            <ComboBoxItem Content="4"/>
+                                            <ComboBoxItem Content="5"/>
+                                            <ComboBoxItem Content="6"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!--<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="奖励推荐人贡献值：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Column="1" Value="{Binding AwardReferrerExp}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="奖励推荐人金币：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding AwardReferrerGoldCoin}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="奖励推荐人矿山：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding AwardReferrerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="奖励推荐人矿工：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding AwardReferrerMiners, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="奖励推荐人矿石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding AwardReferrerStones, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="奖励推荐人钻石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding AwardReferrerDiamond, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
+                                </Grid>-->
+                            </Grid>
+                        </TabItem>
+                        <TabItem Name="tabitemGameConfig" Header="游戏规则">
+                            <ScrollViewer>
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="1 人民币=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Column="1" Value="{Binding Yuan_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Column="2" Text="RMB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding RMB_GoldCoin, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="1 座矿山=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding GoldCoin_Mine, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="1 个矿工=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding GoldCoin_Miner, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding Stones_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding Diamonds_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="2" Text="钻石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="0" Text="每座矿山储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="6" Grid.Column="1" Value="{Binding StonesReservesPerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="0" Text="每个矿工每小时生产：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="7" Grid.Column="1" Value="{Binding OutputStonesPerHour, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="8" Grid.Column="0" Text="矿石买家奖励倍数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="8" Grid.Column="1" Value="{Binding StoneBuyerAwardGoldCoinMultiple, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="8" Grid.Column="2" Text="倍金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="9" Grid.Column="0" Name="lblExchangeExpensePercent1" Text="提现手续费百分比：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="9" Grid.Column="1" x:Name="txtExchangeExpensePercent" Value="{Binding ExchangeExpensePercent, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="9" Grid.Column="2" Name="lblExchangeExpensePercent2" Text="%" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="10" Grid.Column="0" Text="最低手续费：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="10" Grid.Column="1" Value="{Binding ExchangeExpenseMinNumber, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="10" Grid.Column="2" Text="RMB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                </Grid>
+                            </ScrollViewer>
+                        </TabItem>
+                        <TabItem Name="tabitemIncomeAccount" Header="收款账户" Visibility="Collapsed">
+                            <Grid>
+                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="收款支付宝账户：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBox Grid.Column="1" Text="{Binding IncomeMoneyAlipay, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="收款支付宝真实姓名：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IncomeMoneyAlipayRealName, Mode=TwoWay}"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <StackPanel Grid.Row="2" Grid.Column="0">
+                                        <TextBlock Text="收款支付宝二维码：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                        <Button Name="btnUpdateAlipay2DCodeImage" Content="导入收款二维码图片" Margin="10" Click="btnUpdateAlipay2DCodeImage_Click"/>
+                                    </StackPanel>
+                                    <Image Grid.Row="2" Grid.Column="1" Source="{Binding Alipay2DCodeImage}" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+                                </Grid>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                    <Button Grid.Row="1" Name="btnSaveConfig" Content="保  存" HorizontalAlignment="Right" Margin="20,10" Padding="30,5" Click="btnSaveConfig_Click"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+    </Grid>
+</Window>

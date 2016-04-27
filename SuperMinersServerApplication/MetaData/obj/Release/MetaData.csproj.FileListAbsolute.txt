@@ -1,0 +1,4 @@
+F:\My Work\WinForm\SuperMinersServerApplication\MetaData\bin\Release\MetaData.dll
+F:\My Work\WinForm\SuperMinersServerApplication\MetaData\bin\Release\MetaData.pdb
+F:\My Work\WinForm\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dll
+F:\My Work\WinForm\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb

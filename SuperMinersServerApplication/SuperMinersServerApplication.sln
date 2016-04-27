@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperMinersServerApplication", "SuperMinersServerApplication\SuperMinersServerApplication.csproj", "{D9A1FEFE-EF52-4383-B448-819CACFBDF14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaData", "MetaData\MetaData.csproj", "{9EE709A2-4FAC-42DB-B98F-9AEBDF2DDB42}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseProvider", "DataBaseProvider\DataBaseProvider.csproj", "{7248D483-E6AF-4022-BBCD-EC802CD2970C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9A1FEFE-EF52-4383-B448-819CACFBDF14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A1FEFE-EF52-4383-B448-819CACFBDF14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A1FEFE-EF52-4383-B448-819CACFBDF14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A1FEFE-EF52-4383-B448-819CACFBDF14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EE709A2-4FAC-42DB-B98F-9AEBDF2DDB42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EE709A2-4FAC-42DB-B98F-9AEBDF2DDB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EE709A2-4FAC-42DB-B98F-9AEBDF2DDB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EE709A2-4FAC-42DB-B98F-9AEBDF2DDB42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7248D483-E6AF-4022-BBCD-EC802CD2970C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7248D483-E6AF-4022-BBCD-EC802CD2970C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7248D483-E6AF-4022-BBCD-EC802CD2970C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7248D483-E6AF-4022-BBCD-EC802CD2970C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

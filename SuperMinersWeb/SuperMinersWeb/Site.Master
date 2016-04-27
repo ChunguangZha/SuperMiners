@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SuperMinersWeb.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8" />
+    <title><%: Page.Title %> - 超级矿工</title>
+    <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    <a id="A1" runat="server" href="~/">超级矿工</a>
+                </p>
+            </div>
+            <div class="float-right">
+                <div class="topright"></div>
+                <nav>
+                    <ul id="menu">
+                        <li><a id="A3" runat="server" href="~/">主页</a></li>
+                        <li><a id="A4" runat="server" href="~/Register.aspx">玩家注册</a></li>
+                        <li><a id="A5" runat="server" href="~/About.aspx">关于</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <div>
+        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
+        <section class="content-wrapper main-content clear-fix">
+            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+        </section>
+    </div>
+    <footer>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p>&copy; <%: DateTime.Now.Year %> - 超级矿工</p>
+            </div>
+        </div>
+    </footer>
+    </form>
+</body>
+</html>
