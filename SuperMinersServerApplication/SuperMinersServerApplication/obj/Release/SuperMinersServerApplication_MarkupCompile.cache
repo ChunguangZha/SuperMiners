@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\
 SuperMinersServerApplication
 none
 false
 TRACE;DEBUG;Encrypt
-F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
 22042179694
 
 52987798089
-21-1400341322
+21-1012508942
 MainWindow.xaml;Utility\WinInputPassword.xaml;
 
 False

@@ -26,7 +26,7 @@ namespace SuperMinersServerApplication.Controller
             return DBProvider.UserDBProvider.SavePlayerSimpleInfo(BasePlayer.SimpleInfo);
         }
 
-        private void RefreshFortune()
+        public void RefreshFortune()
         {
             BasePlayer.FortuneInfo = DBProvider.UserDBProvider.GetPlayerFortuneInfo(BasePlayer.SimpleInfo.UserName);
             ComputePlayerOfflineStoneOutput();
@@ -71,32 +71,35 @@ namespace SuperMinersServerApplication.Controller
             TimeSpan span = DateTime.Now - BasePlayer.SimpleInfo.LastLoginTime;
             if (span.TotalHours > 0)
             {
-                float playerOutputPerHour = BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
-                float tempOnlineOutput = (float)span.TotalHours * playerOutputPerHour;
-
-                //拿服务器计算出的产出值和客户端传入的产出值进行比较，如果误差在一个小时产量内，则以客户端值为准，否则以服务器端为准。
-                if (Math.Abs(BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput - stonesCount) < playerOutputPerHour)
+                lock (this._lockFortuneAction)
                 {
-                    BasePlayer.FortuneInfo.TempOutputStones = stonesCount;
-                }
-                else
-                {
-                    BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput;
-                }
+                    float playerOutputPerHour = BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
+                    float tempOnlineOutput = (float)span.TotalHours * playerOutputPerHour;
 
-                if (BasePlayer.FortuneInfo.TotalProducedStonesCount + BasePlayer.FortuneInfo.TempOutputStones > BasePlayer.FortuneInfo.StonesReserves)
-                {
-                    //已经超出矿山储量
-                    BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
+                    //拿服务器计算出的产出值和客户端传入的产出值进行比较，如果误差在一个小时产量内，则以客户端值为准，否则以服务器端为准。
+                    if (Math.Abs(BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput - stonesCount) < playerOutputPerHour)
+                    {
+                        BasePlayer.FortuneInfo.TempOutputStones = stonesCount;
+                    }
+                    else
+                    {
+                        BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput;
+                    }
+
+                    if (BasePlayer.FortuneInfo.TotalProducedStonesCount + BasePlayer.FortuneInfo.TempOutputStones > BasePlayer.FortuneInfo.StonesReserves)
+                    {
+                        //已经超出矿山储量
+                        BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
+                    }
+
+                    BasePlayer.FortuneInfo.StockOfStones += BasePlayer.FortuneInfo.TempOutputStones;
+                    BasePlayer.FortuneInfo.TotalProducedStonesCount += BasePlayer.FortuneInfo.TempOutputStones;
+
+                    float stones = BasePlayer.FortuneInfo.TempOutputStones;
+                    BasePlayer.FortuneInfo.TempOutputStones = 0;
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
+                    return stones;
                 }
-
-                BasePlayer.FortuneInfo.StockOfStones += BasePlayer.FortuneInfo.TempOutputStones;
-                BasePlayer.FortuneInfo.TotalProducedStonesCount += BasePlayer.FortuneInfo.TempOutputStones;
-
-                float stones = BasePlayer.FortuneInfo.TempOutputStones;
-                BasePlayer.FortuneInfo.TempOutputStones = 0;
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
-                return stones;
             }
 
             return 0;
@@ -256,12 +259,19 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ReferAward(AwardReferrerConfig awardConfig, CustomerMySqlTransaction trans)
         {
-            BasePlayer.FortuneInfo.Exp += awardConfig.AwardReferrerExp;
-            BasePlayer.FortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
-            BasePlayer.FortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
-            BasePlayer.FortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
-            BasePlayer.FortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
-            return DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+            PlayerFortuneInfo newFortuneInfo = null;
+            lock (_lockFortuneAction)
+            {
+                //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
+                newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+            }
+
+            newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
+            newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
+            newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
+            newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
+            newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
+            return DBProvider.UserDBProvider.SavePlayerFortuneInfo(newFortuneInfo, trans);
         }
     }
 }

@@ -8,10 +8,20 @@ using System.Threading.Tasks;
 namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
 {
     [ServiceContract]
-    interface IServiceToWeb
+    public interface IServiceToWeb
     {
+        /// <summary>
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
         [OperationContract]
-        bool RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode);
+        int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode);
 
         /// <summary>
         /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在

@@ -36,6 +36,8 @@ namespace SuperMinersServerApplication.Controller
 
         #region Fields
 
+        public event Action<PlayerInfo> InvokeCallbackSetPlayerInfo;
+
         public int RegisteredPlayersCount { get; private set; }
         public float AllMiners { get; private set; }
         public float AllOutputStones { get; private set; }
@@ -51,20 +53,31 @@ namespace SuperMinersServerApplication.Controller
             this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
         }
 
-        public bool RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        /// <summary>
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        public int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
         {
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
             {
-                return false;
+                return 1;
             }
 
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
             if (userCount > GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
             {
-                return false;
+                return 2;
             }
 
+            List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
             var trans = MyDBHelper.Instance.CreateTrans();
 
             try
@@ -84,6 +97,7 @@ namespace SuperMinersServerApplication.Controller
                         }
                         var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
                         playerrun.ReferAward(awardConfig, trans);
+                        listPlayerRun.Add(playerrun);
 
                         PlayerActionController.Instance.AddLog(playerrun.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
 
@@ -111,6 +125,7 @@ namespace SuperMinersServerApplication.Controller
 
                         var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
                         playerrun.ReferAward(awardConfig, trans);
+                        listPlayerRun.Add(playerrun);
 
                         previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
                         PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
@@ -142,14 +157,21 @@ namespace SuperMinersServerApplication.Controller
                     }
                 };
 
-                bool result = DBProvider.UserDBProvider.AddPlayer(newplayer, trans);
-                if (result)
-                {
-                    PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 0);
-                }
+                DBProvider.UserDBProvider.AddPlayer(newplayer, trans);
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 0);
 
                 trans.Commit();
-                return result;
+
+                foreach (var playerrun in listPlayerRun)
+                {
+                    playerrun.RefreshFortune();
+                    if (InvokeCallbackSetPlayerInfo != null)
+                    {
+                        InvokeCallbackSetPlayerInfo(playerrun.BasePlayer);
+                    }
+                }
+
+                return 0;
             }
             catch (Exception exc)
             {

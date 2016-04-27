@@ -19,6 +19,6 @@ namespace SuperMinersServerApplication.WebService.Contracts
         void LogedOut(string token);
 
         [Callback]
-        void SetPlayerInfo(string token, PlayerInfo player);
+        void PlayerInfoChanged(string token);
     }
 }

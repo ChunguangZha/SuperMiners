@@ -6,3 +6,11 @@ F:\My Work\WinForm\SuperMinersServerApplication\DataBaseProvider\obj\Release\Dat
 F:\My Work\WinForm\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.dll
 F:\My Work\WinForm\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.pdb
 F:\My Work\WinForm\SuperMinersServerApplication\DataBaseProvider\bin\Release\MySql.Data.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\DataBaseProvider.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\DataBaseProvider.pdb
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MetaData.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MySql.Data.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MetaData.pdb
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.pdb

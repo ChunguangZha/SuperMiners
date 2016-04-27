@@ -12,7 +12,17 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 {
     class ServiceToWeb : IServiceToWeb
     {
-        public bool RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        /// <summary>
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        public int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
         {
             try
             {
@@ -23,7 +33,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
                                     + ",alipayAccount: " + alipayAccount + ",alipayRealName: " + alipayRealName, exc);
 
-                return false;
+                return 3;
             }
         }
 

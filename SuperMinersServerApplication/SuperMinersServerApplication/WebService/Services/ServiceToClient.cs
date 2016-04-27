@@ -1,4 +1,6 @@
-﻿using SuperMinersServerApplication.Encoder;
+﻿using MetaData.User;
+using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
 using SuperMinersServerApplication.WebService.Contracts;
 using System;
@@ -27,6 +29,21 @@ namespace SuperMinersServerApplication.WebService.Services
             this._userStateCheck.Elapsed += new System.Timers.ElapsedEventHandler(_userStateCheck_Elapsed);
             this._userStateCheck.Start();
 
+            PlayerController.Instance.InvokeCallbackSetPlayerInfo += Instance_InvokeCallbackSetPlayerInfo;
+        }
+
+        void Instance_InvokeCallbackSetPlayerInfo(PlayerInfo player)
+        {
+            string token = ClientManager.GetToken(player.SimpleInfo.UserName);
+            if (string.IsNullOrEmpty(token))
+            {
+                return;
+            }
+
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.PlayerInfoChanged(token);
+            })).Start();
         }
 
         public Stream GetClientAccessPolicy()
@@ -66,67 +83,60 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public CallbackInfo Callback(string token)
         {
-            try
+            if (RSAProvider.LoadRSA(token))
             {
-                if (RSAProvider.LoadRSA(token))
+                bool valid = false;
+                Queue<CallbackInfo> queue = null;
+                DateTime start = DateTime.Now;
+                while (!valid)
                 {
-                    bool valid = false;
-                    Queue<CallbackInfo> queue = null;
-                    DateTime start = DateTime.Now;
-                    while (!valid)
+                    if (!App.ServiceToRun.IsStarted)
                     {
-                        if (!App.ServiceToRun.IsStarted)
+                        throw new Exception();
+                    }
+
+                    lock (this._callbackDicLocker)
+                    {
+                        if (this._callbackDic.TryGetValue(token, out queue))
+                        {
+                            lock (queue)
+                            {
+                                valid = queue.Count > 0;
+                            }
+                        }
+                        else
                         {
                             throw new Exception();
-                        }
-
-                        lock (this._callbackDicLocker)
-                        {
-                            if (this._callbackDic.TryGetValue(token, out queue))
-                            {
-                                lock (queue)
-                                {
-                                    valid = queue.Count > 0;
-                                }
-                            }
-                            else
-                            {
-                                throw new Exception();
-                            }
-                        }
-
-                        if (!valid)
-                        {
-                            if ((DateTime.Now - start).TotalSeconds >= GlobalData.KeepAliveTimeSeconds)
-                            {
-                                return new CallbackInfo()
-                                {
-                                    MethodName = String.Empty
-                                };
-                            }
-
-                            Thread.Sleep(100);
                         }
                     }
 
                     if (!valid)
                     {
-                        throw new Exception();
-                    }
+                        if ((DateTime.Now - start).TotalSeconds >= GlobalData.KeepAliveTimeSeconds)
+                        {
+                            return new CallbackInfo()
+                            {
+                                MethodName = String.Empty
+                            };
+                        }
 
-                    lock (queue)
-                    {
-                        return queue.Dequeue();
+                        Thread.Sleep(100);
                     }
                 }
-                else
+
+                if (!valid)
                 {
                     throw new Exception();
                 }
+
+                lock (queue)
+                {
+                    return queue.Dequeue();
+                }
             }
-            catch
+            else
             {
-                return null;
+                throw new Exception();
             }
         }
 

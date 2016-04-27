@@ -13,7 +13,7 @@ namespace SuperMinersWPF.Wcf.Clients
         public event Action OnKickout;
         public event Action OnLogedIn;
         public event Action OnLogedOut;
-        public event Action<PlayerInfo> OnSetPlayerInfo;
+        //public event Action OnSetPlayerInfo;
 
         #region Logion
 
@@ -52,7 +52,6 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-
         #region Callback
 
         public void RaiseOnKickout()
@@ -79,13 +78,14 @@ namespace SuperMinersWPF.Wcf.Clients
                 handler();
             }
         }
-        public void RaiseOnSetPlayerInfo(PlayerInfo player)
+        public void RaiseOnPlayerInfoChanged()
         {
-            Action<PlayerInfo> handler = this.OnSetPlayerInfo;
-            if (null != handler)
-            {
-                handler(player);
-            }
+            this.GetPlayerInfo();
+            //Action handler = this.OnSetPlayerInfo;
+            //if (null != handler)
+            //{
+            //    handler();
+            //}
         }
         #endregion
     }

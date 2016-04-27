@@ -71,21 +71,28 @@ namespace SuperMinersWeb
                 return;
             }
 
-            int result = NetTcpClient.Instance.CheckUserNameExist(userName);
+            int result;
+            if (!WcfClient.IsReady)
+            {
+                Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
+                return;
+            }
+
+            result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result < 0)
             {
                 Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
                 return;
             }
             if (result > 0)
-            {                
+            {
                 Response.Write("<script>alert('该用户名已经存在，请选择其它用户名!')</script>");
                 return;
             }
 
             if (!string.IsNullOrEmpty(alipay) && !string.IsNullOrEmpty(alipayRealName))
             {
-                result = NetTcpClient.Instance.CheckUserAlipayExist(alipay, alipayRealName);
+                result = WcfClient.Instance.CheckUserAlipayExist(alipay, alipayRealName);
                 if (result < 0)
                 {
                     Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
@@ -100,14 +107,22 @@ namespace SuperMinersWeb
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            bool isOK = NetTcpClient.Instance.RegisterUser(ip, userName, this.txtPassword.Text, alipay, alipayRealName, this.txtInvitationCode.Text);
-            if (isOK)
+            result = WcfClient.Instance.RegisterUser(ip, userName, this.txtPassword.Text, alipay, alipayRealName, this.txtInvitationCode.Text);
+            if (result == 0)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
             }
+            else if (result == 1)
+            {
+                Response.Write("<script>alert('用户名已经存在!')</script>");
+            }
+            else if (result == 2)
+            {
+                Response.Write("<script>alert('同一IP注册用户数超限!')</script>");
+            }
             else
             {
-                Response.Write("<script>alert('注册失败!')</script>"); 
+                Response.Write("<script>alert('注册失败!')</script>");
             }
         }
     }

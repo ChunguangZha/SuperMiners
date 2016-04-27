@@ -93,5 +93,26 @@ namespace MetaData.User
         [DataMember]
         public float FreezingDiamonds { get; set; }
 
+        public PlayerFortuneInfo CopyTo()
+        {
+            PlayerFortuneInfo infoB = new PlayerFortuneInfo()
+            {
+                Exp = this.Exp,
+                FreezingDiamonds = this.FreezingDiamonds,
+                FreezingStones = this.FreezingStones,
+                GoldCoin = this.GoldCoin,
+                MinersCount = this.MinersCount,
+                MinesCount = this.MinesCount,
+                RMB = this.RMB,
+                StockOfDiamonds = this.StockOfDiamonds,
+                StockOfStones = this.StockOfStones,
+                StonesReserves = this.StonesReserves,
+                TempOutputStones = this.TempOutputStones,
+                TotalProducedStonesCount = this.TotalProducedStonesCount,
+                UserName = this.UserName
+            };
+
+            return infoB;
+        }
     }
 }

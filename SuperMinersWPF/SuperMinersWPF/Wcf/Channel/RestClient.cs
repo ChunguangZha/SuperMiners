@@ -159,10 +159,8 @@ namespace SuperMinersWPF.Wcf.Channel
                             {
                                 if (null != resultHandler)
                                 {
-                                    if (!resultHandler(ex, null, req.IsCancel, userState))
-                                    {
-                                        BusyToken.Hide();
-                                    }
+                                    BusyToken.Hide();
+                                    resultHandler(ex, null, req.IsCancel, userState);
                                 }
                             }, null);
                             return;

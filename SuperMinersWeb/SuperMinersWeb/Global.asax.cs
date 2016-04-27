@@ -16,7 +16,7 @@ namespace SuperMinersWeb
         protected void Application_Start(object sender, EventArgs e)
         {
             LogHelper.Instance.Init();
-            NetTcpClient.Instance.Init();
+            WcfClient.Init();
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition { Path = "~/scripts/jquery-1.7.2.min.js", DebugPath = "~/scripts/jquery-1.7.2.js", CdnPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.7.2.min.js", CdnDebugPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.7.2.js" });
         }
 

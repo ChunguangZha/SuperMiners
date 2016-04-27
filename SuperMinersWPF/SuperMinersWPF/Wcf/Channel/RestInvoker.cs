@@ -361,17 +361,28 @@ namespace SuperMinersWPF.Wcf.Channel
             {
                 if (null != ex)
                 {
+                    if (ex is WebException)
+                    {
+                        if (null != this.Error)
+                        {
+                            this.Error(this, EventArgs.Empty);
+                        }
+                        return;
+                    }
                     this.InvokeCallback();
                     return;
                 }
 
-                CallbackInfo arg;
+                CallbackInfo arg = null;
                 try
                 {
-                    DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
-                    using (MemoryStream ms = new MemoryStream(result))
+                    if (result != null && result.Length != 0)
                     {
-                        arg = (CallbackInfo)s.ReadObject(ms);
+                        DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
+                        using (MemoryStream ms = new MemoryStream(result))
+                        {
+                            arg = (CallbackInfo)s.ReadObject(ms);
+                        }
                     }
                 }
                 catch

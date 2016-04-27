@@ -98,6 +98,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.RMB = Convert.ToSingle(dt.Rows[0]["RMB"]);
                 player.FortuneInfo.GoldCoin = Convert.ToSingle(dt.Rows[0]["GoldCoin"]);
                 player.FortuneInfo.MinesCount = Convert.ToSingle(dt.Rows[0]["MinesCount"]);
+                player.FortuneInfo.MinersCount = Convert.ToSingle(dt.Rows[0]["MinersCount"]);
                 player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[0]["StonesReserves"]);
                 player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[0]["TotalProducedStonesCount"]);
                 player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[0]["StockOfStones"]);

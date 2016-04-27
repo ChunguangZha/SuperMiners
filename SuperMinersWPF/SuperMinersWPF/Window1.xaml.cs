@@ -35,31 +35,31 @@ namespace SuperMinersWPF
             GlobalData.Client.Error += new EventHandler(Client_Error);
             GlobalData.Client.OnSendMessage += new Action<string>(Client_OnSendMessage);
             GlobalData.Client.OnKickout += new Action(Client_OnKickout);
-            GlobalData.Client.OnSetPlayerInfo += Client_OnSetPlayerInfo;
+            //GlobalData.Client.OnSetPlayerInfo += Client_OnSetPlayerInfo;
             App.UserVMObject.StartListen();
 
             this.DataContext = GlobalData.CurrentUser;
         }
 
-        void Client_OnSetPlayerInfo(MetaData.User.PlayerInfo obj)
-        {
-            try
-            {
-                if (obj == null)
-                {
-                    return;
-                }
-                if (obj.SimpleInfo.UserName == GlobalData.CurrentUser.UserName)
-                {
-                    //TODO: 此时应该玩家所有正在进行的跟财富有关的操作。
-                    GlobalData.CurrentUser.ParentObject = obj;
-                }
-            }
-            catch (Exception)
-            {
+        //void Client_OnSetPlayerInfo()
+        //{
+        //    try
+        //    {
+        //        if (obj == null)
+        //        {
+        //            return;
+        //        }
+        //        if (obj.SimpleInfo.UserName == GlobalData.CurrentUser.UserName)
+        //        {
+        //            //TODO: 此时应该玩家所有正在进行的跟财富有关的操作。
+        //            GlobalData.CurrentUser.ParentObject = obj;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -87,7 +87,7 @@ namespace SuperMinersWPF
             {
                 GlobalData.IsOffline = true;
                 MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
-                //this.Close();
+                this.Close();
             }, null);
         }
 

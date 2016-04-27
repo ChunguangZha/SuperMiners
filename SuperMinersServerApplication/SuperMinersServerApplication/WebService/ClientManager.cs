@@ -98,6 +98,22 @@ namespace SuperMinersServerApplication.WebService
             }
         }
 
+        public static string GetToken(string userName)
+        {
+            lock (_locker)
+            {
+                foreach (var info in _infoDic.Values)
+                {
+                    if (info.UserName.Equals(userName))
+                    {
+                        return info.Token;
+                    }
+                }
+
+                return null;
+            }
+        }
+
         public static IPEndPoint GetIPEndPoint(string token)
         {
             lock (_locker)

@@ -31,7 +31,7 @@ namespace DataBaseProvider
                     cmdTextA = "insert into playersimpleinfo " +
                         "(`UserName`, `Password`, `Alipay`, `AlipayRealName`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
                         " (@UserName, @Password, @Alipay, @AlipayRealName, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
-                    mycmd.Parameters.AddWithValue("@ReferrerUserName", player.SimpleInfo.ReferrerUserName);
+                    mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(player.SimpleInfo.ReferrerUserName));
                 }
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
@@ -102,7 +102,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingStones", playerFortune.FreezingStones);
                 mycmd.Parameters.AddWithValue("@StockOfDiamonds", playerFortune.StockOfDiamonds);
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", playerFortune.FreezingDiamonds);
-                mycmd.Parameters.AddWithValue("@UserName", playerFortune.UserName);
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();
                 mycmd.Dispose();

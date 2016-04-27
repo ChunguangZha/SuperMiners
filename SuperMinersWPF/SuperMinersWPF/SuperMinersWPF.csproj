@@ -81,6 +81,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\AESEncrypt.cs">
       <Link>Wcf\Channel\AESEncrypt.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
+      <Link>Wcf\Datas\CallbackInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\CallbackAttribute.cs">
       <Link>Wcf\Callbacks\CallbackAttribute.cs</Link>
     </Compile>
@@ -104,9 +107,6 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.User.cs">
       <Link>Wcf\Contracts\IServiceToClient.User.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServer\Model\CallbackInfo.cs">
-      <Link>Wcf\Datas\CallbackInfo.cs</Link>
     </Compile>
     <Compile Include="GlobalData.cs" />
     <Compile Include="Models\BaseModel.cs" />
