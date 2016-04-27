@@ -25,9 +25,9 @@ namespace SuperMinersServerApplication.WebService.Services
             this.InvokeCallback(token, "LogedOut");
         }
 
-        public void SetPlayerInfo(string token, PlayerInfo player)
+        public void PlayerInfoChanged(string token)
         {
-            this.InvokeCallback(token, "SetPlayerInfo", player);
+            this.InvokeCallback(token, "PlayerInfoChanged");
         }
     }
 }
