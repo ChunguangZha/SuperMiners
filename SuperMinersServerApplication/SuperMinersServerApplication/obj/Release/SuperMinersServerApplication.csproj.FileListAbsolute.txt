@@ -44,3 +44,5 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.Properties.Resources.resources
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.SuperMinersService.resources
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.csproj.GenerateResource.Cache
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\App.baml
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.StringResources.Strings.resources

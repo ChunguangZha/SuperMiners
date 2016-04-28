@@ -121,6 +121,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />

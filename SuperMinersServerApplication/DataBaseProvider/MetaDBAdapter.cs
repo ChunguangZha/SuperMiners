@@ -102,6 +102,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[0]["StonesReserves"]);
                 player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[0]["TotalProducedStonesCount"]);
                 player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[0]["StockOfStones"]);
+                player.FortuneInfo.TempOutputStones = Convert.ToSingle(dt.Rows[0]["TempOutputStones"]);
                 player.FortuneInfo.FreezingStones = Convert.ToSingle(dt.Rows[0]["FreezingStones"]);
                 player.FortuneInfo.StockOfDiamonds = Convert.ToSingle(dt.Rows[0]["StockOfDiamonds"]);
                 player.FortuneInfo.FreezingDiamonds = Convert.ToSingle(dt.Rows[0]["FreezingDiamonds"]);

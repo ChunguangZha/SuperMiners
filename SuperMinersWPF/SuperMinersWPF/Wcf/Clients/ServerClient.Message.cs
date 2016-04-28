@@ -9,7 +9,7 @@ namespace SuperMinersWPF.Wcf.Clients
 {
     public partial class ServerClient
     {
-        #region BuyMiner
+        #region GetPlayerAction
 
         public event EventHandler<WebInvokeEventArgs<PlayerActionLog[]>> GetPlayerActionCompleted;
         public void GetPlayerAction(int year, int month, int day, int hour, int minute, int second)

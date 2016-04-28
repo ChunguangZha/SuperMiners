@@ -33,14 +33,14 @@ namespace SuperMinersWPF.ViewModels
         {
             try
             {
-                if (!GlobalData.IsOffline)
+                if (GlobalData.IsLogined)
                 {
                     GlobalData.CurrentUser.TempOutputStones += GlobalData.CurrentUser.AllOutputPerHour / 60f;
                 }
             }
             catch (Exception exc)
             {
-
+                LogHelper.Instance.AddErrorLog("TimerUpdateStoneOutput_Elapsed", exc);
             }
         }
 

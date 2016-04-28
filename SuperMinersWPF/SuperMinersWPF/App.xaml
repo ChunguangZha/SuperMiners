@@ -8,8 +8,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Assets/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <local:LocalizedStrings x:Key="LocalizedStrings"/>
-            <local:Strings x:Key="Language"/>
+            <local:LocalizedStrings x:Key="Language"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

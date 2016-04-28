@@ -114,7 +114,7 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-
+                LogHelper.Instance.AddErrorLog("AsyncGetPlayerAction error.", exc);
             }
         }
 
@@ -125,8 +125,6 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetPlayerActionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.ActionLog.PlayerActionLog[]> e)
         {
-            GlobalData.IsOffline = false;
-
             if (e.Cancelled)
             {
                 return;

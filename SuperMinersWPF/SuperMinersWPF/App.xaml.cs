@@ -15,6 +15,7 @@ namespace SuperMinersWPF
     public partial class App : Application
     {
         internal static UserViewModel UserVMObject = new UserViewModel();
+        internal static MessageViewModel MessageVMObject = new MessageViewModel();
 
         protected override void OnStartup(StartupEventArgs e)
         {

@@ -54,21 +54,21 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _GoldCoin_Mine = 10000;
+        public float _RMB_Mine = 10;
 
         /// <summary>
-        /// 购买矿山所需要的金币
+        /// 购买矿山所需要的RMB
         /// </summary>
-        public float GoldCoin_Mine
+        public float RMB_Mine
         {
-            get { return this._GoldCoin_Mine; }
+            get { return this._RMB_Mine; }
             set
             {
-                if (value != this._GoldCoin_Mine)
+                if (value != this._RMB_Mine)
                 {
-                    this._GoldCoin_Mine = value;
+                    this._RMB_Mine = value;
                     IsChanged = true;
-                    NotifyPropertyChanged("GoldCoin_Mine");
+                    NotifyPropertyChanged("RMB_Mine");
                 }
             }
         }
@@ -236,7 +236,7 @@ namespace SuperMinersServerApplication.UIModel
                 Diamonds_RMB = parent.Diamonds_RMB,
                 ExchangeExpenseMinNumber = parent.ExchangeExpenseMinNumber,
                 ExchangeExpensePercent = parent.ExchangeExpensePercent,
-                GoldCoin_Mine = parent.GoldCoin_Mine,
+                RMB_Mine = parent.RMB_Mine,
                 GoldCoin_Miner = parent.GoldCoin_Miner,
                 OutputStonesPerHour = parent.OutputStonesPerHour,
                 RMB_GoldCoin = parent.RMB_GoldCoin,
@@ -256,7 +256,7 @@ namespace SuperMinersServerApplication.UIModel
                 Diamonds_RMB = this.Diamonds_RMB,
                 ExchangeExpenseMinNumber = this.ExchangeExpenseMinNumber,
                 ExchangeExpensePercent = this.ExchangeExpensePercent,
-                GoldCoin_Mine = this.GoldCoin_Mine,
+                RMB_Mine = this.RMB_Mine,
                 GoldCoin_Miner = this.GoldCoin_Miner,
                 OutputStonesPerHour = this.OutputStonesPerHour,
                 RMB_GoldCoin = this.RMB_GoldCoin,

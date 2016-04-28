@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SuperMinersWPF.Login"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="{Binding Title, Mode=OneWay, Source={StaticResource Language}}" Height="300" Width="400">
+        Title="{Binding Strings.Title, Mode=OneWay, Source={StaticResource Language}}" Height="300" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16*"/>
@@ -13,7 +13,10 @@
             <RowDefinition Height="46*"/>
             <RowDefinition Height="95*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="欢迎加入超级矿工" Margin="52,19" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Lime" Height="46" Width="288"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Lime">
+            <Run Text="欢迎加入"/>
+            <Run Text="{Binding Strings.Title, Mode=OneWay, Source={StaticResource Language}}"/>
+        </TextBlock>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="用户名: " Margin="52,14,34,14" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="42"/>
         <TextBox Grid.Row="1" Grid.Column="1" Name="txtUserName" Margin="10,10,20,10" MaxLength="100"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="密  码: " Margin="54,16,36,16" HorizontalAlignment="Center" VerticalAlignment="Center" Height="14" Width="38"/>

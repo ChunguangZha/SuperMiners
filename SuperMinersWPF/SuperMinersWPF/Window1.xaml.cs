@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -22,7 +20,8 @@ namespace SuperMinersWPF
     /// </summary>
     public partial class Window1 : Window
     {
-        private SynchronizationContext _syn;
+        private System.Threading.SynchronizationContext _syn;
+        private System.Timers.Timer _timerGetMessage = new System.Timers.Timer(1000);
 
         public Window1()
         {
@@ -30,15 +29,34 @@ namespace SuperMinersWPF
 
             this.Closing += Window1_Closing;
 
-            this._syn = SynchronizationContext.Current;
+            this._syn = System.Threading.SynchronizationContext.Current;
             GlobalData.Client.SetContext(this._syn);
             GlobalData.Client.Error += new EventHandler(Client_Error);
             GlobalData.Client.OnSendMessage += new Action<string>(Client_OnSendMessage);
             GlobalData.Client.OnKickout += new Action(Client_OnKickout);
-            //GlobalData.Client.OnSetPlayerInfo += Client_OnSetPlayerInfo;
             App.UserVMObject.StartListen();
-
             this.DataContext = GlobalData.CurrentUser;
+
+            _timerGetMessage.Elapsed += TimerGetMessage_Elapsed;
+            this._timerGetMessage.Start();
+        }
+
+        void TimerGetMessage_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                if (GlobalData.IsLogined)
+                {
+                    App.MessageVMObject.AsyncGetPlayerAction();
+                }
+                else
+                {
+                    this._timerGetMessage.Stop();
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         //void Client_OnSetPlayerInfo()
@@ -85,7 +103,7 @@ namespace SuperMinersWPF
         {
             this._syn.Post(s =>
             {
-                GlobalData.IsOffline = true;
+                GlobalData.InitToken(null);
                 MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
                 this.Close();
             }, null);

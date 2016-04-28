@@ -85,7 +85,7 @@ namespace DataBaseProvider
             {
                 string cmdTextB = "UPDATE `playerfortuneinfo` SET "
                     + " `Exp`=@Exp, `RMB`=@RMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
-                    + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones, `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds "
+                    + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,`TempOutputStones`=@TempOutputStones, `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
@@ -99,6 +99,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@TotalProducedStonesCount", playerFortune.TotalProducedStonesCount);
                 mycmd.Parameters.AddWithValue("@MinersCount", playerFortune.MinersCount);
                 mycmd.Parameters.AddWithValue("@StockOfStones", playerFortune.StockOfStones);
+                mycmd.Parameters.AddWithValue("@TempOutputStones", playerFortune.TempOutputStones);
                 mycmd.Parameters.AddWithValue("@FreezingStones", playerFortune.FreezingStones);
                 mycmd.Parameters.AddWithValue("@StockOfDiamonds", playerFortune.StockOfDiamonds);
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", playerFortune.FreezingDiamonds);
@@ -142,7 +143,13 @@ namespace DataBaseProvider
 
         public PlayerFortuneInfo GetPlayerFortuneInfo(string userName)
         {
-            return null;
+            var player = GetPlayer(userName);
+            if (player == null)
+            {
+                return null;
+            }
+
+            return player.FortuneInfo;
         }
 
         public PlayerInfo GetPlayer(string userName)

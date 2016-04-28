@@ -4,6 +4,5 @@ F:\My Work\WinForm\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dl
 F:\My Work\WinForm\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaData.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaData.pdb
-F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb

@@ -1,6 +1,7 @@
 ﻿using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersWPF.Models;
+using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Wcf.Channel;
 using System;
@@ -35,6 +36,7 @@ namespace SuperMinersWPF
 
             isHidden = false;
 
+            LogHelper.Instance.Init();
             this._syn = SynchronizationContext.Current;
             GlobalData.Client.SetContext(this._syn);
             App.UserVMObject.GetPlayerInfoCompleted += UserVMObject_GetPlayerInfoCompleted;

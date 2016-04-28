@@ -33,12 +33,13 @@ namespace DataBaseProvider
                     config = new GameConfig();
                     config.Yuan_RMB = Convert.ToSingle(dt.Rows[0]["Yuan_RMB"]);
                     config.RMB_GoldCoin = Convert.ToSingle(dt.Rows[0]["RMB_GoldCoin"]);
-                    config.GoldCoin_Mine = Convert.ToSingle(dt.Rows[0]["GoldCoin_Mine"]);
+                    config.RMB_Mine = Convert.ToSingle(dt.Rows[0]["RMB_Mine"]);
                     config.GoldCoin_Miner = Convert.ToSingle(dt.Rows[0]["GoldCoin_Miner"]);
                     config.Stones_RMB = Convert.ToSingle(dt.Rows[0]["Stones_RMB"]);
                     config.Diamonds_RMB = Convert.ToSingle(dt.Rows[0]["Diamonds_RMB"]);
                     config.StoneBuyerAwardGoldCoinMultiple = Convert.ToSingle(dt.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
                     config.OutputStonesPerHour = Convert.ToSingle(dt.Rows[0]["OutputStonesPerHour"]);
+                    config.TempStoneOutputValidHour = Convert.ToInt32(dt.Rows[0]["TempStoneOutputValidHour"]);
                     config.StonesReservesPerMines = Convert.ToSingle(dt.Rows[0]["StonesReservesPerMines"]);
                     config.ExchangeExpensePercent = Convert.ToSingle(dt.Rows[0]["ExchangeExpensePercent"]);
                     config.ExchangeExpenseMinNumber = Convert.ToSingle(dt.Rows[0]["ExchangeExpenseMinNumber"]);
@@ -64,17 +65,18 @@ namespace DataBaseProvider
         {
             MySqlCommand mycmd = trans.CreateCommand();
             string cmdText = "delete from gameconfig; " +
-                "insert into gameconfig (Yuan_RMB, RMB_GoldCoin, GoldCoin_Mine, GoldCoin_Miner, Stones_RMB, Diamonds_RMB, StoneBuyerAwardGoldCoinMultiple, OutputStonesPerHour, StonesReservesPerMines,  ExchangeExpensePercent, ExchangeExpenseMinNumber) values " +
-                                    " (@Yuan_RMB, @RMB_GoldCoin, @GoldCoin_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @StonesReservesPerMines, @ExchangeExpensePercent, @ExchangeExpenseMinNumber)";
+                "insert into gameconfig (Yuan_RMB, RMB_GoldCoin, RMB_Mine, GoldCoin_Miner, Stones_RMB, Diamonds_RMB, StoneBuyerAwardGoldCoinMultiple, OutputStonesPerHour, TempStoneOutputValidHour, StonesReservesPerMines,  ExchangeExpensePercent, ExchangeExpenseMinNumber) values " +
+                                    " (@Yuan_RMB, @RMB_GoldCoin, @RMB_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @TempStoneOutputValidHour, @StonesReservesPerMines, @ExchangeExpensePercent, @ExchangeExpenseMinNumber)";
             mycmd.CommandText = cmdText;
             mycmd.Parameters.AddWithValue("@Yuan_RMB", config.Yuan_RMB);
             mycmd.Parameters.AddWithValue("@RMB_GoldCoin", config.RMB_GoldCoin);
-            mycmd.Parameters.AddWithValue("@GoldCoin_Mine", config.GoldCoin_Mine);
+            mycmd.Parameters.AddWithValue("@RMB_Mine", config.RMB_Mine);
             mycmd.Parameters.AddWithValue("@GoldCoin_Miner", config.GoldCoin_Miner);
             mycmd.Parameters.AddWithValue("@Stones_RMB", config.Stones_RMB);
             mycmd.Parameters.AddWithValue("@Diamonds_RMB", config.Diamonds_RMB);
             mycmd.Parameters.AddWithValue("@StoneBuyerAwardGoldCoinMultiple", config.StoneBuyerAwardGoldCoinMultiple);
             mycmd.Parameters.AddWithValue("@OutputStonesPerHour", config.OutputStonesPerHour);
+            mycmd.Parameters.AddWithValue("@TempStoneOutputValidHour", config.TempStoneOutputValidHour);
             mycmd.Parameters.AddWithValue("@StonesReservesPerMines", config.StonesReservesPerMines);
             mycmd.Parameters.AddWithValue("@ExchangeExpensePercent", config.ExchangeExpensePercent);
             mycmd.Parameters.AddWithValue("@ExchangeExpenseMinNumber", config.ExchangeExpenseMinNumber);

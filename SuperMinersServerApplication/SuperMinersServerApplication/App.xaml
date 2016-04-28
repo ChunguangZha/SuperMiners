@@ -1,8 +1,12 @@
 ﻿<Application x:Class="SuperMinersServerApplication.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SuperMinersServerApplication.StringResources"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <local:LocalizedStrings x:Key="Language"/>
+            <!--<local:Strings x:Key="Language"/>-->
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

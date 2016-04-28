@@ -30,7 +30,7 @@ namespace SuperMinersWPF.Views
             GlobalData.Client.BuyMineCompleted += Client_BuyMineCompleted;
             this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();
             this.txtGoldCoin.Text = GlobalData.CurrentUser.GoldCoin.ToString();
-            this.txtGoldCoin_Mine.Text = GlobalData.GameConfig.GoldCoin_Mine.ToString();
+            this.txtGoldCoin_Mine.Text = GlobalData.GameConfig.RMB_Mine.ToString();
         }
 
         void Client_BuyMineCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -66,9 +66,9 @@ namespace SuperMinersWPF.Views
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             int count = (int)this.numMinesCount.Value;
-            float money = count * GlobalData.GameConfig.GoldCoin_Mine;
+            float money = count * GlobalData.GameConfig.RMB_Mine;
             this.txtNeedMoney.Text = money.ToString();
-            if (money > GlobalData.CurrentUser.GoldCoin)
+            if (money > GlobalData.CurrentUser.RMB)
             {
                 MyMessageBox.ShowInfo("账户余额不足，请充值。");
                 return;
@@ -84,16 +84,12 @@ namespace SuperMinersWPF.Views
         private void numMinersCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int count = (int)this.numMinesCount.Value;
-            float money = count * GlobalData.GameConfig.GoldCoin_Mine;
+            float money = count * GlobalData.GameConfig.RMB_Mine;
             this.txtNeedMoney.Text = money.ToString();
-            if (money > GlobalData.CurrentUser.GoldCoin)
+            if (money > GlobalData.CurrentUser.RMB)
             {
-                float allGoldcoin = GlobalData.CurrentUser.GoldCoin + GlobalData.CurrentUser.RMB * GlobalData.GameConfig.RMB_GoldCoin;
-                if (money > allGoldcoin)
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Visible;
-                    return;
-                }
+                this.txtError.Visibility = System.Windows.Visibility.Visible;
+                return;
             }
         }
     }

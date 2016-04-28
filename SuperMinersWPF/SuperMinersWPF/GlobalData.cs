@@ -5,6 +5,7 @@ using SuperMinersWPF.Models;
 using SuperMinersWPF.Wcf.Clients;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,12 +38,6 @@ namespace SuperMinersWPF
             }
         }
 
-        public static bool IsOffline
-        {
-            get;
-            set;
-        }
-
         public static void InitToken(string token)
         {
             Token = token;
@@ -61,5 +56,7 @@ namespace SuperMinersWPF
         }
 
         public static GameConfig GameConfig;
+
+        public static readonly string LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
     }
 }

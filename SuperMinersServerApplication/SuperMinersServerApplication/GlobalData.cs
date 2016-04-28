@@ -21,8 +21,8 @@ namespace SuperMinersServerApplication
 
         public static readonly string SaveConfigPassword = "wangzhongyan";
 
-        public static readonly string DBName = "rserver300";
-        public static readonly int DBPort = 13300;
+        //public static readonly string DBName = "rserver300";
+        //public static readonly int DBPort = 13300;
 
         public static readonly string LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
         public static readonly string ConfigFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");

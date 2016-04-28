@@ -70,15 +70,35 @@
                                     </Grid.RowDefinitions>
                                     <TextBlock Text="同一IP最大允许注册玩家数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Column="1" Value="{Binding UserCountCreateByOneIP, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="赠送新注册玩家贡献值：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="赠送新注册玩家"/>
+                                        <Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="："/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding GiveToNewUserExp, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="赠送新注册玩家金币：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="赠送新注册玩家"/>
+                                        <Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="："/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding GiveToNewUserGoldCoin, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="赠送新注册玩家矿山：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="赠送新注册玩家"/>
+                                        <Run Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="："/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding GiveToNewUserMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="赠送新注册玩家矿工：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="赠送新注册玩家"/>
+                                        <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="："/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding GiveToNewUserMiners, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="赠送新注册玩家矿石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="赠送新注册玩家"/>
+                                        <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="："/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding GiveToNewUserStones, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
                                 </Grid>
                             </Grid>
@@ -104,22 +124,40 @@
                                         <TextBlock Text="推荐级别" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                     </Border>
                                     <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励贡献值" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <Border Grid.Column="2" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励金币" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励矿山" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <Border Grid.Column="4" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励矿工" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励矿石" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <Border Grid.Column="6" BorderBrush="LightGray" BorderThickness="0,1,1,0">
-                                        <TextBlock Text="奖励钻石" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <Run Text="奖励"/>
+                                            <Run Text="{Binding Strings.Diamond, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        </TextBlock>
                                     </Border>
                                     <ListBox Grid.Row="1" Grid.ColumnSpan="7" ItemsSource="{Binding InnerListAwardReferrerConfig}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                                         <ListBox.ItemTemplate>
@@ -225,30 +263,50 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="1 人民币=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Text="1 人民币 =" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Column="1" Value="{Binding Yuan_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Column="2" Text="RMB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="1 "/>
+                                        <Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="="/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding RMB_GoldCoin, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="1 座矿山=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding GoldCoin_Mine, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="1 个矿工=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="1 "/>
+                                        <Run Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="="/>
+                                    </TextBlock>
+                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding RMB_Mine, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="1 "/>
+                                        <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="="/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding GoldCoin_Miner, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="1 "/>
+                                        <Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="="/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding Stones_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="1 RMB=" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="1 "/>
+                                        <Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="="/>
+                                    </TextBlock>
                                     <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding Diamonds_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="5" Grid.Column="2" Text="钻石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Strings.Diamond, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="6" Grid.Column="0" Text="每座矿山储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="6" Grid.Column="1" Value="{Binding StonesReservesPerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="6" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="7" Grid.Column="0" Text="每个矿工每小时生产：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="7" Grid.Column="1" Value="{Binding OutputStonesPerHour, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
-                                    <TextBlock Grid.Row="7" Grid.Column="2" Text="矿石" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="8" Grid.Column="0" Text="矿石买家奖励倍数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="8" Grid.Column="1" Value="{Binding StoneBuyerAwardGoldCoinMultiple, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000" DecimalPlaces="2"/>
                                     <TextBlock Grid.Row="8" Grid.Column="2" Text="倍金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
@@ -257,7 +315,7 @@
                                     <TextBlock Grid.Row="9" Grid.Column="2" Name="lblExchangeExpensePercent2" Text="%" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="10" Grid.Column="0" Text="最低手续费：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="10" Grid.Column="1" Value="{Binding ExchangeExpenseMinNumber, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="10" Grid.Column="2" Text="RMB" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>

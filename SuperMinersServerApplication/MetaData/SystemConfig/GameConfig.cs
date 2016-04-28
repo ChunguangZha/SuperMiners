@@ -26,7 +26,7 @@ namespace MetaData.SystemConfig
         /// 购买矿山所需要的金币
         /// </summary>
         [DataMember]
-        public float GoldCoin_Mine = 10000;
+        public float RMB_Mine = 10;
 
         /// <summary>
         /// 购买矿工所需要的金币
@@ -59,10 +59,10 @@ namespace MetaData.SystemConfig
         public float StonesReservesPerMines = 1000;
 
         /// <summary>
-        /// 离线玩家最大矿石有效生产时间（小时）
+        /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。
         /// </summary>
         [DataMember]
-        public float OfflinePlayerValidStoneOutputHour = 3;
+        public int TempStoneOutputValidHour = 3;
 
         /// <summary>
         /// 矿石买家奖励金币倍数

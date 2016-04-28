@@ -17,7 +17,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button Content="LOGO" Margin="10" Width="64" Height="64" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            <TextBlock Grid.Column="1" Text="超级矿工" FontSize="48" VerticalAlignment="Center" FontWeight="Bold" FontStyle="Italic"/>
+            <TextBlock Grid.Column="1" Text="{Binding Title, Mode=OneWay, Source={StaticResource Language}}" FontSize="48" VerticalAlignment="Center" FontWeight="Bold" FontStyle="Italic"/>
         </Grid>
         <Border Grid.Column="0" Grid.Row="1" Name="panelUserInfo" Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
             <Grid>
@@ -40,7 +40,10 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Text="矿主：" FontSize="16" HorizontalAlignment="Right" Margin="5" FontWeight="Bold"/>
                 <TextBlock Grid.Column="1" Text="{Binding UserName}" FontSize="16" Margin="5" FontWeight="Bold"/>
-                <TextBlock Grid.Row="1" Text="贡献值：" HorizontalAlignment="Right" Margin="5"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Right" Margin="5">
+                    <Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/>
+                    <Run Text="："/>
+                </TextBlock>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                     <TextBox Text="{Binding Exp, Mode=OneWay}" IsReadOnly="True" Width="100" Margin="5" HorizontalAlignment="Left"/>
                     <Button Name="btnInvitationFriends" Content="邀请好友" Width="70" Margin="5" Click="btnInvitationFriends_Click"/>

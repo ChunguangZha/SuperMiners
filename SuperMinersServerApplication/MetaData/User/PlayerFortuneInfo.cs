@@ -76,6 +76,12 @@ namespace MetaData.User
         public float TempOutputStones { get; set; }
 
         /// <summary>
+        /// 非数据库字段，为TempOutputStones的扩充体
+        /// </summary>
+        [DataMember]
+        public PlayerTempOutputStoneInfo PlayerTempOutputStoneInfo { get; set; }
+
+        /// <summary>
         /// 冻结的矿石数
         /// </summary>
         [DataMember]
