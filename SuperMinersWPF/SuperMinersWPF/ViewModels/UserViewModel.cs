@@ -35,7 +35,21 @@ namespace SuperMinersWPF.ViewModels
             {
                 if (GlobalData.IsLogined)
                 {
-                    GlobalData.CurrentUser.TempOutputStones += GlobalData.CurrentUser.AllOutputPerHour / 60f;
+                    DateTime startTime = GlobalData.CurrentUser.TempOutputStonesStartTime;
+
+                    TimeSpan span = DateTime.Now - startTime;
+                    if (span.TotalHours < 0)
+                    {
+                        return;
+                    }
+
+                    float tempOutput = (float)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
+
+                    if (tempOutput > GlobalData.CurrentUser.MaxTempStonesOutput)
+                    {
+                        tempOutput = GlobalData.CurrentUser.MaxTempStonesOutput;
+                    }
+                    GlobalData.CurrentUser.TempOutputStones = tempOutput;
                 }
             }
             catch (Exception exc)

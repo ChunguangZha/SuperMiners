@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.WebService.Contracts;
+﻿using MetaData.ActionLog;
+using SuperMinersServerApplication.WebService.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,11 @@ namespace SuperMinersServerApplication.WebService.Services
         public void SendMessage(string token, string message)
         {
             this.InvokeCallback(token, "SendMessage", message);
+        }
+
+        public void SendPlayerActionLog(string toke, PlayerActionLog playerActionLog)
+        {
+            this.InvokeCallback(toke, "SendPlayerActionLog", playerActionLog);
         }
     }
 }

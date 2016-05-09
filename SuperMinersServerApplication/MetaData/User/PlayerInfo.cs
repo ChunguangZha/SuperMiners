@@ -10,10 +10,19 @@ namespace MetaData.User
     [DataContract]
     public class PlayerInfo
     {
+        public static readonly DateTime INVALIDDATETIME = new DateTime(2015, 1, 1);
+
         [DataMember]
         public PlayerSimpleInfo SimpleInfo = new PlayerSimpleInfo();
 
         [DataMember]
         public PlayerFortuneInfo FortuneInfo = new PlayerFortuneInfo();
+
+        ///// <summary>
+        ///// 非数据库字段，为TempOutputStones的扩充体
+        ///// </summary>
+        //[DataMember]
+        //public PlayerTempOutputStoneInfo PlayerTempOutputStoneInfo = new PlayerTempOutputStoneInfo();
+
     }
 }

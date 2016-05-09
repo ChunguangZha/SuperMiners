@@ -26,5 +26,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int BuyMine(string token, string userName, int minesCount);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GatherStones",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        float GatherStones(string token, string userName);
     }
 }

@@ -74,7 +74,7 @@ namespace DataBaseProvider
                 player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[0]["RegisterTime"]);
                 if (dt.Rows[0]["LastLoginTime"] == DBNull.Value)
                 {
-                    player.SimpleInfo.LastLoginTime = PlayerSimpleInfo.INVALIDDATETIME;
+                    player.SimpleInfo.LastLoginTime = null;
                 }
                 else
                 {
@@ -82,7 +82,7 @@ namespace DataBaseProvider
                 }
                 if (dt.Rows[0]["LastLogOutTime"] == DBNull.Value)
                 {
-                    player.SimpleInfo.LastLogOutTime = PlayerSimpleInfo.INVALIDDATETIME;
+                    player.SimpleInfo.LastLogOutTime = null;
                 }
                 else
                 {
@@ -102,6 +102,14 @@ namespace DataBaseProvider
                 player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[0]["StonesReserves"]);
                 player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[0]["TotalProducedStonesCount"]);
                 player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[0]["StockOfStones"]);
+                if (dt.Rows[0]["TempOutputStonesStartTime"] == DBNull.Value)
+                {
+                    player.FortuneInfo.TempOutputStonesStartTime = null;
+                }
+                else
+                {
+                    player.FortuneInfo.TempOutputStonesStartTime = Convert.ToDateTime(dt.Rows[0]["TempOutputStonesStartTime"]);
+                }
                 player.FortuneInfo.TempOutputStones = Convert.ToSingle(dt.Rows[0]["TempOutputStones"]);
                 player.FortuneInfo.FreezingStones = Convert.ToSingle(dt.Rows[0]["FreezingStones"]);
                 player.FortuneInfo.StockOfDiamonds = Convert.ToSingle(dt.Rows[0]["StockOfDiamonds"]);

@@ -76,7 +76,7 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.AlipayRealName; }
         }
 
-        public DateTime RegisterTime
+        public DateTime? RegisterTime
         {
             get { return this._parentObject.SimpleInfo.RegisterTime; }
         }
@@ -134,23 +134,6 @@ namespace SuperMinersWPF.Models
         }
 
         /// <summary>
-        /// 剩余可开采的矿石储量
-        /// </summary>
-        public float WorkableStonesReserves
-        {
-            get
-            {
-                float workable = StonesReserves - TotalProducedStonesCount - TempOutputStones;
-                if (workable < 0)
-                {
-                    workable = 0;
-                }
-
-                return workable;
-            }
-        }
-                
-        /// <summary>
         /// 矿工数
         /// </summary>
         public float MinersCount
@@ -169,14 +152,52 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        /// <summary>
+        /// 可开采矿石储量
+        /// </summary>
+        public float WorkableStonesReservers
+        {
+            get
+            {
+                float workable = this.StonesReserves - this.TotalProducedStonesCount;
+                if (workable < 0)
+                {
+                    return 0;
+                }
+
+                return workable;
+            }
+        }
+
+        public DateTime TempOutputStonesStartTime
+        {
+            get
+            {
+                if (this._parentObject.FortuneInfo.TempOutputStonesStartTime.HasValue)
+                {
+                    return this._parentObject.FortuneInfo.TempOutputStonesStartTime.Value;
+                }
+
+                return this._parentObject.SimpleInfo.LastLoginTime.Value;
+            }
+        }
+
+        public float MaxTempStonesOutput
+        {
+            get
+            {
+                return GlobalData.GameConfig.TempStoneOutputValidHour * this.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
+            }
+        }
+
         public float TempOutputStones
         {
             get { return this._parentObject.FortuneInfo.TempOutputStones; }
             set
             {
-                if (value > this.WorkableStonesReserves)
+                if (value > this.WorkableStonesReservers)
                 {
-                    this._parentObject.FortuneInfo.TempOutputStones = this.WorkableStonesReserves;
+                    this._parentObject.FortuneInfo.TempOutputStones = this.WorkableStonesReservers;
                 }
                 else
                 {

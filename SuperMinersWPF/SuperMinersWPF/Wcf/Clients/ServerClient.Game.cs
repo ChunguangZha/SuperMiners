@@ -28,5 +28,15 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GatherStones
+
+        public event EventHandler<WebInvokeEventArgs<float>> GatherStonesCompleted;
+        public void GatherStones()
+        {
+            this._invoker.Invoke<float>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName);
+        }
+
+        #endregion
+
     }
 }

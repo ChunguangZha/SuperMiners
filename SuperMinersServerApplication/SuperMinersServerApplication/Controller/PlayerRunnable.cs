@@ -21,7 +21,7 @@ namespace SuperMinersServerApplication.Controller
             BasePlayer = player;
         }
 
-        public float MaxTempOutput
+        public float MaxTempStonesOutput
         {
             get
             {
@@ -42,13 +42,26 @@ namespace SuperMinersServerApplication.Controller
 
         public void ComputePlayerOfflineStoneOutput()
         {
-            if (BasePlayer.SimpleInfo.LastLogOutTime == PlayerSimpleInfo.INVALIDDATETIME)
+            if (BasePlayer.SimpleInfo.LastLogOutTime.HasValue || 
+                BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
             {
                 //表示该玩家之前没有登录过
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
                 return;
             }
-            TimeSpan span = BasePlayer.SimpleInfo.LastLoginTime - BasePlayer.SimpleInfo.LastLogOutTime;
+
+            DateTime startTime;
+            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime.HasValue)
+            {
+                startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
+            }
+            else
+            {
+                startTime = BasePlayer.SimpleInfo.LastLoginTime.Value;
+            }
+
+            TimeSpan span = BasePlayer.SimpleInfo.LastLoginTime.Value - startTime;
             if (span.TotalHours < 0)
             {
                 return;
@@ -58,9 +71,9 @@ namespace SuperMinersServerApplication.Controller
             {
                 float tempOutput = (float)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
 
-                if (tempOutput > MaxTempOutput)
+                if (tempOutput > MaxTempStonesOutput)
                 {
-                    tempOutput = MaxTempOutput;
+                    tempOutput = MaxTempStonesOutput;
                 }
                 if (tempOutput > BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount)
                 {
@@ -76,43 +89,38 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="tempStoneOutput"></param>
         /// <returns></returns>
-        public float GatherStones(float tempStoneOutput)
+        public float GatherStones()
         {
-            TimeSpan span = DateTime.Now - BasePlayer.SimpleInfo.LastLoginTime;
+            DateTime stopTime = DateTime.Now;
+            if (!BasePlayer.FortuneInfo.TempOutputStonesStartTime.HasValue)
+            {
+                BasePlayer.FortuneInfo.TempOutputStones = 0;
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
+                return 0;
+            }
+
+            TimeSpan span = stopTime - BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
             if (span.TotalHours > 0)
             {
                 lock (this._lockFortuneAction)
                 {
-                    if (tempStoneOutput > MaxTempOutput)
-                    {
-                        tempStoneOutput = MaxTempOutput;
-                    }
+                    float tempOutput = (float)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
 
-                    //TimeSpan onlineTimeSpan = DateTime.Now - BasePlayer.SimpleInfo.LastLoginTime;
-                    //float tempStoneOutputFromServer = 
-                    //拿服务器计算出的产出值和客户端传入的产出值进行比较，如果误差在一个小时产量内，则以客户端值为准，否则以服务器端为准。
-                    if (Math.Abs(BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput - tempStoneOutput) < playerOutputPerHour)
+                    if (tempOutput > MaxTempStonesOutput)
                     {
-                        BasePlayer.FortuneInfo.TempOutputStones = tempStoneOutput;
+                        tempOutput = MaxTempStonesOutput;
                     }
-                    else
+                    if (tempOutput > BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount)
                     {
-                        BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.TempOutputStones + tempOnlineOutput;
+                        tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
-
-                    if (BasePlayer.FortuneInfo.TotalProducedStonesCount + BasePlayer.FortuneInfo.TempOutputStones > BasePlayer.FortuneInfo.StonesReserves)
-                    {
-                        //已经超出矿山储量
-                        BasePlayer.FortuneInfo.TempOutputStones = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
-                    }
-
-                    BasePlayer.FortuneInfo.StockOfStones += BasePlayer.FortuneInfo.TempOutputStones;
-                    BasePlayer.FortuneInfo.TotalProducedStonesCount += BasePlayer.FortuneInfo.TempOutputStones;
-
-                    float stones = BasePlayer.FortuneInfo.TempOutputStones;
                     BasePlayer.FortuneInfo.TempOutputStones = 0;
+                    //BasePlayer.PlayerTempOutputStoneInfo.EndTime = stopTime;
+                    BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
+                    BasePlayer.FortuneInfo.StockOfStones += tempOutput;
+                    BasePlayer.FortuneInfo.TotalProducedStonesCount += tempOutput;
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
-                    return stones;
+                    return tempOutput;
                 }
             }
 

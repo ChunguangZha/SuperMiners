@@ -29,10 +29,10 @@ namespace SuperMinersServerApplication.WebService.Services
             this._userStateCheck.Elapsed += new System.Timers.ElapsedEventHandler(_userStateCheck_Elapsed);
             this._userStateCheck.Start();
 
-            PlayerController.Instance.InvokeCallbackSetPlayerInfo += Instance_InvokeCallbackSetPlayerInfo;
+            PlayerController.Instance.PlayerInfoChanged += Instance_PlayerInfoChanged;
         }
 
-        void Instance_InvokeCallbackSetPlayerInfo(PlayerInfo player)
+        void Instance_PlayerInfoChanged(PlayerInfo player)
         {
             string token = ClientManager.GetToken(player.SimpleInfo.UserName);
             if (string.IsNullOrEmpty(token))

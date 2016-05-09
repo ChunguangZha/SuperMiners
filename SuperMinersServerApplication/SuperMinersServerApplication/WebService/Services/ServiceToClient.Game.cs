@@ -45,5 +45,22 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
+
+        public float GatherStones(string token, string userName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return -1;
+                }
+
+                return PlayerController.Instance.GatherStones(userName);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

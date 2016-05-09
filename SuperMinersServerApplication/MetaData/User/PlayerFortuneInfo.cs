@@ -69,17 +69,33 @@ namespace MetaData.User
         [DataMember]
         public float StockOfStones { get; set; }
 
-        /// <summary>
-        /// 临时生产矿石数，非数据库字段，记录在内存中，只有玩家点击收取，才会调用方法把产量值保存到数据库中。
-        /// </summary>
+        public DateTime? TempOutputStonesStartTime = null;
         [DataMember]
-        public float TempOutputStones { get; set; }
+        public string TempOutputStonesStartTimeString
+        {
+            get
+            {
+                if (this.TempOutputStonesStartTime == null)
+                {
+                    return "";
+                }
+                return this.TempOutputStonesStartTime.ToString();
+            }
+            set
+            {
+                try
+                {
+                    TempOutputStonesStartTime = DateTime.Parse(value);
+                }
+                catch (Exception)
+                {
+                    TempOutputStonesStartTime = null;
+                }
+            }
+        }
 
-        /// <summary>
-        /// 非数据库字段，为TempOutputStones的扩充体
-        /// </summary>
         [DataMember]
-        public PlayerTempOutputStoneInfo PlayerTempOutputStoneInfo { get; set; }
+        public float TempOutputStones;
 
         /// <summary>
         /// 冻结的矿石数

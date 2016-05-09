@@ -13,8 +13,6 @@ namespace MetaData.User
     [DataContract]
     public class PlayerSimpleInfo
     {
-        public static readonly DateTime INVALIDDATETIME = new DateTime(2015, 1, 1);
-
         [DataMember]
         public string UserName { get; set; }
 
@@ -50,12 +48,16 @@ namespace MetaData.User
         /// <summary>
         /// 用户注册时间
         /// </summary>
-        public DateTime RegisterTime { get; set; }
+        public DateTime? RegisterTime { get; set; }
         [DataMember]
         public string RegisterTimeString
         {
             get
             {
+                if (this.RegisterTime == null)
+                {
+                    return "";
+                }
                 return this.RegisterTime.ToString();
             }
             set
@@ -66,7 +68,7 @@ namespace MetaData.User
                 }
                 catch (Exception)
                 {
-                    RegisterTime = INVALIDDATETIME;
+                    RegisterTime = null;
                 }
             }
         }
@@ -76,12 +78,16 @@ namespace MetaData.User
         /// <summary>
         /// 上一次登录时间，用20150101表示无效日期
         /// </summary>
-        public DateTime LastLoginTime { get; set; }
+        public DateTime? LastLoginTime { get; set; }
         [DataMember]
         public string LastLoginTimeString
         {
             get
             {
+                if (this.LastLoginTime == null)
+                {
+                    return "";
+                }
                 return this.LastLoginTime.ToString();
             }
             set
@@ -92,7 +98,7 @@ namespace MetaData.User
                 }
                 catch (Exception)
                 {
-                    LastLoginTime = INVALIDDATETIME;
+                    LastLoginTime = null;
                 }
             }
         }
@@ -100,12 +106,16 @@ namespace MetaData.User
         /// <summary>
         /// 上一次登出时间，用20150101表示无效日期
         /// </summary>
-        public DateTime LastLogOutTime { get; set; }
+        public DateTime? LastLogOutTime { get; set; }
         [DataMember]
         public string LastLogOutTimeString
         {
             get
             {
+                if (LastLogOutTime == null)
+                {
+                    return "";
+                }
                 return this.LastLogOutTime.ToString();
             }
             set
@@ -116,7 +126,7 @@ namespace MetaData.User
                 }
                 catch (Exception)
                 {
-                    LastLogOutTime = INVALIDDATETIME;
+                    LastLogOutTime = null;
                 }
             }
         }

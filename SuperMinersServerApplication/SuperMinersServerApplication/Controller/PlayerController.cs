@@ -36,7 +36,7 @@ namespace SuperMinersServerApplication.Controller
 
         #region Fields
 
-        public event Action<PlayerInfo> InvokeCallbackSetPlayerInfo;
+        public event Action<PlayerInfo> PlayerInfoChanged;
 
         public int RegisteredPlayersCount { get; private set; }
         public float AllMiners { get; private set; }
@@ -165,9 +165,9 @@ namespace SuperMinersServerApplication.Controller
                 foreach (var playerrun in listPlayerRun)
                 {
                     playerrun.RefreshFortune();
-                    if (InvokeCallbackSetPlayerInfo != null)
+                    if (PlayerInfoChanged != null)
                     {
-                        InvokeCallbackSetPlayerInfo(playerrun.BasePlayer);
+                        PlayerInfoChanged(playerrun.BasePlayer);
                     }
                 }
 
@@ -249,7 +249,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stonesCount"></param>
         /// <returns></returns>
-        public float GatherStones(string userName, float stonesCount)
+        public float GatherStones(string userName)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -257,7 +257,7 @@ namespace SuperMinersServerApplication.Controller
                 return -1;
             }
 
-            return playerrun.GatherStones(stonesCount);
+            return playerrun.GatherStones();
         }
 
         public int BuyMiner(string userName, int minersCount)
