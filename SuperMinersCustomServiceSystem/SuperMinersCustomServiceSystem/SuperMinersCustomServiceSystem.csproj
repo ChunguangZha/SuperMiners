@@ -57,6 +57,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\AdminInfo.cs">
+      <Link>Wcf\Datas\AdminInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
+      <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerInfo.cs">
+      <Link>Wcf\Datas\PlayerInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerSimpleInfo.cs">
+      <Link>Wcf\Datas\PlayerSimpleInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\AESEncrypt.cs">
+      <Link>Wcf\Channel\AESEncrypt.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Contracts\IServiceToAdmin.cs">
+      <Link>Wcf\Contracts\IServiceToAdmin.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\BusyToken.cs">
+      <Link>Wcf\Channel\BusyToken.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs">
+      <Link>Wcf\Channel\CryptEncoder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\MyWebRequest.cs">
+      <Link>Wcf\Channel\MyWebRequest.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs">
+      <Link>Wcf\Channel\RestClient.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs">
+      <Link>Wcf\Channel\RestInvoker.cs</Link>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
