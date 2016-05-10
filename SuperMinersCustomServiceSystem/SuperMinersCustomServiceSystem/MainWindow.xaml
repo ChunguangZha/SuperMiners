@@ -1,8 +1,69 @@
 ﻿<Window x:Class="SuperMinersCustomServiceSystem.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="350" Width="525">
+        Title="矿工管理员系统" Height="600" Width="800">
     <Grid>
-        
+        <TabControl>
+            <TabItem Header="玩家管理">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="玩家列表">
+                        <DataGrid Name="datagridPlayerInfos" AutoGenerateColumns="False" FrozenColumnCount="2">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Binding="{x:Null}" CanUserSort="False" CanUserReorder="False" ClipboardContentBinding="{x:Null}"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="注册时间"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="注册IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="推荐人"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="上一级登录时间"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </GroupBox>
+
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="交易系统">
+                <Grid></Grid>
+            </TabItem>
+            <TabItem Header="客服系统">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="新闻公告">
+                <Grid>
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
+
     </Grid>
 </Window>

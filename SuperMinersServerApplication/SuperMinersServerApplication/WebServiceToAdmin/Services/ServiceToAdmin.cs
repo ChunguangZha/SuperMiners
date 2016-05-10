@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 {
-    public class ServiceToServer : IServiceToServer
+    public class ServiceToAdmin : IServiceToAdmin
     {
-        public void DeleteUsers(string token, string[] userIDs)
+        public void DeletePlayers(string token, string[] userIDs)
         {
             throw new NotImplementedException();
         }
 
-        public Model.LoggedInUser[] GetLoggedInUsers(string token)
+        public Model.UserInfo[] GetUsers(string token)
         {
             throw new NotImplementedException();
         }
 
-        public bool LogOutUsers(string token, Model.LoggedInUser[] users)
+        public bool LogOutUsers(string token, Model.UserInfo[] users)
         {
             throw new NotImplementedException();
         }

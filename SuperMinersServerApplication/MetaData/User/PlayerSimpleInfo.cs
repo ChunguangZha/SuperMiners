@@ -136,5 +136,34 @@ namespace MetaData.User
         /// </summary>
         [DataMember]
         public string ReferrerUserName { get; set; }
+
+        [DataMember]
+        public bool LockedLogin { get; set; }
+
+        public DateTime? LockedLoginTime { get; set; }
+
+        [DataMember]
+        public string LockedLoginTimeString
+        {
+            get
+            {
+                if (LockedLoginTime == null)
+                {
+                    return "";
+                }
+                return this.LockedLoginTime.ToString();
+            }
+            set
+            {
+                try
+                {
+                    LockedLoginTime = DateTime.Parse(value);
+                }
+                catch (Exception)
+                {
+                    LockedLoginTime = null;
+                }
+            }
+        }
     }
 }

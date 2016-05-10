@@ -1,16 +1,29 @@
-﻿using System;
+﻿using MetaData.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaData.User
+namespace SuperMinersServerApplication.Model
 {
     [DataContract]
-    public class PlayerInfo
+    public class UserInfo
     {
-        public static readonly DateTime INVALIDDATETIME = new DateTime(2015, 1, 1);
+        [DataMember]
+        public bool isOnline
+        {
+            get;
+            set;
+        }
+
+        [DataMember]
+        public string LoginIP
+        {
+            get;
+            set;
+        }
 
         [DataMember]
         public PlayerSimpleInfo SimpleInfo = new PlayerSimpleInfo();
@@ -19,4 +32,5 @@ namespace MetaData.User
         public PlayerFortuneInfo FortuneInfo = new PlayerFortuneInfo();
 
     }
+
 }

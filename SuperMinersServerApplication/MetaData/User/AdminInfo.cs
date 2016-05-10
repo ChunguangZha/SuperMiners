@@ -8,5 +8,10 @@ namespace MetaData.User
 {
     public class AdminInfo
     {
+        public string UserName;
+
+        public string LoginPassword;
+
+        public string ActionPassword;
     }
 }

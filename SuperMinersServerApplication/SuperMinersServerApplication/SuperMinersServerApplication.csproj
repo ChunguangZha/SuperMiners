@@ -73,7 +73,7 @@
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="GlobalData.cs" />
     <Compile Include="Model\CallbackInfo.cs" />
-    <Compile Include="Model\LoggedInUser.cs" />
+    <Compile Include="Model\UserInfo.cs" />
     <Compile Include="MyControl\NumericTextBox.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -102,8 +102,8 @@
     <Compile Include="Utility\WinInputPassword.xaml.cs">
       <DependentUpon>WinInputPassword.xaml</DependentUpon>
     </Compile>
-    <Compile Include="WebServiceToAdmin\Contracts\IServiceToServer.cs" />
-    <Compile Include="WebServiceToAdmin\Services\ServiceToServer.cs" />
+    <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
+    <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.cs" />
     <Compile Include="WebService\ClientManager.cs" />
