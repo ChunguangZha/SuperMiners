@@ -14,5 +14,7 @@ namespace SuperMinersServerApplication.Controller
         public static SystemDBProvider SystemDBProvider = new SystemDBProvider();
 
         public static RechargeDBProvider RechargeDBProvider = new RechargeDBProvider();
+
+        public static AdminDBProvider AdminDBProvider = new AdminDBProvider();
     }
 }

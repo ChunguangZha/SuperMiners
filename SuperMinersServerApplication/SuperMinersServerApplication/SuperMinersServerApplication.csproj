@@ -104,6 +104,7 @@
     </Compile>
     <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
+    <Compile Include="WebServiceToAdmin\AdminManager.cs" />
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.cs" />
     <Compile Include="WebService\ClientManager.cs" />

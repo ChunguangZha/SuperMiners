@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />
     <Compile Include="MetaDBAdapter.cs" />
     <Compile Include="MyDBHelper.cs" />

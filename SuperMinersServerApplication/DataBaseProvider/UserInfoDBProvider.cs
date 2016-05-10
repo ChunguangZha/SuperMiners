@@ -154,6 +154,36 @@ namespace DataBaseProvider
             return player.FortuneInfo;
         }
 
+        public PlayerInfo[] GetAllPlayers()
+        {
+            PlayerInfo[] players = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                players = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt);
+
+                mycmd.Dispose();
+
+                return players;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         public PlayerInfo GetPlayer(string userName)
         {
             PlayerInfo player = null;
@@ -169,8 +199,10 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
-                player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt);
-
+                if (dt.Rows.Count > 0)
+                {
+                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+                }
                 mycmd.Dispose();
 
                 return player;
@@ -200,7 +232,10 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@InvitationCode", DESEncrypt.EncryptDES(invitationCode));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
-                player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+                }
 
                 mycmd.Dispose();
 
@@ -370,7 +405,10 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
-                player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+                }
 
                 mycmd.Dispose();
 

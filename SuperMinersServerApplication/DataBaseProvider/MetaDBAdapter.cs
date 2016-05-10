@@ -53,72 +53,74 @@ namespace DataBaseProvider
             }
         }
 
-        internal static PlayerInfo GetPlayerInfoFromDataTable(DataTable dt)
+        internal static PlayerInfo[] GetPlayerInfoFromDataTable(DataTable dt)
         {
-            PlayerInfo player = null;
-            if (dt.Rows.Count != 0)
+            PlayerInfo[] players = new PlayerInfo[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
             {
-                player = new PlayerInfo();
-                string encryptedUserName = dt.Rows[0]["UserName"].ToString();
-                string encryptedUserPassword = dt.Rows[0]["Password"].ToString();
-                string encryptedAlipay = dt.Rows[0]["Alipay"] == DBNull.Value ? "" : dt.Rows[0]["Alipay"].ToString();
-                string encryptedAlipayRealName = dt.Rows[0]["AlipayRealName"] == DBNull.Value ? "" : dt.Rows[0]["AlipayRealName"].ToString();
-                string encryptedInvitationCode = dt.Rows[0]["InvitationCode"].ToString();
+                PlayerInfo player = new PlayerInfo();
+
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                string encryptedUserPassword = dt.Rows[i]["Password"].ToString();
+                string encryptedAlipay = dt.Rows[i]["Alipay"] == DBNull.Value ? "" : dt.Rows[i]["Alipay"].ToString();
+                string encryptedAlipayRealName = dt.Rows[i]["AlipayRealName"] == DBNull.Value ? "" : dt.Rows[i]["AlipayRealName"].ToString();
+                string encryptedInvitationCode = dt.Rows[i]["InvitationCode"].ToString();
 
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
                 player.SimpleInfo.Alipay = string.IsNullOrEmpty(encryptedAlipay) ? "" : DESEncrypt.DecryptDES(encryptedAlipay);
                 player.SimpleInfo.AlipayRealName = string.IsNullOrEmpty(encryptedAlipayRealName) ? "" : DESEncrypt.DecryptDES(encryptedAlipayRealName);
-                player.SimpleInfo.RegisterIP = dt.Rows[0]["RegisterIP"].ToString();
+                player.SimpleInfo.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
                 player.SimpleInfo.InvitationCode = DESEncrypt.DecryptDES(encryptedInvitationCode);
-                player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[0]["RegisterTime"]);
-                if (dt.Rows[0]["LastLoginTime"] == DBNull.Value)
+                player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
+                if (dt.Rows[i]["LastLoginTime"] == DBNull.Value)
                 {
                     player.SimpleInfo.LastLoginTime = null;
                 }
                 else
                 {
-                    player.SimpleInfo.LastLoginTime = Convert.ToDateTime(dt.Rows[0]["LastLoginTime"]);
+                    player.SimpleInfo.LastLoginTime = Convert.ToDateTime(dt.Rows[i]["LastLoginTime"]);
                 }
-                if (dt.Rows[0]["LastLogOutTime"] == DBNull.Value)
+                if (dt.Rows[i]["LastLogOutTime"] == DBNull.Value)
                 {
                     player.SimpleInfo.LastLogOutTime = null;
                 }
                 else
                 {
-                    player.SimpleInfo.LastLogOutTime = Convert.ToDateTime(dt.Rows[0]["LastLogOutTime"]);
+                    player.SimpleInfo.LastLogOutTime = Convert.ToDateTime(dt.Rows[i]["LastLogOutTime"]);
                 }
-                if (dt.Rows[0]["ReferrerUserName"] != DBNull.Value)
+                if (dt.Rows[i]["ReferrerUserName"] != DBNull.Value)
                 {
-                    player.SimpleInfo.ReferrerUserName = dt.Rows[0]["ReferrerUserName"].ToString();
+                    player.SimpleInfo.ReferrerUserName = dt.Rows[i]["ReferrerUserName"].ToString();
                 }
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
-                player.FortuneInfo.Exp = Convert.ToSingle(dt.Rows[0]["Exp"]);
-                player.FortuneInfo.RMB = Convert.ToSingle(dt.Rows[0]["RMB"]);
-                player.FortuneInfo.GoldCoin = Convert.ToSingle(dt.Rows[0]["GoldCoin"]);
-                player.FortuneInfo.MinesCount = Convert.ToSingle(dt.Rows[0]["MinesCount"]);
-                player.FortuneInfo.MinersCount = Convert.ToSingle(dt.Rows[0]["MinersCount"]);
-                player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[0]["StonesReserves"]);
-                player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[0]["TotalProducedStonesCount"]);
-                player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[0]["StockOfStones"]);
-                if (dt.Rows[0]["TempOutputStonesStartTime"] == DBNull.Value)
+                player.FortuneInfo.Exp = Convert.ToSingle(dt.Rows[i]["Exp"]);
+                player.FortuneInfo.RMB = Convert.ToSingle(dt.Rows[i]["RMB"]);
+                player.FortuneInfo.GoldCoin = Convert.ToSingle(dt.Rows[i]["GoldCoin"]);
+                player.FortuneInfo.MinesCount = Convert.ToSingle(dt.Rows[i]["MinesCount"]);
+                player.FortuneInfo.MinersCount = Convert.ToSingle(dt.Rows[i]["MinersCount"]);
+                player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[i]["StonesReserves"]);
+                player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[i]["TotalProducedStonesCount"]);
+                player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[i]["StockOfStones"]);
+                if (dt.Rows[i]["TempOutputStonesStartTime"] == DBNull.Value)
                 {
                     player.FortuneInfo.TempOutputStonesStartTime = null;
                 }
                 else
                 {
-                    player.FortuneInfo.TempOutputStonesStartTime = Convert.ToDateTime(dt.Rows[0]["TempOutputStonesStartTime"]);
+                    player.FortuneInfo.TempOutputStonesStartTime = Convert.ToDateTime(dt.Rows[i]["TempOutputStonesStartTime"]);
                 }
-                player.FortuneInfo.TempOutputStones = Convert.ToSingle(dt.Rows[0]["TempOutputStones"]);
-                player.FortuneInfo.FreezingStones = Convert.ToSingle(dt.Rows[0]["FreezingStones"]);
-                player.FortuneInfo.StockOfDiamonds = Convert.ToSingle(dt.Rows[0]["StockOfDiamonds"]);
-                player.FortuneInfo.FreezingDiamonds = Convert.ToSingle(dt.Rows[0]["FreezingDiamonds"]);
+                player.FortuneInfo.TempOutputStones = Convert.ToSingle(dt.Rows[i]["TempOutputStones"]);
+                player.FortuneInfo.FreezingStones = Convert.ToSingle(dt.Rows[i]["FreezingStones"]);
+                player.FortuneInfo.StockOfDiamonds = Convert.ToSingle(dt.Rows[i]["StockOfDiamonds"]);
+                player.FortuneInfo.FreezingDiamonds = Convert.ToSingle(dt.Rows[i]["FreezingDiamonds"]);
 
-                dt.Dispose();
+                players[i] = player;
             }
+            dt.Dispose();
 
-            return player;
+            return players;
         }
     }
 }

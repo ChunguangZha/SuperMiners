@@ -343,6 +343,11 @@
                                 </Grid>
                             </Grid>
                         </TabItem>
+                        <TabItem Name="tabitemAdmin" Header="管理员">
+                            <Grid>
+                                
+                            </Grid>
+                        </TabItem>
                     </TabControl>
                     <Button Grid.Row="1" Name="btnSaveConfig" Content="保  存" HorizontalAlignment="Right" Margin="20,10" Padding="30,5" Click="btnSaveConfig_Click"/>
                 </Grid>

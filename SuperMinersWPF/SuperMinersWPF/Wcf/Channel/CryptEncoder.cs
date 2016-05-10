@@ -178,6 +178,7 @@ namespace SuperMinersWPF.Wcf.Channel
 
 #else
             stream.Write(data, 0, data.Length);
+            return data.Length;
 #endif
         }
     }

@@ -46,3 +46,7 @@ Temporary Items
 *.exe
 *.lref
 *.exe
+*.suo
+SuperMinersWPF/SuperMinersWPF/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
+*.dll
+*.dll

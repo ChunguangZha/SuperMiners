@@ -18,7 +18,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool LoginAdmin(string adminName, string password, string key);
+        string LoginAdmin(string adminName, string password, string key);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/LogoutAdmin",
