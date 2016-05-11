@@ -176,7 +176,7 @@
                 </ProgressBar.Style>
             </ProgressBar>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Margin="10,0" VerticalAlignment="Center" Text="{Binding Source={StaticResource LocalizedStrings}, Path=Strings.PleaseWait, StringFormat=\{0\}...}" FontSize="36" FontWeight="Black"/>
+                <TextBlock Margin="10,0" VerticalAlignment="Center" Text="{Binding Source={StaticResource Language}, Path=Strings.PleaseWait, StringFormat=\{0\}...}" FontSize="36" FontWeight="Black"/>
                 <ProgressBar Name="prg" MinWidth="300" Margin="10" Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>

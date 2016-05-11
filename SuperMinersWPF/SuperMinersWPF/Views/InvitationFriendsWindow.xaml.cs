@@ -26,7 +26,17 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            this.txtInvitationCode.Text = GlobalData.CurrentUser.InvitationCode;
+            string baseuri = "";
+#if DEBUG
+            baseuri = "http://localhost:8509/";
+#else
+
+            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+#endif
+
+            string uri = baseuri + "Register.aspx?invitationcode=" + GlobalData.CurrentUser.InvitationCode;
+
+            this.txtInvitationCode.Text = uri;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

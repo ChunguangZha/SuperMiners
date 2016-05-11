@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,6 +31,7 @@ namespace SuperMinersServerApplication
         private int MAXLISTERRORLOGSCOUNT = 100;
         private object _lockListLogs = new object();
         ObservableCollection<string> ListErrorLogsOutput = new ObservableCollection<string>();
+        private System.Threading.SynchronizationContext _syn = SynchronizationContext.Current;
 
         public MainWindow()
         {
@@ -80,15 +82,18 @@ namespace SuperMinersServerApplication
             {
                 if (isError)
                 {
-                    if (ListErrorLogsOutput.Count >= MAXLISTERRORLOGSCOUNT)
+                    _syn.Post(o =>
                     {
-                        for (int i = 0; i < 10; i++)
+                        if (ListErrorLogsOutput.Count >= MAXLISTERRORLOGSCOUNT)
                         {
-                            ListErrorLogsOutput.RemoveAt(0);
+                            for (int i = 0; i < 10; i++)
+                            {
+                                ListErrorLogsOutput.RemoveAt(0);
+                            }
                         }
-                    }
 
-                    ListErrorLogsOutput.Add(log);
+                        ListErrorLogsOutput.Add(log);
+                    }, null);
                 }
             }
         }
