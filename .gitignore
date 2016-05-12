@@ -54,3 +54,8 @@ SuperMinersWPF/SuperMinersWPF/obj/Debug/TempPE/Properties.Resources.Designer.cs.
 SuperMinersCustomServiceSystem/SuperMinersCustomServiceSystem/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 *.cache
 *.cache
+*.suo
+SuperMinersWeb/SuperMinersWeb.v11.suo
+*.suo
+*.txt
+SuperMinersWPF/SuperMinersWPF/obj/Debug/SuperMinersWPF.exe

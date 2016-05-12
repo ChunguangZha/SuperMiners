@@ -141,6 +141,9 @@
       <DependentUpon>MarketWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MySubWindow.cs" />
+    <Compile Include="Views\SellStonesWindow.xaml.cs">
+      <DependentUpon>SellStonesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MarketWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SellStonesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
