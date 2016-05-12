@@ -50,3 +50,7 @@ Temporary Items
 SuperMinersWPF/SuperMinersWPF/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
 *.dll
 *.dll
+*.cache
+SuperMinersCustomServiceSystem/SuperMinersCustomServiceSystem/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+*.cache
+*.cache
