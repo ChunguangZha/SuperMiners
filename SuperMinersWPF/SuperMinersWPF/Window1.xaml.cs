@@ -36,6 +36,7 @@ namespace SuperMinersWPF
             GlobalData.Client.OnKickout += new Action(Client_OnKickout);
             App.UserVMObject.StartListen();
             this.DataContext = GlobalData.CurrentUser;
+            this.gridActionMessage.DataContext = App.MessageVMObject;
 
             _timerGetMessage.Elapsed += TimerGetMessage_Elapsed;
             this._timerGetMessage.Start();
