@@ -7,3 +7,8 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaDat
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaData.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaData.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb

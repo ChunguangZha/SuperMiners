@@ -38,22 +38,22 @@ namespace SuperMinersWPF.Views
         private void numSellStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             float allrmb = GetAllRMB();
-            int expense = GetExpense(allrmb);
+            float expense = GetExpense(allrmb);
             this.txtExpense.Text = expense.ToString();
-            this.txtGetRMB.Text = (allrmb - expense).ToString();
+            this.txtGetRMB.Text = (allrmb - expense).ToString("0.00");
         }
 
         private float GetAllRMB()
         {
-            return (int)this.numSellStones.Value * GlobalData.GameConfig.Stones_RMB; ;
+            return (int)this.numSellStones.Value / GlobalData.GameConfig.Stones_RMB; ;
         }
 
-        private int GetExpense(float allRMB)
+        private float GetExpense(float allRMB)
         {
-            int expense = (int)Math.Ceiling(allRMB * GlobalData.GameConfig.ExchangeExpensePercent);
+            float expense = allRMB * GlobalData.GameConfig.ExchangeExpensePercent;
             if (expense < GlobalData.GameConfig.ExchangeExpenseMinNumber)
             {
-                expense = (int)GlobalData.GameConfig.ExchangeExpenseMinNumber;
+                expense = GlobalData.GameConfig.ExchangeExpenseMinNumber;
             }
             return expense;
         }
@@ -61,7 +61,7 @@ namespace SuperMinersWPF.Views
         private void btnSell_Click(object sender, RoutedEventArgs e)
         {
             float rmb = GetAllRMB();
-            int expense = GetExpense(rmb);
+            float expense = GetExpense(rmb);
             float getRMB = rmb - expense;
             if (getRMB <= 0)
             {

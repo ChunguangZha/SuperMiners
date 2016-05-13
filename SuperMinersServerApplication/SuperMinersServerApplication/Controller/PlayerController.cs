@@ -282,6 +282,22 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMine(minesCount);
         }
 
+        /// <summary>
+        /// 0表示成功；-2表示该用户不在线；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// </summary>
+        /// <param name="SellStonesCount"></param>
+        /// <returns></returns>
+        public int SellStones(string userName, int SellStonesCount)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return -2;
+            }
+
+            return playerrun.SellStones(SellStonesCount);
+        }
+
         public bool RechargeRMB(string alipay, string alipayRealName, float yuan)
         {
             try

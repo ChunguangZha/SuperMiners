@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
 SuperMinersWPF
 none
 false
 TRACE;DEBUG;Encrypt
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-10-908479588
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
+11-1902304286
 
-57-1138295244
+58-1429372465
 16-40985637
-Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SettingWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
-False
+True
 

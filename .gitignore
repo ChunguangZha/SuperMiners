@@ -59,3 +59,8 @@ SuperMinersWeb/SuperMinersWeb.v11.suo
 *.suo
 *.txt
 SuperMinersWPF/SuperMinersWPF/obj/Debug/SuperMinersWPF.exe
+*.dll
+SuperMinersServerApplication/DataBaseProvider/bin/Release/DataBaseProvider.pdb
+*.dll
+SuperMinersServerApplication/DataBaseProvider/bin/Release/MetaData.pdb
+*.dll

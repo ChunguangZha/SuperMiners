@@ -82,5 +82,8 @@ namespace MetaData.SystemConfig
         [DataMember]
         public float ExchangeExpenseMinNumber;
 
+        [DataMember]
+        public int BuyOrderLockTimeMinutes = 30;
+
     }
 }

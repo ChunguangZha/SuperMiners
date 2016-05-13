@@ -2,6 +2,7 @@
 using MetaData;
 using MetaData.SystemConfig;
 using MetaData.User;
+using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -191,6 +192,75 @@ namespace SuperMinersServerApplication.Controller
 
                 return minesCount;
             }
+        }
+
+        /// <summary>
+        /// 0表示成功；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// </summary>
+        /// <param name="SellStonesCount"></param>
+        /// <returns></returns>
+        public int SellStones(int SellStonesCount)
+        {
+            lock (_lockFortuneAction)
+            {
+                float sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
+                if (SellStonesCount > sellableStones)
+                {
+                    return 1;
+                }
+
+                float allRMB = SellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
+                float expense = allRMB * GlobalConfig.GameConfig.ExchangeExpensePercent;
+                if (expense < GlobalConfig.GameConfig.ExchangeExpenseMinNumber)
+                {
+                    expense = GlobalConfig.GameConfig.ExchangeExpenseMinNumber;
+                }
+                float gainRMB = allRMB - expense;
+                if (gainRMB <= 0)
+                {
+                    return 2;
+                }
+
+                DateTime time = DateTime.Now;
+
+                SellStonesOrder sellOrder = new SellStonesOrder()
+                {
+                    OrderNumber = CreateOrderNumber(time, BasePlayer.SimpleInfo.UserName),
+                    SellerUserName = BasePlayer.SimpleInfo.UserName,
+                    SellStonesCount = SellStonesCount,
+                    Expense = expense,
+                    GainRMB = gainRMB,
+                    SellTime = time
+                };
+                BasePlayer.FortuneInfo.FreezingStones += SellStonesCount;
+
+                var trans = MyDBHelper.Instance.CreateTrans();
+
+                try
+                {
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+                    DBProvider.OrderDBProvider.AddSellOrder(sellOrder, trans);
+                    trans.Commit();
+
+                    return 0;
+                }
+                catch (Exception exc)
+                {
+                    trans.Rollback();
+                    LogHelper.Instance.AddErrorLog("玩家 " + BasePlayer.SimpleInfo.UserName + " 出售 " + SellStonesCount + " 矿石时，异常", exc);
+                    return -3;
+                }
+                finally
+                {
+                    trans.Dispose();
+                }
+            }
+        }
+
+        private string CreateOrderNumber(DateTime time, string userName)
+        {
+            Random r = new Random();
+            return time.ToLongDateString() + time.ToLongTimeString() + BasePlayer.SimpleInfo.UserName.GetHashCode().ToString() + r.Next(1000, 9999).ToString();
         }
 
         #region 取消充值功能

@@ -33,5 +33,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         float GatherStones(string token, string userName);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/SellStones",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int SellStones(string token, string userName, int sellStonesCount);
     }
 }

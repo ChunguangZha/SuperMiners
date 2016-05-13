@@ -14,3 +14,11 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release
 F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\DataBaseProvider.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\DataBaseProvider.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MetaData.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MySql.Data.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\bin\Release\MetaData.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\obj\Release\DataBaseProvider.pdb

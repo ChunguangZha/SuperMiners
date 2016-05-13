@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionLog\PlayerActionLog.cs" />
+    <Compile Include="BuyStonesOrder.cs" />
     <Compile Include="DatabaseFieldAttribute.cs" />
     <Compile Include="GoldCoinRechargeRecord.cs" />
     <Compile Include="SystemConfig\AwardReferrerConfig.cs" />
