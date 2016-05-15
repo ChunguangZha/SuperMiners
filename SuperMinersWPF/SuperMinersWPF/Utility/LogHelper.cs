@@ -37,7 +37,7 @@ namespace SuperMinersWPF.Utility
         string LogErrorFilePath = "";
         bool InitSuceed = false;
 
-        Timer _timer = new Timer(1000000);
+        //Timer _timer = new Timer(1000000);
 
         public void Init()
         {
@@ -54,9 +54,8 @@ namespace SuperMinersWPF.Utility
                 }
 
                 InitSuceed = true;
-                _timer.Elapsed += Timer_Elapsed;
-                InitSuceed = true;
-                _timer.Start();
+                //_timer.Elapsed += Timer_Elapsed;
+                //_timer.Start();
             }
             catch (Exception exc)
             {
@@ -70,56 +69,56 @@ namespace SuperMinersWPF.Utility
 
         public void Stop()
         {
-            _timer.Stop();
-            SaveLogToDisk();
+            //_timer.Stop();
+            //SaveLogToDisk();
             InitSuceed = false;
         }
 
-        void Timer_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            if (!InitSuceed)
-            {
-                return;
-            }
-            SaveLogToDisk();
-        }
+        //void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        //{
+        //    if (!InitSuceed)
+        //    {
+        //        return;
+        //    }
+        //    SaveLogToDisk();
+        //}
 
-        private void SaveLogToDisk()
-        {
-            lock (_lockError)
-            {
-                FileStream stream = null;
-                try
-                {
-                    stream = File.OpenWrite(this.LogErrorFilePath);
-                    if (stream != null)
-                    {
-                        foreach (var log in this.ListErrorLogs)
-                        {
-                            StreamWriter writer = new StreamWriter(stream);
-                            writer.WriteLine(log);
-                        }
+        //private void SaveLogToDisk()
+        //{
+        //    lock (_lockError)
+        //    {
+        //        FileStream stream = null;
+        //        try
+        //        {
+        //            stream = File.OpenWrite(this.LogErrorFilePath);
+        //            if (stream != null)
+        //            {
+        //                foreach (var log in this.ListErrorLogs)
+        //                {
+        //                    StreamWriter writer = new StreamWriter(stream);
+        //                    writer.WriteLine(log);
+        //                }
 
-                        this.ListErrorLogs.Clear();
-                    }
-                }
-                catch (Exception exc)
-                {
-                    if (LogAdded != null)
-                    {
-                        LogAdded(true, BuildErrorLog("Error Log Write to Disk failed.", exc));
-                    }
-                }
-                finally
-                {
-                    if (stream != null)
-                    {
-                        stream.Close();
-                        stream.Dispose();
-                    }
-                }
-            }
-        }
+        //                this.ListErrorLogs.Clear();
+        //            }
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            if (LogAdded != null)
+        //            {
+        //                LogAdded(true, BuildErrorLog("Error Log Write to Disk failed.", exc));
+        //            }
+        //        }
+        //        finally
+        //        {
+        //            if (stream != null)
+        //            {
+        //                stream.Close();
+        //                stream.Dispose();
+        //            }
+        //        }
+        //    }
+        //}
 
         public void AddErrorLog(string log, Exception exception)
         {
@@ -132,10 +131,16 @@ namespace SuperMinersWPF.Utility
                     lock (_lockError)
                     {
                         this.ListErrorLogs.Add(logFinished);
-                    }
-                    if (LogAdded != null)
-                    {
-                        LogAdded(true, logFinished);
+
+                        using (StreamWriter writer = new StreamWriter(LogErrorFilePath,true))
+                        {
+                            writer.WriteLine(logFinished);
+                        }
+
+                        if (LogAdded != null)
+                        {
+                            LogAdded(true, logFinished);
+                        }
                     }
                 }
                 catch (Exception exc)

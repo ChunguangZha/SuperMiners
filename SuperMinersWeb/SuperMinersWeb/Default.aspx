@@ -7,7 +7,7 @@
                 <h1>一个可以赚钱的游戏.</h1>
             </hgroup>
             <div id="softwareDownload">
-                <a href="Software/Client.rar">超级矿工客户端下载</a>
+                <a href="Software/Client.rar">迅灵矿场客户端下载</a>
             </div>
         </div>
     </section>

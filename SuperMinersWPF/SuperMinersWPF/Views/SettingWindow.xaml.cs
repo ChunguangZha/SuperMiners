@@ -23,5 +23,55 @@ namespace SuperMinersWPF.Views
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.txtUserName.Text = GlobalData.CurrentUser.UserName;
+            this.txtAlipayAccount.Text = GlobalData.CurrentUser.Alipay;
+            this.txtAlipayRealName.Text = GlobalData.CurrentUser.AlipayRealName;
+            
+            if (string.IsNullOrEmpty(GlobalData.CurrentUser.Alipay))
+            {
+                this.txtAlipayAccount.IsReadOnly = false;
+            }
+            else
+            {
+                this.txtAlipayAccount.IsReadOnly = true;
+            }
+
+            if (string.IsNullOrEmpty(GlobalData.CurrentUser.AlipayRealName))
+            {
+                this.txtAlipayRealName.IsReadOnly = false;
+            }
+            else
+            {
+                this.txtAlipayRealName.IsReadOnly = true;
+            }
+        }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePasswordWindow win = new ChangePasswordWindow();
+            win.ShowDialog();
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            string newAA = this.txtAlipayAccount.Text;
+            string newAR = this.txtAlipayRealName.Text;
+            if (newAA != "" && newAR != "")
+            {
+                if (newAA != GlobalData.CurrentUser.Alipay || newAR != GlobalData.CurrentUser.AlipayRealName)
+                {
+
+                }
+            }
+            this.DialogResult = true;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
     }
 }

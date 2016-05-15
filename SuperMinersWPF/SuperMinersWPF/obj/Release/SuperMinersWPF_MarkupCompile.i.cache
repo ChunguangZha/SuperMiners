@@ -8,13 +8,13 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\
 SuperMinersWPF
 none
 false
-TRACE;DEBUG;Encrypt
+TRACE;Encrypt
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-10-908479588
+12-538232362
 
-57-247812729
-16-40985637
-Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SettingWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+59-1144272976
+201805710553
+Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
 False
 

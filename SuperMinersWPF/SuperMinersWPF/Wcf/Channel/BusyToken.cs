@@ -39,50 +39,50 @@ namespace SuperMinersWPF.Wcf.Channel
 
         public static void Show()
         {
-            lock (_locker)
-            {
-                if (null == _busy)
-                {
-                    if (SynchronizationContext.Current == _context)
-                    {
-                        _busy = new BusyWindow();
-                        _busy.Canceled += new EventHandler(_busy_Canceled);
-                        _busy.Show();
-                    }
-                    else
-                    {
-                        _context.Send(_ =>
-                        {
-                            _busy = new BusyWindow();
-                            _busy.Canceled += new EventHandler(_busy_Canceled);
-                            _busy.Show();
-                        }, null);
-                    }
-                }
-            }
+            //lock (_locker)
+            //{
+            //    if (null == _busy)
+            //    {
+            //        if (SynchronizationContext.Current == _context)
+            //        {
+            //            _busy = new BusyWindow();
+            //            _busy.Canceled += new EventHandler(_busy_Canceled);
+            //            _busy.Show();
+            //        }
+            //        else
+            //        {
+            //            _context.Post(_ =>
+            //            {
+            //                _busy = new BusyWindow();
+            //                _busy.Canceled += new EventHandler(_busy_Canceled);
+            //                _busy.Show();
+            //            }, null);
+            //        }
+            //    }
+            //}
         }
 
         public static void Hide()
         {
-            lock (_locker)
-            {
-                if (null != _busy)
-                {
-                    if (SynchronizationContext.Current == _context)
-                    {
-                        _busy.Close();
-                        _busy = null;
-                    }
-                    else
-                    {
-                        _context.Send(_ =>
-                        {
-                            _busy.Close();
-                            _busy = null;
-                        }, null);
-                    }
-                }
-            }
+            //lock (_locker)
+            //{
+            //    if (null != _busy)
+            //    {
+            //        if (SynchronizationContext.Current == _context)
+            //        {
+            //            _busy.Close();
+            //            _busy = null;
+            //        }
+            //        else
+            //        {
+            //            _context.Post(_ =>
+            //            {
+            //                _busy.Close();
+            //                _busy = null;
+            //            }, null);
+            //        }
+            //    }
+            //}
         }
 
         /// <summary>

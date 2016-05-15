@@ -1,0 +1,175 @@
+﻿Error:  [2016/5/15 21:44:14] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 21:44:29] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 21:46:28] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 21:56:39] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 21:59:23] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:07:42] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:10:14] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:14:16] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:15:20] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:15:53] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:26:25] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:30:09] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:30:30] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:31:45] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:31:59] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:32:10] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:32:20] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:33:54] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:45:47] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:47:27] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:49:53] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:50:08] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:50:25] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:50:34] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:50:40] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:52:56] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:54:09] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:54:21] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 22:59:45] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:00:02] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:02:18] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:02:31] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:07:33] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:08:52] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:09:07] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:09:18] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:09:52] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:10:13] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:10:23] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:10:39] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:10:53] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:12:16] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:19:17] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:19:36] ---- Log: 客户端b已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:19:56] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:20:09] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:20:27] ---- Log: 客户端a_001已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:20:48] ---- Log: 客户端a_001已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/15 23:25:18] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+

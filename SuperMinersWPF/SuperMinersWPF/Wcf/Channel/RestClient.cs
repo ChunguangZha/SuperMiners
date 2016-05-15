@@ -157,9 +157,9 @@ namespace SuperMinersWPF.Wcf.Channel
                         {
                             context.Post(_ =>
                             {
+                                BusyToken.Hide();
                                 if (null != resultHandler)
                                 {
-                                    BusyToken.Hide();
                                     resultHandler(ex, null, req.IsCancel, userState);
                                 }
                             }, null);
@@ -174,12 +174,10 @@ namespace SuperMinersWPF.Wcf.Channel
                 {
                     context.Post(_ =>
                     {
+                        BusyToken.Hide();
                         if (null != resultHandler)
                         {
-                            if (!resultHandler(ex, null, req.IsCancel, userState))
-                            {
-                                BusyToken.Hide();
-                            }
+                            resultHandler(ex, null, req.IsCancel, userState);
                         }
                     }, null);
                 }
@@ -199,16 +197,14 @@ namespace SuperMinersWPF.Wcf.Channel
                     }
                     catch (Exception ex)
                     {
-                        context.Post(_ =>
+                        BusyToken.Hide();
+                        if (null != resultHandler)
                         {
-                            if (null != resultHandler)
+                            context.Post(_ =>
                             {
-                                if (!resultHandler(ex, null, req.IsCancel, userState))
-                                {
-                                    BusyToken.Hide();
-                                }
-                            }
-                        }, null);
+                                resultHandler(ex, null, req.IsCancel, userState);
+                            }, null);
+                        }
                         return;
                     }
 
@@ -219,43 +215,37 @@ namespace SuperMinersWPF.Wcf.Channel
                     }
                     catch (Exception ex)
                     {
-                        context.Post(_ =>
+                        BusyToken.Hide();
+                        if (null != resultHandler)
                         {
-                            if (null != resultHandler)
+                            context.Post(_ =>
                             {
-                                if (!resultHandler(ex, null, req.IsCancel, userState))
-                                {
-                                    BusyToken.Hide();
-                                }
-                            }
-                        }, null);
+                                resultHandler(ex, null, req.IsCancel, userState);
+                            }, null);
+                        }
                         return;
                     }
 
-                    context.Post(_ =>
+                    BusyToken.Hide();
+                    if (null != resultHandler)
                     {
-                        if (null != resultHandler)
+                        context.Post(_ =>
                         {
-                            if (!resultHandler(null, resultData, req.IsCancel, userState))
-                            {
-                                BusyToken.Hide();
-                            }
-                        }
-                    }, null);
+                            resultHandler(null, resultData, req.IsCancel, userState);
+                        }, null);
+                    }
                 }), null);
             }
             catch (Exception ex)
             {
-                context.Post(_ =>
+                BusyToken.Hide();
+                if (null != resultHandler)
                 {
-                    if (null != resultHandler)
+                    context.Post(_ =>
                     {
-                        if (!resultHandler(ex, null, req.IsCancel, userState))
-                        {
-                            BusyToken.Hide();
-                        }
-                    }
-                }, null);
+                        resultHandler(ex, null, req.IsCancel, userState);
+                    }, null);
+                }
             }
         }
 

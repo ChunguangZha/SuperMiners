@@ -21,10 +21,6 @@
             <legend>玩家信息</legend>
             <ol>
                 <li>
-                    <label for="txtUserName" class="label">邀请码： </label>
-                    <asp:TextBox ID="txtInvitationCode" runat="server" MaxLength="45" />
-                </li>
-                <li>
                     <label for="txtUserName" class="label">用户名： </label>
                     <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtUserName"

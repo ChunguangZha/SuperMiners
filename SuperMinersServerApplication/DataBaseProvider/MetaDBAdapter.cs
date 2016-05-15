@@ -35,7 +35,7 @@ namespace DataBaseProvider
 
                             object value = field.GetValue(obj);
                             strbuilderParams.Append("@" + field.Name + ",");
-                            mycmd.Parameters.Add("@" + field.Name, value);
+                            mycmd.Parameters.AddWithValue("@" + field.Name, value);
                         }
                     }
 
@@ -91,7 +91,8 @@ namespace DataBaseProvider
                 }
                 if (dt.Rows[i]["ReferrerUserName"] != DBNull.Value)
                 {
-                    player.SimpleInfo.ReferrerUserName = dt.Rows[i]["ReferrerUserName"].ToString();
+                    string encryptedReferrerUserName = dt.Rows[i]["ReferrerUserName"].ToString();
+                    player.SimpleInfo.ReferrerUserName = DESEncrypt.DecryptDES(encryptedReferrerUserName);
                 }
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
@@ -122,5 +123,40 @@ namespace DataBaseProvider
 
             return players;
         }
+
+        internal static SellStonesOrder[] GetSellStonesOrderFromDataTable(DataTable dt)
+        {
+            SellStonesOrder[] orders = new SellStonesOrder[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                SellStonesOrder order = new SellStonesOrder();
+                order.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
+                string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
+                order.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
+                order.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
+                order.Expense = Convert.ToSingle(dt.Rows[i]["Expense"]);
+                order.GainRMB = Convert.ToSingle(dt.Rows[i]["GainRMB"]);
+                order.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
+                order.OrderState = (SellOrderState)Convert.ToInt32(dt.Rows[i]["OrderState"]);
+
+                if (order.OrderState != SellOrderState.Wait)
+                {
+                    if (dt.Rows[i]["BuyerUserName"] != DBNull.Value)
+                    {
+                        string encryptedBuyerUserName = dt.Rows[i]["BuyerUserName"].ToString();
+                        order.LockedByUserName = DESEncrypt.DecryptDES(encryptedBuyerUserName);
+                    }
+                    if (dt.Rows[i]["LockedTime"] != DBNull.Value)
+                    {
+                        order.LockedTime = Convert.ToDateTime(dt.Rows[i]["LockedTime"]);
+                    }
+                }
+
+                orders[i] = order;
+            }
+
+            return orders;
+        }
+
     }
 }

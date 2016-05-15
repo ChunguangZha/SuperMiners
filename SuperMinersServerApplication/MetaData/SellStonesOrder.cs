@@ -63,5 +63,43 @@ namespace MetaData
             }
         }
 
+        [DataMember]
+        public SellOrderState OrderState = SellOrderState.Wait;
+
+        [DataMember]
+        public string LockedByUserName = null;
+
+        public DateTime? LockedTime = null;
+        [DataMember]
+        public string LockedTimeString
+        {
+            get
+            {
+                if (this.LockedTime == null)
+                {
+                    return "";
+                }
+                return this.LockedTime.ToString();
+            }
+            set
+            {
+                try
+                {
+                    LockedTime = DateTime.Parse(value);
+                }
+                catch (Exception)
+                {
+                    LockedTime = null;
+                }
+            }
+        }
+
+    }
+
+    public enum SellOrderState
+    {
+        Wait,
+        Lock,
+        Finish
     }
 }

@@ -58,11 +58,14 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 return String.Empty;
             }
+
+            string token = String.Empty;
             if (ClientManager.IsExistUserName(userName))
             {
+                token = ClientManager.GetToken(userName);
+                Logout(token);
                 return "ISLOGGED";
             }
-            string token = String.Empty;
             try
             {
                 PlayerInfo player = PlayerController.Instance.LoginPlayer(userName, password);
@@ -91,6 +94,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
             if (!string.IsNullOrEmpty(token))
             {
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Login, 1);
                 new Thread(new ParameterizedThreadStart(o =>
                 {
                     this.LogedIn(o.ToString());
@@ -140,6 +144,48 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     LogHelper.Instance.AddErrorLog("GetPlayerInfo", exc);
                     return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool ChangePassword(string token, string oldPassword, string newPassword)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    string userName = ClientManager.GetClientUserName(token);
+                    return PlayerController.Instance.ChangePassword(userName, oldPassword, newPassword);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ChangePassword", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool ChangeAlipay(string token, string alipayAccount, string alipayRealName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    string userName = ClientManager.GetClientUserName(token);
+                    return PlayerController.Instance.ChangeAlipay(userName, alipayAccount, alipayRealName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ChangePassword", exc);
+                    return false;
                 }
             }
             else

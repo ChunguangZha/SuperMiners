@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Utility;
+﻿using SuperMinersWPF.StringResources;
+using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,14 @@ namespace SuperMinersWPF
     public partial class Window1 : Window
     {
         private System.Threading.SynchronizationContext _syn;
-        private System.Timers.Timer _timerGetMessage = new System.Timers.Timer(1000);
 
         public Window1()
         {
             InitializeComponent();
 
             this.Closing += Window1_Closing;
+
+            this.Title = Strings.Title + " 内测 0.03 版";
 
             this._syn = System.Threading.SynchronizationContext.Current;
             GlobalData.Client.SetContext(this._syn);
@@ -38,52 +40,26 @@ namespace SuperMinersWPF
             this.DataContext = GlobalData.CurrentUser;
             this.gridActionMessage.DataContext = App.MessageVMObject;
 
-            _timerGetMessage.Elapsed += TimerGetMessage_Elapsed;
-            this._timerGetMessage.Start();
+            //App.MessageVMObject.StartListen();
+
+            imgDigStones.Image = System.Drawing.Image.FromFile(System.Windows.Forms.Application.StartupPath + "\\Images\\DigStones.gif");
+            imgDigStones.Size = new System.Drawing.Size(200, 200);
         }
-
-        void TimerGetMessage_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            try
-            {
-                if (GlobalData.IsLogined)
-                {
-                    App.MessageVMObject.AsyncGetPlayerAction();
-                }
-                else
-                {
-                    this._timerGetMessage.Stop();
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        //void Client_OnSetPlayerInfo()
-        //{
-        //    try
-        //    {
-        //        if (obj == null)
-        //        {
-        //            return;
-        //        }
-        //        if (obj.SimpleInfo.UserName == GlobalData.CurrentUser.UserName)
-        //        {
-        //            //TODO: 此时应该玩家所有正在进行的跟财富有关的操作。
-        //            GlobalData.CurrentUser.ParentObject = obj;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-
-        //    }
-        //}
 
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            App.UserVMObject.StopListen();
-            GlobalData.Client.Logout();
+            try
+            {
+                //App.MessageVMObject.StopListen();
+                App.UserVMObject.StopListen();
+                GlobalData.Client.Logout();
+
+                LogHelper.Instance.AddErrorLog("客户端" + GlobalData.CurrentUser.UserName + "已退出.", null);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("退出异常.", exc);
+            }
         }
 
         void Client_OnKickout()
@@ -104,8 +80,11 @@ namespace SuperMinersWPF
         {
             this._syn.Post(s =>
             {
-                GlobalData.InitToken(null);
-                MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
+                if (GlobalData.IsLogined)
+                {
+                    GlobalData.InitToken(null);
+                    MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
+                }
                 this.Close();
             }, null);
         }
@@ -145,7 +124,13 @@ namespace SuperMinersWPF
 
         private void btnStonesSell_Click(object sender, RoutedEventArgs e)
         {
-
+            if (GlobalData.CurrentUser.SellableStones < 1)
+            {
+                MyMessageBox.ShowInfo("没有可出售的" + Strings.Stone);
+                return;
+            }
+            SellStonesWindow win = new SellStonesWindow();
+            win.ShowDialog();
         }
 
         private void btnGetMoney_Click(object sender, RoutedEventArgs e)
@@ -155,12 +140,16 @@ namespace SuperMinersWPF
 
         private void btnSetting_Click(object sender, RoutedEventArgs e)
         {
-
+            SettingWindow win = new SettingWindow();
+            win.ShowDialog();
         }
 
         private void btnGatherStones_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((int)GlobalData.CurrentUser.TempOutputStones > 0)
+            {
+                App.UserVMObject.AsyncGatherStones((int)GlobalData.CurrentUser.TempOutputStones);
+            }
         }
 
     }

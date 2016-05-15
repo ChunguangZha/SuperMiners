@@ -13,14 +13,7 @@ namespace SuperMinersWeb
         string invitationCode = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                invitationCode = Request["invitationcode"];
-                if (!string.IsNullOrEmpty(invitationCode))
-                {
-                    this.txtInvitationCode.Visible = false;
-                }
-            }
+            invitationCode = Request["invitationcode"];
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
@@ -107,7 +100,7 @@ namespace SuperMinersWeb
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            result = WcfClient.Instance.RegisterUser(ip, userName, this.txtPassword.Text, alipay, alipayRealName, this.txtInvitationCode.Text);
+            result = WcfClient.Instance.RegisterUser(ip, userName, this.txtPassword.Text, alipay, alipayRealName, invitationCode);
             if (result == 0)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");

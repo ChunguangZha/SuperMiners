@@ -71,6 +71,7 @@ namespace SuperMinersServerApplication
                     return false;
                 }
                 LogHelper.Instance.Init();
+                OrderController.Instance.Init();
 
                 if (!GetSystemConfig())
                 {
@@ -93,6 +94,7 @@ namespace SuperMinersServerApplication
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("启动服务失败。", exc);
+                IsStarted = false;
                 return false;
             }
         }
@@ -247,7 +249,10 @@ namespace SuperMinersServerApplication
         {
             try
             {
-                _serviceToClientHost.Close();
+                if (_serviceToClientHost != null)
+                {
+                    _serviceToClientHost.Close();
+                }
                 IsStarted = false;
                 LogHelper.Instance.Stop();
 

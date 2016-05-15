@@ -17,9 +17,12 @@ F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.g.reso
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.Properties.Resources.resources
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.StringResources.Strings.resources
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csproj.GenerateResource.Cache
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.config
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.config
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Assets\Style.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Login.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BusyWindow.baml
@@ -33,6 +36,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BuyMinerWin
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BuyMineWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\InvitationFriendsWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MarketWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SellStonesWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SettingWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\WinRechargeRMB.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Window1.g.cs
@@ -40,17 +44,15 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\App.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\GeneratedInternalTypeHelper.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF_MarkupCompile.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF_MarkupCompile.lref
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\App.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BuyMinerWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BuyMineWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SellStonesWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\WinRechargeRMB.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.g.resources
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.Properties.Resources.resources
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.StringResources.Strings.resources
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csproj.GenerateResource.Cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.config
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb

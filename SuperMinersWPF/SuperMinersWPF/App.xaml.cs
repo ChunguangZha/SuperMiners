@@ -22,6 +22,7 @@ namespace SuperMinersWPF
             base.OnStartup(e);
 
             UserVMObject.RegisterEvent();
+            MessageVMObject.RegisterEvent();
         }
     }
 }

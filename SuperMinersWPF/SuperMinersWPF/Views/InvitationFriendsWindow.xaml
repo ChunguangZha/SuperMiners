@@ -10,8 +10,8 @@
             <RowDefinition Height="63*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="请将邀请码复制给好友" Margin="5"/>
-        <TextBox Grid.Row="1" Name="txtInvitationCode" IsReadOnly="True" Margin="5"/>
-        <Button Grid.Row="2" Name="btnOK" Content="确定" Padding="20,5" Margin="10,10,100,10" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>
+        <TextBox Grid.Row="1" Name="txtInvitationCode" IsReadOnly="True" Margin="5" TextWrapping="Wrap"/>
+        <Button Grid.Row="2" Name="btnOK" Content="复制" Padding="20,5" Margin="10,10,100,10" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>
         <Button Grid.Row="2" Name="btnCancel" Content="取消" Padding="20,5" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnCancel_Click"/>
     </Grid>
 </Window>

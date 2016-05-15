@@ -13,7 +13,7 @@ namespace SuperMinersWPF.Wcf.Clients
         public event Action OnKickout;
         public event Action OnLogedIn;
         public event Action OnLogedOut;
-        //public event Action OnSetPlayerInfo;
+        public event Action OnPlayerInfoChanged;
 
         #region Logion
 
@@ -52,6 +52,32 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region ChangePassword
+
+        public event EventHandler<WebInvokeEventArgs<bool>> ChangePasswordCompleted;
+        public void ChangePassword(string oldPassword, string newPassword, object userState)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.InvokeUserState<bool>(this._context, "ChangePassword", this.ChangePasswordCompleted, userState, GlobalData.Token, oldPassword, newPassword);
+            }
+        }
+
+        #endregion
+
+        #region ChangeAlipay
+
+        public event EventHandler<WebInvokeEventArgs<bool>> ChangeAlipayCompleted;
+        public void ChangeAlipay(string alipayAccount, string alipayRealName, object userState)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.InvokeUserState<bool>(this._context, "ChangeAlipay", this.ChangeAlipayCompleted, userState, GlobalData.Token, alipayAccount, alipayRealName);
+            }
+        }
+
+        #endregion
+
         #region Callback
 
         public void RaiseOnKickout()
@@ -80,12 +106,11 @@ namespace SuperMinersWPF.Wcf.Clients
         }
         public void RaiseOnPlayerInfoChanged()
         {
-            this.GetPlayerInfo();
-            //Action handler = this.OnSetPlayerInfo;
-            //if (null != handler)
-            //{
-            //    handler();
-            //}
+            Action handler = this.OnPlayerInfoChanged;
+            if (null != handler)
+            {
+                handler();
+            }
         }
         #endregion
     }

@@ -10,5 +10,8 @@ namespace SuperMinersServerApplication.WebService.Contracts
     {
         [Callback]
         void SendMessage(string token, string message);
+
+        [Callback]
+        void SendPlayerActionLog(string toke);
     }
 }

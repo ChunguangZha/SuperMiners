@@ -64,5 +64,7 @@ namespace MetaData.ActionLog
         BuyMiner,
         SellStone,
         SellDiamond,
+        GatherStone,
+        Login,
     }
 }

@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.Utility
         string LogErrorFilePath = "";
         bool InitSuceed = false;
 
-        Timer _timer = new Timer(1000000);
+        Timer _timer = new Timer(1000 * 60);
 
         public void Init()
         {
@@ -101,10 +101,12 @@ namespace SuperMinersServerApplication.Utility
                     stream = File.OpenWrite(this.LogErrorFilePath);
                     if (stream != null)
                     {
-                        foreach (var log in this.ListErrorLogs)
+                        using (StreamWriter writer = new StreamWriter(stream))
                         {
-                            StreamWriter writer = new StreamWriter(stream);
-                            writer.WriteLine(log);
+                            foreach (var log in this.ListErrorLogs)
+                            {
+                                writer.WriteLine(log);
+                            }
                         }
 
                         this.ListErrorLogs.Clear();

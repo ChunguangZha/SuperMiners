@@ -41,6 +41,7 @@ namespace SuperMinersWPF.Views
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            Clipboard.SetText(this.txtInvitationCode.Text);
             this.DialogResult = true;
         }
 

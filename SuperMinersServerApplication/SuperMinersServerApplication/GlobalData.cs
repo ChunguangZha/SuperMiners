@@ -11,8 +11,8 @@ namespace SuperMinersServerApplication
 {
     internal static class GlobalData
     {
-        public static readonly int TimeoutSeconds = 120;
-        public static readonly int KeepAliveTimeSeconds = 100;
+        public static readonly int TimeoutSeconds = 600;
+        public static readonly int KeepAliveTimeSeconds = 600;
         public static readonly int ServiceToWebPort = 4510;
         public static readonly int ServiceToClientPort = 33101;
         public static readonly int ServiceToAdministrator = 33123;

@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Utility;
+﻿using SuperMinersWPF.StringResources;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,8 +30,7 @@ namespace SuperMinersWPF.Views
         {
             GlobalData.Client.BuyMineCompleted += Client_BuyMineCompleted;
             this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();
-            this.txtGoldCoin.Text = GlobalData.CurrentUser.GoldCoin.ToString();
-            this.txtGoldCoin_Mine.Text = GlobalData.GameConfig.RMB_Mine.ToString();
+            this.txtRMB_Mine.Text = GlobalData.GameConfig.RMB_Mine.ToString();
         }
 
         void Client_BuyMineCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -66,6 +66,12 @@ namespace SuperMinersWPF.Views
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             int count = (int)this.numMinesCount.Value;
+            if (count == 0)
+            {
+                MyMessageBox.ShowInfo("请输入有效" + Strings.Mine + "数");
+                return;
+            }
+
             float money = count * GlobalData.GameConfig.RMB_Mine;
             this.txtNeedMoney.Text = money.ToString();
             if (money > GlobalData.CurrentUser.RMB)
@@ -89,7 +95,10 @@ namespace SuperMinersWPF.Views
             if (money > GlobalData.CurrentUser.RMB)
             {
                 this.txtError.Visibility = System.Windows.Visibility.Visible;
-                return;
+            }
+            else
+            {
+                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
             }
         }
     }

@@ -1,8 +1,10 @@
-﻿using SuperMinersWPF.Utility;
+﻿using SuperMinersWPF.StringResources;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,9 +22,11 @@ namespace SuperMinersWPF.Views
     /// </summary>
     public partial class BuyMinerWindow : Window
     {
+        private SynchronizationContext _syn;
         public BuyMinerWindow()
         {
             InitializeComponent();
+            _syn = SynchronizationContext.Current;
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -58,14 +62,24 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
+            MyMessageBox.ShowInfo("成功购买 " + result.ToString() + "位矿工。");
             App.UserVMObject.AsyncGetPlayerInfo();
 
-            this.DialogResult = true;
+            _syn.Post(p =>
+            {
+                this.DialogResult = true;
+            }, null);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             int count = (int)this.numMinersCount.Value;
+            if (count == 0)
+            {
+                MyMessageBox.ShowInfo("请输入有效" + Strings.Miner + "数");
+                return;
+            }
+
             float money = count * GlobalData.GameConfig.GoldCoin_Miner;
             this.txtNeedMoney.Text = money.ToString();
             if (money > GlobalData.CurrentUser.GoldCoin)
@@ -73,7 +87,7 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("账户余额不足，请充值。");
                 return;
             }
-            GlobalData.Client.BuyMiner(count);
+            GlobalData.Client.BuyMiner(count, count);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -92,7 +106,10 @@ namespace SuperMinersWPF.Views
                 if (money > allGoldcoin)
                 {
                     this.txtError.Visibility = System.Windows.Visibility.Visible;
-                    return;
+                }
+                else
+                {
+                    this.txtError.Visibility = System.Windows.Visibility.Collapsed;
                 }
             }
         }

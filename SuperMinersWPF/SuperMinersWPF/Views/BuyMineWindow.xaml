@@ -16,31 +16,31 @@
         <GroupBox Header="账户余额">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="RMB：" Margin="5"/>
-                    <TextBox Name="txtRMB" IsReadOnly="True" Width="70" Margin="5"/>
-                </StackPanel>
-                <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" Margin="5">
-                    <TextBlock Text="金币：" Margin="5"/>
-                    <TextBox Name="txtGoldCoin" IsReadOnly="True" Width="70" Margin="5"/>
-                </StackPanel>
+                <TextBlock Margin="10,5">
+                    <Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/>
+                    <Run Text=":"/>
+                </TextBlock>
+                <TextBox Name="txtRMB" Grid.Column="1" IsReadOnly="True" Margin="5"/>
             </Grid>
         </GroupBox>
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
-            <TextBlock Text="矿山价值：" Margin="5"/>
-            <TextBlock Name="txtGoldCoin_Mine" Width="70" Margin="5" VerticalAlignment="Top"/>
-            <TextBlock Text="金币" Margin="5"/>
+            <TextBlock Margin="5">
+                <Run Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}"/>
+                <Run Text="价值："/>
+            </TextBlock>
+            <TextBlock Name="txtRMB_Mine" Width="70" Margin="5" VerticalAlignment="Top"/>
+            <TextBlock Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
         </StackPanel>
-        <TextBlock Grid.Row="2" Text="当账户中没有足够金币时，系统自动将RMB转换成金币。" Margin="5,10" TextWrapping="Wrap"/>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="5" VerticalAlignment="Top">
             <TextBlock Text="购买" Margin="5" VerticalAlignment="Center"/>
             <my:NumericTextBox x:Name="numMinesCount" Width="50" VerticalAlignment="Center" ValueChanged="numMinersCount_ValueChanged"/>
-            <TextBlock Text="矿山， 需要 " Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}" VerticalAlignment="Center"/>
+            <TextBlock Text="， 需要 " Margin="5" VerticalAlignment="Center"/>
             <TextBox Name="txtNeedMoney" Width="70" IsReadOnly="True" VerticalAlignment="Center"/>
-            <TextBlock Text="金币" Margin="5" VerticalAlignment="Center"/>
+            <TextBlock Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
         </StackPanel>
         <TextBlock Grid.Row="4" Name="txtError" Text="账户余额不足，请先充值。" Margin="5" Foreground="Red" Visibility="Collapsed"/>
         <Button Grid.Row="5" Name="btnOK" Content="确定" Padding="20,5" Margin="10,10,100,10" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>

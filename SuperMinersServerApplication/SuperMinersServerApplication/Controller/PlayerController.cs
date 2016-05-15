@@ -130,6 +130,7 @@ namespace SuperMinersServerApplication.Controller
                         previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
                         PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
 
+                        indexLevel++;
                     }
                 }
                 PlayerInfo newplayer = new PlayerInfo()
@@ -158,7 +159,7 @@ namespace SuperMinersServerApplication.Controller
                 };
 
                 DBProvider.UserDBProvider.AddPlayer(newplayer, trans);
-                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 0);
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
 
                 trans.Commit();
 
@@ -217,7 +218,7 @@ namespace SuperMinersServerApplication.Controller
                 return;
             }
 
-            playerrun.SaveSimpleInfoToDB();
+            playerrun.LogoutPlayer();
             this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
         }
 
@@ -243,13 +244,42 @@ namespace SuperMinersServerApplication.Controller
             return null;
         }
 
+        public bool ChangePassword(string userName, string oldPassword, string newPassword)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                var player = DBProvider.UserDBProvider.GetPlayer(userName);
+                playerrun = new PlayerRunnable(player);
+            }
+
+            if (playerrun.BasePlayer.SimpleInfo.Password == oldPassword)
+            {
+                return playerrun.ChangePassword(newPassword);
+            }
+
+            return false;
+        }
+
+        public bool ChangeAlipay(string userName, string alipayAccount, string alipayRealName)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                var player = DBProvider.UserDBProvider.GetPlayer(userName);
+                playerrun = new PlayerRunnable(player);
+            }
+
+            return playerrun.ChangeAlipay(alipayAccount, alipayRealName);
+        }
+
         /// <summary>
         /// 收取生产出来的矿石
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="stonesCount"></param>
         /// <returns></returns>
-        public float GatherStones(string userName)
+        public int GatherStones(string userName, int stones)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -257,7 +287,7 @@ namespace SuperMinersServerApplication.Controller
                 return -1;
             }
 
-            return playerrun.GatherStones();
+            return playerrun.GatherStones(stones);
         }
 
         public int BuyMiner(string userName, int minersCount)

@@ -32,7 +32,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        float GatherStones(string token, string userName);
+        int GatherStones(string token, string userName, int stones);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SellStones",

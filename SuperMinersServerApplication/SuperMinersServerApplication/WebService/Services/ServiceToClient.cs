@@ -30,6 +30,19 @@ namespace SuperMinersServerApplication.WebService.Services
             this._userStateCheck.Start();
 
             PlayerController.Instance.PlayerInfoChanged += Instance_PlayerInfoChanged;
+            PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
+        }
+
+        void Instance_PlayerActionAdded()
+        {
+            var allClients = ClientManager.AllClients;
+            foreach (var client in allClients)
+            {
+                new Thread(new ParameterizedThreadStart(o =>
+                {
+                    this.SendPlayerActionLog(o.ToString());
+                })).Start(client.Token);
+            }
         }
 
         void Instance_PlayerInfoChanged(PlayerInfo player)

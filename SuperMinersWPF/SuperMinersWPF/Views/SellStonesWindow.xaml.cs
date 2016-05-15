@@ -37,6 +37,10 @@ namespace SuperMinersWPF.Views
 
         private void numSellStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            if (this.txtExpense == null)
+            {
+                return;
+            }
             float allrmb = GetAllRMB();
             float expense = GetExpense(allrmb);
             this.txtExpense.Text = expense.ToString();

@@ -34,5 +34,21 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PlayerInfo GetPlayerInfo(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/ChangePassword",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool ChangePassword(string token, string oldPassword, string newPassword);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/ChangeAlipay",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool ChangeAlipay(string token, string alipayAccount, string alipayRealName);
     }
 }

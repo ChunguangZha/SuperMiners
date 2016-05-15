@@ -133,7 +133,7 @@ namespace SuperMinersWPF.StringResources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 超级矿工.
+        ///   Looks up a localized string similar to 迅灵矿场.
         /// </summary>
         public static string Title {
             get {

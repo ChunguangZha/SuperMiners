@@ -23,7 +23,7 @@ namespace MetaData.SystemConfig
         public float RMB_GoldCoin = 1000;
 
         /// <summary>
-        /// 购买矿山所需要的金币
+        /// 购买矿山所需要的RMB
         /// </summary>
         [DataMember]
         public float RMB_Mine = 10;

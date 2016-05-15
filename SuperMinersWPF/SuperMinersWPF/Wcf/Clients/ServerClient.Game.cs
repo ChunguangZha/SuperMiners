@@ -11,9 +11,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region BuyMiner
 
         public event EventHandler<WebInvokeEventArgs<int>> BuyMinerCompleted;
-        public void BuyMiner(int minersCount)
+        public void BuyMiner(int minersCount, object userState)
         {
-            this._invoker.Invoke<int>(this._context, "BuyMiner", this.BuyMinerCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, minersCount);
+            this._invoker.InvokeUserState<int>(this._context, "BuyMiner", this.BuyMinerCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, minersCount);
         }
 
         #endregion
@@ -30,10 +30,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region GatherStones
 
-        public event EventHandler<WebInvokeEventArgs<float>> GatherStonesCompleted;
-        public void GatherStones()
+        public event EventHandler<WebInvokeEventArgs<int>> GatherStonesCompleted;
+        public void GatherStones(int stones)
         {
-            this._invoker.Invoke<float>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName);
+            this._invoker.Invoke<int>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, stones);
         }
 
         #endregion

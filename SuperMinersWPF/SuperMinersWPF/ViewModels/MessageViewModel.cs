@@ -7,18 +7,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersWPF.ViewModels
 {
     class MessageViewModel : INotifyPropertyChanged
     {
-        bool isStartedListen = false;
+        //bool isStartedListen = false;
 
-        /// <summary>
-        /// 每分钟执行一次
-        /// </summary>
-        private System.Timers.Timer _timerListenMessage = new System.Timers.Timer(1000 * 60);
+        //private Thread _threadListen;
 
         private int _systemAllPlayerCount;
         public int SystemAllPlayerCount
@@ -70,30 +68,39 @@ namespace SuperMinersWPF.ViewModels
             get { return this._listPlayerActionLog; }
         }
 
-        public void StartListen()
-        {
-            if (!isStartedListen)
-            {
-                isStartedListen = true;
-                _timerListenMessage.Elapsed += TimerListenMessage_Elapsed;
-                _timerListenMessage.Start();
-            }
-        }
+        //public void StartListen()
+        //{
+        //    if (!isStartedListen)
+        //    {
+        //        isStartedListen = true;
+        //        this._threadListen = new Thread(ThreadListenMessage);
+        //        this._threadListen.IsBackground = true;
+        //        this._threadListen.Name = "Thread Listen Message";
+        //        this._threadListen.Start();
+        //    }
+        //}
 
-        void TimerListenMessage_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        {
-            AsyncGetPlayerAction();
-        }
+        //private void ThreadListenMessage()
+        //{
+        //    while (isStartedListen)
+        //    {
+        //        AsyncGetPlayerAction();
+        //        Thread.Sleep(1000);
+        //    }
+        //}
 
-        public void StopListen()
-        {
-            if (isStartedListen)
-            {
-                isStartedListen = false;
-                _timerListenMessage.Stop();
-                _timerListenMessage.Elapsed -= TimerListenMessage_Elapsed;
-            }
-        }
+        //void TimerListenMessage_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        //{
+        //    AsyncGetPlayerAction();
+        //}
+
+        //public void StopListen()
+        //{
+        //    if (isStartedListen)
+        //    {
+        //        isStartedListen = false;
+        //    }
+        //}
 
         public void AsyncGetPlayerAction()
         {
@@ -121,6 +128,12 @@ namespace SuperMinersWPF.ViewModels
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerActionCompleted += Client_GetPlayerActionCompleted;
+            GlobalData.Client.OnSendPlayerActionLog += Client_OnSendPlayerActionLog;
+        }
+
+        void Client_OnSendPlayerActionLog()
+        {
+            AsyncGetPlayerAction();
         }
 
         void Client_GetPlayerActionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.ActionLog.PlayerActionLog[]> e)
@@ -135,10 +148,10 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
-            var lastLog = e.Result[e.Result.Length - 1];
-            this.SystemAllMinerCount = lastLog.SystemAllMinerCount;
-            this.SystemAllOutputStoneCount = lastLog.SystemAllOutputStoneCount;
-            this.SystemAllPlayerCount = lastLog.SystemAllPlayerCount;
+            var lastLogFromServer = e.Result[e.Result.Length - 1];
+            this.SystemAllMinerCount = lastLogFromServer.SystemAllMinerCount;
+            this.SystemAllOutputStoneCount = lastLogFromServer.SystemAllOutputStoneCount;
+            this.SystemAllPlayerCount = lastLogFromServer.SystemAllPlayerCount;
 
             if (ListPlayerActionLog.Count >= this.LogMaxCount)
             {
@@ -148,9 +161,21 @@ namespace SuperMinersWPF.ViewModels
                 }
             }
 
+            PlayerActionLogUIModel lastLogFromClient = null;
+            if (ListPlayerActionLog.Count > 0)
+            {
+                lastLogFromClient = ListPlayerActionLog[ListPlayerActionLog.Count - 1];
+            }
             for (int i = 0; i < e.Result.Length; i++)
             {
                 var log = e.Result[i];
+                if (lastLogFromClient != null)
+                {
+                    if (lastLogFromClient.Time >= log.Time)
+                    {
+                        continue;
+                    }
+                }
                 ListPlayerActionLog.Add(new PlayerActionLogUIModel(log));
             }
         }

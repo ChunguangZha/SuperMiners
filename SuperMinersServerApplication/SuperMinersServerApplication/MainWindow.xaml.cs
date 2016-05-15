@@ -56,6 +56,15 @@ namespace SuperMinersServerApplication
 #else            
             ServiceBase.Run(App.ServiceToRun);
 #endif
+
+            if (App.ServiceToRun.IsStarted)
+            {
+                this.tabItemConfig.IsEnabled = true;
+            }
+            else
+            {
+                this.tabItemConfig.IsEnabled = false;
+            }
         }
 
         private void BindUI()

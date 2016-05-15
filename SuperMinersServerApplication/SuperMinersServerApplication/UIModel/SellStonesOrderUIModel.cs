@@ -12,79 +12,131 @@ namespace SuperMinersServerApplication.UIModel
         SellStonesOrder _parentObject;
         private object _lock = new object();
 
+        public SellStonesOrder ParentObject
+        {
+            get { return this._parentObject; }
+        }
+
         public SellStonesOrderUIModel(SellStonesOrder parent)
         {
             this._parentObject = parent;
-
-            IsLocked = false;
-            LockedByUserName = null;
-            LockedTime = null;
         }
 
-        /// <summary>
-        /// 订单编号，以日期+卖方用户名HashCode+4位随机数
-        /// </summary>
-        public string OrderNumber
+        ///// <summary>
+        ///// 订单编号，以日期+卖方用户名HashCode+4位随机数
+        ///// </summary>
+        //public string OrderNumber
+        //{
+        //    get { return _parentObject.OrderNumber; }
+        //}
+
+        ///// <summary>
+        ///// 卖方用户名
+        ///// </summary>
+        //public string SellerUserName
+        //{
+        //    get { return _parentObject.SellerUserName; }
+        //}
+
+        ///// <summary>
+        ///// 出售矿石数
+        ///// </summary>
+        //public int SellStonesCount
+        //{
+        //    get { return _parentObject.SellStonesCount; }
+        //}
+
+        ///// <summary>
+        ///// 手续费
+        ///// </summary>
+        //public float Expense
+        //{
+        //    get { return _parentObject.Expense; }
+        //}
+
+        ///// <summary>
+        ///// 可获取的RMB数
+        ///// </summary>
+        //public float GainRMB
+        //{
+        //    get { return _parentObject.GainRMB; }
+        //}
+
+        //public DateTime SellTime
+        //{
+        //    get { return _parentObject.SellTime; }
+        //}
+
+        //public bool IsLocked { get; private set; }
+
+        //public string LockedByUserName { get; private set; }
+
+        //public DateTime? LockedTime { get; private set; }
+
+        public SellOrderState CheckOrderState()
         {
-            get { return _parentObject.OrderNumber; }
+            lock (this._lock)
+            {
+                return CheckOrderStateUnlock();
+            }
         }
 
-        /// <summary>
-        /// 卖方用户名
-        /// </summary>
-        public string SellerUserName
+        private SellOrderState CheckOrderStateUnlock()
         {
-            get { return _parentObject.SellerUserName; }
+            if (this._parentObject.OrderState == SellOrderState.Lock)
+            {
+                if (string.IsNullOrEmpty(this._parentObject.LockedByUserName) || this._parentObject.LockedTime == null)
+                {
+                    this._parentObject.OrderState = SellOrderState.Wait;
+                    this._parentObject.LockedByUserName = "";
+                    this._parentObject.LockedTime = null;
+                }
+                else
+                {
+                    TimeSpan span = DateTime.Now - this._parentObject.LockedTime.Value;
+                    if (span.TotalMinutes >= GlobalConfig.GameConfig.BuyOrderLockTimeMinutes)
+                    {
+                        this._parentObject.OrderState = SellOrderState.Wait;
+                        this._parentObject.LockedByUserName = "";
+                        this._parentObject.LockedTime = null;
+                    }
+                }
+            }
+
+            return this._parentObject.OrderState;
         }
-
-        /// <summary>
-        /// 出售矿石数
-        /// </summary>
-        public int SellStonesCount
-        {
-            get { return _parentObject.SellStonesCount; }
-        }
-
-        /// <summary>
-        /// 手续费
-        /// </summary>
-        public float Expense
-        {
-            get { return _parentObject.Expense; }
-        }
-
-        /// <summary>
-        /// 可获取的RMB数
-        /// </summary>
-        public float GainRMB
-        {
-            get { return _parentObject.GainRMB; }
-        }
-
-        public DateTime SellTime
-        {
-            get { return _parentObject.SellTime; }
-        }
-
-        public bool IsLocked { get; private set; }
-
-        public string LockedByUserName { get; private set; }
-
-        public DateTime? LockedTime { get; private set; }
 
         public bool LockOrder(string userName)
         {
             lock (this._lock)
             {
-                if (this.IsLocked)
+                if (CheckOrderStateUnlock() == SellOrderState.Wait)
                 {
-                    return false;
+                    this._parentObject.OrderState = SellOrderState.Lock;
+                    this._parentObject.LockedByUserName = userName;
+                    this._parentObject.LockedTime = DateTime.Now;
+                    
+                    return true;
                 }
 
-                this.IsLocked = true;
-                this.LockedByUserName = userName;
-                this.LockedTime = DateTime.Now;
-                return true;
+                return false;
+            }
+        }
+
+        public bool UnlockOrder(string userName)
+        {
+            lock (this._lock)
+            {
+                if (this._parentObject.OrderState == SellOrderState.Lock && this._parentObject.LockedByUserName == userName)
+                {
+                    this._parentObject.OrderState = SellOrderState.Wait;
+                    this._parentObject.LockedByUserName = "";
+                    this._parentObject.LockedTime = null;
+
+                    return true;
+                }
+
+                return false;
             }
         }
     }

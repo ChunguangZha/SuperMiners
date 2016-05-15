@@ -1,9 +1,11 @@
 ﻿using MetaData.ActionLog;
 using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller
@@ -28,6 +30,8 @@ namespace SuperMinersServerApplication.Controller
         }
 
         #endregion
+
+        public event Action PlayerActionAdded;
 
         private List<PlayerActionLog> list = new List<PlayerActionLog>();
         private int maxListCount = 100;
@@ -54,6 +58,11 @@ namespace SuperMinersServerApplication.Controller
                     }
                     list.Add(log);
                 }
+
+                if (PlayerActionAdded != null)
+                {
+                    PlayerActionAdded();
+                }
             }
             catch (Exception exc)
             {
@@ -79,12 +88,25 @@ namespace SuperMinersServerApplication.Controller
 
             lock (this._lockList)
             {
-                var resultLogs = list.TakeWhile(l =>
+                List<PlayerActionLog> listSearchResults = new List<PlayerActionLog>();
+                foreach (var item in list)
                 {
-                    return l.Time >= time;
-                });
+                    if (item.Time > time)
+                    {
+                        listSearchResults.Add(item);
+                    }
+                }
 
-                return resultLogs.ToArray<PlayerActionLog>();
+                PlayerActionLog[] actions = listSearchResults.ToArray();
+                if (actions.Length > 0)
+                {
+                    PlayerActionLog lastLog = actions[actions.Length - 1];
+                    lastLog.SystemAllPlayerCount = DBProvider.UserDBProvider.GetAllPlayerCount();
+                    lastLog.SystemAllMinerCount = (int)DBProvider.UserDBProvider.GetAllMinersCount();
+                    lastLog.SystemAllOutputStoneCount = DBProvider.UserDBProvider.GetAllOutputStonesCount();
+                }
+
+                return actions;
             }
         }
     }

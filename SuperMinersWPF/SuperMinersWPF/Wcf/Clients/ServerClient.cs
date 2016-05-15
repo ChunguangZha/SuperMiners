@@ -77,6 +77,7 @@ namespace SuperMinersWPF.Wcf.Clients
         public event EventHandler Error;
 
         public event Action<string> OnSendMessage;
+        public event Action OnSendPlayerActionLog;
 
         private RestInvoker<IServiceToClient> _invoker = new RestInvoker<IServiceToClient>();
         private SynchronizationContext _context;
@@ -117,6 +118,15 @@ namespace SuperMinersWPF.Wcf.Clients
             if (null != handler)
             {
                 handler(msg);
+            }
+        }
+
+        public void RaiseOnSendPlayerActionLog()
+        {
+            Action handler = this.OnSendPlayerActionLog;
+            if (null != handler)
+            {
+                handler();
             }
         }
     }

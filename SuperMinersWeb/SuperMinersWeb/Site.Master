@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta charset="utf-8" />
-    <title><%: Page.Title %> - 超级矿工</title>
+    <title><%: Page.Title %> - 迅灵矿场</title>
     <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -17,7 +17,7 @@
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a id="A1" runat="server" href="~/">超级矿工</a>
+                    <a id="A1" runat="server" href="~/">迅灵矿场</a>
                 </p>
             </div>
             <div class="float-right">
@@ -41,7 +41,7 @@
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - 超级矿工</p>
+                <p>&copy; <%: DateTime.Now.Year %> - 迅灵矿场</p>
             </div>
         </div>
     </footer>

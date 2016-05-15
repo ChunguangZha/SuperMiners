@@ -36,7 +36,43 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                return "";
+                string message = "";
+                switch (this._parentObject.ActionType)
+                {
+                    case ActionType.Register:
+                        message = "注册为新矿主。";
+                        break;
+                    case ActionType.Refer:
+                        message = string.Format("成功推荐 {0} 位玩家，" + this._parentObject.Remark, this._parentObject.OperNumber);
+                        break;
+                    case ActionType.RMBRecharge:
+                        break;
+                    case ActionType.GoldCoinRecharge:
+                        message = string.Format("充值 {0} 金币", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.BuyMine:
+                        message = string.Format("购买了 {0} 座矿山，" + this._parentObject.Remark, this._parentObject.OperNumber);
+                        break;
+                    case ActionType.BuyMiner:
+                        message = string.Format("购买了 {0} 位矿工", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.SellStone:
+                        message = string.Format("出售了 {0} 矿石", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.SellDiamond:
+                        message = string.Format("出售了 {0} 钻石", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.GatherStone:
+                        message = string.Format("收取了 {0} 矿石", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.Login:
+                        message = "进入矿场";
+                        break;
+                    default:
+                        break;
+                }
+
+                return message;
             }
         }
     }

@@ -108,13 +108,12 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();
-                mycmd.Dispose();
 
                 return true;
             }
-            catch (Exception exc)
+            finally
             {
-                throw exc;
+                mycmd.Dispose();
             }
         }
 
@@ -138,9 +137,78 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SavePlayerSimpleInfo(PlayerSimpleInfo playerSimpleInfo)
+        public bool UpdatePlayerLoginLogoutTime(string userName, DateTime loginTime, DateTime logoutTime)
         {
-            return false;
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime, `LastLogOutTime` = @LastLogOutTime where `UserName` = @UserName;";
+                mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@LastLoginTime", loginTime);
+                mycmd.Parameters.AddWithValue("@LastLogOutTime", logoutTime);
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+            }
+        }
+
+        public bool UpdatePlayerPassword(string userName, string password)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "update playersimpleinfo set `Password` = @Password where `UserName` = @UserName;";
+                mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@Password", DESEncrypt.EncryptDES(password));
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+            }
+        }
+
+        public bool UpdatePlayerAlipay(string userName, string alipayAccount, string alipayRealName)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "update playersimpleinfo set `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName where `UserName` = @UserName;";
+                mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
+                mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+            }
         }
 
         public PlayerFortuneInfo GetPlayerFortuneInfo(string userName)
@@ -314,7 +382,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "SELECT count(MinersCount) FROM playerfortuneinfo;;";
+                string cmdText = "SELECT sum(MinersCount) FROM playerfortuneinfo;;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 object objResult = mycmd.ExecuteScalar();
                 float result = Convert.ToSingle(objResult);
@@ -341,14 +409,14 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "SELECT count(TotalProducedStonesCount) FROM playerfortuneinfo;;";
+                string cmdText = "SELECT sum(TotalProducedStonesCount) FROM playerfortuneinfo;;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 object objResult = mycmd.ExecuteScalar();
                 float result = Convert.ToSingle(objResult);
 
                 mycmd.Dispose();
 
-                return result;
+                return (int)result;
             }
             catch (Exception exc)
             {

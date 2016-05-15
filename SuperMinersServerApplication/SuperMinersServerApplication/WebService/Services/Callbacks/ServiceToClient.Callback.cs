@@ -15,9 +15,9 @@ namespace SuperMinersServerApplication.WebService.Services
             this.InvokeCallback(token, "SendMessage", message);
         }
 
-        public void SendPlayerActionLog(string toke, PlayerActionLog playerActionLog)
+        public void SendPlayerActionLog(string toke)
         {
-            this.InvokeCallback(toke, "SendPlayerActionLog", playerActionLog);
+            this.InvokeCallback(toke, "SendPlayerActionLog");
         }
     }
 }

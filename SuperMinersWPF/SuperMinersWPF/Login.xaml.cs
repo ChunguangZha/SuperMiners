@@ -54,6 +54,7 @@ namespace SuperMinersWPF
                 winMain.Closed += winMain_Closed;
                 this.Visibility = System.Windows.Visibility.Hidden;
                 winMain.Show();
+                GlobalData.Client.GetPlayerInfo();
             }
         }
 
@@ -86,7 +87,8 @@ namespace SuperMinersWPF
 
             if (e.Error != null)
             {
-                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", e.Error);
+                MyMessageBox.ShowInfo("服务器连接失败。" + e.Error.ToString());
                 return;
             }
 
@@ -162,8 +164,12 @@ namespace SuperMinersWPF
 
         void winMain_Closed(object sender, EventArgs e)
         {
-            this.isHidden = false;
-            this.Visibility = System.Windows.Visibility.Visible;
+            this.Close();
+            //if (GlobalData.IsLogined)
+            //{
+            //    this.isHidden = false;
+            //    this.Visibility = System.Windows.Visibility.Visible;
+            //}
         }
 
         private void hlinkForgetPassword_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)

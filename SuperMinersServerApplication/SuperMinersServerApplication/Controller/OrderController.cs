@@ -1,5 +1,7 @@
-﻿using MetaData;
+﻿using DataBaseProvider;
+using MetaData;
 using SuperMinersServerApplication.UIModel;
+using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,18 +29,35 @@ namespace SuperMinersServerApplication.Controller
         #endregion
 
         object _lockListSellOrders = new object();
-        List<SellStonesOrderUIModel> listSellOrders = new List<SellStonesOrderUIModel>();
+        private Dictionary<string, SellStonesOrderUIModel> dicNotFinishedSellOrders = new Dictionary<string, SellStonesOrderUIModel>();
 
         public void Init()
         {
-            listSellOrders.Clear();
-            var sellOrderDBObjects = DBProvider.OrderDBProvider.GetAllSellOrders();
+            dicNotFinishedSellOrders.Clear();
+            var sellOrderDBObjects = DBProvider.OrderDBProvider.GetAllFinishedSellOrders();
             if (sellOrderDBObjects != null)
             {
                 foreach (var item in sellOrderDBObjects)
                 {
-                    listSellOrders.Add(new SellStonesOrderUIModel(item));
+                    dicNotFinishedSellOrders.Add(item.OrderNumber, new SellStonesOrderUIModel(item));
                 }
+            }
+        }
+
+        public SellStonesOrder[] GetNotFinishedSellOrders()
+        {
+            lock (_lockListSellOrders)
+            {
+                List<SellStonesOrder> orders = new List<SellStonesOrder>();
+                foreach (var item in dicNotFinishedSellOrders.Values)
+                {
+                    if (item.CheckOrderState() != SellOrderState.Finish)
+                    {
+                        orders.Add(item.ParentObject);
+                    }
+                }
+
+                return orders.ToArray();
             }
         }
 
@@ -46,7 +65,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                listSellOrders.Add(new SellStonesOrderUIModel(order));
+                dicNotFinishedSellOrders.Add(order.OrderNumber, new SellStonesOrderUIModel(order));
             }
 
             return true;
@@ -57,7 +76,7 @@ namespace SuperMinersServerApplication.Controller
             SellStonesOrderUIModel order = null;
             lock (this._lockListSellOrders)
             {
-                order = this.listSellOrders.FirstOrDefault(o => o.OrderNumber.Equals(sellOrderNumber));
+                this.dicNotFinishedSellOrders.TryGetValue(sellOrderNumber, out order);
             }
 
             if (order == null)
@@ -65,7 +84,27 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            return order.LockOrder(buyerUserName);
+            bool isOK = order.LockOrder(buyerUserName);
+            if (isOK)
+            {
+                var trans = MyDBHelper.Instance.CreateTrans();
+                try
+                {
+                    isOK = DBProvider.OrderDBProvider.UpdateSellOrderState(order.ParentObject, trans);
+                }
+                catch (Exception exc)
+                {
+                    order.UnlockOrder(buyerUserName);
+                    LogHelper.Instance.AddErrorLog("玩家：" + buyerUserName + " 锁定订单：" + sellOrderNumber + ", 异常。", exc);
+                    trans.Rollback();
+                }
+                finally
+                {
+                    trans.Dispose();
+                }
+            }
+
+            return isOK;
         }
     }
 }

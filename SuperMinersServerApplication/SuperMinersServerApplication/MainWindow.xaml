@@ -45,7 +45,7 @@
                     </GroupBox>
                 </Grid>
             </TabItem>
-            <TabItem Header="配  置">
+            <TabItem Header="配  置" Name="tabItemConfig">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -307,14 +307,14 @@
                                     <TextBlock Grid.Row="7" Grid.Column="0" Text="每个矿工每小时生产：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="7" Grid.Column="1" Value="{Binding OutputStonesPerHour, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
                                     <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="8" Grid.Column="0" Text="矿石买家奖励倍数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="8" Grid.Column="0" Text="购买矿石奖励倍数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="8" Grid.Column="1" Value="{Binding StoneBuyerAwardGoldCoinMultiple, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000" DecimalPlaces="2"/>
                                     <TextBlock Grid.Row="8" Grid.Column="2" Text="倍金币" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="9" Grid.Column="0" Name="lblExchangeExpensePercent1" Text="提现手续费百分比：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="9" Grid.Column="0" Name="lblExchangeExpensePercent1" Text="出售矿石手续费百分比：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="9" Grid.Column="1" x:Name="txtExchangeExpensePercent" Value="{Binding ExchangeExpensePercent, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
                                     <TextBlock Grid.Row="9" Grid.Column="2" Name="lblExchangeExpensePercent2" Text="%" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="10" Grid.Column="0" Text="最低手续费：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="10" Grid.Column="1" Value="{Binding ExchangeExpenseMinNumber, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="10" Grid.Column="1" Value="{Binding ExchangeExpenseMinNumber, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="5"/>
                                     <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                 </Grid>
                             </ScrollViewer>

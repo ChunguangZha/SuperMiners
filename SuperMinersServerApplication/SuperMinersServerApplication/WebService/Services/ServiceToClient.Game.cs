@@ -46,6 +46,23 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public int GatherStones(string token, string userName, int stones)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return -1;
+                }
+
+                return PlayerController.Instance.GatherStones(userName, stones);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         /// <summary>
         /// 0表示成功；-1表示查询不到该用户; -2表示该用户不在线；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
         /// </summary>
@@ -70,21 +87,5 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public float GatherStones(string token, string userName)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                if (ClientManager.GetClientUserName(token) != userName)
-                {
-                    return -1;
-                }
-
-                return PlayerController.Instance.GatherStones(userName);
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
     }
 }

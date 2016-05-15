@@ -49,7 +49,11 @@ namespace SuperMinersWPF.ViewModels
                     {
                         tempOutput = GlobalData.CurrentUser.MaxTempStonesOutput;
                     }
-                    GlobalData.CurrentUser.TempOutputStones = tempOutput;
+                    if (tempOutput > GlobalData.CurrentUser.WorkableStonesReservers)
+                    {
+                        tempOutput = GlobalData.CurrentUser.WorkableStonesReservers;
+                    }
+                    GlobalData.CurrentUser.TempOutputStones = (int)tempOutput;
                 }
             }
             catch (Exception exc)
@@ -73,9 +77,90 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetPlayerInfo();
         }
 
+        public void AsyncGatherStones(int stones)
+        {
+            GlobalData.Client.GatherStones(stones);
+        }
+
+        public void AsyncChangePassword(string oldPassword, string newPassword)
+        {
+            GlobalData.Client.ChangePassword(oldPassword, newPassword, newPassword);
+        }
+
+        public void AsyncChangeAlipay(string alipayAccount, string alipayRealName)
+        {
+            GlobalData.Client.ChangeAlipay(alipayAccount, alipayRealName, new string[] { alipayAccount, alipayRealName });
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerInfoCompleted += Client_GetPlayerInfoCompleted;
+            GlobalData.Client.GatherStonesCompleted += Client_GatherStonesCompleted;
+            GlobalData.Client.ChangePasswordCompleted += Client_ChangePasswordCompleted;
+            GlobalData.Client.ChangeAlipayCompleted += Client_ChangeAlipayCompleted;
+            GlobalData.Client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
+        }
+
+        void Client_OnPlayerInfoChanged()
+        {
+            GlobalData.Client.GetPlayerInfo();
+        }
+
+        void Client_ChangeAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null || !e.Result)
+            {
+                MyMessageBox.ShowInfo("修改失败。");
+                return;
+            }
+
+            if (e.UserState != null)
+            {
+                string[] states = e.UserState as string[];
+                if (states != null && states.Length == 2)
+                {
+                    GlobalData.CurrentUser.ParentObject.SimpleInfo.Alipay = states[0];
+                    GlobalData.CurrentUser.ParentObject.SimpleInfo.AlipayRealName = states[1];
+                }
+            }
+
+            MyMessageBox.ShowInfo("修改成功。");
+        }
+
+        void Client_ChangePasswordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null || !e.Result)
+            {
+                MyMessageBox.ShowInfo("修改失败。");
+                return;
+            }
+
+            if (e.UserState != null)
+            {
+                string newPassword = Convert.ToString(e.UserState);
+                GlobalData.CurrentUser.ParentObject.SimpleInfo.Password = newPassword;
+            }
+
+            MyMessageBox.ShowInfo("修改成功。");
+        }
+
+        void Client_GatherStonesCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            if (e.Result > 0)
+            {
+                MyMessageBox.ShowInfo("成功收取" + e.Result.ToString() + "矿石。");
+            }
+            AsyncGetPlayerInfo();
         }
 
         void Client_GetPlayerInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PlayerInfo> e)
