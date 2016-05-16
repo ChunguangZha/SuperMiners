@@ -71,3 +71,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\DigStones.gif
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.manifest
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.application
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe.manifest
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.application

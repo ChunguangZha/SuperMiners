@@ -21,7 +21,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="invitationCode"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode);
+        int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode);
 
         /// <summary>
         /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在

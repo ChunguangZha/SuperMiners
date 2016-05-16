@@ -16,13 +16,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
     public partial interface IServiceToClient
     {
 #if !SILVERLIGHT
-        [OperationContract]
-        [WebGet(UriTemplate = "/clientaccesspolicy.xml")]
-        Stream GetClientAccessPolicy();
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/clientaccesspolicy.xml")]
+        //Stream GetClientAccessPolicy();
 
-        [OperationContract]
-        [WebGet(UriTemplate = "/crossdomain.xml")]
-        Stream GetCrossDomain();
+        //[OperationContract]
+        //[WebGet(UriTemplate = "/crossdomain.xml")]
+        //Stream GetCrossDomain();
 #endif
 
         [OperationContract]
@@ -33,12 +33,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
           BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         CallbackInfo Callback(string token);
 
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetTimeZone",
-          Method = "POST",
-          ResponseFormat = WebMessageFormat.Json,
-          RequestFormat = WebMessageFormat.Json,
-          BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        string GetTimeZone(string token);
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebService/GetTimeZone",
+        //  Method = "POST",
+        //  ResponseFormat = WebMessageFormat.Json,
+        //  RequestFormat = WebMessageFormat.Json,
+        //  BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //string GetTimeZone(string token);
     }
 }

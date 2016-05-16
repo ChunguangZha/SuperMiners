@@ -49,6 +49,6 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool ChangeAlipay(string token, string alipayAccount, string alipayRealName);
+        bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName);
     }
 }

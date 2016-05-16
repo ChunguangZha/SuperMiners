@@ -46,6 +46,38 @@ namespace SuperMinersWPF
             imgDigStones.Size = new System.Drawing.Size(200, 200);
         }
 
+        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        {
+            BindUI();
+        }
+
+        private void BindUI()
+        {
+            Binding bind = new Binding()
+            {
+                Source = App.TopListVMObject.ListExpTopList
+            };
+            this.lvExpTopList.SetBinding(ListView.ItemsSourceProperty, bind);
+
+            bind = new Binding()
+            {
+                Source = App.TopListVMObject.ListGoldCoinTopList
+            };
+            this.lvGoldCoinTopList.SetBinding(ListView.ItemsSourceProperty, bind);
+
+            bind = new Binding()
+            {
+                Source = App.TopListVMObject.ListMinerTopList
+            };
+            this.lvMinerTopList.SetBinding(ListView.ItemsSourceProperty, bind);
+
+            bind = new Binding()
+            {
+                Source = App.TopListVMObject.ListStoneTopList
+            };
+            this.lvStoneTopList.SetBinding(ListView.ItemsSourceProperty, bind);
+        }
+
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
@@ -149,6 +181,46 @@ namespace SuperMinersWPF
             if ((int)GlobalData.CurrentUser.TempOutputStones > 0)
             {
                 App.UserVMObject.AsyncGatherStones((int)GlobalData.CurrentUser.TempOutputStones);
+            }
+        }
+
+        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.tabcontrol == null)
+            {
+                return;
+            }
+
+            if (this.tabcontrol.SelectedItem != null)
+            {
+                TabItem tabitem = this.tabcontrol.SelectedItem as TabItem;
+                if (tabitem != null)
+                {
+                    if (tabitem.Name == "tabitemTopList")
+                    {
+                        App.TopListVMObject.AsyncGetExpTopList();
+                    }
+                }
+            }
+        }
+
+        private void tabcontrolTopList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.tabcontrolTopList.SelectedIndex == 0)
+            {
+                App.TopListVMObject.AsyncGetExpTopList();
+            }
+            else if (this.tabcontrolTopList.SelectedIndex == 1)
+            {
+                App.TopListVMObject.AsyncGetStoneTopList();
+            }
+            else if (this.tabcontrolTopList.SelectedIndex == 2)
+            {
+                App.TopListVMObject.AsyncGetMinerTopList();
+            }
+            else if (this.tabcontrolTopList.SelectedIndex == 3)
+            {
+                App.TopListVMObject.AsyncGetGoldCoinTopList();
             }
         }
 

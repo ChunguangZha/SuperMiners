@@ -23,18 +23,19 @@ namespace DataBaseProvider
                 if (string.IsNullOrEmpty(player.SimpleInfo.ReferrerUserName))
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `Password`, `Alipay`, `AlipayRealName`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
-                        " (@UserName, @Password, @Alipay, @AlipayRealName, @RegisterIP, @InvitationCode, @RegisterTime); ";
+                        "(`UserName`, `NickName`, `Password`, `Alipay`, `AlipayRealName`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
+                        " (@UserName, @NickName, @Password, @Alipay, @AlipayRealName, @RegisterIP, @InvitationCode, @RegisterTime); ";
                 }
                 else
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `Password`, `Alipay`, `AlipayRealName`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
-                        " (@UserName, @Password, @Alipay, @AlipayRealName, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
+                        "(`UserName`, `NickName`, `Password`, `Alipay`, `AlipayRealName`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
+                        " (@UserName, @NickName, @Password, @Alipay, @AlipayRealName, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
                     mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(player.SimpleInfo.ReferrerUserName));
                 }
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
+                mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(player.SimpleInfo.NickName));
                 mycmd.Parameters.AddWithValue("@Password", DESEncrypt.EncryptDES(player.SimpleInfo.Password));
                 mycmd.Parameters.AddWithValue("@Alipay", string.IsNullOrEmpty(player.SimpleInfo.Alipay) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.Alipay));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", string.IsNullOrEmpty(player.SimpleInfo.AlipayRealName) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.AlipayRealName));
@@ -186,7 +187,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool UpdatePlayerAlipay(string userName, string alipayAccount, string alipayRealName)
+        public bool UpdatePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -194,8 +195,9 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string textCmd = "update playersimpleinfo set `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName where `UserName` = @UserName;";
+                string textCmd = "update playersimpleinfo set `NickName`=@NickName, `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName where `UserName` = @UserName;";
                 mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
                 mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
@@ -509,6 +511,59 @@ namespace DataBaseProvider
                 mycmd.Dispose();
 
                 return result;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public TopListInfo[] GetExpTopList()
+        {
+            return GetTopList("Exp");
+        }
+
+        public TopListInfo[] GetStoneTopList()
+        {
+            return GetTopList("StockOfStones");
+        }
+
+        public TopListInfo[] GetMinerTopList()
+        {
+            return GetTopList("MinersCount");
+        }
+
+        public TopListInfo[] GetGoldCoinTopList()
+        {
+            return GetTopList("GoldCoin");
+        }
+
+        private TopListInfo[] GetTopList(string valueType)
+        {
+            TopListInfo[] toplistInfos = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "SELECT s.UserName, s.NickName , f." + valueType + " FROM playersimpleinfo s left join playerfortuneinfo f on s.id=f.userId order by f." + valueType + " desc limit 20;";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    toplistInfos = MetaDBAdapter<TopListInfo>.GetTopListInfo(valueType, dt);
+                }
+
+                mycmd.Dispose();
+
+                return toplistInfos;
             }
             catch (Exception exc)
             {

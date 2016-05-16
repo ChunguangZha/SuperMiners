@@ -17,6 +17,9 @@ namespace MetaData.User
         public string UserName { get; set; }
 
         [DataMember]
+        public string NickName { get; set; }
+
+        [DataMember]
         public string Password { get; set; }
 
         /// <summary>

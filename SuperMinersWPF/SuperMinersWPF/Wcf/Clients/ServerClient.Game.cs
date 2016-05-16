@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,6 +35,46 @@ namespace SuperMinersWPF.Wcf.Clients
         public void GatherStones(int stones)
         {
             this._invoker.Invoke<int>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, stones);
+        }
+
+        #endregion
+
+        #region GetExpTopList
+
+        public event EventHandler<WebInvokeEventArgs<TopListInfo[]>> GetExpTopListCompleted;
+        public void GetExpTopList()
+        {
+            this._invoker.Invoke<TopListInfo[]>(this._context, "GetExpTopList", this.GetExpTopListCompleted, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region GetStoneTopList
+
+        public event EventHandler<WebInvokeEventArgs<TopListInfo[]>> GetStoneTopListCompleted;
+        public void GetStoneTopList()
+        {
+            this._invoker.Invoke<TopListInfo[]>(this._context, "GetStoneTopList", this.GetStoneTopListCompleted, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region GetMinerTopList
+
+        public event EventHandler<WebInvokeEventArgs<TopListInfo[]>> GetMinerTopListCompleted;
+        public void GetMinerTopList()
+        {
+            this._invoker.Invoke<TopListInfo[]>(this._context, "GetMinerTopList", this.GetMinerTopListCompleted, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region GetGoldCoinTopList
+
+        public event EventHandler<WebInvokeEventArgs<TopListInfo[]>> GetGoldCoinTopListCompleted;
+        public void GetGoldCoinTopList()
+        {
+            this._invoker.Invoke<TopListInfo[]>(this._context, "GetGoldCoinTopList", this.GetGoldCoinTopListCompleted, GlobalData.Token);
         }
 
         #endregion

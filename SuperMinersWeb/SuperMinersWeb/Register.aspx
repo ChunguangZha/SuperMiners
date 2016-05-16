@@ -27,6 +27,12 @@
                                     CssClass="field-validation-error" ErrorMessage="请填写用户名." />
                 </li>
                 <li>
+                    <label for="txtNickName" class="label">昵称： </label>
+                    <asp:TextBox ID="txtNickName" runat="server" MaxLength="15" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtNickName"
+                                    CssClass="field-validation-error" ErrorMessage="请填写昵称." />
+                </li>
+                <li>
                     <label for="txtPassword" class="label">密    码： </label>
                     <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" MaxLength="15" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPassword"

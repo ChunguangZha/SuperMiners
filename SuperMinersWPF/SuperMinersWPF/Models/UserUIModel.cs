@@ -33,6 +33,7 @@ namespace SuperMinersWPF.Models
                 this._parentObject = value;
 
                 NotifyPropertyChange("UserName");
+                NotifyPropertyChange("NickName");
                 NotifyPropertyChange("Password");
                 NotifyPropertyChange("Alipay");
                 NotifyPropertyChange("AlipayRealName");
@@ -60,6 +61,11 @@ namespace SuperMinersWPF.Models
         public string UserName
         {
             get { return this._parentObject.SimpleInfo.UserName; }
+        }
+
+        public string NickName
+        {
+            get { return this._parentObject.SimpleInfo.NickName; }
         }
 
         public string Password

@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.Controller;
+﻿using MetaData.User;
+using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.WebService.Contracts;
 using System;
@@ -80,6 +81,54 @@ namespace SuperMinersServerApplication.WebService.Services
                 }
 
                 return PlayerController.Instance.SellStones(userName, sellStonesCount);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public TopListInfo[] GetExpTopList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return DBProvider.UserDBProvider.GetExpTopList();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public TopListInfo[] GetStoneTopList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return DBProvider.UserDBProvider.GetStoneTopList();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public TopListInfo[] GetMinerTopList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return DBProvider.UserDBProvider.GetMinerTopList();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public TopListInfo[] GetGoldCoinTopList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return DBProvider.UserDBProvider.GetGoldCoinTopList();
             }
             else
             {

@@ -43,6 +43,8 @@ namespace DataBaseProvider
                     config.StonesReservesPerMines = Convert.ToSingle(dt.Rows[0]["StonesReservesPerMines"]);
                     config.ExchangeExpensePercent = Convert.ToSingle(dt.Rows[0]["ExchangeExpensePercent"]);
                     config.ExchangeExpenseMinNumber = Convert.ToSingle(dt.Rows[0]["ExchangeExpenseMinNumber"]);
+                    config.UserMaxHaveMinersCount = Convert.ToInt32(dt.Rows[0]["UserMaxHaveMinersCount"]);
+                    config.BuyOrderLockTimeMinutes = Convert.ToInt32(dt.Rows[0]["BuyOrderLockTimeMinutes"]);
 
                     dt.Dispose();
                 }
@@ -65,8 +67,8 @@ namespace DataBaseProvider
         {
             MySqlCommand mycmd = trans.CreateCommand();
             string cmdText = "delete from gameconfig; " +
-                "insert into gameconfig (Yuan_RMB, RMB_GoldCoin, RMB_Mine, GoldCoin_Miner, Stones_RMB, Diamonds_RMB, StoneBuyerAwardGoldCoinMultiple, OutputStonesPerHour, TempStoneOutputValidHour, StonesReservesPerMines,  ExchangeExpensePercent, ExchangeExpenseMinNumber) values " +
-                                    " (@Yuan_RMB, @RMB_GoldCoin, @RMB_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @TempStoneOutputValidHour, @StonesReservesPerMines, @ExchangeExpensePercent, @ExchangeExpenseMinNumber)";
+                "insert into gameconfig (`Yuan_RMB`, `RMB_GoldCoin`, `RMB_Mine`, `GoldCoin_Miner`, `Stones_RMB`, `Diamonds_RMB`, `StoneBuyerAwardGoldCoinMultiple`, `OutputStonesPerHour`, `TempStoneOutputValidHour`, `StonesReservesPerMines`,  `ExchangeExpensePercent`, `ExchangeExpenseMinNumber`, `UserMaxHaveMinersCount`, `BuyOrderLockTimeMinutes`) values " +
+                                    " (@Yuan_RMB, @RMB_GoldCoin, @RMB_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @TempStoneOutputValidHour, @StonesReservesPerMines, @ExchangeExpensePercent, @ExchangeExpenseMinNumber, @UserMaxHaveMinersCount, @BuyOrderLockTimeMinutes)";
             mycmd.CommandText = cmdText;
             mycmd.Parameters.AddWithValue("@Yuan_RMB", config.Yuan_RMB);
             mycmd.Parameters.AddWithValue("@RMB_GoldCoin", config.RMB_GoldCoin);
@@ -80,6 +82,8 @@ namespace DataBaseProvider
             mycmd.Parameters.AddWithValue("@StonesReservesPerMines", config.StonesReservesPerMines);
             mycmd.Parameters.AddWithValue("@ExchangeExpensePercent", config.ExchangeExpensePercent);
             mycmd.Parameters.AddWithValue("@ExchangeExpenseMinNumber", config.ExchangeExpenseMinNumber);
+            mycmd.Parameters.AddWithValue("@UserMaxHaveMinersCount", config.UserMaxHaveMinersCount);
+            mycmd.Parameters.AddWithValue("@BuyOrderLockTimeMinutes", config.BuyOrderLockTimeMinutes);
 
             mycmd.ExecuteNonQuery();
             //mycmd.Dispose();

@@ -173,14 +173,18 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool ChangeAlipay(string token, string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
+                    if (string.IsNullOrEmpty(nickName) || string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
+                    {
+                        return false;
+                    }
                     string userName = ClientManager.GetClientUserName(token);
-                    return PlayerController.Instance.ChangeAlipay(userName, alipayAccount, alipayRealName);
+                    return PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName);
                 }
                 catch (Exception exc)
                 {

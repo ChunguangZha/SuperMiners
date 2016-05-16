@@ -37,9 +37,17 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
-        public bool ChangeAlipay(string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName)
         {
-            DBProvider.UserDBProvider.UpdatePlayerAlipay(BasePlayer.SimpleInfo.UserName, alipayAccount, alipayRealName);
+            if (!string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.AlipayRealName))
+            {
+                //先做验证，如果玩家之前已经绑定过支付信息，而本次又修改了支付宝信息，则返回false.
+                if (this.BasePlayer.SimpleInfo.Alipay != alipayAccount || this.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
+                {
+                    return false;
+                }
+            }
+            DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName);
             this.BasePlayer.SimpleInfo.Alipay = alipayAccount;
             this.BasePlayer.SimpleInfo.AlipayRealName = alipayRealName;
             return true;
@@ -62,21 +70,20 @@ namespace SuperMinersServerApplication.Controller
             if (BasePlayer.SimpleInfo.LastLogOutTime == null || 
                 BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
             {
-                //表示该玩家之前没有登录过
+                //表示该玩家之前没有登录过，以本次登录时间为起始。
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
                 return;
             }
 
             DateTime startTime;
-            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime != null)
+            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
-                startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
+                //如果没有保存起始时间，则以上一次退出时间为起始。这时，如果玩家退出时没有进行收取，则下一次登录会清除玩家上一次在线时所生产出的矿石。
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLogOutTime.Value;
             }
-            else
-            {
-                startTime = BasePlayer.SimpleInfo.LastLoginTime.Value;
-            }
+
+            startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
 
             TimeSpan span = BasePlayer.SimpleInfo.LastLoginTime.Value - startTime;
             if (span.TotalHours < 0)
@@ -119,7 +126,6 @@ namespace SuperMinersServerApplication.Controller
             TimeSpan span = stopTime - BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
             if (span.TotalHours > 0)
             {
-                int IntTempOutput = 0;
                 lock (this._lockFortuneAction)
                 {
                     float tempOutput = (float)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
@@ -133,7 +139,7 @@ namespace SuperMinersServerApplication.Controller
                         tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
 
-                    IntTempOutput = (int)tempOutput;
+                    int IntTempOutput = (int)tempOutput;
                     if (stones > IntTempOutput)
                     {
                         stones = IntTempOutput;
@@ -146,7 +152,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GatherStone, stones);
-                return IntTempOutput;
+                return stones;
             }
 
             return 0;

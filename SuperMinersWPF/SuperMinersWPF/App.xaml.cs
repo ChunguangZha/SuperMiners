@@ -16,6 +16,7 @@ namespace SuperMinersWPF
     {
         internal static UserViewModel UserVMObject = new UserViewModel();
         internal static MessageViewModel MessageVMObject = new MessageViewModel();
+        internal static TopListViewModel TopListVMObject = new TopListViewModel();
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -23,6 +24,7 @@ namespace SuperMinersWPF
 
             UserVMObject.RegisterEvent();
             MessageVMObject.RegisterEvent();
+            TopListVMObject.RegisterEvent();
         }
     }
 }

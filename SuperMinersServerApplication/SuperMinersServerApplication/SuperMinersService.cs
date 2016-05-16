@@ -253,6 +253,10 @@ namespace SuperMinersServerApplication
                 {
                     _serviceToClientHost.Close();
                 }
+                if (_serviceToWebHost != null)
+                {
+                    _serviceToWebHost.Close();
+                }
                 IsStarted = false;
                 LogHelper.Instance.Stop();
 

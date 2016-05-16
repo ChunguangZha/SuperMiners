@@ -54,6 +54,7 @@
     <Compile Include="SystemConfig\GameConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="User\AdminInfo.cs" />
+    <Compile Include="User\TopListInfo.cs" />
     <Compile Include="User\PlayerFortuneInfo.cs" />
     <Compile Include="User\PlayerInfo.cs" />
     <Compile Include="User\PlayerSimpleInfo.cs" />

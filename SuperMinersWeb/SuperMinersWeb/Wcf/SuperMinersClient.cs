@@ -97,11 +97,11 @@ namespace SuperMinersWeb.Wcf
         /// <param name="alipayRealName"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUser(clientIP, userName, password, alipayAccount, alipayRealName, invitationCode);
+                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, invitationCode);
             }
             catch (Exception)
             {

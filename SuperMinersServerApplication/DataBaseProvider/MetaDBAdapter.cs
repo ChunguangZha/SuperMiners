@@ -53,6 +53,26 @@ namespace DataBaseProvider
             }
         }
 
+        internal static TopListInfo[] GetTopListInfo(string valueType, DataTable dt)
+        {
+            TopListInfo[] toplistInfos = new TopListInfo[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                TopListInfo info = new TopListInfo();
+
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
+
+                info.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+                info.NickName = string.IsNullOrEmpty(encryptedNickName) ? info.UserName : DESEncrypt.DecryptDES(encryptedNickName);
+                info.Value = Convert.ToSingle(dt.Rows[i][valueType]);
+
+                toplistInfos[i] = info;
+            }
+
+            return toplistInfos;
+        }
+
         internal static PlayerInfo[] GetPlayerInfoFromDataTable(DataTable dt)
         {
             PlayerInfo[] players = new PlayerInfo[dt.Rows.Count];
@@ -61,12 +81,14 @@ namespace DataBaseProvider
                 PlayerInfo player = new PlayerInfo();
 
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
                 string encryptedUserPassword = dt.Rows[i]["Password"].ToString();
                 string encryptedAlipay = dt.Rows[i]["Alipay"] == DBNull.Value ? "" : dt.Rows[i]["Alipay"].ToString();
                 string encryptedAlipayRealName = dt.Rows[i]["AlipayRealName"] == DBNull.Value ? "" : dt.Rows[i]["AlipayRealName"].ToString();
                 string encryptedInvitationCode = dt.Rows[i]["InvitationCode"].ToString();
 
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+                player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
                 player.SimpleInfo.Alipay = string.IsNullOrEmpty(encryptedAlipay) ? "" : DESEncrypt.DecryptDES(encryptedAlipay);
                 player.SimpleInfo.AlipayRealName = string.IsNullOrEmpty(encryptedAlipayRealName) ? "" : DESEncrypt.DecryptDES(encryptedAlipayRealName);

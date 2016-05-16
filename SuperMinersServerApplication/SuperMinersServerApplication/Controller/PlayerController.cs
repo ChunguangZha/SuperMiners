@@ -63,7 +63,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="alipayRealName"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode)
         {
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
@@ -71,10 +71,15 @@ namespace SuperMinersServerApplication.Controller
                 return 1;
             }
 
+            bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
             if (userCount > GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
             {
-                return 2;
+                Awardable = false;
+            }
+            else
+            {
+                Awardable = true;
             }
 
             List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
@@ -88,49 +93,53 @@ namespace SuperMinersServerApplication.Controller
                 {
                     string previousReferrerUserName = null;
                     referrerLevel1player = DBProvider.UserDBProvider.GetPlayerByInvitationCode(invitationCode);
-                    if (referrerLevel1player != null)
+
+                    if (Awardable)
                     {
-                        var playerrun = this.GetOnlinePlayerRunnable(referrerLevel1player.SimpleInfo.UserName);
-                        if (playerrun == null)
+                        if (referrerLevel1player != null)
                         {
-                            playerrun = new PlayerRunnable(referrerLevel1player);
-                        }
-                        var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
-                        playerrun.ReferAward(awardConfig, trans);
-                        listPlayerRun.Add(playerrun);
+                            var playerrun = this.GetOnlinePlayerRunnable(referrerLevel1player.SimpleInfo.UserName);
+                            if (playerrun == null)
+                            {
+                                playerrun = new PlayerRunnable(referrerLevel1player);
+                            }
+                            var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
+                            playerrun.ReferAward(awardConfig, trans);
+                            listPlayerRun.Add(playerrun);
 
-                        PlayerActionController.Instance.AddLog(playerrun.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
+                            PlayerActionController.Instance.AddLog(playerrun.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
 
-                        previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
-                    }
-
-                    int indexLevel = 2;
-                    while (indexLevel <= awardLevelCount)
-                    {
-                        if (string.IsNullOrEmpty(previousReferrerUserName))
-                        {
-                            break;
+                            previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
                         }
 
-                        var playerrun = this.GetOnlinePlayerRunnable(previousReferrerUserName);
-                        if (playerrun == null)
+                        int indexLevel = 2;
+                        while (indexLevel <= awardLevelCount)
                         {
-                            PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayer(previousReferrerUserName);
-                            if (previousReferrerPlayer == null)
+                            if (string.IsNullOrEmpty(previousReferrerUserName))
                             {
                                 break;
                             }
-                            playerrun = new PlayerRunnable(previousReferrerPlayer);
+
+                            var playerrun = this.GetOnlinePlayerRunnable(previousReferrerUserName);
+                            if (playerrun == null)
+                            {
+                                PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayer(previousReferrerUserName);
+                                if (previousReferrerPlayer == null)
+                                {
+                                    break;
+                                }
+                                playerrun = new PlayerRunnable(previousReferrerPlayer);
+                            }
+
+                            var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
+                            playerrun.ReferAward(awardConfig, trans);
+                            listPlayerRun.Add(playerrun);
+
+                            previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
+                            PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
+
+                            indexLevel++;
                         }
-
-                        var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
-                        playerrun.ReferAward(awardConfig, trans);
-                        listPlayerRun.Add(playerrun);
-
-                        previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
-                        PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
-
-                        indexLevel++;
                     }
                 }
                 PlayerInfo newplayer = new PlayerInfo()
@@ -138,6 +147,7 @@ namespace SuperMinersServerApplication.Controller
                     SimpleInfo = new PlayerSimpleInfo()
                     {
                         UserName = userName,
+                        NickName = nickName,
                         Password = password,
                         Alipay = alipayAccount,
                         AlipayRealName = alipayRealName,
@@ -211,7 +221,6 @@ namespace SuperMinersServerApplication.Controller
 
         public void LogoutPlayer(string userName)
         {
-            //玩家退出登录，将清除之前在线时所没有收取的矿石。
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
@@ -261,7 +270,7 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
-        public bool ChangeAlipay(string userName, string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName)
         {
             var playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -269,8 +278,8 @@ namespace SuperMinersServerApplication.Controller
                 var player = DBProvider.UserDBProvider.GetPlayer(userName);
                 playerrun = new PlayerRunnable(player);
             }
-
-            return playerrun.ChangeAlipay(alipayAccount, alipayRealName);
+            
+            return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName);
         }
 
         /// <summary>

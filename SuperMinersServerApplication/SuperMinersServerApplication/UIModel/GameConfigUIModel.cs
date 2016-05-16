@@ -225,6 +225,44 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
+        public int _UserMaxHaveMinersCount = 50;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int UserMaxHaveMinersCount
+        {
+            get { return this._UserMaxHaveMinersCount; }
+            set
+            {
+                if (value != this._UserMaxHaveMinersCount)
+                {
+                    this._UserMaxHaveMinersCount = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("UserMaxHaveMinersCount");
+                }
+            }
+        }
+
+        public int _BuyOrderLockTimeMinutes = 30;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int BuyOrderLockTimeMinutes
+        {
+            get { return this._BuyOrderLockTimeMinutes; }
+            set
+            {
+                if (value != this._BuyOrderLockTimeMinutes)
+                {
+                    this._BuyOrderLockTimeMinutes = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("BuyOrderLockTimeMinutes");
+                }
+            }
+        }
+
         public static GameConfigUIModel CreateFromDBObject(GameConfig parent)
         {
             if (parent == null)
@@ -243,7 +281,9 @@ namespace SuperMinersServerApplication.UIModel
                 StoneBuyerAwardGoldCoinMultiple = parent.StoneBuyerAwardGoldCoinMultiple,
                 Stones_RMB = parent.Stones_RMB,
                 StonesReservesPerMines = parent.StonesReservesPerMines,
-                Yuan_RMB = parent.Yuan_RMB
+                Yuan_RMB = parent.Yuan_RMB,
+                UserMaxHaveMinersCount = parent.UserMaxHaveMinersCount,
+                BuyOrderLockTimeMinutes = parent.BuyOrderLockTimeMinutes
             };
 
             return uiConfig;
@@ -263,7 +303,9 @@ namespace SuperMinersServerApplication.UIModel
                 StoneBuyerAwardGoldCoinMultiple = this.StoneBuyerAwardGoldCoinMultiple,
                 Stones_RMB = this.Stones_RMB,
                 StonesReservesPerMines = this.StonesReservesPerMines,
-                Yuan_RMB = this.Yuan_RMB
+                Yuan_RMB = this.Yuan_RMB,
+                UserMaxHaveMinersCount = this.UserMaxHaveMinersCount,
+                BuyOrderLockTimeMinutes = this.BuyOrderLockTimeMinutes
             };
 
             return dbConfig;

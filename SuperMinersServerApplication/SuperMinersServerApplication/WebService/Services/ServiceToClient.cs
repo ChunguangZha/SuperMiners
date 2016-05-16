@@ -59,40 +59,40 @@ namespace SuperMinersServerApplication.WebService.Services
             })).Start();
         }
 
-        public Stream GetClientAccessPolicy()
-        {
-            RSAProvider.LoadNoRSA();
+//        public Stream GetClientAccessPolicy()
+//        {
+//            RSAProvider.LoadNoRSA();
 
-            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
+//            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
 
-            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
-                                                    <access-policy>
-                                                        <cross-domain-access>
-                                                            <policy>
-                                                                <allow-from http-request-headers=""*"">
-                                                                    <domain uri=""*""/>
-                                                                </allow-from>
-                                                                <grant-to>
-                                                                    <resource path=""/"" include-subpaths=""true""/>
-                                                                </grant-to>
-                                                            </policy>
-                                                        </cross-domain-access>
-                                                    </access-policy>";
-            return new MemoryStream(Encoding.UTF8.GetBytes(result));
-        }
+//            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
+//                                                    <access-policy>
+//                                                        <cross-domain-access>
+//                                                            <policy>
+//                                                                <allow-from http-request-headers=""*"">
+//                                                                    <domain uri=""*""/>
+//                                                                </allow-from>
+//                                                                <grant-to>
+//                                                                    <resource path=""/"" include-subpaths=""true""/>
+//                                                                </grant-to>
+//                                                            </policy>
+//                                                        </cross-domain-access>
+//                                                    </access-policy>";
+//            return new MemoryStream(Encoding.UTF8.GetBytes(result));
+//        }
 
-        public Stream GetCrossDomain()
-        {
-            RSAProvider.LoadNoRSA();
+//        public Stream GetCrossDomain()
+//        {
+//            RSAProvider.LoadNoRSA();
 
-            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
+//            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
 
-            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
-                                                    <cross-domain-policy>
-                                                      <allow-access-from domain=""*"" />
-                                                    </cross-domain-policy>";
-            return new MemoryStream(Encoding.UTF8.GetBytes(result));
-        }
+//            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
+//                                                    <cross-domain-policy>
+//                                                      <allow-access-from domain=""*"" />
+//                                                    </cross-domain-policy>";
+//            return new MemoryStream(Encoding.UTF8.GetBytes(result));
+//        }
 
         public CallbackInfo Callback(string token)
         {
@@ -153,45 +153,45 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public string GetTimeZone(string token)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                StringBuilder sb = new StringBuilder();
-                try
-                {
-                    sb.Append("(GMT");
-                    TimeSpan ts = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
-                    if (ts.TotalSeconds == 0)
-                    {
-                        sb.Append(") ");
-                    }
-                    else
-                    {
-                        if (ts.TotalSeconds > 0)
-                        {
-                            sb.Append("+");
-                        }
+        //public string GetTimeZone(string token)
+        //{
+        //    if (RSAProvider.LoadRSA(token))
+        //    {
+        //        StringBuilder sb = new StringBuilder();
+        //        try
+        //        {
+        //            sb.Append("(GMT");
+        //            TimeSpan ts = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+        //            if (ts.TotalSeconds == 0)
+        //            {
+        //                sb.Append(") ");
+        //            }
+        //            else
+        //            {
+        //                if (ts.TotalSeconds > 0)
+        //                {
+        //                    sb.Append("+");
+        //                }
 
-                        sb.Append(ts.Hours.ToString("d2"));
-                        sb.Append(":");
-                        sb.Append(ts.Minutes.ToString("d2"));
-                        sb.Append(") ");
-                    }
-                    sb.Append(TimeZone.CurrentTimeZone.StandardName);
-                }
-                catch (Exception e)
-                {
-                    return string.Empty;
-                }
+        //                sb.Append(ts.Hours.ToString("d2"));
+        //                sb.Append(":");
+        //                sb.Append(ts.Minutes.ToString("d2"));
+        //                sb.Append(") ");
+        //            }
+        //            sb.Append(TimeZone.CurrentTimeZone.StandardName);
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            return string.Empty;
+        //        }
 
-                return sb.ToString();
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
+        //        return sb.ToString();
+        //    }
+        //    else
+        //    {
+        //        throw new Exception();
+        //    }
+        //}
 
         private void InvokeCallback(string token, string methodName, params object[] paras)
         {

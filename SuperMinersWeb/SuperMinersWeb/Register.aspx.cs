@@ -20,8 +20,8 @@ namespace SuperMinersWeb
         {
             if (this.txtUserName.Text == "" ||
                 this.txtPassword.Text == "" ||
-                this.txtConfirmPassword.Text == ""// ||
-                //this.txtAlipayRealName.Text == "" ||
+                this.txtConfirmPassword.Text == "" ||
+                this.txtNickName.Text == ""
                 //this.txtAlipayAccount.Text == ""
                 )
             {
@@ -34,13 +34,19 @@ namespace SuperMinersWeb
             }
 
             string userName = this.txtUserName.Text;
+            string nickName = this.txtNickName.Text;
             string alipay = this.txtAlipayAccount.Text;
             string alipayRealName = this.txtAlipayRealName.Text;
             string password = this.txtPassword.Text;
             string confirmpwd = this.txtConfirmPassword.Text;
             if (userName.Length > 15)
             {
-                Response.Write("<script>alert('用户名长度不能超过30个字符!')</script>");
+                Response.Write("<script>alert('用户名长度不能超过15个字符!')</script>");
+                return;
+            }
+            if (nickName.Length > 15)
+            {
+                Response.Write("<script>alert('昵称长度不能超过15个字符!')</script>");
                 return;
             }
             if (alipay.Length > 30)
@@ -50,17 +56,17 @@ namespace SuperMinersWeb
             }
             if (alipayRealName.Length > 15)
             {
-                Response.Write("<script>alert('支付宝真实姓名长度不能超过30个字符!')</script>");
+                Response.Write("<script>alert('支付宝真实姓名长度不能超过15个字符!')</script>");
                 return;
             }
             if (password.Length > 15)
             {
-                Response.Write("<script>alert('密码长度不能超过30个字符!')</script>");
+                Response.Write("<script>alert('密码长度不能超过15个字符!')</script>");
                 return;
             }
             if (confirmpwd.Length > 15)
             {
-                Response.Write("<script>alert('密码长度不能超过30个字符!')</script>");
+                Response.Write("<script>alert('密码长度不能超过15个字符!')</script>");
                 return;
             }
 
@@ -100,7 +106,7 @@ namespace SuperMinersWeb
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            result = WcfClient.Instance.RegisterUser(ip, userName, this.txtPassword.Text, alipay, alipayRealName, invitationCode);
+            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, alipay, alipayRealName, invitationCode);
             if (result == 0)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
