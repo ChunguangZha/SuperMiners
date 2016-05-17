@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="{Binding Strings.Title, Mode=OneWay, Source={StaticResource Language}}" 
         Height="300" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" 
-        Icon="Images/Logo128.jpg">
+        Icon="pack://siteoforigin:,,,/Images/Logo128.jpg">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="16*"/>

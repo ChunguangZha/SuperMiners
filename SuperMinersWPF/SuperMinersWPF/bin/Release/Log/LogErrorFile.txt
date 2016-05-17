@@ -246,3 +246,56 @@ Error:  [2016/5/17 1:38:48] ---- Log: 客户端a_001已退出.
 Error:  [2016/5/17 1:39:05] ---- Log: 客户端a_001已退出.
 -----------------------------------------------------
 
+Error:  [2016/5/17 23:10:14] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:10:20] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:10:30] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:10:43] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:10:59] ---- Log: 客户端a_001已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:11:14] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:35:42] ---- Log: 服务器连接失败。
+Exc.Message: 对 OAEP 填充进行解码时出错。Exc.Stack:    在 System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   在 System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   在 SuperMinersWPF.Wcf.Channel.CryptEncoder.Read(Stream stream) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs:行号 103
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 214
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:37:51] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:39:15] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:39:37] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:42:19] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:42:28] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:42:37] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:43:52] ---- Log: 客户端c已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/17 23:47:47] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+

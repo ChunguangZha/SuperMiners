@@ -100,10 +100,17 @@ namespace SuperMinersWPF.Wcf.Channel
                 Array.Copy(buffer, index, ivData, 0, ivLen);
                 index += ivLen;
 
-                byte[] key = RSAReceive.Decrypt(keyData, true);
-                byte[] iv = RSAReceive.Decrypt(ivData, true);
+                try
+                {
+                    byte[] key = RSAReceive.Decrypt(keyData, true);
+                    byte[] iv = RSAReceive.Decrypt(ivData, true);
+                    buffer = AESEncrypt.Decrypt(buffer, index, buffer.Length - index, key, iv);
+                }
+                catch (Exception exc)
+                {
+                    Console.WriteLine(exc);
+                }
 
-                buffer = AESEncrypt.Decrypt(buffer, index, buffer.Length - index, key, iv);
             }
 #endif
             return buffer;

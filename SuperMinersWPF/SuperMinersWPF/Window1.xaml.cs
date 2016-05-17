@@ -42,8 +42,8 @@ namespace SuperMinersWPF
 
             //App.MessageVMObject.StartListen();
 
-            imgDigStones.Image = System.Drawing.Image.FromFile(System.Windows.Forms.Application.StartupPath + "\\Images\\DigStones.gif");
-            imgDigStones.Size = new System.Drawing.Size(200, 200);
+            //imgDigStones.Image = System.Drawing.Image.FromFile(System.Windows.Forms.Application.StartupPath + "\\Images\\DigStones.gif");
+            //imgDigStones.Size = new System.Drawing.Size(200, 200);
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)

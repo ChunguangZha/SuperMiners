@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:winForm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         Loaded="Window_Loaded_1"
-        Height="600" Width="1000" Icon="Images/Logo128.jpg">
+        Height="600" Width="1000" Icon="pack://siteoforigin:,,,/Images/Logo128.jpg">
     <!--<Window.Background>
         <ImageBrush ImageSource="Images/background.jpg"/>
     </Window.Background>-->
@@ -38,7 +38,7 @@
             <RowDefinition Height="475*"/>
         </Grid.RowDefinitions>
         <Grid Name="panelLogo">
-            <Image Source="Images/迅灵矿场.jpg"/>
+            <Image Source="pack://siteoforigin:,,,/Images/迅灵矿场.jpg"/>
         </Grid>
         <Border Grid.Column="0" Grid.Row="1" Name="panelUserInfo" Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
             <Grid>

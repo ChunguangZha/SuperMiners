@@ -2,9 +2,9 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
-    <PublishUrlHistory>publish\|http://localhost:8090/</PublishUrlHistory>
-    <InstallUrlHistory />
-    <SupportUrlHistory />
+    <PublishUrlHistory>F:\My Work\SuperMinersPublish\|publish\|http://localhost:8090/</PublishUrlHistory>
+    <InstallUrlHistory>http://221.195.61.55:8090/Software/|http://221.195.61.55:8090/</InstallUrlHistory>
+    <SupportUrlHistory>http://localhost:8509/Default.aspx</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
     <ErrorReportUrlHistory />
