@@ -70,6 +70,15 @@ namespace SuperMinersWPF.StringResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 兴奋剂.
+        /// </summary>
+        public static string Dope {
+            get {
+                return ResourceManager.GetString("Dope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 贡献值.
         /// </summary>
         public static string Exp {

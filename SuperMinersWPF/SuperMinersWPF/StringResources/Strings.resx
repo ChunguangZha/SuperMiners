@@ -120,6 +120,9 @@
   <data name="Diamond" xml:space="preserve">
     <value>钻石</value>
   </data>
+  <data name="Dope" xml:space="preserve">
+    <value>兴奋剂</value>
+  </data>
   <data name="Exp" xml:space="preserve">
     <value>贡献值</value>
   </data>

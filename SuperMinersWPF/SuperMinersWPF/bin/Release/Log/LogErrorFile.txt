@@ -299,3 +299,19 @@ Error:  [2016/5/17 23:43:52] ---- Log: 客户端c已退出.
 Error:  [2016/5/17 23:47:47] ---- Log: 客户端a已退出.
 -----------------------------------------------------
 
+Error:  [2016/5/18 22:49:17] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/18 22:58:37] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/18 23:23:33] ---- Log: 服务器连接失败。
+Exc.Message: 字节编码无效。Exc.Stack:    在 System.Runtime.Serialization.Json.JsonEncodingStreamWrapper.InitForReading(Stream inputStream, Encoding expectedEncoding)
+   在 System.Runtime.Serialization.Json.XmlJsonReader.SetInput(Stream stream, Encoding encoding, XmlDictionaryReaderQuotas quotas, OnXmlDictionaryReaderClose onClose)
+   在 System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject(Stream stream)
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 321
+-----------------------------------------------------
+
+Error:  [2016/5/19 0:07:23] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+

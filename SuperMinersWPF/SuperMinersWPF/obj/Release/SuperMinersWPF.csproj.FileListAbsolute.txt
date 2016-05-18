@@ -32,7 +32,12 @@ F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.cspr
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.baml
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\DigStones.gif
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\Logo128.jpg
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\迅灵矿场.jpg
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.config
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.manifest
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.application
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Assets\Style.baml
@@ -67,12 +72,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.Properties.Resources.resources
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.StringResources.Strings.resources
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csproj.GenerateResource.Cache
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\DigStones.gif
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.manifest
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.application
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe.manifest
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.application
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\Logo128.jpg
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\迅灵矿场.jpg
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb
