@@ -63,8 +63,10 @@ namespace SuperMinersServerApplication.WebService.Services
             if (ClientManager.IsExistUserName(userName))
             {
                 token = ClientManager.GetToken(userName);
-                Logout(token);
-                return "ISLOGGED";
+                new Thread(new ParameterizedThreadStart(o =>
+                {
+                    this.KickoutByUser(o.ToString());
+                })).Start(token);
             }
             try
             {
@@ -173,7 +175,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -184,12 +186,84 @@ namespace SuperMinersServerApplication.WebService.Services
                         return false;
                     }
                     string userName = ClientManager.GetClientUserName(token);
-                    return PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName);
+                    return PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName, email, qq);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("ChangePassword", exc);
+                    LogHelper.Instance.AddErrorLog("ChangePlayerSimpleInfo", exc);
                     return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int CheckUserAlipayExist(string token, string alipayAccount, string alipayRealName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
+                    {
+                        return -2;
+                    }
+                    int count = DBProvider.UserDBProvider.GetPlayerCountByAlipay(alipayAccount, alipayRealName);
+                    return count;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("CheckUserAlipayExist Exception. alipayAccount: " + alipayAccount
+                        + ", alipayRealName: " + alipayRealName, exc);
+
+                    return -1;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public UserReferrerTreeItem[] GetUserReferrerTree(string token, string userName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    List<UserReferrerTreeItem> results = new List<UserReferrerTreeItem>();
+
+                    UserReferrerTreeItem parent = DBProvider.UserDBProvider.GetUserReferrerUpTree(userName);
+                    UserReferrerTreeItem[] childrens = DBProvider.UserDBProvider.GetUserReferrerDownTree(userName);
+                    if (parent != null)
+                    {
+                        parent.Level = -1;
+                        results.Add(parent);
+                    }
+                    if (childrens != null)
+                    {
+                        foreach (var child in childrens)
+                        {
+                            child.Level = 1;
+                            results.Add(child);
+                        }
+                    }
+
+                    return results.ToArray();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetUserReferrerTree Exception. userName: " + userName, exc);
+
+                    return null;
                 }
             }
             else

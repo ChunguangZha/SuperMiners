@@ -59,6 +59,7 @@
     <Compile Include="User\PlayerInfo.cs" />
     <Compile Include="User\PlayerSimpleInfo.cs" />
     <Compile Include="User\PlayerTempOutputStoneInfo.cs" />
+    <Compile Include="User\UserReferrerTreeItem.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

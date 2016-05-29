@@ -35,7 +35,7 @@ namespace MetaData.SystemConfig
         /// 给新注册用户赠送矿山数
         /// </summary>
         [DataMember]
-        public int GiveToNewUserMines = 0;
+        public float GiveToNewUserMines = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿工数

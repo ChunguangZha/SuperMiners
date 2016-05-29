@@ -317,7 +317,7 @@
                                     <my:NumericTextBox Grid.Row="10" Grid.Column="1" Value="{Binding ExchangeExpenseMinNumber, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="5"/>
                                     <TextBlock Grid.Row="10" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="11" Text="玩家最多可拥有矿工数" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="11" Grid.Column="1" Value="{Binding UserMaxHaveMinersCount, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="11" Grid.Column="1" Value="{Binding UserMaxHaveMinersCount, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000"/>
                                     <TextBlock Grid.Row="12" Text="买家锁定订单时间" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="12" Grid.Column="1" Value="{Binding BuyOrderLockTimeMinutes, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="12" Grid.Column="2" Text="分钟" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>

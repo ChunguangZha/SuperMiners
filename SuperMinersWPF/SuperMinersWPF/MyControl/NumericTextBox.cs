@@ -207,6 +207,11 @@ namespace SuperMinersWPF.MyControl
 
         #endregion
 
+        protected override void OnTextChanged(TextChangedEventArgs e)
+        {
+            this.ChangeValue(this.Text);
+        }
+
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -215,13 +220,13 @@ namespace SuperMinersWPF.MyControl
                 {
                     if (FocusControl == null)
                     {
-                        this.ChangeValue();
+                        this.ChangeValue(this.Text);
                     }
                     else
                     {
                         if (!FocusControl.Focus())
                         {
-                            this.ChangeValue();
+                            this.ChangeValue(this.Text);
                         }
                     }
                 }
@@ -229,7 +234,7 @@ namespace SuperMinersWPF.MyControl
                 {
                     if (!FocusWindow.Focus())
                     {
-                        this.ChangeValue();
+                        this.ChangeValue(this.Text);
                     }
                 }
                 e.Handled = true;
@@ -238,27 +243,33 @@ namespace SuperMinersWPF.MyControl
             base.OnKeyDown(e);
         }
 
+        protected override void OnGotFocus(RoutedEventArgs e)
+        {
+            this.SelectAll();
+            base.OnGotFocus(e);
+        }
+
         protected override void OnLostFocus(RoutedEventArgs e)
         {
-            this.ChangeValue();
+            this.ChangeValue(this.Text);
 
             base.OnLostFocus(e);
         }
 
-        public void ChangeValue()
+        public void ChangeValue(string text)
         {
             double value;
 
-            if (this.Text.Length == 0)
+            if (text.Length == 0)
             {
                 value = 0;
             }
             else
             {
-                if (!Double.TryParse(this.Text, NumberStyles.AllowExponent | NumberStyles.Float, CultureInfo.InvariantCulture, out value))
+                if (!Double.TryParse(text, NumberStyles.AllowExponent | NumberStyles.Float, CultureInfo.InvariantCulture, out value))
                 {
-                    this.Text = this._inputed;
-                    this.SelectionStart = this.Text.Length;
+                    text = this._inputed;
+                    this.SelectionStart = text.Length;
                     return;
                 }
             }

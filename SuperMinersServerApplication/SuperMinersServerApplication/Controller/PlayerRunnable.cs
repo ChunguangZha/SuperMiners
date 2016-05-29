@@ -37,7 +37,7 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
-        public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             if (!string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.AlipayRealName))
             {
@@ -47,7 +47,7 @@ namespace SuperMinersServerApplication.Controller
                     return false;
                 }
             }
-            DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName);
+            DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName, email, qq);
             this.BasePlayer.SimpleInfo.Alipay = alipayAccount;
             this.BasePlayer.SimpleInfo.AlipayRealName = alipayRealName;
             return true;
@@ -115,6 +115,11 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int GatherStones(int stones)
         {
+            if (stones <= 0)
+            {
+                return 0;
+            }
+
             DateTime stopTime = DateTime.Now;
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
@@ -160,6 +165,11 @@ namespace SuperMinersServerApplication.Controller
 
         public int BuyMiner(int minersCount)
         {
+            if (minersCount <= 0)
+            {
+                return 0;
+            }
+
             lock (_lockFortuneAction)
             {
                 float allGoldCoin = BasePlayer.FortuneInfo.GoldCoin + BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
@@ -204,6 +214,11 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int BuyMine(int minesCount)
         {
+            if (minesCount <= 0)
+            {
+                return 0;
+            }
+
             lock (_lockFortuneAction)
             {
                 float needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
@@ -235,6 +250,11 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int SellStones(int SellStonesCount)
         {
+            if (SellStonesCount <= 0)
+            {
+                return 0;
+            }
+
             lock (_lockFortuneAction)
             {
                 float sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;

@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.User;
+using SuperMinersWPF.StringResources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,6 +50,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("MinersCount");
                 NotifyPropertyChange("AllOutputPerHour");
                 NotifyPropertyChange("TempOutputStones");
+                NotifyPropertyChange("TempOutputStonesString");
                 NotifyPropertyChange("StockOfStones");
                 NotifyPropertyChange("FreezingStones");
                 NotifyPropertyChange("SellableStones");
@@ -160,6 +162,34 @@ namespace SuperMinersWPF.Models
         }
 
         /// <summary>
+        /// 所有矿工每天总产量
+        /// </summary>
+        public float AllOutputPerDay
+        {
+            get
+            {
+                return AllOutputPerHour * 24;
+            }
+        }
+
+        private int _outputCountDown;
+
+        public int OutputCountdown
+        {
+            get { return this._outputCountDown; }
+            set
+            {
+                this._outputCountDown = value;
+                NotifyPropertyChange("OutputCountdownString");
+            }
+        }
+
+        public string OutputCountdownString
+        {
+            get { return OutputCountdown.ToString() + "秒"; }
+        }
+
+        /// <summary>
         /// 可开采矿石储量
         /// </summary>
         public float WorkableStonesReservers
@@ -211,7 +241,16 @@ namespace SuperMinersWPF.Models
                     this._parentObject.FortuneInfo.TempOutputStones = value;
                 }
                 NotifyPropertyChange("TempOutputStones");
+                NotifyPropertyChange("TempOutputStonesString");
                 NotifyPropertyChange("WorkableStonesReserves");
+            }
+        }
+
+        public string TempOutputStonesString
+        {
+            get
+            {
+                return TempOutputStones.ToString("0.00") + " " + Strings.Stone;
             }
         }
 

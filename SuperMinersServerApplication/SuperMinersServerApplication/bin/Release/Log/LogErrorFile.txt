@@ -1,10 +1,9 @@
-Error:  [2016/5/14 13:14:51] ---- Log: 启动服务失败。
-Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '== 2' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+Error:  [2016/5/29 19:08:53] ---- Log: GetUserReferrerTree Exception. userName: a
+Exc.Message: Unable to convert MySQL date/time value to System.DateTimeExc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetUserReferrerDownTree(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 590
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetUserReferrerTree(String token, String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 245
+-----------------------------------------------------
+
+teReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
    在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
    在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable,

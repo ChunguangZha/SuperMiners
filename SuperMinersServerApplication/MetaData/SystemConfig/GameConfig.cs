@@ -62,7 +62,7 @@ namespace MetaData.SystemConfig
         /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。
         /// </summary>
         [DataMember]
-        public int TempStoneOutputValidHour = 3;
+        public int TempStoneOutputValidHour = 24;
 
         /// <summary>
         /// 矿石买家奖励金币倍数

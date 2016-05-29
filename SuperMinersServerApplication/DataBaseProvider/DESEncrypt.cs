@@ -47,6 +47,11 @@ namespace DataBaseProvider
         {
             try
             {
+                if (string.IsNullOrEmpty(decryptString))
+                {
+                    return string.Empty;
+                }
+
                 byte[] rgbKey = Encoding.UTF8.GetBytes(Key2);
                 byte[] rgbIV = Keys;
                 byte[] inputByteArray = Convert.FromBase64String(decryptString);

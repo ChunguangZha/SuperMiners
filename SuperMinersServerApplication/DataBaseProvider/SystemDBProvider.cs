@@ -189,7 +189,7 @@ namespace DataBaseProvider
                     config.UserCountCreateByOneIP = Convert.ToInt32(dt.Rows[0]["UserCountCreateByOneIP"]);
                     config.GiveToNewUserExp = Convert.ToSingle(dt.Rows[0]["GiveToNewUserExp"]);
                     config.GiveToNewUserGoldCoin = Convert.ToSingle(dt.Rows[0]["GiveToNewUserGoldCoin"]);
-                    config.GiveToNewUserMines = Convert.ToInt32(dt.Rows[0]["GiveToNewUserMines"]);
+                    config.GiveToNewUserMines = Convert.ToSingle(dt.Rows[0]["GiveToNewUserMines"]);
                     config.GiveToNewUserMiners = Convert.ToInt32(dt.Rows[0]["GiveToNewUserMiners"]);
                     config.GiveToNewUserStones = Convert.ToSingle(dt.Rows[0]["GiveToNewUserStones"]);
 

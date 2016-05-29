@@ -17,7 +17,7 @@ namespace SuperMinersWPF.ViewModels
         /// <summary>
         /// 每分钟执行一次
         /// </summary>
-        private System.Timers.Timer _timerUpdateStoneOutput = new System.Timers.Timer(1000 * 60);
+        private System.Timers.Timer _timerUpdateStoneOutput = new System.Timers.Timer(1000);
 
         public void StartListen()
         {
@@ -29,37 +29,49 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
+        int _countdown = 60;
+
         void TimerUpdateStoneOutput_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
             {
                 if (GlobalData.IsLogined)
                 {
-                    DateTime startTime = GlobalData.CurrentUser.TempOutputStonesStartTime;
-
-                    TimeSpan span = DateTime.Now - startTime;
-                    if (span.TotalHours < 0)
+                    GlobalData.CurrentUser.OutputCountdown = this._countdown--;
+                    if (this._countdown == 0)
                     {
-                        return;
+                        ComputeOutput();
+                        this._countdown = 60;
                     }
-
-                    float tempOutput = (float)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
-
-                    if (tempOutput > GlobalData.CurrentUser.MaxTempStonesOutput)
-                    {
-                        tempOutput = GlobalData.CurrentUser.MaxTempStonesOutput;
-                    }
-                    if (tempOutput > GlobalData.CurrentUser.WorkableStonesReservers)
-                    {
-                        tempOutput = GlobalData.CurrentUser.WorkableStonesReservers;
-                    }
-                    GlobalData.CurrentUser.TempOutputStones = (int)tempOutput;
                 }
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("TimerUpdateStoneOutput_Elapsed", exc);
             }
+        }
+
+        private void ComputeOutput()
+        {
+            DateTime startTime = GlobalData.CurrentUser.TempOutputStonesStartTime;
+
+            TimeSpan span = DateTime.Now - startTime;
+            if (span.TotalHours < 0)
+            {
+                return;
+            }
+
+            float tempOutput = (float)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
+
+            if (tempOutput > GlobalData.CurrentUser.MaxTempStonesOutput)
+            {
+                tempOutput = GlobalData.CurrentUser.MaxTempStonesOutput;
+            }
+            if (tempOutput > GlobalData.CurrentUser.WorkableStonesReservers)
+            {
+                tempOutput = GlobalData.CurrentUser.WorkableStonesReservers;
+            }
+            GlobalData.CurrentUser.TempOutputStones = tempOutput;
         }
 
         public void StopListen()

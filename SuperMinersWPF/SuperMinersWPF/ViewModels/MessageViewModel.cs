@@ -68,40 +68,6 @@ namespace SuperMinersWPF.ViewModels
             get { return this._listPlayerActionLog; }
         }
 
-        //public void StartListen()
-        //{
-        //    if (!isStartedListen)
-        //    {
-        //        isStartedListen = true;
-        //        this._threadListen = new Thread(ThreadListenMessage);
-        //        this._threadListen.IsBackground = true;
-        //        this._threadListen.Name = "Thread Listen Message";
-        //        this._threadListen.Start();
-        //    }
-        //}
-
-        //private void ThreadListenMessage()
-        //{
-        //    while (isStartedListen)
-        //    {
-        //        AsyncGetPlayerAction();
-        //        Thread.Sleep(1000);
-        //    }
-        //}
-
-        //void TimerListenMessage_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
-        //{
-        //    AsyncGetPlayerAction();
-        //}
-
-        //public void StopListen()
-        //{
-        //    if (isStartedListen)
-        //    {
-        //        isStartedListen = false;
-        //    }
-        //}
-
         public void AsyncGetPlayerAction()
         {
             try
@@ -178,8 +144,14 @@ namespace SuperMinersWPF.ViewModels
                 }
                 ListPlayerActionLog.Add(new PlayerActionLogUIModel(log));
             }
+
+            if (GetPlayerActionCompleted != null)
+            {
+                GetPlayerActionCompleted(null, null);
+            }
         }
 
+        public event EventHandler GetPlayerActionCompleted;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

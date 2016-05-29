@@ -76,12 +76,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private int _giveToNewUserMines = 0;
+        private float _giveToNewUserMines = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿山数
         /// </summary>
-        public int GiveToNewUserMines
+        public float GiveToNewUserMines
         {
             get { return this._giveToNewUserMines; }
             set

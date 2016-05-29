@@ -73,6 +73,27 @@ namespace DataBaseProvider
             return toplistInfos;
         }
 
+        internal static UserReferrerTreeItem[] GetUserReferrerTreeItem(DataTable dt)
+        {
+            UserReferrerTreeItem[] players = new UserReferrerTreeItem[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                UserReferrerTreeItem player = new UserReferrerTreeItem();
+
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
+                
+                player.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+                player.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.UserName : DESEncrypt.DecryptDES(encryptedNickName);
+                player.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
+                player.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
+
+                players[i] = player;
+            }
+
+            return players;
+        }
+
         internal static PlayerInfo[] GetPlayerInfoFromDataTable(DataTable dt)
         {
             PlayerInfo[] players = new PlayerInfo[dt.Rows.Count];
@@ -85,13 +106,17 @@ namespace DataBaseProvider
                 string encryptedUserPassword = dt.Rows[i]["Password"].ToString();
                 string encryptedAlipay = dt.Rows[i]["Alipay"] == DBNull.Value ? "" : dt.Rows[i]["Alipay"].ToString();
                 string encryptedAlipayRealName = dt.Rows[i]["AlipayRealName"] == DBNull.Value ? "" : dt.Rows[i]["AlipayRealName"].ToString();
+                string encryptedEmail = dt.Rows[i]["Email"] == DBNull.Value ? "" : dt.Rows[i]["Email"].ToString();
+                string encryptedQQ = dt.Rows[i]["QQ"] == DBNull.Value ? "" : dt.Rows[i]["QQ"].ToString();
                 string encryptedInvitationCode = dt.Rows[i]["InvitationCode"].ToString();
 
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
-                player.SimpleInfo.Alipay = string.IsNullOrEmpty(encryptedAlipay) ? "" : DESEncrypt.DecryptDES(encryptedAlipay);
-                player.SimpleInfo.AlipayRealName = string.IsNullOrEmpty(encryptedAlipayRealName) ? "" : DESEncrypt.DecryptDES(encryptedAlipayRealName);
+                player.SimpleInfo.Alipay = DESEncrypt.DecryptDES(encryptedAlipay);
+                player.SimpleInfo.AlipayRealName = DESEncrypt.DecryptDES(encryptedAlipayRealName);
+                player.SimpleInfo.Email = DESEncrypt.DecryptDES(encryptedEmail);
+                player.SimpleInfo.QQ = DESEncrypt.DecryptDES(encryptedQQ);
                 player.SimpleInfo.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
                 player.SimpleInfo.InvitationCode = DESEncrypt.DecryptDES(encryptedInvitationCode);
                 player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);

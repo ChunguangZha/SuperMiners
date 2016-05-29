@@ -11,6 +11,7 @@ namespace SuperMinersWPF.Wcf.Clients
     public partial class ServerClient
     {
         public event Action OnKickout;
+        public event Action OnKickoutByUser;
         public event Action OnLogedIn;
         public event Action OnLogedOut;
         public event Action OnPlayerInfoChanged;
@@ -65,14 +66,40 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-        #region ChangeAlipay
+        #region ChangePlayerSimpleInfo
 
-        public event EventHandler<WebInvokeEventArgs<bool>> ChangeAlipayCompleted;
-        public void ChangeAlipay(string alipayAccount, string alipayRealName, object userState)
+        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerSimpleInfoCompleted;
+        public void ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq, object userState)
         {
             if (GlobalData.IsLogined)
             {
-                this._invoker.InvokeUserState<bool>(this._context, "ChangeAlipay", this.ChangeAlipayCompleted, userState, GlobalData.Token, alipayAccount, alipayRealName);
+                this._invoker.InvokeUserState<bool>(this._context, "ChangePlayerSimpleInfo", this.ChangePlayerSimpleInfoCompleted, userState, GlobalData.Token, nickName, alipayAccount, alipayRealName, email, qq);
+            }
+        }
+
+        #endregion
+
+        #region CheckUserAlipayExist
+
+        public event EventHandler<WebInvokeEventArgs<int>> CheckUserAlipayExistCompleted;
+        public void CheckUserAlipayExist(string alipayAccount, string alipayRealName, object userState)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.InvokeUserState<int>(this._context, "CheckUserAlipayExist", this.CheckUserAlipayExistCompleted, userState, GlobalData.Token, alipayAccount, alipayRealName);
+            }
+        }
+
+        #endregion
+
+        #region GetUserReferrerTree
+
+        public event EventHandler<WebInvokeEventArgs<UserReferrerTreeItem[]>> GetUserReferrerTreeCompleted;
+        public void GetUserReferrerTree(string userName, object userState)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.InvokeUserState<UserReferrerTreeItem[]>(this._context, "GetUserReferrerTree", this.GetUserReferrerTreeCompleted, userState, GlobalData.Token, userName);
             }
         }
 
@@ -83,6 +110,14 @@ namespace SuperMinersWPF.Wcf.Clients
         public void RaiseOnKickout()
         {
             Action handler = this.OnKickout;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+        public void RaiseOnKickoutByUser()
+        {
+            Action handler = this.OnKickoutByUser;
             if (null != handler)
             {
                 handler();

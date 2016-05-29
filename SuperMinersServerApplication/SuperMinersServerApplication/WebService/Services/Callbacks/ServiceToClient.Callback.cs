@@ -19,5 +19,6 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             this.InvokeCallback(toke, "SendPlayerActionLog");
         }
+
     }
 }

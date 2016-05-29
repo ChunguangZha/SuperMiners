@@ -34,6 +34,12 @@ namespace MetaData.User
         [DataMember]
         public string AlipayRealName { get; set; }
 
+        [DataMember]
+        public string Email { get; set; }
+
+        [DataMember]
+        public string QQ { get; set; }
+
         /// <summary>
         /// 用户注册时的IP
         /// </summary>

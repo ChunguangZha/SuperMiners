@@ -143,5 +143,22 @@ namespace SuperMinersWeb.Wcf
                 return -1;
             }
         }
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public int CheckEmailExist(string email)
+        {
+            try
+            {
+                return base.Channel.CheckEmailExist(email);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
     }
 }

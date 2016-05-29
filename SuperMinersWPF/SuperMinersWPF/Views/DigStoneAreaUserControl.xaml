@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="SuperMinersWPF.Views.DigStoneAreaUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="500" d:DesignWidth="600">
+    <Grid Background="#FFF0F0F0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Name="gridActionMessage">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Background="#FFAFBCBB">
+                <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/player.png"/>
+                <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">
+                                <Run Text="共"/>
+                                <Run Text="{Binding SystemAllPlayerCount}"/>
+                                <Run Text="矿主"/>
+                                <Run Text="{Binding SystemAllMinerCount}"/>
+                                <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
+                </TextBlock>
+                <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
+                <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
+                                <Run Text="当前系统共累计生产： "/>
+                                <Run Text="{Binding SystemAllOutputStoneCount}"/>
+                                <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
+                </TextBlock>
+            </StackPanel>
+            <ListBox Name="listboxActionMessage" Grid.Row="1" Margin="5" Background="Transparent" ItemsSource="{Binding ListPlayerActionLog}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Line Grid.ColumnSpan="3" StrokeDashArray="4,2" Fill="#FF8D8D8D" X2="300"/>
+                            <TextBlock Grid.Row="1" Text="{Binding UserName, Mode=OneWay}" Foreground="DarkBlue" Margin="5" FontStyle="Italic" FontSize="12"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding LogMessage, Mode=OneWay}" TextWrapping="Wrap" Margin="20,5,5,5"/>
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Time, Mode=OneWay}" Foreground="DarkGreen" Margin="5"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Column="1" Name="gridGetMoneyShowImages" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="1" Text="提现晒图" Margin="5,0"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="当前系统用300矿主成功提现" Margin="5,0"/>
+            <Border Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                <ListBox Grid.Row="1" x:Name="listChat" Margin="5">
+                    <ListBoxItem>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="矿主 小倩 2016/04/04 22:22:22 成功提现" FontStyle="Italic" FontSize="12" Foreground="DarkBlue"/>
+                            <Button Content="提现图" Width="200" Height="200" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="矿主 abc 2016/04/04 22:22:22 成功提现" FontStyle="Italic" FontSize="12" Foreground="DarkBlue"/>
+                            <Button Content="提现图" Width="200" Height="200" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

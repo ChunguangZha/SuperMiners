@@ -31,7 +31,9 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.txtMessage.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付价值{0}矿石。", 50 * GlobalData.GameConfig.Stones_RMB);
             this.txtUserName.Text = GlobalData.CurrentUser.UserName;
+            this.txtNickName.Text = GlobalData.CurrentUser.NickName;
             this.txtAlipayAccount.Text = GlobalData.CurrentUser.Alipay;
             this.txtAlipayRealName.Text = GlobalData.CurrentUser.AlipayRealName;
             
@@ -52,15 +54,55 @@ namespace SuperMinersWPF.Views
             {
                 this.txtAlipayRealName.IsReadOnly = true;
             }
-            GlobalData.Client.ChangeAlipayCompleted += Client_ChangeAlipayCompleted;
+
+            GlobalData.Client.CheckUserAlipayExistCompleted += Client_CheckUserAlipayExistCompleted;
+            GlobalData.Client.ChangePlayerSimpleInfoCompleted += Client_ChangePlayerSimpleInfoCompleted;
+        }
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Client_CheckUserAlipayExistCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("修改失败。");
+                return;
+            }
+
+            if (e.Result <= -2)
+            {
+                MyMessageBox.ShowInfo("支付宝账户或者真实姓名无效，请重新输入。");
+                return;
+            }
+            if (e.Result == -1)
+            {
+                MyMessageBox.ShowInfo("与服务器通信异常，请稍候再试。");
+                return;
+            }
+            if (e.Result > 0)
+            {
+                MyMessageBox.ShowInfo("支付宝账户已经被其它玩家绑定，请输入其它账户。");
+                return;
+            }
+
+            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, email, qq);
         }
 
         private void Window_Closed(object sender, EventArgs e)
         {
-            GlobalData.Client.ChangeAlipayCompleted += Client_ChangeAlipayCompleted;
+            GlobalData.Client.CheckUserAlipayExistCompleted -= Client_CheckUserAlipayExistCompleted;
+            GlobalData.Client.ChangePlayerSimpleInfoCompleted -= Client_ChangePlayerSimpleInfoCompleted;
         }
 
-        void Client_ChangeAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_ChangePlayerSimpleInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
             if (e.Cancelled)
             {
@@ -73,21 +115,14 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            if (e.UserState != null)
-            {
-                string[] states = e.UserState as string[];
-                if (states != null && states.Length == 2)
-                {
-                    GlobalData.CurrentUser.ParentObject.SimpleInfo.Alipay = states[0];
-                    GlobalData.CurrentUser.ParentObject.SimpleInfo.AlipayRealName = states[1];
-                }
-            }
+            GlobalData.CurrentUser.ParentObject.SimpleInfo.Alipay = alipay;
+            GlobalData.CurrentUser.ParentObject.SimpleInfo.AlipayRealName = alipayRealName;
 
             MyMessageBox.ShowInfo("修改成功。");
 
             _syn.Post(p =>
             {
-                this.DialogResult = true;
+                this.Close();
             }, null);
         }
 
@@ -97,29 +132,49 @@ namespace SuperMinersWPF.Views
             win.ShowDialog();
         }
 
+        string nickName = "";
+        string alipay = "";
+        string alipayRealName = "";
+        string email = "";
+        string qq = "";
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            string nickName = this.txtNickName.Text;
+            nickName = this.txtNickName.Text;
             if (string.IsNullOrEmpty(nickName))
             {
                 MyMessageBox.ShowInfo("请填写昵称。");
                 return;
             }
 
-            string newAA = this.txtAlipayAccount.Text;
-            if (string.IsNullOrEmpty(newAA))
+            email = this.txtEmail.Text;
+            if (string.IsNullOrEmpty(email))
+            {
+                MyMessageBox.ShowInfo("请填写邮箱。");
+                return;
+            }
+            qq = this.txtQQ.Text;
+            if (string.IsNullOrEmpty(qq))
+            {
+                MyMessageBox.ShowInfo("请填写QQ。");
+                return;
+            }
+
+            alipay = this.txtAlipayAccount.Text;
+            if (string.IsNullOrEmpty(alipay))
             {
                 MyMessageBox.ShowInfo("请填写支付宝账户。");
                 return;
             }
 
-            string newAR = this.txtAlipayRealName.Text;
-            if (string.IsNullOrEmpty(newAR))
+            alipayRealName = this.txtAlipayRealName.Text;
+            if (string.IsNullOrEmpty(alipayRealName))
             {
                 MyMessageBox.ShowInfo("请填写支付宝实名认证的真实姓名。");
                 return;
             }
-            AsyncChangePlayerSimpleInfo(newAA, newAR);
+
+            GlobalData.Client.CheckUserAlipayExist(alipay, alipayRealName, null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -127,9 +182,9 @@ namespace SuperMinersWPF.Views
             this.DialogResult = false;
         }
 
-        public void AsyncChangePlayerSimpleInfo(string alipayAccount, string alipayRealName)
+        public void AsyncChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
-            GlobalData.Client.ChangeAlipay(alipayAccount, alipayRealName, new string[] { alipayAccount, alipayRealName });
+            GlobalData.Client.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq, new string[] { alipayAccount, alipayRealName });
         }
 
     }

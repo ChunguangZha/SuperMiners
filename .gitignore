@@ -64,3 +64,6 @@ SuperMinersServerApplication/DataBaseProvider/bin/Release/DataBaseProvider.pdb
 *.dll
 SuperMinersServerApplication/DataBaseProvider/bin/Release/MetaData.pdb
 *.dll
+*.dll
+SuperMinersServerApplication/DataBaseProvider/bin/Release/DataBaseProvider.pdb
+*.pdb

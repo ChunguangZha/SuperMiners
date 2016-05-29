@@ -116,7 +116,7 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                return DBProvider.UserDBProvider.GetMinerTopList();
+                return TopListController.Instance.GetMinerTopList();
             }
             else
             {
@@ -128,7 +128,7 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                return DBProvider.UserDBProvider.GetGoldCoinTopList();
+                return null;
             }
             else
             {
@@ -136,5 +136,16 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public TopListInfo[] GetReferrerTopList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return TopListController.Instance.GetReferrerTopList();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

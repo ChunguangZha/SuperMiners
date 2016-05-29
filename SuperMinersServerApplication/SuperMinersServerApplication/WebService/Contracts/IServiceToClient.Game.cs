@@ -75,5 +75,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         TopListInfo[] GetGoldCoinTopList(string token);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetReferrerTopList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        TopListInfo[] GetReferrerTopList(string token);
     }
 }

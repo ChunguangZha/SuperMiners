@@ -12,7 +12,40 @@
     </section>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="homepage">
+    <script type="text/javascript">
+        var xmlRequest;
+        
+        function CreateHttpRequest() {
+            try{
+                xmlRequest = new XMLHttpRequest();
+            } catch (err) {
+                xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+
+        function CallServerForUpdate() {
+            xmlRequest.open("GET", "AuthCodeImageCallbackHandler.ashx");
+            xmlRequest.onreadystatechange = ApplyUpdate;
+            xmlRequest.send();
+        }
+
+        function ApplyUpdate() {
+            if (xmlRequest.readyState == 4) {
+                if (xmlRequest.status == 200) {
+                    var img = document.getElementById("imgAuthCode");
+                    var response = xmlRequest.response;
+                    img.src = response;
+                }
+            }
+        }
+
+        function RefreshImg() {
+            var img = document.getElementById('imgAuthCode');
+            img.src = null;
+            img.src = "AuthCode.aspx";
+        }
+    </script>
+    <div class="homepage" onload="CreateHttpRequest">
         <p class="validation-summary-errors">
              <asp:Literal runat="server" ID="ErrorMessage" />
         </p>
@@ -47,12 +80,22 @@
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="两次密码不一至." />
                 </li>
                 <li>
-                    <label for="txtAlipayAccount" class="label">支付宝账户：</label>
-                    <asp:TextBox ID="txtAlipayAccount" runat="server" MaxLength="30" />
+                    <label for="txtAlipayAccount" class="label">邮箱：</label>
+                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" TextMode="Email" />
+                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEmail"
+                                    CssClass="field-validation-error" ErrorMessage="请填写邮箱." />
                 </li>
                 <li>
-                    <label for="txtAlipayRealName" class="label">支付宝姓名：</label>
-                    <asp:TextBox ID="txtAlipayRealName" runat="server" MaxLength="15" />
+                    <label for="txtAlipayRealName" class="label">QQ：</label>
+                    <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" TextMode="Number" />
+                </li>
+                <li>
+                    <div class="positionR">
+                        <label for="txtAlipayRealName" class="label">验证码：</label>
+                        <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" ToolTip="请输入验证码！" />
+                        <img src="AuthCodeImageCallbackHandler.ashx" alt="" id="imgAuthCode" /> 
+                        <a href="javascript:CallServerForUpdate()">更换验证码</a> 
+                    </div>
                 </li>
             </ol>
             <asp:Button ID="btnRegister" CssClass="button" runat="server" Text="注  册" CausesValidation="true" OnClick="btnRegister_Click" />

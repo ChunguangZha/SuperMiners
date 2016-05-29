@@ -66,6 +66,7 @@
     <Compile Include="Controller\PlayerActionController.cs" />
     <Compile Include="Controller\PlayerController.cs" />
     <Compile Include="Controller\PlayerRunnable.cs" />
+    <Compile Include="Controller\TopListController.cs" />
     <Compile Include="Encoder\AESEncrypt.cs" />
     <Compile Include="Encoder\CryptEncoder.cs" />
     <Compile Include="Encoder\CryptMessageEncoderElement.cs" />

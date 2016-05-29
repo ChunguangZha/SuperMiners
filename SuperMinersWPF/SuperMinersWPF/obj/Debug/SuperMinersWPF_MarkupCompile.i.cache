@@ -10,11 +10,11 @@ none
 false
 TRACE;Encrypt
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-12-538232362
+151230947121
 
-621005158636
+66599198619
 201805710553
-Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
-False
+True
 

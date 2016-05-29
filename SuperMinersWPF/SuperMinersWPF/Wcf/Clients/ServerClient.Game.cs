@@ -79,5 +79,14 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetReferrerTopList
+
+        public event EventHandler<WebInvokeEventArgs<TopListInfo[]>> GetReferrerTopListCompleted;
+        public void GetReferrerTopList()
+        {
+            this._invoker.Invoke<TopListInfo[]>(this._context, "GetReferrerTopList", this.GetReferrerTopListCompleted, GlobalData.Token);
+        }
+
+        #endregion
     }
 }

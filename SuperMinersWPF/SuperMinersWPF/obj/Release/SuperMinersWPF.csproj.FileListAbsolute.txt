@@ -32,9 +32,6 @@ F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.cspr
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.baml
 F:\My Work\WinForm\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\InvitationFriendsWindow.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\DigStones.gif
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\Logo128.jpg
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Images\迅灵矿场.jpg
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.config
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.manifest
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.application
@@ -76,3 +73,10 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.application
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\DigStoneAreaUserControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\StonesMarketUserControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\TopListUserControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\DigStoneAreaUserControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\StonesMarketUserControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\TopListUserControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache

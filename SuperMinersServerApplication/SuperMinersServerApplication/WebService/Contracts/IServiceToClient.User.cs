@@ -44,11 +44,33 @@ namespace SuperMinersServerApplication.WebService.Contracts
         bool ChangePassword(string token, string oldPassword, string newPassword);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/ChangeAlipay",
+        [WebInvoke(UriTemplate = "/WebService/ChangePlayerSimpleInfo",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName);
+        bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq);
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/CheckUserAlipayExist",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int CheckUserAlipayExist(string token, string alipayAccount, string alipayRealName);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetUserReferrerTree",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        UserReferrerTreeItem[] GetUserReferrerTree(string token, string userName);
     }
 }

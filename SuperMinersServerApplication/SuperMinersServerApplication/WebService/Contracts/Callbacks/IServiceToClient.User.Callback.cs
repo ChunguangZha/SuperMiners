@@ -13,6 +13,9 @@ namespace SuperMinersServerApplication.WebService.Contracts
         void Kickout(string token);
 
         [Callback]
+        void KickoutByUser(string token);
+
+        [Callback]
         void LogedIn(string token);
 
         [Callback]

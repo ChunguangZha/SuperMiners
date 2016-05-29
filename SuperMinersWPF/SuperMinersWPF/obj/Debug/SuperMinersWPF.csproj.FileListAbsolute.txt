@@ -56,3 +56,12 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Images\DigStones.gif
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Images\Logo128.jpg
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Images\迅灵矿场.jpg
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.manifest
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.application
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\ChangePasswordWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\ChangePasswordWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe.manifest
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.application

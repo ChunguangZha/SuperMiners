@@ -34,6 +34,8 @@ namespace SuperMinersWPF
         {
             InitializeComponent();
 
+            this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+
             isHidden = false;
 
             LogHelper.Instance.Init();
@@ -42,6 +44,7 @@ namespace SuperMinersWPF
             App.UserVMObject.GetPlayerInfoCompleted += UserVMObject_GetPlayerInfoCompleted;
             GlobalData.Client.LoginCompleted += Client_LoginCompleted;
             GlobalData.Client.GetGameConfigCompleted += Client_GetGameConfigCompleted;
+            this.txtUserName.Focus();
         }
 
         void UserVMObject_GetPlayerInfoCompleted(object sender, EventArgs e)
@@ -88,7 +91,7 @@ namespace SuperMinersWPF
             if (e.Error != null)
             {
                 LogHelper.Instance.AddErrorLog("服务器连接失败。", e.Error);
-                MyMessageBox.ShowInfo("服务器连接失败。" + e.Error.ToString());
+                MyMessageBox.ShowInfo("服务器连接失败。");
                 return;
             }
 
@@ -126,7 +129,7 @@ namespace SuperMinersWPF
         {
             if (!CryptEncoder.Ready)
             {
-                lbMsg.Text = "正在初始化，请等待...";
+                MyMessageBox.ShowInfo("正在初始化，请等待...");
                 return;
             }
 
@@ -204,6 +207,19 @@ namespace SuperMinersWPF
 
             Process.Start(new ProcessStartInfo(baseuri));
             e.Handled = true;
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void panelTopBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ButtonState == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
     }
 }

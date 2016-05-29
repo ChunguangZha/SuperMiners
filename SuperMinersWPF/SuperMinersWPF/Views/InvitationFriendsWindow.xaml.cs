@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWPF.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -42,7 +43,7 @@ namespace SuperMinersWPF.Views
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(this.txtInvitationCode.Text);
-            this.DialogResult = true;
+            MyMessageBox.ShowInfo("已复制到剪切版");
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

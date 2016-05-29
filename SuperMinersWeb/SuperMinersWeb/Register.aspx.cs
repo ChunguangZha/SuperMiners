@@ -35,8 +35,8 @@ namespace SuperMinersWeb
 
             string userName = this.txtUserName.Text;
             string nickName = this.txtNickName.Text;
-            string alipay = this.txtAlipayAccount.Text;
-            string alipayRealName = this.txtAlipayRealName.Text;
+            string email = this.txtEmail.Text;
+            string qq = this.txtQQ.Text;
             string password = this.txtPassword.Text;
             string confirmpwd = this.txtConfirmPassword.Text;
             if (userName.Length > 15)
@@ -49,12 +49,12 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('昵称长度不能超过15个字符!')</script>");
                 return;
             }
-            if (alipay.Length > 30)
+            if (email.Length > 30)
             {
                 Response.Write("<script>alert('支付宝账户长度不能超过30个字符!')</script>");
                 return;
             }
-            if (alipayRealName.Length > 15)
+            if (qq.Length > 15)
             {
                 Response.Write("<script>alert('支付宝真实姓名长度不能超过15个字符!')</script>");
                 return;
@@ -67,6 +67,13 @@ namespace SuperMinersWeb
             if (confirmpwd.Length > 15)
             {
                 Response.Write("<script>alert('密码长度不能超过15个字符!')</script>");
+                return;
+            }
+
+            HttpCookie cookie = Request.Cookies["CheckCode"];
+            if (cookie.Value != this.txtAuthCode.Text.Trim())
+            {
+                Response.Write("<script>alert('验证码错误！')</script>");
                 return;
             }
 
@@ -89,9 +96,9 @@ namespace SuperMinersWeb
                 return;
             }
 
-            if (!string.IsNullOrEmpty(alipay) && !string.IsNullOrEmpty(alipayRealName))
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(qq))
             {
-                result = WcfClient.Instance.CheckUserAlipayExist(alipay, alipayRealName);
+                result = WcfClient.Instance.CheckEmailExist(email);
                 if (result < 0)
                 {
                     Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
@@ -106,7 +113,7 @@ namespace SuperMinersWeb
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, alipay, alipayRealName, invitationCode);
+            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
             if (result == 0)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
@@ -124,5 +131,19 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('注册失败!')</script>");
             }
         }
+
+        //protected void Button1_Click(object sender, EventArgs e)
+        //{
+        //    HttpCookie cookie = Request.Cookies["CheckCode"];
+        //    if (cookie.Value == this.TextBox1.Text.Trim())
+        //    {
+        //        Response.Write("<script>alert('验证码正确！')</script>");
+        //    }
+        //    else
+        //    {
+        //        Response.Write("<script>alert('验证码错误！')</script>");
+        //    }
+        //}
+
     }
 }

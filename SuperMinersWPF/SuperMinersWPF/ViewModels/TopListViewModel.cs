@@ -42,6 +42,12 @@ namespace SuperMinersWPF.ViewModels
             get { return _listMinerTopList; }
         }
 
+        private ObservableCollection<TopListInfoUIModel> _listReferrerCountTopList = new ObservableCollection<TopListInfoUIModel>();
+
+        public ObservableCollection<TopListInfoUIModel> ListReferrerCountTopList
+        {
+            get { return _listReferrerCountTopList; }
+        }
 
 
         public void AsyncGetExpTopList()
@@ -64,12 +70,39 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetGoldCoinTopList();
         }
 
+        public void AsyncGetReferrerTopList()
+        {
+            GlobalData.Client.GetReferrerTopList();
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetExpTopListCompleted += Client_GetExpTopListCompleted;
             GlobalData.Client.GetStoneTopListCompleted += Client_GetStoneTopListCompleted;
             GlobalData.Client.GetMinerTopListCompleted += Client_GetMinerTopListCompleted;
             GlobalData.Client.GetGoldCoinTopListCompleted += Client_GetGoldCoinTopListCompleted;
+            GlobalData.Client.GetReferrerTopListCompleted += Client_GetReferrerTopListCompleted;
+        }
+
+        void Client_GetReferrerTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null || e.Result == null)
+            {
+                MyMessageBox.ShowInfo("查询排行榜失败。");
+                return;
+            }
+
+            this.ListReferrerCountTopList.Clear();
+            for (int i = 0; i < e.Result.Length; i++)
+            {
+                var item = e.Result[i];
+                this.ListReferrerCountTopList.Add(new TopListInfoUIModel(i, item));
+            }
         }
 
         void Client_GetGoldCoinTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)

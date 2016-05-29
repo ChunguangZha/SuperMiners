@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.StringResources;
+﻿using SuperMinersWPF.Models;
+using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views;
 using System;
@@ -29,53 +30,31 @@ namespace SuperMinersWPF
 
             this.Closing += Window1_Closing;
 
-            this.Title = Strings.Title + " 内测 0.03 版";
+            this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
 
             this._syn = System.Threading.SynchronizationContext.Current;
             GlobalData.Client.SetContext(this._syn);
             GlobalData.Client.Error += new EventHandler(Client_Error);
             GlobalData.Client.OnSendMessage += new Action<string>(Client_OnSendMessage);
             GlobalData.Client.OnKickout += new Action(Client_OnKickout);
+            GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
             App.UserVMObject.StartListen();
             this.DataContext = GlobalData.CurrentUser;
-            this.gridActionMessage.DataContext = App.MessageVMObject;
 
-            //App.MessageVMObject.StartListen();
-
-            //imgDigStones.Image = System.Drawing.Image.FromFile(System.Windows.Forms.Application.StartupPath + "\\Images\\DigStones.gif");
-            //imgDigStones.Size = new System.Drawing.Size(200, 200);
         }
 
-        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        void Client_OnKickoutByUser()
         {
-            BindUI();
+            this._syn.Post(s =>
+            {
+                MyMessageBox.ShowInfo("您的账户在其它电脑登录，如非本人操作，请及时修改密码。");
+                this.Close();
+            }, null);
         }
 
-        private void BindUI()
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            Binding bind = new Binding()
-            {
-                Source = App.TopListVMObject.ListExpTopList
-            };
-            this.lvExpTopList.SetBinding(ListView.ItemsSourceProperty, bind);
 
-            bind = new Binding()
-            {
-                Source = App.TopListVMObject.ListGoldCoinTopList
-            };
-            this.lvGoldCoinTopList.SetBinding(ListView.ItemsSourceProperty, bind);
-
-            bind = new Binding()
-            {
-                Source = App.TopListVMObject.ListMinerTopList
-            };
-            this.lvMinerTopList.SetBinding(ListView.ItemsSourceProperty, bind);
-
-            bind = new Binding()
-            {
-                Source = App.TopListVMObject.ListStoneTopList
-            };
-            this.lvStoneTopList.SetBinding(ListView.ItemsSourceProperty, bind);
         }
 
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -123,7 +102,9 @@ namespace SuperMinersWPF
 
         private void btnInvitationFriends_Click(object sender, RoutedEventArgs e)
         {
+            App.UserReferrerTreeVMObject.AsyncGetUserReferrerTree();
             InvitationFriendsWindow win = new InvitationFriendsWindow();
+            win.DataContext = App.UserReferrerTreeVMObject;
             win.ShowDialog();
         }
 
@@ -184,44 +165,107 @@ namespace SuperMinersWPF
             }
         }
 
-        private void TabControl_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //private void tabcontrolTopList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (this.tabcontrolTopList.SelectedIndex == 0)
+        //    {
+        //        App.TopListVMObject.AsyncGetExpTopList();
+        //    }
+        //    else if (this.tabcontrolTopList.SelectedIndex == 1)
+        //    {
+        //        App.TopListVMObject.AsyncGetStoneTopList();
+        //    }
+        //    else if (this.tabcontrolTopList.SelectedIndex == 2)
+        //    {
+        //        App.TopListVMObject.AsyncGetMinerTopList();
+        //    }
+        //    else if (this.tabcontrolTopList.SelectedIndex == 3)
+        //    {
+        //        App.TopListVMObject.AsyncGetGoldCoinTopList();
+        //    }
+        //}
+
+        private void btnBuyDope_Click(object sender, RoutedEventArgs e)
         {
-            if (this.tabcontrol == null)
+
+        }
+
+        private void btnUseDope_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnShowDigStonesArea_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
             {
                 return;
             }
 
-            if (this.tabcontrol.SelectedItem != null)
-            {
-                TabItem tabitem = this.tabcontrol.SelectedItem as TabItem;
-                if (tabitem != null)
-                {
-                    if (tabitem.Name == "tabitemTopList")
-                    {
-                        App.TopListVMObject.AsyncGetExpTopList();
-                    }
-                }
-            }
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Visible;
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        private void tabcontrolTopList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        private void btnShowStonesMarket_Checked(object sender, RoutedEventArgs e)
         {
-            if (this.tabcontrolTopList.SelectedIndex == 0)
+            if (this.controlDigStoneArea == null)
             {
-                App.TopListVMObject.AsyncGetExpTopList();
+                return;
             }
-            else if (this.tabcontrolTopList.SelectedIndex == 1)
+
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void btnShowTopList_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
             {
-                App.TopListVMObject.AsyncGetStoneTopList();
+                return;
             }
-            else if (this.tabcontrolTopList.SelectedIndex == 2)
+
+            App.TopListVMObject.AsyncGetExpTopList();
+            this.controlTopList.Visibility = System.Windows.Visibility.Visible;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void btnShowChat_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
             {
-                App.TopListVMObject.AsyncGetMinerTopList();
+                return;
             }
-            else if (this.tabcontrolTopList.SelectedIndex == 3)
+
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void btnShowFunny_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
             {
-                App.TopListVMObject.AsyncGetGoldCoinTopList();
+                return;
             }
+
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void btnShowGameHelper_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
+            {
+                return;
+            }
+
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
         }
 
     }

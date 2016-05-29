@@ -15,6 +15,11 @@ namespace SuperMinersServerApplication.WebService.Services
             this.InvokeCallback(token, "Kickout");
         }
 
+        public void KickoutByUser(string token)
+        {
+            this.InvokeCallback(token, "KickoutByUser");
+        }
+
         public void LogedIn(string token)
         {
             this.InvokeCallback(token, "LogedIn");

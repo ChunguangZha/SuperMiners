@@ -59,11 +59,11 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        /// <param name="alipayAccount"></param>
-        /// <param name="alipayRealName"></param>
+        /// <param name="email"></param>
+        /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode)
         {
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
@@ -149,8 +149,8 @@ namespace SuperMinersServerApplication.Controller
                         UserName = userName,
                         NickName = nickName,
                         Password = password,
-                        Alipay = alipayAccount,
-                        AlipayRealName = alipayRealName,
+                        Email = email,
+                        QQ = qq,
                         InvitationCode = CreateInvitationCode(userName),
                         RegisterTime = DateTime.Now,
                         RegisterIP = clientIP,
@@ -270,7 +270,7 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
-        public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName)
+        public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             var playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -279,7 +279,7 @@ namespace SuperMinersServerApplication.Controller
                 playerrun = new PlayerRunnable(player);
             }
             
-            return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName);
+            return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
         }
 
         /// <summary>

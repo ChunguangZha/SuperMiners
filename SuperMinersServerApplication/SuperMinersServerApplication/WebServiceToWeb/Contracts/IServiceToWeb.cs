@@ -16,12 +16,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        /// <param name="alipayAccount"></param>
-        /// <param name="alipayRealName"></param>
+        /// <param name="email"></param>
+        /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode);
+        int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode);
 
         /// <summary>
         /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
@@ -39,5 +39,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <returns></returns>
         [OperationContract]
         int CheckUserAlipayExist(string alipayAccount, string alipayRealName);
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        [OperationContract]
+        int CheckEmailExist(string email);
     }
 }
