@@ -17,7 +17,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        GameConfig GetGameConfig(string token);
+        SystemConfigin1 GetGameConfig(string token);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetIncomeMoneyAccount",

@@ -1,4 +1,5 @@
 ﻿using MetaData.ActionLog;
+using MetaData.SystemConfig;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
@@ -68,6 +69,11 @@ namespace SuperMinersWPF.ViewModels
             get { return this._listPlayerActionLog; }
         }
 
+        public void AsyncGetSystemConfig()
+        {
+            GlobalData.Client.GetGameConfig();
+        }
+
         public void AsyncGetPlayerAction()
         {
             try
@@ -94,7 +100,46 @@ namespace SuperMinersWPF.ViewModels
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerActionCompleted += Client_GetPlayerActionCompleted;
+            GlobalData.Client.GetGameConfigCompleted += Client_GetGameConfigCompleted;
             GlobalData.Client.OnSendPlayerActionLog += Client_OnSendPlayerActionLog;
+            GlobalData.Client.OnSendGameConfig += Client_OnSendGameConfig;
+        }
+
+        void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SystemConfig.SystemConfigin1> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            bool isOK = true;
+            if (e.Error != null || e.Result == null ||
+                e.Result.AwardReferrerConfigList == null ||
+                e.Result.GameConfig == null ||
+                e.Result.RegisterUserConfig == null)
+            {
+                MyMessageBox.ShowInfo("获取配置信息失败。");
+
+                isOK = false;
+            }
+            else
+            {
+                GlobalData.GameConfig = e.Result.GameConfig;
+                GlobalData.RegisterUserConfig = e.Result.RegisterUserConfig;
+                GlobalData.AwardReferrerLevelConfig = new AwardReferrerLevelConfig();
+                GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
+                isOK = true;
+            }
+
+            if (this.GetSystemConfigCompleted != null)
+            {
+                this.GetSystemConfigCompleted(isOK);
+            }
+        }
+
+        void Client_OnSendGameConfig()
+        {
+            GlobalData.Client.GetGameConfig();
         }
 
         void Client_OnSendPlayerActionLog()
@@ -152,6 +197,7 @@ namespace SuperMinersWPF.ViewModels
         }
 
         public event EventHandler GetPlayerActionCompleted;
+        public event Action<bool> GetSystemConfigCompleted;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -4,7 +4,7 @@
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
-                <h1>一个可以赚钱的游戏.</h1>
+                <h1>欢迎加入迅灵矿场，更多精彩等你发现。</h1>
             </hgroup>
             <div id="softwareDownload">
                 <a href="Software/publish.htm">迅灵矿场客户端下载</a>

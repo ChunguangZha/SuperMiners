@@ -161,7 +161,6 @@ namespace SuperMinersServerApplication.Controller
 
         public void SaveSystemConfig()
         {
-            bool changedGameConfig = false;
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
@@ -174,7 +173,6 @@ namespace SuperMinersServerApplication.Controller
                 bool isOK = DBProvider.SystemDBProvider.SaveAwardReferrerConfig(listBaseAwardConfig, trans);
                 if (this.InnerGameConfig.IsChanged)
                 {
-                    changedGameConfig = true;
                     isOK = DBProvider.SystemDBProvider.SaveGameConfig(this.InnerGameConfig.ToDBObject(), trans);
                     this.InnerGameConfig.IsChanged = false;
                 }

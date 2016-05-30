@@ -28,7 +28,7 @@ namespace SuperMinersWeb
         {
             if (checkCode == null || checkCode.Trim() == String.Empty)
                 return;
-            System.Drawing.Bitmap image = new System.Drawing.Bitmap((int)Math.Ceiling((checkCode.Length * 12.5)), 22);
+            System.Drawing.Bitmap image = new System.Drawing.Bitmap((int)Math.Ceiling((checkCode.Length * 18.5)), 30);
             Graphics g = Graphics.FromImage(image);
             try
             {
@@ -45,7 +45,7 @@ namespace SuperMinersWeb
                     int y2 = random.Next(image.Height);
                     g.DrawLine(new Pen(Color.Black), x1, y1, x2, y2);
                 }
-                Font font = new System.Drawing.Font("Arial", 12, (System.Drawing.FontStyle.Bold));
+                Font font = new System.Drawing.Font("Arial", 16, (System.Drawing.FontStyle.Bold));
                 System.Drawing.Drawing2D.LinearGradientBrush brush = new
                     System.Drawing.Drawing2D.LinearGradientBrush(
                     new Rectangle(0, 0, image.Width, image.Height),

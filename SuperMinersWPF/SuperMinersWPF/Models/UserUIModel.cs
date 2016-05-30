@@ -49,6 +49,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("TotalProducedStonesCount");
                 NotifyPropertyChange("MinersCount");
                 NotifyPropertyChange("AllOutputPerHour");
+                NotifyPropertyChange("AllOutputPerDay");
                 NotifyPropertyChange("TempOutputStones");
                 NotifyPropertyChange("TempOutputStonesString");
                 NotifyPropertyChange("StockOfStones");

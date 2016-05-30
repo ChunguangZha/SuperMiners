@@ -6,7 +6,7 @@
                 <h1><%: Title %>.</h1>
             </hgroup>
             <div class="declaration">
-                声明： 请填写真实的支付宝账户和支付宝真实姓名，否则平台可能将无法确认您充值成功，且无法提现。由此带来的损失将由您本人承担。
+
             </div>
         </div>
     </section>
@@ -28,25 +28,25 @@
             <ol>
                 <li>
                     <label for="txtUserName" class="label">用户名： </label>
-                    <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" />
+                    <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="textbox" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtUserName"
                                     CssClass="field-validation-error" ErrorMessage="请填写用户名." />
                 </li>
                 <li>
                     <label for="txtNickName" class="label">昵称： </label>
-                    <asp:TextBox ID="txtNickName" runat="server" MaxLength="15" />
+                    <asp:TextBox ID="txtNickName" runat="server" MaxLength="15" CssClass="textbox" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtNickName"
                                     CssClass="field-validation-error" ErrorMessage="请填写昵称." />
                 </li>
                 <li>
                     <label for="txtPassword" class="label">密码： </label>
-                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" MaxLength="15" />
+                    <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="textbox" MaxLength="15" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPassword"
                                     CssClass="field-validation-error" ErrorMessage="请填写密码." />
                 </li>
                 <li>
                     <label for="txtConfirmPassword" class="label">确认密码： </label>
-                    <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" MaxLength="15" />
+                    <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" CssClass="textbox" MaxLength="15" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="txtConfirmPassword"
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="请再输入一遍密码." />
                     <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToCompare="txtPassword" ControlToValidate="txtConfirmPassword"
@@ -54,18 +54,18 @@
                 </li>
                 <li>
                     <label for="txtAlipayAccount" class="label">邮箱： </label>
-                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" TextMode="Email" />
+                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" CssClass="textbox" TextMode="Email" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEmail"
                                     CssClass="field-validation-error" ErrorMessage="请填写邮箱." />
                 </li>
                 <li>
                     <label for="txtAlipayRealName" class="label">QQ： </label>
-                    <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" TextMode="Number" />
+                    <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" CssClass="textbox" TextMode="Number" />
                 </li>
                 <li>
                     <div class="positionR">
                         <label for="txtAlipayRealName" class="label">验证码： </label>
-                        <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" ToolTip="请输入验证码！" />
+                        <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入验证码！" />
                         <img src="AuthCode.ashx" alt="" id="imgAuthCode" /> 
                         <a href="javascript:CallServerForUpdate()">更换验证码</a> 
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtAuthCode"

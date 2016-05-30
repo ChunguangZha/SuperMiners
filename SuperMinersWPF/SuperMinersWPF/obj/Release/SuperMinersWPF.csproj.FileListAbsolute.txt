@@ -79,7 +79,6 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\TopListUs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\DigStoneAreaUserControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\StonesMarketUserControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\TopListUserControl.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe.config
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.exe
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.pdb
@@ -132,3 +131,9 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherSton
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesForBuyMinerWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesForBuyMinerWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesForBuyMinerWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesForBuyMinerWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GatherStonesWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GameHelperControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\GameHelperControl.g.cs

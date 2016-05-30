@@ -13,7 +13,7 @@ namespace SuperMinersWeb
         string invitationCode = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            invitationCode = Request["invitationcode"];
+            invitationCode = Request["ic"];
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)

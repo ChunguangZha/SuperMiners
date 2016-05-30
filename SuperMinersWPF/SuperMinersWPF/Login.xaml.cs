@@ -43,8 +43,20 @@ namespace SuperMinersWPF
             GlobalData.Client.SetContext(this._syn);
             App.UserVMObject.GetPlayerInfoCompleted += UserVMObject_GetPlayerInfoCompleted;
             GlobalData.Client.LoginCompleted += Client_LoginCompleted;
-            GlobalData.Client.GetGameConfigCompleted += Client_GetGameConfigCompleted;
+            App.MessageVMObject.GetSystemConfigCompleted += MessageVMObject_GetSystemConfigCompleted;
             this.txtUserName.Focus();
+        }
+
+        void MessageVMObject_GetSystemConfigCompleted(bool obj)
+        {
+            if (obj)
+            {
+                App.UserVMObject.AsyncGetPlayerInfo();
+            }
+            else
+            {
+                GlobalData.Client.Logout();
+            }
         }
 
         void UserVMObject_GetPlayerInfoCompleted(object sender, EventArgs e)
@@ -59,26 +71,6 @@ namespace SuperMinersWPF
                 winMain.Show();
                 GlobalData.Client.GetPlayerInfo();
             }
-        }
-
-        void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GameConfig> e)
-        {
-            if (e.Cancelled)
-            {
-                return;
-            }
-
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("获取用户信息失败。");
-                GlobalData.Client.Logout();
-                return;
-            }
-
-            e.Continue = true;
-            GlobalData.GameConfig = e.Result;
-
-            App.UserVMObject.AsyncGetPlayerInfo();
         }
 
         void Client_LoginCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
@@ -117,7 +109,7 @@ namespace SuperMinersWPF
 
             e.Continue = true;
 
-            GlobalData.Client.GetGameConfig();
+            App.MessageVMObject.AsyncGetSystemConfig();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)

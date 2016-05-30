@@ -78,6 +78,7 @@ namespace SuperMinersWPF.Wcf.Clients
 
         public event Action<string> OnSendMessage;
         public event Action OnSendPlayerActionLog;
+        public event Action OnSendGameConfig;
 
         private RestInvoker<IServiceToClient> _invoker = new RestInvoker<IServiceToClient>();
         private SynchronizationContext _context;
@@ -132,7 +133,11 @@ namespace SuperMinersWPF.Wcf.Clients
 
         public void RaiseOnSendGameConfig()
         {
-            this.GetGameConfig();
+            Action handler = this.OnSendGameConfig;
+            if (null != handler)
+            {
+                handler();
+            }
         }
     }
 }

@@ -203,6 +203,7 @@ namespace SuperMinersWPF
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Visible;
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowStonesMarket_Checked(object sender, RoutedEventArgs e)
@@ -215,6 +216,7 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowTopList_Checked(object sender, RoutedEventArgs e)
@@ -228,6 +230,7 @@ namespace SuperMinersWPF
             this.controlTopList.Visibility = System.Windows.Visibility.Visible;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowChat_Checked(object sender, RoutedEventArgs e)
@@ -240,6 +243,7 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowFunny_Checked(object sender, RoutedEventArgs e)
@@ -252,6 +256,7 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowGameHelper_Checked(object sender, RoutedEventArgs e)
@@ -261,7 +266,8 @@ namespace SuperMinersWPF
                 return;
             }
 
-            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlGameHelper.Visibility = System.Windows.Visibility.Visible;
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
         }

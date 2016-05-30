@@ -11,11 +11,18 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
-        public GameConfig GetGameConfig(string token)
+        public SystemConfigin1 GetGameConfig(string token)
         {
             if (RSAProvider.LoadRSA(token))
             {
-                return GlobalConfig.GameConfig;
+                SystemConfigin1 config = new SystemConfigin1()
+                {
+                    GameConfig = GlobalConfig.GameConfig,
+                    RegisterUserConfig = GlobalConfig.RegisterPlayerConfig,
+                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray()
+                };
+
+                return config;
             }
             else
             {

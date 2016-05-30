@@ -33,8 +33,9 @@ namespace SuperMinersWPF.Wcf.Clients
         {
             if (GlobalData.IsLogined)
             {
+                string token = GlobalData.Token;
                 GlobalData.InitToken(null);
-                this._invoker.Invoke<bool>(this._context, "Logout", this.LogoutCompleted, GlobalData.Token);
+                this._invoker.Invoke<bool>(this._context, "Logout", this.LogoutCompleted, token);
             }
         }
 

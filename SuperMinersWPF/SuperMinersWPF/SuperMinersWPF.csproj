@@ -33,7 +33,7 @@
     <PublisherName>迅灵信息</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>26</ApplicationRevision>
+    <ApplicationRevision>27</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -106,11 +106,20 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
+      <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Datas\GameConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\IncomeMoneyAccount.cs">
       <Link>Wcf\Datas\IncomeMoneyAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
+      <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
+      <Link>Wcf\Datas\SystemConfigin1.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
@@ -198,6 +207,9 @@
     <Compile Include="Views\DigStoneAreaUserControl.xaml.cs">
       <DependentUpon>DigStoneAreaUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GameHelperControl.xaml.cs">
+      <DependentUpon>GameHelperControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GatherStonesForBuyMinerWindow.xaml.cs">
       <DependentUpon>GatherStonesForBuyMinerWindow.xaml</DependentUpon>
     </Compile>
@@ -271,6 +283,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DigStoneAreaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GameHelperControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

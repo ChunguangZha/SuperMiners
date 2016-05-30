@@ -11,12 +11,12 @@ namespace SuperMinersWPF.Wcf.Clients
     {
         #region GetGameConfig
 
-        public event EventHandler<WebInvokeEventArgs<GameConfig>> GetGameConfigCompleted;
+        public event EventHandler<WebInvokeEventArgs<SystemConfigin1>> GetGameConfigCompleted;
         public void GetGameConfig()
         {
             if (GlobalData.IsLogined)
             {
-                this._invoker.Invoke<GameConfig>(this._context, "GetGameConfig", this.GetGameConfigCompleted, GlobalData.Token);
+                this._invoker.Invoke<SystemConfigin1>(this._context, "GetGameConfig", this.GetGameConfigCompleted, GlobalData.Token);
             }
         }
 

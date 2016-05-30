@@ -197,7 +197,9 @@ namespace SuperMinersServerApplication.Controller
 
         private string CreateInvitationCode(string userName)
         {
-            return Guid.NewGuid().ToString();
+            int code = userName.GetHashCode();
+            string ic = Encoding.ASCII.GetString(BitConverter.GetBytes(code));
+            return ic;
         }
 
         public PlayerInfo LoginPlayer(string userName, string password)

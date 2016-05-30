@@ -29,25 +29,52 @@ namespace MetaData.SystemConfig
         /// 给新注册用户赠送金币数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserGoldCoin = 5;
+        public float GiveToNewUserGoldCoin = 2500;
 
         /// <summary>
         /// 给新注册用户赠送矿山数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserMines = 0;
+        public float GiveToNewUserMines = 0.6f;
 
         /// <summary>
         /// 给新注册用户赠送矿工数
         /// </summary>
         [DataMember]
-        public int GiveToNewUserMiners = 1;
+        public int GiveToNewUserMiners = 70;
 
         /// <summary>
         /// 给新注册用户赠送矿石数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserStones = 0.05f;
+        public float GiveToNewUserStones = 0f;
 
+        public string ToString()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            strBuilder.Append("注册奖励：");
+            if (GiveToNewUserExp > 0)
+            {
+                strBuilder.Append(string.Format("贡献值-[{0}],", this.GiveToNewUserExp));
+            }
+            if (GiveToNewUserGoldCoin > 0)
+            {
+                strBuilder.Append(string.Format("金币-[{0}],", this.GiveToNewUserGoldCoin));
+            }
+            if (GiveToNewUserMines > 0)
+            {
+                strBuilder.Append(string.Format("矿山-[{0}],", this.GiveToNewUserMines));
+            }
+            if (GiveToNewUserMiners > 0)
+            {
+                strBuilder.Append(string.Format("矿工-[{0}],", this.GiveToNewUserMiners));
+            }
+            if (GiveToNewUserStones > 0)
+            {
+                strBuilder.Append(string.Format("矿石-[{0}],", this.GiveToNewUserStones));
+            }
+
+            return strBuilder.ToString(0, strBuilder.Length - 1);
+        }
     }
 }

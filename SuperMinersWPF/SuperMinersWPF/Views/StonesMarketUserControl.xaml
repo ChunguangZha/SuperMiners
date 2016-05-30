@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Background="#FFF0F0F0">
+    <Grid Background="{DynamicResource MainPanelBackground}">
         <TextBlock Text="即将开放..." FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
     <!--<TabControl TabStripPlacement="Left">

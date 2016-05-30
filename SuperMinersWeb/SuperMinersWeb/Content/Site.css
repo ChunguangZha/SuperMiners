@@ -152,6 +152,7 @@ div.declaration {
 }
 
 label.label {
+    vertical-align:middle;
     float:left;
     min-width:150px;
     text-align:right|center;
@@ -162,6 +163,19 @@ label.label {
 
 .button {
     margin-left:150px;
+}
+
+label.requirestar {
+    display:inline;
+    color:red;
+    vertical-align:middle;
+    margin:.5em .5em .5em .5em;
+    width:10px;
+}
+
+input.textbox {
+    display:inline;
+    width:200px;
 }
 
 /* site title
