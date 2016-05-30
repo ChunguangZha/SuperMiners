@@ -71,7 +71,7 @@ namespace SuperMinersWeb
             }
 
             HttpCookie cookie = Request.Cookies["CheckCode"];
-            if (cookie.Value != this.txtAuthCode.Text.Trim())
+            if (cookie.Value.ToLower() != this.txtAuthCode.Text.Trim().ToLower())
             {
                 Response.Write("<script>alert('验证码错误！')</script>");
                 return;

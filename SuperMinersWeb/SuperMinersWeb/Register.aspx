@@ -13,37 +13,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
-        var xmlRequest;
-        
-        function CreateHttpRequest() {
-            try{
-                xmlRequest = new XMLHttpRequest();
-            } catch (err) {
-                xmlRequest = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-        }
-
         function CallServerForUpdate() {
-            xmlRequest.open("GET", "AuthCodeImageCallbackHandler.ashx");
-            xmlRequest.onreadystatechange = ApplyUpdate;
-            xmlRequest.send();
+            document.getElementById("imgAuthCode").src = "AuthCode.ashx?Num=" + Math.random();
         }
 
-        function ApplyUpdate() {
-            if (xmlRequest.readyState == 4) {
-                if (xmlRequest.status == 200) {
-                    var img = document.getElementById("imgAuthCode");
-                    var response = xmlRequest.response;
-                    img.src = response;
-                }
-            }
-        }
-
-        function RefreshImg() {
-            var img = document.getElementById('imgAuthCode');
-            img.src = null;
-            img.src = "AuthCode.aspx";
-        }
     </script>
     <div class="homepage" onload="CreateHttpRequest">
         <p class="validation-summary-errors">
@@ -66,7 +39,7 @@
                                     CssClass="field-validation-error" ErrorMessage="请填写昵称." />
                 </li>
                 <li>
-                    <label for="txtPassword" class="label">密    码： </label>
+                    <label for="txtPassword" class="label">密码： </label>
                     <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" MaxLength="15" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPassword"
                                     CssClass="field-validation-error" ErrorMessage="请填写密码." />
@@ -80,21 +53,23 @@
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="两次密码不一至." />
                 </li>
                 <li>
-                    <label for="txtAlipayAccount" class="label">邮箱：</label>
+                    <label for="txtAlipayAccount" class="label">邮箱： </label>
                     <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" TextMode="Email" />
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtEmail"
                                     CssClass="field-validation-error" ErrorMessage="请填写邮箱." />
                 </li>
                 <li>
-                    <label for="txtAlipayRealName" class="label">QQ：</label>
+                    <label for="txtAlipayRealName" class="label">QQ： </label>
                     <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" TextMode="Number" />
                 </li>
                 <li>
                     <div class="positionR">
-                        <label for="txtAlipayRealName" class="label">验证码：</label>
+                        <label for="txtAlipayRealName" class="label">验证码： </label>
                         <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" ToolTip="请输入验证码！" />
-                        <img src="AuthCodeImageCallbackHandler.ashx" alt="" id="imgAuthCode" /> 
+                        <img src="AuthCode.ashx" alt="" id="imgAuthCode" /> 
                         <a href="javascript:CallServerForUpdate()">更换验证码</a> 
+                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtAuthCode"
+                                    CssClass="field-validation-error" ErrorMessage="请输入验证码." />
                     </div>
                 </li>
             </ol>

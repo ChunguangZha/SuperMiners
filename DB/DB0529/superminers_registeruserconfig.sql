@@ -28,7 +28,7 @@ CREATE TABLE `registeruserconfig` (
   `UserCountCreateByOneIP` int(11) NOT NULL DEFAULT '5' COMMENT '同一IP地址，可以注册用户数。',
   `GiveToNewUserExp` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送贡献值',
   `GiveToNewUserGoldCoin` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送金币数',
-  `GiveToNewUserMines` int(11) NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿山数',
+  `GiveToNewUserMines` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿山数',
   `GiveToNewUserMiners` int(11) NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿工数',
   `GiveToNewUserStones` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿石数'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -40,7 +40,7 @@ CREATE TABLE `registeruserconfig` (
 
 LOCK TABLES `registeruserconfig` WRITE;
 /*!40000 ALTER TABLE `registeruserconfig` DISABLE KEYS */;
-INSERT INTO `registeruserconfig` VALUES (50,12.34,100,3,4,99);
+INSERT INTO `registeruserconfig` VALUES (3,0,0,0.8,100,0);
 /*!40000 ALTER TABLE `registeruserconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-29 23:31:14
+-- Dump completed on 2016-05-30  0:23:57

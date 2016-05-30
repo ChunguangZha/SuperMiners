@@ -129,5 +129,10 @@ namespace SuperMinersWPF.Wcf.Clients
                 handler();
             }
         }
+
+        public void RaiseOnSendGameConfig()
+        {
+            this.GetGameConfig();
+        }
     }
 }

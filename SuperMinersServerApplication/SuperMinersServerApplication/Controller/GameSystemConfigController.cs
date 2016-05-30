@@ -30,6 +30,8 @@ namespace SuperMinersServerApplication.Controller
 
         #endregion
 
+        public event Action GameConfigChanged;
+
         public GameConfigUIModel InnerGameConfig { get; set; }
         public IncomeMoneyAccountUIModel InnerIncomeMoneyAccount { get; set; }
         public RegisterUserConfigUIModel InnerRegisterPlayerConfig { get; set; }
@@ -159,6 +161,7 @@ namespace SuperMinersServerApplication.Controller
 
         public void SaveSystemConfig()
         {
+            bool changedGameConfig = false;
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
@@ -171,6 +174,7 @@ namespace SuperMinersServerApplication.Controller
                 bool isOK = DBProvider.SystemDBProvider.SaveAwardReferrerConfig(listBaseAwardConfig, trans);
                 if (this.InnerGameConfig.IsChanged)
                 {
+                    changedGameConfig = true;
                     isOK = DBProvider.SystemDBProvider.SaveGameConfig(this.InnerGameConfig.ToDBObject(), trans);
                     this.InnerGameConfig.IsChanged = false;
                 }
@@ -186,6 +190,11 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 trans.Commit();
+
+                if (GameConfigChanged != null)
+                {
+                    GameConfigChanged();
+                }
 
                 GlobalConfig.AwardReferrerLevelConfig.SetListAward(listBaseAwardConfig);
                 GlobalConfig.GameConfig = this.InnerGameConfig.ToDBObject();

@@ -31,6 +31,19 @@ namespace SuperMinersServerApplication.WebService.Services
 
             PlayerController.Instance.PlayerInfoChanged += Instance_PlayerInfoChanged;
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
+            GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
+        }
+
+        void Instance_GameConfigChanged()
+        {
+            var allClients = ClientManager.AllClients;
+            foreach (var client in allClients)
+            {
+                new Thread(new ParameterizedThreadStart(o =>
+                {
+                    this.SendGameConfig(o.ToString());
+                })).Start(client.Token);
+            }
         }
 
         void Instance_PlayerActionAdded()

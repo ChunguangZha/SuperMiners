@@ -126,8 +126,23 @@ namespace SuperMinersWPF
 
         private void btnMinersBuy_Click(object sender, RoutedEventArgs e)
         {
-            BuyMinerWindow win = new BuyMinerWindow();
-            win.ShowDialog();
+            bool showWin = false;
+            if (GlobalData.CurrentUser.TempOutputStones > 0)
+            {
+                App.UserVMObject.SuspendListen();
+                GatherStonesForBuyMinerWindow winGatherStones = new GatherStonesForBuyMinerWindow();
+                if (winGatherStones.ShowDialog() == true)
+                {
+                    showWin = true;
+                }
+                App.UserVMObject.ResumeListen();
+            }
+
+            if (showWin)
+            {
+                BuyMinerWindow win = new BuyMinerWindow();
+                win.ShowDialog();
+            }
         }
 
         private void btnDiamondsSell_Click(object sender, RoutedEventArgs e)
@@ -159,40 +174,23 @@ namespace SuperMinersWPF
 
         private void btnGatherStones_Click(object sender, RoutedEventArgs e)
         {
-            if ((int)GlobalData.CurrentUser.TempOutputStones > 0)
+            if (GlobalData.CurrentUser.TempOutputStones > 0)
             {
-                App.UserVMObject.AsyncGatherStones((int)GlobalData.CurrentUser.TempOutputStones);
+                App.UserVMObject.SuspendListen();
+                GatherStonesWindow win = new GatherStonesWindow();
+                win.ShowDialog();
+                App.UserVMObject.ResumeListen();
             }
         }
-
-        //private void tabcontrolTopList_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        //{
-        //    if (this.tabcontrolTopList.SelectedIndex == 0)
-        //    {
-        //        App.TopListVMObject.AsyncGetExpTopList();
-        //    }
-        //    else if (this.tabcontrolTopList.SelectedIndex == 1)
-        //    {
-        //        App.TopListVMObject.AsyncGetStoneTopList();
-        //    }
-        //    else if (this.tabcontrolTopList.SelectedIndex == 2)
-        //    {
-        //        App.TopListVMObject.AsyncGetMinerTopList();
-        //    }
-        //    else if (this.tabcontrolTopList.SelectedIndex == 3)
-        //    {
-        //        App.TopListVMObject.AsyncGetGoldCoinTopList();
-        //    }
-        //}
-
+        
         private void btnBuyDope_Click(object sender, RoutedEventArgs e)
         {
-
+            MyMessageBox.ShowInfo("该功能暂未开放，敬请期待...");
         }
 
         private void btnUseDope_Click(object sender, RoutedEventArgs e)
         {
-
+            MyMessageBox.ShowInfo("该功能暂未开放，敬请期待...");
         }
 
         private void btnShowDigStonesArea_Checked(object sender, RoutedEventArgs e)

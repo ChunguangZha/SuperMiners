@@ -15,10 +15,14 @@ namespace SuperMinersServerApplication.WebService.Services
             this.InvokeCallback(token, "SendMessage", message);
         }
 
-        public void SendPlayerActionLog(string toke)
+        public void SendPlayerActionLog(string token)
         {
-            this.InvokeCallback(toke, "SendPlayerActionLog");
+            this.InvokeCallback(token, "SendPlayerActionLog");
         }
 
+        public void SendGameConfig(string token)
+        {
+            this.InvokeCallback(token, "SendGameConfig");
+        }
     }
 }

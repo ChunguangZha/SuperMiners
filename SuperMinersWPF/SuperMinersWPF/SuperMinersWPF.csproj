@@ -33,7 +33,7 @@
     <PublisherName>迅灵信息</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>25</ApplicationRevision>
+    <ApplicationRevision>26</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -198,6 +198,12 @@
     <Compile Include="Views\DigStoneAreaUserControl.xaml.cs">
       <DependentUpon>DigStoneAreaUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\GatherStonesForBuyMinerWindow.xaml.cs">
+      <DependentUpon>GatherStonesForBuyMinerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GatherStonesWindow.xaml.cs">
+      <DependentUpon>GatherStonesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\InvitationFriendsWindow.xaml.cs">
       <DependentUpon>InvitationFriendsWindow.xaml</DependentUpon>
     </Compile>
@@ -265,6 +271,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DigStoneAreaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GatherStonesForBuyMinerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GatherStonesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

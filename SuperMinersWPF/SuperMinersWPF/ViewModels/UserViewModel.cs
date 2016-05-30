@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersWPF.ViewModels
@@ -13,6 +14,7 @@ namespace SuperMinersWPF.ViewModels
         public event EventHandler GetPlayerInfoCompleted;
 
         bool isStartedListen = false;
+        bool isSuspendListen = false;
 
         /// <summary>
         /// 每分钟执行一次
@@ -24,30 +26,52 @@ namespace SuperMinersWPF.ViewModels
             if (!isStartedListen)
             {
                 isStartedListen = true;
-                _timerUpdateStoneOutput.Elapsed += TimerUpdateStoneOutput_Elapsed;
-                _timerUpdateStoneOutput.Start();
+
+                Thread thrListenStoneOutput = new Thread(TimerUpdateStoneOutput_Elapsed);
+                thrListenStoneOutput.Name = "thrListenStoneOutput";
+                thrListenStoneOutput.IsBackground = true;
+                thrListenStoneOutput.Start();
             }
         }
 
         int _countdown = 60;
 
-        void TimerUpdateStoneOutput_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        public void SuspendListen()
         {
-            try
+            isSuspendListen = true;
+        }
+
+        public void ResumeListen()
+        {
+            _countdown = 60;
+            isSuspendListen = false;
+        }
+
+        void TimerUpdateStoneOutput_Elapsed()
+        {
+            while (isStartedListen)
             {
-                if (GlobalData.IsLogined)
+                if (!isSuspendListen)
                 {
-                    GlobalData.CurrentUser.OutputCountdown = this._countdown--;
-                    if (this._countdown == 0)
+                    try
                     {
-                        ComputeOutput();
-                        this._countdown = 60;
+                        if (GlobalData.IsLogined)
+                        {
+                            GlobalData.CurrentUser.OutputCountdown = this._countdown--;
+                            if (this._countdown <= 1)
+                            {
+                                ComputeOutput();
+                                this._countdown = 60;
+                            }
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        LogHelper.Instance.AddErrorLog("TimerUpdateStoneOutput_Elapsed", exc);
                     }
                 }
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("TimerUpdateStoneOutput_Elapsed", exc);
+
+                Thread.Sleep(1000);
             }
         }
 
@@ -79,8 +103,6 @@ namespace SuperMinersWPF.ViewModels
             if (isStartedListen)
             {
                 isStartedListen = false;
-                _timerUpdateStoneOutput.Stop();
-                _timerUpdateStoneOutput.Elapsed -= TimerUpdateStoneOutput_Elapsed;
             }
         }
 
@@ -89,6 +111,10 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetPlayerInfo();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stones">0表示清空临时产出</param>
         public void AsyncGatherStones(int stones)
         {
             GlobalData.Client.GatherStones(stones);

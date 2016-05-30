@@ -286,7 +286,7 @@ namespace SuperMinersServerApplication.Controller
         /// 收取生产出来的矿石
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="stonesCount"></param>
+        /// <param name="stonesCount">0表示清空临时产出</param>
         /// <returns></returns>
         public int GatherStones(string userName, int stones)
         {

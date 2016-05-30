@@ -115,12 +115,15 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int GatherStones(int stones)
         {
+            DateTime stopTime = DateTime.Now;
             if (stones <= 0)
             {
+                BasePlayer.FortuneInfo.TempOutputStones = 0;
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
                 return 0;
             }
 
-            DateTime stopTime = DateTime.Now;
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
