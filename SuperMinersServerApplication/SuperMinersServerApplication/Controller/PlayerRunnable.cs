@@ -400,7 +400,10 @@ namespace SuperMinersServerApplication.Controller
                 newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
             }
 
-            newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
+            if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
+            {
+                newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
+            }
             newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
             newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
             newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;

@@ -1,9 +1,11 @@
-Error:  [2016/5/29 19:08:53] ---- Log: GetUserReferrerTree Exception. userName: a
-Exc.Message: Unable to convert MySQL date/time value to System.DateTimeExc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetUserReferrerDownTree(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 590
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetUserReferrerTree(String token, String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 245
+Error:  [2016/5/31 11:04:02] ---- Log: 启动服务失败。
+Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
+   在 MySql.Data.MySqlClient.Driver.Open()
+   在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   在 MySql.Data.MySqlClient.MySqlConnection.Open()
+   在 DataBaseProvider.OrderDBProvider.GetAllFinishedSellOrders() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 78
+   在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 37
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 74
 -----------------------------------------------------
 
-teReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable,
+ datatables, Int32 startRecord, Int32 maxRecords, String srcTable,

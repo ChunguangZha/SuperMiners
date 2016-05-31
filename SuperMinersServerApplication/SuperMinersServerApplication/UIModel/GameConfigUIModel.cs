@@ -16,7 +16,7 @@ namespace SuperMinersServerApplication.UIModel
 
         public bool IsChanged { get; set; }
 
-        public float _Yuan_RMB = 1;
+        private float _Yuan_RMB = 1;
 
         /// <summary>
         /// 人民币兑换RMB
@@ -35,7 +35,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _RMB_GoldCoin = 1000;
+        private float _RMB_GoldCoin = 1000;
 
         /// <summary>
         /// RMB兑换金币
@@ -54,7 +54,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _RMB_Mine = 10;
+        private float _RMB_Mine = 10;
 
         /// <summary>
         /// 购买矿山所需要的RMB
@@ -73,7 +73,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _GoldCoin_Miner = 1000;
+        private float _GoldCoin_Miner = 1000;
 
         /// <summary>
         /// 购买矿工所需要的金币
@@ -92,7 +92,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _Stones_RMB = 10000;
+        private float _Stones_RMB = 10000;
 
         /// <summary>
         /// 多少矿石等价于1RMB
@@ -111,7 +111,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _Diamonds_RMB = 10;
+        private float _Diamonds_RMB = 10;
 
         /// <summary>
         /// 多少钻石等价于1RMB
@@ -130,7 +130,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _StoneBuyerAwardGoldCoinMultiple = 1;
+        private float _StoneBuyerAwardGoldCoinMultiple = 1;
 
         /// <summary>
         /// 矿石买家奖励金币数
@@ -149,7 +149,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _OutputStonesPerHour = 0.003f;
+        private float _OutputStonesPerHour = 0.003f;
 
         /// <summary>
         /// 每个矿工每小时生产矿石数
@@ -168,7 +168,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _StonesReservesPerMines = 1000;
+        private float _StonesReservesPerMines = 1000;
 
         /// <summary>
         /// 每座矿山的矿石储量
@@ -187,7 +187,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public float _ExchangeExpensePercent = 5;
+        private float _ExchangeExpensePercent = 5;
 
         /// <summary>
         /// 提现手续费比例百分数，值为1，表示1%
@@ -205,8 +205,8 @@ namespace SuperMinersServerApplication.UIModel
                 }
             }
         }
-        
-        public float _ExchangeExpenseMinNumber = 1;
+
+        private float _ExchangeExpenseMinNumber = 1;
 
         /// <summary>
         /// 提现手续费手续费最小金额
@@ -225,7 +225,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public int _UserMaxHaveMinersCount = 50;
+        private int _UserMaxHaveMinersCount = 50;
 
         /// <summary>
         /// 
@@ -244,7 +244,7 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        public int _BuyOrderLockTimeMinutes = 30;
+        private int _BuyOrderLockTimeMinutes = 30;
 
         /// <summary>
         /// 
@@ -262,6 +262,73 @@ namespace SuperMinersServerApplication.UIModel
                 }
             }
         }
+
+        private int _CanExchangeMinExp;
+
+        public int CanExchangeMinExp
+        {
+            get { return _CanExchangeMinExp; }
+            set
+            {
+                if (value != this._CanExchangeMinExp)
+                {
+                    this._CanExchangeMinExp = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("CanExchangeMinExp");
+                }
+            }
+        }
+
+        private int _CanDiscountMinExp;
+
+        public int CanDiscountMinExp
+        {
+            get { return _CanDiscountMinExp; }
+            set
+            {
+                if (value != this._CanDiscountMinExp)
+                {
+                    this._CanDiscountMinExp = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("CanDiscountMinExp");
+                }
+            }
+        }
+
+        private float _Discount;
+
+        public float Discount
+        {
+            get { return _Discount; }
+            set
+            {
+                if (value != this._Discount)
+                {
+                    this._Discount = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("Discount");
+                }
+            }
+        }
+
+
+        private int _TempStoneOutputValidHour;
+
+        public int TempStoneOutputValidHour
+        {
+            get { return _TempStoneOutputValidHour; }
+            set
+            {
+                if (value != this._TempStoneOutputValidHour)
+                {
+                    this._TempStoneOutputValidHour = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("TempStoneOutputValidHour");
+                }
+            }
+        }
+
+
 
         public static GameConfigUIModel CreateFromDBObject(GameConfig parent)
         {
@@ -283,7 +350,11 @@ namespace SuperMinersServerApplication.UIModel
                 StonesReservesPerMines = parent.StonesReservesPerMines,
                 Yuan_RMB = parent.Yuan_RMB,
                 UserMaxHaveMinersCount = parent.UserMaxHaveMinersCount,
-                BuyOrderLockTimeMinutes = parent.BuyOrderLockTimeMinutes
+                BuyOrderLockTimeMinutes = parent.BuyOrderLockTimeMinutes,
+                TempStoneOutputValidHour = parent.TempStoneOutputValidHour,
+                CanDiscountMinExp = parent.CanDiscountMinExp,
+                CanExchangeMinExp = parent.CanExchangeMinExp,
+                Discount = parent.Discount,
             };
 
             return uiConfig;
@@ -305,7 +376,11 @@ namespace SuperMinersServerApplication.UIModel
                 StonesReservesPerMines = this.StonesReservesPerMines,
                 Yuan_RMB = this.Yuan_RMB,
                 UserMaxHaveMinersCount = this.UserMaxHaveMinersCount,
-                BuyOrderLockTimeMinutes = this.BuyOrderLockTimeMinutes
+                BuyOrderLockTimeMinutes = this.BuyOrderLockTimeMinutes,
+                TempStoneOutputValidHour = this.TempStoneOutputValidHour,
+                CanDiscountMinExp = this.CanDiscountMinExp,
+                CanExchangeMinExp = this.CanExchangeMinExp,
+                Discount = this.Discount
             };
 
             return dbConfig;

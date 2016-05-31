@@ -61,6 +61,24 @@ namespace SuperMinersWPF.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 一、	购买矿工
+        ///注册时系统赠送你一座初始矿山，价值&lt;$注册赠送矿山价值人民币$&gt;元；赠送&lt;$注册赠送矿工数量$&gt;矿工，每天可以轻松收益&lt;$每天免费收益人民币$&gt;元，您也可以通过购买更多的矿工来获取更多收益；金币可以通过充值来获取，或者您也可以在交易区中购买迅灵矿石来免费赚取金币，或者通过活动来获取金币。
+        ///二、	领取收益
+        ///全自动挖矿，无需人工干预，仅需每天进入矿场领取收益即可，注意事项：每&lt;$100矿工数量$&gt;矿工每天可以生产迅灵矿石&lt;$100矿工每天生产矿石数量$&gt;块，收益每&lt;$收益时间$&gt;分钟结算一次，最高可累计&lt;$累计上限小时$&gt;小时，当超过&lt;$累计上限小时$&gt;小时未领取收益将不在产生收益；
+        ///三、	贡献值系统
+        ///在矿场上充值、推广、娱乐、活动中可以获得贡献值，贡献值满&lt;$提现贡献值$&gt;时，即可提现，贡献值达到&lt;$折扣贡献值$&gt;之后购买矿工可以获得相应的折扣；
+        ///四、	推荐人系统
+        ///矿场的发展靠大家，为了给予对网站宣传做出贡献的玩家一定奖励，特推出推广系统，每推荐一人矿场奖励&lt;$推荐奖励金币$&gt;金币；
+        ///五、	矿石交易区
+        ///在矿场上购买矿工，勘探矿山，开始挖矿，就可以源源不断的收集矿石，是不是速度总 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string Helper {
+            get {
+                return ResourceManager.GetString("Helper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         public static System.Drawing.Bitmap Logo128 {

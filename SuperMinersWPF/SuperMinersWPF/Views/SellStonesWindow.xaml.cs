@@ -33,6 +33,7 @@ namespace SuperMinersWPF.Views
             this.txtSellableStones.Text = GlobalData.CurrentUser.SellableStones.ToString();
             this.subTxtExpensePercent.Text = GlobalData.GameConfig.ExchangeExpensePercent.ToString();
             this.numSellStones.Maximum = (int)GlobalData.CurrentUser.SellableStones;
+            this.subTxtMinExpense.Text = GlobalData.GameConfig.ExchangeExpenseMinNumber.ToString();
         }
 
         private void numSellStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -49,12 +50,12 @@ namespace SuperMinersWPF.Views
 
         private float GetAllRMB()
         {
-            return (int)this.numSellStones.Value / GlobalData.GameConfig.Stones_RMB; ;
+            return (int)this.numSellStones.Value / GlobalData.GameConfig.Stones_RMB;
         }
 
         private float GetExpense(float allRMB)
         {
-            float expense = allRMB * GlobalData.GameConfig.ExchangeExpensePercent;
+            float expense = allRMB * GlobalData.GameConfig.ExchangeExpensePercent / 100;
             if (expense < GlobalData.GameConfig.ExchangeExpenseMinNumber)
             {
                 expense = GlobalData.GameConfig.ExchangeExpenseMinNumber;

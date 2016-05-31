@@ -209,34 +209,6 @@
                                         </ComboBox>
                                     </StackPanel>
                                 </Grid>
-
-                                <!--<Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="奖励推荐人贡献值：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Column="1" Value="{Binding AwardReferrerExp}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="奖励推荐人金币：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding AwardReferrerGoldCoin}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="10000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="奖励推荐人矿山：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding AwardReferrerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="奖励推荐人矿工：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding AwardReferrerMiners, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="奖励推荐人矿石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="4" Grid.Column="1" Value="{Binding AwardReferrerStones, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
-                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="奖励推荐人钻石：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding AwardReferrerDiamond, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
-                                </Grid>-->
                             </Grid>
                         </TabItem>
                         <TabItem Name="tabitemGameConfig" Header="游戏规则">
@@ -248,6 +220,11 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -321,6 +298,18 @@
                                     <TextBlock Grid.Row="12" Text="买家锁定订单时间" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="12" Grid.Column="1" Value="{Binding BuyOrderLockTimeMinutes, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="12" Grid.Column="2" Text="分钟" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+
+                                    <TextBlock Grid.Row="13" Text="矿石生产有效记录时间" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="13" Grid.Column="1" Value="{Binding TempStoneOutputValidHour, Mode=TwoWay}" Maximum="1000" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="13" Grid.Column="2" Text="小时" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="14" Text="可以提现的贡献值" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="14" Grid.Column="1" Value="{Binding CanExchangeMinExp, Mode=TwoWay}" Maximum="1000" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="15" Text="可以打折的贡献值" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="15" Grid.Column="1" Value="{Binding CanDiscountMinExp, Mode=TwoWay}" Maximum="1000" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="16" Text="折扣" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <my:NumericTextBox Grid.Row="16" Grid.Column="1" Value="{Binding Discount, Mode=TwoWay}" Maximum="1" Minimum="0" DecimalPlaces="3" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Grid.Row="16" Grid.Column="2" Text="[0 - 1]" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+
                                 </Grid>
                             </ScrollViewer>
                         </TabItem>

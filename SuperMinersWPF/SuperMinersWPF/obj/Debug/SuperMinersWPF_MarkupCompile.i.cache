@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
 SuperMinersWPF
 none
 false
-TRACE;Encrypt
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-17-204141999
+DEBUG;TRACE;Encrypt
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
+18676506828
 
-701085385747
+74-615018641
 201805710553
-Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\MarketWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
 True
 

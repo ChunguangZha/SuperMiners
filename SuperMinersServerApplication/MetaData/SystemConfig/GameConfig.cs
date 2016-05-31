@@ -94,5 +94,23 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int BuyOrderLockTimeMinutes = 30;
 
+        /// <summary>
+        /// 允许提现的贡献值级别
+        /// </summary>
+        [DataMember]
+        public int CanExchangeMinExp = 50;
+
+        /// <summary>
+        /// 允许打折的贡献值级别
+        /// </summary>
+        [DataMember]
+        public int CanDiscountMinExp = 100;
+
+        /// <summary>
+        /// 打折
+        /// </summary>
+        [DataMember]
+        public float Discount = 0.99f;
+
     }
 }

@@ -117,6 +117,7 @@ namespace SuperMinersWeb
             if (result == 0)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
+                Response.Redirect("~/");
             }
             else if (result == 1)
             {
@@ -131,19 +132,6 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('注册失败!')</script>");
             }
         }
-
-        //protected void Button1_Click(object sender, EventArgs e)
-        //{
-        //    HttpCookie cookie = Request.Cookies["CheckCode"];
-        //    if (cookie.Value == this.TextBox1.Text.Trim())
-        //    {
-        //        Response.Write("<script>alert('验证码正确！')</script>");
-        //    }
-        //    else
-        //    {
-        //        Response.Write("<script>alert('验证码错误！')</script>");
-        //    }
-        //}
-
+        
     }
 }

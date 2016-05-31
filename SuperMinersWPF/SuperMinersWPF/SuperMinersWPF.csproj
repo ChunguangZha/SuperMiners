@@ -45,7 +45,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;Encrypt</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;Encrypt</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -55,7 +55,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;Encrypt</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;Encrypt</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -219,9 +219,6 @@
     <Compile Include="Views\InvitationFriendsWindow.xaml.cs">
       <DependentUpon>InvitationFriendsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MarketWindow.xaml.cs">
-      <DependentUpon>MarketWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MySubWindow.cs" />
     <Compile Include="Views\SellStonesWindow.xaml.cs">
       <DependentUpon>SellStonesWindow.xaml</DependentUpon>
@@ -299,10 +296,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\InvitationFriendsWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\MarketWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -409,6 +402,9 @@
   <ItemGroup>
     <Resource Include="Resources\m.png" />
     <Resource Include="Resources\player.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Helper.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

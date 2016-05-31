@@ -214,3 +214,45 @@ Error:  [2016/5/31 1:00:32] ---- Log: 客户端a已退出.
 Error:  [2016/5/31 1:04:33] ---- Log: 客户端a已退出.
 -----------------------------------------------------
 
+Error:  [2016/5/31 11:10:16] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 11:34:15] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 11:37:45] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 16:31:54] ---- Log: Read HelperTxt Error
+Exc.Message: 未能找到路径“F:\Resources\迅灵矿场”的一部分。Exc.Stack:    在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   在 System.IO.StreamReader..ctor(String path)
+   在 SuperMinersWPF.Views.GameHelperControl.SetText() 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\GameHelperControl.xaml.cs:行号 55
+-----------------------------------------------------
+
+Error:  [2016/5/31 16:32:18] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 16:59:45] ---- Log: Read HelperTxt Error
+Exc.Message: 未能找到路径“F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\Resources\Helper.txt”的一部分。Exc.Stack:    在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   在 System.IO.StreamReader..ctor(String path)
+   在 SuperMinersWPF.Views.GameHelperControl.SetText() 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\GameHelperControl.xaml.cs:行号 54
+-----------------------------------------------------
+
+Error:  [2016/5/31 16:59:48] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 17:10:03] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 17:12:06] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/5/31 17:13:49] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
