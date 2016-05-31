@@ -16,5 +16,8 @@ namespace SuperMinersServerApplication.WebService.Contracts
 
         [Callback]
         void SendGameConfig(string token);
+
+        [Callback]
+        void SendNewNotice(string token, string title);
     }
 }

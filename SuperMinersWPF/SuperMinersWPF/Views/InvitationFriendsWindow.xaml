@@ -73,9 +73,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock Grid.Row="3" Grid.ColumnSpan="2" Name="txtInfo" Margin="5" Foreground="Red" TextWrapping="Wrap"/>
-        <TextBlock Grid.Row="4" Text="请将邀请码复制给好友" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Name="txtInvitationCode" IsReadOnly="True" Margin="5" TextWrapping="Wrap"/>
+        <TextBlock Grid.Row="3" Text="请将邀请码复制给好友" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="txtInvitationCode" IsReadOnly="True" Margin="5" TextWrapping="Wrap"/>
         <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnOK" Content="复制" Width="75" Margin="5,5,100,5" HorizontalAlignment="Right" Click="btnOK_Click"/>
         <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="75" Margin="5" HorizontalAlignment="Right" Click="btnCancel_Click"/>
     </Grid>

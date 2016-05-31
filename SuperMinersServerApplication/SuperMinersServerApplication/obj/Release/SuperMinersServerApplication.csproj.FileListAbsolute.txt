@@ -71,3 +71,5 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.csproj.GenerateResource.Cache
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.exe
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.pdb
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.baml
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.g.cs

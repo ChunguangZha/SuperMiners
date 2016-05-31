@@ -27,18 +27,6 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            string baseuri = "";
-#if DEBUG
-            baseuri = "http://localhost:8509/";
-#else
-
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-#endif
-
-            string uri = baseuri + "Register.aspx?ic=" + GlobalData.CurrentUser.InvitationCode;
-
-            this.txtInvitationCode.Text = uri;
-
             SetAdText();
         }
 
@@ -65,7 +53,19 @@ namespace SuperMinersWPF.Views
             }
 
             builder.Append("无需挂机每天上线收取矿石即可，轻轻松松把钱赚。");
-            this.txtInfo.Text = builder.ToString();
+
+            string baseuri = "";
+#if DEBUG
+            baseuri = "http://localhost:8509/";
+#else
+
+            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+#endif
+
+            string uri = baseuri + "Register.aspx?ic=" + GlobalData.CurrentUser.InvitationCode;
+            builder.Append(" " + uri);
+
+            this.txtInvitationCode.Text = builder.ToString();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

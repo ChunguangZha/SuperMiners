@@ -1,4 +1,5 @@
-﻿using MetaData.ActionLog;
+﻿using MetaData;
+using MetaData.ActionLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,5 +20,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PlayerActionLog[] GetPlayerAction(string token, int year, int month, int day, int hour, int minute, int second);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetNotices",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        NoticeInfo[] GetNotices(string token, int year, int month, int day, int hour, int minute, int second);
     }
 }

@@ -73,11 +73,7 @@ namespace SuperMinersServerApplication.Controller
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
-            if (userCount > GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
-            {
-                Awardable = false;
-            }
-            else
+            if (userCount == 0)
             {
                 Awardable = true;
             }
@@ -197,9 +193,7 @@ namespace SuperMinersServerApplication.Controller
 
         private string CreateInvitationCode(string userName)
         {
-            int code = userName.GetHashCode();
-            string ic = Encoding.ASCII.GetString(BitConverter.GetBytes(code));
-            return ic;
+            return userName;
         }
 
         public PlayerInfo LoginPlayer(string userName, string password)

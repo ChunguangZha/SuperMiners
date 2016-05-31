@@ -41,6 +41,7 @@ namespace SuperMinersWPF
             App.UserVMObject.StartListen();
             this.DataContext = GlobalData.CurrentUser;
 
+            this.panelNotice.DataContext = App.NoticeVMObject;
         }
 
         void Client_OnKickoutByUser()
@@ -54,7 +55,7 @@ namespace SuperMinersWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            App.NoticeVMObject.AsyncGetNewNotices();
         }
 
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -270,6 +271,18 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+        }
+
+        private void btnShowNotice_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.NoticeVMObject.LastedNotice == null)
+            {
+                return;
+            }
+
+            ViewSingleNoticeWindow win = new ViewSingleNoticeWindow();
+            win.SetNotice(App.NoticeVMObject.LastedNotice);
+            win.ShowDialog();
         }
 
     }

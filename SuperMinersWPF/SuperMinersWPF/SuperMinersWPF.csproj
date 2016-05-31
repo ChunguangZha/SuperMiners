@@ -25,7 +25,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://221.195.61.55:8090/Software/</InstallUrl>
+    <InstallUrl>http://ore.xlwinfo.com/Software/</InstallUrl>
     <SupportUrl>http://221.195.61.55:8090/</SupportUrl>
     <ErrorReportUrl>http://221.195.61.55:8090/</ErrorReportUrl>
     <TargetCulture>zh-CN</TargetCulture>
@@ -33,8 +33,8 @@
     <PublisherName>迅灵信息</PublisherName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>27</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -55,7 +55,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Encrypt</DefineConstants>
+    <DefineConstants>TRACE;Encrypt</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -105,6 +105,9 @@
     </ApplicationDefinition>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
+      <Link>Wcf\Datas\NoticeInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
@@ -189,6 +192,7 @@
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
+    <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
     <Compile Include="ViewModels\UserReferrerTreeViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -219,6 +223,9 @@
     <Compile Include="Views\InvitationFriendsWindow.xaml.cs">
       <DependentUpon>InvitationFriendsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ListAllNoticeWindow.xaml.cs">
+      <DependentUpon>ListAllNoticeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MySubWindow.cs" />
     <Compile Include="Views\SellStonesWindow.xaml.cs">
       <DependentUpon>SellStonesWindow.xaml</DependentUpon>
@@ -231,6 +238,9 @@
     </Compile>
     <Compile Include="Views\TopListUserControl.xaml.cs">
       <DependentUpon>TopListUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSingleNoticeWindow.xaml.cs">
+      <DependentUpon>ViewSingleNoticeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WinRechargeRMB.xaml.cs">
       <DependentUpon>WinRechargeRMB.xaml</DependentUpon>
@@ -299,6 +309,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ListAllNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SellStonesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -312,6 +326,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TopListUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSingleNoticeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -402,9 +420,6 @@
   <ItemGroup>
     <Resource Include="Resources\m.png" />
     <Resource Include="Resources\player.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Helper.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

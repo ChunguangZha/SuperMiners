@@ -24,5 +24,10 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             this.InvokeCallback(token, "SendGameConfig");
         }
+
+        public void SendNewNotice(string token, string title)
+        {
+            this.InvokeCallback(token, "SendNewNotice", title);
+        }
     }
 }

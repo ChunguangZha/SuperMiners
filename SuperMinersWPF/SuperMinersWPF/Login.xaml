@@ -36,16 +36,16 @@
         <TextBlock Grid.Row="2" Grid.Column="0" Text="账号:" Margin="20,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="txtUserName" Margin="10,5" MaxLength="50" FontSize="18"/>
         <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0">
-                <Hyperlink Name="hlinkRegister" NavigateUri="http://www.sina.com" RequestNavigate="hlinkRegister_RequestNavigate">快速注册</Hyperlink>
+                <Hyperlink Name="hlinkRegister" NavigateUri="http://ore.xlwinfo.com" RequestNavigate="hlinkRegister_RequestNavigate">快速注册</Hyperlink>
         </TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="密码:" Margin="20,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
         <PasswordBox Grid.Row="3" Grid.Column="1" Name="txtPassword" Margin="10,5" MaxLength="50" FontSize="18"/>
         <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0">
-                <Hyperlink Name="hlinkForgetPassword" NavigateUri="www.baidu.com" RequestNavigate="hlinkForgetPassword_RequestNavigate">忘记密码</Hyperlink>
+                <Hyperlink Name="hlinkForgetPassword" RequestNavigate="hlinkForgetPassword_RequestNavigate">忘记密码</Hyperlink>
         </TextBlock>
         <Button Grid.Row="4" Grid.Column="1" Name="btnLogin" Content="登录" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnLogin_Click" IsDefault="True" Background="#FFF78F75" Foreground="White" FontSize="14"/>
         <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <Hyperlink Name="hlinkHomePage" NavigateUri="" RequestNavigate="hlinkHomePage_RequestNavigate">主页</Hyperlink>
+                <Hyperlink Name="hlinkHomePage" NavigateUri="http://ore.xlwinfo.com" RequestNavigate="hlinkHomePage_RequestNavigate">矿场主页</Hyperlink>
         </TextBlock>
     </Grid>
 </Window>

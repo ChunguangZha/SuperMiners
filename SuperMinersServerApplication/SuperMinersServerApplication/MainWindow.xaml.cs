@@ -2,6 +2,7 @@
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -71,6 +72,15 @@ namespace SuperMinersServerApplication
         {
             UpdateServiceStateToUI();
             BindListLogs();
+
+            BindNoticeLists();
+        }
+
+        private void BindNoticeLists()
+        {
+            Binding bind = new Binding();
+            bind.Source = NoticeController.Instance.ListNotices;
+            this.datagridNotices.SetBinding(DataGrid.ItemsSourceProperty, bind);
         }
 
         private void BindListLogs()
@@ -223,6 +233,27 @@ namespace SuperMinersServerApplication
             {
                 GetSystemConfig();
             }
+        }
+
+        private void btnCreateNotices_Click(object sender, RoutedEventArgs e)
+        {
+            AddNoticeWindow win = new AddNoticeWindow();
+            win.ShowDialog();
+        }
+
+        private void btnDeleteNotices_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnclearAllNotices_Click(object sender, RoutedEventArgs e)
+        {
+            NoticeController.Instance.SetAllChecked(false);
+        }
+
+        private void btnSelectAllNotices_Click(object sender, RoutedEventArgs e)
+        {
+            NoticeController.Instance.SetAllChecked(true);
         }
 
     }

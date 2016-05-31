@@ -72,6 +72,7 @@ namespace SuperMinersServerApplication
                 }
                 LogHelper.Instance.Init();
                 OrderController.Instance.Init();
+                NoticeController.Instance.Init();
 
                 if (!GetSystemConfig())
                 {
@@ -126,6 +127,10 @@ namespace SuperMinersServerApplication
                 if (!Directory.Exists(GlobalData.ConfigFolder))
                 {
                     Directory.CreateDirectory(GlobalData.ConfigFolder);
+                }
+                if (!Directory.Exists(GlobalData.NoticeFolder))
+                {
+                    Directory.CreateDirectory(GlobalData.NoticeFolder);
                 }
 
                 return true;

@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
+    <Compile Include="Controller\NoticeController.cs" />
     <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\PlayerActionController.cs" />
     <Compile Include="Controller\PlayerController.cs" />
@@ -105,6 +106,9 @@
     <Compile Include="Utility\WinInputPassword.xaml.cs">
       <DependentUpon>WinInputPassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddNoticeWindow.xaml.cs">
+      <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\AdminManager.cs" />
@@ -140,6 +144,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Utility\WinInputPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddNoticeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

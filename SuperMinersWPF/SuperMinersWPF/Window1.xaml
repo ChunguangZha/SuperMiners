@@ -94,11 +94,12 @@
             <RowDefinition Height="475*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="panelLogo" Background="{StaticResource LogoPanelBackground}">
-            <Image Source="Resources/logo.png" Stretch="None" Margin="10"/>
+            <Image Source="Resources/logo.png" Stretch="None" Margin="10,20"/>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1" x:Name="panelUserInfo" Background="{StaticResource PlayerInfoBackground}">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -159,7 +160,7 @@
                 <StackPanel Grid.Row="13" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBox Text="0 天 00:00:00" FontSize="28" Style="{StaticResource UserInfoTextBoxStyle}" Width="Auto"/>
                 </StackPanel>
-                <Button Grid.Row="14" Grid.ColumnSpan="3" x:Name="btnSetting" Content="设置" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnSetting_Click"/>
+                <Button Grid.Row="15" Grid.ColumnSpan="3" x:Name="btnSetting" Content="设置" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnSetting_Click"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="1" x:Name="panelNotify" Background="{StaticResource NotifyPanelBackground}">
@@ -167,6 +168,14 @@
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid Name="panelNotice">
+                <Button Name="btnShowNotice" Foreground="Red" Background="Transparent" BorderThickness="0" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnShowNotice_Click">
+                    <Button.Content>
+                        <TextBlock Text="{Binding LastedNoticeTitle}" FontStyle="Italic" FontWeight="Bold" FontSize="16" TextDecorations="Underline"/>
+                    </Button.Content>
+                </Button>
+
+            </Grid>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <RadioButton x:Name="btnShowDigStonesArea" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" IsChecked="True" Checked="btnShowDigStonesArea_Checked">
                     <Grid Margin="10,10,15,5">

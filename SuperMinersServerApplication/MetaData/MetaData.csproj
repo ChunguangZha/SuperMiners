@@ -44,6 +44,7 @@
     <Compile Include="BuyStonesOrder.cs" />
     <Compile Include="DatabaseFieldAttribute.cs" />
     <Compile Include="GoldCoinRechargeRecord.cs" />
+    <Compile Include="NoticeInfo.cs" />
     <Compile Include="SystemConfig\AwardReferrerConfig.cs" />
     <Compile Include="SystemConfig\RegisterUserConfig.cs" />
     <Compile Include="SystemConfig\IncomeMoneyAccount.cs" />
