@@ -138,9 +138,10 @@ namespace SuperMinersWPF
 
         private void btnMinersBuy_Click(object sender, RoutedEventArgs e)
         {
-            bool showWin = false;
+            bool showWin = true;
             if (GlobalData.CurrentUser.TempOutputStones > 0)
             {
+                showWin = false;
                 App.UserVMObject.SuspendListen();
                 GatherStonesForBuyMinerWindow winGatherStones = new GatherStonesForBuyMinerWindow();
                 if (winGatherStones.ShowDialog() == true)

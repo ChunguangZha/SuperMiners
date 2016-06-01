@@ -110,21 +110,29 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                PlayerController.Instance.LogoutPlayer(ClientManager.GetClientUserName(token));
-                RSAProvider.RemoveRSA(token);
-                ClientManager.RemoveClient(token);
-                lock (this._callbackDicLocker)
+                try
                 {
-                    this._callbackDic.Remove(token);
-                }
-                if (!string.IsNullOrEmpty(token))
-                {
-                    new Thread(new ParameterizedThreadStart(o =>
+                    PlayerController.Instance.LogoutPlayer(ClientManager.GetClientUserName(token));
+                    RSAProvider.RemoveRSA(token);
+                    ClientManager.RemoveClient(token);
+                    lock (this._callbackDicLocker)
                     {
-                        this.LogedOut(o.ToString());
-                    })).Start(token);
+                        this._callbackDic.Remove(token);
+                    }
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        new Thread(new ParameterizedThreadStart(o =>
+                        {
+                            this.LogedOut(o.ToString());
+                        })).Start(token);
+                    }
+                    return true;
                 }
-                return true;
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("Logout Error", exc);
+                    return false;
+                }
             }
             else
             {

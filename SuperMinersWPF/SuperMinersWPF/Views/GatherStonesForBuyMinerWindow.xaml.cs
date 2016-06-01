@@ -32,7 +32,7 @@ namespace SuperMinersWPF.Views
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            App.UserVMObject.AsyncGatherStones((int)GlobalData.CurrentUser.TempOutputStones);
+            App.UserVMObject.AsyncGatherStones(GlobalData.CurrentUser.TempOutputStones);
             this.DialogResult = true;
         }
 

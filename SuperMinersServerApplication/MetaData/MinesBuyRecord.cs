@@ -16,12 +16,12 @@ namespace MetaData
         /// <summary>
         /// 花费的金币数
         /// </summary>
-        public int SpendGoldCoin = 0;
+        public int SpendRMB = 0;
 
         /// <summary>
         /// 获取矿山数
         /// </summary>
-        public int GainMinesCount = 0;
+        public float GainMinesCount = 0;
 
         /// <summary>
         /// 获取的矿石储量，将该值累加到用户的StonesReserves值中

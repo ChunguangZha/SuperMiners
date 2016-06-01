@@ -56,9 +56,9 @@ namespace SuperMinersServerApplication.Controller
         public bool LogoutPlayer()
         {
             BasePlayer.SimpleInfo.LastLogOutTime = DateTime.Now;
-            return DBProvider.UserDBProvider.UpdatePlayerLoginLogoutTime(BasePlayer.SimpleInfo.UserName, BasePlayer.SimpleInfo.LastLoginTime.Value, BasePlayer.SimpleInfo.LastLogOutTime.Value);
+            return DBProvider.UserDBProvider.LogoutPlayer(BasePlayer.SimpleInfo, BasePlayer.FortuneInfo);
         }
-        
+
         public void RefreshFortune()
         {
             BasePlayer.FortuneInfo = DBProvider.UserDBProvider.GetPlayerFortuneInfo(BasePlayer.SimpleInfo.UserName);
@@ -67,7 +67,7 @@ namespace SuperMinersServerApplication.Controller
 
         public void ComputePlayerOfflineStoneOutput()
         {
-            if (BasePlayer.SimpleInfo.LastLogOutTime == null || 
+            if (BasePlayer.SimpleInfo.LastLogOutTime == null ||
                 BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
             {
                 //表示该玩家之前没有登录过，以本次登录时间为起始。
@@ -111,10 +111,11 @@ namespace SuperMinersServerApplication.Controller
         /// 收取生产出来的矿石
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="tempStoneOutput"></param>
+        /// <param name="stones"></param>
         /// <returns></returns>
-        public int GatherStones(int stones)
+        public int GatherStones(float stones)
         {
+            int IntTempOutput;
             DateTime stopTime = DateTime.Now;
             if (stones <= 0)
             {
@@ -147,20 +148,20 @@ namespace SuperMinersServerApplication.Controller
                         tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
 
-                    int IntTempOutput = (int)tempOutput;
-                    if (stones > IntTempOutput)
-                    {
-                        stones = IntTempOutput;
-                    }
+                    float computeTempOutput = stones < tempOutput ? stones : tempOutput;
+                    IntTempOutput = (int)computeTempOutput;
+
                     BasePlayer.FortuneInfo.TempOutputStones = 0;
                     BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
-                    BasePlayer.FortuneInfo.StockOfStones += stones;
-                    BasePlayer.FortuneInfo.TotalProducedStonesCount += stones;
+                    BasePlayer.FortuneInfo.StockOfStones += IntTempOutput;
+
+                    //将零头从矿石储量中减去！
+                    BasePlayer.FortuneInfo.TotalProducedStonesCount += computeTempOutput;
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GatherStone, stones);
-                return stones;
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GatherStone, IntTempOutput);
+                return IntTempOutput;
             }
 
             return 0;
@@ -199,10 +200,39 @@ namespace SuperMinersServerApplication.Controller
                     BasePlayer.FortuneInfo.GoldCoin = needRMB * GlobalConfig.GameConfig.RMB_GoldCoin - gc;
                 }
                 BasePlayer.FortuneInfo.MinersCount += minersCount;
-                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+
+                CustomerMySqlTransaction trans = null;
+                try
                 {
-                    RefreshFortune();
-                    return -1;
+                    trans = MyDBHelper.Instance.CreateTrans();
+                    if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans))
+                    {
+                        trans.Rollback();
+                        RefreshFortune();
+                        return -1;
+                    }
+                    MinersBuyRecord record = new MinersBuyRecord()
+                    {
+                        UserName = BasePlayer.SimpleInfo.UserName,
+                        SpendGoldCoin = allNeedGoldCoin,
+                        GainMinersCount = minersCount,
+                        Time = DateTime.Now
+                    };
+                    DBProvider.BuyMinerRecordDBProvider.AddBuyMinerRecord(record, trans);
+
+                    trans.Commit();
+                }
+                catch (Exception exc)
+                {
+                    trans.Rollback();
+                    LogHelper.Instance.AddErrorLog("Buy Miners Error!", exc);
+                }
+                finally
+                {
+                    if (trans != null)
+                    {
+                        trans.Dispose();
+                    }
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMiner, minersCount);
@@ -240,7 +270,7 @@ namespace SuperMinersServerApplication.Controller
                     return -1;
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount, 
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
                     "增加了 " + newReservers.ToString() + " 的矿石储量");
                 return minesCount;
             }

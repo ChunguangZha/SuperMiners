@@ -18,5 +18,7 @@ namespace SuperMinersServerApplication.Controller
         public static AdminDBProvider AdminDBProvider = new AdminDBProvider();
 
         public static OrderDBProvider OrderDBProvider = new OrderDBProvider();
+
+        public static BuyMinerRecordDBProvider BuyMinerRecordDBProvider = new BuyMinerRecordDBProvider();
     }
 }

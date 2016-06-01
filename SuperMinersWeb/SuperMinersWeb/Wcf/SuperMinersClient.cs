@@ -11,57 +11,6 @@ namespace SuperMinersWeb.Wcf
 {
     public class SuperMinersClient : ClientBase<IServiceToWeb>, IServiceToWeb
     {
-        //#region Single
-
-        //private static SuperMinersClient client = new SuperMinersClient();
-
-        //public static SuperMinersClient Instance
-        //{
-        //    get
-        //    {
-        //        return client;
-        //    }
-        //}
-
-        //private SuperMinersClient()
-        //{
-
-        //}
-
-        //#endregion
-
-        //ChannelFactory<IServiceToWeb> factory = null;
-        //IServiceToWeb channel;
-
-        //public void Init()
-        //{
-        //    try
-        //    {
-        //        NetTcpBinding binding = new NetTcpBinding();
-        //        binding.Security.Mode = SecurityMode.Transport;
-        //        binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
-        //        EndpointAddress address = new EndpointAddress("net.tcp://localhost:4510/ServiceToWeb");
-        //        factory = new ChannelFactory<IServiceToWeb>(binding, address);
-        //        factory.Faulted += Factory_Faulted;
-        //        channel = factory.CreateChannel();
-
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        if (factory != null)
-        //        {
-        //            factory.Abort();
-        //        }
-        //        LogHelper.Instance.AddErrorLog("Init Client Failed。", exc);
-        //    }
-        //}
-
-        //void Factory_Faulted(object sender, EventArgs e)
-        //{
-        //    factory.Close();
-        //    Init();
-        //}
-
         public SuperMinersClient()
         {
 
@@ -154,6 +103,23 @@ namespace SuperMinersWeb.Wcf
             try
             {
                 return base.Channel.CheckEmailExist(email);
+            }
+            catch (Exception)
+            {
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <returns></returns>
+        public int CheckRegisterIP(string clientIP)
+        {
+            try
+            {
+                return base.Channel.CheckRegisterIP(clientIP);
             }
             catch (Exception)
             {

@@ -34,23 +34,23 @@ namespace SuperMinersWPF.Views
         {
             StringBuilder builder = new StringBuilder();
             builder.Append("迅灵矿场，一个挖矿赚钱的网站。");
-            if (GlobalData.RegisterUserConfig != null)
-            {
-                builder.Append(GlobalData.RegisterUserConfig.ToString());
-                builder.Append(",");
-            }
-            if (GlobalData.AwardReferrerLevelConfig != null && GlobalData.AwardReferrerLevelConfig.AwardLevelCount > 0)
-            {
-                for (int i = 1; i <= GlobalData.AwardReferrerLevelConfig.AwardLevelCount; i++)
-                {
-                    var award = GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(i);
-                    if (award != null)
-                    {
-                        builder.Append(award.ToString());
-                        builder.Append(",");
-                    }
-                }
-            }
+            //if (GlobalData.RegisterUserConfig != null)
+            //{
+            //    builder.Append(GlobalData.RegisterUserConfig.ToString());
+            //    builder.Append(",");
+            //}
+            //if (GlobalData.AwardReferrerLevelConfig != null && GlobalData.AwardReferrerLevelConfig.AwardLevelCount > 0)
+            //{
+            //    for (int i = 1; i <= GlobalData.AwardReferrerLevelConfig.AwardLevelCount; i++)
+            //    {
+            //        var award = GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(i);
+            //        if (award != null)
+            //        {
+            //            builder.Append(award.ToString());
+            //            builder.Append(",");
+            //        }
+            //    }
+            //}
 
             builder.Append("无需挂机每天上线收取矿石即可，轻轻松松把钱赚。");
 

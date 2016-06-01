@@ -39,6 +39,11 @@ namespace SuperMinersWeb
             string qq = this.txtQQ.Text;
             string password = this.txtPassword.Text;
             string confirmpwd = this.txtConfirmPassword.Text;
+            if (userName.Length < 3)
+            {
+                Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
+                return;
+            }
             if (userName.Length > 15)
             {
                 Response.Write("<script>alert('用户名长度不能超过15个字符!')</script>");
@@ -83,11 +88,25 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
                 return;
             }
+            
+            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+
+            result = WcfClient.Instance.CheckRegisterIP(ip);
+            if (result < 0)
+            {
+                Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
+                return;
+            }
+            if (result > 0)
+            {
+                Response.Write("<script>alert('此IP注册玩家数，已经超出限制，无法注册!')</script>");
+                return;
+            }
 
             result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result < 0)
             {
-                Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
+                Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
                 return;
             }
             if (result > 0)
@@ -110,8 +129,6 @@ namespace SuperMinersWeb
                     return;
                 }
             }
-
-            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
             result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
             if (result == 0)

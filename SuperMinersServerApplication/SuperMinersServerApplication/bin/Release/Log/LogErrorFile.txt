@@ -1,6 +1,7 @@
-Error:  [2016/6/1 0:57:30] ---- Log: 启动服务失败。
-Exc.Message: 列“CanExchangeMinExp”不属于表 。Exc.Stack:    在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 129
-   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 104
-   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 76
+Error:  [2016/6/1 20:11:52] ---- Log: 启动服务失败。
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetAllMinersCount() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 402
+   在 SuperMinersServerApplication.Controller.PlayerController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 52
+   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 106
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 77
 -----------------------------------------------------
 

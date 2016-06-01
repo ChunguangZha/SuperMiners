@@ -34,7 +34,9 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        int _countdown = 60;
+        const int COUNTDOWN = 59;
+
+        int _countdown = COUNTDOWN;
 
         public void SuspendListen()
         {
@@ -43,7 +45,7 @@ namespace SuperMinersWPF.ViewModels
 
         public void ResumeListen()
         {
-            _countdown = 60;
+            _countdown = COUNTDOWN;
             isSuspendListen = false;
         }
 
@@ -58,10 +60,10 @@ namespace SuperMinersWPF.ViewModels
                         if (GlobalData.IsLogined)
                         {
                             GlobalData.CurrentUser.OutputCountdown = this._countdown--;
-                            if (this._countdown <= 0)
+                            if (this._countdown < 0)
                             {
                                 ComputeOutput();
-                                this._countdown = 60;
+                                this._countdown = COUNTDOWN;
                             }
                         }
                     }
@@ -115,7 +117,7 @@ namespace SuperMinersWPF.ViewModels
         /// 
         /// </summary>
         /// <param name="stones">0表示清空临时产出</param>
-        public void AsyncGatherStones(int stones)
+        public void AsyncGatherStones(float stones)
         {
             GlobalData.Client.GatherStones(stones);
         }

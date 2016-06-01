@@ -47,7 +47,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int GatherStones(string token, string userName, int stones)
+        public int GatherStones(string token, string userName, float stones)
         {
             if (RSAProvider.LoadRSA(token))
             {

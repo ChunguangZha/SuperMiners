@@ -54,7 +54,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -73,6 +73,10 @@ namespace SuperMinersServerApplication.Controller
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
+            if (userCount >= GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
+            {
+                return 2;
+            }
             if (userCount == 0)
             {
                 Awardable = true;
@@ -193,7 +197,7 @@ namespace SuperMinersServerApplication.Controller
 
         private string CreateInvitationCode(string userName)
         {
-            return userName;
+            return userName.GetHashCode().ToString();
         }
 
         public PlayerInfo LoginPlayer(string userName, string password)
@@ -284,7 +288,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stonesCount">0表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(string userName, int stones)
+        public int GatherStones(string userName, float stones)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)

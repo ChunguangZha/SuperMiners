@@ -11,7 +11,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
     public interface IServiceToWeb
     {
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -47,5 +47,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <returns></returns>
         [OperationContract]
         int CheckEmailExist(string email);
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <returns></returns>
+        [OperationContract]
+        int CheckRegisterIP(string clientIP);
     }
 }

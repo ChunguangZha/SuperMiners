@@ -13,7 +13,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
     class ServiceToWeb : IServiceToWeb
     {
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败
+        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -26,6 +26,10 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
+                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                {
+                    return 4;
+                }
                 return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, email, qq, invitationCode);
             }
             catch (Exception exc)
@@ -35,11 +39,6 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 
                 return 3;
             }
-        }
-
-        private string CreateInvitationCode(string userName)
-        {
-            return Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -111,6 +110,35 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckEmailExist Exception. email: " + email, exc);
+
+                return -1;
+            }
+        }
+
+        /// <summary>
+        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <returns></returns>
+        public int CheckRegisterIP(string clientIP)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(clientIP))
+                {
+                    return -2;
+                }
+                int count = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
+                if (count < GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
+                {
+                    return 0;
+                }
+
+                return 1;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("CheckRegisterIP Exception. clientIP: " + clientIP, exc);
 
                 return -1;
             }
