@@ -4,7 +4,7 @@
         xmlns:winForm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:Views="clr-namespace:SuperMinersWPF.Views" x:Class="SuperMinersWPF.Window1"
         Loaded="Window_Loaded"
-        Height="600" Width="1000" Icon="Logo128.ico" MinHeight="600" MinWidth="1000">
+        Height="620" Width="1000" Icon="Logo128.ico" MinHeight="620" MinWidth="1000">
     <Window.Resources>
         <SolidColorBrush x:Key="RightTitleMouseOverBackground" Color="#FFC8ECE7"/>
         <SolidColorBrush x:Key="RedButtonBackground" Color="#FFF69068"/>
@@ -84,6 +84,17 @@
             </Setter>
         </Style>
     </Window.Resources>
+    <!--<Window.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="txtLinkNotice">
+            <BeginStoryboard>
+                <Storyboard RepeatBehavior="Forever" >
+                    <DoubleAnimation From="0" To="-30" Duration="0:0:2" Storyboard.TargetName="txtLinkNotice" Storyboard.TargetProperty="RenderTransform.Y" />
+                    <DoubleAnimation From="30" To="0" Duration="0:0:2" Storyboard.TargetName="txtLinkNotice" Storyboard.TargetProperty="RenderTransform.Y" />
+                    <DoubleAnimation From="0" To="0" Duration="0:0:16" Storyboard.TargetName="txtLinkNotice" Storyboard.TargetProperty="RenderTransform.Y" />
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>-->
     <Grid Background="{DynamicResource MainPanelBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="280"/>
@@ -94,7 +105,7 @@
             <RowDefinition Height="475*"/>
         </Grid.RowDefinitions>
         <Grid x:Name="panelLogo" Background="{StaticResource LogoPanelBackground}">
-            <Image Source="Resources/logo.png" Stretch="None" Margin="10,20"/>
+            <Image Source="Resources/logo.png" Stretch="None" Margin="10"/>
         </Grid>
         <Grid Grid.Column="0" Grid.Row="1" x:Name="panelUserInfo" Background="{StaticResource PlayerInfoBackground}">
             <Grid Margin="5">
@@ -169,12 +180,12 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Name="panelNotice">
-                <Button Name="btnShowNotice" Foreground="Red" Background="Transparent" BorderThickness="0" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnShowNotice_Click">
-                    <Button.Content>
-                        <TextBlock Text="{Binding LastedNoticeTitle}" FontStyle="Italic" FontWeight="Bold" FontSize="16" TextDecorations="Underline"/>
-                    </Button.Content>
-                </Button>
-
+                <TextBlock x:Name="txtLinkNotice" Margin="10,5" FontStyle="Italic" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                    <TextBlock.RenderTransform>
+                        <TranslateTransform x:Name="txtLinkNoticeTranslate" Y="0"/>
+                    </TextBlock.RenderTransform>
+                    <Hyperlink Name="linkNotice" Click="linkNotice_Click">消息通知</Hyperlink>
+                </TextBlock>
             </Grid>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <RadioButton x:Name="btnShowDigStonesArea" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" IsChecked="True" Checked="btnShowDigStonesArea_Checked">

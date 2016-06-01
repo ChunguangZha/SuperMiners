@@ -26,16 +26,16 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://ore.xlwinfo.com/Software/</InstallUrl>
-    <SupportUrl>http://221.195.61.55:8090/</SupportUrl>
-    <ErrorReportUrl>http://221.195.61.55:8090/</ErrorReportUrl>
+    <SupportUrl>http://ore.xlwinfo.com/</SupportUrl>
+    <ErrorReportUrl>http://ore.xlwinfo.com/</ErrorReportUrl>
     <TargetCulture>zh-CN</TargetCulture>
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
-    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
+    <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>

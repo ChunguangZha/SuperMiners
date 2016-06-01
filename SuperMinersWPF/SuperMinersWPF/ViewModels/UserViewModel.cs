@@ -58,7 +58,7 @@ namespace SuperMinersWPF.ViewModels
                         if (GlobalData.IsLogined)
                         {
                             GlobalData.CurrentUser.OutputCountdown = this._countdown--;
-                            if (this._countdown <= 1)
+                            if (this._countdown <= 0)
                             {
                                 ComputeOutput();
                                 this._countdown = 60;

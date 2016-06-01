@@ -28,21 +28,11 @@ namespace SuperMinersWPF.ViewModels
             set
             {
                 this._lastedNotice = value;
-                NotifyPropertyChange("LastedNotice");
-                NotifyPropertyChange("LastedNoticeTitle");
-            }
-        }
 
-        public string LastedNoticeTitle
-        {
-            get
-            {
-                if (LastedNotice == null)
+                if (LastNoticeChanged != null)
                 {
-                    return "";
+                    LastNoticeChanged();
                 }
-
-                return LastedNotice.Title;
             }
         }
 
@@ -84,5 +74,7 @@ namespace SuperMinersWPF.ViewModels
             LastedNotice = new NoticeInfo() { Title = obj };
 
         }
+
+        public event Action LastNoticeChanged;
     }
 }

@@ -30,9 +30,9 @@ namespace SuperMinersWPF
             UserReferrerTreeVMObject.RegisterEvent();
             NoticeVMObject.RegisterEvent();
 
-#if !DEBUG
-            CreateDesktopShortCut();
-#endif
+//#if !DEBUG
+//            CreateDesktopShortCut();
+//#endif
         }
 
         private static void CreateDesktopShortCut()

@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -55,14 +56,24 @@ namespace SuperMinersWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            App.NoticeVMObject.LastNoticeChanged += NoticeVMObject_LastNoticeChanged;
             App.NoticeVMObject.AsyncGetNewNotices();
+
+        }
+
+        void NoticeVMObject_LastNoticeChanged()
+        {
+            this.linkNotice.Inlines.Clear();
+            if (App.NoticeVMObject.LastedNotice != null)
+            {
+                this.linkNotice.Inlines.Add(App.NoticeVMObject.LastedNotice.Title);
+            }
         }
 
         void Window1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             try
             {
-                //App.MessageVMObject.StopListen();
                 App.UserVMObject.StopListen();
                 GlobalData.Client.Logout();
 
@@ -273,7 +284,7 @@ namespace SuperMinersWPF
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        private void btnShowNotice_Click(object sender, RoutedEventArgs e)
+        private void linkNotice_Click(object sender, RoutedEventArgs e)
         {
             if (App.NoticeVMObject.LastedNotice == null)
             {

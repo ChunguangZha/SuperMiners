@@ -39,7 +39,6 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.e
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.application
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.exe
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Release\SuperMinersWPF.pdb
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Assets\Style.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Login.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BusyWindow.baml
@@ -139,3 +138,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNo
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ViewSingleNoticeWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticeWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ViewSingleNoticeWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticeWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ViewSingleNoticeWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticeWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ViewSingleNoticeWindow.g.cs

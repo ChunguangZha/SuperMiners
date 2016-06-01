@@ -286,3 +286,48 @@ Error:  [2016/6/1 1:49:53] ---- Log: 客户端a已退出.
 Error:  [2016/6/1 2:01:18] ---- Log: 客户端a已退出.
 -----------------------------------------------------
 
+Error:  [2016/6/1 10:05:32] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 10:07:22] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 11:35:28] ---- Log: 服务器连接失败。
+Exc.Message: 无法连接到远程服务器Exc.Stack:    在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass12.<Send>b__e(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/6/1 11:35:46] ---- Log: 服务器连接失败。
+Exc.Message: 无法连接到远程服务器Exc.Stack:    在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass12.<Send>b__e(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/6/1 11:54:42] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 11:56:01] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 13:26:11] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 13:31:24] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 13:33:52] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 14:58:50] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 14:59:33] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 15:00:11] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
+Error:  [2016/6/1 15:01:08] ---- Log: 客户端a已退出.
+-----------------------------------------------------
+
