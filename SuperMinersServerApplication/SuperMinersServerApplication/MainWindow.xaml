@@ -393,6 +393,54 @@
                     </Grid>
                 </Grid>
             </TabItem>
+            <TabItem Header="玩家管理" Name="tabItemPlayerManager">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="174*"/>
+                        <RowDefinition Height="24*"/>
+                    </Grid.RowDefinitions>
+                    <DataGrid x:Name="datagridPlayers" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" HeadersVisibility="Column" SelectionMode="Single" CanUserResizeRows="False" HorizontalScrollBarVisibility="Disabled" EnableRowVirtualization="False" AlternatingRowBackground="#FFE4E2E2" FontSize="14" RowDetailsVisibilityMode="Collapsed">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="100">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="*" Header="用户名">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding UserName}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="*" Header="昵称">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding NickName}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Name="btnSelectAllPlayers" Margin="5" Content="全选" VerticalAlignment="Center" Width="100" Click="btnSelectAllPlayers_Click"/>
+                            <Button Name="btnclearAllPlayers" Margin="5" Content="全取消" VerticalAlignment="Center" Width="100" Click="btnclearAllPlayers_Click"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal"  FlowDirection="RightToLeft">
+                            <Button Name="btnDeletePlayers" Margin="5" Content="删除该玩家" VerticalAlignment="Center" Width="100" Click="btnDeletePlayers_Click"/>
+                            <Button Name="btnViewReferTree" Margin="5" Content="查看推荐关系" VerticalAlignment="Center" Width="100" Click="btnViewReferTree_Click"/>
+                            <Button Name="btnViewTradeRecord" Margin="5" Content="查看交易记录" VerticalAlignment="Center" Width="100" Click="btnViewTradeRecord_Click"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
         </TabControl>
 
     </Grid>

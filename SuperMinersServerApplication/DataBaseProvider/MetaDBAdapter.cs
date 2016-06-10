@@ -186,18 +186,18 @@ namespace DataBaseProvider
                 order.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
                 order.OrderState = (SellOrderState)Convert.ToInt32(dt.Rows[i]["OrderState"]);
 
-                if (order.OrderState != SellOrderState.Wait)
-                {
-                    if (dt.Rows[i]["BuyerUserName"] != DBNull.Value)
-                    {
-                        string encryptedBuyerUserName = dt.Rows[i]["BuyerUserName"].ToString();
-                        order.LockedByUserName = DESEncrypt.DecryptDES(encryptedBuyerUserName);
-                    }
-                    if (dt.Rows[i]["LockedTime"] != DBNull.Value)
-                    {
-                        order.LockedTime = Convert.ToDateTime(dt.Rows[i]["LockedTime"]);
-                    }
-                }
+                //if (order.OrderState != SellOrderState.Wait)
+                //{
+                //    if (dt.Rows[i]["BuyerUserName"] != DBNull.Value)
+                //    {
+                //        string encryptedBuyerUserName = dt.Rows[i]["BuyerUserName"].ToString();
+                //        order.LockedByUserName = DESEncrypt.DecryptDES(encryptedBuyerUserName);
+                //    }
+                //    if (dt.Rows[i]["LockedTime"] != DBNull.Value)
+                //    {
+                //        order.LockedTime = Convert.ToDateTime(dt.Rows[i]["LockedTime"]);
+                //    }
+                //}
 
                 orders[i] = order;
             }

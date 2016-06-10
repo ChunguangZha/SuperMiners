@@ -59,6 +59,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Alipay\AlipayDefault.aspx" />
+    <Content Include="Alipay\notify_url.aspx" />
+    <Content Include="Alipay\readme.txt" />
+    <Content Include="Alipay\return_url.aspx" />
     <Content Include="AuthCode.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -121,6 +125,8 @@
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\mine.jpg" />
+    <Content Include="Images\miner.jpg" />
     <Content Include="Images\orderedList0.png" />
     <Content Include="Images\orderedList1.png" />
     <Content Include="Images\orderedList2.png" />
@@ -131,7 +137,10 @@
     <Content Include="Images\orderedList7.png" />
     <Content Include="Images\orderedList8.png" />
     <Content Include="Images\orderedList9.png" />
+    <Content Include="Images\stones.jpg" />
     <Content Include="Register.aspx" />
+    <Content Include="Shopping\MineTrade.aspx" />
+    <Content Include="Shopping\ShopList.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -144,6 +153,20 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Content Include="App_Code\AlipayConfig.cs" />
+    <Content Include="App_Code\AlipayCore.cs" />
+    <Content Include="App_Code\AlipayNotify.cs" />
+    <Content Include="App_Code\AlipaySubmit.cs" />
+    <Content Include="App_Code\RSA.cs" />
+    <Compile Include="Alipay\AlipayDefault.aspx.cs">
+      <DependentUpon>AlipayDefault.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alipay\notify_url.aspx.cs">
+      <DependentUpon>notify_url.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Alipay\return_url.aspx.cs">
+      <DependentUpon>return_url.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="AuthCode.aspx.cs">
@@ -174,6 +197,20 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Shopping\MineTrade.aspx.cs">
+      <DependentUpon>MineTrade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shopping\MineTrade.aspx.designer.cs">
+      <DependentUpon>MineTrade.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Shopping\ShopList.aspx.cs">
+      <DependentUpon>ShopList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shopping\ShopList.aspx.designer.cs">
+      <DependentUpon>ShopList.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -188,6 +225,8 @@
   <ItemGroup>
     <Content Include="Site.Master" />
     <Content Include="AuthCodeImageCallbackHandler.ashx" />
+    <Content Include="key\alipay_public_key.pem" />
+    <Content Include="key\rsa_private_key.pem" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -256,5 +256,30 @@ namespace SuperMinersServerApplication
             NoticeController.Instance.SetAllChecked(true);
         }
 
+        private void btnSelectAllPlayers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnclearAllPlayers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnDeletePlayers_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnViewReferTree_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnViewTradeRecord_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

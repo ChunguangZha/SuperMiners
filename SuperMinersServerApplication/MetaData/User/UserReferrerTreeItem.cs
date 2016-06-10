@@ -30,7 +30,7 @@ namespace MetaData.User
         /// <summary>
         /// 用户注册时间
         /// </summary>
-        public DateTime? RegisterTime { get; set; }
+        public DateTime RegisterTime { get; set; }
         [DataMember]
         public string RegisterTimeString
         {
@@ -50,7 +50,7 @@ namespace MetaData.User
                 }
                 catch (Exception)
                 {
-                    RegisterTime = null;
+                    RegisterTime = Common.INVALIDTIME;
                 }
             }
         }

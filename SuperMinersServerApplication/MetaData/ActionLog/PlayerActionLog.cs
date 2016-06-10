@@ -38,7 +38,7 @@ namespace MetaData.ActionLog
                 }
                 catch (Exception)
                 {
-                    Time = new DateTime(1990, 1, 1);
+                    Time = Common.INVALIDTIME;
                 }
             }
         }

@@ -258,6 +258,75 @@ ul#menu {
             text-decoration: none;
         }
 
+        
+/* shoplist listview itemtemplate span
+----------------------------------------------------------*/
+div.shopitemwrap {
+    overflow:hidden;
+    position:relative;
+    float:left;
+    letter-spacing:normal;
+    margin:18px;
+}
+
+a.shopitem {
+    margin:50px;
+}
+
+    a.shopitem div.img-wrap {
+        text-align:center;
+    }
+
+    a.shopitem div.title {
+        position:relative;
+        font-size:18px;
+        text-align:center;
+        bottom:10px;
+    }
+
+        a.shopitem div.title .price {
+            color:#f3425e;
+            font-weight:700;
+            margin-left:50px;
+        }
+
+
+/* shoppage
+----------------------------------------------------------*/
+div.shoppageinfo {
+    float:left;
+    width:100%;
+}
+
+div.shoppageinfo-l {
+    float:left;
+    width:300px;
+    padding:20px;
+    position:relative;
+}
+div.shoppageinfo-r {
+    float:left;
+    width:50%;
+    padding:20px;
+}
+    div.shoppageinfo-r ul {
+        list-style:none;
+        position:relative;
+        margin:0;
+        font-size:18px;
+    }
+
+        div.shoppageinfo-r ul il {
+            margin:5px;
+            height:30px;
+        }
+
+            shoppageinfoprice {
+                color:#f40;
+                font-size:26px;
+                font-weight:700;
+            }
+
 
 /* page elements
 ----------------------------------------------------------*/

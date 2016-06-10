@@ -29,32 +29,55 @@ namespace SuperMinersServerApplication.Controller
         #endregion
 
         object _lockListSellOrders = new object();
-        private Dictionary<string, SellStonesOrderUIModel> dicNotFinishedSellOrders = new Dictionary<string, SellStonesOrderUIModel>();
+        private Dictionary<string, OrderRunnable> dicSellOrders = new Dictionary<string, OrderRunnable>();
 
-        public void Init()
+        private List<BuyStonesOrder> listBuyStonesOrder = new List<BuyStonesOrder>();
+
+        public bool Init()
         {
-            dicNotFinishedSellOrders.Clear();
-            var sellOrderDBObjects = DBProvider.OrderDBProvider.GetAllFinishedSellOrders();
-            if (sellOrderDBObjects != null)
+            try
             {
-                foreach (var item in sellOrderDBObjects)
+                dicSellOrders.Clear();
+                var sellOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList();
+                if (sellOrderDBObjects != null)
                 {
-                    dicNotFinishedSellOrders.Add(item.OrderNumber, new SellStonesOrderUIModel(item));
+                    var lockOrderedDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList();
+                    foreach (var item in sellOrderDBObjects)
+                    {
+                        var runnable = new OrderRunnable(item);
+                        if (item.OrderState == SellOrderState.Lock)
+                        {
+                            var lockOrderObj = lockOrderedDBObjects.FirstOrDefault(o => o.OrderNumber == item.OrderNumber);
+                            if (lockOrderObj == null)
+                            {
+                                LogHelper.Instance.AddInfoLog("Order[" + item.OrderNumber + "] had locked, but can't find LockInfo");
+                            }
+                            else
+                            {
+                                runnable.Init(lockOrderObj);
+                            }
+                        }
+                        dicSellOrders.Add(item.OrderNumber, new OrderRunnable(item));
+                    }
                 }
+                this.listBuyStonesOrder = new List<BuyStonesOrder>(DBProvider.OrderDBProvider.GetBuyStonesOrderList());
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Init OrderController Error", exc);
+                return false;
             }
         }
 
-        public SellStonesOrder[] GetNotFinishedSellOrders()
+        public SellStonesOrder[] GetSellOrders()
         {
             lock (_lockListSellOrders)
             {
                 List<SellStonesOrder> orders = new List<SellStonesOrder>();
-                foreach (var item in dicNotFinishedSellOrders.Values)
+                foreach (var item in dicSellOrders.Values)
                 {
-                    if (item.CheckOrderState() != SellOrderState.Finish)
-                    {
-                        orders.Add(item.ParentObject);
-                    }
+                    orders.Add(item.GetSellOrder());
                 }
 
                 return orders.ToArray();
@@ -65,7 +88,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                dicNotFinishedSellOrders.Add(order.OrderNumber, new SellStonesOrderUIModel(order));
+                dicSellOrders.Add(order.OrderNumber, new OrderRunnable(order));
             }
 
             return true;
@@ -73,10 +96,10 @@ namespace SuperMinersServerApplication.Controller
 
         public bool LockSellOrder(string sellOrderNumber, string buyerUserName)
         {
-            SellStonesOrderUIModel order = null;
+            OrderRunnable order = null;
             lock (this._lockListSellOrders)
             {
-                this.dicNotFinishedSellOrders.TryGetValue(sellOrderNumber, out order);
+                this.dicSellOrders.TryGetValue(sellOrderNumber, out order);
             }
 
             if (order == null)
@@ -84,27 +107,44 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            bool isOK = order.LockOrder(buyerUserName);
-            if (isOK)
+            return order.Lock(buyerUserName);
+        }
+
+        public bool Pay(string buyerUserName, float moneyYuan, CustomerMySqlTransaction trans)
+        {
+            var runnable = FindRunnableByBuyUserName(buyerUserName);
+            if (runnable == null)
             {
-                var trans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    isOK = DBProvider.OrderDBProvider.UpdateSellOrderState(order.ParentObject, trans);
-                }
-                catch (Exception exc)
-                {
-                    order.UnlockOrder(buyerUserName);
-                    LogHelper.Instance.AddErrorLog("玩家：" + buyerUserName + " 锁定订单：" + sellOrderNumber + ", 异常。", exc);
-                    trans.Rollback();
-                }
-                finally
-                {
-                    trans.Dispose();
-                }
+                return false;
             }
 
-            return isOK;
+            if (runnable.Pay(moneyYuan, trans))
+            {
+                lock (this._lockListSellOrders)
+                {
+                    this.dicSellOrders.Remove(runnable.OrderNumber);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private OrderRunnable FindRunnableByBuyUserName(string buyerUserName)
+        {
+            lock (this._lockListSellOrders)
+            {
+                foreach (var item in this.dicSellOrders.Values)
+                {
+                    if (item.CheckBuyerName(buyerUserName))
+                    {
+                        return item;
+                    }
+                }
+
+                return null;
+            }
         }
     }
 }

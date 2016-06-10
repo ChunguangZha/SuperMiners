@@ -64,6 +64,7 @@
     <Compile Include="Controller\GameSystemConfigController.cs" />
     <Compile Include="Controller\NoticeController.cs" />
     <Compile Include="Controller\OrderController.cs" />
+    <Compile Include="Controller\OrderRunnable.cs" />
     <Compile Include="Controller\PlayerActionController.cs" />
     <Compile Include="Controller\PlayerController.cs" />
     <Compile Include="Controller\PlayerRunnable.cs" />
@@ -101,7 +102,6 @@
     <Compile Include="UIModel\GameConfigUIModel.cs" />
     <Compile Include="UIModel\IncomeMoneyAccountUIModel.cs" />
     <Compile Include="UIModel\RegisterUserConfigUIModel.cs" />
-    <Compile Include="UIModel\SellStonesOrderUIModel.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\WinInputPassword.xaml.cs">
       <DependentUpon>WinInputPassword.xaml</DependentUpon>

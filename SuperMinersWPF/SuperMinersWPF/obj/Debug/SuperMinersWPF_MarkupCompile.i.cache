@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
 SuperMinersWPF
 none
 false
 DEBUG;TRACE;Encrypt
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
 1928917050
 
 771024458930
 201805710553
 Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
-True
+False
 
