@@ -306,7 +306,8 @@ div.shoppageinfo-l {
 }
 div.shoppageinfo-r {
     float:left;
-    width:50%;
+    position:relative;
+    width:60%;
     padding:20px;
 }
     div.shoppageinfo-r ul {

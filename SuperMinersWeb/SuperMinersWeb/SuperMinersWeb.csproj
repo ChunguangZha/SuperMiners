@@ -139,8 +139,10 @@
     <Content Include="Images\orderedList9.png" />
     <Content Include="Images\stones.jpg" />
     <Content Include="Register.aspx" />
+    <Content Include="Shopping\MinerTrade.aspx" />
     <Content Include="Shopping\MineTrade.aspx" />
     <Content Include="Shopping\ShopList.aspx" />
+    <Content Include="Shopping\StoneTrade.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -161,12 +163,15 @@
     <Content Include="App_Code\RSA.cs" />
     <Compile Include="Alipay\AlipayDefault.aspx.cs">
       <DependentUpon>AlipayDefault.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Alipay\notify_url.aspx.cs">
       <DependentUpon>notify_url.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Alipay\return_url.aspx.cs">
       <DependentUpon>return_url.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="AuthCode.aspx.cs">
@@ -197,6 +202,13 @@
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Shopping\MinerTrade.aspx.cs">
+      <DependentUpon>MinerTrade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shopping\MinerTrade.aspx.designer.cs">
+      <DependentUpon>MinerTrade.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Shopping\MineTrade.aspx.cs">
       <DependentUpon>MineTrade.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -210,6 +222,13 @@
     </Compile>
     <Compile Include="Shopping\ShopList.aspx.designer.cs">
       <DependentUpon>ShopList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Shopping\StoneTrade.aspx.cs">
+      <DependentUpon>StoneTrade.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Shopping\StoneTrade.aspx.designer.cs">
+      <DependentUpon>StoneTrade.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MineTrade.aspx.cs" Inherits="SuperMinersWeb.Shopping.MineTrade" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StoneTrade.aspx.cs" Inherits="SuperMinersWeb.Shopping.StoneTrade" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="shoppageinfo">
         <div class="shoppageinfo-l">
-            <img src="../Images/mine.jpg" />
+            <img src="../Images/stones.jpg" />
         </div>
         <div class="shoppageinfo-r">
             <h2>矿工</h2>
