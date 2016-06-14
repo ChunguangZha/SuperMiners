@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData.SystemConfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -55,5 +56,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <returns></returns>
         [OperationContract]
         int CheckRegisterIP(string clientIP);
+
+        [OperationContract]
+        GameConfig GetGameConfig();
     }
 }

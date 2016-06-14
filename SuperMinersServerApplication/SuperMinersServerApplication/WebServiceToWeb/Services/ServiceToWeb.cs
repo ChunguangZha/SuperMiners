@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.SystemConfig;
+using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
@@ -141,6 +142,20 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 LogHelper.Instance.AddErrorLog("CheckRegisterIP Exception. clientIP: " + clientIP, exc);
 
                 return -1;
+            }
+        }
+
+        public GameConfig GetGameConfig()
+        {
+            try
+            {
+                return GlobalConfig.GameConfig;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("CheckRegisterIP Exception. ", exc);
+
+                return null;
             }
         }
     }

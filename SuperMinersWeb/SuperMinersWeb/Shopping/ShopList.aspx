@@ -17,4 +17,5 @@
             </div>
         </ItemTemplate>
     </asp:ListView>
+    <asp:LinqDataSource ID="LinqDataSource1" runat="server"></asp:LinqDataSource>
 </asp:Content>
