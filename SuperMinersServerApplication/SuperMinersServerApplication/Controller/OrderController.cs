@@ -118,7 +118,7 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            if (runnable.Pay(moneyYuan, trans))
+            if (runnable.Pay(moneyYuan, 0, trans))
             {
                 lock (this._lockListSellOrders)
                 {

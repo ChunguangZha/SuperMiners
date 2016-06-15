@@ -19,34 +19,40 @@ namespace SuperMinersWeb.Shopping
                 CreateItems();
 
                 this.listShop.DataSource = list;
+                this.listShop.DataBind();
             }
         }
 
         private void CreateItems()
         {
-            list.Add(new ShopItem()
+            GlobalData.GameConfig = Wcf.WcfClient.Instance.GetGameConfig();
+            if (list == null || list.Count == 0)
             {
-                Name="矿工",
-                ImgPath = "~/Images/miner.jpg",
-                Price = (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2),
-                Href = "MinerTrade.aspx"
-            });
-            list.Add(new ShopItem()
-            {
-                Name = "矿山",
-                ImgPath = "~/Images/mine.jpg",
-                Price = (float)Math.Round(GlobalData.GameConfig.RMB_Mine / GlobalData.GameConfig.Yuan_RMB, 2),
-                Href = "MineTrade.aspx"
-            });
+                list = new List<ShopItem>();
+                list.Add(new ShopItem()
+                {
+                    Name = "矿工",
+                    ImgPath = "~/Images/miner.jpg",
+                    Price = (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2),
+                    Href = "MinerTrade.aspx"
+                });
+                list.Add(new ShopItem()
+                {
+                    Name = "矿山",
+                    ImgPath = "~/Images/mine.jpg",
+                    Price = (float)Math.Round(GlobalData.GameConfig.RMB_Mine / GlobalData.GameConfig.Yuan_RMB, 2),
+                    Href = "MineTrade.aspx"
+                });
 
-            //矿石的价格已100块矿石为单位。
-            list.Add(new ShopItem()
-            {
-                Name = "矿石",
-                ImgPath = "~/Images/stones.jpg",
-                Price = (float)Math.Round((1 * 100) / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2),
-                Href = "StoneTrade.aspx"
-            });
+                //矿石的价格已100块矿石为单位。
+                list.Add(new ShopItem()
+                {
+                    Name = "矿石",
+                    ImgPath = "~/Images/stones.jpg",
+                    Price = (float)Math.Round((1 * 100) / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2),
+                    Href = "StoneTrade.aspx"
+                });
+            }
         }
     }
 }

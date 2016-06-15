@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ListView ID="listShop" runat="server" DataSourceID="ObjectDataSource1">
+    <asp:ListView ID="listShop" runat="server">
         <ItemTemplate>
             <div class="shopitemwrap">
                 <a class="shopitem" href="MinerTrade.aspx">

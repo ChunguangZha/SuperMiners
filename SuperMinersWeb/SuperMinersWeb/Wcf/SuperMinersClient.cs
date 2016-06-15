@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.WebServiceToWeb.Contracts;
+﻿using MetaData.SystemConfig;
+using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using SuperMinersWeb.Utility;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,18 @@ namespace SuperMinersWeb.Wcf
             catch (Exception)
             {
                 return -1;
+            }
+        }
+
+        public GameConfig GetGameConfig()
+        {
+            try
+            {
+                return base.Channel.GetGameConfig();
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

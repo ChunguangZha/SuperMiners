@@ -5,7 +5,7 @@ using System.Net;
 using System;
 using System.Collections.Generic;
 
-namespace Com.Alipay
+namespace SuperMinersWeb.App_Code
 {
     /// <summary>
     /// 类名：Notify

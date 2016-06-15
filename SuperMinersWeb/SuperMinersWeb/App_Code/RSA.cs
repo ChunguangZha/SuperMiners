@@ -4,7 +4,7 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace Com.Alipay
+namespace SuperMinersWeb.App_Code
 {
     /// <summary>
     /// 类名：RSAFromPkcs8
