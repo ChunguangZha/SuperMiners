@@ -1,4 +1,4 @@
-﻿using SuperMinersWeb.Data;
+﻿using SuperMinersWeb.App_Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +17,8 @@ namespace SuperMinersWeb.Shopping
             if (!this.IsPostBack)
             {
                 CreateItems();
-                
-                //this.LinqDataSource1
+
+                this.listShop.DataSource = list;
             }
         }
 
@@ -27,20 +27,25 @@ namespace SuperMinersWeb.Shopping
             list.Add(new ShopItem()
             {
                 Name="矿工",
-                ImgPath = "../Images/miner.jpg",
-                Price = (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2)
+                ImgPath = "~/Images/miner.jpg",
+                Price = (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2),
+                Href = "MinerTrade.aspx"
             });
             list.Add(new ShopItem()
             {
                 Name = "矿山",
-                ImgPath = "../Images/mine.jpg",
-                Price = (float)Math.Round(GlobalData.GameConfig.RMB_Mine / GlobalData.GameConfig.Yuan_RMB, 2)
+                ImgPath = "~/Images/mine.jpg",
+                Price = (float)Math.Round(GlobalData.GameConfig.RMB_Mine / GlobalData.GameConfig.Yuan_RMB, 2),
+                Href = "MineTrade.aspx"
             });
+
+            //矿石的价格已100块矿石为单位。
             list.Add(new ShopItem()
             {
                 Name = "矿石",
-                ImgPath = "../Images/stones.jpg",
-                Price = (float)Math.Round(GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2)
+                ImgPath = "~/Images/stones.jpg",
+                Price = (float)Math.Round((1 * 100) / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2),
+                Href = "StoneTrade.aspx"
             });
         }
     }

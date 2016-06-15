@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SuperMinersWeb.Data
+namespace SuperMinersWeb.App_Code
 {
     public class ShopItem
     {
@@ -12,5 +12,7 @@ namespace SuperMinersWeb.Data
         public float Price { get; set; }
 
         public string ImgPath { get; set; }
+
+        public string Href { get; set; }
     }
 }

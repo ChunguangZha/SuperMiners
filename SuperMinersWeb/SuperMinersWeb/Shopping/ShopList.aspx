@@ -2,20 +2,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
-    <asp:ListView ID="listShop" runat="server">
+    <asp:ListView ID="listShop" runat="server" DataSourceID="ObjectDataSource1">
         <ItemTemplate>
             <div class="shopitemwrap">
-                <a class="shopitem">
+                <a class="shopitem" href="MinerTrade.aspx">
                     <div class="img-wrap">
-                        <img src="../Images/stones.jpg" />
+                        <asp:Image ID="Image1" runat="server" ImageUrl='<%# Eval("ImgPath") %>' />
                     </div>
                     <div class="title">                    
-                        <span>矿石</span>                 
-                        <span class="price">￥30</span>
-                    </div>
+                        <span><%# Eval("Name") %></span>                 
+                        <span class="price">￥<%# Eval("Price") %></span></div>
                 </a>
             </div>
         </ItemTemplate>
     </asp:ListView>
-    <asp:LinqDataSource ID="LinqDataSource1" runat="server"></asp:LinqDataSource>
 </asp:Content>

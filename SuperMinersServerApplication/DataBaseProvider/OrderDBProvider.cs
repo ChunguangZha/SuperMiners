@@ -80,7 +80,7 @@ namespace DataBaseProvider
             try
             {
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
-                string textB = "delete locksellstonesorder b where b.SellOrderID = (select c.id from sellstonesorder c where c.OrderNumber = @OrderNumber);"
+                string textB = "delete locksellstonesorder b where b.SellOrderID = (select c.id from sellstonesorder c where c.OrderNumber = @OrderNumber);";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = textA + textB;

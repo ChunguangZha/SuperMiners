@@ -73,3 +73,5 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.baml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.baml
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.g.cs

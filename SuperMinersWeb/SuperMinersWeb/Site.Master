@@ -25,6 +25,7 @@
                 <nav>
                     <ul id="menu">
                         <li><a id="A3" runat="server" href="~/">主页</a></li>
+                        <li><a id="A6" runat="server" href="~/Shopping/ShopList.aspx" >网上商城</a></li>
                         <li><a id="A4" runat="server" href="~/Register.aspx">玩家注册</a></li>
                         <li><a id="A5" runat="server" href="~/About.aspx">关于</a></li>
                     </ul>

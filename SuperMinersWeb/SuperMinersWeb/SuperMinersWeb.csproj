@@ -148,7 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
-      <Link>Data\GameConfig.cs</Link>
+      <Link>App_Code\GameConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Contracts\IServiceToWeb.cs">
       <Link>Wcf\IServiceToWeb.cs</Link>
@@ -188,7 +188,7 @@
     <Compile Include="AuthCodeImageCallbackHandler.ashx.cs">
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Data\ShopItem.cs" />
+    <Compile Include="App_Code\ShopItem.cs" />
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -294,19 +294,19 @@
             </div>
         </div>
         <div class="container blue">
-            <div class="title">支付宝即时到账(create_direct_pay_by_user)</div>
+            <div class="title">支付宝即时到账</div>
         </div>
     </div>
     <div class="content">
         <form class="alipayform" target="_blank" runat="server">
             <div class="element" style="margin-top: 60px;">
-                <div class="legend">支付宝即时到账交易接口快速通道 </div>
+                <div class="legend">支付宝即时到账交易 </div>
             </div>
 			
             <div class="element">
                 <div class="etitle">商户订单号:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDout_trade_no" name="WIDout_trade_no" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDout_trade_no" runat="server"></asp:TextBox>
                 </div>
 
                 <br>
@@ -316,7 +316,7 @@
             <div class="element">
                 <div class="etitle">商品名称:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDsubject" name="WIDsubject"  value="test商品" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDsubject" Text="test商品" runat="server"></asp:TextBox>
                 </div>
                 <br>
                 <div class="mark">注意：商品名称(subject)是必须填写参数，该参数建议中文，英文，数字，不能含有特殊字符</div>
@@ -324,7 +324,7 @@
             <div class="element">
                 <div class="etitle">付款金额:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDtotal_fee" name="WIDtotal_fee"  value ="0.01" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDtotal_fee" Text="0.01" runat="server"></asp:TextBox>
                 </div>
                 <br>
                 <div class="mark">注意：付款金额(total_fee)，必填(格式如：1.00,请精确到分)</div>
@@ -332,14 +332,14 @@
 			<div class="element">
 				<div class="etitle">商品描述:</div>
 				<div class="einput">
-				<asp:TextBox ID="WIDbody" name="WIDbody" value="即时到账测试" runat="server"></asp:TextBox>
+				<asp:TextBox ID="WIDbody" Text="即时到账测试" runat="server"></asp:TextBox>
 				</div>
 				<br>
 				<div class="mark">注意：商品描述(body)，选填(建议中文，英文，数字，不能含有特殊字符)</div>
 			</div>
             <div class="element">
 
-                <asp:Button ID="BtnAlipay" name="BtnAlipay" class="alisubmit" Text="确认支付" Style="text-align: center;"
+                <asp:Button ID="BtnAlipay" class="alisubmit" Text="确认支付" Style="text-align: center;"
                     runat="server" OnClick="BtnAlipay_Click" />
             </div>
         </form>
