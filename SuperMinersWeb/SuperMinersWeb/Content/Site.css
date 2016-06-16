@@ -151,31 +151,43 @@ div.declaration {
     margin:.5em .5em .5em .5em;
 }
 
-label.label {
-    vertical-align:middle;
-    float:left;
-    min-width:150px;
-    text-align:right|center;
-}
-
 /* Register Page
 ----------------------------------------------------------*/
+
+.mtw {
+    margin-top:20px;
+    font-size:12px;
+}
+.rfm {
+    margin:0 auto;
+    width:760px;
+}
+.registerinfoline {
+        
+    border-bottom:1px dotted #CDCDCD;
+}
+
+.rq {
+    margin:auto 0;
+    vertical-align:middle;
+    color:red;
+    padding:3px;
+}
+
+.label {
+    float:right;
+    vertical-align:middle;
+    min-width:250px;
+}
 
 .button {
     margin-left:150px;
 }
 
-label.requirestar {
-    display:inline;
-    color:red;
-    vertical-align:middle;
-    margin:.5em .5em .5em .5em;
-    width:10px;
-}
 
 input.textbox {
-    display:inline;
-    width:200px;
+    width:220px;
+    margin-top:0;
 }
 
 /* site title
