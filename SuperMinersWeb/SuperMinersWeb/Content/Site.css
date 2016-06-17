@@ -157,6 +157,7 @@ div.declaration {
 .mtw {
     margin-top:20px;
     font-size:12px;
+	font-weight:normal;
 }
 .rfm {
     margin:0 auto;
@@ -167,21 +168,33 @@ div.declaration {
     border-bottom:1px dotted #CDCDCD;
 }
 
-.rq {
+.rqstar {
     margin:auto 0;
     vertical-align:middle;
     color:red;
-    padding:3px;
 }
 
 .label {
-    float:right;
+	float:right;
+	text-align:right;
+    margin:auto 0;
     vertical-align:middle;
     min-width:250px;
+    font-size:12px;
+	font-style:normal;
+	font-variant:normal;
+	font-family:Arial;
+	color:#444;
+}
+
+.checkimg{
+    vertical-align:middle;
+	margin-bottom:auto;
 }
 
 .button {
-    margin-left:150px;
+    margin-left:100px;
+	width:100px;
 }
 
 

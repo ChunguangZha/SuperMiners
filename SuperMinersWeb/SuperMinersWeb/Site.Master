@@ -5,6 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta charset="utf-8" />
+    <meta name="keywords" content="迅灵矿场，灵币，挖矿" />
+    <meta name="application-name" content="迅灵矿场" />
+    <meta name="author" content="迅灵信息" />
     <title><%: Page.Title %> - 迅灵矿场</title>
     <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
