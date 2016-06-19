@@ -26,6 +26,10 @@ namespace SuperMinersWeb.Shopping
         private void CreateItems()
         {
             GlobalData.GameConfig = Wcf.WcfClient.Instance.GetGameConfig();
+            if (GlobalData.GameConfig == null)
+            {
+                return;
+            }
             if (list == null || list.Count == 0)
             {
                 list = new List<ShopItem>();

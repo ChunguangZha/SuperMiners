@@ -1,4 +1,7 @@
 ﻿<%@ Page Title="玩家注册" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="SuperMinersWeb.Register" %>
+<asp:Content ID="ContentHeader" ContentPlaceHolderID="head" runat="server">
+    <
+</asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
     <section class="featured">
         <div class="content-wrapper">
