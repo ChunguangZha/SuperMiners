@@ -1,18 +1,9 @@
 ﻿<%@ Page Title="玩家注册" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="SuperMinersWeb.Register" %>
 <asp:Content ID="ContentHeader" ContentPlaceHolderID="head" runat="server">
-    <
+    <script src="Scripts/jquery-3.0.0.js" ></script>
+    <script src="Scripts/jquery.validate.min.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="FeaturedContent" runat="server">
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1><%: Title %>.</h1>
-            </hgroup>
-            <div class="declaration">
-
-            </div>
-        </div>
-    </section>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <script type="text/javascript">
