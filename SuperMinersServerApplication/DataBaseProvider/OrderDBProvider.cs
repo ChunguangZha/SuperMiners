@@ -162,22 +162,22 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                DataTable dt = new DataTable();
+                //DataTable dt = new DataTable();
 
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
-                string cmdText = "select a.*, b.UserName as SellerUserName, c.UserName as BuyerUserName " + 
-                                "from sellstonesorder a " +
-                                "left join playersimpleinfo b on a.SellerUserID = b.id " +
-                                "left join playersimpleinfo c on a.LockedByUserID = c.id " +
-                                "where a.OrderState != @OrderState;";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Finish);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt);
+                //myconn = MyDBHelper.Instance.CreateConnection();
+                //myconn.Open();
+                //string cmdText = "select a.*, b.UserName as SellerUserName, c.UserName as BuyerUserName " + 
+                //                "from sellstonesorder a " +
+                //                "left join playersimpleinfo b on a.SellerUserID = b.id " +
+                //                "left join playersimpleinfo c on a.LockedByUserID = c.id " +
+                //                "where a.OrderState != @OrderState;";
+                //MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                //mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Finish);
+                //MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                //adapter.Fill(dt);
+                //orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt);
 
-                mycmd.Dispose();
+                //mycmd.Dispose();
 
                 return orders;
             }

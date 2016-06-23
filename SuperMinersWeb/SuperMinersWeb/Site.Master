@@ -11,31 +11,34 @@
     <title><%: Page.Title %> - 迅灵矿场</title>
     <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
     <link href="/Logo128.ico" rel="shortcut icon" type="image/x-icon" />
+    <script src="Scripts/jquery-3.0.0.js"></script>
+    <script src="Scripts/jquery.validate.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
     <header>
-        <div class="content-wrapper">
+        <div class="content-wrapper navmenu">
                 <nav>
                     <ul id="menu">
                         <li><a id="A3" runat="server" href="~/"><span>主页</span></a></li>
-                        <li><span class="split">|</span></li>
+                        <li><div class="split"></div></li>
                         <li><a id="A6" runat="server" href="~/Shopping/ShopList.aspx" ><span>网上商城</span></a></li>
-                        <li><span class="split">|</span></li>
+                        <li><div class="split"></div></li>
                         <li><a id="A4" runat="server" href="~/Register.aspx"><span>矿主注册</span></a></li>
-                        <li><span class="split">|</span></li>
-                        <li><a id="A5" runat="server" href="~/About.aspx"><span>下载矿场</span></a></li>
+                        <li><div class="split"></div></li>
+                        <li><a id="A5" runat="server" href="~/Software/DownLoad.aspx"><span>下载矿场</span></a></li>
                     </ul>
                 </nav>
         </div>
     </header>
-    <div>
-        <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
-        <section class="content-wrapper main-content clear-fix">
+    <div class="body">
+        <div class="content-paper">
+        </div>
+        <div class="main-content clear-fix">
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </section>
+        </div>
     </div>
     <footer>
         <div class="content-wrapper">

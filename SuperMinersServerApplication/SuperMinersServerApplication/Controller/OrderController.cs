@@ -60,7 +60,16 @@ namespace SuperMinersServerApplication.Controller
                         dicSellOrders.Add(item.OrderNumber, new OrderRunnable(item));
                     }
                 }
-                this.listBuyStonesOrder = new List<BuyStonesOrder>(DBProvider.OrderDBProvider.GetBuyStonesOrderList());
+
+                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderList();
+                if (buyOrderRecords == null)
+                {
+                    this.listBuyStonesOrder = new List<BuyStonesOrder>();
+                }
+                else
+                {
+                    this.listBuyStonesOrder = new List<BuyStonesOrder>(buyOrderRecords);
+                }
                 return true;
             }
             catch (Exception exc)

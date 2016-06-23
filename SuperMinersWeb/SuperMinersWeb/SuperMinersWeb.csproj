@@ -142,15 +142,24 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
+    <Content Include="Software\DownLoad.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="Images\1_3.png" />
+    <Content Include="Images\1_1.png" />
+    <Content Include="Images\1_2.png" />
     <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
+    <Content Include="Images\bodybg.png" />
+    <Content Include="Images\group1_line2headerbg.png" />
+    <Content Include="Images\group2_header.png" />
     <Content Include="Images\masterheader.png" />
     <Content Include="Images\masterpagebg.png" />
     <Content Include="Images\mine.jpg" />
     <Content Include="Images\miner.jpg" />
+    <Content Include="Images\paperheader.png" />
+    <Content Include="Images\qianbao.png" />
+    <Content Include="Images\threeadvantage.png" />
     <Content Include="Images\stones.jpg" />
+    <Content Include="Images\tixiananli.png" />
     <Content Include="Logo128.ico" />
     <Content Include="Register.aspx" />
     <Content Include="packages.config" />
@@ -221,6 +230,13 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Software\DownLoad.aspx.cs">
+      <DependentUpon>DownLoad.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Software\DownLoad.aspx.designer.cs">
+      <DependentUpon>DownLoad.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -286,9 +302,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Software\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
