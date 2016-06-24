@@ -22,7 +22,6 @@ namespace SuperMinersWeb
                 this.txtPassword.Text == "" ||
                 this.txtConfirmPassword.Text == "" ||
                 this.txtNickName.Text == ""
-                //this.txtAlipayAccount.Text == ""
                 )
             {
                 return;
@@ -54,24 +53,29 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('昵称长度不能超过15个字符!')</script>");
                 return;
             }
-            if (email.Length > 30)
+            if (email.Length > 20)
             {
-                Response.Write("<script>alert('支付宝账户长度不能超过30个字符!')</script>");
+                Response.Write("<script>alert('电子邮箱长度不能超过20个字符!')</script>");
                 return;
             }
             if (qq.Length > 15)
             {
-                Response.Write("<script>alert('支付宝真实姓名长度不能超过15个字符!')</script>");
+                Response.Write("<script>alert('QQ长度不能超过15个字符!')</script>");
+                return;
+            }
+            if (password.Length < 6)
+            {
+                Response.Write("<script>alert('密码长度不能小于6位!')</script>");
                 return;
             }
             if (password.Length > 15)
             {
-                Response.Write("<script>alert('密码长度不能超过15个字符!')</script>");
+                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
                 return;
             }
             if (confirmpwd.Length > 15)
             {
-                Response.Write("<script>alert('密码长度不能超过15个字符!')</script>");
+                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
                 return;
             }
 

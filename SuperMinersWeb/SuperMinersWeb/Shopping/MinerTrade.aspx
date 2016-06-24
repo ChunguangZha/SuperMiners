@@ -19,8 +19,12 @@
                 <li>
                     <span>数量</span>
                     <asp:TextBox ID="txtCount" runat="server" TextMode="Number" />
+                </li>
+                <li>
                     <asp:RequiredFieldValidator ID="RequiredFieldValidator7" runat="server" ControlToValidate="txtCount"
                                      CssClass="field-validation-error" Display="Dynamic" ErrorMessage="请选择购买数量." />
+                </li>
+                <li>                    
                     <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="txtCount"
                          MinimumValue="1" MaximumValue="99999999" ErrorMessage="数量需大于0"></asp:RangeValidator>
                 </li>
