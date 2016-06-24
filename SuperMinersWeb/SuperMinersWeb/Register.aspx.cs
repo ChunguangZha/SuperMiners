@@ -21,7 +21,7 @@ namespace SuperMinersWeb
             if (this.txtUserName.Text == "" ||
                 this.txtPassword.Text == "" ||
                 this.txtConfirmPassword.Text == "" ||
-                this.txtNickName.Text == ""
+                this.txtEmail.Text == ""
                 )
             {
                 return;

@@ -17,7 +17,6 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <form id="form1" runat="server">
     <header>
         <div class="content-wrapper navmenu">
                 <nav>
@@ -33,13 +32,15 @@
                 </nav>
         </div>
     </header>
-    <div class="body">
-        <div class="content-paper">
+    <form id="form1" runat="server" method="get">
+        <div class="body">
+            <div class="content-paper">
+            </div>
+            <div class="main-content clear-fix">
+                <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            </div>
         </div>
-        <div class="main-content clear-fix">
-            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
-        </div>
-    </div>
+    </form>
     <footer>
         <div class="content-wrapper">
             <div class="float-left">
@@ -47,6 +48,5 @@
             </div>
         </div>
     </footer>
-    </form>
 </body>
 </html>

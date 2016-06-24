@@ -163,6 +163,7 @@
     <Content Include="Logo128.ico" />
     <Content Include="Register.aspx" />
     <Content Include="packages.config" />
+    <Content Include="CheckUserName.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -223,6 +224,9 @@
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\ShopItem.cs" />
+    <Compile Include="CheckUserName.ashx.cs">
+      <DependentUpon>CheckUserName.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
