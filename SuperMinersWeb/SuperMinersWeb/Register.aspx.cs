@@ -129,7 +129,7 @@ namespace SuperMinersWeb
                 }
                 if (result > 0)
                 {
-                    Response.Write("<script>alert('该支付宝已被其它用户使用，请选择其它支付宝账户!')</script>");
+                    Response.Write("<script>alert('该邮箱已被其它用户使用，请选择其它邮箱!')</script>");
                     return;
                 }
             }

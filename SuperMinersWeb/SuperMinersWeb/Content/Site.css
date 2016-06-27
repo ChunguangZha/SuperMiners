@@ -366,6 +366,11 @@ div.homepage {
                 color: red;
                 margin:0 5px;
             }
+.registerpage .message {
+    float:left;
+    color:red;
+    vertical-align:middle;
+}
 
     .textbox {
         border: 1px solid #e2e2e2;

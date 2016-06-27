@@ -14,7 +14,8 @@
                                     <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入用户名！" TabIndex="1" />
                                 </td>
                                 <td>
-                                    <span id="msgUserName"></span>
+                                    <span id="msgUserName" class="message"></span>
+                                    <img id="imgUserNameOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -36,7 +37,8 @@
                                     <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="textbox" MaxLength="15" ToolTip="请输入密码！" TabIndex="3" />
                                 </td>
                                 <td>                                    
-                                    <span></span>
+                                    <span id="msgPassword" class="message"></span>
+                                    <img id="imgPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -47,7 +49,8 @@
                                     <asp:TextBox ID="txtConfirmPassword" runat="server" TextMode="Password" CssClass="textbox" MaxLength="15" ToolTip="请再次输入密码！" TabIndex="4" />
                                 </td>
                                 <td>
-                                    <span></span>
+                                    <span id="msgConfirmPassword" class="message"></span>
+                                    <img id="imgConfirmPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -55,10 +58,11 @@
                                     <label for="txtEmail"><span>*</span>邮箱： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="20" CssClass="textbox" TextMode="Email" ToolTip="请输入邮箱！" TabIndex="5" />
+                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入邮箱！" TabIndex="5" />
                                 </td>
                                 <td>
-                                    <span></span>
+                                    <span id="msgEmail" class="message"></span>
+                                    <img id="imgEmailOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -69,6 +73,8 @@
                                     <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" CssClass="textbox" TabIndex="6" />
                                 </td>
                                 <td>
+                                    <span id="msgQQ" class="message"></span>
+                                    <img id="imgQQOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +85,8 @@
                                     <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入验证码！" TabIndex="7" />
                                 </td>
                                 <td>
-                                    <span></span>
+                                    <span id="msgAuthCode" class="message"></span>
+                                    <img id="imgAuthCodeOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -87,7 +94,7 @@
                                 </th>
                                 <td>
                                     请输入此验证码
-                                    <img src="AuthCode" class="checkimg" alt="验证码" id="imgAuthCode" /> 
+                                    <img id="imgAuthCode" src="AuthCode" class="checkimg" alt="验证码" /> 
                                     <a href="javascript:CallServerForUpdate()" class="checkimg">换下一张</a> 
                                 </td>
                                 <td>
@@ -95,7 +102,6 @@
                             </tr>
                         </tbody>
                     </table>
-                                    <input id="submit" type="submit" value="Submit" />
               <asp:Button ID="btnRegister" CssClass="button" runat="server" Text="注  册" OnClick="btnRegister_Click" TabIndex="8" />
         </div>
 </asp:Content>

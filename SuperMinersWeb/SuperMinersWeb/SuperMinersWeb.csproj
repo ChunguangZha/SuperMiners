@@ -142,6 +142,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
+    <Content Include="Images\yes.png" />
     <Content Include="Software\DownLoad.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\1_3.png" />
@@ -163,7 +164,9 @@
     <Content Include="Logo128.ico" />
     <Content Include="Register.aspx" />
     <Content Include="packages.config" />
-    <Content Include="CheckUserName.ashx" />
+    <Content Include="Handler\CheckUserName.ashx" />
+    <Content Include="Handler\CheckAuthCode.ashx" />
+    <Content Include="Handler\CheckEmail.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -220,11 +223,17 @@
     <Compile Include="AuthCode.aspx.designer.cs">
       <DependentUpon>AuthCode.aspx</DependentUpon>
     </Compile>
-    <Compile Include="AuthCodeImageCallbackHandler.ashx.cs">
+    <Compile Include="Handler\AuthCodeImageCallbackHandler.ashx.cs">
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="App_Code\ShopItem.cs" />
-    <Compile Include="CheckUserName.ashx.cs">
+    <Compile Include="Handler\CheckAuthCode.ashx.cs">
+      <DependentUpon>CheckAuthCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckEmail.ashx.cs">
+      <DependentUpon>CheckEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
@@ -294,7 +303,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
-    <Content Include="AuthCodeImageCallbackHandler.ashx" />
+    <Content Include="Handler\AuthCodeImageCallbackHandler.ashx" />
     <Content Include="key\alipay_public_key.pem" />
     <Content Include="key\rsa_private_key.pem" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
