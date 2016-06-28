@@ -11,8 +11,6 @@
     <title><%: Page.Title %> - 迅灵矿场</title>
     <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
     <link href="/Logo128.ico" rel="shortcut icon" type="image/x-icon" />
-    <script src="Scripts/jquery-3.0.0.js"></script>
-    <script src="Scripts/jquery.validate.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
