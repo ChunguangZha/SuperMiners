@@ -14,7 +14,7 @@ namespace MetaData.Trade
         /// 订单编号，以日期+卖方用户名HashCode+4位随机数
         /// </summary>
         [DataMember]
-        public string OrderNumber = "";
+        public SellStonesOrder StonesOrder;
 
         [DataMember]
         public string LockedByUserName = null;

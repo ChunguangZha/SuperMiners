@@ -193,6 +193,7 @@
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
+    <Compile Include="ViewModels\StoneOrderViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
     <Compile Include="ViewModels\UserReferrerTreeViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
