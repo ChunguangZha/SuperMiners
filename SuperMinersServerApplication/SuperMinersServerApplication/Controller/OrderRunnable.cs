@@ -29,16 +29,17 @@ namespace SuperMinersServerApplication.Controller
             this._sellOrder = sellOrder;
         }
 
+        public OrderRunnable(LockSellStonesOrder lockInfo)
+        {
+            _lockOrderObject = lockInfo;
+            this._sellOrder = lockInfo.StonesOrder;
+        }
+
         public SellStonesOrder GetSellOrder()
         {
             return _sellOrder;
         }
-
-        public void Init(LockSellStonesOrder lockInfo)
-        {
-            this._lockOrderObject = lockInfo;
-        }
-
+        
         public bool CheckBuyerName(string buyerUserName)
         {
             lock (this._lock)
@@ -59,22 +60,16 @@ namespace SuperMinersServerApplication.Controller
                 //此处暂不检查TimeOut
                 BuyStonesOrder buyOrder = new BuyStonesOrder()
                 {
+                    StonesOrder = this._sellOrder,
                     BuyerUserName = this._lockOrderObject.LockedByUserName,
                     BuyTime = this._lockOrderObject.LockedTime,
-                    Expense = this._sellOrder.Expense,
-                    OrderNumber = this._sellOrder.OrderNumber,
-                    OrderState = SellOrderState.Finish,
-                    GainRMB = this._sellOrder.GainRMB,
-                    PayRMB = moneyYuan * GlobalConfig.GameConfig.Yuan_RMB,
-                    SellerUserName = this._sellOrder.SellerUserName,
-                    SellStonesCount = this._sellOrder.SellStonesCount,
-                    SellTime = this._sellOrder.SellTime
+                    AwardGoldCoin = awardGoldCoin
                 };
 
-                if (DBProvider.OrderDBProvider.PayOrder(buyOrder, this._sellOrder, this._lockOrderObject, trans))
+                if (DBProvider.OrderDBProvider.PayOrder(buyOrder, trans))
                 {
                     this._sellOrder.OrderState = SellOrderState.Finish;
-                    this._lockOrderObject = null;
+                    DBProvider.OrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);
 
                     return true;
                 }
@@ -99,7 +94,7 @@ namespace SuperMinersServerApplication.Controller
                             {
                                 trans = MyDBHelper.Instance.CreateTrans();
                             }
-                            if (DBProvider.OrderDBProvider.ReleaseOrderLock(_lockOrderObject, trans))
+                            if (DBProvider.OrderDBProvider.ReleaseOrderLock(_lockOrderObject.StonesOrder.OrderNumber, trans))
                             {
                                 this._lockOrderObject = null;
                                 this._sellOrder.OrderState = SellOrderState.Wait;
@@ -125,7 +120,7 @@ namespace SuperMinersServerApplication.Controller
 
                     this._lockOrderObject = new LockSellStonesOrder()
                     {
-                        OrderNumber = this._sellOrder.OrderNumber,
+                        StonesOrder = this._sellOrder,
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now
                     };
@@ -169,8 +164,9 @@ namespace SuperMinersServerApplication.Controller
                 try
                 {
                     trans = MyDBHelper.Instance.CreateTrans();
-                    DBProvider.OrderDBProvider.ReleaseOrderLock(_lockOrderObject, trans);
+                    DBProvider.OrderDBProvider.ReleaseOrderLock(this._sellOrder.OrderNumber, trans);
                     trans.Commit();
+                    this._lockOrderObject = null;
                     return true;
                 }
                 catch (Exception exc)
@@ -194,7 +190,7 @@ namespace SuperMinersServerApplication.Controller
 
         private bool CheckLockTimeOut()
         {
-            if (this._sellOrder.OrderState == SellOrderState.Exception)
+            if (this._lockOrderObject == null || this._sellOrder.OrderState == SellOrderState.Exception)
             {
                 return false;
             }

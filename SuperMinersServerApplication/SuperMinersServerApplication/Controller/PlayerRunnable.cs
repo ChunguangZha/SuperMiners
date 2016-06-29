@@ -316,7 +316,7 @@ namespace SuperMinersServerApplication.Controller
                     SellerUserName = BasePlayer.SimpleInfo.UserName,
                     SellStonesCount = SellStonesCount,
                     Expense = expense,
-                    GainRMB = gainRMB,
+                    ValueRMB = gainRMB,
                     SellTime = time
                 };
                 BasePlayer.FortuneInfo.FreezingStones += SellStonesCount;

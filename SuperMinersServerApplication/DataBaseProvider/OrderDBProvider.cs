@@ -20,16 +20,16 @@ namespace DataBaseProvider
                 mycmd = trans.CreateCommand();
 
                 string cmdTextA = "insert into sellstonesorder " +
-                    "(`OrderNumber`, `SellerUserID`, `SellStonesCount`, `Expense`, `GainRMB`, `SellTime`, `OrderState` ) " +
+                    "(`OrderNumber`, `SellerUserName`, `SellStonesCount`, `Expense`, `ValueRMB`, `SellTime`, `OrderState` ) " +
                     " values " +
-                    "(@OrderNumber, (select b.id from playersimpleinfo b where b.UserName = @SellerUserName), @SellStonesCount, @Expense, @GainRMB, @SellTime, @OrderState); ";
+                    "(@OrderNumber, @SellerUserName, @SellStonesCount, @Expense, @ValueRMB, @SellTime, @OrderState); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", order.OrderNumber);
                 mycmd.Parameters.AddWithValue("@SellerUserName", DESEncrypt.EncryptDES(order.SellerUserName));
                 mycmd.Parameters.AddWithValue("@SellStonesCount", order.SellStonesCount);
                 mycmd.Parameters.AddWithValue("@Expense", order.Expense);
-                mycmd.Parameters.AddWithValue("@GainRMB", order.GainRMB);
+                mycmd.Parameters.AddWithValue("@ValueRMB", order.ValueRMB);
                 mycmd.Parameters.AddWithValue("@SellTime", order.SellTime);
                 mycmd.Parameters.AddWithValue("@OrderState", order.OrderState);
 
@@ -50,17 +50,18 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                string textDel = "delete locksellstonesorder where OrderNumber = @OrderNumber;";
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
                 string textB = "insert into locksellstonesorder " +
-                    "(`SellOrderID`, `LockedByUserID`, `LockedTime` ) " +
+                    "(`OrderNumber`, `LockedByUserName`, `LockedTime` ) " +
                     " values " +
-                    "((select b.id from sellstonesorder b where b.OrderNumber = @OrderNumber), (select c.id from playersimpleinfo b where c.UserName = @UserName), @LockedTime); ";
+                    "(@OrderNumber, @LockedByUserName, @LockedTime); ";
 
                 mycmd = trans.CreateCommand();
-                mycmd.CommandText = textA + textB;
+                mycmd.CommandText = textDel + textA + textB;
                 mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Lock);
-                mycmd.Parameters.AddWithValue("@OrderNumber", lockOrder.OrderNumber);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(lockOrder.LockedByUserName));
+                mycmd.Parameters.AddWithValue("@OrderNumber", lockOrder.StonesOrder.OrderNumber);
+                mycmd.Parameters.AddWithValue("@LockedByUserName", DESEncrypt.EncryptDES(lockOrder.LockedByUserName));
                 mycmd.Parameters.AddWithValue("@LockedTime", lockOrder.LockedTime);
                 mycmd.ExecuteNonQuery();
 
@@ -72,7 +73,17 @@ namespace DataBaseProvider
             }
         }
 
-        public bool ReleaseOrderLock(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans)
+        public bool ReleaseOrderLock(string orderNumber, CustomerMySqlTransaction trans)
+        {
+            return UpdateSellOrderState(orderNumber, SellOrderState.Wait, trans);
+        }
+
+        public bool FinishOrderLock(string orderNumber, CustomerMySqlTransaction trans)
+        {
+            return UpdateSellOrderState(orderNumber, SellOrderState.Finish, trans);
+        }
+
+        private bool UpdateSellOrderState(string orderNumber, SellOrderState state, CustomerMySqlTransaction trans)
         {
             //1.修改订单状态；
             //2.删除锁定信息记录。
@@ -80,12 +91,12 @@ namespace DataBaseProvider
             try
             {
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
-                string textB = "delete locksellstonesorder b where b.SellOrderID = (select c.id from sellstonesorder c where c.OrderNumber = @OrderNumber);";
+                string textB = "delete locksellstonesorder b where b.OrderNumber = @OrderNumber;";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = textA + textB;
-                mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Lock);
-                mycmd.Parameters.AddWithValue("@OrderNumber", lockOrder.OrderNumber);
+                mycmd.Parameters.AddWithValue("@OrderState", (int)state);
+                mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
                 mycmd.ExecuteNonQuery();
 
                 return true;
@@ -96,51 +107,23 @@ namespace DataBaseProvider
             }
         }
 
-        public bool UpdateSellOrderState(SellStonesOrder order, CustomerMySqlTransaction trans)
+        public bool PayOrder(BuyStonesOrder buyOrder, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
             try
             {
-                string cmdTextB = "UPDATE `sellstonesorder` SET "
-                    + " `OrderState`=@OrderState where OrderNumber=@OrderNumber;";
-
-                mycmd = trans.CreateCommand();
-                mycmd.CommandText = cmdTextB;
-
-                mycmd.Parameters.AddWithValue("@OrderState", order.OrderState);
-                mycmd.Parameters.AddWithValue("@OrderNumber", order.OrderNumber);
-                mycmd.ExecuteNonQuery();
-
-                return true;
-            }
-            finally
-            {
-                mycmd.Dispose();
-            }
-        }
-
-        public bool PayOrder(BuyStonesOrder buyOrder, SellStonesOrder sellOrder, LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans)
-        {
-            //1.删除订单状态；
-            //2.删除锁定信息记录；
-            //3.添加购买信息记录。
-            MySqlCommand mycmd = null;
-            try
-            {
-                string textA = "delete sellstonesorder where OrderNumber = @OrderNumber;";
-                //先尝试会否级联删除。
-                //string textB = "delete locksellstonesorder b where b.SellOrderID = (select c.id from sellstonesorder c where c.OrderNumber = @OrderNumber);"
-
                 string textC = "insert into buystonesrecord " +
-                    "(`OrderNumber`, `SellerUserID`, `SellStonesCount`, `Expense`, `GainRMB`, `SellTime`, `OrderState` ) " +
+                    "(`OrderNumber`, `BuyerUserName`, `BuyTime`, `AwardGoldCoin` ) " +
                     " values " +
-                    "(@OrderNumber, (select b.id from playersimpleinfo b where b.UserName = @SellerUserName), @SellStonesCount, @Expense, @GainRMB, @SellTime, @OrderState); ";
-
+                    "(@OrderNumber, @BuyerUserName, @BuyTime, @AwardGoldCoin); ";
 
                 mycmd = trans.CreateCommand();
-                mycmd.CommandText = textA;// +textB;
-                mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Lock);
-                mycmd.Parameters.AddWithValue("@OrderNumber", lockOrder.OrderNumber);
+                mycmd.CommandText = textC;
+                mycmd.Parameters.AddWithValue("@OrderNumber", buyOrder.StonesOrder.OrderNumber);
+                string encryptUserName = DESEncrypt.EncryptDES(buyOrder.BuyerUserName);
+                mycmd.Parameters.AddWithValue("@BuyerUserName", encryptUserName);
+                mycmd.Parameters.AddWithValue("@BuyTime", buyOrder.BuyTime);
+                mycmd.Parameters.AddWithValue("@AwardGoldCoin", buyOrder.AwardGoldCoin);
                 mycmd.ExecuteNonQuery();
 
                 return true;
@@ -151,33 +134,28 @@ namespace DataBaseProvider
             }
         }
 
-        public BuyStonesOrder[] GetBuyStonesOrderList()
+        public BuyStonesOrder[] GetBuyStonesOrderListLast20()
         {
-            return null;
-        }
-
-        public SellStonesOrder[] GetSellOrderList()
-        {
-            SellStonesOrder[] orders = null;
+            BuyStonesOrder[] orders = null;
             MySqlConnection myconn = null;
             try
             {
-                //DataTable dt = new DataTable();
+                DataTable dt = new DataTable();
 
-                //myconn = MyDBHelper.Instance.CreateConnection();
-                //myconn.Open();
-                //string cmdText = "select a.*, b.UserName as SellerUserName, c.UserName as BuyerUserName " + 
-                //                "from sellstonesorder a " +
-                //                "left join playersimpleinfo b on a.SellerUserID = b.id " +
-                //                "left join playersimpleinfo c on a.LockedByUserID = c.id " +
-                //                "where a.OrderState != @OrderState;";
-                //MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                //mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Finish);
-                //MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                //adapter.Fill(dt);
-                //orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt);
-
-                //mycmd.Dispose();
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select b.*, s.* " +
+                                "from buystonesrecord b " +
+                                "left join sellstonesorder s on s.OrderNumber = b.OrderNumber " +
+                                "order by b.BuyTime desc top 20;";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    orders = MetaDBAdapter<BuyStonesOrder>.GetBuyStonesOrderFromDataTable(dt);
+                }
+                mycmd.Dispose();
 
                 return orders;
             }
@@ -187,14 +165,135 @@ namespace DataBaseProvider
             }
         }
 
-        public LockSellStonesOrder[] GetLockSellStonesOrderList()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderState">-1表示全部状态</param>
+        /// <param name="userName">""表示全部玩家</param>
+        /// <returns></returns>
+        public SellStonesOrder[] GetSellOrderList(int orderState, string userName)
         {
-            return null;
+            SellStonesOrder[] orders = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select s.* from sellstonesorder s ";
+                if (orderState >= 0)
+                {
+                    cmdText += " where s.OrderState = @OrderState ";
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        cmdText += " and s.SellerUserName = @SellerUserName ";
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(userName))
+                    {
+                        cmdText += " where s.SellerUserName = @SellerUserName ";
+                    }
+                }
+
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                if (orderState >= 0)
+                {
+                    mycmd.Parameters.AddWithValue("@OrderState", orderState);
+                }
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    string encryptUserName = DESEncrypt.EncryptDES(userName);
+                    mycmd.Parameters.AddWithValue("@SellerUserName", encryptUserName);
+                }
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt);
+                }
+
+                mycmd.Dispose();
+
+                return orders;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userName">""表示所有玩家</param>
+        /// <returns></returns>
+        public LockSellStonesOrder[] GetLockSellStonesOrderList(string userName)
+        {
+            LockSellStonesOrder[] orders = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select l.*, s.* " +
+                                "from locksellstonesorder l " +
+                                "left join sellstonesorder s on s.OrderNumber = l.OrderNumber ";
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    cmdText += " where l.LockedByUserName = @LockedByUserName ";
+                }
+
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    orders = MetaDBAdapter<LockSellStonesOrder>.GetLockStonesOrderListFromDataTable(dt);
+                }
+                mycmd.Dispose();
+
+                return orders;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
         }
 
         public SellStonesOrder GetSellOrder(string orderNumber)
         {
-            return null;
+            SellStonesOrder order = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select s.* from sellstonesorder s where s.OrderNumber = @OrderNumber";
+
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null && dt.Rows.Count > 0)
+                {
+                    order = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt)[0];
+                }
+                mycmd.Dispose();
+
+                return order;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
         }
     }
 }

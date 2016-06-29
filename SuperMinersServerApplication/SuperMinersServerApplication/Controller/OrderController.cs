@@ -31,44 +31,35 @@ namespace SuperMinersServerApplication.Controller
         object _lockListSellOrders = new object();
         private Dictionary<string, OrderRunnable> dicSellOrders = new Dictionary<string, OrderRunnable>();
 
-        private List<BuyStonesOrder> listBuyStonesOrder = new List<BuyStonesOrder>();
+        private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
 
         public bool Init()
         {
             try
             {
                 dicSellOrders.Clear();
-                var sellOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList();
-                if (sellOrderDBObjects != null)
+                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList((int)SellOrderState.Wait, "");
+                foreach (var item in waitOrderDBObjects)
                 {
-                    var lockOrderedDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList();
-                    foreach (var item in sellOrderDBObjects)
-                    {
-                        var runnable = new OrderRunnable(item);
-                        if (item.OrderState == SellOrderState.Lock)
-                        {
-                            var lockOrderObj = lockOrderedDBObjects.FirstOrDefault(o => o.OrderNumber == item.OrderNumber);
-                            if (lockOrderObj == null)
-                            {
-                                LogHelper.Instance.AddInfoLog("Order[" + item.OrderNumber + "] had locked, but can't find LockInfo");
-                            }
-                            else
-                            {
-                                runnable.Init(lockOrderObj);
-                            }
-                        }
-                        dicSellOrders.Add(item.OrderNumber, new OrderRunnable(item));
-                    }
+                    var runnable = new OrderRunnable(item);
+                    dicSellOrders.Add(item.OrderNumber, new OrderRunnable(item));
                 }
 
-                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderList();
+                var lockedOrderDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList("");
+                foreach (var item in lockedOrderDBObjects)
+                {
+                    var runnable = new OrderRunnable(item);
+                    dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
+                }
+
+                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderListLast20();
                 if (buyOrderRecords == null)
                 {
-                    this.listBuyStonesOrder = new List<BuyStonesOrder>();
+                    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
                 }
                 else
                 {
-                    this.listBuyStonesOrder = new List<BuyStonesOrder>(buyOrderRecords);
+                    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>(buyOrderRecords);
                 }
                 return true;
             }

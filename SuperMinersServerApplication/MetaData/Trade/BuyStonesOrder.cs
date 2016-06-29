@@ -18,12 +18,6 @@ namespace MetaData
         [DataMember]
         public string BuyerUserName = "";
 
-        /// <summary>
-        /// 买方付出的RMB数，该值不一定等于SellStonesOrder.GainRMB，应该按服务器配置计算得出。
-        /// </summary>
-        [DataMember]
-        public float PayRMB;
-
         public DateTime BuyTime;
         [DataMember]
         public string BuyTimeString

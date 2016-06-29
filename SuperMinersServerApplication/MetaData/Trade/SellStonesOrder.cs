@@ -41,7 +41,7 @@ namespace MetaData
         /// 可获取的RMB数
         /// </summary>
         [DataMember]
-        public float GainRMB = 0;
+        public float ValueRMB = 0;
 
         public DateTime SellTime;
         [DataMember]
