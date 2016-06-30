@@ -12,8 +12,7 @@ namespace SuperMinersServerApplication.WebService.Services
     public partial class ServiceToClient : IServiceToClient
     {
         #region IServiceToClient Members
-
-
+        
         public bool SellStone(string token, string userName, int sellStonesCount)
         {
             if (RSAProvider.LoadRSA(token))
@@ -31,6 +30,19 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public MetaData.SellStonesOrder[] GetNotFinishedStonesOrder(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return OrderController.Instance.GetSellOrders();
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #endregion
+
     }
 }

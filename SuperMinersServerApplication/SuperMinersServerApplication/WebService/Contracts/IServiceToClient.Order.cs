@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -18,5 +19,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool SellStone(string token, string userName, int sellStonesCount);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetNotFinishedStonesOrder",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SellStonesOrder[] GetNotFinishedStonesOrder(string token);
     }
 }

@@ -50,7 +50,7 @@ namespace SuperMinersWPF
             this._syn.Post(s =>
             {
                 MyMessageBox.ShowInfo("您的账户在其它电脑登录，如非本人操作，请及时修改密码。");
-                this.Close();
+                this.DialogResult = true;
             }, null);
         }
 
@@ -90,7 +90,8 @@ namespace SuperMinersWPF
             this._syn.Post(s =>
             {
                 MyMessageBox.ShowInfo("您已经被管理员强制退出登录，请联系系统管理员。");
-                this.Close();
+                this.DialogResult = true;
+                //this.Close();
             }, null);
         }
 
@@ -108,7 +109,7 @@ namespace SuperMinersWPF
                     GlobalData.InitToken(null);
                     MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
                 }
-                this.Close();
+                this.DialogResult = true;
             }, null);
         }
 

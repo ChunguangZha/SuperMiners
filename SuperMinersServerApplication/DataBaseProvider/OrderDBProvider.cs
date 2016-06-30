@@ -147,7 +147,7 @@ namespace DataBaseProvider
                 string cmdText = "select b.*, s.* " +
                                 "from buystonesrecord b " +
                                 "left join sellstonesorder s on s.OrderNumber = b.OrderNumber " +
-                                "order by b.BuyTime desc top 20;";
+                                "order by b.BuyTime desc limit 20;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -168,10 +168,10 @@ namespace DataBaseProvider
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderState">-1表示全部状态</param>
+        /// <param name="orderState">null表示全部状态, 可以多种状态组合查询</param>
         /// <param name="userName">""表示全部玩家</param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellOrderList(int orderState, string userName)
+        public SellStonesOrder[] GetSellOrderList(int[] orderStates, string userName)
         {
             SellStonesOrder[] orders = null;
             MySqlConnection myconn = null;
@@ -181,27 +181,40 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select s.* from sellstonesorder s ";
-                if (orderState >= 0)
+                StringBuilder builder = new StringBuilder();
+                builder.Append("select s.* from sellstonesorder s ");
+                if (orderStates != null && orderStates.Length != 0)
                 {
-                    cmdText += " where s.OrderState = @OrderState ";
+                    builder.Append(" where ");
+                    for (int i = 0; i < orderStates.Length; i++)
+                    {
+                        builder.Append(" s.OrderState = @OrderState" + i.ToString());
+                        if (i != orderStates.Length - 1)
+                        {
+                            builder.Append(" or ");
+                        }
+                    }
                     if (!string.IsNullOrEmpty(userName))
                     {
-                        cmdText += " and s.SellerUserName = @SellerUserName ";
+                        builder.Append(" and s.SellerUserName = @SellerUserName ");
                     }
                 }
                 else
                 {
                     if (!string.IsNullOrEmpty(userName))
                     {
-                        cmdText += " where s.SellerUserName = @SellerUserName ";
+                        builder.Append(" where s.SellerUserName = @SellerUserName ");
                     }
                 }
 
+                string cmdText = builder.ToString();
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                if (orderState >= 0)
+                if (orderStates != null && orderStates.Length != 0)
                 {
-                    mycmd.Parameters.AddWithValue("@OrderState", orderState);
+                    for (int i = 0; i < orderStates.Length; i++)
+                    {
+                        mycmd.Parameters.AddWithValue("@OrderState" + i.ToString(), orderStates[i]);
+                    }
                 }
                 if (!string.IsNullOrEmpty(userName))
                 {

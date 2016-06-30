@@ -38,7 +38,7 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 dicSellOrders.Clear();
-                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList((int)SellOrderState.Wait, "");
+                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "");
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new OrderRunnable(item);

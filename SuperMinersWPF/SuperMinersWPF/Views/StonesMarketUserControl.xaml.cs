@@ -24,5 +24,10 @@ namespace SuperMinersWPF.Views
         {
             InitializeComponent();
         }
+
+        private void numBuyStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+
+        }
     }
 }

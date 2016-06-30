@@ -1,5 +1,5 @@
-Error:  [2016/6/15 22:17:23] ---- Log: Init OrderController Error
-Exc.Message: Unknown column 'a.LockedByUserID' in 'on clause'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/6/30 20:40:42] ---- Log: Init OrderController Error
+Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'top 20' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
@@ -10,7 +10,7 @@ Exc.Message: Unknown column 'a.LockedByUserID' in 'on clause'Exc.Stack:    在 M
    在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
    在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
    在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.OrderDBProvider.GetSellOrderList() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 177
-   在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 41
+   在 DataBaseProvider.OrderDBProvider.GetBuyStonesOrderListLast20() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 153
+   在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 55
 -----------------------------------------------------
 

@@ -58,7 +58,7 @@ namespace SuperMinersWPF.Models
                 {
                     return DateTime.MinValue;
                 }
-                return this._parentObject.RegisterTime.Value;
+                return this._parentObject.RegisterTime;
             }
         }
 

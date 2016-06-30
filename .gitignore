@@ -70,3 +70,4 @@ SuperMinersServerApplication/DataBaseProvider/bin/Release/DataBaseProvider.pdb
 *.dll
 *.pdb
 SuperMinersWeb/SuperMinersWeb.v11.suo
+*.dll

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +19,14 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetNotFinishedStonesOrder
+
+        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetNotFinishedStonesOrderCompleted;
+        public void GetNotFinishedStonesOrder(object userState)
+        {
+            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "GetNotFinishedStonesOrder", this.GetNotFinishedStonesOrderCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
     }
 }

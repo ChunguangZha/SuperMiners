@@ -55,7 +55,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;Encrypt</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;Encrypt</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -106,6 +106,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
+      <Link>Wcf\Datas\Common.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
       <Link>Wcf\Datas\NoticeInfo.cs</Link>
     </Compile>
@@ -123,6 +126,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
+      <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
@@ -177,6 +183,7 @@
     <Compile Include="Models\MineralUIModel.cs" />
     <Compile Include="Models\MinerUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
+    <Compile Include="Models\SellStonesOrderUIModel.cs" />
     <Compile Include="Models\TopListInfoUIModel.cs" />
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
     <Compile Include="Models\UserUIModel.cs" />

@@ -8,11 +8,11 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\
 SuperMinersWPF
 none
 false
-TRACE;Encrypt
+DEBUG;TRACE;Encrypt
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
 1928917050
 
-73-389454238
+79334484516
 201805710553
 Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
