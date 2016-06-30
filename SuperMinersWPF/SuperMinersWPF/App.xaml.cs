@@ -19,6 +19,7 @@ namespace SuperMinersWPF
         internal static TopListViewModel TopListVMObject = new TopListViewModel();
         internal static UserReferrerTreeViewModel UserReferrerTreeVMObject = new UserReferrerTreeViewModel();
         internal static NoticeViewModel NoticeVMObject = new NoticeViewModel();
+        internal static StoneOrderViewModel StoneOrderVMObject = new StoneOrderViewModel();
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -29,6 +30,7 @@ namespace SuperMinersWPF
             TopListVMObject.RegisterEvent();
             UserReferrerTreeVMObject.RegisterEvent();
             NoticeVMObject.RegisterEvent();
+            StoneOrderVMObject.RegisterEvent();
 
 //#if !DEBUG
 //            CreateDesktopShortCut();

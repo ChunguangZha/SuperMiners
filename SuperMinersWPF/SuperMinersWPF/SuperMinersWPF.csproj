@@ -163,6 +163,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Message.cs">
       <Link>Wcf\Contracts\IServiceToClient.Message.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Order.cs">
+      <Link>Wcf\Contracts\IServiceToClient.Order.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.SystemConfig.cs">
       <Link>Wcf\Contracts\IServiceToClient.SystemConfig.cs</Link>
     </Compile>
@@ -253,6 +256,7 @@
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Game.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Message.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Compile Include="Wcf\Clients\ServerClient.User.cs" />

@@ -122,6 +122,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Game.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Callback.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="WebService\Services\ServiceToClient.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Message.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
     <Compile Include="WebService\Services\ServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Services\ServiceToClient.User.cs" />
     <Page Include="MainWindow.xaml">

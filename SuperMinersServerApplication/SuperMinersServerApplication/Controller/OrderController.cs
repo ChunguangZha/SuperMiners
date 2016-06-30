@@ -84,10 +84,64 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool AddSellOrder(SellStonesOrder order)
+        private float GetExpense(float valueRMB)
         {
+            float expense = valueRMB * GlobalConfig.GameConfig.ExchangeExpensePercent / 100;
+            if (expense < GlobalConfig.GameConfig.ExchangeExpenseMinNumber)
+            {
+                expense = GlobalConfig.GameConfig.ExchangeExpenseMinNumber;
+            }
+            return expense;
+        }
+
+        private string CreateOrderNumber(string userName, DateTime time)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append(time.Year.ToString("0000"));
+            builder.Append(time.Month.ToString("00"));
+            builder.Append(time.Day.ToString("00"));
+            builder.Append(time.Hour.ToString("00"));
+            builder.Append(time.Minute.ToString("00"));
+            builder.Append(time.Second.ToString("00"));
+            builder.Append(time.Millisecond.ToString("0000"));
+            builder.Append(userName.GetHashCode());
+            builder.Append((new Random()).Next(1000, 9999));
+            return builder.ToString();
+        }
+
+        public bool CreateSellOrder(string userName, int sellStonesCount)
+        {
+            float valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
+            DateTime time = DateTime.Now;
+            SellStonesOrder order = new SellStonesOrder()
+            {
+                OrderNumber = CreateOrderNumber(userName, time),
+                SellStonesCount = sellStonesCount,
+                OrderState = SellOrderState.Wait,
+                SellerUserName = userName,
+                ValueRMB = valueRMB,
+                Expense = GetExpense(valueRMB),
+                SellTime = time,
+            };
+
             lock (this._lockListSellOrders)
             {
+                var myTrans = MyDBHelper.Instance.CreateTrans();
+                try
+                {
+                    DBProvider.OrderDBProvider.AddSellOrder(order, myTrans);
+                    myTrans.Commit();
+                }
+                catch (Exception exc)
+                {
+                    myTrans.Rollback();
+                    LogHelper.Instance.AddErrorLog("Add Sell Order Exception: " + order.ToString(), exc);
+                }
+                finally
+                {
+                    myTrans.Dispose();
+                }
+
                 dicSellOrders.Add(order.OrderNumber, new OrderRunnable(order));
             }
 

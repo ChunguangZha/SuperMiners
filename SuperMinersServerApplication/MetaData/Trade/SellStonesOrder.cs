@@ -67,6 +67,29 @@ namespace MetaData
         [DataMember]
         public SellOrderState OrderState = SellOrderState.Wait;
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("订单号: ");
+            builder.Append(this.OrderNumber);
+            builder.Append(",");
+            builder.Append("卖方: ");
+            builder.Append(this.SellerUserName);
+            builder.Append(",");
+            builder.Append("出售矿石数: ");
+            builder.Append(this.SellStonesCount);
+            builder.Append(",");
+            builder.Append("手续费: ");
+            builder.Append(this.Expense);
+            builder.Append(",");
+            builder.Append("价值人民币: ");
+            builder.Append(this.ValueRMB);
+            builder.Append(",");
+            builder.Append("出售时间: ");
+            builder.Append(this.SellTime);
+
+            return builder.ToString();
+        }
     }
 
     public enum SellOrderState
