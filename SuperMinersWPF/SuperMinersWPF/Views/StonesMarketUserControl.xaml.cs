@@ -25,6 +25,12 @@ namespace SuperMinersWPF.Views
             InitializeComponent();
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.listboxSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStonesOrder;
+            App.StoneOrderVMObject.AsyncGetNotFinishedStonesOrder();
+        }
+
         private void numBuyStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
 

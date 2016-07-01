@@ -24,6 +24,11 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.SellStone(sellStonesCount, null);
         }
 
+        public void AsyncGetNotFinishedStonesOrder()
+        {
+            GlobalData.Client.GetNotFinishedStonesOrder(null);
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.SellStoneCompleted += Client_SellStoneCompleted;
