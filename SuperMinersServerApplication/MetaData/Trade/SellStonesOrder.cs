@@ -38,7 +38,7 @@ namespace MetaData
         public float Expense = 0;
 
         /// <summary>
-        /// 可获取的RMB数
+        /// 买方需要支付的RMB数（即总价值），卖方可收获的RMB=ValueRMB-Expense;
         /// </summary>
         [DataMember]
         public float ValueRMB = 0;
@@ -64,8 +64,20 @@ namespace MetaData
             }
         }
 
+        public SellOrderState OrderState
+        {
+            get
+            {
+                return (SellOrderState)this.OrderStateInt;
+            }
+            set
+            {
+                this.OrderStateInt = (int)value;
+            }
+        }
+
         [DataMember]
-        public SellOrderState OrderState = SellOrderState.Wait;
+        public int OrderStateInt;
 
         public override string ToString()
         {
@@ -94,7 +106,7 @@ namespace MetaData
 
     public enum SellOrderState
     {
-        Wait,
+        Wait = 1,
         Lock,
         Finish,
         Exception

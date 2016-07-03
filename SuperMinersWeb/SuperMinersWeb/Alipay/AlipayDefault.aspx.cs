@@ -28,27 +28,47 @@ using SuperMinersWeb.App_Code;
 /// 3、支持中心（https://support.open.alipay.com/alipay/support/index.htm）
 /// 如果不想使用扩展功能请把扩展功能参数赋空值。
 /// </summary>
-public partial class _Default : System.Web.UI.Page 
+public partial class AlipayDefault : System.Web.UI.Page 
 {
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (!this.IsPostBack)
+        {
+            string orderNumber = Request.QueryString["on"];
+            string shopName = Request.QueryString["sn"];
+            string money = Request.QueryString["mn"];
+
+            this.WIDout_trade_no.Text = orderNumber;
+            this.WIDsubject.Text = shopName;
+            this.WIDtotal_fee.Text = money;
+        }
     }
 
     protected void BtnAlipay_Click(object sender, EventArgs e)
     {
-        //////////////////////////////////////////////请求参数////////////////////////////////////////////
+        ////////////////////////////////////////////请求参数////////////////////////////////////////////
 
-        ////商户订单号，商户网站订单系统中唯一订单号，必填
-        //string out_trade_no = WIDout_trade_no.Text.Trim();
+        //商户订单号，商户网站订单系统中唯一订单号，必填
+        string out_trade_no = WIDout_trade_no.Text.Trim();
 
-        ////订单名称，必填
-        //string subject = WIDsubject.Text.Trim();
+        //订单名称，必填
+        string subject = WIDsubject.Text.Trim();
 
-        ////付款金额，必填
-        //string total_fee = WIDtotal_fee.Text.Trim();
+        //付款金额，必填
+        string total_fee = WIDtotal_fee.Text.Trim();
 
-        ////商品描述，可空
-        //string body = WIDbody.Text.Trim();
+        string alipayAccount = WIDAlipayAccount.Text.Trim();
+        if (string.IsNullOrEmpty(alipayAccount))
+        {
+            Response.Write("<script>alert('请输入支付宝账户');</script>");
+            return;
+        }
+        if (alipayAccount.Length > 30)
+        {
+            Response.Write("<script>alert('输入的支付宝账户过长，请少于30个字符');</script>");
+            return;
+        }
+
 
 
 

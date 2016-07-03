@@ -37,6 +37,9 @@ namespace MetaData.User
         public float RMB { get; set; }
 
         [DataMember]
+        public float FreezingRMB { get; set; }
+
+        [DataMember]
         public float GoldCoin { get; set; }
 
         /// <summary>

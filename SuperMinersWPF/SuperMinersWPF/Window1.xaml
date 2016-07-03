@@ -153,7 +153,7 @@
                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding StockOfDiamonds, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="6" Grid.Column="2" x:Name="btnDiamondsSell" Content="出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnDiamondsSell_Click"/>
                 <TextBlock Grid.Row="7" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding StockOfStones, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SellableStones, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="7" Grid.Column="2" x:Name="btnStonesSell" Content="挂单出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnStonesSell_Click"/>
                 <TextBlock Grid.Row="8" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
                 <TextBlock Grid.Row="9" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="距离下一次收益计算： "/><Run Text=" "/><Run Text="{Binding OutputCountdownString, Mode=OneWay}"/></TextBlock>

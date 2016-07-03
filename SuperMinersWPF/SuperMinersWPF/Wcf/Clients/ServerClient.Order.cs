@@ -11,10 +11,10 @@ namespace SuperMinersWPF.Wcf.Clients
     {
         #region SellStone
 
-        public event EventHandler<WebInvokeEventArgs<bool>> SellStoneCompleted;
+        public event EventHandler<WebInvokeEventArgs<int>> SellStoneCompleted;
         public void SellStone(int sellStonesCount, object userState)
         {
-            this._invoker.InvokeUserState<bool>(this._context, "SellStone", this.SellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, sellStonesCount);
+            this._invoker.InvokeUserState<int>(this._context, "SellStone", this.SellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, sellStonesCount);
         }
 
         #endregion
@@ -25,6 +25,56 @@ namespace SuperMinersWPF.Wcf.Clients
         public void GetNotFinishedStonesOrder(object userState)
         {
             this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "GetNotFinishedStonesOrder", this.GetNotFinishedStonesOrderCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region CheckUserHasNotPayOrder
+
+        public event EventHandler<WebInvokeEventArgs<bool>> CheckUserHasNotPayOrderCompleted;
+        public void CheckUserHasNotPayOrder(object userState)
+        {
+            this._invoker.InvokeUserState<bool>(this._context, "CheckUserHasNotPayOrder", this.CheckUserHasNotPayOrderCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region AutoMatchLockSellStone
+
+        public event EventHandler<WebInvokeEventArgs<SellStonesOrder>> AutoMatchLockSellStoneCompleted;
+        public void AutoMatchLockSellStone(int buyStonesCount, object userState)
+        {
+            this._invoker.InvokeUserState<SellStonesOrder>(this._context, "AutoMatchLockSellStone", this.AutoMatchLockSellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, buyStonesCount);
+        }
+
+        #endregion
+
+        #region ReleaseLockOrder
+
+        public event EventHandler<WebInvokeEventArgs<bool>> ReleaseLockOrderCompleted;
+        public void ReleaseLockOrder(object userState)
+        {
+            this._invoker.InvokeUserState<bool>(this._context, "ReleaseLockOrder", this.ReleaseLockOrderCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region PayOrderByRMB
+
+        public event EventHandler<WebInvokeEventArgs<bool>> PayOrderByRMBCompleted;
+        public void PayOrderByRMB(string orderNumber, float rmb, object userState)
+        {
+            this._invoker.InvokeUserState<bool>(this._context, "PayOrderByRMB", this.PayOrderByRMBCompleted, userState, GlobalData.Token, orderNumber, rmb);
+        }
+
+        #endregion
+
+        #region PayOrderByAlipay
+
+        public event EventHandler<WebInvokeEventArgs<string>> PayOrderByAlipayCompleted;
+        public void PayOrderByAlipay(string orderNumber, float rmb, object userState)
+        {
+            this._invoker.InvokeUserState<string>(this._context, "PayOrderByAlipay", this.PayOrderByAlipayCompleted, userState, GlobalData.Token, orderNumber, rmb);
         }
 
         #endregion

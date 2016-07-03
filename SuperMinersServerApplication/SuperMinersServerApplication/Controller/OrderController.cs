@@ -1,5 +1,7 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.Trade;
+using MetaData.User;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using System;
@@ -29,6 +31,9 @@ namespace SuperMinersServerApplication.Controller
         #endregion
 
         object _lockListSellOrders = new object();
+        /// <summary>
+        /// Key为订单号
+        /// </summary>
         private Dictionary<string, OrderRunnable> dicSellOrders = new Dictionary<string, OrderRunnable>();
 
         private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
@@ -70,6 +75,69 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        /// <summary>
+        /// 检查该玩家是否存在未支付的订单
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public bool CheckUserHasNotPayOrder(string userName)
+        {
+            lock (_lockListSellOrders)
+            {
+                foreach (var item in dicSellOrders.Values)
+                {
+                    if (item.CheckBuyerName(userName))
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        }
+
+        public SellStonesOrder AutoMatchLockSellStone(string userName, int stoneCount)
+        {
+            lock (_lockListSellOrders)
+            {
+                OrderRunnable runnable = null;
+                foreach (var item in dicSellOrders.Values)
+                {
+                    if (item.OrderState == SellOrderState.Wait && item.StoneCount <= stoneCount)
+                    {
+                        if (runnable == null)
+                        {
+                            runnable = item;
+                        }
+                        else
+                        {
+                            if (item.StoneCount > runnable.StoneCount)
+                            {
+                                runnable = item;
+                            }
+                        }
+
+                        if (runnable != null && runnable.StoneCount == stoneCount)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (runnable == null)
+                {
+                    return null;
+                }
+
+                if (runnable.Lock(userName))
+                {
+                    return runnable.GetSellOrder();
+                }
+
+                return null;
+            }
+        }
+
         public SellStonesOrder[] GetSellOrders()
         {
             lock (_lockListSellOrders)
@@ -104,12 +172,41 @@ namespace SuperMinersServerApplication.Controller
             builder.Append(time.Minute.ToString("00"));
             builder.Append(time.Second.ToString("00"));
             builder.Append(time.Millisecond.ToString("0000"));
-            builder.Append(userName.GetHashCode());
+            builder.Append((int)TradeType.StoneTrade);//表示此为矿石交易，对应还有矿山交易等
+            builder.Append(Math.Abs(userName.GetHashCode()));
             builder.Append((new Random()).Next(1000, 9999));
             return builder.ToString();
         }
 
-        public bool CreateSellOrder(string userName, int sellStonesCount)
+        public int GetTradeType(string orderNumber)
+        {
+            if (orderNumber.Length < 20)
+            {
+                return -1;
+            }
+
+            string typestring = orderNumber.Substring(18, 2);
+            int typeResult = -1;
+            int.TryParse(typestring, out typeResult);
+            return typeResult;
+        }
+
+        public void ClearSellStonesOrder(SellStonesOrder order)
+        {
+            lock (this._lockListSellOrders)
+            {
+                dicSellOrders.Remove(order.OrderNumber);
+            }
+        }
+
+        /// <summary>
+        /// 如果事务提交失败，则需调用ClearSellStonesOrder方法从集合中清除该方法返回的订单
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="sellStonesCount"></param>
+        /// <param name="myTrans"></param>
+        /// <returns></returns>
+        public SellStonesOrder CreateSellOrder(string userName, int sellStonesCount)
         {
             float valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
             DateTime time = DateTime.Now;
@@ -123,29 +220,17 @@ namespace SuperMinersServerApplication.Controller
                 Expense = GetExpense(valueRMB),
                 SellTime = time,
             };
+            
+            return order;
+        }
 
+        public void AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction myTrans)
+        {
             lock (this._lockListSellOrders)
             {
-                var myTrans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    DBProvider.OrderDBProvider.AddSellOrder(order, myTrans);
-                    myTrans.Commit();
-                }
-                catch (Exception exc)
-                {
-                    myTrans.Rollback();
-                    LogHelper.Instance.AddErrorLog("Add Sell Order Exception: " + order.ToString(), exc);
-                }
-                finally
-                {
-                    myTrans.Dispose();
-                }
-
+                DBProvider.OrderDBProvider.AddSellOrder(order, myTrans);
                 dicSellOrders.Add(order.OrderNumber, new OrderRunnable(order));
             }
-
-            return true;
         }
 
         public bool LockSellOrder(string sellOrderNumber, string buyerUserName)
@@ -164,25 +249,50 @@ namespace SuperMinersServerApplication.Controller
             return order.Lock(buyerUserName);
         }
 
-        public bool Pay(string buyerUserName, float moneyYuan, CustomerMySqlTransaction trans)
+        public bool ReleaseLockSellOrder(string orderNumber)
         {
-            var runnable = FindRunnableByBuyUserName(buyerUserName);
-            if (runnable == null)
+            OrderRunnable order = null;
+            lock (this._lockListSellOrders)
+            {
+                this.dicSellOrders.TryGetValue(orderNumber, out order);
+            }
+
+            if (order == null)
             {
                 return false;
             }
 
-            if (runnable.Pay(moneyYuan, 0, trans))
-            {
-                lock (this._lockListSellOrders)
-                {
-                    this.dicSellOrders.Remove(runnable.OrderNumber);
-                }
+            return order.ReleaseLock();
+        }
 
-                return true;
+        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans)
+        {
+            OrderRunnable runnable = null;
+            lock (this._lockListSellOrders)
+            {
+                if (this.dicSellOrders.ContainsKey(orderNumber))
+                {
+                    runnable = this.dicSellOrders[orderNumber];
+                }
+            }
+            
+            if (runnable == null)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时错误，没有找到订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
+            }
+            if (!runnable.CheckBuyerName(buyerUserName))
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时错误，此订单不是被当前玩家锁定。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
+            }
+            if (rmb < runnable.ValueRMB)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时错误，玩家支付的灵币不足，无法完成订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
             }
 
-            return false;
+            return runnable.Pay(rmb, trans);
         }
 
         private OrderRunnable FindRunnableByBuyUserName(string buyerUserName)
@@ -200,5 +310,81 @@ namespace SuperMinersServerApplication.Controller
                 return null;
             }
         }
+
+        public bool PayStoneTrade(PlayerInfo player, string orderNumber, bool rmbPay, float rmb)
+        {
+            var trans = MyDBHelper.Instance.CreateTrans();
+            try
+            {
+                var buyOrder = this.Pay(orderNumber, player.SimpleInfo.UserName, rmb, trans);
+                if (buyOrder == null)
+                {
+                    trans.Rollback();
+                    return false;
+                }
+
+                bool isOK = PlayerController.Instance.PayStoneOrder(player, buyOrder, rmbPay, trans);
+                if (!isOK)
+                {
+                    trans.Rollback();
+                    return false;
+                }
+
+                trans.Commit();
+                PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                trans.Rollback();
+                LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + orderNumber, exc);
+                return false;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
+                }
+            }
+        }
+
+        //public void PayStoneTradeByAlipay(PlayerInfo player, string orderNumber, float rmb)
+        //{
+        //    var trans = MyDBHelper.Instance.CreateTrans();
+        //    try
+        //    {
+        //        var buyOrder = this.Pay(orderNumber, player.SimpleInfo.UserName, rmb, trans);
+        //        if (buyOrder == null)
+        //        {
+        //            trans.Rollback();
+        //            return;
+        //        }
+        //        //从Web页面回来的，肯定是支付宝支付
+        //        bool isOK = PlayerController.Instance.PayStoneOrder(player, buyOrder, false, trans);
+        //        if (!isOK)
+        //        {
+        //            trans.Rollback();
+        //            return;
+        //        }
+
+        //        trans.Commit();
+        //        PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
+
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        trans.Rollback();
+        //        LogHelper.Instance.AddErrorLog("PayStoneTradeByAlipay Exception. OrderNumber: " + orderNumber, exc);
+        //    }
+        //    finally
+        //    {
+        //        if (trans != null)
+        //        {
+        //            trans.Dispose();
+        //        }
+        //    }
+        //}
     }
 }

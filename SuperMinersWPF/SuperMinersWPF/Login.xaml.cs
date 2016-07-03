@@ -29,6 +29,7 @@ namespace SuperMinersWPF
     {
         private SynchronizationContext _syn;
         private bool isHidden = false;
+        Window1 winMain = null;
 
         public Login()
         {
@@ -65,7 +66,7 @@ namespace SuperMinersWPF
             if (!isHidden)
             {
                 isHidden = true;
-                Window1 winMain = new Window1();
+                winMain = new Window1();
                 winMain.Closed += winMain_Closed;
                 this.Visibility = System.Windows.Visibility.Hidden;
                 winMain.Show();
@@ -159,12 +160,15 @@ namespace SuperMinersWPF
 
         void winMain_Closed(object sender, EventArgs e)
         {
-            this.Close();
-            //if (GlobalData.IsLogined)
-            //{
-            //    this.isHidden = false;
-            //    this.Visibility = System.Windows.Visibility.Visible;
-            //}
+            if (winMain != null && winMain.IsBackToLogin)
+            {
+                this.isHidden = false;
+                this.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         private void hlinkForgetPassword_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)

@@ -277,72 +277,74 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
+        /// 支付购买矿石订单后，更新买家信息
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="rmbPay">true为灵币支付；false为支付宝支付</param>
+        /// <param name="trans"></param>
+        /// <returns></returns>
+        public bool PayBuyStonesUpdateBuyerInfo(BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (rmbPay)
+                {
+                    if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
+                    {
+                        return false;
+                    }
+                    BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
+                }
+                BasePlayer.FortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
+                BasePlayer.FortuneInfo.GoldCoin += order.AwardGoldCoin;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 支付购买矿石订单后，更新卖家信息
+        /// </summary>
+        /// <param name="order"></param>
+        /// <param name="trans"></param>
+        /// <returns></returns>
+        public bool PayBuyStonesUpdateSellerInfo(BuyStonesOrder order, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                BasePlayer.FortuneInfo.RMB += (order.StonesOrder.ValueRMB - order.StonesOrder.Expense);
+                BasePlayer.FortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
+                BasePlayer.FortuneInfo.FreezingStones -= order.StonesOrder.SellStonesCount;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// 0表示成功；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
         /// </summary>
         /// <param name="SellStonesCount"></param>
         /// <returns></returns>
-        public int SellStones(int SellStonesCount)
+        public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
         {
-            if (SellStonesCount <= 0)
-            {
-                return 0;
-            }
-
             lock (_lockFortuneAction)
             {
                 float sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
-                if (SellStonesCount > sellableStones)
+                if (order.SellStonesCount > sellableStones)
                 {
                     return 1;
                 }
 
-                float allRMB = SellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
-                float expense = allRMB * GlobalConfig.GameConfig.ExchangeExpensePercent;
-                if (expense < GlobalConfig.GameConfig.ExchangeExpenseMinNumber)
-                {
-                    expense = GlobalConfig.GameConfig.ExchangeExpenseMinNumber;
-                }
-                float gainRMB = allRMB - expense;
-                if (gainRMB <= 0)
-                {
-                    return 2;
-                }
+                BasePlayer.FortuneInfo.FreezingStones += order.SellStonesCount;
 
-                DateTime time = DateTime.Now;
-
-                SellStonesOrder sellOrder = new SellStonesOrder()
-                {
-                    OrderNumber = CreateOrderNumber(time, BasePlayer.SimpleInfo.UserName),
-                    SellerUserName = BasePlayer.SimpleInfo.UserName,
-                    SellStonesCount = SellStonesCount,
-                    Expense = expense,
-                    ValueRMB = gainRMB,
-                    SellTime = time
-                };
-                BasePlayer.FortuneInfo.FreezingStones += SellStonesCount;
-
-                var trans = MyDBHelper.Instance.CreateTrans();
-
-                try
-                {
-                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
-                    DBProvider.OrderDBProvider.AddSellOrder(sellOrder, trans);
-                    trans.Commit();
-
-                    PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.SellStone, SellStonesCount);
-                    return 0;
-                }
-                catch (Exception exc)
-                {
-                    trans.Rollback();
-                    LogHelper.Instance.AddErrorLog("玩家 " + BasePlayer.SimpleInfo.UserName + " 出售 " + SellStonesCount + " 矿石时，异常", exc);
-                    return -3;
-                }
-                finally
-                {
-                    trans.Dispose();
-                }
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
             }
+
+            return 0;
         }
 
         private string CreateOrderNumber(DateTime time, string userName)

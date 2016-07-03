@@ -11,19 +11,13 @@ namespace SuperMinersWPF.ViewModels
 {
     class StoneOrderViewModel
     {
-        private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStonesOrder;
+        private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStonesOrder = new ObservableCollection<SellStonesOrderUIModel>();
 
         public ObservableCollection<SellStonesOrderUIModel> AllNotFinishStonesOrder
         {
             get { return _allNotFinishStonesOrder; }
         }
-
-
-        public void AsyncSellStone(int sellStonesCount)
-        {
-            GlobalData.Client.SellStone(sellStonesCount, null);
-        }
-
+        
         public void AsyncGetNotFinishedStonesOrder()
         {
             GlobalData.Client.GetNotFinishedStonesOrder(null);
@@ -31,7 +25,6 @@ namespace SuperMinersWPF.ViewModels
 
         public void RegisterEvent()
         {
-            GlobalData.Client.SellStoneCompleted += Client_SellStoneCompleted;
             GlobalData.Client.GetNotFinishedStonesOrderCompleted += Client_GetNotFinishedStonesOrderCompleted;
         }
 
@@ -54,22 +47,6 @@ namespace SuperMinersWPF.ViewModels
                 var item = e.Result[i];
                 this.AllNotFinishStonesOrder.Add(new SellStonesOrderUIModel(item));
             }
-        }
-
-        void Client_SellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
-        {
-            if (e.Cancelled)
-            {
-                return;
-            }
-
-            if (e.Error != null || !e.Result)
-            {
-                MyMessageBox.ShowInfo("挂单出售矿石失败。");
-                return;
-            }
-
-            MyMessageBox.ShowInfo("挂单出售矿石成功。");
         }
     }
 }

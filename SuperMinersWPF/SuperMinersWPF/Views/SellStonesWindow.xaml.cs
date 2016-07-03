@@ -21,9 +21,12 @@ namespace SuperMinersWPF.Views
     /// </summary>
     public partial class SellStonesWindow : Window
     {
+        private System.Threading.SynchronizationContext _syn;
+
         public SellStonesWindow()
         {
             InitializeComponent();
+            this._syn = System.Threading.SynchronizationContext.Current;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -34,6 +37,36 @@ namespace SuperMinersWPF.Views
             this.subTxtExpensePercent.Text = GlobalData.GameConfig.ExchangeExpensePercent.ToString();
             this.numSellStones.Maximum = (int)GlobalData.CurrentUser.SellableStones;
             this.subTxtMinExpense.Text = GlobalData.GameConfig.ExchangeExpenseMinNumber.ToString();
+
+            GlobalData.Client.SellStoneCompleted += Client_SellStoneCompleted;
+        }
+
+        void Client_SellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("挂单出售矿石失败。");
+                return;
+            }
+            if (e.Result != 0)
+            {
+                MyMessageBox.ShowInfo("挂单出售矿石失败。");
+                return;
+            }
+
+            MyMessageBox.ShowInfo("挂单出售矿石成功。");
+            App.UserVMObject.AsyncGetPlayerInfo();
+            App.StoneOrderVMObject.AsyncGetNotFinishedStonesOrder();
+
+            this._syn.Post((o) =>
+            {
+                this.DialogResult = true;
+            }, null);
         }
 
         private void numSellStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -74,6 +107,8 @@ namespace SuperMinersWPF.Views
                     + ", 您当前出售的矿石不够支付，无法出售。");
                 return;
             }
+
+            GlobalData.Client.SellStone((int)this.numSellStones.Value, null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

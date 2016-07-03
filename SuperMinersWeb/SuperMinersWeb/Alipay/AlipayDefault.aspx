@@ -1,8 +1,8 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AlipayDefault.aspx.cs" Inherits="AlipayDefault" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
-    <title>支付宝即时到账交易接口</title>
+    <title>迅灵矿场支付宝即时到账交易</title>
     <style>
         html, body {
             width: 100%;
@@ -101,7 +101,7 @@
             display: block;
             float: left;
             height: 40px;
-            width: 85px;
+            width: 176px;
             margin-top: 20px;
         }
 
@@ -265,17 +265,9 @@
         <div class="container black">
             <div class="qrcode">
                 <div class="littlecode">
-                    <img width="16px" src="img/little_qrcode.jpg" id="licode">
                     <div class="showqrs" id="showqrs">
                         <div class="shtoparrow"></div>
                         <div class="guanzhuqr">
-                            <img src="img/guanzhu_qrcode.png" width="80">
-                            <div class="shmsg" style="margin-top: 5px;">
-                                请扫码关注
-                            </div>
-                            <div class="shmsg" style="margin-bottom: 5px;">
-                                接收重要信息
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -284,13 +276,9 @@
         <div class="container">
             <div class="nav">
                 <a href="https://www.alipay.com/" target="_blank" class="logo">
-                    <img src="img/alipay_logo.png" height="30px"></a>
+                    <img src="../Images/alipay_logo.png" height="30"/></a>
                 <span class="divier"></span>
-                <a href="http://open.alipay.com/platform/home.htm" target="_blank" class="open">开放平台</a>
-                <ul class="navbar">
-                    <li><a href="https://doc.open.alipay.com/doc2/detail?treeId=62&articleId=103566&docType=1" target="_blank" >在线文档</a></li>
-                    <li><a href="https://support.open.alipay.com/alipay/support/index.htm" target="_blank" >技术支持</a></li>
-                </ul>
+                <span class="open">迅灵信息合作伙伴</span>
             </div>
         </div>
         <div class="container blue">
@@ -304,38 +292,32 @@
             </div>
 			
             <div class="element">
-                <div class="etitle">商户订单号:</div>
+                <div class="etitle">订单号:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDout_trade_no" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDout_trade_no" runat="server" ReadOnly="true"></asp:TextBox>
                 </div>
 
-                <br>
-                <div class="mark">注意：商户订单号(out_trade_no)是必须填写数据,该参数建议是英文字母和数字,不能含有特殊字符</div>
             </div>
 
             <div class="element">
                 <div class="etitle">商品名称:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDsubject" Text="test商品" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDsubject" Text="" runat="server" ReadOnly="true"></asp:TextBox>
                 </div>
-                <br>
-                <div class="mark">注意：商品名称(subject)是必须填写参数，该参数建议中文，英文，数字，不能含有特殊字符</div>
             </div>
             <div class="element">
                 <div class="etitle">付款金额:</div>
                 <div class="einput">
-                    <asp:TextBox ID="WIDtotal_fee" Text="0.01" runat="server"></asp:TextBox>
+                    <asp:TextBox ID="WIDtotal_fee" Text="0.01" runat="server" ReadOnly="true"></asp:TextBox>
                 </div>
-                <br>
-                <div class="mark">注意：付款金额(total_fee)，必填(格式如：1.00,请精确到分)</div>
             </div>
 			<div class="element">
-				<div class="etitle">商品描述:</div>
+				<div class="etitle">支付宝账户:</div>
 				<div class="einput">
-				<asp:TextBox ID="WIDbody" Text="即时到账测试" runat="server"></asp:TextBox>
+				<asp:TextBox ID="WIDAlipayAccount" Text="" runat="server" MaxLength="30"></asp:TextBox>
 				</div>
 				<br>
-				<div class="mark">注意：商品描述(body)，选填(建议中文，英文，数字，不能含有特殊字符)</div>
+				<div class="mark">测试阶段，手动输入支付宝账户来模拟支付操作</div>
 			</div>
             <div class="element">
 
@@ -364,37 +346,37 @@
 </body>
 <script>
 
-        var even = document.getElementById("licode");   
-        var showqrs = document.getElementById("showqrs");
-         even.onmouseover = function(){
-            showqrs.style.display = "block"; 
-         }
-         even.onmouseleave = function(){
-            showqrs.style.display = "none";
-         }
+        //var even = document.getElementById("licode");   
+        //var showqrs = document.getElementById("showqrs");
+        // even.onmouseover = function(){
+        //    showqrs.style.display = "block"; 
+        // }
+        // even.onmouseleave = function(){
+        //    showqrs.style.display = "none";
+        // }
          
-         var out_trade_no = document.getElementById("WIDout_trade_no");
+         //var out_trade_no = document.getElementById("WIDout_trade_no");
 
-         //设定时间格式化函数
-         Date.prototype.format = function (format) {
-               var args = {
-                   "M+": this.getMonth() + 1,
-                   "d+": this.getDate(),
-                   "h+": this.getHours(),
-                   "m+": this.getMinutes(),
-                   "s+": this.getSeconds(),
-               };
-               if (/(y+)/.test(format))
-                   format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-               for (var i in args) {
-                   var n = args[i];
-                   if (new RegExp("(" + i + ")").test(format))
-                       format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
-               }
-               return format;
-           };
+         ////设定时间格式化函数
+         //Date.prototype.format = function (format) {
+         //      var args = {
+         //          "M+": this.getMonth() + 1,
+         //          "d+": this.getDate(),
+         //          "h+": this.getHours(),
+         //          "m+": this.getMinutes(),
+         //          "s+": this.getSeconds(),
+         //      };
+         //      if (/(y+)/.test(format))
+         //          format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+         //      for (var i in args) {
+         //          var n = args[i];
+         //          if (new RegExp("(" + i + ")").test(format))
+         //              format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+         //      }
+         //      return format;
+         //  };
            
-         out_trade_no.value = 'test'+ new Date().format("yyyyMMddhhmmss");
+         //out_trade_no.value = 'test'+ new Date().format("yyyyMMddhhmmss");
  
 </script>
 </html>

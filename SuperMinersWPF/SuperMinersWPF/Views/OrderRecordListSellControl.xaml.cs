@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,29 @@ namespace SuperMinersWPF.Views
     /// </summary>
     public partial class OrderRecordListSellControl : UserControl
     {
+        public IEnumerable ItemsSource
+        {
+            get { return (IEnumerable)GetValue(ItemSourceProperty); }
+            set { SetValue(ItemSourceProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for ItemSource.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty ItemSourceProperty =
+            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(OrderRecordListSellControl), new PropertyMetadata(null));
+
+
         public OrderRecordListSellControl()
         {
             InitializeComponent();
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            Binding bind = new Binding()
+            {
+                Source = this.ItemsSource
+            };
+            this.listboxSellOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
         }
     }
 }

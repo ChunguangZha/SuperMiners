@@ -142,6 +142,7 @@
     <Content Include="Content\themes\base\tooltip.css" />
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
+    <Content Include="Images\alipay_logo.png" />
     <Content Include="Images\yes.png" />
     <Content Include="Software\DownLoad.aspx" />
     <Content Include="Global.asax" />

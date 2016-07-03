@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SuperMinersWPF.Models
 {
-    class SellStonesOrderUIModel : BaseModel
+    public class SellStonesOrderUIModel : BaseModel
     {
         public SellStonesOrderUIModel(SellStonesOrder parent)
         {
@@ -92,6 +93,30 @@ namespace SuperMinersWPF.Models
                 this._parentObject.OrderState = value;
                 NotifyPropertyChange("OrderState");
                 NotifyPropertyChange("OrderStateString");
+            }
+        }
+
+        public SolidColorBrush OrderStateBrush
+        {
+            get
+            {
+                switch (this.OrderState)
+                {
+                    case SellOrderState.Wait:
+                        return new SolidColorBrush(Colors.Black);
+
+                    case SellOrderState.Lock:
+                        return new SolidColorBrush(Colors.Gray);
+
+                    case SellOrderState.Finish:
+                        return new SolidColorBrush(Colors.Green);
+
+                    case SellOrderState.Exception:
+                        return new SolidColorBrush(Colors.Red);
+
+                    default:
+                        return new SolidColorBrush(Colors.Black);
+                }
             }
         }
 

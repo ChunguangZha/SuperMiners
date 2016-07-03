@@ -62,6 +62,7 @@ namespace MetaData.ActionLog
         GoldCoinRecharge,
         BuyMine,
         BuyMiner,
+        BuyStone,
         SellStone,
         SellDiamond,
         GatherStone,

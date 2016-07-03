@@ -87,7 +87,7 @@ namespace DataBaseProvider
             try
             {
                 string cmdTextB = "UPDATE `playerfortuneinfo` SET "
-                    + " `Exp`=@Exp, `RMB`=@RMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
+                    + " `Exp`=@Exp, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
                     + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,`TempOutputStonesStartTime`=@TempOutputStonesStartTime,`TempOutputStones`=@TempOutputStones,"
                     + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
@@ -97,6 +97,7 @@ namespace DataBaseProvider
 
                 mycmd.Parameters.AddWithValue("@Exp", playerFortune.Exp);
                 mycmd.Parameters.AddWithValue("@RMB", playerFortune.RMB);
+                mycmd.Parameters.AddWithValue("@FreezingRMB", playerFortune.FreezingRMB);
                 mycmd.Parameters.AddWithValue("@GoldCoin", playerFortune.GoldCoin);
                 mycmd.Parameters.AddWithValue("@MinesCount", playerFortune.MinesCount);
                 mycmd.Parameters.AddWithValue("@StonesReserves", playerFortune.StonesReserves);
@@ -511,7 +512,7 @@ namespace DataBaseProvider
             }
         }
 
-        public PlayerInfo GetPlayerByAlipay(string alipayAccount, string alipayRealName)
+        public PlayerInfo GetPlayerByAlipay(string alipayAccount)
         {
             PlayerInfo player = null;
             MySqlConnection myconn = null;
@@ -521,10 +522,9 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, b.* from playersimpleinfo a left join playerfortuneinfo b on a.id = b.userId where a.Alipay = @Alipay and a.AlipayRealName = @AlipayRealName";
+                string cmdText = "select a.*, b.* from playersimpleinfo a left join playerfortuneinfo b on a.id = b.userId where a.Alipay = @Alipay";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
-                mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt.Rows.Count > 0)

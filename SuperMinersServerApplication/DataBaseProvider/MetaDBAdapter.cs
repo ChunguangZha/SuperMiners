@@ -146,6 +146,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
                 player.FortuneInfo.Exp = Convert.ToSingle(dt.Rows[i]["Exp"]);
                 player.FortuneInfo.RMB = Convert.ToSingle(dt.Rows[i]["RMB"]);
+                player.FortuneInfo.FreezingRMB = Convert.ToSingle(dt.Rows[i]["FreezingRMB"]);
                 player.FortuneInfo.GoldCoin = Convert.ToSingle(dt.Rows[i]["GoldCoin"]);
                 player.FortuneInfo.MinesCount = Convert.ToSingle(dt.Rows[i]["MinesCount"]);
                 player.FortuneInfo.MinersCount = Convert.ToSingle(dt.Rows[i]["MinersCount"]);

@@ -23,7 +23,7 @@ namespace MetaData.User
         public string Password { get; set; }
 
         /// <summary>
-        /// 支付宝账户
+        /// 支付宝账户，加密，MaxLength=30
         /// </summary>
         [DataMember]
         public string Alipay { get; set; }

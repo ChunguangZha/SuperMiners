@@ -11,7 +11,7 @@ namespace SuperMinersWPF.Wcf.Channel
     {
         private WebRequest _req;
 
-        public MyWebRequest(WebRequest req)
+        public MyWebRequest(WebRequest req) 
         {
             this._req = req;
             this.IsCancel = false;

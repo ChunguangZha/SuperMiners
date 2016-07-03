@@ -321,39 +321,79 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMine(minesCount);
         }
 
+        public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)
+        {
+            PlayerRunnable playerBuyerRun = this.GetOnlinePlayerRunnable(playerBuyer.SimpleInfo.UserName);
+            if (playerBuyerRun == null)
+            {
+                playerBuyerRun = new PlayerRunnable(playerBuyer);
+            }
+            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(order, rmbPay, trans);
+            if (!isOK)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败。 rmbPay: " + rmbPay + "。 " + order.ToString());
+                return false;
+            }
+
+            PlayerRunnable playerSellerRun = this.GetOnlinePlayerRunnable(order.StonesOrder.SellerUserName);
+            if (playerSellerRun == null)
+            {
+                var seller = DBProvider.UserDBProvider.GetPlayer(order.StonesOrder.SellerUserName);
+                if (seller == null)
+                {
+                    LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 rmbPay: " + rmbPay + "。 " + order.ToString());
+                    return false;
+                }
+
+                playerSellerRun = new PlayerRunnable(seller);
+            }
+
+            return playerSellerRun.PayBuyStonesUpdateSellerInfo(order, trans);
+        }
+
         /// <summary>
         /// 0表示成功；-2表示该用户不在线；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// 如果事务提交失败，则调用RollbackUserFromDB恢复状态
         /// </summary>
         /// <param name="SellStonesCount"></param>
         /// <returns></returns>
-        public int SellStones(string userName, int SellStonesCount)
+        public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(order.SellerUserName);
             if (playerrun == null)
             {
                 return -2;
             }
 
-            return playerrun.SellStones(SellStonesCount);
+            return playerrun.SellStones(order, trans);
+        }
+
+        public void RollbackUserFromDB(string userName)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun != null)
+            {
+                playerrun.RefreshFortune();
+            }
         }
 
         public bool RechargeRMB(string alipay, string alipayRealName, float yuan)
         {
             try
             {
-                PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-                if (player == null)
-                {
-                    return false;
-                }
+                //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
+                //if (player == null)
+                //{
+                //    return false;
+                //}
 
-                var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-                if (playerrun == null)
-                {
-                    playerrun = new PlayerRunnable(player);
-                }
+                //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
+                //if (playerrun == null)
+                //{
+                //    playerrun = new PlayerRunnable(player);
+                //}
 
-                playerrun.RechargeRMB(yuan);
+                //playerrun.RechargeRMB(yuan);
                 return true;
             }
             catch (Exception exc)
@@ -363,30 +403,43 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool RechargeGoldCoine(string alipay, string alipayRealName, float yuan)
+        public bool RechargeGoldCoin(string alipay, string alipayRealName, float yuan)
         {
             try
             {
-                PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-                if (player == null)
-                {
-                    return false;
-                }
+                //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
+                //if (player == null)
+                //{
+                //    return false;
+                //}
 
-                var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-                if (playerrun == null)
-                {
-                    playerrun = new PlayerRunnable(player);
-                }
+                //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
+                //if (playerrun == null)
+                //{
+                //    playerrun = new PlayerRunnable(player);
+                //}
 
-                playerrun.RechargeRMB(yuan);
+                //playerrun.RechargeRMB(yuan);
                 return true;
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("RechargeGoldCoine exception. alipay = " + alipay + ", reamname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
+                LogHelper.Instance.AddErrorLog("RechargeGoldCoin exception. alipay = " + alipay + ", realname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
                 return false;
             }
+        }
+
+        public PlayerInfo GetPlayerByAlipayAccount(string alipayAccount)
+        {
+            foreach (var item in this._dicOnlinePlayerRuns.Values)
+            {
+                if (item.BasePlayer.SimpleInfo.Alipay == alipayAccount)
+                {
+                    return item.BasePlayer;
+                }
+            }
+
+            return DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
         }
     }
 }

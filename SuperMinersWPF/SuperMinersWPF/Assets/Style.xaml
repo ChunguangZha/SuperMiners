@@ -8,4 +8,74 @@
         <Setter Property="Topmost" Value="True"/>
         <Setter Property="ShowInTaskbar" Value="False"/>
     </Style>
+
+    <Color x:Key="Color_024">#FF00AADE</Color>
+    
+    <Style x:Key="SliderCheckBox" TargetType="CheckBox">
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Background="Transparent" Orientation="Horizontal">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" To=".55" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="contentPresenter" />
+                                        <DoubleAnimation Duration="0" To="1" Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="disabled" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="CheckStates">
+                                <VisualState x:Name="Checked">
+                                    <Storyboard x:Name="Storyboard1">
+                                        <DoubleAnimation Storyboard.TargetName="CheckFlag" 
+											Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
+											From="{Binding ElementName=baseBorder, Path=RenderTransform.X}" 
+											To="14"
+											Duration="00:00:00.1"/>
+                                        <ColorAnimation Storyboard.TargetName="baseBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+														From="{Binding ElementName=baseBorder, Path=Background}"
+														To="{StaticResource Color_024}" 
+														Duration="00:00:00.1" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Unchecked">
+                                    <Storyboard x:Name="Storyboard2">
+                                        <DoubleAnimation Storyboard.TargetName="CheckFlag" 
+											Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.X)" 
+											From="{Binding ElementName=baseBorder, Path=RenderTransform.X}" 
+											To="0"
+											Duration="00:00:00.1"/>
+                                        <ColorAnimation Storyboard.TargetName="baseBorder" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" 
+														From="{Binding ElementName=baseBorder, Path=Background}"
+														To="Gray" 
+														Duration="00:00:00.1" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid>
+                            <Border x:Name="baseBorder" BorderThickness="1" Background="LightBlue" Width="35" Height="20" CornerRadius="10">
+                                <Canvas >
+                                    <Border Background="White" x:Name="CheckFlag" CornerRadius="10" VerticalAlignment="Center" BorderThickness="1" Width="19" Height="18" RenderTransformOrigin="0.5,0.5">
+                                        <Border.RenderTransform>
+                                            <TranslateTransform/>
+                                        </Border.RenderTransform>
+                                    </Border>
+                                </Canvas>
+                            </Border>
+                            <Border x:Name="disabled" BorderThickness="1" Background="#A0C3C3C3" Width="35" Height="20" Opacity="0" CornerRadius="10"/>
+                        </Grid>
+                        <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

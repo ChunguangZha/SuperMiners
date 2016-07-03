@@ -24,6 +24,30 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public SellOrderState OrderState
+        {
+            get
+            {
+                return this._sellOrder.OrderState;
+            }
+        }
+
+        public int StoneCount
+        {
+            get
+            {
+                return this._sellOrder.SellStonesCount;
+            }
+        }
+
+        public float ValueRMB
+        {
+            get
+            {
+                return this._sellOrder.ValueRMB;
+            }
+        }
+
         public OrderRunnable(SellStonesOrder sellOrder)
         {
             this._sellOrder = sellOrder;
@@ -53,7 +77,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool Pay(float moneyYuan, int awardGoldCoin, CustomerMySqlTransaction trans)
+        public BuyStonesOrder Pay(float rmb, CustomerMySqlTransaction trans)
         {
             lock (this._lock)
             {
@@ -63,18 +87,14 @@ namespace SuperMinersServerApplication.Controller
                     StonesOrder = this._sellOrder,
                     BuyerUserName = this._lockOrderObject.LockedByUserName,
                     BuyTime = this._lockOrderObject.LockedTime,
-                    AwardGoldCoin = awardGoldCoin
+                    AwardGoldCoin = this._sellOrder.SellStonesCount * GlobalConfig.GameConfig.StoneBuyerAwardGoldCoinMultiple
                 };
 
-                if (DBProvider.OrderDBProvider.PayOrder(buyOrder, trans))
-                {
-                    this._sellOrder.OrderState = SellOrderState.Finish;
-                    DBProvider.OrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);
+                this._sellOrder.OrderState = SellOrderState.Finish;
+                DBProvider.OrderDBProvider.PayOrder(buyOrder, trans);
+                DBProvider.OrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);
 
-                    return true;
-                }
-
-                return false;
+                return buyOrder;
             }
         }
 

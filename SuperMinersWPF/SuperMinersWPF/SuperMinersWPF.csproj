@@ -134,6 +134,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
+      <Link>Wcf\Datas\BuyStonesOrder.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
@@ -187,6 +190,7 @@
     </Compile>
     <Compile Include="GlobalData.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\BuyStonesOrderUIModel.cs" />
     <Compile Include="Models\MineralUIModel.cs" />
     <Compile Include="Models\MinerUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
@@ -222,6 +226,9 @@
     </Compile>
     <Compile Include="Views\BuyMineWindow.xaml.cs">
       <DependentUpon>BuyMineWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BuyStonesWindow.xaml.cs">
+      <DependentUpon>BuyStonesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ChangePasswordWindow.xaml.cs">
       <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
@@ -307,6 +314,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BuyMineWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BuyStonesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

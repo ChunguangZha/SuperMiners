@@ -42,6 +42,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("InvitationCode");
                 NotifyPropertyChange("Exp");
                 NotifyPropertyChange("RMB");
+                NotifyPropertyChange("FreezingRMB");
                 NotifyPropertyChange("GoldCoin");
                 NotifyPropertyChange("MinesCount");
                 NotifyPropertyChange("StonesReserves");
@@ -112,6 +113,11 @@ namespace SuperMinersWPF.Models
         public float RMB
         {
             get { return this._parentObject.FortuneInfo.RMB; }
+        }
+
+        public float FreezingRMB
+        {
+            get { return this._parentObject.FortuneInfo.FreezingRMB; }
         }
 
         /// <summary>

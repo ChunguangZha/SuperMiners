@@ -41,5 +41,19 @@ namespace MetaData
 
         [DataMember]
         public float AwardGoldCoin;
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("买方: ");
+            builder.Append(this.BuyerUserName);
+            builder.Append(",");
+            builder.Append("购买时间: ");
+            builder.Append(this.BuyTime);
+            builder.Append(",");
+            builder.Append(StonesOrder.ToString());
+
+            return builder.ToString();
+        }
     }
 }

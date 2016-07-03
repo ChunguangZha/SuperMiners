@@ -1,16 +1,17 @@
-Error:  [2016/6/30 20:40:42] ---- Log: Init OrderController Error
-Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'top 20' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/7/2 20:35:51] ---- Log: Add Sell Order Exception: 订单号: 201607022035510558-4454765447195,卖方: Tony,出售矿石数: 100,手续费: 1,价值人民币: 10,出售时间: 2016/7/2 20:35:51
+Exc.Message: Data too long for column 'OrderNumber' at row 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
    在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.OrderDBProvider.GetBuyStonesOrderListLast20() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 153
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   在 DataBaseProvider.OrderDBProvider.AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 36
+   在 SuperMinersServerApplication.Controller.OrderController.CreateSellOrder(String userName, Int32 sellStonesCount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 132
+-----------------------------------------------------
+
+置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 153
    在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 55
 -----------------------------------------------------
 

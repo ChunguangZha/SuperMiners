@@ -1,4 +1,6 @@
-﻿using MetaData.SystemConfig;
+﻿using DataBaseProvider;
+using MetaData.SystemConfig;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Utility;
@@ -156,6 +158,55 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 LogHelper.Instance.AddErrorLog("CheckRegisterIP Exception. ", exc);
 
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <param name="money">人民币，需换算为灵币</param>
+        /// <param name="payAlipayAccount"></param>
+        /// <param name="succeed"></param>
+        public void PayCompleted(string orderNumber, float money, string payAlipayAccount, bool succeed)
+        {
+            try
+            {
+                if (!succeed)
+                {
+                    return;
+                }
+                PlayerInfo player = PlayerController.Instance.GetPlayerByAlipayAccount(payAlipayAccount);
+                if (player == null)
+                {
+                    return;
+                }
+
+                int tradeTypeInt = OrderController.Instance.GetTradeType(orderNumber);
+                if (tradeTypeInt < 10)
+                {
+                    return;
+                }
+                float rmb = money * GlobalConfig.GameConfig.Yuan_RMB;
+                TradeType tradeType = (TradeType)tradeTypeInt;
+                switch (tradeType)
+                {
+                    case TradeType.StoneTrade:
+                        OrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
+                        break;
+                    case TradeType.MineTrade:
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("PayCompleted Exception. " +
+                                            " orderNumber: " + orderNumber + ";" +
+                                            " money: " + money.ToString() + ";" +
+                                            " payAlipayAccount: " + payAlipayAccount, exc);
+
             }
         }
     }
