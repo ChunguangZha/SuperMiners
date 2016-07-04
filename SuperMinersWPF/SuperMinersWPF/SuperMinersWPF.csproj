@@ -137,6 +137,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
       <Link>Wcf\Datas\BuyStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\LockSellStonesOrder.cs">
+      <Link>Wcf\Datas\LockSellStonesOrder.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
@@ -191,6 +194,7 @@
     <Compile Include="GlobalData.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BuyStonesOrderUIModel.cs" />
+    <Compile Include="Models\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Models\MineralUIModel.cs" />
     <Compile Include="Models\MinerUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />

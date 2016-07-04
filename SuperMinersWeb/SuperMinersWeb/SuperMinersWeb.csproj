@@ -60,10 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
-    <Content Include="Alipay\AlipayDefault.aspx" />
     <Content Include="Alipay\notify_url.aspx" />
     <Content Include="Alipay\readme.txt" />
     <Content Include="Alipay\return_url.aspx" />
+    <Content Include="Alipay\AlipayDefault.aspx" />
     <Content Include="AuthCode.aspx" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -204,10 +204,6 @@
     <Content Include="App_Code\AlipayNotify.cs" />
     <Content Include="App_Code\AlipaySubmit.cs" />
     <Content Include="App_Code\RSA.cs" />
-    <Compile Include="Alipay\AlipayDefault.aspx.cs">
-      <DependentUpon>AlipayDefault.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Alipay\notify_url.aspx.cs">
       <DependentUpon>notify_url.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -215,6 +211,13 @@
     <Compile Include="Alipay\return_url.aspx.cs">
       <DependentUpon>return_url.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alipay\AlipayDefault.aspx.cs">
+      <DependentUpon>AlipayDefault.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Alipay\AlipayDefault.aspx.designer.cs">
+      <DependentUpon>AlipayDefault.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="AuthCode.aspx.cs">

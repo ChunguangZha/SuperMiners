@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Trade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,10 +42,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region AutoMatchLockSellStone
 
-        public event EventHandler<WebInvokeEventArgs<SellStonesOrder>> AutoMatchLockSellStoneCompleted;
+        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> AutoMatchLockSellStoneCompleted;
         public void AutoMatchLockSellStone(int buyStonesCount, object userState)
         {
-            this._invoker.InvokeUserState<SellStonesOrder>(this._context, "AutoMatchLockSellStone", this.AutoMatchLockSellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, buyStonesCount);
+            this._invoker.InvokeUserState<LockSellStonesOrder>(this._context, "AutoMatchLockSellStone", this.AutoMatchLockSellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, buyStonesCount);
         }
 
         #endregion
@@ -69,14 +70,14 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-        #region PayOrderByAlipay
+        //#region PayOrderByAlipay
 
-        public event EventHandler<WebInvokeEventArgs<string>> PayOrderByAlipayCompleted;
-        public void PayOrderByAlipay(string orderNumber, float rmb, object userState)
-        {
-            this._invoker.InvokeUserState<string>(this._context, "PayOrderByAlipay", this.PayOrderByAlipayCompleted, userState, GlobalData.Token, orderNumber, rmb);
-        }
+        //public event EventHandler<WebInvokeEventArgs<string>> PayOrderByAlipayCompleted;
+        //public void PayOrderByAlipay(string orderNumber, float rmb, object userState)
+        //{
+        //    this._invoker.InvokeUserState<string>(this._context, "PayOrderByAlipay", this.PayOrderByAlipayCompleted, userState, GlobalData.Token, orderNumber, rmb);
+        //}
 
-        #endregion
+        //#endregion
     }
 }

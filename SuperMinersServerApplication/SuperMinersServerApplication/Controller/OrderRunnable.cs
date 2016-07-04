@@ -98,7 +98,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool Lock(string playerUserName)
+        public LockSellStonesOrder Lock(string playerUserName)
         {
             lock (this._lock)
             {
@@ -124,12 +124,12 @@ namespace SuperMinersServerApplication.Controller
                                 trans.Rollback();
                                 trans.Dispose();
                                 trans = null;
-                                return false;
+                                return null;
                             }
                         }
                         else
                         {
-                            return false;
+                            return null;
                         }
                     }
 
@@ -141,6 +141,7 @@ namespace SuperMinersServerApplication.Controller
                     this._lockOrderObject = new LockSellStonesOrder()
                     {
                         StonesOrder = this._sellOrder,
+                        PayUrl = this.CreatePayUrl(),
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now
                     };
@@ -149,7 +150,7 @@ namespace SuperMinersServerApplication.Controller
 
                     trans.Commit();
 
-                    return true;
+                    return this._lockOrderObject;
                 }
                 catch (Exception exc)
                 {
@@ -160,7 +161,7 @@ namespace SuperMinersServerApplication.Controller
                     this._sellOrder.OrderState = SellOrderState.Wait;
                     this._lockOrderObject = null;
                     LogHelper.Instance.AddErrorLog("Lock Order[" + this._sellOrder.OrderNumber + "] by User[" + playerUserName + "] Error", exc);
-                    return false;
+                    return null;
                 }
                 finally
                 {
@@ -170,6 +171,20 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
             }
+        }
+
+        private string CreatePayUrl()
+        {
+            float money = this._sellOrder.ValueRMB / GlobalConfig.GameConfig.Yuan_RMB;
+            float money_1 = (float)Math.Round(money, 1);
+            if (money_1 < money)//说明刚才是四舍了，要把他加回来
+            {
+                money_1 += 0.1f;
+            }
+
+            //取到角级
+            string suburl = @"Alipay/AlipayDefault.aspx?on=" + this._sellOrder.OrderNumber + "&sn=矿石&mn=" + money_1.ToString();
+            return suburl;
         }
 
         public bool ReleaseLock()

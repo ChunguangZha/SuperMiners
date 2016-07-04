@@ -70,8 +70,15 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("连接服务器失败。");
                 return;
             }
-
-            this.Close();
+            if (e.Result)
+            {
+                MyMessageBox.ShowInfo("购买成功。");
+                this.Close();
+            }
+            else
+            {
+                MyMessageBox.ShowInfo("购买失败。");
+            }
         }
 
         void Client_PayOrderByAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
@@ -84,6 +91,12 @@ namespace SuperMinersWPF.Views
             if (e.Error != null)
             {
                 MyMessageBox.ShowInfo("连接服务器失败。");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(e.Result))
+            {
+                MyMessageBox.ShowInfo("购买失败。");
                 return;
             }
 

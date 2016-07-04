@@ -1,5 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
@@ -121,7 +122,7 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <param name="userName"></param>
         /// <param name="buyStonesCount"></param>
         /// <returns></returns>
-        public SellStonesOrder AutoMatchLockSellStone(string token, string userName, int buyStonesCount)
+        public LockSellStonesOrder AutoMatchLockSellStone(string token, string userName, int buyStonesCount)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -197,37 +198,35 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        /// <summary>
-        /// 返回生成的网址
-        /// </summary>
-        /// <param name="token"></param>
-        /// <param name="orderNumber"></param>
-        /// <returns></returns>
-        public string PayOrderByAlipay(string token, string orderNumber, float rmb)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                string userName = ClientManager.GetClientUserName(token);
-                float money = rmb / GlobalConfig.GameConfig.Yuan_RMB;
-                float money_1 = (float)Math.Round(money, 1);
-                if (money_1 < money)//说明刚才是四舍了，要把他加回来
-                {
-                    money_1 += 0.1f;
-                }
+        ///// <summary>
+        ///// 返回生成的网址
+        ///// </summary>
+        ///// <param name="token"></param>
+        ///// <param name="orderNumber"></param>
+        ///// <returns></returns>
+        //public string PayOrderByAlipay(string token, string orderNumber, float rmb)
+        //{
+        //    if (RSAProvider.LoadRSA(token))
+        //    {
+        //        string userName = ClientManager.GetClientUserName(token);
+        //        float money = rmb / GlobalConfig.GameConfig.Yuan_RMB;
+        //        float money_1 = (float)Math.Round(money, 1);
+        //        if (money_1 < money)//说明刚才是四舍了，要把他加回来
+        //        {
+        //            money_1 += 0.1f;
+        //        }
 
-                //取到角级
-                string suburl = @"Alipay/AlipayDefault.aspx?on=" + orderNumber + "&sn=矿石&mn=" + money_1.ToString();
-                return suburl;
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
+        //        //取到角级
+        //        string suburl = @"Alipay/AlipayDefault.aspx?on=" + orderNumber + "&sn=矿石&mn=" + money_1.ToString();
+        //        return suburl;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception();
+        //    }
+        //}
 
         #endregion
-
-
 
     }
 }

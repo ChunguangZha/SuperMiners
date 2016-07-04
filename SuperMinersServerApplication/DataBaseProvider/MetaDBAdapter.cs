@@ -191,6 +191,7 @@ namespace DataBaseProvider
 
                 string encryptedLockedByUserName = dt.Rows[i]["LockedByUserName"].ToString();
                 order.LockedByUserName = DESEncrypt.DecryptDES(encryptedLockedByUserName);
+                order.PayUrl = dt.Rows[i]["PayUrl"].ToString();
                 order.LockedTime = Convert.ToDateTime(dt.Rows[i]["LockedTime"]);
 
                 orders[i] = order;

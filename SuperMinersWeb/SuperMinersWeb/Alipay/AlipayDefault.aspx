@@ -1,5 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AlipayDefault.aspx.cs" Inherits="AlipayDefault" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AlipayDefault.aspx.cs" Inherits="SuperMinersWeb.Alipay.WebForm1" %>
+
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>迅灵矿场支付宝即时到账交易</title>
@@ -286,7 +288,7 @@
         </div>
     </div>
     <div class="content">
-        <form class="alipayform" target="_blank" runat="server">
+        <form id="Form1" class="alipayform" target="_blank" runat="server">
             <div class="element" style="margin-top: 60px;">
                 <div class="legend">支付宝即时到账交易 </div>
             </div>
@@ -346,37 +348,38 @@
 </body>
 <script>
 
-        //var even = document.getElementById("licode");   
-        //var showqrs = document.getElementById("showqrs");
-        // even.onmouseover = function(){
-        //    showqrs.style.display = "block"; 
-        // }
-        // even.onmouseleave = function(){
-        //    showqrs.style.display = "none";
-        // }
-         
-         //var out_trade_no = document.getElementById("WIDout_trade_no");
+    //var even = document.getElementById("licode");   
+    //var showqrs = document.getElementById("showqrs");
+    // even.onmouseover = function(){
+    //    showqrs.style.display = "block"; 
+    // }
+    // even.onmouseleave = function(){
+    //    showqrs.style.display = "none";
+    // }
 
-         ////设定时间格式化函数
-         //Date.prototype.format = function (format) {
-         //      var args = {
-         //          "M+": this.getMonth() + 1,
-         //          "d+": this.getDate(),
-         //          "h+": this.getHours(),
-         //          "m+": this.getMinutes(),
-         //          "s+": this.getSeconds(),
-         //      };
-         //      if (/(y+)/.test(format))
-         //          format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-         //      for (var i in args) {
-         //          var n = args[i];
-         //          if (new RegExp("(" + i + ")").test(format))
-         //              format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
-         //      }
-         //      return format;
-         //  };
-           
-         //out_trade_no.value = 'test'+ new Date().format("yyyyMMddhhmmss");
- 
+    //var out_trade_no = document.getElementById("WIDout_trade_no");
+
+    ////设定时间格式化函数
+    //Date.prototype.format = function (format) {
+    //      var args = {
+    //          "M+": this.getMonth() + 1,
+    //          "d+": this.getDate(),
+    //          "h+": this.getHours(),
+    //          "m+": this.getMinutes(),
+    //          "s+": this.getSeconds(),
+    //      };
+    //      if (/(y+)/.test(format))
+    //          format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    //      for (var i in args) {
+    //          var n = args[i];
+    //          if (new RegExp("(" + i + ")").test(format))
+    //              format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+    //      }
+    //      return format;
+    //  };
+
+    //out_trade_no.value = 'test'+ new Date().format("yyyyMMddhhmmss");
+
 </script>
 </html>
+

@@ -53,14 +53,15 @@ namespace DataBaseProvider
                 string textDel = "delete locksellstonesorder where OrderNumber = @OrderNumber;";
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
                 string textB = "insert into locksellstonesorder " +
-                    "(`OrderNumber`, `LockedByUserName`, `LockedTime` ) " +
+                    "(`OrderNumber`, `PayUrl`, `LockedByUserName`, `LockedTime` ) " +
                     " values " +
-                    "(@OrderNumber, @LockedByUserName, @LockedTime); ";
+                    "(@OrderNumber, @PayUrl, @LockedByUserName, @LockedTime); ";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = textDel + textA + textB;
                 mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Lock);
                 mycmd.Parameters.AddWithValue("@OrderNumber", lockOrder.StonesOrder.OrderNumber);
+                mycmd.Parameters.AddWithValue("@PayUrl", lockOrder.PayUrl);
                 mycmd.Parameters.AddWithValue("@LockedByUserName", DESEncrypt.EncryptDES(lockOrder.LockedByUserName));
                 mycmd.Parameters.AddWithValue("@LockedTime", lockOrder.LockedTime);
                 mycmd.ExecuteNonQuery();

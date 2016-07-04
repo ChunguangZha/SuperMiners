@@ -96,7 +96,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public SellStonesOrder AutoMatchLockSellStone(string userName, int stoneCount)
+        public LockSellStonesOrder AutoMatchLockSellStone(string userName, int stoneCount)
         {
             lock (_lockListSellOrders)
             {
@@ -129,12 +129,7 @@ namespace SuperMinersServerApplication.Controller
                     return null;
                 }
 
-                if (runnable.Lock(userName))
-                {
-                    return runnable.GetSellOrder();
-                }
-
-                return null;
+                return runnable.Lock(userName);
             }
         }
 
@@ -233,21 +228,21 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool LockSellOrder(string sellOrderNumber, string buyerUserName)
-        {
-            OrderRunnable order = null;
-            lock (this._lockListSellOrders)
-            {
-                this.dicSellOrders.TryGetValue(sellOrderNumber, out order);
-            }
+        //public bool LockSellOrder(string sellOrderNumber, string buyerUserName)
+        //{
+        //    OrderRunnable order = null;
+        //    lock (this._lockListSellOrders)
+        //    {
+        //        this.dicSellOrders.TryGetValue(sellOrderNumber, out order);
+        //    }
 
-            if (order == null)
-            {
-                return false;
-            }
+        //    if (order == null)
+        //    {
+        //        return false;
+        //    }
 
-            return order.Lock(buyerUserName);
-        }
+        //    return order.Lock(buyerUserName);
+        //}
 
         public bool ReleaseLockSellOrder(string orderNumber)
         {

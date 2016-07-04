@@ -139,5 +139,18 @@ namespace SuperMinersWeb.Wcf
                 return null;
             }
         }
+
+        public void PayCompleted(string orderNumber, float money, string payAlipayAccount, bool succeed)
+        {
+            try
+            {
+                base.Channel.PayCompleted(orderNumber, money, payAlipayAccount, succeed);
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
     }
 }

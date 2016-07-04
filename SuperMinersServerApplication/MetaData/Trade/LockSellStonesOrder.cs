@@ -19,6 +19,9 @@ namespace MetaData.Trade
         [DataMember]
         public string LockedByUserName = null;
 
+        [DataMember]
+        public string PayUrl = null;
+
         public DateTime LockedTime;
         [DataMember]
         public string LockedTimeString
@@ -44,5 +47,10 @@ namespace MetaData.Trade
             }
         }
 
+        /// <summary>
+        /// 非数据库字段。剩余有效时间（秒），每次返回给Wcf之前，用服务器当前时间-LockedTime得出。客户端以该值为基本进行倒计（会有小量的时间差）
+        /// </summary>
+        [DataMember]
+        public int ValidTimeSeconds;
     }
 }
