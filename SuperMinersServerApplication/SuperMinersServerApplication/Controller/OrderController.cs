@@ -53,8 +53,17 @@ namespace SuperMinersServerApplication.Controller
                 var lockedOrderDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList("");
                 foreach (var item in lockedOrderDBObjects)
                 {
-                    var runnable = new OrderRunnable(item);
-                    dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
+                    TimeSpan span = DateTime.Now - item.LockedTime;
+                    if (span.TotalSeconds > GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
+                    {
+                        this.ReleaseLockSellOrder(item.StonesOrder.OrderNumber);
+                    }
+                    else
+                    {
+                        item.ValidTimeSeconds = (int)span.TotalSeconds;
+                        var runnable = new OrderRunnable(item);
+                        dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
+                    }
                 }
 
                 var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderListLast20();
@@ -130,6 +139,26 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 return runnable.Lock(userName);
+            }
+        }
+
+        public LockSellStonesOrder GetLockedOrderByUserName(string userName)
+        {
+            lock (_lockListSellOrders)
+            {
+                LockSellStonesOrder order = new LockSellStonesOrder();
+                foreach (var item in dicSellOrders.Values)
+                {
+                    if (item.CheckBuyerName(userName))
+                    {
+                        if (!item.CheckOrderLockedIsTimeOut())
+                        {
+                            return item.GetLockedOrder();
+                        }
+                    }
+                }
+
+                return null;
             }
         }
 

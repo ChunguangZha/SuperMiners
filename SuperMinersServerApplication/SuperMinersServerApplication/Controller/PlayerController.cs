@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using DataBaseProvider;
+using MetaData.Trade;
 
 namespace SuperMinersServerApplication.Controller
 {

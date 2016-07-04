@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MetaData
+namespace MetaData.Trade
 {
     /// <summary>
     /// 销售矿石派单

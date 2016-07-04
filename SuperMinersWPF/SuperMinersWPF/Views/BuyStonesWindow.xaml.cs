@@ -2,6 +2,7 @@
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,32 +22,33 @@ namespace SuperMinersWPF.Views
     /// </summary>
     public partial class BuyStonesWindow : Window
     {
-        private SellStonesOrderUIModel _sellOrder;
+        private LockSellStonesOrderUIModel _lockedOrder;
 
-        public SellStonesOrderUIModel SellOrder
+        public LockSellStonesOrderUIModel LockedOrder
         {
-            get { return _sellOrder; }
-            set { _sellOrder = value; }
+            get { return _lockedOrder; }
+            set { _lockedOrder = value; }
         }
 
 
-        public BuyStonesWindow(SellStonesOrderUIModel order)
+        public BuyStonesWindow(LockSellStonesOrderUIModel order)
         {
             InitializeComponent();
-            this._sellOrder = order;
+            this._lockedOrder = order;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GlobalData.Client.ReleaseLockOrderCompleted += Client_ReleaseLockOrderCompleted;
-            GlobalData.Client.PayOrderByAlipayCompleted += Client_PayOrderByAlipayCompleted;
-            GlobalData.Client.PayOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
+            //GlobalData.Client.PayOrderByAlipayCompleted += Client_PayOrderByAlipayCompleted;
+            App.StoneOrderVMObject.OrderLockTimeOut += StoneOrderVMObject_OrderLockTimeOut;
+            App.StoneOrderVMObject.PayOrderSucceed += StoneOrderVMObject_PayOrderSucceed;
             
-            this.DataContext = this.SellOrder;
+            this.DataContext = this.LockedOrder;
 
-            float awardGoldCoin = this.SellOrder.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
+            float awardGoldCoin = this.LockedOrder.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
             this.txtAwardGoldCoin.Text = ((int)awardGoldCoin).ToString();
-            if (GlobalData.CurrentUser.RMB < this.SellOrder.ValueRMB)
+            if (GlobalData.CurrentUser.RMB < this.LockedOrder.ValueRMB)
             {
                 this.chkPayType.IsChecked = true;
                 this.chkPayType.IsEnabled = false;
@@ -58,50 +60,39 @@ namespace SuperMinersWPF.Views
             }
         }
 
-        void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void StoneOrderVMObject_PayOrderSucceed()
         {
-            if (e.Cancelled)
-            {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                return;
-            }
-            if (e.Result)
-            {
-                MyMessageBox.ShowInfo("购买成功。");
-                this.Close();
-            }
-            else
-            {
-                MyMessageBox.ShowInfo("购买失败。");
-            }
-        }
-
-        void Client_PayOrderByAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
-        {
-            if (e.Cancelled)
-            {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                return;
-            }
-
-            if (string.IsNullOrEmpty(e.Result))
-            {
-                MyMessageBox.ShowInfo("购买失败。");
-                return;
-            }
-
             this.Close();
         }
+
+        void StoneOrderVMObject_OrderLockTimeOut()
+        {
+            this.btnOK.IsEnabled = false;
+            MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
+            this.Close();
+        }
+
+        //void Client_PayOrderByAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
+        //{
+        //    if (e.Cancelled)
+        //    {
+        //        return;
+        //    }
+
+        //    if (e.Error != null)
+        //    {
+        //        MyMessageBox.ShowInfo("连接服务器失败。");
+        //        return;
+        //    }
+
+        //    if (string.IsNullOrEmpty(e.Result))
+        //    {
+        //        MyMessageBox.ShowInfo("购买失败。");
+        //        return;
+        //    }
+
+        //    this.Close();
+        //}
 
         void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
@@ -123,11 +114,19 @@ namespace SuperMinersWPF.Views
         {
             if (chkPayType.IsChecked == true)//支付宝支付
             {
-                GlobalData.Client.PayOrderByAlipay(SellOrder.OrderNumber, SellOrder.ValueRMB, null);
+                string baseuri = "";
+#if DEBUG
+                baseuri = "http://localhost:8509/";
+#else
+
+            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+#endif
+
+                Process.Start(new ProcessStartInfo(baseuri + this.LockedOrder.PayUrl));
             }
             else
             {
-                GlobalData.Client.PayOrderByRMB(SellOrder.OrderNumber, SellOrder.ValueRMB, null);
+                App.StoneOrderVMObject.AsyncPayOrderByRMB(LockedOrder.OrderNumber, LockedOrder.ValueRMB);
             }
         }
 

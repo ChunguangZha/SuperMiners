@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Utility;
+﻿using SuperMinersWPF.Models;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,23 @@ namespace SuperMinersWPF.Views
         {
             this.listboxSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStonesOrder;
             App.StoneOrderVMObject.AsyncGetNotFinishedStonesOrder();
+            App.StoneOrderVMObject.LockOrderSucceed += StoneOrderVMObject_LockOrderSucceed;
+        }
+
+        void StoneOrderVMObject_LockOrderSucceed(LockSellStonesOrderUIModel obj)
+        {
+            this._syn.Post(o =>
+            {
+                BuyStonesWindow win = new BuyStonesWindow(obj);
+                if (win.ShowDialog() == true)
+                {
+
+                }
+                else
+                {
+
+                }
+            }, null);
         }
 
         private void numBuyStones_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -42,6 +60,7 @@ namespace SuperMinersWPF.Views
 
         private void btnAutoMatchOrder_Click(object sender, RoutedEventArgs e)
         {
+            App.StoneOrderVMObject.AsyncAutoMatchStonesOrder((int)this.numBuyStones.Value);
         }
     }
 }

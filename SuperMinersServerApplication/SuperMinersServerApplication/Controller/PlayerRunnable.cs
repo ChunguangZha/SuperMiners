@@ -1,6 +1,7 @@
 ﻿using DataBaseProvider;
 using MetaData;
 using MetaData.SystemConfig;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Utility;
 using System;

@@ -31,6 +31,8 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("SellTime");
                 NotifyPropertyChange("OrderState");
                 NotifyPropertyChange("OrderStateString");
+                NotifyPropertyChange("ValidTimeSeconds");
+                NotifyPropertyChange("ValidTimeSecondsString");
 
             }
         }
@@ -115,11 +117,44 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        public float AwardGoldCoin
+        {
+            get
+            {
+                return this.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
+            }
+        }
+
         public DateTime LockedTime
         {
             get
             {
                 return this._parentObject.LockedTime;
+            }
+        }
+
+        public int ValidTimeSeconds
+        {
+            get
+            {
+                return this._parentObject.ValidTimeSeconds;
+            }
+        }
+
+        public int ValidTimeSecondsTickDown()
+        {
+            this._parentObject.ValidTimeSeconds--;
+            NotifyPropertyChange("ValidTimeSecondsString");
+            return this._parentObject.ValidTimeSeconds;
+        }
+
+        public string ValidTimeSecondsString
+        {
+            get
+            {
+                int mintues = this._parentObject.ValidTimeSeconds / 60;
+                int seconds = this._parentObject.ValidTimeSeconds % 60;
+                return mintues.ToString() + " 分 " + seconds.ToString() + " 秒";
             }
         }
     }

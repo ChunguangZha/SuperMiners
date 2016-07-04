@@ -13,8 +13,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -32,9 +32,14 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="支付灵币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ValueRMB}" Margin="10,5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Text="奖励金币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" Text="" Name="txtAwardGoldCoin" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding AwardGoldCoin}" Name="txtAwardGoldCoin" Margin="10,5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="6" Grid.Column="0" Text="支付方式：" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <CheckBox Grid.Row="6" Grid.Column="1" Content="灵币支付" Name="chkPayType" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Top" Foreground="White" Margin="5" Checked="chkPayType_Checked" Unchecked="chkPayType_Unchecked"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="请在" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
+            <Run Text="{Binding ValidTimeSecondsString}" Foreground="Red" FontWeight="Bold"/>
+            <Run Text="内支付"/>
+        </TextBlock>
         <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="20,5,150,5" Name="btnOK" Content="确认支付" Width="100" HorizontalAlignment="Right" Click="btnOK_Click"/>
         <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="20,5" Name="btnCancel" Content="取消" Width="100" HorizontalAlignment="Right" Click="btnCancel_Click"/>
     </Grid>

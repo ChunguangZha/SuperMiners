@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Models;
+﻿using MetaData.Trade;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,14 @@ namespace SuperMinersWPF.ViewModels
             get { return _allNotFinishStonesOrder; }
         }
 
+        public LockSellStonesOrderUIModel LockedStonesOrder = null;
+        System.Timers.Timer _timer = new System.Timers.Timer(1000);
+
+        public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
+        {
+            GlobalData.Client.PayOrderByRMB(orderNumber, valueRMB, null);
+        }
+
         public void AsyncCheckPlayerHasNotPayedOrder()
         {
             GlobalData.Client.CheckUserHasNotPayOrder(null);
@@ -35,9 +44,61 @@ namespace SuperMinersWPF.ViewModels
 
         public void RegisterEvent()
         {
+            _timer.Elapsed += Timer_Elapsed;
             GlobalData.Client.GetNotFinishedStonesOrderCompleted += Client_GetNotFinishedStonesOrderCompleted;
             GlobalData.Client.AutoMatchLockSellStoneCompleted += Client_AutoMatchLockSellStoneCompleted;
             GlobalData.Client.CheckUserHasNotPayOrderCompleted += Client_CheckUserHasNotPayOrderCompleted;
+            GlobalData.Client.PayOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
+        }
+
+        void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            if (this.LockedStonesOrder == null)
+            {
+                this._timer.Stop();
+            }
+            else
+            {
+                if (this.LockedStonesOrder.ValidTimeSecondsTickDown() <= 0)
+                {
+                    GlobalData.Client.ReleaseLockOrder(null);
+                    if (OrderLockTimeOut != null)
+                    {
+                        OrderLockTimeOut();
+                    }
+                    this.LockedStonesOrder = null;
+                    this._timer.Stop();
+                }
+            }
+        }
+
+        void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_PayOrderByRMBCompleted Exception。", e.Error);
+                return;
+            }
+            if (e.Result)
+            {
+                MyMessageBox.ShowInfo("购买成功。");
+
+                if (PayOrderSucceed != null)
+                {
+                    PayOrderSucceed();
+                }
+                this.LockedStonesOrder = null;
+            }
+            else
+            {
+                MyMessageBox.ShowInfo("购买失败。");
+            }
         }
 
         void Client_CheckUserHasNotPayOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
@@ -50,6 +111,7 @@ namespace SuperMinersWPF.ViewModels
             if (e.Error != null)
             {
                 MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_CheckUserHasNotPayOrderCompleted Exception。", e.Error);
                 return;
             }
 
@@ -71,6 +133,7 @@ namespace SuperMinersWPF.ViewModels
             if (e.Error != null)
             {
                 MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_AutoMatchLockSellStoneCompleted Exception。", e.Error);
                 return;
             }
 
@@ -80,39 +143,38 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
-            this._syn.Post(o =>
+            LockedStonesOrder = new LockSellStonesOrderUIModel(e.Result);
+            this._timer.Start();
+            if (LockOrderSucceed != null)
             {
-                BuyStonesWindow win = new BuyStonesWindow(new Models.SellStonesOrderUIModel(e.Result));
-                if (win.ShowDialog() == true)
-                {
+                LockOrderSucceed(LockedStonesOrder);
+            }
 
-                }
-                else
-                {
-
-                }
-            }, null);
         }
 
-        void Client_GetNotFinishedStonesOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SellStonesOrder[]> e)
+        void Client_GetNotFinishedStonesOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
         {
             if (e.Cancelled)
             {
                 return;
             }
 
-            if (e.Error != null || e.Result == null)
+            if (e.Error != null)
             {
                 MyMessageBox.ShowInfo("获取矿石卖单失败。");
+                LogHelper.Instance.AddErrorLog("Client_GetNotFinishedStonesOrderCompleted Exception。", e.Error);
                 return;
             }
 
-            this.AllNotFinishStonesOrder.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+            if (e.Result != null)
             {
-                var item = e.Result[i];
-                this.AllNotFinishStonesOrder.Add(new SellStonesOrderUIModel(item));
+                this.LockedStonesOrder = new LockSellStonesOrderUIModel(e.Result);
+                this._timer.Start();
             }
         }
+
+        public event Action<LockSellStonesOrderUIModel> LockOrderSucceed;
+        public event Action PayOrderSucceed;
+        public event Action OrderLockTimeOut;
     }
 }

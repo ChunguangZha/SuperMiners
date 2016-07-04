@@ -33,7 +33,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        SellStonesOrder[] GetNotFinishedStonesOrder(string token);
+        LockSellStonesOrder GetNotFinishedStonesOrder(string token);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/AutoMatchLockSellStone",

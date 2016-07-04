@@ -22,10 +22,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region GetNotFinishedStonesOrder
 
-        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetNotFinishedStonesOrderCompleted;
+        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> GetNotFinishedStonesOrderCompleted;
         public void GetNotFinishedStonesOrder(object userState)
         {
-            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "GetNotFinishedStonesOrder", this.GetNotFinishedStonesOrderCompleted, userState, GlobalData.Token);
+            this._invoker.InvokeUserState<LockSellStonesOrder>(this._context, "GetNotFinishedStonesOrder", this.GetNotFinishedStonesOrderCompleted, userState, GlobalData.Token);
         }
 
         #endregion
