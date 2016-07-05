@@ -71,13 +71,13 @@ namespace SuperMinersServerApplication
                     return false;
                 }
                 LogHelper.Instance.Init();
-                OrderController.Instance.Init();
-                NoticeController.Instance.Init();
-
                 if (!GetSystemConfig())
                 {
                     return false;
                 }
+
+                OrderController.Instance.Init();
+                NoticeController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

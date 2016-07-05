@@ -1,13 +1,20 @@
-Error:  [2016/7/4 23:21:59] ---- Log: GetPlayerAction Exception. ClientIP=::1:41208, year=2016, month=7, day=3, hour=23, minute=19, second=36
-Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetAllPlayerCount() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 388
-   在 SuperMinersServerApplication.Controller.PlayerActionController.GetActionLogList(Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerActionController.cs:行号 104
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetPlayerAction(String token, Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Message.cs:行号 23
+Error:  [2016/7/5 21:31:16] ---- Log: Lock Order[2016070221175506294454765449374] by User[Tony] Error
+Exc.Message: Unknown column 'PayUrl' in 'field list'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   在 DataBaseProvider.OrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 67
+   在 SuperMinersServerApplication.Controller.OrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
 -----------------------------------------------------
 
-r(String userName, Int32 sellStonesCount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 132
+) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
 -----------------------------------------------------
 
-置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 153
+lication\DataBaseProvider\OrderDBProvider.cs:行号 153
    在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 55
 -----------------------------------------------------
 

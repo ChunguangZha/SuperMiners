@@ -311,19 +311,22 @@ namespace SuperMinersWPF.Wcf.Channel
                 if ((resultHandler != null))
                 {
                     T1 resultData = default(T1);
-                    if (ex == null)
+                    if (result != null && result.Length != 0)
                     {
-                        try
+                        if (ex == null)
                         {
-                            DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
-                            using (MemoryStream ms = new MemoryStream(result))
+                            try
                             {
-                                resultData = (T1)s.ReadObject(ms);
+                                DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
+                                using (MemoryStream ms = new MemoryStream(result))
+                                {
+                                    resultData = (T1)s.ReadObject(ms);
+                                }
                             }
-                        }
-                        catch (Exception ex1)
-                        {
-                            ex = ex1;
+                            catch (Exception ex1)
+                            {
+                                ex = ex1;
+                            }
                         }
                     }
 

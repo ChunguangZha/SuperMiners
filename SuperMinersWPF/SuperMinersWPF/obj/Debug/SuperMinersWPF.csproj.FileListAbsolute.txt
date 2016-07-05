@@ -139,3 +139,4 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.Str
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csproj.GenerateResource.Cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe.manifest
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.application
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache

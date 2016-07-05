@@ -31,6 +31,10 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("SellTime");
                 NotifyPropertyChange("OrderState");
                 NotifyPropertyChange("OrderStateString");
+                NotifyPropertyChange("LockedByUserName");
+                NotifyPropertyChange("PayUrl");
+                NotifyPropertyChange("AwardGoldCoin");
+                NotifyPropertyChange("LockedTime");
                 NotifyPropertyChange("ValidTimeSeconds");
                 NotifyPropertyChange("ValidTimeSecondsString");
 
@@ -133,27 +137,35 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        private int BuyOrderLockTimeSeconds
+        {
+            get
+            {
+                return GlobalData.GameConfig.BuyOrderLockTimeMinutes * 60;
+            }
+        }
+
         public int ValidTimeSeconds
         {
             get
             {
-                return this._parentObject.ValidTimeSeconds;
+                return BuyOrderLockTimeSeconds - this._parentObject.OrderLockedTimeSpan;
             }
         }
 
         public int ValidTimeSecondsTickDown()
         {
-            this._parentObject.ValidTimeSeconds--;
+            this._parentObject.OrderLockedTimeSpan++;
             NotifyPropertyChange("ValidTimeSecondsString");
-            return this._parentObject.ValidTimeSeconds;
+            return this.ValidTimeSeconds;
         }
 
         public string ValidTimeSecondsString
         {
             get
             {
-                int mintues = this._parentObject.ValidTimeSeconds / 60;
-                int seconds = this._parentObject.ValidTimeSeconds % 60;
+                int mintues = this.ValidTimeSeconds / 60;
+                int seconds = this.ValidTimeSeconds % 60;
                 return mintues.ToString() + " 分 " + seconds.ToString() + " 秒";
             }
         }

@@ -56,11 +56,14 @@ namespace SuperMinersServerApplication.Controller
                     TimeSpan span = DateTime.Now - item.LockedTime;
                     if (span.TotalSeconds > GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
                     {
-                        this.ReleaseLockSellOrder(item.StonesOrder.OrderNumber);
+                        var runnable = new OrderRunnable(item);
+                        runnable.ReleaseLock();
+                        //解除锁定后，继续加到集合中
+                        dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
                     }
                     else
                     {
-                        item.ValidTimeSeconds = (int)span.TotalSeconds;
+                        item.OrderLockedTimeSpan = (int)span.TotalSeconds;
                         var runnable = new OrderRunnable(item);
                         dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
                     }
@@ -146,19 +149,19 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockListSellOrders)
             {
-                LockSellStonesOrder order = new LockSellStonesOrder();
+                LockSellStonesOrder order = null;
                 foreach (var item in dicSellOrders.Values)
                 {
                     if (item.CheckBuyerName(userName))
                     {
                         if (!item.CheckOrderLockedIsTimeOut())
                         {
-                            return item.GetLockedOrder();
+                            order = item.GetLockedOrder();
                         }
                     }
                 }
 
-                return null;
+                return order;
             }
         }
 

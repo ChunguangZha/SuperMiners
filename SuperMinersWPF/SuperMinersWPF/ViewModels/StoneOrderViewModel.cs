@@ -4,13 +4,15 @@ using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuperMinersWPF.ViewModels
 {
-    class StoneOrderViewModel
+    class StoneOrderViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStonesOrder = new ObservableCollection<SellStonesOrderUIModel>();
 
@@ -19,7 +21,35 @@ namespace SuperMinersWPF.ViewModels
             get { return _allNotFinishStonesOrder; }
         }
 
-        public LockSellStonesOrderUIModel LockedStonesOrder = null;
+        private LockSellStonesOrderUIModel _lockedStonesOrder = null;
+        public LockSellStonesOrderUIModel LockedStonesOrder
+        {
+            get { return this._lockedStonesOrder; }
+            set
+            {
+                this._lockedStonesOrder = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrder"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrderVisible"));
+                }
+            }
+        }
+
+        public Visibility LockedStonesOrderVisible
+        {
+            get
+            {
+                if (this.LockedStonesOrder == null)
+                {
+                    return Visibility.Collapsed;
+                }
+
+                return Visibility.Visible;
+            }
+        }
+
+
         System.Timers.Timer _timer = new System.Timers.Timer(1000);
 
         public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
@@ -37,18 +67,48 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.AutoMatchLockSellStone(stoneCount, null);
         }
         
-        public void AsyncGetNotFinishedStonesOrder()
+        public void AsyncGetOrderLockedBySelf()
         {
-            GlobalData.Client.GetNotFinishedStonesOrder(null);
+            GlobalData.Client.GetOrderLockedBySelf(null);
+        }
+
+        public void AsyncGetAllNotFinishedSellOrders()
+        {
+            GlobalData.Client.GetAllNotFinishedSellOrders(null);
         }
 
         public void RegisterEvent()
         {
             _timer.Elapsed += Timer_Elapsed;
-            GlobalData.Client.GetNotFinishedStonesOrderCompleted += Client_GetNotFinishedStonesOrderCompleted;
+            GlobalData.Client.GetOrderLockedBySelfCompleted += Client_GetOrderLockedBySelfCompleted;
             GlobalData.Client.AutoMatchLockSellStoneCompleted += Client_AutoMatchLockSellStoneCompleted;
             GlobalData.Client.CheckUserHasNotPayOrderCompleted += Client_CheckUserHasNotPayOrderCompleted;
             GlobalData.Client.PayOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
+            GlobalData.Client.GetAllNotFinishedSellOrdersCompleted += Client_GetAllNotFinishedSellOrdersCompleted;
+        }
+
+        void Client_GetAllNotFinishedSellOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_GetAllNotFinishedSellOrdersCompleted Exception。", e.Error);
+                return;
+            }
+            if (e.Result != null)
+            {
+                this._allNotFinishStonesOrder.Clear();
+                var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
+                foreach (var item in listOrderTimeASC)
+                {
+                    this._allNotFinishStonesOrder.Add(new SellStonesOrderUIModel(item));
+                }
+            }
         }
 
         void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -152,7 +212,7 @@ namespace SuperMinersWPF.ViewModels
 
         }
 
-        void Client_GetNotFinishedStonesOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
+        void Client_GetOrderLockedBySelfCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
         {
             if (e.Cancelled)
             {
@@ -161,8 +221,8 @@ namespace SuperMinersWPF.ViewModels
 
             if (e.Error != null)
             {
-                MyMessageBox.ShowInfo("获取矿石卖单失败。");
-                LogHelper.Instance.AddErrorLog("Client_GetNotFinishedStonesOrderCompleted Exception。", e.Error);
+                MyMessageBox.ShowInfo("获取未完成的订单失败。");
+                LogHelper.Instance.AddErrorLog("Client_GetOrderLockedBySelfCompleted Exception。", e.Error);
                 return;
             }
 
@@ -176,5 +236,7 @@ namespace SuperMinersWPF.ViewModels
         public event Action<LockSellStonesOrderUIModel> LockOrderSucceed;
         public event Action PayOrderSucceed;
         public event Action OrderLockTimeOut;
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

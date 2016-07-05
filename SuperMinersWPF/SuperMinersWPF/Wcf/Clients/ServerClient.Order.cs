@@ -20,12 +20,22 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-        #region GetNotFinishedStonesOrder
+        #region GetOrderLockedBySelf
 
-        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> GetNotFinishedStonesOrderCompleted;
-        public void GetNotFinishedStonesOrder(object userState)
+        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> GetOrderLockedBySelfCompleted;
+        public void GetOrderLockedBySelf(object userState)
         {
-            this._invoker.InvokeUserState<LockSellStonesOrder>(this._context, "GetNotFinishedStonesOrder", this.GetNotFinishedStonesOrderCompleted, userState, GlobalData.Token);
+            this._invoker.InvokeUserState<LockSellStonesOrder>(this._context, "GetOrderLockedBySelf", this.GetOrderLockedBySelfCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
+
+        #region GetAllNotFinishedSellOrders
+
+        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetAllNotFinishedSellOrdersCompleted;
+        public void GetAllNotFinishedSellOrders(object userState)
+        {
+            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "GetAllNotFinishedSellOrders", this.GetAllNotFinishedSellOrdersCompleted, userState, GlobalData.Token);
         }
 
         #endregion

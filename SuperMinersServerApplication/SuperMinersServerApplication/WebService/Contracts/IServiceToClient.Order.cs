@@ -28,12 +28,20 @@ namespace SuperMinersServerApplication.WebService.Contracts
         int SellStone(string token, string userName, int sellStonesCount);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetNotFinishedStonesOrder",
+        [WebInvoke(UriTemplate = "/WebService/GetAllNotFinishedSellOrders",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        LockSellStonesOrder GetNotFinishedStonesOrder(string token);
+        SellStonesOrder[] GetAllNotFinishedSellOrders(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetOrderLockedBySelf",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        LockSellStonesOrder GetOrderLockedBySelf(string token);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/AutoMatchLockSellStone",

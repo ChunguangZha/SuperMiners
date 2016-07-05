@@ -33,8 +33,15 @@ namespace SuperMinersWPF.Views
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             this.listboxSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStonesOrder;
-            App.StoneOrderVMObject.AsyncGetNotFinishedStonesOrder();
+            App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
+            App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
             App.StoneOrderVMObject.LockOrderSucceed += StoneOrderVMObject_LockOrderSucceed;
+            
+            Binding bind = new Binding()
+            {
+                Source = App.StoneOrderVMObject
+            };
+            this.expBuyOrders.SetBinding(Expander.DataContextProperty, bind);
         }
 
         void StoneOrderVMObject_LockOrderSucceed(LockSellStonesOrderUIModel obj)
@@ -61,6 +68,16 @@ namespace SuperMinersWPF.Views
         private void btnAutoMatchOrder_Click(object sender, RoutedEventArgs e)
         {
             App.StoneOrderVMObject.AsyncAutoMatchStonesOrder((int)this.numBuyStones.Value);
+        }
+
+        private void btnPay_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAppeal_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

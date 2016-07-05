@@ -26,3 +26,55 @@ Exc.Message: 应为来自命名空间“”的元素“root”。。遇到名称
 Error:  [2016/7/4 23:42:58] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/7/5 20:10:39] ---- Log: Client_GetNotFinishedStonesOrderCompleted Exception。
+Exc.Message: 应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。Exc.Stack:    在 System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalReadObject(XmlReaderDelegator xmlReader, Boolean verifyObjectName)
+   在 System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions(XmlReaderDelegator reader, Boolean verifyObjectName, DataContractResolver dataContractResolver)
+   在 System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject(XmlDictionaryReader reader)
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 321
+-----------------------------------------------------
+
+Error:  [2016/7/5 20:10:49] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 20:30:45] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 20:55:24] ---- Log: Client_GetOrderLockedBySelfCompleted Exception。
+Exc.Message: 应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。Exc.Stack:    在 System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalReadObject(XmlReaderDelegator xmlReader, Boolean verifyObjectName)
+   在 System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions(XmlReaderDelegator reader, Boolean verifyObjectName, DataContractResolver dataContractResolver)
+   在 System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject(XmlDictionaryReader reader)
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 321
+-----------------------------------------------------
+
+Error:  [2016/7/5 20:55:35] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 21:02:27] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 21:11:04] ---- Log: Client_GetOrderLockedBySelfCompleted Exception。
+Exc.Message: 应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。Exc.Stack:    在 System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalReadObject(XmlReaderDelegator xmlReader, Boolean verifyObjectName)
+   在 System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions(XmlReaderDelegator reader, Boolean verifyObjectName, DataContractResolver dataContractResolver)
+   在 System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject(XmlDictionaryReader reader)
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 321
+-----------------------------------------------------
+
+Error:  [2016/7/5 21:11:36] ---- Log: Client_AutoMatchLockSellStoneCompleted Exception。
+Exc.Message: 应为来自命名空间“”的元素“root”。。遇到名称为“”、命名空间为“”的“None”。Exc.Stack:    在 System.Runtime.Serialization.Json.DataContractJsonSerializer.InternalReadObject(XmlReaderDelegator xmlReader, Boolean verifyObjectName)
+   在 System.Runtime.Serialization.XmlObjectSerializer.ReadObjectHandleExceptions(XmlReaderDelegator reader, Boolean verifyObjectName, DataContractResolver dataContractResolver)
+   在 System.Runtime.Serialization.Json.DataContractJsonSerializer.ReadObject(XmlDictionaryReader reader)
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 321
+-----------------------------------------------------
+
+Error:  [2016/7/5 21:42:22] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 22:51:42] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 22:59:52] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/5 23:24:33] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

@@ -50,7 +50,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string textDel = "delete locksellstonesorder where OrderNumber = @OrderNumber;";
+                string textDel = "delete from locksellstonesorder where OrderNumber = @OrderNumber;";
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
                 string textB = "insert into locksellstonesorder " +
                     "(`OrderNumber`, `PayUrl`, `LockedByUserName`, `LockedTime` ) " +
@@ -92,7 +92,7 @@ namespace DataBaseProvider
             try
             {
                 string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
-                string textB = "delete locksellstonesorder b where b.OrderNumber = @OrderNumber;";
+                string textB = "delete from locksellstonesorder where OrderNumber = @OrderNumber;";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = textA + textB;

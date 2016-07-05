@@ -150,7 +150,7 @@ namespace SuperMinersServerApplication.Controller
                         PayUrl = this.CreatePayUrl(),
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now,
-                        ValidTimeSeconds = GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60
+                        OrderLockedTimeSpan = GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60
                     };
                     this._sellOrder.OrderState = SellOrderState.Lock;
                     DBProvider.OrderDBProvider.LockOrder(this._lockOrderObject, trans);
@@ -243,8 +243,8 @@ namespace SuperMinersServerApplication.Controller
             }
 
             TimeSpan span = DateTime.Now - this._lockOrderObject.LockedTime;
-            this._lockOrderObject.ValidTimeSeconds = (int)span.TotalSeconds;
-            if (this._lockOrderObject.ValidTimeSeconds >= GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
+            this._lockOrderObject.OrderLockedTimeSpan = (int)span.TotalSeconds;
+            if (this._lockOrderObject.OrderLockedTimeSpan >= GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
             {
                 this.ReleaseLock();
                 return true;

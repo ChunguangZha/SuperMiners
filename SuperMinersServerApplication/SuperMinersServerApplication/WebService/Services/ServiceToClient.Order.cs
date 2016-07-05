@@ -103,12 +103,24 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public LockSellStonesOrder GetNotFinishedStonesOrder(string token)
+        public LockSellStonesOrder GetOrderLockedBySelf(string token)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
                 return OrderController.Instance.GetLockedOrderByUserName(userName);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public SellStonesOrder[] GetAllNotFinishedSellOrders(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return OrderController.Instance.GetSellOrders();
             }
             else
             {
