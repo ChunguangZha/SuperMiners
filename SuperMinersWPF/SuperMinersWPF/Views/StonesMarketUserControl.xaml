@@ -22,7 +22,7 @@
                     <TextBlock Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
                     <Button x:Name="btnAutoMatchOrder" Content="自动匹配卖单" Width="100" Margin="5" ToolTip="如果没有合适卖单，则匹配小于输入值最大的卖单" Click="btnAutoMatchOrder_Click"/>
                 </StackPanel>
-                <ListBox Grid.Row="1" x:Name="listboxSellOrders" HorizontalContentAlignment="Stretch" Margin="5">
+                <ListBox Grid.Row="1" x:Name="listboxAllSellOrders" HorizontalContentAlignment="Stretch" Margin="5">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -53,105 +53,106 @@
             </Grid>
         </TabItem>
         <TabItem Header="未完成的交易" Padding="5">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <StackPanel>
-                    <Expander Header="买入交易" Name="expBuyOrders">
-                        <Border DataContext="{Binding LockedStonesOrder}" Visibility="{Binding LockedStonesOrderVisible}" Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="LightBlue">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" MinWidth="150"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="订单号：" Margin="10,5" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBlock Grid.Column="1" Text="{Binding OrderNumber}" FontSize="18" FontWeight="Bold" Margin="10,5" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="卖方：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SellerUserName, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="出售矿石：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SellStonesCount, Mode=OneWay}" Margin="10,5" VerticalAlignment="Center"/>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <Grid Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Expander Header="买入交易" x:Name="expBuyOrders">
+                        <ListBox Name="listboxMyBuyOrders" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Background="LightBlue">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" MinWidth="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="订单号：" Margin="10,5" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding OrderNumber}" FontSize="18" FontWeight="Bold" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="卖方：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SellerUserName, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="出售矿石：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SellStonesCount, Mode=OneWay}" Margin="10,5" VerticalAlignment="Center"/>
 
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="交易金额：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="可奖励金币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AwardGoldCoin, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="5" Grid.Column="0" Text="出售时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SellTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                <TextBlock Grid.Row="6" Grid.Column="0" Text="锁定时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LockedTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalContentAlignment="Center" />
-                                <TextBlock Grid.Row="7" Grid.Column="0" Text="付款：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="10,5">
-                                    <TextBlock Text="请在" VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding ValidTimeSecondsString}" VerticalAlignment="Center"/>
-                                    <TextBlock Text="内付款" VerticalAlignment="Center"/>
-                                    <Button Name="btnPay" Content="确认付款" Margin="20,0" Width="100" VerticalAlignment="Center" Click="btnPay_Click"/>
-                                    <TextBlock Text="如果已经付款，请" VerticalAlignment="Center" Margin="5"/>
-                                    <Button Name="btnAppeal" Content="申诉" Width="100" Margin="20,0" VerticalAlignment="Center" Click="btnAppeal_Click"/>
-                                </StackPanel>
-                            </Grid>
-                        </Border>
-                    </Expander>
-                </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <Expander Header="卖出交易" Name="expSellOrders">
-                        <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListBoxItem HorizontalContentAlignment="Stretch">
-                                <Border Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto"/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="卖出交易" Margin="5" FontSize="14" FontWeight="Bold"/>
-                                        <TextBlock Grid.Column="1" Text="交易时间 2016年3月23日 4:43:20" Margin="10,5" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="1" Grid.Column="0" Text="买      方：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <TextBox Grid.Row="1" Grid.Column="1" Text="ABC" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="2" Grid.Column="0" Text="买方支付宝账户：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <TextBox Grid.Row="2" Grid.Column="1" Text="15687654321  某某某" Margin="10,5" VerticalAlignment="Center"/>
-
-                                        <TextBlock Grid.Row="3" Grid.Column="0" Text="矿石数量：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <TextBox Grid.Row="3" Grid.Column="1" Text="2000" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="4" Grid.Column="0" Text="交易类型：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <TextBox Grid.Row="4" Grid.Column="1" Text="现金交易" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center" />
-                                        <TextBlock Grid.Row="5" Grid.Column="0" Text="交易金额：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <TextBox Grid.Row="5" Grid.Column="1" Text="195元" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
-                                        <TextBlock Grid.Row="6" Grid.Column="0" Text="交易状态1：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
-                                            <TextBlock Text="等待买家30分钟内向您付款" Margin="10,5" VerticalAlignment="Center"/>
-                                            <Button Content="确认收款" Margin="5" VerticalAlignment="Center"/>
-                                            <TextBlock Text="(支付矿石)" VerticalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-                            </ListBoxItem>
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="交易金额：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="4" Grid.Column="0" Text="可奖励金币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding AwardGoldCoin, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="5" Grid.Column="0" Text="出售时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SellTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="6" Grid.Column="0" Text="锁定时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding LockedTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalContentAlignment="Center" />
+                                            <TextBlock Grid.Row="7" Grid.Column="0" Text="付款：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal" Margin="10,5">
+                                                <TextBlock Text="请在" VerticalAlignment="Center"/>
+                                                <TextBlock Text="{Binding ValidTimeSecondsString}" VerticalAlignment="Center"/>
+                                                <TextBlock Text="内付款" VerticalAlignment="Center"/>
+                                                <Button x:Name="btnPay" Content="确认付款" Margin="20,0" Width="100" VerticalAlignment="Center" Click="btnPay_Click"/>
+                                                <TextBlock Text="如果已经付款，请" VerticalAlignment="Center" Margin="5"/>
+                                                <Button x:Name="btnAppeal" Content="申诉" Width="100" Margin="20,0" VerticalAlignment="Center" Click="btnAppeal_Click"/>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
                         </ListBox>
                     </Expander>
-                </StackPanel>
-            </Grid>
+                    <Expander Grid.Row="1" Header="卖出交易" x:Name="expSellOrders">
+                        <ListBox Name="listboxMySellOrders" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Margin="5" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" MinWidth="150"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="订单号：" Margin="10,5" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding OrderNumber}" FontSize="18" FontWeight="Bold" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="出售矿石：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SellStonesCount, Mode=OneWay}" Margin="10,5" VerticalAlignment="Center"/>
+
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="交易金额：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="4" Grid.Column="0" Text="手续费：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Expense, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="5" Grid.Column="0" Text="出售时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SellTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
+                                            <TextBlock Grid.Row="6" Grid.Column="0" Text="订单状态：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                            <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OrderStateString, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalContentAlignment="Center" />
+
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Expander>
+                </Grid>
+            </ScrollViewer>
         </TabItem>
         <TabItem Header="交易记录" Padding="5">
             <Grid>
@@ -161,17 +162,25 @@
                 </Grid.RowDefinitions>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="交易类型" Margin="5" VerticalAlignment="Center"/>
-                    <ComboBox x:Name="cmbTradeType" Width="100" SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,5,20,5">
+                    <ComboBox x:Name="cmbTradeType" Width="100" SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,5,20,5" SelectionChanged="cmbTradeType_SelectionChanged">
                         <ComboBoxItem Content="买入交易"/>
                         <ComboBoxItem Content="卖出交易"/>
                     </ComboBox>
-                    <Button x:Name="btnLastWeek" Content="最近一周" Margin="5"/>
-                    <Button x:Name="btnLastMonth" Content="最近一月" Margin="5"/>
+                    <Button x:Name="btnLastWeek" Margin="5" BorderThickness="0" Background="{x:Null}" Click="btnLastWeek_Click">
+                        <Button.Content>
+                            <TextBlock Text="最近一周" TextDecorations="Underline"/>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="btnLastMonth" Margin="5" BorderThickness="0" Background="{x:Null}" Click="btnLastMonth_Click">
+                        <Button.Content>
+                            <TextBlock Text="最近一周" TextDecorations="Underline"/>
+                        </Button.Content>
+                    </Button>
                     <TextBlock Text="从" VerticalAlignment="Center" Margin="5"/>
-                    <DatePicker x:Name="dtpickerBegin" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5"/>
+                    <DatePicker x:Name="dtpickerBegin" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FirstDayOfWeek="Monday"/>
                     <TextBlock Text="到" VerticalAlignment="Center" Margin="5"/>
-                    <DatePicker x:Name="dtpickerEnd" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5"/>
-                    <Button x:Name="btnSearch" Content="查询" Width="100" Margin="20,5"/>
+                    <DatePicker x:Name="dtpickerEnd" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" SelectedDateChanged="dtpickerEnd_SelectedDateChanged" FirstDayOfWeek="Monday"/>
+                    <Button x:Name="btnSearch" Content="查询" Width="100" Margin="20,5" Click="btnSearch_Click"/>
                 </StackPanel>
 
                 <local:OrderRecordListBuyControl Grid.Row="1" x:Name="controlBuyOrderList" Margin="5"/>

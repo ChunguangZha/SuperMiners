@@ -173,35 +173,19 @@ namespace SuperMinersWPF
 
         private void hlinkForgetPassword_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            Process.Start(new ProcessStartInfo(e.Uri.ToString()));
-            e.Handled = true;
+            //Process.Start(new ProcessStartInfo(e.Uri.ToString()));
+            //e.Handled = true;
         }
 
         private void hlinkRegister_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            string baseuri = "";
-#if DEBUG
-            baseuri = "http://localhost:8509/";
-#else
-
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-#endif
-
-            Process.Start(new ProcessStartInfo(baseuri + "Register.aspx"));
+            MyWebPage.ShowMyWebPage("Register.aspx");
             e.Handled = true;
         }
 
         private void hlinkHomePage_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
         {
-            string baseuri = "";
-#if DEBUG
-            baseuri = "http://localhost:8509/";
-#else
-
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-#endif
-
-            Process.Start(new ProcessStartInfo(baseuri));
+            MyWebPage.ShowMyWebPage("");
             e.Handled = true;
         }
 

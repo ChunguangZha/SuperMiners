@@ -1,17 +1,16 @@
-Error:  [2016/7/6 17:46:58] ---- Log: Lock Order[201607061127540202114454765448895] by User[tony1] Error
-Exc.Message: Unknown column 'PayUrl' in 'field list'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.OrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 67
-   在 SuperMinersServerApplication.Controller.OrderRunnable.Lock(String playerUserName) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
+Error:  [2016/7/6 20:51:05] ---- Log: 启动服务失败。
+Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
+   在 MySql.Data.MySqlClient.Driver.Open()
+   在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   在 MySql.Data.MySqlClient.MySqlConnection.Open()
+   在 DataBaseProvider.CustomerMySqlTransaction..ctor(MySqlConnection connection) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 69
+   在 DataBaseProvider.MyDBHelper.CreateTrans() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 52
+   在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 91
+   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 105
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 74
 -----------------------------------------------------
 
-Hub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 258
+��号 258
    在 SuperMinersServerApplication.WebService.Services.ServiceToClient.SellStone(String token, String userName, Int32 sellStonesCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Order.cs:行号 57
 -----------------------------------------------------
 

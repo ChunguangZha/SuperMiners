@@ -37,7 +37,7 @@
         <CheckBox Grid.Row="6" Grid.Column="1" Content="灵币支付" Name="chkPayType" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Top" Foreground="White" Margin="5" Checked="chkPayType_Checked" Unchecked="chkPayType_Unchecked"/>
         <TextBlock Grid.Row="7" Grid.Column="0" Text="请在" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="7" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
-            <Run Text="{Binding ValidTimeSecondsString}" Foreground="Red" FontWeight="Bold"/>
+            <Run Text="{Binding ValidTimeSecondsString, Mode=OneWay}" Foreground="Red" FontWeight="Bold"/>
             <Run Text="内支付"/>
         </TextBlock>
         <Button Grid.Row="8" Grid.ColumnSpan="2" Margin="20,5,150,5" Name="btnOK" Content="确认支付" Width="100" HorizontalAlignment="Right" Click="btnOK_Click"/>

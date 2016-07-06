@@ -222,6 +222,7 @@
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\MyMessageBox.cs" />
+    <Compile Include="Utility\MyWebPage.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />

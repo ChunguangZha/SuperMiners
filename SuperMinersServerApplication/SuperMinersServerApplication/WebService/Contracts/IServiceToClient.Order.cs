@@ -75,12 +75,6 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool PayOrderByRMB(string token, string orderNumber, float rmb);
 
-        //[OperationContract]
-        //[WebInvoke(UriTemplate = "/WebService/PayOrderByAlipay",
-        //    Method = "POST",
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    RequestFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        //string PayOrderByAlipay(string token, string orderNumber, float rmb);
+
     }
 }

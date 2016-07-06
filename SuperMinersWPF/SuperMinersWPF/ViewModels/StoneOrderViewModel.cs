@@ -14,43 +14,56 @@ namespace SuperMinersWPF.ViewModels
 {
     class StoneOrderViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStonesOrder = new ObservableCollection<SellStonesOrderUIModel>();
+        private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStoneOrder = new ObservableCollection<SellStonesOrderUIModel>();
 
-        public ObservableCollection<SellStonesOrderUIModel> AllNotFinishStonesOrder
+        public ObservableCollection<SellStonesOrderUIModel> AllNotFinishStoneOrder
         {
-            get { return _allNotFinishStonesOrder; }
+            get { return _allNotFinishStoneOrder; }
         }
 
-        private LockSellStonesOrderUIModel _lockedStonesOrder = null;
-        public LockSellStonesOrderUIModel LockedStonesOrder
+        private ObservableCollection<LockSellStonesOrderUIModel> _myBuyNotFinishedStoneOrders = new ObservableCollection<LockSellStonesOrderUIModel>();
+
+        public ObservableCollection<LockSellStonesOrderUIModel> MyBuyNotFinishedStoneOrders
         {
-            get { return this._lockedStonesOrder; }
-            set
-            {
-                this._lockedStonesOrder = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrder"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrderVisible"));
-                }
-            }
+            get { return _myBuyNotFinishedStoneOrders; }
         }
 
-        public Visibility LockedStonesOrderVisible
-        {
-            get
-            {
-                if (this.LockedStonesOrder == null)
-                {
-                    return Visibility.Collapsed;
-                }
+        private ObservableCollection<SellStonesOrderUIModel> _mySellNotFinishedStonesOrders = new ObservableCollection<SellStonesOrderUIModel>();
 
-                return Visibility.Visible;
-            }
+        public ObservableCollection<SellStonesOrderUIModel> MySellNotFinishedStoneOrders
+        {
+            get { return _mySellNotFinishedStonesOrders; }
         }
+
+
+
+        //private LockSellStonesOrderUIModel _lockedStonesOrder = null;
+        //public LockSellStonesOrderUIModel LockedStonesOrder
+        //{
+        //    get { return this._lockedStonesOrder; }
+        //    set
+        //    {
+        //        this._lockedStonesOrder = value;
+        //        if (PropertyChanged != null)
+        //        {
+        //            PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrder"));
+        //            PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrderVisible"));
+        //        }
+        //    }
+        //}
 
 
         System.Timers.Timer _timer = new System.Timers.Timer(1000);
+
+        public LockSellStonesOrderUIModel GetFirstLockedStoneOrder()
+        {
+            if (this._myBuyNotFinishedStoneOrders == null || this._myBuyNotFinishedStoneOrders.Count == 0)
+            {
+                return null;
+            }
+
+            return this._myBuyNotFinishedStoneOrders[0];
+        }
 
         public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
         {
@@ -98,15 +111,18 @@ namespace SuperMinersWPF.ViewModels
         {
             if (tradeType == (int)TradeType.StoneTrade)
             {
-                if (LockedStonesOrder != null && LockedStonesOrder.OrderNumber == orderNumber)
+                var lockedOrder = this.GetFirstLockedStoneOrder();
+                if (lockedOrder != null && lockedOrder.OrderNumber == orderNumber)
                 {
                     MyMessageBox.ShowInfo("矿石购买成功。");
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                    this.AsyncGetAllNotFinishedSellOrders();
 
                     if (StoneOrderPaySucceed != null)
                     {
                         StoneOrderPaySucceed();
                     }
-                    LockedStonesOrder = null;
+                    this._myBuyNotFinishedStoneOrders.Clear();
                 }
             }
         }
@@ -126,31 +142,38 @@ namespace SuperMinersWPF.ViewModels
             }
             if (e.Result != null)
             {
-                this._allNotFinishStonesOrder.Clear();
+                this._allNotFinishStoneOrder.Clear();
+                this._mySellNotFinishedStonesOrders.Clear();
                 var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
                 foreach (var item in listOrderTimeASC)
                 {
-                    this._allNotFinishStonesOrder.Add(new SellStonesOrderUIModel(item));
+                    var uiobj = new SellStonesOrderUIModel(item);
+                    this._allNotFinishStoneOrder.Add(uiobj);
+                    if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                    {
+                        this._mySellNotFinishedStonesOrders.Add(uiobj);
+                    }
                 }
             }
         }
 
         void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (this.LockedStonesOrder == null)
+            var lockedOrder = this.GetFirstLockedStoneOrder();
+            if (lockedOrder == null)
             {
                 this._timer.Stop();
             }
             else
             {
-                if (this.LockedStonesOrder.ValidTimeSecondsTickDown() <= 0)
+                if (lockedOrder.ValidTimeSecondsTickDown() <= 0)
                 {
-                    GlobalData.Client.ReleaseLockOrder(null);
+                    GlobalData.Client.ReleaseLockOrder(lockedOrder.OrderNumber, null);
                     if (StoneOrderLockTimeOut != null)
                     {
                         StoneOrderLockTimeOut();
                     }
-                    this.LockedStonesOrder = null;
+                    this.MyBuyNotFinishedStoneOrders.Clear();
                     this._timer.Stop();
                 }
             }
@@ -177,7 +200,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     StoneOrderPaySucceed();
                 }
-                this.LockedStonesOrder = null;
+                this.MyBuyNotFinishedStoneOrders.Clear();
             }
             else
             {
@@ -227,11 +250,14 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
-            LockedStonesOrder = new LockSellStonesOrderUIModel(e.Result);
+            var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+            this.MyBuyNotFinishedStoneOrders.Clear();
+            this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+
             this._timer.Start();
             if (StoneOrderLockSucceed != null)
             {
-                StoneOrderLockSucceed(LockedStonesOrder);
+                StoneOrderLockSucceed(lockedOrder);
             }
 
         }
@@ -252,7 +278,9 @@ namespace SuperMinersWPF.ViewModels
 
             if (e.Result != null)
             {
-                this.LockedStonesOrder = new LockSellStonesOrderUIModel(e.Result);
+                var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+                this.MyBuyNotFinishedStoneOrders.Clear();
+                this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
                 this._timer.Start();
             }
         }

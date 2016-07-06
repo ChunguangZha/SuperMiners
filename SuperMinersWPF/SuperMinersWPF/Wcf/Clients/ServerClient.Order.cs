@@ -66,9 +66,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region ReleaseLockOrder
 
         public event EventHandler<WebInvokeEventArgs<bool>> ReleaseLockOrderCompleted;
-        public void ReleaseLockOrder(object userState)
+        public void ReleaseLockOrder(string orderNumber, object userState)
         {
-            this._invoker.InvokeUserState<bool>(this._context, "ReleaseLockOrder", this.ReleaseLockOrderCompleted, userState, GlobalData.Token);
+            this._invoker.InvokeUserState<bool>(this._context, "ReleaseLockOrder", this.ReleaseLockOrderCompleted, userState, GlobalData.Token, orderNumber);
         }
 
         #endregion

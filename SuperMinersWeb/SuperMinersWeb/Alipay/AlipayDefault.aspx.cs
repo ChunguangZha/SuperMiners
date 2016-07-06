@@ -79,6 +79,7 @@ namespace SuperMinersWeb.Alipay
 
             WcfClient.Instance.PayCompleted(out_trade_no, money, alipayAccount, true);
 
+            Response.Write("<script>window.opener=null;window.close();</script>");// 不会弹出询问
 
 
             //////////////////////////////////////////////////////////////////////////////////////////////////

@@ -174,7 +174,10 @@ namespace SuperMinersServerApplication.Controller
                 List<SellStonesOrder> orders = new List<SellStonesOrder>();
                 foreach (var item in dicSellOrders.Values)
                 {
-                    orders.Add(item.GetSellOrder());
+                    if (item.OrderState != SellOrderState.Finish)
+                    {
+                        orders.Add(item.GetSellOrder());
+                    }
                 }
 
                 return orders.ToArray();
@@ -360,6 +363,9 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 trans.Commit();
+
+                this.dicSellOrders.Remove(buyOrder.StonesOrder.OrderNumber);
+
                 PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
 
                 string tokenBuyer = ClientManager.GetToken(player.SimpleInfo.UserName);

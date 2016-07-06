@@ -2,7 +2,6 @@
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,7 +32,9 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.listboxSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStonesOrder;
+            this.listboxMyBuyOrders.ItemsSource = App.StoneOrderVMObject.MyBuyNotFinishedStoneOrders;
+            this.listboxMySellOrders.ItemsSource = App.StoneOrderVMObject.MySellNotFinishedStoneOrders;
+            this.listboxAllSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStoneOrder;
             App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
             App.StoneOrderVMObject.StoneOrderLockSucceed += StoneOrderVMObject_LockOrderSucceed;
@@ -43,6 +44,9 @@ namespace SuperMinersWPF.Views
                 Source = App.StoneOrderVMObject
             };
             this.expBuyOrders.SetBinding(Expander.DataContextProperty, bind);
+
+            this.dtpickerBegin.SelectedDate = DateTime.Now.AddDays(-7);
+            this.dtpickerEnd.SelectedDate = DateTime.Now;
         }
 
         void StoneOrderVMObject_LockOrderSucceed(LockSellStonesOrderUIModel obj)
@@ -68,26 +72,79 @@ namespace SuperMinersWPF.Views
 
         private void btnAutoMatchOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (App.StoneOrderVMObject.GetFirstLockedStoneOrder() != null)
+            {
+                MyMessageBox.ShowInfo("您有未支付的订单，请先支付，再继续购买。");
+                return;
+            }
             App.StoneOrderVMObject.AsyncAutoMatchStonesOrder((int)this.numBuyStones.Value);
         }
 
         private void btnPay_Click(object sender, RoutedEventArgs e)
         {
             //支付宝支付
-            string baseuri = "";
-#if DEBUG
-            baseuri = "http://localhost:8509/";
-#else
-
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-#endif
-
-            Process.Start(new ProcessStartInfo(baseuri + App.StoneOrderVMObject.LockedStonesOrder.PayUrl));
+            var lockedOrder = App.StoneOrderVMObject.GetFirstLockedStoneOrder();
+            if (lockedOrder != null)
+            {
+                MyWebPage.ShowMyWebPage(lockedOrder.PayUrl);
+            }
         }
 
         private void btnAppeal_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void cmbTradeType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.cmbTradeType.SelectedIndex == 0)
+            {
+                this.controlBuyOrderList.Visibility = System.Windows.Visibility.Visible;
+                this.controlSellOrderList.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                this.controlBuyOrderList.Visibility = System.Windows.Visibility.Collapsed;
+                this.controlSellOrderList.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private void btnLastWeek_Click(object sender, RoutedEventArgs e)
+        {
+            this.dtpickerBegin.SelectedDate = DateTime.Now.AddDays(-7);
+            this.dtpickerEnd.SelectedDate = DateTime.Now;
+        }
+
+        private void btnLastMonth_Click(object sender, RoutedEventArgs e)
+        {
+            this.dtpickerBegin.SelectedDate = DateTime.Now.AddDays(-30);
+            this.dtpickerEnd.SelectedDate = DateTime.Now;
+        }
+
+        private void dtpickerEnd_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.dtpickerBegin.SelectedDate == null)
+            {
+                MyMessageBox.ShowInfo("请设置起始时间");
+                return;
+            }
+            DateTime timeBegin = this.dtpickerBegin.SelectedDate.Value;
+            if (this.dtpickerEnd.SelectedDate == null)
+            {
+                MyMessageBox.ShowInfo("请设置截止时间");
+                return;
+            }
+            DateTime timeEnd = this.dtpickerEnd.SelectedDate.Value;
+            if (timeBegin >= timeEnd)
+            {
+                MyMessageBox.ShowInfo("起始时间必须小于截止时间");
+                return;
+            }
         }
     }
 }

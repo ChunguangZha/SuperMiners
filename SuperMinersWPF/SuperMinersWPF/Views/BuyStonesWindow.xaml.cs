@@ -132,7 +132,7 @@ namespace SuperMinersWPF.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            GlobalData.Client.ReleaseLockOrder(null);
+            GlobalData.Client.ReleaseLockOrder(this._lockedOrder.OrderNumber, null);
         }
 
         private void chkPayType_Checked(object sender, RoutedEventArgs e)
