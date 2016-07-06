@@ -2,6 +2,7 @@
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +36,7 @@ namespace SuperMinersWPF.Views
             this.listboxSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStonesOrder;
             App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
-            App.StoneOrderVMObject.LockOrderSucceed += StoneOrderVMObject_LockOrderSucceed;
+            App.StoneOrderVMObject.StoneOrderLockSucceed += StoneOrderVMObject_LockOrderSucceed;
             
             Binding bind = new Binding()
             {
@@ -72,7 +73,16 @@ namespace SuperMinersWPF.Views
 
         private void btnPay_Click(object sender, RoutedEventArgs e)
         {
+            //支付宝支付
+            string baseuri = "";
+#if DEBUG
+            baseuri = "http://localhost:8509/";
+#else
 
+            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+#endif
+
+            Process.Start(new ProcessStartInfo(baseuri + App.StoneOrderVMObject.LockedStonesOrder.PayUrl));
         }
 
         private void btnAppeal_Click(object sender, RoutedEventArgs e)

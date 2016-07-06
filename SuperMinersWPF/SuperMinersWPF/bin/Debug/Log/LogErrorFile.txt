@@ -78,3 +78,14 @@ Error:  [2016/7/5 22:59:52] ---- Log: 客户端Tony已退出.
 Error:  [2016/7/5 23:24:33] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/7/6 11:03:50] ---- Log: 服务器连接失败。
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 196
+-----------------------------------------------------
+
+Error:  [2016/7/6 11:31:10] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/6 17:46:24] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

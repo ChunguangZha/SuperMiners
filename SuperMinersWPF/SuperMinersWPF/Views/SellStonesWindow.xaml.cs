@@ -61,7 +61,7 @@ namespace SuperMinersWPF.Views
 
             MyMessageBox.ShowInfo("挂单出售矿石成功。");
             App.UserVMObject.AsyncGetPlayerInfo();
-            App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
+            App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
 
             this._syn.Post((o) =>
             {

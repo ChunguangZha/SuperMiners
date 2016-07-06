@@ -149,5 +149,6 @@ namespace SuperMinersWPF.Wcf.Clients
                 handler(title);
             }
         }
+
     }
 }

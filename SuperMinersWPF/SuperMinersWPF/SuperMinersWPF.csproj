@@ -143,6 +143,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
+      <Link>Wcf\Datas\TradeType.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
     </Compile>
@@ -169,6 +172,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.Callback.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs">
+      <Link>Wcf\Callbacks\IServiceToClient.Order.Callback.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.User.Callback.cs</Link>

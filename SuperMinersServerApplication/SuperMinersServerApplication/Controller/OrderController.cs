@@ -4,10 +4,12 @@ using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller
@@ -360,6 +362,23 @@ namespace SuperMinersServerApplication.Controller
                 trans.Commit();
                 PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
 
+                string tokenBuyer = ClientManager.GetToken(player.SimpleInfo.UserName);
+                if (!string.IsNullOrEmpty(tokenBuyer))
+                {
+                    if (StoneOrderPaySucceedNotifyBuyer != null)
+                    {
+                        StoneOrderPaySucceedNotifyBuyer(tokenBuyer, orderNumber);
+                    }
+                }
+                string tokenSeller = ClientManager.GetToken(buyOrder.StonesOrder.SellerUserName);
+                if (!string.IsNullOrEmpty(tokenSeller))
+                {
+                    if (StoneOrderPaySucceedNotifySeller != null)
+                    {
+                        StoneOrderPaySucceedNotifySeller(tokenSeller, orderNumber);
+                    }
+                }
+
                 return true;
             }
             catch (Exception exc)
@@ -413,5 +432,14 @@ namespace SuperMinersServerApplication.Controller
         //        }
         //    }
         //}
+
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> StoneOrderPaySucceedNotifyBuyer;
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> StoneOrderPaySucceedNotifySeller;
     }
 }

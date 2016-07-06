@@ -187,12 +187,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return;
                 }
+                bool isOK;
                 float rmb = money * GlobalConfig.GameConfig.Yuan_RMB;
                 TradeType tradeType = (TradeType)tradeTypeInt;
                 switch (tradeType)
                 {
                     case TradeType.StoneTrade:
-                        OrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
+                        isOK = OrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
                         break;
                     case TradeType.MineTrade:
                         break;

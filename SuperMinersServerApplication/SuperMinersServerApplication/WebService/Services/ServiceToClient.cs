@@ -33,6 +33,24 @@ namespace SuperMinersServerApplication.WebService.Services
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
             NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
+            OrderController.Instance.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
+            OrderController.Instance.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+        }
+
+        void Instance_StoneOrderPaySucceedNotifySeller(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.TradeType.StoneTrade, arg2);
+            })).Start();
+        }
+
+        void Instance_StoneOrderPaySucceedNotifyBuyer(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.TradeType.StoneTrade, arg2);
+            })).Start();
         }
 
         void Instance_NoticeAdded(string obj)

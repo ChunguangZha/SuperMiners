@@ -10,6 +10,9 @@ namespace SuperMinersWPF.Wcf.Clients
 {
     public partial class ServerClient
     {
+        public event Action<int, string> OnOrderAlipayPaySucceed;
+        public event Action OnOrderListChanged;
+
         #region SellStone
 
         public event EventHandler<WebInvokeEventArgs<int>> SellStoneCompleted;
@@ -89,5 +92,27 @@ namespace SuperMinersWPF.Wcf.Clients
         //}
 
         //#endregion
+
+        #region Callback
+
+        public void RaiseOnOrderAlipayPaySucceed(int tradeType, string orderNumber)
+        {
+            Action<int, string> handler = this.OnOrderAlipayPaySucceed;
+            if (null != handler)
+            {
+                handler(tradeType, orderNumber);
+            }
+        }
+
+        public void RaiseOnOrderListChanged()
+        {
+            Action handler = this.OnOrderListChanged;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+
+        #endregion
     }
 }

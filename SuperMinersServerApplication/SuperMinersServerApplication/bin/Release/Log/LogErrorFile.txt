@@ -1,4 +1,4 @@
-Error:  [2016/7/5 21:31:16] ---- Log: Lock Order[2016070221175506294454765449374] by User[Tony] Error
+Error:  [2016/7/6 17:46:58] ---- Log: Lock Order[201607061127540202114454765448895] by User[tony1] Error
 Exc.Message: Unknown column 'PayUrl' in 'field list'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
@@ -7,14 +7,13 @@ Exc.Message: Unknown column 'PayUrl' in 'field list'Exc.Stack:    在 MySql.Data
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.OrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 67
-   在 SuperMinersServerApplication.Controller.OrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
+   在 DataBaseProvider.OrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\OrderDBProvider.cs:行号 67
+   在 SuperMinersServerApplication.Controller.OrderRunnable.Lock(String playerUserName) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
 -----------------------------------------------------
 
-) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderRunnable.cs:行号 156
+Hub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 258
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.SellStone(String token, String userName, Int32 sellStonesCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Order.cs:行号 57
 -----------------------------------------------------
 
-lication\DataBaseProvider\OrderDBProvider.cs:行号 153
-   在 SuperMinersServerApplication.Controller.OrderController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\OrderController.cs:行号 55
------------------------------------------------------
+-------------------------------------------
 

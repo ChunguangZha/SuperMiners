@@ -59,10 +59,9 @@ namespace SuperMinersServerApplication.WebService.Services
                 return String.Empty;
             }
 
-            string token = String.Empty;
-            if (ClientManager.IsExistUserName(userName))
+            string token = ClientManager.GetToken(userName);
+            if (!string.IsNullOrEmpty(token))
             {
-                token = ClientManager.GetToken(userName);
                 new Thread(new ParameterizedThreadStart(o =>
                 {
                     this.KickoutByUser(o.ToString());

@@ -85,6 +85,30 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.CheckUserHasNotPayOrderCompleted += Client_CheckUserHasNotPayOrderCompleted;
             GlobalData.Client.PayOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
             GlobalData.Client.GetAllNotFinishedSellOrdersCompleted += Client_GetAllNotFinishedSellOrdersCompleted;
+            GlobalData.Client.OnOrderAlipayPaySucceed += Client_OnOrderAlipayPaySucceed;
+            GlobalData.Client.OnOrderListChanged += Client_OnOrderListChanged;
+        }
+
+        void Client_OnOrderListChanged()
+        {
+            AsyncGetAllNotFinishedSellOrders();
+        }
+
+        void Client_OnOrderAlipayPaySucceed(int tradeType, string orderNumber)
+        {
+            if (tradeType == (int)TradeType.StoneTrade)
+            {
+                if (LockedStonesOrder != null && LockedStonesOrder.OrderNumber == orderNumber)
+                {
+                    MyMessageBox.ShowInfo("矿石购买成功。");
+
+                    if (StoneOrderPaySucceed != null)
+                    {
+                        StoneOrderPaySucceed();
+                    }
+                    LockedStonesOrder = null;
+                }
+            }
         }
 
         void Client_GetAllNotFinishedSellOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
@@ -122,9 +146,9 @@ namespace SuperMinersWPF.ViewModels
                 if (this.LockedStonesOrder.ValidTimeSecondsTickDown() <= 0)
                 {
                     GlobalData.Client.ReleaseLockOrder(null);
-                    if (OrderLockTimeOut != null)
+                    if (StoneOrderLockTimeOut != null)
                     {
-                        OrderLockTimeOut();
+                        StoneOrderLockTimeOut();
                     }
                     this.LockedStonesOrder = null;
                     this._timer.Stop();
@@ -147,17 +171,17 @@ namespace SuperMinersWPF.ViewModels
             }
             if (e.Result)
             {
-                MyMessageBox.ShowInfo("购买成功。");
+                MyMessageBox.ShowInfo("矿石购买成功。");
 
-                if (PayOrderSucceed != null)
+                if (StoneOrderPaySucceed != null)
                 {
-                    PayOrderSucceed();
+                    StoneOrderPaySucceed();
                 }
                 this.LockedStonesOrder = null;
             }
             else
             {
-                MyMessageBox.ShowInfo("购买失败。");
+                MyMessageBox.ShowInfo("矿石购买失败。");
             }
         }
 
@@ -205,9 +229,9 @@ namespace SuperMinersWPF.ViewModels
 
             LockedStonesOrder = new LockSellStonesOrderUIModel(e.Result);
             this._timer.Start();
-            if (LockOrderSucceed != null)
+            if (StoneOrderLockSucceed != null)
             {
-                LockOrderSucceed(LockedStonesOrder);
+                StoneOrderLockSucceed(LockedStonesOrder);
             }
 
         }
@@ -233,9 +257,9 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        public event Action<LockSellStonesOrderUIModel> LockOrderSucceed;
-        public event Action PayOrderSucceed;
-        public event Action OrderLockTimeOut;
+        public event Action<LockSellStonesOrderUIModel> StoneOrderLockSucceed;
+        public event Action StoneOrderPaySucceed;
+        public event Action StoneOrderLockTimeOut;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

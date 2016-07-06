@@ -52,7 +52,7 @@
                 </ListBox>
             </Grid>
         </TabItem>
-        <TabItem Header="当前交易" Padding="5">
+        <TabItem Header="未完成的交易" Padding="5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>

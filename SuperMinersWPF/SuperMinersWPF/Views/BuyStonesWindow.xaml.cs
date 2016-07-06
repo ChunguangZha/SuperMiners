@@ -41,8 +41,8 @@ namespace SuperMinersWPF.Views
         {
             GlobalData.Client.ReleaseLockOrderCompleted += Client_ReleaseLockOrderCompleted;
             //GlobalData.Client.PayOrderByAlipayCompleted += Client_PayOrderByAlipayCompleted;
-            App.StoneOrderVMObject.OrderLockTimeOut += StoneOrderVMObject_OrderLockTimeOut;
-            App.StoneOrderVMObject.PayOrderSucceed += StoneOrderVMObject_PayOrderSucceed;
+            App.StoneOrderVMObject.StoneOrderLockTimeOut += StoneOrderVMObject_OrderLockTimeOut;
+            App.StoneOrderVMObject.StoneOrderPaySucceed += StoneOrderVMObject_PayOrderSucceed;
             
             this.DataContext = this.LockedOrder;
 

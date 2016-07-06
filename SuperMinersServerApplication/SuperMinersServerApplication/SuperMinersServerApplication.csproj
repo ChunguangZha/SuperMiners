@@ -117,6 +117,7 @@
     <Compile Include="WebService\ClientManager.cs" />
     <Compile Include="WebService\Contracts\Callbacks\CallbackAttribute.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.CallbackMessage.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
@@ -126,6 +127,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Services\Callbacks\ServiceToClient.Order.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Services\ServiceToClient.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
