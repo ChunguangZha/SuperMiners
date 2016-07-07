@@ -65,7 +65,7 @@ namespace SuperMinersWPF.Views
 
             this._syn.Post((o) =>
             {
-                this.DialogResult = true;
+                this.Close();
             }, null);
         }
 

@@ -21,7 +21,7 @@ namespace SuperMinersWPF.Views
     /// <summary>
     /// Interaction logic for OrderRecordListBuyControl.xaml
     /// </summary>
-    public partial class OrderRecordListBuyControl : UserControl, INotifyPropertyChanged
+    public partial class OrderRecordListBuyControl : UserControl
     {
         private List<BuyStonesOrderUIModel> _listBuyStonesOrder = new List<BuyStonesOrderUIModel>();
 
@@ -31,11 +31,14 @@ namespace SuperMinersWPF.Views
             set
             {
                 _listBuyStonesOrder = value;
-                if (PropertyChanged != null)
+                this.listboxBuyOrder.ItemsSource = ListBuyStonesOrder;
+
+                int itemsCount = 0;
+                if (ListBuyStonesOrder != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("ListBuyStonesOrder"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("ItemsCount"));
+                    itemsCount = ListBuyStonesOrder.Count;
                 }
+                this.txtItemsCount.Text = itemsCount.ToString();
             }
         }
 
@@ -59,22 +62,22 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            Binding bind = new Binding()
-            {
-                Source = this.ListBuyStonesOrder
-            };
-            this.listboxBuyOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
-            bind = new Binding()
-            {
-                Source = this.ItemsCount
-            };
-            this.txtItemsCount.SetBinding(TextBlock.TextProperty, bind);
+            //Binding bind = new Binding()
+            //{
+            //    Source = this.ListBuyStonesOrder
+            //};
+            //this.listboxBuyOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
+            //bind = new Binding()
+            //{
+            //    Source = this.ItemsCount
+            //};
+            //this.txtItemsCount.SetBinding(TextBlock.TextProperty, bind);
         }
 
-        #region INotifyPropertyChanged Members
+        //#region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
+        //#endregion
     }
 }

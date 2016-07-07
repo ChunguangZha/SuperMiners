@@ -8,13 +8,13 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\
 SuperMinersWPF
 none
 false
-DEBUG;TRACE;Encrypt
+TRACE;Encrypt
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-1928917050
+22829193055
 
-83-1656087097
-201805710553
-Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+93480020103
+27-1174524522
+Assets\Style.xaml;Login.xaml;Views\BusyWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\DigStoneAreaUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
 True
 

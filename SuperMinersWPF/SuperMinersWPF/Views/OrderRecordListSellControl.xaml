@@ -24,7 +24,7 @@
             <TextBlock  Text="0" Name="txtItemsCount" VerticalAlignment="Center" Margin="10,0"/>
             <TextBlock Text="条记录" VerticalAlignment="Center"/>
         </StackPanel>
-        <ListBox Grid.Row="1" Name="listboxSellOrder" HorizontalContentAlignment="Stretch">
+        <ListBox Grid.Row="1" Name="listboxSellOrder" HorizontalContentAlignment="Stretch" Margin="5">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="5">
@@ -36,6 +36,8 @@
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="订单号：" FontSize="14" Margin="5"/>
                             <TextBlock Text="{Binding OrderNumber}" FontSize="14" FontWeight="Bold" Margin="5"/>
+                            <TextBlock Text="挂单时间：" Margin="30,5,5,5"/>
+                            <TextBlock Text="{Binding SellTime}" Foreground="Red" FontStyle="Italic" Margin="5"/>
                         </StackPanel>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
                             <TextBlock Text="卖出矿石：" Margin="5"/>
@@ -43,9 +45,7 @@
                             <TextBlock Text="价值灵币：" Margin="30,5,5,5"/>
                             <TextBlock Text="{Binding ValueRMB}" Foreground="Red" FontStyle="Italic" Margin="5"/>
                             <TextBlock Text="手续费：" Margin="30,5,5,5"/>
-                            <TextBlock Text="{Binding AwardGoldCoin}" Foreground="Red" FontStyle="Italic" Margin="5"/>
-                            <TextBlock Text="挂单时间：" Margin="30,5,5,5"/>
-                            <TextBlock Text="{Binding BuyTime}" Foreground="Red" FontStyle="Italic" Margin="5"/>
+                            <TextBlock Text="{Binding Expense}" Foreground="Red" FontStyle="Italic" Margin="5"/>
                             <TextBlock Text="状态：" Margin="30,5,5,5"/>
                             <TextBlock Text="{Binding OrderStateString}" Foreground="Red" FontStyle="Italic" Margin="5"/>
                         </StackPanel>

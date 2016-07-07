@@ -30,10 +30,13 @@ namespace SuperMinersWPF.Views
             set { _lockedOrder = value; }
         }
 
+        private System.Threading.SynchronizationContext _syn;
+
 
         public BuyStonesWindow(LockSellStonesOrderUIModel order)
         {
             InitializeComponent();
+            _syn = System.Threading.SynchronizationContext.Current;
             this._lockedOrder = order;
         }
 
@@ -68,8 +71,11 @@ namespace SuperMinersWPF.Views
         void StoneOrderVMObject_OrderLockTimeOut()
         {
             this.btnOK.IsEnabled = false;
-            MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
-            this.Close();
+            _syn.Post(o =>
+            {
+                MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
+                this.Close();
+            }, null);
         }
 
         //void Client_PayOrderByAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
@@ -103,7 +109,10 @@ namespace SuperMinersWPF.Views
 
             if (e.Error != null)
             {
-                MyMessageBox.ShowInfo("连接服务器失败。");
+                _syn.Post(o =>
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                }, null);
                 return;
             }
 
@@ -114,15 +123,16 @@ namespace SuperMinersWPF.Views
         {
             if (chkPayType.IsChecked == true)//支付宝支付
             {
-                string baseuri = "";
-#if DEBUG
-                baseuri = "http://localhost:8509/";
-#else
+                MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
+//                string baseuri = "";
+//#if DEBUG
+//                baseuri = "http://localhost:8509/";
+//#else
 
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-#endif
+//            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+//#endif
 
-                Process.Start(new ProcessStartInfo(baseuri + this.LockedOrder.PayUrl));
+//                Process.Start(new ProcessStartInfo(baseuri + this.LockedOrder.PayUrl));
             }
             else
             {

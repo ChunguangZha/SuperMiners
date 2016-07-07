@@ -173,7 +173,7 @@
                     </Button>
                     <Button x:Name="btnLastMonth" Margin="5" BorderThickness="0" Background="{x:Null}" Click="btnLastMonth_Click">
                         <Button.Content>
-                            <TextBlock Text="最近一周" TextDecorations="Underline"/>
+                            <TextBlock Text="最近一月" TextDecorations="Underline"/>
                         </Button.Content>
                     </Button>
                     <TextBlock Text="从" VerticalAlignment="Center"/>
@@ -183,7 +183,7 @@
                     <Button x:Name="btnSearch" Content="查询" Width="100" Margin="20,5" Click="btnSearch_Click"/>
                 </StackPanel>
 
-                <local:OrderRecordListBuyControl Grid.Row="1" x:Name="controlBuyOrderList" Margin="5"/>
+                <local:OrderRecordListBuyControl Grid.Row="1" x:Name="controlBuyOrderList" Margin="5,0"/>
                 <local:OrderRecordListSellControl Grid.Row="1" x:Name="controlSellOrderList" Visibility="Collapsed" Margin="5"/>
 
             </Grid>

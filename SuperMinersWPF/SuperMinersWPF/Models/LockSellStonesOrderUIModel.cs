@@ -149,7 +149,12 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                return BuyOrderLockTimeSeconds - this._parentObject.OrderLockedTimeSpan;
+                int value = BuyOrderLockTimeSeconds - this._parentObject.OrderLockedTimeSpan;
+                if (value <= 0)
+                {
+                    return 0;
+                }
+                return value;
             }
         }
 

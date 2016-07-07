@@ -22,7 +22,7 @@ namespace SuperMinersWPF.Views
     /// <summary>
     /// Interaction logic for OrderRecordListSellControl.xaml
     /// </summary>
-    public partial class OrderRecordListSellControl : UserControl, INotifyPropertyChanged
+    public partial class OrderRecordListSellControl : UserControl//, INotifyPropertyChanged
     {
         private List<SellStonesOrderUIModel> _listSellStonesOrder;
 
@@ -45,26 +45,26 @@ namespace SuperMinersWPF.Views
             set
             {
                 _itemsSource = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("ItemsSource"));
-                    PropertyChanged(this, new PropertyChangedEventArgs("ItemsCount"));
-                }
+                //if (PropertyChanged != null)
+                //{
+                //    PropertyChanged(this, new PropertyChangedEventArgs("ItemsSource"));
+                //    PropertyChanged(this, new PropertyChangedEventArgs("ItemsCount"));
+                //}
             }
         }
 
-        public int ItemsCount
-        {
-            get
-            {
-                if (ItemsSource == null)
-                {
-                    return 0;
-                }
+        //public int ItemsCount
+        //{
+        //    get
+        //    {
+        //        if (ItemsSource == null)
+        //        {
+        //            return 0;
+        //        }
 
-                return ItemsSource.Count();
-            }
-        }
+        //        return ItemsSource.Count();
+        //    }
+        //}
 
         public OrderRecordListSellControl()
         {
@@ -73,19 +73,19 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.txtItemsCount != null)
-            {
-                Binding bind = new Binding()
-                {
-                    Source = this.ItemsSource
-                };
-                this.listboxSellOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
-                bind = new Binding()
-                {
-                    Source = this.ItemsCount
-                };
-                this.txtItemsCount.SetBinding(TextBlock.TextProperty, bind);
-            }
+            //if (this.txtItemsCount != null)
+            //{
+            //    Binding bind = new Binding()
+            //    //{
+            //    //    Source = this.ItemsSource
+            //    //};
+            //    //this.listboxSellOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
+            //    //bind = new Binding()
+            //    {
+            //        Source = this.ItemsCount
+            //    };
+            //    this.txtItemsCount.SetBinding(TextBlock.TextProperty, bind);
+            //}
         }
 
         private void cmbOrderState_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -107,14 +107,15 @@ namespace SuperMinersWPF.Views
                     ItemsSource = this.ListSellStonesOrder.Where(s => (int)s.OrderState == this.cmbOrderState.SelectedIndex);
                 }
 
-                //this.listboxSellOrder.ItemsSource = ItemsSource;
+                this.listboxSellOrder.ItemsSource = ItemsSource;
+                this.txtItemsCount.Text = ItemsSource.Count().ToString();
             }
         }
 
-        #region INotifyPropertyChanged Members
+        //#region INotifyPropertyChanged Members
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        //public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
+        //#endregion
     }
 }
