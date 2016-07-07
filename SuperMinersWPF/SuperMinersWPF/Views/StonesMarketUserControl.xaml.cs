@@ -47,6 +47,9 @@ namespace SuperMinersWPF.Views
 
             this.dtpickerBegin.SelectedDate = DateTime.Now.AddDays(-7);
             this.dtpickerEnd.SelectedDate = DateTime.Now;
+
+            GlobalData.Client.SearchUserBuyStoneOrdersCompleted += Client_SearchUserBuyStoneOrdersCompleted;
+            GlobalData.Client.SearchUserSellStoneOrdersCompleted += Client_SearchUserSellStoneOrdersCompleted;
         }
 
         void StoneOrderVMObject_LockOrderSucceed(LockSellStonesOrderUIModel obj)
@@ -97,6 +100,11 @@ namespace SuperMinersWPF.Views
 
         private void cmbTradeType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (this.controlBuyOrderList == null)
+            {
+                return;
+            }
+
             if (this.cmbTradeType.SelectedIndex == 0)
             {
                 this.controlBuyOrderList.Visibility = System.Windows.Visibility.Visible;
@@ -145,6 +153,71 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("起始时间必须小于截止时间");
                 return;
             }
+
+            if (this.cmbTradeType.SelectedIndex == 0)
+            {
+                GlobalData.Client.SearchUserBuyStoneOrders(timeBegin.Year, timeBegin.Month, timeBegin.Day, timeEnd.Year, timeEnd.Month, timeEnd.Day, null);
+            }
+            else
+            {
+                GlobalData.Client.SearchUserSellStoneOrders(timeBegin.Year, timeBegin.Month, timeBegin.Day, timeEnd.Year, timeEnd.Month, timeEnd.Day, null);
+            }
         }
+
+        void Client_SearchUserSellStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.SellStonesOrder[]> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_SearchUserSellStoneOrdersCompleted Exception。", e.Error);
+                return;
+            }
+
+            List<SellStonesOrderUIModel> listSellOrder = new List<SellStonesOrderUIModel>();
+                
+            if (e.Result != null)
+            {
+                var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
+                foreach (var item in listOrderTimeASC)
+                {
+                    listSellOrder.Add(new SellStonesOrderUIModel(item));
+                }
+            }
+
+            this.controlSellOrderList.ListSellStonesOrder = listSellOrder;
+        }
+
+        void Client_SearchUserBuyStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.BuyStonesOrder[]> e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_SearchUserBuyStoneOrdersCompleted Exception。", e.Error);
+                return;
+            }
+
+            List<BuyStonesOrderUIModel> listBuyOrder = new List<BuyStonesOrderUIModel>();
+
+            if (e.Result != null)
+            {
+                var listOrderTimeASC = e.Result.OrderBy(s => s.BuyTime);
+                foreach (var item in listOrderTimeASC)
+                {
+                    listBuyOrder.Add(new BuyStonesOrderUIModel(item));
+                }
+            }
+            this.controlBuyOrderList.ListBuyStonesOrder = listBuyOrder;
+        }
+
     }
 }

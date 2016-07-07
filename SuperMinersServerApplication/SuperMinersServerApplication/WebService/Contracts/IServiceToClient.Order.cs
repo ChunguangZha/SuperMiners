@@ -75,6 +75,21 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool PayOrderByRMB(string token, string orderNumber, float rmb);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/SearchUserSellStoneOrders",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay);
+        
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/SearchUserBuyStoneOrders",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay);
 
     }
 }

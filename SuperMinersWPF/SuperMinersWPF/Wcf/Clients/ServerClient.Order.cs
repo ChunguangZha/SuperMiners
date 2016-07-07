@@ -83,15 +83,25 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-        //#region PayOrderByAlipay
+        #region SearchUserSellStoneOrders
 
-        //public event EventHandler<WebInvokeEventArgs<string>> PayOrderByAlipayCompleted;
-        //public void PayOrderByAlipay(string orderNumber, float rmb, object userState)
-        //{
-        //    this._invoker.InvokeUserState<string>(this._context, "PayOrderByAlipay", this.PayOrderByAlipayCompleted, userState, GlobalData.Token, orderNumber, rmb);
-        //}
+        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> SearchUserSellStoneOrdersCompleted;
+        public void SearchUserSellStoneOrders(int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, object userState)
+        {
+            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "SearchUserSellStoneOrders", this.SearchUserSellStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, beginYear, beginMonth, beginDay, endYear, endMonth, endDay);
+        }
 
-        //#endregion
+        #endregion
+
+        #region SearchUserBuyStoneOrders
+
+        public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> SearchUserBuyStoneOrdersCompleted;
+        public void SearchUserBuyStoneOrders(int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, object userState)
+        {
+            this._invoker.InvokeUserState<BuyStonesOrder[]>(this._context, "SearchUserBuyStoneOrders", this.SearchUserBuyStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, beginYear, beginMonth, beginDay, endYear, endMonth, endDay);
+        }
+
+        #endregion
 
         #region Callback
 

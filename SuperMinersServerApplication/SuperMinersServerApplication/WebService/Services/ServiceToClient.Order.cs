@@ -211,35 +211,44 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        ///// <summary>
-        ///// 返回生成的网址
-        ///// </summary>
-        ///// <param name="token"></param>
-        ///// <param name="orderNumber"></param>
-        ///// <returns></returns>
-        //public string PayOrderByAlipay(string token, string orderNumber, float rmb)
-        //{
-        //    if (RSAProvider.LoadRSA(token))
-        //    {
-        //        string userName = ClientManager.GetClientUserName(token);
-        //        float money = rmb / GlobalConfig.GameConfig.Yuan_RMB;
-        //        float money_1 = (float)Math.Round(money, 1);
-        //        if (money_1 < money)//说明刚才是四舍了，要把他加回来
-        //        {
-        //            money_1 += 0.1f;
-        //        }
+        public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return null;
+                }
 
-        //        //取到角级
-        //        string suburl = @"Alipay/AlipayDefault.aspx?on=" + orderNumber + "&sn=矿石&mn=" + money_1.ToString();
-        //        return suburl;
-        //    }
-        //    else
-        //    {
-        //        throw new Exception();
-        //    }
-        //}
+                DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
+                DateTime endTime = new DateTime(endYear, endMonth, endDay);
+                return DBProvider.OrderDBProvider.GetSellOrderList(null, userName, beginTime, endTime);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return null;
+                }
+
+                DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
+                DateTime endTime = new DateTime(endYear, endMonth, endDay);
+                return DBProvider.OrderDBProvider.GetBuyStonesOrderList(userName, beginTime, endTime);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
 
         #endregion
-
     }
 }

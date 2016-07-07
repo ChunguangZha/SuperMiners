@@ -37,22 +37,6 @@ namespace SuperMinersWPF.ViewModels
 
 
 
-        //private LockSellStonesOrderUIModel _lockedStonesOrder = null;
-        //public LockSellStonesOrderUIModel LockedStonesOrder
-        //{
-        //    get { return this._lockedStonesOrder; }
-        //    set
-        //    {
-        //        this._lockedStonesOrder = value;
-        //        if (PropertyChanged != null)
-        //        {
-        //            PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrder"));
-        //            PropertyChanged(this, new PropertyChangedEventArgs("LockedStonesOrderVisible"));
-        //        }
-        //    }
-        //}
-
-
         System.Timers.Timer _timer = new System.Timers.Timer(1000);
 
         public LockSellStonesOrderUIModel GetFirstLockedStoneOrder()

@@ -160,7 +160,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="5">
                     <TextBlock Text="交易类型" Margin="5" VerticalAlignment="Center"/>
                     <ComboBox x:Name="cmbTradeType" Width="100" SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,5,20,5" SelectionChanged="cmbTradeType_SelectionChanged">
                         <ComboBoxItem Content="买入交易"/>
@@ -176,9 +176,9 @@
                             <TextBlock Text="最近一周" TextDecorations="Underline"/>
                         </Button.Content>
                     </Button>
-                    <TextBlock Text="从" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="从" VerticalAlignment="Center"/>
                     <DatePicker x:Name="dtpickerBegin" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FirstDayOfWeek="Monday"/>
-                    <TextBlock Text="到" VerticalAlignment="Center" Margin="5"/>
+                    <TextBlock Text="到" VerticalAlignment="Center"/>
                     <DatePicker x:Name="dtpickerEnd" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" SelectedDateChanged="dtpickerEnd_SelectedDateChanged" FirstDayOfWeek="Monday"/>
                     <Button x:Name="btnSearch" Content="查询" Width="100" Margin="20,5" Click="btnSearch_Click"/>
                 </StackPanel>

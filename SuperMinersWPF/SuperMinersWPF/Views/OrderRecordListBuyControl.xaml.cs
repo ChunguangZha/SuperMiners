@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SuperMinersWPF.Models;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,18 +21,36 @@ namespace SuperMinersWPF.Views
     /// <summary>
     /// Interaction logic for OrderRecordListBuyControl.xaml
     /// </summary>
-    public partial class OrderRecordListBuyControl : UserControl
+    public partial class OrderRecordListBuyControl : UserControl, INotifyPropertyChanged
     {
-        public IEnumerable ItemsSource
+        private List<BuyStonesOrderUIModel> _listBuyStonesOrder = new List<BuyStonesOrderUIModel>();
+
+        public List<BuyStonesOrderUIModel> ListBuyStonesOrder
         {
-            get { return (IEnumerable)GetValue(ItemSourceProperty); }
-            set { SetValue(ItemSourceProperty, value); }
+            get { return _listBuyStonesOrder; }
+            set
+            {
+                _listBuyStonesOrder = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("ListBuyStonesOrder"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("ItemsCount"));
+                }
+            }
         }
 
-        // Using a DependencyProperty as the backing store for ItemSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty ItemSourceProperty =
-            DependencyProperty.Register("ItemsSource", typeof(IEnumerable), typeof(OrderRecordListBuyControl), new PropertyMetadata(null));
-        
+        public int ItemsCount
+        {
+            get
+            {
+                if (ListBuyStonesOrder == null)
+                {
+                    return 0;
+                }
+
+                return ListBuyStonesOrder.Count;
+            }
+        }
 
         public OrderRecordListBuyControl()
         {
@@ -41,9 +61,20 @@ namespace SuperMinersWPF.Views
         {
             Binding bind = new Binding()
             {
-                Source = this.ItemsSource
+                Source = this.ListBuyStonesOrder
             };
             this.listboxBuyOrder.SetBinding(ListBox.ItemsSourceProperty, bind);
+            bind = new Binding()
+            {
+                Source = this.ItemsCount
+            };
+            this.txtItemsCount.SetBinding(TextBlock.TextProperty, bind);
         }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
     }
 }

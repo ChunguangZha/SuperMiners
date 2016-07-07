@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SuperMinersWPF.Models
 {
-    class BuyStonesOrderUIModel : BaseModel
+    public class BuyStonesOrderUIModel : BaseModel
     {
         public BuyStonesOrderUIModel(BuyStonesOrder parent)
         {

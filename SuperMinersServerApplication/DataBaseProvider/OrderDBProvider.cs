@@ -135,8 +135,12 @@ namespace DataBaseProvider
             }
         }
 
-        public BuyStonesOrder[] GetBuyStonesOrderListLast20()
+        public BuyStonesOrder[] GetBuyStonesOrderList(string userName, DateTime beginTime, DateTime endTime)
         {
+            if (beginTime >= endTime)
+            {
+                return null;
+            }
             BuyStonesOrder[] orders = null;
             MySqlConnection myconn = null;
             try
@@ -145,11 +149,27 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select b.*, s.* " +
-                                "from buystonesrecord b " +
-                                "left join sellstonesorder s on s.OrderNumber = b.OrderNumber " +
-                                "order by b.BuyTime desc limit 20;";
+
+                StringBuilder builder = new StringBuilder();
+                builder.Append("select b.*, s.* ");
+                builder.Append("from buystonesrecord b ");
+                builder.Append("left join sellstonesorder s on s.OrderNumber = b.OrderNumber ");
+                builder.Append(" where ");
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    builder.Append(" b.BuyerUserName = @BuyerUserName and ");
+                }
+                builder.Append(" b.BuyTime >= @beginTime and b.BuyTime < @endTime ;");
+                string cmdText = builder.ToString();
+
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@beginTime", beginTime);
+                mycmd.Parameters.AddWithValue("@endTime", endTime);
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    string encryptUserName = DESEncrypt.EncryptDES(userName);
+                    mycmd.Parameters.AddWithValue("@BuyerUserName", encryptUserName);
+                }
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt != null)
@@ -172,8 +192,12 @@ namespace DataBaseProvider
         /// <param name="orderState">null表示全部状态, 可以多种状态组合查询</param>
         /// <param name="userName">""表示全部玩家</param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellOrderList(int[] orderStates, string userName)
+        public SellStonesOrder[] GetSellOrderList(int[] orderStates, string userName, DateTime beginTime, DateTime endTime)
         {
+            if (beginTime >= endTime)
+            {
+                return null;
+            }
             SellStonesOrder[] orders = null;
             MySqlConnection myconn = null;
             try
@@ -184,32 +208,30 @@ namespace DataBaseProvider
                 myconn.Open();
                 StringBuilder builder = new StringBuilder();
                 builder.Append("select s.* from sellstonesorder s ");
+                builder.Append(" where s.SellTime >= @beginTime and s.SellTime < @endTime ");
+
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    builder.Append(" and s.SellerUserName = @SellerUserName ");
+                }
                 if (orderStates != null && orderStates.Length != 0)
                 {
-                    builder.Append(" where ");
+                    builder.Append(" and s.OrderState in ( ");
                     for (int i = 0; i < orderStates.Length; i++)
                     {
-                        builder.Append(" s.OrderState = @OrderState" + i.ToString());
+                        builder.Append(" @OrderState" + i.ToString());
                         if (i != orderStates.Length - 1)
                         {
-                            builder.Append(" or ");
+                            builder.Append(",");
                         }
                     }
-                    if (!string.IsNullOrEmpty(userName))
-                    {
-                        builder.Append(" and s.SellerUserName = @SellerUserName ");
-                    }
-                }
-                else
-                {
-                    if (!string.IsNullOrEmpty(userName))
-                    {
-                        builder.Append(" where s.SellerUserName = @SellerUserName ");
-                    }
+                    builder.Append(" )");
                 }
 
                 string cmdText = builder.ToString();
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@beginTime", beginTime);
+                mycmd.Parameters.AddWithValue("@endTime", endTime);
                 if (orderStates != null && orderStates.Length != 0)
                 {
                     for (int i = 0; i < orderStates.Length; i++)

@@ -45,7 +45,9 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 dicSellOrders.Clear();
-                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "");
+                DateTime endTime = DateTime.Now;
+                DateTime beginTime = endTime.AddDays(-7);
+                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new OrderRunnable(item);
@@ -71,7 +73,8 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
 
-                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderListLast20();
+                beginTime = endTime.AddDays(-1);
+                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderList("", beginTime, endTime);
                 if (buyOrderRecords == null)
                 {
                     this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
