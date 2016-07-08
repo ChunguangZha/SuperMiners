@@ -148,3 +148,10 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderReco
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BuyStonesWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListBuyControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListSellControl.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BuyStonesWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListBuyControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListSellControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BuyStonesWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListBuyControl.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\OrderRecordListSellControl.g.cs

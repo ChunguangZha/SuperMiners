@@ -18,9 +18,10 @@
                 </Grid.RowDefinitions>
                 <StackPanel Margin="10,5" Orientation="Horizontal">
                     <TextBlock Text="要购买" Margin="5" VerticalAlignment="Center"/>
-                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numBuyStones" Width="70" Minimum="10" Maximum="10000" Margin="5" ValueChanged="numBuyStones_ValueChanged"/>
+                    <my:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numBuyStones" Width="70" Minimum="0" Maximum="100000" Margin="5"/>
                     <TextBlock Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
                     <Button x:Name="btnAutoMatchOrder" Content="自动匹配卖单" Width="100" Margin="5" ToolTip="如果没有合适卖单，则匹配小于输入值最大的卖单" Click="btnAutoMatchOrder_Click"/>
+                    <Button Name="btnRefreshOrderList" Content="刷新" Width="100" Margin="20,5" Click="btnRefreshOrderList_Click"/>
                 </StackPanel>
                 <ListBox Grid.Row="1" x:Name="listboxAllSellOrders" HorizontalContentAlignment="Stretch" Margin="5">
                     <ListBox.ItemTemplate>

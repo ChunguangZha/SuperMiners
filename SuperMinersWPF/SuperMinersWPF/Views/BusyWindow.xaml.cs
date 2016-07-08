@@ -86,6 +86,11 @@ namespace SuperMinersWPF.Views
 
         }
 
+        public void SetMessage(string message)
+        {
+            this.txtMessage.Text = message;
+        }
+
         /// <summary>
         /// Sets current progress
         /// </summary>
@@ -100,13 +105,6 @@ namespace SuperMinersWPF.Views
         #endregion
 
         #region Private Methods
-
-        //public override void OnApplyTemplate()
-        //{
-        //    ((Button)this.GetTemplateChild("CloseButton")).Click += new RoutedEventHandler(CancelButton_Click);
-        //    ((Border)this.GetTemplateChild("Chrome")).Background = null;
-        //    base.OnApplyTemplate();
-        //}
 
         protected override void OnClosing(CancelEventArgs e)
         {
@@ -134,6 +132,8 @@ namespace SuperMinersWPF.Views
                     _cancelAction(_state);
                 }
             }
+
+            this.Close();
         }
 
         #endregion

@@ -385,3 +385,26 @@ Error:  [2016/7/7 23:12:20] ---- Log: 客户端Tony已退出.
 Error:  [2016/7/7 23:14:52] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/7/8 11:24:58] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/8 11:36:41] ---- Log: 客户端ttt已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/8 11:36:42] ---- Log: Client_AutoMatchLockSellStoneCompleted Exception。
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 196
+-----------------------------------------------------
+
+Error:  [2016/7/8 13:42:05] ---- Log: 客户端ttt已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/8 15:32:07] ---- Log: 客户端ttt已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/8 17:15:12] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/8 17:16:53] ---- Log: 客户端ttt已退出.
+-----------------------------------------------------
+

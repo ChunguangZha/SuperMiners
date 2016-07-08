@@ -75,6 +75,11 @@ namespace SuperMinersWPF.Views
 
         private void btnAutoMatchOrder_Click(object sender, RoutedEventArgs e)
         {
+            if (this.numBuyStones.Value < 10)
+            {
+                MyMessageBox.ShowInfo("至少要购买10块矿石");
+                return;
+            }
             if (App.StoneOrderVMObject.GetFirstLockedStoneOrder() != null)
             {
                 MyMessageBox.ShowInfo("您有未支付的订单，请先支付，再继续购买。");
@@ -217,6 +222,11 @@ namespace SuperMinersWPF.Views
                 }
             }
             this.controlBuyOrderList.ListBuyStonesOrder = listBuyOrder;
+        }
+
+        private void btnRefreshOrderList_Click(object sender, RoutedEventArgs e)
+        {
+            App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
         }
 
     }

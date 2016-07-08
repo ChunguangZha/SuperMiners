@@ -14,6 +14,7 @@ namespace SuperMinersWPF.ViewModels
 {
     class StoneOrderViewModel : INotifyPropertyChanged
     {
+        private object _lockAllNotFinishStoneOrder = new object();
         private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStoneOrder = new ObservableCollection<SellStonesOrderUIModel>();
 
         public ObservableCollection<SellStonesOrderUIModel> AllNotFinishStoneOrder
@@ -126,16 +127,19 @@ namespace SuperMinersWPF.ViewModels
             }
             if (e.Result != null)
             {
-                this._allNotFinishStoneOrder.Clear();
-                this._mySellNotFinishedStonesOrders.Clear();
-                var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
-                foreach (var item in listOrderTimeASC)
+                lock (_lockAllNotFinishStoneOrder)
                 {
-                    var uiobj = new SellStonesOrderUIModel(item);
-                    this._allNotFinishStoneOrder.Add(uiobj);
-                    if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                    this._allNotFinishStoneOrder.Clear();
+                    this._mySellNotFinishedStonesOrders.Clear();
+                    var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
+                    foreach (var item in listOrderTimeASC)
                     {
-                        this._mySellNotFinishedStonesOrders.Add(uiobj);
+                        var uiobj = new SellStonesOrderUIModel(item);
+                        this._allNotFinishStoneOrder.Add(uiobj);
+                        if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                        {
+                            this._mySellNotFinishedStonesOrders.Add(uiobj);
+                        }
                     }
                 }
             }
@@ -152,13 +156,13 @@ namespace SuperMinersWPF.ViewModels
             {
                 if (lockedOrder.ValidTimeSecondsTickDown() <= 0)
                 {
+                    this._timer.Stop();
                     GlobalData.Client.ReleaseLockOrder(lockedOrder.OrderNumber, null);
                     if (StoneOrderLockTimeOut != null)
                     {
                         StoneOrderLockTimeOut();
                     }
                     this.MyBuyNotFinishedStoneOrders.Clear();
-                    this._timer.Stop();
                 }
             }
         }
@@ -237,6 +241,15 @@ namespace SuperMinersWPF.ViewModels
             var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
             this.MyBuyNotFinishedStoneOrders.Clear();
             this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+
+            lock (_lockAllNotFinishStoneOrder)
+            {
+                var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
+                if (orderSell != null)
+                {
+                    orderSell.OrderState = SellOrderState.Lock;
+                }
+            }
 
             this._timer.Start();
             if (StoneOrderLockSucceed != null)

@@ -3,12 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-        Height="150" Width="400" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterOwner">
+        Height="100" Width="500" ShowInTaskbar="False" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterOwner" WindowStyle="None" Background="#FF999999">
     <Grid x:Name="LayoutRoot" Margin="2">
-        <StackPanel Orientation="Horizontal" Margin="0,-8,0,12" HorizontalAlignment="Center">
-            <ProgressBar IsIndeterminate="True" Width="100" Height="80">
+        <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+            <ProgressBar IsIndeterminate="True" Width="80" Height="60">
                 <ProgressBar.Resources>
-                    <System:Double x:Key="DotSize">12</System:Double>
+                    <System:Double x:Key="DotSize">8</System:Double>
                 </ProgressBar.Resources>
                 <ProgressBar.Style>
                     <Style TargetType="ProgressBar" >
@@ -176,9 +176,10 @@
                 </ProgressBar.Style>
             </ProgressBar>
             <StackPanel VerticalAlignment="Center">
-                <TextBlock Margin="10,0" VerticalAlignment="Center" Text="{Binding Source={StaticResource Language}, Path=Strings.PleaseWait, StringFormat=\{0\}...}" FontSize="36" FontWeight="Black"/>
+                <TextBlock Name="txtMessage" Margin="10,0" VerticalAlignment="Center" Text="{Binding Source={StaticResource Language}, Path=Strings.PleaseWait, StringFormat=\{0\}...}" FontSize="24" FontStyle="Italic" FontWeight="Black" Foreground="#FFFF3A00"/>
                 <ProgressBar Name="prg" MinWidth="300" Margin="10" Visibility="Collapsed"/>
             </StackPanel>
         </StackPanel>
+        <Button Name="btnClose" Content="×" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Click="CancelButton_Click"/>
     </Grid>
 </Window>

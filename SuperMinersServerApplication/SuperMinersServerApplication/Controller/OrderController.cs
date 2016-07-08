@@ -297,7 +297,16 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            return order.ReleaseLock();
+            bool isOK = order.ReleaseLock();
+            if (isOK)
+            {
+                lock (this._lockListSellOrders)
+                {
+                    this.dicSellOrders.Remove(order.OrderNumber);
+                }
+            }
+
+            return isOK;
         }
 
         public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans)

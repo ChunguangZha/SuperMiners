@@ -110,33 +110,9 @@ namespace SuperMinersServerApplication.Controller
                 CustomerMySqlTransaction trans = null;
                 try
                 {
-                    if (this._lockOrderObject != null)
+                    if (this._lockOrderObject != null && !CheckOrderLockedIsTimeOut())
                     {
-                        CheckOrderLockedIsTimeOut();
-                        //if (CheckOrderLockedIsTimeOut())
-                        //{
-                        //    //上一次锁定超时，现将其解锁
-                        //    if (trans == null)
-                        //    {
-                        //        trans = MyDBHelper.Instance.CreateTrans();
-                        //    }
-                        //    if (DBProvider.OrderDBProvider.ReleaseOrderLock(_lockOrderObject.StonesOrder.OrderNumber, trans))
-                        //    {
-                        //        this._lockOrderObject = null;
-                        //        this._sellOrder.OrderState = SellOrderState.Wait;
-                        //    }
-                        //    else
-                        //    {
-                        //        trans.Rollback();
-                        //        trans.Dispose();
-                        //        trans = null;
-                        //        return null;
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    return null;
-                        //}
+                        return this._lockOrderObject;
                     }
 
                     if (trans == null)
@@ -150,7 +126,7 @@ namespace SuperMinersServerApplication.Controller
                         PayUrl = this.CreatePayUrl(),
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now,
-                        OrderLockedTimeSpan = GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60
+                        OrderLockedTimeSpan = 0
                     };
                     this._sellOrder.OrderState = SellOrderState.Lock;
                     DBProvider.OrderDBProvider.LockOrder(this._lockOrderObject, trans);

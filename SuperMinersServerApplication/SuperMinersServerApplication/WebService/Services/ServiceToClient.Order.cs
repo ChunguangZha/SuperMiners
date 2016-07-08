@@ -222,7 +222,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                 DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
                 DateTime endTime = new DateTime(endYear, endMonth, endDay);
-                return DBProvider.OrderDBProvider.GetSellOrderList(null, userName, beginTime, endTime);
+                return DBProvider.OrderDBProvider.GetSellOrderList(null, userName, beginTime, endTime.AddDays(1));
             }
             else
             {
@@ -241,7 +241,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                 DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
                 DateTime endTime = new DateTime(endYear, endMonth, endDay);
-                return DBProvider.OrderDBProvider.GetBuyStonesOrderList(userName, beginTime, endTime);
+                return DBProvider.OrderDBProvider.GetBuyStonesOrderList(userName, beginTime, endTime.AddDays(1));
             }
             else
             {
