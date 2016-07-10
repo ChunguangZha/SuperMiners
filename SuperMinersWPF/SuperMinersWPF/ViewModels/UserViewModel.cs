@@ -110,6 +110,7 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncGetPlayerInfo()
         {
+            App.BusyToken.ShowBusyWindow("正在加载玩家信息...");
             GlobalData.Client.GetPlayerInfo();
         }
 
@@ -119,6 +120,14 @@ namespace SuperMinersWPF.ViewModels
         /// <param name="stones">0表示清空临时产出</param>
         public void AsyncGatherStones(float stones)
         {
+            if (stones == 0)
+            {
+                App.BusyToken.ShowBusyWindow("正在提交服务器...");
+            }
+            else
+            {
+                App.BusyToken.ShowBusyWindow("正在收取矿石...");
+            }
             GlobalData.Client.GatherStones(stones);
         }
 
@@ -131,11 +140,12 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_OnPlayerInfoChanged()
         {
-            GlobalData.Client.GetPlayerInfo();
+            AsyncGetPlayerInfo();
         }
 
         void Client_GatherStonesCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Result > 0)
             {
                 MyMessageBox.ShowInfo("成功收取" + e.Result.ToString() + "矿石。");
@@ -145,6 +155,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetPlayerInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PlayerInfo> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -152,6 +163,7 @@ namespace SuperMinersWPF.ViewModels
 
             if (e.Error != null || e.Result == null)
             {
+                App.BusyToken.CloseAllBusyWindow();
                 MyMessageBox.ShowInfo("获取用户信息失败。");
                 GlobalData.Client.Logout();
                 return;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.WebService.Services
@@ -13,6 +14,12 @@ namespace SuperMinersServerApplication.WebService.Services
     {
         public SystemConfigin1 GetGameConfig(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 SystemConfigin1 config = new SystemConfigin1()

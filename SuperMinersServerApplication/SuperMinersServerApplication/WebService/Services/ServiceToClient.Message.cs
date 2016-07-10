@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.WebService.Services
@@ -16,6 +17,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public MetaData.ActionLog.PlayerActionLog[] GetPlayerAction(string token, int year, int month, int day, int hour, int minute, int second)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try
@@ -39,6 +46,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public NoticeInfo[] GetNotices(string token, int year, int month, int day, int hour, int minute, int second)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try

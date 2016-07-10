@@ -43,6 +43,7 @@ namespace SuperMinersWPF.Views
 
         void Client_SellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -108,6 +109,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
+            App.BusyToken.ShowBusyWindow("正在提交服务器...");
             GlobalData.Client.SellStone((int)this.numSellStones.Value, null);
         }
 

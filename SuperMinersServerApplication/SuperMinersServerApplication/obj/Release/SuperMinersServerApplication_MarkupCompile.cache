@@ -8,12 +8,12 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 SuperMinersServerApplication
 none
 false
-TRACE;DEBUG;Encrypt
+TRACE;DEBUG;Encrypt, -Delay
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
 31498948883
 
 641947231516
-21-1012508942
+22-704092124
 MainWindow.xaml;Utility\WinInputPassword.xaml;Views\AddNoticeWindow.xaml;
 
 False

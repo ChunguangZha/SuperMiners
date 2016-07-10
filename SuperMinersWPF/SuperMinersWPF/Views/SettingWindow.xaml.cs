@@ -66,6 +66,7 @@ namespace SuperMinersWPF.Views
         /// <param name="e"></param>
         void Client_CheckUserAlipayExistCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -104,6 +105,7 @@ namespace SuperMinersWPF.Views
 
         void Client_ChangePlayerSimpleInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -174,6 +176,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
+            App.BusyToken.ShowBusyWindow("正在验证...");
             GlobalData.Client.CheckUserAlipayExist(alipay, alipayRealName, null);
         }
 
@@ -184,6 +187,7 @@ namespace SuperMinersWPF.Views
 
         public void AsyncChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
+            App.BusyToken.ShowBusyWindow("正在提交服务器...");
             GlobalData.Client.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq, new string[] { alipayAccount, alipayRealName });
         }
 

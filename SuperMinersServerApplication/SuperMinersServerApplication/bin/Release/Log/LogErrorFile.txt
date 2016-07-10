@@ -1,12 +1,10 @@
-Error:  [2016/7/6 20:51:05] ---- Log: 启动服务失败。
-Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
-   在 MySql.Data.MySqlClient.Driver.Open()
-   在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
-   在 MySql.Data.MySqlClient.MySqlConnection.Open()
-   在 DataBaseProvider.CustomerMySqlTransaction..ctor(MySqlConnection connection) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 69
-   在 DataBaseProvider.MyDBHelper.CreateTrans() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 52
-   在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 91
-   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 105
+Error:  [2016/7/9 19:42:17] ---- Log: Web login failed
+Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetPlayer(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 295
+   在 SuperMinersServerApplication.Controller.PlayerController.LoginPlayer(String userName, String password) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 206
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.Login(String userName, String password, String key) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 78
+-----------------------------------------------------
+
+ice.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 105
    在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 74
 -----------------------------------------------------
 

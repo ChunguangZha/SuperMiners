@@ -25,7 +25,7 @@ namespace SuperMinersWPF.Wcf.Clients
         /// <param name="valure"></param>
         public void SetProgress(double valure)
         {
-            BusyToken.SetProgress(valure);
+            //BusyToken.SetProgress(valure);
         }
 
         public bool Continue
@@ -110,7 +110,7 @@ namespace SuperMinersWPF.Wcf.Clients
 
         public void SetContext(SynchronizationContext context)
         {
-            BusyToken.SetContext(context);
+            //BusyToken.SetContext(context);
             this._context = context;
         }
 

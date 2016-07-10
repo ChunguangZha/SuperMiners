@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.WebService.Services
@@ -27,6 +28,12 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <returns></returns>
         public int SellStone(string token, string userName, int sellStonesCount)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -105,6 +112,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public LockSellStonesOrder GetOrderLockedBySelf(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
@@ -118,6 +131,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public SellStonesOrder[] GetAllNotFinishedSellOrders(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return OrderController.Instance.GetSellOrders();
@@ -137,6 +156,12 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <returns></returns>
         public LockSellStonesOrder AutoMatchLockSellStone(string token, string userName, int buyStonesCount)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -159,6 +184,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public bool CheckUserHasNotPayOrder(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
@@ -172,6 +203,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public bool ReleaseLockOrder(string token, string orderNumber)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
@@ -185,6 +222,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public bool PayOrderByRMB(string token, string orderNumber, float rmb)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
@@ -213,6 +256,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -232,6 +281,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)

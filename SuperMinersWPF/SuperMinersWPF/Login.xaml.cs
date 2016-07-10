@@ -56,12 +56,14 @@ namespace SuperMinersWPF
             }
             else
             {
+                App.BusyToken.CloseBusyWindow();
                 GlobalData.Client.Logout();
             }
         }
 
         void UserVMObject_GetPlayerInfoCompleted(object sender, EventArgs e)
         {
+            App.BusyToken.CloseBusyWindow();
             GlobalData.Client.HandleCallback();
             if (!isHidden)
             {
@@ -70,7 +72,7 @@ namespace SuperMinersWPF
                 winMain.Closed += winMain_Closed;
                 this.Visibility = System.Windows.Visibility.Hidden;
                 winMain.Show();
-                GlobalData.Client.GetPlayerInfo();
+                //GlobalData.Client.GetPlayerInfo();
             }
         }
 
@@ -78,11 +80,13 @@ namespace SuperMinersWPF
         {
             if (e.Cancelled)
             {
+                App.BusyToken.CloseBusyWindow();
                 return;
             }
 
             if (e.Error != null)
             {
+                App.BusyToken.CloseBusyWindow();
                 LogHelper.Instance.AddErrorLog("服务器连接失败。", e.Error);
                 MyMessageBox.ShowInfo("服务器连接失败。");
                 return;
@@ -90,13 +94,21 @@ namespace SuperMinersWPF
 
             if (string.IsNullOrEmpty(e.Result))
             {
-                MyMessageBox.ShowInfo("该用户不存在，或密码不正确。");
+                App.BusyToken.CloseBusyWindow();
+                MyMessageBox.ShowInfo("用户名不存在，或密码不正确。");
                 return;
             }
 
+            if (e.Result == "LOCKED")
+            {
+                App.BusyToken.CloseBusyWindow();
+                MyMessageBox.ShowInfo("您的账户已经被管理员禁用，请联系管理员。");
+                return;
+            }
             if (e.Result == "ISLOGGED")
             {
-                MyMessageBox.ShowInfo("该用户已经在其它客户端登录。");
+                App.BusyToken.CloseBusyWindow();
+                MyMessageBox.ShowInfo("您的账户正在其它客户端登录，我们已将对方退出，请重新登录。");
                 return;
             }
 
@@ -108,7 +120,7 @@ namespace SuperMinersWPF
 
             GlobalData.InitToken(e.Result);
 
-            e.Continue = true;
+            //e.Continue = true;
 
             App.MessageVMObject.AsyncGetSystemConfig();
         }
@@ -122,7 +134,7 @@ namespace SuperMinersWPF
         {
             if (!CryptEncoder.Ready)
             {
-                MyMessageBox.ShowInfo("正在初始化，请等待...");
+                //MyMessageBox.ShowInfo("正在初始化，请等待...");
                 return;
             }
 
@@ -155,6 +167,7 @@ namespace SuperMinersWPF
             string userName = this.txtUserName.Text;
             string password = this.txtPassword.Password;
 
+            App.BusyToken.ShowBusyWindow("正在加载...");
             GlobalData.Client.Login(userName, password, CryptEncoder.Key);
         }
 

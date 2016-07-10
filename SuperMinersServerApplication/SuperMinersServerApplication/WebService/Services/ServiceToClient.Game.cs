@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.WebService.Services
@@ -15,6 +16,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public int BuyMiner(string token, string userName, int minersCount)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -32,6 +39,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public int BuyMine(string token, string userName, int minesCount)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -49,6 +62,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public int GatherStones(string token, string userName, float stones)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 if (ClientManager.GetClientUserName(token) != userName)
@@ -64,32 +83,14 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        ///// <summary>
-        ///// 0表示成功；-1表示查询不到该用户; -2表示该用户不在线；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
-        ///// </summary>
-        ///// <param name="token"></param>
-        ///// <param name="userName"></param>
-        ///// <param name="sellStonesCount"></param>
-        ///// <returns></returns>
-        //public int SellStones(string token, string userName, int sellStonesCount)
-        //{
-        //    if (RSAProvider.LoadRSA(token))
-        //    {
-        //        if (ClientManager.GetClientUserName(token) != userName)
-        //        {
-        //            return -1;
-        //        }
-
-        //        return PlayerController.Instance.SellStones(userName, sellStonesCount);
-        //    }
-        //    else
-        //    {
-        //        throw new Exception();
-        //    }
-        //}
-
         public TopListInfo[] GetExpTopList(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return DBProvider.UserDBProvider.GetExpTopList();
@@ -102,6 +103,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public TopListInfo[] GetStoneTopList(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return DBProvider.UserDBProvider.GetStoneTopList();
@@ -114,6 +121,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public TopListInfo[] GetMinerTopList(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return TopListController.Instance.GetMinerTopList();
@@ -126,6 +139,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public TopListInfo[] GetGoldCoinTopList(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return null;
@@ -138,6 +157,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public TopListInfo[] GetReferrerTopList(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 return TopListController.Instance.GetReferrerTopList();

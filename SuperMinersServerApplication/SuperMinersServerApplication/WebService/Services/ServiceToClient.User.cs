@@ -54,6 +54,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public string Login(string userName, string password, string key)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
             {
                 return String.Empty;
@@ -66,12 +72,19 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     this.KickoutByUser(o.ToString());
                 })).Start(token);
+
+                return "ISLOGGED";
             }
             try
             {
                 PlayerInfo player = PlayerController.Instance.LoginPlayer(userName, password);
                 if (null != player)
                 {
+                    if (player.SimpleInfo.LockedLogin)
+                    {
+                        return "LOCKED";
+                    }
+
                     RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
                     rsa.FromXmlString(key);
 
@@ -141,6 +154,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public PlayerInfo GetPlayerInfo(string token)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try
@@ -163,6 +182,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public bool ChangePassword(string token, string oldPassword, string newPassword)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try
@@ -184,6 +209,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try
@@ -215,6 +246,12 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <returns></returns>
         public int CheckUserAlipayExist(string token, string alipayAccount, string alipayRealName)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try
@@ -242,6 +279,12 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public UserReferrerTreeItem[] GetUserReferrerTree(string token, string userName)
         {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
             if (RSAProvider.LoadRSA(token))
             {
                 try

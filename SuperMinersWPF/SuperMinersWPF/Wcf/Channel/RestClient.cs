@@ -125,8 +125,8 @@ namespace SuperMinersWPF.Wcf.Channel
                 return;
             }
 
-            BusyToken.AddRequest(req);
-            BusyToken.Show();
+            //BusyToken.AddRequest(req);
+            //BusyToken.Show();
 
             req.Request.Method = method;
             if ((null == data) || (data.Length == 0))
@@ -157,7 +157,7 @@ namespace SuperMinersWPF.Wcf.Channel
                         {
                             context.Post(_ =>
                             {
-                                BusyToken.Hide();
+                                //BusyToken.Hide();
                                 if (null != resultHandler)
                                 {
                                     resultHandler(ex, null, req.IsCancel, userState);
@@ -174,7 +174,7 @@ namespace SuperMinersWPF.Wcf.Channel
                 {
                     context.Post(_ =>
                     {
-                        BusyToken.Hide();
+                        //BusyToken.Hide();
                         if (null != resultHandler)
                         {
                             resultHandler(ex, null, req.IsCancel, userState);
@@ -197,7 +197,7 @@ namespace SuperMinersWPF.Wcf.Channel
                     }
                     catch (Exception ex)
                     {
-                        BusyToken.Hide();
+                        //BusyToken.Hide();
                         if (null != resultHandler)
                         {
                             context.Post(_ =>
@@ -215,7 +215,7 @@ namespace SuperMinersWPF.Wcf.Channel
                     }
                     catch (Exception ex)
                     {
-                        BusyToken.Hide();
+                        //BusyToken.Hide();
                         if (null != resultHandler)
                         {
                             context.Post(_ =>
@@ -226,7 +226,7 @@ namespace SuperMinersWPF.Wcf.Channel
                         return;
                     }
 
-                    BusyToken.Hide();
+                    //BusyToken.Hide();
                     if (null != resultHandler)
                     {
                         context.Post(_ =>
@@ -238,7 +238,7 @@ namespace SuperMinersWPF.Wcf.Channel
             }
             catch (Exception ex)
             {
-                BusyToken.Hide();
+                //BusyToken.Hide();
                 if (null != resultHandler)
                 {
                     context.Post(_ =>

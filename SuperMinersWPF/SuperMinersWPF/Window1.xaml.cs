@@ -192,7 +192,7 @@ namespace SuperMinersWPF
 
         private void btnGatherStones_Click(object sender, RoutedEventArgs e)
         {
-            if (GlobalData.CurrentUser.TempOutputStones > 0)
+            if ((int)GlobalData.CurrentUser.TempOutputStones > 0)
             {
                 App.UserVMObject.SuspendListen();
                 GatherStonesWindow win = new GatherStonesWindow();

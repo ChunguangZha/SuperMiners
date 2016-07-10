@@ -159,6 +159,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
+            App.BusyToken.ShowBusyWindow("正在查询订单...");
             if (this.cmbTradeType.SelectedIndex == 0)
             {
                 GlobalData.Client.SearchUserBuyStoneOrders(timeBegin.Year, timeBegin.Month, timeBegin.Day, timeEnd.Year, timeEnd.Month, timeEnd.Day, null);
@@ -171,6 +172,7 @@ namespace SuperMinersWPF.Views
 
         void Client_SearchUserSellStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.SellStonesOrder[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -199,6 +201,7 @@ namespace SuperMinersWPF.Views
 
         void Client_SearchUserBuyStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.BuyStonesOrder[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;

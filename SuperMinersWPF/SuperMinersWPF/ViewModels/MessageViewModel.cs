@@ -89,6 +89,7 @@ namespace SuperMinersWPF.ViewModels
                     dtLast = ListPlayerActionLog[ListPlayerActionLog.Count - 1].Time;
                 }
 
+                App.BusyToken.ShowBusyWindow("正在加载数据...");
                 GlobalData.Client.GetPlayerAction(dtLast.Year, dtLast.Month, dtLast.Day, dtLast.Hour, dtLast.Minute, dtLast.Second);
             }
             catch (Exception exc)
@@ -149,6 +150,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetPlayerActionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.ActionLog.PlayerActionLog[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;

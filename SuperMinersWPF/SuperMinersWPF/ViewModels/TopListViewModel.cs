@@ -52,26 +52,31 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncGetExpTopList()
         {
+            App.BusyToken.ShowBusyWindow("正在加载排行榜...");
             GlobalData.Client.GetExpTopList();
         }
 
         public void AsyncGetStoneTopList()
         {
+            App.BusyToken.ShowBusyWindow("正在加载排行榜...");
             GlobalData.Client.GetStoneTopList();
         }
 
         public void AsyncGetMinerTopList()
         {
+            App.BusyToken.ShowBusyWindow("正在加载排行榜...");
             GlobalData.Client.GetMinerTopList();
         }
 
         public void AsyncGetGoldCoinTopList()
         {
+            App.BusyToken.ShowBusyWindow("正在加载排行榜...");
             GlobalData.Client.GetGoldCoinTopList();
         }
 
         public void AsyncGetReferrerTopList()
         {
+            App.BusyToken.ShowBusyWindow("正在加载排行榜...");
             GlobalData.Client.GetReferrerTopList();
         }
 
@@ -86,6 +91,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetReferrerTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -107,6 +113,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetGoldCoinTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -128,6 +135,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetMinerTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -149,6 +157,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetStoneTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -170,6 +179,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetExpTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;

@@ -38,6 +38,8 @@ namespace SuperMinersServerApplication
         {
             InitializeComponent();
 
+            this.Title = "服务器配置" + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+
             LogHelper.Instance.LogAdded += Instance_LogAdded;
             App.ServiceToRun.ServiceStateChanged += ServiceToRun_ServiceStateChanged;
         }

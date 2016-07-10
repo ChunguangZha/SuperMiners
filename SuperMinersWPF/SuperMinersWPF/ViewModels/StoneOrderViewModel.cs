@@ -12,7 +12,7 @@ using System.Windows;
 
 namespace SuperMinersWPF.ViewModels
 {
-    class StoneOrderViewModel : INotifyPropertyChanged
+    class StoneOrderViewModel
     {
         private object _lockAllNotFinishStoneOrder = new object();
         private ObservableCollection<SellStonesOrderUIModel> _allNotFinishStoneOrder = new ObservableCollection<SellStonesOrderUIModel>();
@@ -52,26 +52,31 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
         {
+            App.BusyToken.ShowBusyWindow("正在提交服务器...");
             GlobalData.Client.PayOrderByRMB(orderNumber, valueRMB, null);
         }
 
         public void AsyncCheckPlayerHasNotPayedOrder()
         {
+            App.BusyToken.ShowBusyWindow("正在您是否有未完成的订单...");
             GlobalData.Client.CheckUserHasNotPayOrder(null);
         }
 
         public void AsyncAutoMatchStonesOrder(int stoneCount)
         {
+            App.BusyToken.ShowBusyWindow("正在匹配订单");
             GlobalData.Client.AutoMatchLockSellStone(stoneCount, null);
         }
         
         public void AsyncGetOrderLockedBySelf()
         {
+            App.BusyToken.ShowBusyWindow("正在获取您的订单...");
             GlobalData.Client.GetOrderLockedBySelf(null);
         }
 
         public void AsyncGetAllNotFinishedSellOrders()
         {
+            App.BusyToken.ShowBusyWindow("正在加载新的订单...");
             GlobalData.Client.GetAllNotFinishedSellOrders(null);
         }
 
@@ -94,6 +99,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_OnOrderAlipayPaySucceed(int tradeType, string orderNumber)
         {
+            App.BusyToken.CloseBusyWindow();
             if (tradeType == (int)TradeType.StoneTrade)
             {
                 var lockedOrder = this.GetFirstLockedStoneOrder();
@@ -114,6 +120,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetAllNotFinishedSellOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -169,6 +176,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -198,6 +206,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_CheckUserHasNotPayOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -220,6 +229,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_AutoMatchLockSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.LockSellStonesOrder> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -261,6 +271,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetOrderLockedBySelfCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
         {
+            App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
             {
                 return;
@@ -286,6 +297,5 @@ namespace SuperMinersWPF.ViewModels
         public event Action StoneOrderPaySucceed;
         public event Action StoneOrderLockTimeOut;
 
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

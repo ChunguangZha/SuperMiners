@@ -256,5 +256,6 @@
             <Views:TopListUserControl x:Name="controlTopList" Visibility="Collapsed"/>
             <Views:GameHelperControl x:Name="controlGameHelper" Visibility="Collapsed"/>
         </Grid>
+
     </Grid>
 </Window>
