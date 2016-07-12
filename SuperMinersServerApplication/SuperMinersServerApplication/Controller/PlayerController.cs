@@ -38,6 +38,7 @@ namespace SuperMinersServerApplication.Controller
         #region Fields
 
         public event Action<PlayerInfo> PlayerInfoChanged;
+        public event Action<string> KickOutPlayer;
 
         public int RegisteredPlayersCount { get; private set; }
         public float AllMiners { get; private set; }
@@ -281,6 +282,34 @@ namespace SuperMinersServerApplication.Controller
             }
             
             return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
+        }
+
+        public bool LockPlayer(string userName)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun != null)
+            {
+                var token = ClientManager.GetToken(playerrun.BasePlayer.SimpleInfo.UserName);
+                if (!string.IsNullOrEmpty(token) && this.KickOutPlayer != null)
+                {
+                    this.KickOutPlayer(token);
+                }
+
+                return playerrun.LockPlayer();
+            }
+
+            return false;
+        }
+
+        public bool UnlockPlayer(string userName)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun != null)
+            {
+                return playerrun.UnlockPlayer();
+            }
+
+            return false;
         }
 
         /// <summary>

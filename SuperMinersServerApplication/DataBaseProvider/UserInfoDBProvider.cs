@@ -198,6 +198,31 @@ namespace DataBaseProvider
             }
         }
 
+        public bool UpdatePlayerLockedState(string userName, bool isLock, DateTime? time)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "update playersimpleinfo set `LockedLogin` = @LockedLogin, `LockedLoginTime` = @LockedLoginTime where `UserName` = @UserName;";
+                mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@LockedLogin", isLock);
+                mycmd.Parameters.AddWithValue("@LockedLoginTime", time);
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+            }
+        }
+
         public bool UpdatePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             MySqlConnection myconn = null;

@@ -7,49 +7,68 @@
             <TabItem Header="玩家管理">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <GroupBox Header="玩家列表">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="用户名：" HorizontalAlignment="Right" Margin="5"/>
+                        <TextBox Grid.Column="1" Name="txtUserName" Margin="5"/>
+                        <TextBlock Grid.Column="2" Text="支付宝账户：" HorizontalAlignment="Right" Margin="5"/>
+                        <TextBox Grid.Column="3" Name="txtAlipayAccount" Margin="5"/>
+                        <TextBlock Grid.Row="1" Text="推荐人：" HorizontalAlignment="Right" Margin="5"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txtReferrerUserName" Margin="5"/>
+                        <TextBlock Grid.Row="1" Grid.Column="2" Text="被锁定：" HorizontalAlignment="Right" Margin="5"/>
+                        <CheckBox Grid.Row="1" Grid.Column="3" Name="chkLocked" Margin="5"/>
+                        
+                        <Button Grid.Row="2" Grid.Column="3" Name="btnSearch" Content="搜索" Width="100" Margin="5" Click="btnSearch_Click"/>
+                    </Grid>
+                    <GroupBox Grid.Row="1" Header="玩家列表">
                         <DataGrid Name="datagridPlayerInfos" AutoGenerateColumns="False" FrozenColumnCount="2">
                             <DataGrid.Columns>
                                 <DataGridCheckBoxColumn Binding="{x:Null}" CanUserSort="False" CanUserReorder="False" ClipboardContentBinding="{x:Null}"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="注册时间"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="注册IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="推荐人"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="上一级登录时间"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
-                                <DataGridTextColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
+                                <DataGridTextColumn Binding="{Binding Alipay}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
+                                <DataGridTextColumn Binding="{Binding AlipayRealName}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>
+                                <DataGridTextColumn Binding="{Binding RegisterTime}" ClipboardContentBinding="{x:Null}" Header="注册时间"/>
+                                <DataGridTextColumn Binding="{Binding RegisterIP}" ClipboardContentBinding="{x:Null}" Header="注册IP"/>
+                                <DataGridTextColumn Binding="{Binding ReferrerUserName}" ClipboardContentBinding="{x:Null}" Header="推荐人"/>
+                                <DataGridTextColumn Binding="{Binding LastLoginTime}" ClipboardContentBinding="{x:Null}" Header="上一级登录时间"/>
+                                <DataGridTextColumn Binding="{Binding LockedLogin}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
+                                <DataGridTextColumn Binding="{Binding LockedLoginTime}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
+                                <DataGridTextColumn Binding="{Binding isOnline}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>
+                                <DataGridTextColumn Binding="{Binding LoginIP}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                                <DataGridTextColumn Binding="{Binding Exp}" ClipboardContentBinding="{x:Null}" Header="贡献值"/>
+                                <DataGridTextColumn Binding="{Binding RMB}" ClipboardContentBinding="{x:Null}" Header="灵币"/>
+                                <DataGridTextColumn Binding="{Binding GoldCoin}" ClipboardContentBinding="{x:Null}" Header="金币"/>
+                                <DataGridTextColumn Binding="{Binding StonesReserves}" ClipboardContentBinding="{x:Null}" Header="矿石储量"/>
+                                <DataGridTextColumn Binding="{Binding TotalProducedStonesCount}" ClipboardContentBinding="{x:Null}" Header="累计总产出"/>
+                                <DataGridTextColumn Binding="{Binding StockOfStones}" ClipboardContentBinding="{x:Null}" Header="矿石量"/>
+                                <DataGridTextColumn Binding="{Binding MinersCount}" ClipboardContentBinding="{x:Null}" Header="矿工数"/>
+                                <DataGridTextColumn Binding="{Binding StockOfDiamonds}" ClipboardContentBinding="{x:Null}" Header="钻石量"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </GroupBox>
-
-
+                    <Grid Grid.Row="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Name="btnEditPlayerInfo" Content="修改玩家信息" Width="100" Margin="5" Click="btnEditPlayerInfo_Click"/>
+                    </Grid>
                 </Grid>
             </TabItem>
             <TabItem Header="交易系统">

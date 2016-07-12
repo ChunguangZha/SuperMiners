@@ -1,4 +1,5 @@
 ﻿using MetaData.User;
+using SuperMinersServerApplication.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        string LoginAdmin(string adminName, string password, string key);
+        string LoginAdmin(string adminName, string password, string mac, string key);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/LogoutAdmin",
@@ -41,31 +42,39 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        Model.UserInfo[] GetPlayers(string token, int isOnline, int isLocked);
+        PlayerInfoLoginWrap[] GetPlayers(string token, int isOnline, int isLocked);
+
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/DeletePlayers",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //void DeletePlayers(string token, string actionPassword, string[] playerUserNames);
+
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/LogOutPlayers",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //bool LogOutPlayers(string token, string actionPassword, string[] playerUserNames);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/DeletePlayers",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/LockPlayer",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        void DeletePlayers(string token, string actionPassword, string[] userNames);
+        bool LockPlayer(string token, string actionPassword, string playerUserName);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/LogOutPlayers",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/UnlockPlayer",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool LogOutPlayers(string token, string actionPassword, string[] userNames);
-
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/LockPlayers",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool LockPlayers(string token, string actionPassword, string[] userNames);
+        bool UnlockPlayer(string token, string actionPassword, string playerUserName);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdatePlayerInfo",

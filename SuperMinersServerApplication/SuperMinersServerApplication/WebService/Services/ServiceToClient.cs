@@ -30,11 +30,20 @@ namespace SuperMinersServerApplication.WebService.Services
             this._userStateCheck.Start();
 
             PlayerController.Instance.PlayerInfoChanged += Instance_PlayerInfoChanged;
+            PlayerController.Instance.KickOutPlayer += Instance_KickOutPlayer;
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
             NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
             OrderController.Instance.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
             OrderController.Instance.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+        }
+
+        void Instance_KickOutPlayer(string obj)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.Kickout(obj);
+            })).Start();
         }
 
         void Instance_StoneOrderPaySucceedNotifySeller(string arg1, string arg2)

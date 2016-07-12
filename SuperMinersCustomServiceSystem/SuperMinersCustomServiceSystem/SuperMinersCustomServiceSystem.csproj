@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
     <Reference Include="System.Xml" />
@@ -55,6 +56,36 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
+      <Link>Wcf\Datas\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
+      <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
+      <Link>Wcf\Datas\GameConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\IncomeMoneyAccount.cs">
+      <Link>Wcf\Datas\IncomeMoneyAccount.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
+      <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
+      <Link>Wcf\Datas\SystemConfigin1.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
+      <Link>Wcf\Datas\CallbackInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\CallbackAttribute.cs">
+      <Link>Wcf\Datas\CallbackAttribute.cs</Link>
+    </Compile>
+    <Compile Include="GlobalData.cs" />
+    <Compile Include="Wcf\Channel\CryptEncoder.cs" />
+    <Compile Include="Wcf\Channel\MyWebRequest.cs" />
+    <Compile Include="Wcf\Channel\RestClient.cs" />
+    <Compile Include="Wcf\Channel\RestInvoker.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,23 +105,11 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\AESEncrypt.cs">
       <Link>Wcf\Channel\AESEncrypt.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\UserInfo.cs">
+      <Link>Wcf\Datas\UserInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Contracts\IServiceToAdmin.cs">
       <Link>Wcf\Contracts\IServiceToAdmin.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\BusyToken.cs">
-      <Link>Wcf\Channel\BusyToken.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\CryptEncoder.cs">
-      <Link>Wcf\Channel\CryptEncoder.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\MyWebRequest.cs">
-      <Link>Wcf\Channel\MyWebRequest.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs">
-      <Link>Wcf\Channel\RestClient.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs">
-      <Link>Wcf\Channel\RestInvoker.cs</Link>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

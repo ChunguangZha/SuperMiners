@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SuperMinersServerApplication.Model
 {
     [DataContract]
-    public class UserInfo
+    public class PlayerInfoLoginWrap
     {
         [DataMember]
         public bool isOnline

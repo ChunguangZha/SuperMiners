@@ -17,6 +17,12 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
             set;
         }
 
+        public string ActionPassword
+        {
+            get;
+            set;
+        }
+
         public string IP
         {
             get;
@@ -42,7 +48,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
         private static Dictionary<string, AdminLoginnedInfo> _infoDic = new Dictionary<string, AdminLoginnedInfo>();
         private static readonly object _locker = new object();
 
-        public static void AddClient(string userName, string token)
+        public static void AddClient(string userName, string actionPassword, string token)
         {
             string ip = null;
             try
@@ -61,6 +67,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
                 _infoDic[token] = new AdminLoginnedInfo()
                 {
                     UserName = userName,
+                    ActionPassword = actionPassword,
                     Token = token,
                     IP = ip,
                     TimeLoggedIn = DateTime.Now
@@ -76,6 +83,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
             {
                 _infoDic.Remove(token);
                 _lastUpdateTimeDic.Remove(token);
+            }
+        }
+
+        public static string[] GetInvalidClients()
+        {
+            lock (_locker)
+            {
+                return _lastUpdateTimeDic.Where(data => (DateTime.Now - data.Value).TotalSeconds > GlobalData.TimeoutSeconds).Select(data => data.Key).ToArray();
             }
         }
 
@@ -139,5 +154,18 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
             return null;
         }
 
+        public static AdminLoginnedInfo GetClient(string token)
+        {
+            lock (_locker)
+            {
+                AdminLoginnedInfo info;
+                if (_infoDic.TryGetValue(token, out info))
+                {
+                    return info;
+                }
+            }
+
+            return null;
+        }
     }
 }

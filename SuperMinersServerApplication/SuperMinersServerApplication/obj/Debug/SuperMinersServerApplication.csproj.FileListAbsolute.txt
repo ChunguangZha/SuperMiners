@@ -11,3 +11,6 @@ F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.csproj.GenerateResource.Cache
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.exe
 F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Debug\SuperMinersServerApplication.exe.config
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.exe
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.pdb

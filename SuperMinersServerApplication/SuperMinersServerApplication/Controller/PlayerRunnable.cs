@@ -54,6 +54,24 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
+        public bool LockPlayer()
+        {
+            this.BasePlayer.SimpleInfo.LockedLogin = true;
+            this.BasePlayer.SimpleInfo.LockedLoginTime = DateTime.Now;
+            this.BasePlayer.SimpleInfo.LastLogOutTime = null;
+            this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = null;
+            bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, this.BasePlayer.SimpleInfo.LockedLoginTime);
+            return isOK;
+        }
+
+        public bool UnlockPlayer()
+        {
+            this.BasePlayer.SimpleInfo.LockedLogin = false;
+            this.BasePlayer.SimpleInfo.LockedLoginTime = null;
+            bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, null);
+            return isOK;
+        }
+
         public bool LogoutPlayer()
         {
             BasePlayer.SimpleInfo.LastLogOutTime = DateTime.Now;
@@ -80,7 +98,7 @@ namespace SuperMinersServerApplication.Controller
             DateTime startTime;
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
-                //如果没有保存起始时间，则以上一次退出时间为起始。这时，如果玩家退出时没有进行收取，则下一次登录会清除玩家上一次在线时所生产出的矿石。
+                //如果没有保存起始时间，则以上一次退出时间为起始。
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLogOutTime.Value;
             }
 

@@ -9,53 +9,114 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 {
-    public class ServiceToAdmin : IServiceToAdmin
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
+    public class ServiceToAdmin : IServiceToAdmin, IDisposable
     {
-        public string LoginAdmin(string adminName, string password, string key)
+        private Dictionary<string, Queue<CallbackInfo>> _callbackDic = new Dictionary<string, Queue<CallbackInfo>>();
+        private readonly object _callbackDicLocker = new object();
+
+        private System.Timers.Timer _userStateCheck = new System.Timers.Timer(10000);
+
+        private void _userStateCheck_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (string.IsNullOrEmpty(adminName) || String.IsNullOrEmpty(password))
+            this._userStateCheck.Stop();
+            try
             {
-                return string.Empty;
+                string[] tokens = AdminManager.GetInvalidClients();
+                if (null != tokens)
+                {
+                    foreach (var token in tokens)
+                    {
+                        //PlayerController.Instance.LogoutPlayer(ClientManager.GetClientUserName(token));
+                        RSAProvider.RemoveRSA(token);
+                        AdminManager.RemoveClient(token);
+                        lock (this._callbackDicLocker)
+                        {
+                            this._callbackDic.Remove(token);
+                        }
+                    }
+                }
             }
+            catch
+            {
+            }
+            finally
+            {
+                if (App.ServiceToRun.IsStarted)
+                {
+                    this._userStateCheck.Start();
+                }
+            }
+        }
+
+        public string LoginAdmin(string adminName, string password, string mac, string key)
+        {
             string token = string.Empty;
+            if (string.IsNullOrEmpty(adminName) || String.IsNullOrEmpty(password) || String.IsNullOrEmpty(mac) || String.IsNullOrEmpty(key))
+            {
+                return token;
+            }
             try
             {
                 AdminInfo admin = DBProvider.AdminDBProvider.GetAdmin(adminName);
-                if (null != admin)
+                if (null == admin)
                 {
-                    RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-                    rsa.FromXmlString(key);
-
-                    token = Guid.NewGuid().ToString();
-                    RSAProvider.SetRSA(token, rsa);
-                    RSAProvider.LoadRSA(token);
-
-                    AdminManager.AddClient(adminName, token);
-                    //lock (this._callbackDicLocker)
-                    //{
-                    //    this._callbackDic[token] = new Queue<CallbackInfo>();
-                    //}
-
-                    LogHelper.Instance.AddInfoLog("Admin login, userId=" + adminName + ", remoteIP=" + AdminManager.GetClientIP(token));
-
+                    return token;
                 }
+                if (admin.LoginPassword != password)
+                {
+                    return token;
+                }
+
+#if !DEBUG
+                if (admin.Macs == null || admin.Macs.Length == 0)
+                {
+                    if (admin.Macs.FirstOrDefault(s => s == mac) == null)
+                    {
+                        return token;
+                    }
+                }
+
+#endif
+
+                token = AdminManager.GetToken(adminName);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    //new Thread(new ParameterizedThreadStart(o =>
+                    //{
+                    //    this.KickoutByUser(o.ToString());
+                    //})).Start(token);
+
+                    return "ISLOGGED";
+                }
+
+                RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+                rsa.FromXmlString(key);
+
+                token = Guid.NewGuid().ToString();
+                RSAProvider.SetRSA(token, rsa);
+                RSAProvider.LoadRSA(token);
+
+                AdminManager.AddClient(adminName, admin.ActionPassword, token);
+                lock (this._callbackDicLocker)
+                {
+                    this._callbackDic[token] = new Queue<CallbackInfo>();
+                }
+
+                LogHelper.Instance.AddInfoLog("Admin login, userId=" + adminName + ", remoteIP=" + AdminManager.GetClientIP(token));
+
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.AddErrorLog("Web Admin login failed, userId=" + adminName + ", remoteIP=" + AdminManager.GetClientIP(token), ex);
+                LogHelper.Instance.AddErrorLog("Admin login failed, userId=" + adminName + ", remoteIP=" + AdminManager.GetClientIP(token), ex);
             }
-            //if (!string.IsNullOrEmpty(token))
-            //{
-            //    new Thread(new ParameterizedThreadStart(o =>
-            //    {
-            //        this.LogedIn(o.ToString());
-            //    })).Start(token);
-            //}
 
             return token;
         }
@@ -66,10 +127,10 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             {
                 RSAProvider.RemoveRSA(token);
                 AdminManager.RemoveClient(token);
-                //lock (this._callbackDicLocker)
-                //{
-                //    this._callbackDic.Remove(token);
-                //}
+                lock (this._callbackDicLocker)
+                {
+                    this._callbackDic.Remove(token);
+                }
                 //if (!string.IsNullOrEmpty(token))
                 //{
                 //    new Thread(new ParameterizedThreadStart(o =>
@@ -85,22 +146,27 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public Model.UserInfo[] GetPlayers(string token, int isOnline, int isLocked)
+        public PlayerInfoLoginWrap[] GetPlayers(string token, int isOnline, int isLocked)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    string adminName = AdminManager.GetClientUserName(token);
+                    string adminUserName = AdminManager.GetClientUserName(token);
+                    if (string.IsNullOrEmpty(adminUserName))
+                    {
+                        return null;
+                    }
+
                     PlayerInfo[] players = DBProvider.UserDBProvider.GetAllPlayers();
                     if (players == null)
                     {
                         return null;
                     }
-                    UserInfo[] users = new UserInfo[players.Length];
+                    PlayerInfoLoginWrap[] users = new PlayerInfoLoginWrap[players.Length];
                     for (int i = 0; i < players.Length; i++)
                     {
-                        users[i] = new UserInfo()
+                        users[i] = new PlayerInfoLoginWrap()
                         {
                             SimpleInfo = players[i].SimpleInfo,
                             isOnline = ClientManager.IsExistUserName(players[i].SimpleInfo.UserName),
@@ -113,7 +179,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("GetPlayers", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetPlayers Exception", exc);
                     return null;
                 }
             }
@@ -123,24 +189,88 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public void DeletePlayers(string token, string actionPassword, string[] userNames)
+        //public void DeletePlayers(string token, string actionPassword, string userName)
+        //{
+
+        //}
+
+        //public bool LogOutPlayers(string token, string actionPassword, string userName)
+        //{
+        //    return false;
+        //}
+
+        public bool LockPlayer(string token, string actionPassword, string playerUserName)
         {
-            throw new NotImplementedException();
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
+
+                    return PlayerController.Instance.LockPlayer(playerUserName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("LockPlayer", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
-        public bool LogOutPlayers(string token, string actionPassword, string[] userNames)
+        public bool UnlockPlayer(string token, string actionPassword, string playerUserName)
         {
-            throw new NotImplementedException();
-        }
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
 
-        public bool LockPlayers(string token, string actionPassword, string[] userNames)
-        {
-            throw new NotImplementedException();
+                    return PlayerController.Instance.UnlockPlayer(playerUserName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         public bool UpdatePlayerInfo(string token, string actionPassword, MetaData.User.PlayerSimpleInfo simpleInfo, MetaData.User.PlayerFortuneInfo fortuneInfo)
         {
             throw new NotImplementedException();
         }
+
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            this._userStateCheck.Dispose();
+        }
+
+        #endregion
     }
 }

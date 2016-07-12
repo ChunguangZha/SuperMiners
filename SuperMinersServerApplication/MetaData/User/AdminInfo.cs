@@ -13,5 +13,7 @@ namespace MetaData.User
         public string LoginPassword;
 
         public string ActionPassword;
+
+        public string[] Macs;
     }
 }
