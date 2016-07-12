@@ -284,6 +284,18 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
         }
 
+        public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(fortuneinfo.UserName);
+            if (playerrun != null)
+            {
+                var player = DBProvider.UserDBProvider.GetPlayer(fortuneinfo.UserName);
+                playerrun = new PlayerRunnable(player);
+            }
+
+            return playerrun.SetFortuneInfo(fortuneinfo);
+        }
+
         public bool LockPlayer(string userName)
         {
             var playerrun = this.GetOnlinePlayerRunnable(userName);

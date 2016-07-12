@@ -23,6 +23,20 @@ namespace SuperMinersServerApplication.Controller
             BasePlayer = player;
         }
 
+        public bool SetFortuneInfo(PlayerFortuneInfo fortuneInfo)
+        {
+            lock (this._lockFortuneAction)
+            {
+                bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo);
+                if (isOK)
+                {
+                    this.BasePlayer.FortuneInfo = fortuneInfo;
+                }
+
+                return isOK;
+            }
+        }
+
         public float MaxTempStonesOutput
         {
             get

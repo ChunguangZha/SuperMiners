@@ -77,13 +77,19 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         bool UnlockPlayer(string token, string actionPassword, string playerUserName);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdatePlayerInfo",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdatePlayerFortuneInfo",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool UpdatePlayerInfo(string token, string actionPassword, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo);
+        bool UpdatePlayerFortuneInfo(string token, string actionPassword, PlayerFortuneInfo fortuneInfo);
 
-
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/ChangePlayerPassword",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool ChangePlayerPassword(string token, string actionPassword, string newPassword);
     }
 }

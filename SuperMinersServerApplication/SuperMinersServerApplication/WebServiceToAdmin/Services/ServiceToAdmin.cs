@@ -259,9 +259,64 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool UpdatePlayerInfo(string token, string actionPassword, MetaData.User.PlayerSimpleInfo simpleInfo, MetaData.User.PlayerFortuneInfo fortuneInfo)
+        public bool UpdatePlayerFortuneInfo(string token, string actionPassword, MetaData.User.PlayerFortuneInfo fortuneInfo)
         {
-            throw new NotImplementedException();
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
+
+                    return PlayerController.Instance.ChangePlayerFortuneInfo(fortuneInfo);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool ChangePlayerPassword(string token, string actionPassword, string newPassword)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
+
+                    return PlayerController.Instance.ChangePassword(fortuneInfo);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         #region IDisposable Members

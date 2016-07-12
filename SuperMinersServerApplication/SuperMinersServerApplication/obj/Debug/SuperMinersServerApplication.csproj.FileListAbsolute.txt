@@ -14,3 +14,6 @@ F:\My Work\WinForm\SuperMinersServerApplication\SuperMinersServerApplication\obj
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Debug\SuperMinersServerApplication.exe.config
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.exe
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.pdb
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Debug\SuperMinersServerApplication.exe.config
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.exe
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.pdb
