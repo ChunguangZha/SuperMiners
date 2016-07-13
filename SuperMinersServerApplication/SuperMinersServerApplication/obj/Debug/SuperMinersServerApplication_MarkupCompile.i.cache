@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\
 SuperMinersServerApplication
 none
 false
 TRACE;DEBUG;Encrypt, -Delay
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
 31498948883
 
 68-933822612
-22-1935750337
+22865076290
 MainWindow.xaml;Utility\WinInputPassword.xaml;Views\AddNoticeWindow.xaml;
 
 True

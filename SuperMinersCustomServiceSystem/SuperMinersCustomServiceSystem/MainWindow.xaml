@@ -37,7 +37,7 @@
                     <GroupBox Grid.Row="1" Header="玩家列表">
                         <DataGrid Name="datagridPlayerInfos" AutoGenerateColumns="False" FrozenColumnCount="2">
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Binding="{x:Null}" CanUserSort="False" CanUserReorder="False" ClipboardContentBinding="{x:Null}"/>
+                                <DataGridCheckBoxColumn Binding="{Binding Checked}" CanUserSort="False" CanUserReorder="False" ClipboardContentBinding="{x:Null}"/>
                                 <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
                                 <DataGridTextColumn Binding="{Binding Alipay}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
                                 <DataGridTextColumn Binding="{Binding AlipayRealName}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>

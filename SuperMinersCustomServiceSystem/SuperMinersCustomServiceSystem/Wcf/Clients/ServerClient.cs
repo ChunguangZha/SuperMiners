@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Wcf.Channel;
+using SuperMinersServerApplication.Model;
 using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
 using System;
 using System.Collections.Generic;
@@ -118,29 +119,40 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<string>(this._context, "LoginAdmin", this.LoginAdminCompleted, adminName, password, mac, key);
         }
 
-        public bool LogoutAdmin(string token)
+        public event EventHandler<WebInvokeEventArgs<bool>> LogoutAdminCompleted;
+        public void LogoutAdmin()
         {
-            throw new NotImplementedException();
+            this._invoker.Invoke<bool>(this._context, "LogoutAdmin", this.LogoutAdminCompleted, GlobalData.Token);
         }
 
-        public SuperMinersServerApplication.Model.PlayerInfoLoginWrap[] GetPlayers(string token, int isOnline, int isLocked)
+        public event EventHandler<WebInvokeEventArgs<PlayerInfoLoginWrap[]>> GetPlayersCompleted;
+        public void GetPlayers(int isOnline, int isLocked)
         {
-            throw new NotImplementedException();
+            this._invoker.Invoke<PlayerInfoLoginWrap[]>(this._context, "GetPlayers", this.GetPlayersCompleted, GlobalData.Token, isOnline, isLocked);
         }
 
-        public bool LockPlayer(string token, string actionPassword, string playerUserName)
+        public event EventHandler<WebInvokeEventArgs<bool>> LockPlayerCompleted;
+        public void LockPlayer(string actionPassword, string playerUserName)
         {
-            throw new NotImplementedException();
+            this._invoker.Invoke<bool>(this._context, "LockPlayer", this.LockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName);
         }
 
-        public bool UnlockPlayer(string token, string actionPassword, string playerUserName)
+        public event EventHandler<WebInvokeEventArgs<bool>> UnlockPlayerCompleted;
+        public void UnlockPlayer(string actionPassword, string playerUserName)
         {
-            throw new NotImplementedException();
+            this._invoker.Invoke<bool>(this._context, "UnlockPlayer", this.UnlockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName);
         }
 
-        public bool UpdatePlayerInfo(string token, string actionPassword, MetaData.User.PlayerSimpleInfo simpleInfo, MetaData.User.PlayerFortuneInfo fortuneInfo)
+        public event EventHandler<WebInvokeEventArgs<bool>> UpdatePlayerFortuneInfoCompleted;
+        public void UpdatePlayerFortuneInfo(string actionPassword, MetaData.User.PlayerFortuneInfo fortuneInfo)
         {
-            throw new NotImplementedException();
+            this._invoker.Invoke<bool>(this._context, "UpdatePlayerFortuneInfo", this.UpdatePlayerFortuneInfoCompleted, GlobalData.Token, actionPassword, fortuneInfo);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerPasswordCompleted;
+        public void ChangePlayerPassword(string actionPassword, string playerUserName, string newPassword)
+        {
+            this._invoker.Invoke<bool>(this._context, "ChangePlayerPassword", this.ChangePlayerPasswordCompleted, GlobalData.Token, actionPassword, playerUserName, newPassword);
         }
 
         #endregion

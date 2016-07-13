@@ -90,6 +90,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool ChangePlayerPassword(string token, string actionPassword, string newPassword);
+        bool ChangePlayerPassword(string token, string actionPassword, string playerUserName, string newPassword);
     }
 }

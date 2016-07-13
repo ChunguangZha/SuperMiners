@@ -219,7 +219,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("LockPlayer", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.LockPlayer", exc);
                     return false;
                 }
             }
@@ -249,7 +249,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.UnlockPlayer", exc);
                     return false;
                 }
             }
@@ -279,7 +279,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.UpdatePlayerFortuneInfo", exc);
                     return false;
                 }
             }
@@ -289,7 +289,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool ChangePlayerPassword(string token, string actionPassword, string newPassword)
+        public bool ChangePlayerPassword(string token, string actionPassword, string playerUserName, string newPassword)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -305,11 +305,11 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         return false;
                     }
 
-                    return PlayerController.Instance.ChangePassword(fortuneInfo);
+                    return PlayerController.Instance.ChangePasswordByAdmin(playerUserName, newPassword);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("UnlockPlayer", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayerPassword", exc);
                     return false;
                 }
             }

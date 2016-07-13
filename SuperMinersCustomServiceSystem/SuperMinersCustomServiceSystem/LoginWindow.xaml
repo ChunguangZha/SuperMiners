@@ -1,0 +1,23 @@
+﻿<Window x:Class="SuperMinersCustomServiceSystem.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="登录迅灵矿场管理系统" Height="200" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.ColumnSpan="2" Text="欢迎登录迅灵矿场管理系统" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Margin="5"/>
+        <TextBlock Grid.Row="1" Text="账户：" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="txtAdminUserName" VerticalAlignment="Top" Margin="5"/>
+        <TextBlock Grid.Row="2" Text="密码：" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="txtPassword" VerticalAlignment="Top" Margin="5"/>
+        <Button Grid.Row="3" Grid.Column="1" Name="btnLogin" Content="登录" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+    </Grid>
+</Window>

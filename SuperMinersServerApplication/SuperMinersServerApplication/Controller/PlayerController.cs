@@ -272,6 +272,18 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
+        public bool ChangePasswordByAdmin(string userName, string newPassword)
+        {
+            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                var player = DBProvider.UserDBProvider.GetPlayer(userName);
+                playerrun = new PlayerRunnable(player);
+            }
+
+            return playerrun.ChangePassword(newPassword);
+        }
+
         public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             var playerrun = this.GetOnlinePlayerRunnable(userName);
