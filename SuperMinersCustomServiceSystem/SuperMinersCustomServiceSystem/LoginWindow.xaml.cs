@@ -19,9 +19,26 @@ namespace SuperMinersCustomServiceSystem
     /// </summary>
     public partial class LoginWindow : Window
     {
+        MainWindow _winMain = null;
+
         public LoginWindow()
         {
             InitializeComponent();
+            this.txtAdminUserName.Focus();
+            GlobalData.Client.LoginAdminCompleted += Client_LoginAdminCompleted;
+        }
+
+        void Client_LoginAdminCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.txtAdminUserName.Text == "")
+            {
+                MessageBox.Show("");
+            }
         }
     }
 }

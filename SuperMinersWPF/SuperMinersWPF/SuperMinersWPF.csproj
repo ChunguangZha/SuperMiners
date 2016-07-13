@@ -25,14 +25,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://ore.xlwinfo.com/Software/</InstallUrl>
-    <SupportUrl>http://ore.xlwinfo.com/</SupportUrl>
-    <ErrorReportUrl>http://ore.xlwinfo.com/</ErrorReportUrl>
+    <InstallUrl>http://www.xlore.net:65512/Software/</InstallUrl>
+    <SupportUrl>http://www.xlore.net:65512/</SupportUrl>
+    <ErrorReportUrl>http://www.xlore.net:65512/</ErrorReportUrl>
     <TargetCulture>zh-CN</TargetCulture>
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
