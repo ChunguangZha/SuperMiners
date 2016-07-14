@@ -146,7 +146,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public PlayerInfoLoginWrap[] GetPlayers(string token, int isOnline, int isLocked)
+        public PlayerInfoLoginWrap[] GetPlayers(string token)
         {
             if (RSAProvider.LoadRSA(token))
             {

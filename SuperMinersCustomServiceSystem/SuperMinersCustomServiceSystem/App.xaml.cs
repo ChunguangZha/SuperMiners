@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,14 @@ namespace SuperMinersCustomServiceSystem
     /// </summary>
     public partial class App : Application
     {
+        public static BusyToken BusyToken = new BusyToken();
+        public static PlayerViewModel PlayerVMObject = new PlayerViewModel();
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            PlayerVMObject.RegisterEvents();
+        }
     }
 }

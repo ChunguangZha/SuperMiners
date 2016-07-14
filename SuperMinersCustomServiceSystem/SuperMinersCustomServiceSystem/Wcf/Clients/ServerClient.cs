@@ -126,9 +126,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<PlayerInfoLoginWrap[]>> GetPlayersCompleted;
-        public void GetPlayers(int isOnline, int isLocked)
+        public void GetPlayers()
         {
-            this._invoker.Invoke<PlayerInfoLoginWrap[]>(this._context, "GetPlayers", this.GetPlayersCompleted, GlobalData.Token, isOnline, isLocked);
+            this._invoker.Invoke<PlayerInfoLoginWrap[]>(this._context, "GetPlayers", this.GetPlayersCompleted, GlobalData.Token);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> LockPlayerCompleted;

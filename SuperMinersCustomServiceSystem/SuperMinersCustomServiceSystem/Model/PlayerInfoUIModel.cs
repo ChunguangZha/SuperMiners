@@ -26,11 +26,14 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("LoginIP");
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("NickName");
-                NotifyPropertyChange("Password");
                 NotifyPropertyChange("Alipay");
                 NotifyPropertyChange("AlipayRealName");
                 NotifyPropertyChange("RegisterTime");
+                NotifyPropertyChange("ReferrerUserName");
                 NotifyPropertyChange("InvitationCode");
+                NotifyPropertyChange("LastLoginTime");
+                NotifyPropertyChange("IsLocked");
+                NotifyPropertyChange("LockedTime");
                 NotifyPropertyChange("Exp");
                 NotifyPropertyChange("RMB");
                 NotifyPropertyChange("FreezingRMB");
@@ -91,14 +94,29 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.SimpleInfo.RegisterTime; }
         }
 
+        public string ReferrerUserName
+        {
+            get { return this._parentObject.SimpleInfo.ReferrerUserName; }
+        }
+
         public string InvitationCode
         {
             get { return this._parentObject.SimpleInfo.InvitationCode; }
         }
 
-        public float Exp
+        public DateTime? LastLoginTime
         {
-            get { return this._parentObject.FortuneInfo.Exp; }
+            get { return this._parentObject.SimpleInfo.LastLoginTime; }
+        }
+
+        public bool IsLocked
+        {
+            get { return this._parentObject.SimpleInfo.LockedLogin; }
+        }
+
+        public DateTime? LockedTime
+        {
+            get { return this._parentObject.SimpleInfo.LockedLoginTime; }
         }
 
         public bool Online
@@ -119,6 +137,11 @@ namespace SuperMinersCustomServiceSystem.Model
                 this.ParentObject.LoginIP = value;
                 NotifyPropertyChange("LoginIP");
             }
+        }
+
+        public float Exp
+        {
+            get { return this._parentObject.FortuneInfo.Exp; }
         }
 
         public float RMB

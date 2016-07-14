@@ -245,8 +245,14 @@
     <Compile Include="Views\ChangePasswordWindow.xaml.cs">
       <DependentUpon>ChangePasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ChatUserControl.xaml.cs">
+      <DependentUpon>ChatUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DigStoneAreaUserControl.xaml.cs">
       <DependentUpon>DigStoneAreaUserControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FunnyUserControl.xaml.cs">
+      <DependentUpon>FunnyUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GameHelperControl.xaml.cs">
       <DependentUpon>GameHelperControl.xaml</DependentUpon>
@@ -337,7 +343,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ChatUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DigStoneAreaUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FunnyUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

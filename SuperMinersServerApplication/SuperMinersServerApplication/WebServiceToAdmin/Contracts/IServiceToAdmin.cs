@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        PlayerInfoLoginWrap[] GetPlayers(string token, int isOnline, int isLocked);
+        PlayerInfoLoginWrap[] GetPlayers(string token);
 
         //[OperationContract]
         //[WebInvoke(UriTemplate = "/WebServiceAdmin/DeletePlayers",

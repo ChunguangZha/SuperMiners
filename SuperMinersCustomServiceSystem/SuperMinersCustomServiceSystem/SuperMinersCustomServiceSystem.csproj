@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Encrypt</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -80,18 +80,33 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\CallbackAttribute.cs">
       <Link>Wcf\Datas\CallbackAttribute.cs</Link>
     </Compile>
+    <Compile Include="BusyWindow.xaml.cs">
+      <DependentUpon>BusyWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="EditPlayerWindow.xaml.cs">
+      <DependentUpon>EditPlayerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GlobalData.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\PlayerInfoUIModel.cs" />
+    <Compile Include="ViewModel\BusyToken.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
     <Compile Include="Wcf\Channel\CryptEncoder.cs" />
     <Compile Include="Wcf\Channel\MyWebRequest.cs" />
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
+    <Page Include="BusyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EditPlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

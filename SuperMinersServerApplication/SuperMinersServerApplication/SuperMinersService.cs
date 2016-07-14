@@ -4,6 +4,8 @@ using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService.Contracts;
 using SuperMinersServerApplication.WebService.Services;
+using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
+using SuperMinersServerApplication.WebServiceToAdmin.Services;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using SuperMinersServerApplication.WebServiceToWeb.Services;
 using System;
@@ -39,6 +41,7 @@ namespace SuperMinersServerApplication
         }
 
         private ServiceHost _serviceToClientHost;
+        private ServiceHost _serviceToAdminHost;
         private ServiceHost _serviceToWebHost;
 
         public SuperMinersService()
@@ -84,6 +87,10 @@ namespace SuperMinersServerApplication
                     return false;
                 }
                 if (!InitServiceToWeb())
+                {
+                    return false;
+                }
+                if (!InitServiceToAdmin())
                 {
                     return false;
                 }
@@ -250,6 +257,65 @@ namespace SuperMinersServerApplication
             }
         }
 
+        private bool InitServiceToAdmin()
+        {
+            try
+            {
+                List<BindingElement> bindingElements = new List<BindingElement>();
+
+                WebMessageEncodingBindingElement webCncoding = new WebMessageEncodingBindingElement();
+                webCncoding.ReaderQuotas.MaxArrayLength = 1024 * 1024 * 5;
+                webCncoding.ReaderQuotas.MaxBytesPerRead = 1024 * 1024 * 3;
+                webCncoding.ReaderQuotas.MaxStringContentLength = 1024 * 1024 * 5;
+                CryptMessageEncoderElement encoding = new CryptMessageEncoderElement(webCncoding);
+
+                HttpTransportBindingElement transport = new HttpTransportBindingElement();
+                transport.ManualAddressing = true;
+                transport.MaxReceivedMessageSize = Int32.MaxValue;
+                transport.MaxBufferSize = Int32.MaxValue;
+                transport.MaxBufferPoolSize = 1024 * 1024 * 5;
+
+                bindingElements.Add(encoding);
+                bindingElements.Add(transport);
+
+                CustomBinding bind = new CustomBinding(bindingElements);
+
+                var baseAddress = new Uri("http://localhost:" + GlobalData.ServiceToAdministrator);
+                this._serviceToAdminHost = new ServiceHost(typeof(ServiceToAdmin), baseAddress);
+                this._serviceToAdminHost.Description.Behaviors.Add(new ServiceThrottlingBehavior()
+                {
+                    MaxConcurrentCalls = 1024,
+                    MaxConcurrentInstances = 512,
+                    MaxConcurrentSessions = 512,
+                });
+
+                var servieEP = this._serviceToAdminHost.AddServiceEndpoint(typeof(IServiceToAdmin), bind, baseAddress);
+
+                servieEP.Behaviors.Add(new WebHttpBehavior());
+
+                foreach (var item in servieEP.Contract.Operations)
+                {
+                    DataContractSerializerOperationBehavior dc = item.Behaviors.Find<DataContractSerializerOperationBehavior>();
+                    if (dc == null)
+                    {
+                        dc = new DataContractSerializerOperationBehavior(item);
+                        item.Behaviors.Add(dc);
+                    }
+
+                    // Change the settings of the behavior.
+                    dc.MaxItemsInObjectGraph = Int32.MaxValue;
+                }
+
+                this._serviceToAdminHost.Open();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Init Service To Admin failed.", exc);
+                return false;
+            }
+        }
+
         private bool StopService()
         {
             try
@@ -261,6 +327,10 @@ namespace SuperMinersServerApplication
                 if (_serviceToWebHost != null)
                 {
                     _serviceToWebHost.Close();
+                }
+                if (_serviceToAdminHost != null)
+                {
+                    _serviceToAdminHost.Close();
                 }
                 IsStarted = false;
                 LogHelper.Instance.Stop();

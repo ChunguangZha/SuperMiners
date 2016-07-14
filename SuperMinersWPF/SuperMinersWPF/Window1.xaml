@@ -255,6 +255,8 @@
             <Views:StonesMarketUserControl x:Name="controlStonesMarket" Visibility="Collapsed"/>
             <Views:TopListUserControl x:Name="controlTopList" Visibility="Collapsed"/>
             <Views:GameHelperControl x:Name="controlGameHelper" Visibility="Collapsed"/>
+            <Views:ChatUserControl x:Name="controlChat" Visibility="Collapsed"/>
+            <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
         </Grid>
 
     </Grid>
