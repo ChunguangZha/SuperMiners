@@ -105,6 +105,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controller\AdminController.cs" />
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
     <Compile Include="Controller\NoticeController.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="SuperMinersService.Designer.cs">
       <DependentUpon>SuperMinersService.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIModel\AdminUIModel.cs" />
     <Compile Include="UIModel\AwardReferrerConfigUIModel.cs" />
     <Compile Include="UIModel\BaseUIModel.cs" />
     <Compile Include="UIModel\GameConfigUIModel.cs" />
@@ -153,6 +155,9 @@
     </Compile>
     <Compile Include="Views\AddNoticeWindow.xaml.cs">
       <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditAdminWindow.xaml.cs">
+      <DependentUpon>EditAdminWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
@@ -197,6 +202,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditAdminWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

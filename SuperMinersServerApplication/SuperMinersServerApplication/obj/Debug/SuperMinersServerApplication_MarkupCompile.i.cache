@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;Encrypt, -Delay
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
-31498948883
+4-699928455
 
-68-933822612
+7187111878
 22865076290
-MainWindow.xaml;Utility\WinInputPassword.xaml;Views\AddNoticeWindow.xaml;
+MainWindow.xaml;Utility\WinInputPassword.xaml;Views\AddNoticeWindow.xaml;Views\EditAdminWindow.xaml;
 
-True
+False
 

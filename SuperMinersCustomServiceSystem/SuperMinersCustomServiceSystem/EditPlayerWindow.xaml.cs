@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,13 @@ namespace SuperMinersCustomServiceSystem
     /// </summary>
     public partial class EditPlayerWindow : Window
     {
-        public EditPlayerWindow()
+        PlayerInfoUIModel _player = null;
+        public EditPlayerWindow(PlayerInfoUIModel player)
         {
             InitializeComponent();
+
+            this._player = player;
+            this.DataContext = _player;
         }
 
         private void btnEditAlipay_Click(object sender, RoutedEventArgs e)

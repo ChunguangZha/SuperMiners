@@ -75,16 +75,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     return token;
                 }
 
-#if !DEBUG
                 if (admin.Macs == null || admin.Macs.Length == 0)
                 {
-                    if (admin.Macs.FirstOrDefault(s => s == mac) == null)
+                    if (admin.Macs.FirstOrDefault(s => s.ToLower() == mac.ToLower()) == null)
                     {
                         return token;
                     }
                 }
-
-#endif
 
                 token = AdminManager.GetToken(adminName);
                 if (!string.IsNullOrEmpty(token))
@@ -94,6 +91,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     //    this.KickoutByUser(o.ToString());
                     //})).Start(token);
 
+                    LogoutAdmin(token);
                     return "ISLOGGED";
                 }
 
@@ -166,13 +164,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     PlayerInfoLoginWrap[] users = new PlayerInfoLoginWrap[players.Length];
                     for (int i = 0; i < players.Length; i++)
                     {
-                        users[i] = new PlayerInfoLoginWrap()
+                        users[i] = new PlayerInfoLoginWrap();
+                        users[i].SimpleInfo = players[i].SimpleInfo;
+                        users[i].FortuneInfo = players[i].FortuneInfo;
+                        users[i].isOnline = ClientManager.IsExistUserName(players[i].SimpleInfo.UserName);
+                        if (users[i].isOnline)
                         {
-                            SimpleInfo = players[i].SimpleInfo,
-                            isOnline = ClientManager.IsExistUserName(players[i].SimpleInfo.UserName),
-                            LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(players[i].SimpleInfo.UserName)),
-                            FortuneInfo = players[i].FortuneInfo,
-                        };
+                            users[i].LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(players[i].SimpleInfo.UserName));
+                        }
                     }
 
                     return users;
@@ -188,16 +187,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 throw new Exception();
             }
         }
-
-        //public void DeletePlayers(string token, string actionPassword, string userName)
-        //{
-
-        //}
-
-        //public bool LogOutPlayers(string token, string actionPassword, string userName)
-        //{
-        //    return false;
-        //}
 
         public bool LockPlayer(string token, string actionPassword, string playerUserName)
         {

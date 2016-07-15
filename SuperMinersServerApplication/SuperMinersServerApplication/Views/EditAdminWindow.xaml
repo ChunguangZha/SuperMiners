@@ -1,0 +1,34 @@
+﻿<Window x:Class="SuperMinersServerApplication.Views.EditAdminWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="EditAdminWindow" Height="300" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="用户名：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Name="txtUserName" IsReadOnly="True" MaxLength="15" Margin="5"/>
+        <TextBlock Grid.Row="1" Text="登录密码：" Margin="5" HorizontalAlignment="Right"/>
+        <PasswordBox Grid.Row="1" Grid.Column="1" Name="txtLoginPassword" MaxLength="15" Margin="5"/>
+        <TextBlock Grid.Row="2" Text="确认登录密码：" Margin="5" HorizontalAlignment="Right"/>
+        <PasswordBox Grid.Row="2" Grid.Column="1" Name="txtConfirmLoginPassword" MaxLength="15" Margin="5"/>
+        <TextBlock Grid.Row="3" Text="操作密码：" Margin="5" HorizontalAlignment="Right"/>
+        <PasswordBox Grid.Row="3" Grid.Column="1" Name="txtActionPassword" MaxLength="15" Margin="5"/>
+        <TextBlock Grid.Row="4" Text="确认操作密码：" Margin="5" HorizontalAlignment="Right"/>
+        <PasswordBox Grid.Row="4" Grid.Column="1" Name="txtConfirmActionPassword" MaxHeight="15" Margin="5"/>
+        <TextBlock Grid.Row="5" Text="MAC：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="txtMac" MaxHeight="20" Margin="5"/>
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Name="btnOK" Content="保存" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,5,120,5" Click="btnOK_Click"/>
+        <Button Grid.Row="6" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="btnCancel_Click"/>
+    </Grid>
+</Window>

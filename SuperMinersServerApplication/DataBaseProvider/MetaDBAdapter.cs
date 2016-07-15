@@ -173,6 +173,23 @@ namespace DataBaseProvider
             return players;
         }
 
+        internal static AdminInfo[] GetAdminInfoListFromDataTable(DataTable dt)
+        {
+            AdminInfo[] admins = new AdminInfo[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                AdminInfo admin = new AdminInfo();
+                admin.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                admin.LoginPassword = DESEncrypt.DecryptDES(dt.Rows[i]["LoginPassword"].ToString());
+                admin.ActionPassword = DESEncrypt.DecryptDES(dt.Rows[i]["ActionPassword"].ToString());
+                string macs = dt.Rows[i]["Mac"].ToString();
+                admin.Macs = macs.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                admins[i] = admin;
+            }
+
+            return admins;
+        }
+
         internal static LockSellStonesOrder[] GetLockStonesOrderListFromDataTable(DataTable dt)
         {
             LockSellStonesOrder[] orders = new LockSellStonesOrder[dt.Rows.Count];

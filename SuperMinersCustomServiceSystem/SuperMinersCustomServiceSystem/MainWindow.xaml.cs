@@ -24,6 +24,7 @@ namespace SuperMinersCustomServiceSystem
         public MainWindow()
         {
             InitializeComponent();
+            this.Title += "   --" + GlobalData.CurrentAdmin.UserName;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -34,6 +35,7 @@ namespace SuperMinersCustomServiceSystem
             };
 
             this.datagridPlayerInfos.SetBinding(DataGrid.ItemsSourceProperty, bind);
+            App.PlayerVMObject.AsyncGetListPlayers();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -54,17 +56,12 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (App.PlayerVMObject.GetCheckPlayersCount() != 1)
+            if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
             {
-                MessageBox.Show("请选择一个玩家进行修改。");
-                return;
-            }
+                PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
 
-            PlayerInfoUIModel player = App.PlayerVMObject.GetFirstCheckedPlayer();
-            if (player == null)
-            {
-                MessageBox.Show("请选择一个玩家进行修改。");
-                return;
+                EditPlayerWindow win = new EditPlayerWindow(player);
+                win.ShowDialog();
             }
         }
 

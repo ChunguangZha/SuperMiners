@@ -49,16 +49,20 @@ namespace SuperMinersServerApplication
             BindUI();
 
             StartService();
+
+            AdminController.Instance.GetAllAdmin();
         }
 
         private void StartService()
         {
             this.progressbar.Visibility = System.Windows.Visibility.Visible;
-#if DEBUG
+//#if DEBUG
+//            App.ServiceToRun.StartByApplication();
+//#else            
+//            ServiceBase.Run(App.ServiceToRun);
+//#endif
+
             App.ServiceToRun.StartByApplication();
-#else            
-            ServiceBase.Run(App.ServiceToRun);
-#endif
 
             if (App.ServiceToRun.IsStarted)
             {
@@ -76,6 +80,10 @@ namespace SuperMinersServerApplication
             BindListLogs();
 
             BindNoticeLists();
+
+            Binding bind = new Binding();
+            bind.Source = AdminController.Instance.ListAdmin;
+            this.datagridAdmin.SetBinding(DataGrid.ItemsSourceProperty, bind);
         }
 
         private void BindNoticeLists()
@@ -258,30 +266,58 @@ namespace SuperMinersServerApplication
             NoticeController.Instance.SetAllChecked(true);
         }
 
-        private void btnSelectAllPlayers_Click(object sender, RoutedEventArgs e)
+        private void btnDeleteAdmin_Click(object sender, RoutedEventArgs e)
         {
+            if (AdminController.Instance.GetCheckedItemsCount() != 1)
+            {
+                MessageBox.Show("请选择一个管理员进行删除。");
+                return;
+            }
 
+            var admin = AdminController.Instance.GetFirstCheckedAdmin();
+            if (admin != null)
+            {
+                var result = MessageBox.Show("请确定是否删除该管理员？", "删除管理员", MessageBoxButton.OKCancel);
+                if (result == MessageBoxResult.OK)
+                {
+                    AdminController.Instance.DeleteAdmin(admin.UserName);
+                }
+            }
         }
 
-        private void btnclearAllPlayers_Click(object sender, RoutedEventArgs e)
+        private void btnAddAdmin_Click(object sender, RoutedEventArgs e)
         {
-
+            EditAdminWindow win = new EditAdminWindow(true, null);
+            if (win.ShowDialog() == true)
+            {
+                AdminController.Instance.GetAllAdmin();
+            }
         }
 
-        private void btnDeletePlayers_Click(object sender, RoutedEventArgs e)
+        private void btnEditAdmin_Click(object sender, RoutedEventArgs e)
         {
+            if (this.datagridAdmin.SelectedItem is AdminUIModel)
+            {
 
+                MessageBox.Show("abc行修改。");
+            }
+            if (AdminController.Instance.GetCheckedItemsCount() != 1)
+            {
+                MessageBox.Show("请选择一个管理员进行修改。");
+                return;
+            }
+
+            var admin = AdminController.Instance.GetFirstCheckedAdmin();
+            if (admin != null)
+            {
+                EditAdminWindow win = new EditAdminWindow(false, admin);
+                if (win.ShowDialog() == true)
+                {
+                    AdminController.Instance.GetAllAdmin();
+                }
+            }
         }
 
-        private void btnViewReferTree_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void btnViewTradeRecord_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
 
     }
 }

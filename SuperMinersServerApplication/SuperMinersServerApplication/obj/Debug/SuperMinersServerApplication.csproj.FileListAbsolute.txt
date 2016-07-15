@@ -75,3 +75,5 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.TrustInfo.xml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.exe.manifest
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\SuperMinersServerApplication.application
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\Views\EditAdminWindow.baml
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Debug\Views\EditAdminWindow.g.cs

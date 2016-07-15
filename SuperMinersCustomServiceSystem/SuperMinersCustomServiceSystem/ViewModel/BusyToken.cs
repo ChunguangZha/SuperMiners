@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperMinersCustomServiceSystem.ViewModel
 {
-    class BusyToken
+    public class BusyToken
     {
         #region Busy Window Methods
 

@@ -1,7 +1,12 @@
-Error:  [2016/7/9 19:42:17] ---- Log: Web login failed
-Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetPlayer(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 295
-   在 SuperMinersServerApplication.Controller.PlayerController.LoginPlayer(String userName, String password) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 206
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.Login(String userName, String password, String key) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 78
+Error:  [2016/7/15 17:23:31] ---- Log: ServiceToAdmin.GetPlayers Exception
+Exc.Message: 值不能为 null。
+参数名: keyExc.Stack:    在 System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
+   在 System.Collections.Generic.Dictionary`2.TryGetValue(TKey key, TValue& value)
+   在 SuperMinersServerApplication.WebService.ClientManager.GetClientIP(String token) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\ClientManager.cs:行号 168
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetPlayers(String token) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 166
+-----------------------------------------------------
+
+s\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 78
 -----------------------------------------------------
 
 ice.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 105

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace SuperMinersCustomServiceSystem.ViewModel
 {
-    class PlayerViewModel
+    public class PlayerViewModel
     {
         private ObservableCollection<PlayerInfoUIModel> _listAllPlayers = new ObservableCollection<PlayerInfoUIModel>();
 

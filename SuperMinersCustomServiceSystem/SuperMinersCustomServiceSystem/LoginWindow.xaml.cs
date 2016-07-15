@@ -30,6 +30,8 @@ namespace SuperMinersCustomServiceSystem
         {
             InitializeComponent();
 
+            _syn = SynchronizationContext.Current;
+            GlobalData.Client.SetContext(this._syn);
             isHidden = false;
             this.txtAdminUserName.Focus();
             GlobalData.Client.LoginAdminCompleted += Client_LoginAdminCompleted;
@@ -65,13 +67,17 @@ namespace SuperMinersCustomServiceSystem
                 return;
             }
 
+            GlobalData.InitUser(new MetaData.User.AdminInfo()
+            {
+                UserName = this.txtAdminUserName.Text
+            });
+            GlobalData.InitToken(e.Result);
+
             this._syn.Post(o =>
             {
                 this.txtAdminUserName.Text = "";
                 this.txtPassword.Password = "";
             }, null);
-
-            GlobalData.InitToken(e.Result);
 
             if (!isHidden)
             {
@@ -85,8 +91,9 @@ namespace SuperMinersCustomServiceSystem
 
         void WinMain_Closed(object sender, EventArgs e)
         {
-            this.isHidden = false;
-            this.Visibility = System.Windows.Visibility.Visible;
+            //this.isHidden = false;
+            //this.Visibility = System.Windows.Visibility.Visible;
+            this.Close();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -108,6 +115,19 @@ namespace SuperMinersCustomServiceSystem
                 MessageBox.Show("请输入密码");
                 return;
             }
+
+#if DEBUG
+            GlobalData.Client.Init(GlobalData.DebugServer);
+#else
+            string serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri"];
+            if (string.IsNullOrEmpty(serverUri))
+            {
+                MessageBox.Show("找不到服务器Uri地址，请联系系统管理员，或者安装最新版本。");
+                return;
+            }
+
+            GlobalData.Client.Init(serverUri);
+#endif
 
             string mac = GetMac();
             GlobalData.Client.LoginAdmin(this.txtAdminUserName.Text.Trim(), this.txtPassword.Password.Trim(), mac, CryptEncoder.Key);

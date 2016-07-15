@@ -73,7 +73,7 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
     }
 
-    public class ServerClient : IServiceToAdmin
+    public class ServerClient
     {
         public event EventHandler Error;
 
@@ -101,12 +101,18 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
 
         public void Init(string host)
         {
-            this._invoker.Init(String.Format("http://{0}:33101", host));
+            this._invoker.Init(String.Format("http://{0}:33123", host));
         }
 
         public void HandleCallback()
         {
             this._invoker.HandleCallback(this._context);
+        }
+
+        public void SetContext(SynchronizationContext context)
+        {
+            //BusyToken.SetContext(context);
+            this._context = context;
         }
 
 

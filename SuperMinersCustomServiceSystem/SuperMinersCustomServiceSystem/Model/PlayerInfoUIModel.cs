@@ -94,6 +94,11 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.SimpleInfo.RegisterTime; }
         }
 
+        public string RegisterIP
+        {
+            get { return this._parentObject.SimpleInfo.RegisterIP; }
+        }
+
         public string ReferrerUserName
         {
             get { return this._parentObject.SimpleInfo.ReferrerUserName; }
