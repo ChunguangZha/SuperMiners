@@ -55,7 +55,7 @@
                                 <TextBlock Text="人" Margin="5"/>
                             </StackPanel>
                         </GroupBox.Header>
-                        <DataGrid Name="datagridPlayerInfos" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
+                        <DataGrid Name="datagridPlayerInfos" SelectionMode="Single" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
                                 <DataGridTextColumn Binding="{Binding NickName}" ClipboardContentBinding="{x:Null}" Header="昵称"/>

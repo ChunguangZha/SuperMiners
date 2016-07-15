@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.SystemConfig;
+using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
@@ -119,6 +120,24 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             return token;
         }
 
+        public AdminInfo GetAdminInfo(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                var adminUserName = AdminManager.GetClientUserName(token);
+                if (!string.IsNullOrEmpty(adminUserName))
+                {
+                    return DBProvider.AdminDBProvider.GetAdmin(adminUserName);
+                }
+
+                return null;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public bool LogoutAdmin(string token)
         {
             if (RSAProvider.LoadRSA(token))
@@ -137,6 +156,25 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 //    })).Start(token);
                 //}
                 return true;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public SystemConfigin1 GetGameConfig(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                SystemConfigin1 config = new SystemConfigin1()
+                {
+                    GameConfig = GlobalConfig.GameConfig,
+                    RegisterUserConfig = GlobalConfig.RegisterPlayerConfig,
+                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray()
+                };
+
+                return config;
             }
             else
             {
@@ -180,6 +218,32 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 {
                     LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetPlayers Exception", exc);
                     return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool ChangePlayer(string token, PlayerInfoLoginWrap player)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    bool isOK = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.Email, player.SimpleInfo.QQ);
+                    if (!isOK)
+                    {
+                        return false;
+                    }
+                    isOK = PlayerController.Instance.ChangePlayerFortuneInfo(player.FortuneInfo);
+                    return isOK;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
+                    return false;
                 }
             }
             else

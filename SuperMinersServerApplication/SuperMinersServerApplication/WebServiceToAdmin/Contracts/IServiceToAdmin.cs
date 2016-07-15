@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.SystemConfig;
+using MetaData.User;
 using SuperMinersServerApplication.Model;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,28 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         string LoginAdmin(string adminName, string password, string mac, string key);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAdminInfo",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        AdminInfo GetAdminInfo(string token);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/LogoutAdmin",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool LogoutAdmin(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetGameConfig",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        SystemConfigin1 GetGameConfig(string token);
 
         /// <summary>
         /// 
@@ -43,6 +60,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PlayerInfoLoginWrap[] GetPlayers(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/ChangePlayer",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool ChangePlayer(string token, PlayerInfoLoginWrap player);
 
         //[OperationContract]
         //[WebInvoke(UriTemplate = "/WebServiceAdmin/DeletePlayers",

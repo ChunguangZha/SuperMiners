@@ -31,6 +31,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.GetPlayers();
         }
 
+        public void AsyncChangePlayerInfo(PlayerInfoUIModel player)
+        {
+            App.BusyToken.ShowBusyWindow("正在保存玩家信息...");
+            GlobalData.Client.ChangePlayer(player.ParentObject);
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -60,7 +66,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 {
                     checkUserAlipay = true;
                 }
-                if (string.IsNullOrEmpty(referrerUserName) || item.ReferrerUserName.Contains(referrerUserName))
+                if (string.IsNullOrEmpty(referrerUserName) || item.ReferrerUserName == referrerUserName)
                 {
                     checkUserReferrer = true;
                 }
@@ -144,6 +150,25 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         public void RegisterEvents()
         {
             GlobalData.Client.GetPlayersCompleted += Client_GetPlayersCompleted;
+            GlobalData.Client.ChangePlayerCompleted += Client_ChangePlayerCompleted;
+        }
+
+        void Client_ChangePlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null || !e.Result)
+            {
+                MessageBox.Show("保存玩家信息失败。");
+                return;
+            }
+
+            MessageBox.Show("保存玩家信息成功。");
+            this.AsyncGetListPlayers();
         }
 
         void Client_GetPlayersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SuperMinersServerApplication.Model.PlayerInfoLoginWrap[]> e)

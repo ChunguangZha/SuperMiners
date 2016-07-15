@@ -299,13 +299,22 @@ namespace SuperMinersServerApplication.Controller
         public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo)
         {
             var playerrun = this.GetOnlinePlayerRunnable(fortuneinfo.UserName);
-            if (playerrun != null)
+            if (playerrun == null)
             {
                 var player = DBProvider.UserDBProvider.GetPlayer(fortuneinfo.UserName);
                 playerrun = new PlayerRunnable(player);
             }
 
-            return playerrun.SetFortuneInfo(fortuneinfo);
+            bool isOK = playerrun.SetFortuneInfo(fortuneinfo);
+            if (isOK)
+            {
+                if (this.PlayerInfoChanged != null)
+                {
+                    this.PlayerInfoChanged(playerrun.BasePlayer);
+                }
+            }
+
+            return isOK;
         }
 
         public bool LockPlayer(string userName)

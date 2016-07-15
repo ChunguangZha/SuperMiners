@@ -82,11 +82,21 @@ namespace SuperMinersCustomServiceSystem.Model
         public string Alipay
         {
             get { return this._parentObject.SimpleInfo.Alipay; }
+            set
+            {
+                this._parentObject.SimpleInfo.Alipay = value;
+                NotifyPropertyChange("Alipay");
+            }
         }
 
         public string AlipayRealName
         {
             get { return this._parentObject.SimpleInfo.AlipayRealName; }
+            set
+            {
+                this._parentObject.SimpleInfo.AlipayRealName = value;
+                NotifyPropertyChange("AlipayRealName");
+            }
         }
 
         public DateTime? RegisterTime
@@ -152,6 +162,12 @@ namespace SuperMinersCustomServiceSystem.Model
         public float RMB
         {
             get { return this._parentObject.FortuneInfo.RMB; }
+        }
+
+        public void SetRMB(float newRMB)
+        {
+            this._parentObject.FortuneInfo.RMB = newRMB;
+            NotifyPropertyChange("RMB");
         }
 
         public float FreezingRMB

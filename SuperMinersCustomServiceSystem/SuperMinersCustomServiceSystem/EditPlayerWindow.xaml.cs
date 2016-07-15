@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,12 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditAlipay_Click(object sender, RoutedEventArgs e)
         {
-
+            EditPlayerAlipayWindow win = new EditPlayerAlipayWindow(this._player.UserName, this._player.Alipay, this._player.AlipayRealName);
+            if (win.ShowDialog() == true)
+            {
+                this._player.Alipay = win.AlipayAccount;
+                this._player.AlipayRealName = win.AlipayRealName;
+            }
         }
 
         private void btnEditExp_Click(object sender, RoutedEventArgs e)
@@ -41,17 +47,28 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditRMB_Click(object sender, RoutedEventArgs e)
         {
-
+            EditPlayerRMBWindow win = new EditPlayerRMBWindow(this._player.UserName, this._player.RMB);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetRMB(win.ChangedRMB);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-
+            InputActionPasswordWindow win = new InputActionPasswordWindow();
+            if (win.ShowDialog() == true)
+            {
+                if (MessageBox.Show("确定要修改玩家信息？此操作不可更改。", "确认修改", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                {
+                    App.PlayerVMObject.AsyncChangePlayerInfo(this._player);
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-
+            this.DialogResult = false;
         }
     }
 }

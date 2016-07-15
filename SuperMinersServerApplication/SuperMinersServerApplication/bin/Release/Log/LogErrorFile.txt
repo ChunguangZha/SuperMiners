@@ -1,19 +1,16 @@
-Error:  [2016/7/15 17:23:31] ---- Log: ServiceToAdmin.GetPlayers Exception
-Exc.Message: 值不能为 null。
-参数名: keyExc.Stack:    在 System.Collections.Generic.Dictionary`2.FindEntry(TKey key)
-   在 System.Collections.Generic.Dictionary`2.TryGetValue(TKey key, TValue& value)
-   在 SuperMinersServerApplication.WebService.ClientManager.GetClientIP(String token) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\ClientManager.cs:行号 168
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetPlayers(String token) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 166
+Error:  [2016/7/15 22:43:25] ---- Log: 启动服务失败。
+Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
+   在 MySql.Data.MySqlClient.Driver.Open()
+   在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
+   在 MySql.Data.MySqlClient.MySqlConnection.Open()
+   在 DataBaseProvider.CustomerMySqlTransaction..ctor(MySqlConnection connection) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 69
+   在 DataBaseProvider.MyDBHelper.CreateTrans() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 52
+   在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 91
+   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 112
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 77
 -----------------------------------------------------
 
-s\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 78
------------------------------------------------------
-
-ice.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 105
-   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 74
------------------------------------------------------
-
-��号 258
+�号 258
    在 SuperMinersServerApplication.WebService.Services.ServiceToClient.SellStone(String token, String userName, Int32 sellStonesCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Order.cs:行号 57
 -----------------------------------------------------
 

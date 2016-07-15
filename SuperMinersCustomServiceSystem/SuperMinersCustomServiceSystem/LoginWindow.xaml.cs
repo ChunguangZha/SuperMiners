@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Wcf.Channel;
+﻿using MetaData.SystemConfig;
+using SuperMinersCustomServiceSystem.Wcf.Channel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,70 @@ namespace SuperMinersCustomServiceSystem
             isHidden = false;
             this.txtAdminUserName.Focus();
             GlobalData.Client.LoginAdminCompleted += Client_LoginAdminCompleted;
+            GlobalData.Client.GetAdminInfoCompleted += Client_GetAdminInfoCompleted;
+            GlobalData.Client.GetGameConfigCompleted += Client_GetGameConfigCompleted;
+        }
+
+        void Client_GetAdminInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.AdminInfo> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MessageBox.Show("服务器连接失败。");
+                return;
+            }
+
+            if (e.Result == null)
+            {
+                MessageBox.Show("获取管理员信息失败。");
+                return;
+            }
+
+            GlobalData.InitUser(e.Result);
+            App.BusyToken.ShowBusyWindow("正在加载服务器配置...");
+            GlobalData.Client.GetGameConfig();
+        }
+
+        void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SystemConfig.SystemConfigin1> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MessageBox.Show("服务器连接失败。");
+                return;
+            }
+
+            if (e.Result == null)
+            {
+                MessageBox.Show("获取服务器配置失败。");
+                return;
+            }
+
+            GlobalData.GameConfig = e.Result.GameConfig;
+            GlobalData.RegisterUserConfig = e.Result.RegisterUserConfig;
+            GlobalData.AwardReferrerLevelConfig = new MetaData.SystemConfig.AwardReferrerLevelConfig();
+            GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
+
+            if (!isHidden)
+            {
+                isHidden = true;
+                _winMain = new MainWindow();
+                _winMain.Closed += WinMain_Closed;
+                this.Visibility = System.Windows.Visibility.Hidden;
+                _winMain.Show();
+            }
         }
 
         void Client_LoginAdminCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
@@ -67,10 +132,6 @@ namespace SuperMinersCustomServiceSystem
                 return;
             }
 
-            GlobalData.InitUser(new MetaData.User.AdminInfo()
-            {
-                UserName = this.txtAdminUserName.Text
-            });
             GlobalData.InitToken(e.Result);
 
             this._syn.Post(o =>
@@ -79,14 +140,8 @@ namespace SuperMinersCustomServiceSystem
                 this.txtPassword.Password = "";
             }, null);
 
-            if (!isHidden)
-            {
-                isHidden = true;
-                _winMain = new MainWindow();
-                _winMain.Closed += WinMain_Closed;
-                this.Visibility = System.Windows.Visibility.Hidden;
-                _winMain.Show();
-            }
+            App.BusyToken.ShowBusyWindow("正在加载管理员信息...");
+            GlobalData.Client.GetAdminInfo();
         }
 
         void WinMain_Closed(object sender, EventArgs e)

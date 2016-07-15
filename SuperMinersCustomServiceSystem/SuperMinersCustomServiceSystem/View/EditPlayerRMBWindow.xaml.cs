@@ -1,0 +1,67 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+namespace SuperMinersCustomServiceSystem.View
+{
+    /// <summary>
+    /// Interaction logic for Window1.xaml
+    /// </summary>
+    public partial class EditPlayerRMBWindow : Window
+    {
+        string _userName;
+        float _currentRMB;
+
+        public float ChangedRMB { get; private set; }
+
+        public EditPlayerRMBWindow(string userName, float currentRMB)
+        {
+            InitializeComponent();
+            this._userName = userName;
+            this._currentRMB = currentRMB;
+
+            this.txtUserName.Text = userName;
+            this.txtCurrentRMB.Text = currentRMB.ToString();
+            this.txtRMBChanged.Value = currentRMB;
+        }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            this.ChangedRMB = (float)this.txtRMBChanged.Value;
+            this.DialogResult = true;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+
+        private void chkChangeType_Checked(object sender, RoutedEventArgs e)
+        {
+            this.panelInCharge.IsEnabled = true;
+            this.txtRMBChanged.IsReadOnly = true;
+        }
+
+        private void chkChangeType_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.panelInCharge.IsEnabled = false;
+            this.txtRMBChanged.IsReadOnly = false;
+        }
+
+        private void NumericTextBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.ChangedRMB = this._currentRMB + (((float)this.numYuanValue.Value) * GlobalData.GameConfig.Yuan_RMB);
+            this.txtRMBChanged.Value = this.ChangedRMB;
+        }
+    }
+}
