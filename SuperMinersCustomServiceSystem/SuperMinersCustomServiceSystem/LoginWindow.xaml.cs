@@ -52,12 +52,14 @@ namespace SuperMinersCustomServiceSystem
             if (e.Error != null)
             {
                 MessageBox.Show("服务器连接失败。");
+                SetUIEnable(true);
                 return;
             }
 
             if (e.Result == null)
             {
                 MessageBox.Show("获取管理员信息失败。");
+                SetUIEnable(true);
                 return;
             }
 
@@ -68,6 +70,7 @@ namespace SuperMinersCustomServiceSystem
 
         void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SystemConfig.SystemConfigin1> e)
         {
+            SetUIEnable(true);
             App.BusyToken.CloseBusyWindow();
 
             if (e.Cancelled)
@@ -106,7 +109,6 @@ namespace SuperMinersCustomServiceSystem
         {
             if (e.Cancelled)
             {
-                App.BusyToken.CloseBusyWindow();
                 return;
             }
 
@@ -115,6 +117,7 @@ namespace SuperMinersCustomServiceSystem
                 App.BusyToken.CloseBusyWindow();
                 //LogHelper.Instance.AddErrorLog("服务器连接失败。", e.Error);
                 MessageBox.Show("服务器连接失败。");
+                SetUIEnable(true);
                 return;
             }
 
@@ -122,6 +125,7 @@ namespace SuperMinersCustomServiceSystem
             {
                 App.BusyToken.CloseBusyWindow();
                 MessageBox.Show("用户名不存在，或密码不正确。");
+                SetUIEnable(true);
                 return;
             }
 
@@ -129,16 +133,17 @@ namespace SuperMinersCustomServiceSystem
             {
                 App.BusyToken.CloseBusyWindow();
                 MessageBox.Show("您的账户正在其它客户端登录，我们已将对方退出，请重新登录。");
+                SetUIEnable(true);
                 return;
             }
 
             GlobalData.InitToken(e.Result);
 
-            this._syn.Post(o =>
-            {
-                this.txtAdminUserName.Text = "";
-                this.txtPassword.Password = "";
-            }, null);
+            //this._syn.Post(o =>
+            //{
+            //    this.txtAdminUserName.Text = "";
+            //    this.txtPassword.Password = "";
+            //}, null);
 
             App.BusyToken.ShowBusyWindow("正在加载管理员信息...");
             GlobalData.Client.GetAdminInfo();
@@ -146,9 +151,34 @@ namespace SuperMinersCustomServiceSystem
 
         void WinMain_Closed(object sender, EventArgs e)
         {
-            //this.isHidden = false;
-            //this.Visibility = System.Windows.Visibility.Visible;
-            this.Close();
+            if (this._winMain != null && this._winMain.IsBackToLogin)
+            {
+                this.isHidden = false;
+                this.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                this.Close();
+            }
+        }
+
+        private void SetUIEnable(bool isEnable)
+        {
+            if (SynchronizationContext.Current == this._syn)
+            {
+                this.txtAdminUserName.IsEnabled = isEnable;
+                this.txtPassword.IsEnabled = isEnable;
+                this.btnLogin.IsEnabled = isEnable;
+            }
+            else
+            {
+                this._syn.Post(o =>
+                {
+                    this.txtAdminUserName.IsEnabled = isEnable;
+                    this.txtPassword.IsEnabled = isEnable;
+                    this.btnLogin.IsEnabled = isEnable;
+                }, null);
+            }
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
@@ -170,6 +200,8 @@ namespace SuperMinersCustomServiceSystem
                 MessageBox.Show("请输入密码");
                 return;
             }
+
+            SetUIEnable(false);
 
 #if DEBUG
             GlobalData.Client.Init(GlobalData.DebugServer);

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
 {
     [ServiceContract]
-    interface IServiceToAdmin
+    public partial interface IServiceToAdmin
     {
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/LoginAdmin",

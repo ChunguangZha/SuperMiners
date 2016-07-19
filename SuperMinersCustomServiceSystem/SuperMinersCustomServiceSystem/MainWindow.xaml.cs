@@ -21,6 +21,9 @@ namespace SuperMinersCustomServiceSystem
     /// </summary>
     public partial class MainWindow : Window
     {
+        private System.Threading.SynchronizationContext _syn;
+        public bool IsBackToLogin = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,6 +32,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this._syn = System.Threading.SynchronizationContext.Current;
             Binding bind = new Binding()
             {
                 Source = App.PlayerVMObject.ListFilteredPlayers
@@ -36,6 +40,22 @@ namespace SuperMinersCustomServiceSystem
 
             this.datagridPlayerInfos.SetBinding(DataGrid.ItemsSourceProperty, bind);
             App.PlayerVMObject.AsyncGetListPlayers();
+            GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
+        }
+
+        void Client_OnKickoutByUser()
+        {
+            this._syn.Post(s =>
+            {
+                MessageBox.Show("您的账户在其它电脑登录，如非本人操作，请及时修改密码。");
+                this.IsBackToLogin = true;
+                this.Close();
+            }, null);
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.LogoutAdmin();
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

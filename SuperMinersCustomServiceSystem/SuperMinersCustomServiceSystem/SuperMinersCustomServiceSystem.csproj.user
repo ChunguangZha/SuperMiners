@@ -2,7 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PublishUrlHistory>F:\My Work\SuperMinersAdministratorPublish\|publish\</PublishUrlHistory>
-    <InstallUrlHistory />
+    <InstallUrlHistory>http://www.xlore.net:65512/Software/Administrator/|http://www.xlore.net:65512/Software/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />

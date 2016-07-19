@@ -8,17 +8,22 @@ using SuperMinersServerApplication.WebService;
 using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Security.Cryptography;
 using System.ServiceModel;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
 namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 {
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    public class ServiceToAdmin : IServiceToAdmin, IDisposable
+    public partial class ServiceToAdmin : IServiceToAdmin, IDisposable
     {
         private Dictionary<string, Queue<CallbackInfo>> _callbackDic = new Dictionary<string, Queue<CallbackInfo>>();
         private readonly object _callbackDicLocker = new object();
@@ -57,6 +62,126 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public CallbackInfo Callback(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                bool valid = false;
+                Queue<CallbackInfo> queue = null;
+                DateTime start = DateTime.Now;
+                while (!valid)
+                {
+                    if (!App.ServiceToRun.IsStarted)
+                    {
+                        throw new Exception();
+                    }
+
+                    lock (this._callbackDicLocker)
+                    {
+                        if (this._callbackDic.TryGetValue(token, out queue))
+                        {
+                            lock (queue)
+                            {
+                                valid = queue.Count > 0;
+                            }
+                        }
+                        else
+                        {
+                            throw new Exception();
+                        }
+                    }
+
+                    if (!valid)
+                    {
+                        if ((DateTime.Now - start).TotalSeconds >= GlobalData.KeepAliveTimeSeconds)
+                        {
+                            return new CallbackInfo()
+                            {
+                                MethodName = String.Empty
+                            };
+                        }
+
+                        Thread.Sleep(100);
+                    }
+                }
+
+                if (!valid)
+                {
+                    throw new Exception();
+                }
+
+                lock (queue)
+                {
+                    return queue.Dequeue();
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        private void InvokeCallback(string token, string methodName, params object[] paras)
+        {
+            Queue<CallbackInfo> queue;
+            lock (this._callbackDicLocker)
+            {
+                if (!this._callbackDic.TryGetValue(token, out queue))
+                {
+                    return;
+                }
+            }
+
+            lock (queue)
+            {
+                queue.Enqueue(new CallbackInfo()
+                {
+                    MethodName = methodName,
+                    Parameters = (paras == null) ? null : paras.Select(p =>
+                    {
+                        Type type = p.GetType();
+                        DataContractJsonSerializer s = new DataContractJsonSerializer(type, GetKnownTypes(type));
+                        using (MemoryStream ms = new MemoryStream())
+                        {
+                            s.WriteObject(ms, p);
+                            return Encoding.UTF8.GetString(ms.ToArray()).Trim();
+                        }
+                    }).ToArray()
+                });
+            }
+        }
+
+        private static Type[] GetKnownTypes(Type type)
+        {
+            Func<MemberInfo, Type, bool> hasAttribute = (info, attrType) =>
+            {
+                var typeAttrs = info.GetCustomAttributes(attrType, false);
+                if ((typeAttrs != null) && (typeAttrs.Length > 0))
+                {
+                    return true;
+                }
+
+                return false;
+            };
+
+            List<Type> typeList = new List<Type>();
+
+            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var prop in props)
+            {
+                if (hasAttribute(prop, typeof(DataMemberAttribute)))
+                {
+                    if (!typeList.Contains(prop.PropertyType))
+                    {
+                        typeList.Add(prop.PropertyType);
+                    }
+                }
+            }
+
+            return typeList.Count > 0 ? typeList.ToArray() : null;
+        }
+
         public string LoginAdmin(string adminName, string password, string mac, string key)
         {
             string token = string.Empty;
@@ -87,12 +212,11 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 token = AdminManager.GetToken(adminName);
                 if (!string.IsNullOrEmpty(token))
                 {
-                    //new Thread(new ParameterizedThreadStart(o =>
-                    //{
-                    //    this.KickoutByUser(o.ToString());
-                    //})).Start(token);
+                    new Thread(new ParameterizedThreadStart(o =>
+                    {
+                        this.KickoutByUser(o.ToString());
+                    })).Start(token);
 
-                    LogoutAdmin(token);
                     return "ISLOGGED";
                 }
 

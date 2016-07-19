@@ -29,7 +29,7 @@
     <PublisherName>迅灵信息</PublisherName>
     <SuiteName>迅灵矿场</SuiteName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -159,7 +159,9 @@
     <Compile Include="Views\EditAdminWindow.xaml.cs">
       <DependentUpon>EditAdminWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebServiceToAdmin\Contracts\Callbacks\IServiceToAdmin.Callback.cs" />
     <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
+    <Compile Include="WebServiceToAdmin\Services\Callbacks\ServiceToAdmin.Callback.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\AdminManager.cs" />
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.cs" />
@@ -286,15 +288,16 @@
   <ItemGroup>
     <PublishFile Include="MySql.Data">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

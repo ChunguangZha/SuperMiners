@@ -19,6 +19,6 @@
         <TextBox Grid.Row="1" Grid.Column="1" Name="txtAdminUserName" VerticalAlignment="Top" Margin="5"/>
         <TextBlock Grid.Row="2" Text="密码：" HorizontalAlignment="Right" Margin="5"/>
         <PasswordBox Grid.Row="2" Grid.Column="1" Name="txtPassword" VerticalAlignment="Top" Margin="5"/>
-        <Button Grid.Row="3" Grid.Column="1" Name="btnLogin" Content="登录" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Click="btnLogin_Click"/>
+        <Button Grid.Row="3" Grid.Column="1" Name="btnLogin" Content="登录" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5" Click="btnLogin_Click" IsDefault="True"/>
     </Grid>
 </Window>

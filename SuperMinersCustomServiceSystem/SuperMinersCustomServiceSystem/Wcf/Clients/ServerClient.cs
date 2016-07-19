@@ -79,10 +79,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
     {
         public event EventHandler Error;
 
-        //public event Action<string> OnSendMessage;
-        //public event Action OnSendPlayerActionLog;
-        //public event Action OnSendGameConfig;
-        //public event Action<string> OnSendNewNotice;
+        public event Action OnKickoutByUser;
+        public event Action OnLogedIn;
+        public event Action OnLogedOut;
 
         private RestInvoker<IServiceToAdmin> _invoker = new RestInvoker<IServiceToAdmin>();
         private SynchronizationContext _context;
@@ -118,6 +117,34 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
 
+        #region Callback
+
+        public void RaiseOnKickoutByUser()
+        {
+            Action handler = this.OnKickoutByUser;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+        public void RaiseOnLogedIn()
+        {
+            Action handler = this.OnLogedIn;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+        public void RaiseOnLogedOut()
+        {
+            Action handler = this.OnLogedOut;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+
+        #endregion
 
         #region IServiceToAdmin Members
 
