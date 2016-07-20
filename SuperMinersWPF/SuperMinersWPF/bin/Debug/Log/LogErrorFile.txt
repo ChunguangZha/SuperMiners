@@ -227,3 +227,15 @@ Error:  [2016/7/16 1:22:22] ---- Log: 客户端Tony已退出.
 Error:  [2016/7/16 1:29:58] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/7/20 21:45:49] ---- Log: 服务器连接失败。
+Exc.Message: 无法连接到远程服务器Exc.Stack:    在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass12.<Send>b__e(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/7/20 22:04:09] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/20 22:39:13] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

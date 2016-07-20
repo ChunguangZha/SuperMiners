@@ -75,14 +75,19 @@ namespace SuperMinersServerApplication.Controller
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
-            if (userCount >= GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
-            {
-                return 2;
-            }
-            if (userCount == 0)
+            if (userCount < GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
             {
                 Awardable = true;
             }
+
+            //if (userCount >= GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
+            //{
+            //    return 2;
+            //}
+            //if (userCount == 0)
+            //{
+            //    Awardable = true;
+            //}
 
             List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
             var trans = MyDBHelper.Instance.CreateTrans();

@@ -76,12 +76,19 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)
         {
-            if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+            try
             {
-                PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
 
-                EditPlayerWindow win = new EditPlayerWindow(player);
-                win.ShowDialog();
+                    EditPlayerWindow win = new EditPlayerWindow(player);
+                    win.ShowDialog();
+                }
+            }
+            catch (Exception exc)
+            {
+                
             }
         }
 

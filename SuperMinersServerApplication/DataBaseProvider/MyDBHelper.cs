@@ -28,9 +28,9 @@ namespace DataBaseProvider
 
         #endregion
 
-        //internal static readonly string CONNECTIONSTRING = "server=localhost;port=13344; uid=superminersDBA;pwd=dba!@#123;database=superminers;charset=utf8; pooling=false; Keep Alive=5;";
+        internal static readonly string CONNECTIONSTRING = "server=localhost;port=13344; uid=superminersDBA;pwd=dba!@#123;database=superminers;charset=utf8; pooling=false; Keep Alive=5;";
 
-        internal static readonly string CONNECTIONSTRING = "server=localhost;port=13366; uid=superminersDBA;pwd=dba!@#123;database=superminers;charset=utf8; pooling=false; Keep Alive=5;";
+        //internal static readonly string CONNECTIONSTRING = "server=localhost;port=13366; uid=superminersDBA;pwd=dba!@#123;database=superminers;charset=utf8; pooling=false; Keep Alive=5;";
 
         public MySqlConnection CreateConnection()
         {

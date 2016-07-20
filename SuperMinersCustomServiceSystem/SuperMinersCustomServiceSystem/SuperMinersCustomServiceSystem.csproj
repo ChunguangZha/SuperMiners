@@ -24,7 +24,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://www.xlore.net:65512/Software/Administrator/</InstallUrl>
+    <InstallUrl>http://ore.xlwinfo.com:8000/Administrator/</InstallUrl>
     <SupportUrl>http://www.xlore.net:65512/</SupportUrl>
     <ErrorReportUrl>http://www.xlore.net:65512/</ErrorReportUrl>
     <TargetCulture>zh-CN</TargetCulture>
@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

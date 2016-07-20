@@ -1,4 +1,4 @@
-Error:  [2016/7/15 22:43:25] ---- Log: 启动服务失败。
+Error:  [2016/7/20 21:45:19] ---- Log: 启动服务失败。
 Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
    在 MySql.Data.MySqlClient.Driver.Open()
    在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
