@@ -67,6 +67,12 @@ namespace SuperMinersWPF.ViewModels
             App.BusyToken.ShowBusyWindow("正在匹配订单");
             GlobalData.Client.AutoMatchLockSellStone(stoneCount, null);
         }
+
+        public void AsyncLockStoneOrder(string orderNumber)
+        {
+            App.BusyToken.ShowBusyWindow("正在锁定订单...");
+            GlobalData.Client.LockSellStone(orderNumber, null);
+        }
         
         public void AsyncGetOrderLockedBySelf()
         {
@@ -90,6 +96,49 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetAllNotFinishedSellOrdersCompleted += Client_GetAllNotFinishedSellOrdersCompleted;
             GlobalData.Client.OnOrderAlipayPaySucceed += Client_OnOrderAlipayPaySucceed;
             GlobalData.Client.OnOrderListChanged += Client_OnOrderListChanged;
+            GlobalData.Client.LockSellStoneCompleted += Client_LockSellStoneCompleted;
+        }
+
+        void Client_LockSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                return;
+            }
+
+            if (e.Result == null)
+            {
+                MyMessageBox.ShowInfo("订单锁定失败。");
+                return;
+            }
+
+            var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+            this.MyBuyNotFinishedStoneOrders.Clear();
+            this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+
+            lock (_lockAllNotFinishStoneOrder)
+            {
+                var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
+                if (orderSell != null)
+                {
+                    orderSell.OrderState = SellOrderState.Lock;
+                }
+            }
+
+            this._timer.Start();
+            if (StoneOrderLockSucceed != null)
+            {
+                StoneOrderLockSucceed(lockedOrder);
+            }
+
         }
 
         void Client_OnOrderListChanged()

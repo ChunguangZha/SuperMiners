@@ -232,5 +232,15 @@ namespace SuperMinersWPF.Views
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
         }
 
+        private void btnBuy_Click(object sender, RoutedEventArgs e)
+        {
+            Button btnBuy = sender as Button;
+            SellStonesOrderUIModel stoneOrder = btnBuy.DataContext as SellStonesOrderUIModel;
+            if (stoneOrder != null)
+            {
+                App.StoneOrderVMObject.AsyncLockStoneOrder(stoneOrder.OrderNumber);
+            }
+        }
+
     }
 }

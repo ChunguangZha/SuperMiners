@@ -239,3 +239,20 @@ Error:  [2016/7/20 22:04:09] ---- Log: 客户端Tony已退出.
 Error:  [2016/7/20 22:39:13] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/7/21 21:49:44] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/21 23:36:21] ---- Log: Client_GetAllNotFinishedSellOrdersCompleted Exception。
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 196
+-----------------------------------------------------
+
+Error:  [2016/7/21 23:36:22] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/21 23:42:47] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/7/21 23:51:22] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+

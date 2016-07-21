@@ -52,6 +52,14 @@ namespace SuperMinersServerApplication.WebService.Contracts
         LockSellStonesOrder AutoMatchLockSellStone(string token, string userName, int buyStonesCount);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/LockSellStone",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        LockSellStonesOrder LockSellStone(string token, string userName, string orderNumber);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/CheckUserHasNotPayOrder",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,

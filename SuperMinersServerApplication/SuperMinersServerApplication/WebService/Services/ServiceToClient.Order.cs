@@ -182,6 +182,34 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public LockSellStonesOrder LockSellStone(string token, string userName, string orderNumber)
+        {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return null;
+                }
+
+                if (OrderController.Instance.CheckUserHasNotPayOrder(userName))
+                {
+                    return null;
+                }
+
+                return OrderController.Instance.LockSellStone(userName, orderNumber);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public bool CheckUserHasNotPayOrder(string token)
         {
 #if Delay

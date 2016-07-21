@@ -150,6 +150,24 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public LockSellStonesOrder LockSellStone(string userName, string orderNumber)
+        {
+            lock (_lockListSellOrders)
+            {
+                OrderRunnable runnable = null;
+                if (dicSellOrders.TryGetValue(orderNumber, out runnable))
+                {
+                    if (runnable.OrderState != SellOrderState.Wait)
+                    {
+                        return null;
+                    }
+                    return runnable.Lock(userName);
+                }
+
+                return null;
+            }
+        }
+
         public LockSellStonesOrder GetLockedOrderByUserName(string userName)
         {
             lock (_lockListSellOrders)
@@ -298,13 +316,13 @@ namespace SuperMinersServerApplication.Controller
             }
 
             bool isOK = order.ReleaseLock();
-            if (isOK)
-            {
-                lock (this._lockListSellOrders)
-                {
-                    this.dicSellOrders.Remove(order.OrderNumber);
-                }
-            }
+            //if (isOK)
+            //{
+            //    lock (this._lockListSellOrders)
+            //    {
+            //        this.dicSellOrders.Remove(order.OrderNumber);
+            //    }
+            //}
 
             return isOK;
         }

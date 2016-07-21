@@ -63,6 +63,16 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region LockSellStone
+
+        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> LockSellStoneCompleted;
+        public void LockSellStone(string orderNumber, object userState)
+        {
+            this._invoker.InvokeUserState<LockSellStonesOrder>(this._context, "LockSellStone", this.LockSellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, orderNumber);
+        }
+
+        #endregion
+
         #region ReleaseLockOrder
 
         public event EventHandler<WebInvokeEventArgs<bool>> ReleaseLockOrderCompleted;

@@ -73,7 +73,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     this.KickoutByUser(o.ToString());
                 })).Start(token);
 
-                return "ISLOGGED";
+                //return "ISLOGGED";
             }
             try
             {
