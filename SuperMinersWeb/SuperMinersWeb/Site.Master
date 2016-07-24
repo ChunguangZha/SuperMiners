@@ -41,8 +41,8 @@
     </form>
     <footer>
         <div class="content-wrapper">
-            <div class="float-left">
-                <p>&copy; <%: DateTime.Now.Year %> - 迅灵矿场</p>
+            <div>
+                <p>&copy; <%: DateTime.Now.Year %> - 盐山迅灵信息服务有限公司  |  <a href="http://www.miit.gov.cn/">冀ICP备16016823号-1</a></p>
             </div>
         </div>
     </footer>

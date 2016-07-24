@@ -3,11 +3,11 @@
   <PropertyGroup>
     <ProjectView>ShowAllFiles</ProjectView>
     <PublishUrlHistory>F:\My Work\SuperMinersPublish\|publish\|http://localhost:8090/</PublishUrlHistory>
-    <InstallUrlHistory>http://ore.xlwinfo.com:8000/|http://www.xlore.net:65512/Software/|http://ore.xlwinfo.com/Software/|http://game.xlwinfo.com/Software/|http://221.195.61.55:8090/Software/</InstallUrlHistory>
-    <SupportUrlHistory>http://ore.xlwinfo.com/|http://221.195.61.55:8090/|http://localhost:8509/Default.aspx</SupportUrlHistory>
+    <InstallUrlHistory>http://game.xlwinfo.com/|http://ore.xlwinfo.com:8000/|http://www.xlore.net:65512/Software/|http://ore.xlwinfo.com/Software/|http://game.xlwinfo.com/Software/</InstallUrlHistory>
+    <SupportUrlHistory>http://www.xlore.net:65512/|http://ore.xlwinfo.com/|http://221.195.61.55:8090/|http://localhost:8509/Default.aspx</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
-    <ErrorReportUrlHistory>http://ore.xlwinfo.com/|http://221.195.61.55:8090/</ErrorReportUrlHistory>
+    <ErrorReportUrlHistory>http://www.xlore.net:65512/|http://ore.xlwinfo.com/|http://221.195.61.55:8090/</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>

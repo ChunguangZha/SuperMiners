@@ -8,7 +8,7 @@
         <beforeApplicationStartup />
       </update>
     </subscription>
-    <deploymentProvider codebase="http://www.xlore.net:65512/Software/SuperMinersWPF.application" />
+    <deploymentProvider codebase="http://ore.xlwinfo.com:8000/SuperMinersWPF.application" />
   </deployment>
   <compatibleFrameworks xmlns="urn:schemas-microsoft-com:clickonce.v2">
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
@@ -21,7 +21,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ab+ATPOLL7dQ29JlXzkWV9qw5nZkoTVIhoD7TylWVeE=</dsig:DigestValue>
+        <dsig:DigestValue>NoM8Qy7lC9KL8SEDyM/KojqkkOxr01Pw3jUrRqHPoB8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

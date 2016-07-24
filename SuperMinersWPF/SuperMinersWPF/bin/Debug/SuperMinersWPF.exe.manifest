@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>i8r9oEE4H20oxTgCTVtG+wqPaHYa7rAeyu/9HNpnvKc=</dsig:DigestValue>
+        <dsig:DigestValue>CbLAWg08tFEW97SQse8Dpih2l7tEe6IEj7oATluNUnM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -63,13 +63,13 @@
       <dsig:DigestValue>3ELOb+t3lsKPdNgF8CJ44YsBFwqdaIhW8evg7hdwZX4=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SuperMinersWPF.exe.config" size="1197">
+  <file name="SuperMinersWPF.exe.config" size="1192">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>qz9UfcppK0goqFUMkSCO6CV/L9o70KP/bpTreqnYShw=</dsig:DigestValue>
+      <dsig:DigestValue>y5kD+X+ruK1NJ9Mn0WYQbTmm1pbwik1twDYRmL4SKxA=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>
