@@ -163,3 +163,6 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ChatUserC
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\FunnyUserControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ChatUserControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\FunnyUserControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.g.cs
