@@ -61,7 +61,8 @@ namespace SuperMinersWPF.ViewModels
 
             this.ListNotices.Clear();
 
-            foreach (var item in e.Result)
+            var listOrdered = e.Result.OrderByDescending(n => n.Time);
+            foreach (var item in listOrdered)
             {
                 this.ListNotices.Add(item);
             }
@@ -71,8 +72,7 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_OnSendNewNotice(string obj)
         {
-            LastedNotice = new NoticeInfo() { Title = obj };
-
+            this.AsyncGetNewNotices();
         }
 
         public event Action LastNoticeChanged;

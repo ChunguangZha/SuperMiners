@@ -309,8 +309,8 @@ namespace SuperMinersWPF
                 return;
             }
 
-            ViewSingleNoticeWindow win = new ViewSingleNoticeWindow();
-            win.SetNotice(App.NoticeVMObject.LastedNotice);
+            ListAllNoticesWindow win = new ListAllNoticesWindow();
+            win.SetCurrentNotice(App.NoticeVMObject.LastedNotice);
             win.ShowDialog();
         }
 

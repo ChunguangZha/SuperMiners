@@ -11,6 +11,8 @@
     <title><%: Page.Title %> - 迅灵矿场</title>
     <link href="/Content/Site.css" rel="stylesheet" type="text/css" /> 
     <link href="/Logo128.ico" rel="shortcut icon" type="image/x-icon" />
+    <script src="Scripts/jquery-3.0.0.min.js"></script>
+    <script src="Scripts/float-contact-us.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -32,19 +34,17 @@
     </header>
     <form id="form1" runat="server" method="get">
         <div class="body">
-            <div class="contactus">
-                <span><b>联系我们</b></span>
-                <ul>
-                    <li>
-                        <a href="tencent://message/?uin=502921166&Site=Service&menu=yes">客服QQ 502921166</a>                        
-                    </li>
-                    <li>
-                        <a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作QQ：502921177</a>                          
-                    </li>
-                    <li>
-                        <a href="tencent://message/?uin=566603443&Site=Service&menu=yes">内部测试QQ群：566603443</a>                          
-                    </li>
-                </ul>
+            <div id="rightArrow"><a href="javascript:;" title="在线客户"></a></div>
+            <div id="floatDivBoxs">
+                <div class="floatDtt">联系我们</div>
+                <div class="floatShadow">
+                    <ul class="floatDqq">
+                        <li><a href="tencent://message/?uin=502921166&Site=Service&menu=yes"><img src="images/qq.png" />在线客服</a></li>
+                        <li><a href="tencent://message/?uin=502921177&Site=Service&menu=yes"><img src="images/qq.png" />商务合作</a></li>
+                        <li><a href="tencent://message/?uin=566603443&Site=Service&menu=yes"><img src="images/qq.png" />内部测试</a></li>
+                    </ul>
+                </div>
+                <div class="floatDbg"></div>
             </div>
             <div class="content-paper">
             </div>

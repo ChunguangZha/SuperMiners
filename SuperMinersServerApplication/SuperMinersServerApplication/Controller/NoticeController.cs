@@ -56,7 +56,7 @@ namespace SuperMinersServerApplication.Controller
                         try
                         {
                             NoticeInfo notice = this.ReadFromXml(item);
-                            _listNotices.Add(notice);
+                            _listNotices.Insert(0, notice);
                         }
                         catch (Exception excsub)
                         {
@@ -77,7 +77,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 notice.Time = DateTime.Now;
                 SaveToXml(Path.Combine(GlobalData.NoticeFolder, notice.FileName), notice);
-
+                this.ListNotices.Insert(0, notice);
                 if (NoticeAdded != null)
                 {
                     NoticeAdded(notice.Title);

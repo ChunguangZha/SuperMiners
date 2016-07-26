@@ -143,7 +143,11 @@
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
     <Content Include="Images\alipay_logo.png" />
+    <Content Include="Images\online_arrow.jpg" />
+    <Content Include="Images\online_botbg.jpg" />
+    <Content Include="Images\qq.png" />
     <Content Include="Images\yes.png" />
+    <Content Include="Scripts\float-contact-us.js" />
     <Content Include="Software\DownLoad.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\1_3.png" />
