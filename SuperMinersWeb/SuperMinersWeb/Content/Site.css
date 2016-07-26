@@ -144,7 +144,38 @@ div.body {
     text-align: center;
     background-color: #FFFEF2;
 }
-    
+
+div.contactus
+{
+	background-color: #5A382C;
+	color:white;
+	display: inline-block;
+	position: fixed;
+	float: right;
+	top: 400px;
+	right: 0px;
+}
+	div.contactus span
+	{
+		display:inline-block;
+		font-size:16px;
+		margin-top:5px;
+		width:100%;
+		text-align:center;
+	}
+	div.contactus ul
+	{
+		margin-right:10px;
+		margin-left:10px;
+	}
+		div.contactus ul a
+		{
+			color:white;
+		}
+	div.contactus li
+	{
+		margin:10px;
+	}
     
 footer {
     clear: both;

@@ -32,6 +32,20 @@
     </header>
     <form id="form1" runat="server" method="get">
         <div class="body">
+            <div class="contactus">
+                <span><b>联系我们</b></span>
+                <ul>
+                    <li>
+                        <a href="tencent://message/?uin=502921166&Site=Service&menu=yes">客服QQ 502921166</a>                        
+                    </li>
+                    <li>
+                        <a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作QQ：502921177</a>                          
+                    </li>
+                    <li>
+                        <a href="tencent://message/?uin=566603443&Site=Service&menu=yes">内部测试QQ群：566603443</a>                          
+                    </li>
+                </ul>
+            </div>
             <div class="content-paper">
             </div>
             <div class="main-content clear-fix">
