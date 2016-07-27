@@ -110,6 +110,90 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+//        public bool CancelSellStone(string token, string userName, string orderNumber)
+//        {
+//#if Delay
+
+//            Thread.Sleep(5000);
+
+//#endif
+
+//            if (RSAProvider.LoadRSA(token))
+//            {
+//                if (ClientManager.GetClientUserName(token) != userName)
+//                {
+//                    return false;
+//                }
+//                if (sellStonesCount <= 0)
+//                {
+//                    return -3;
+//                }
+
+//                SellStonesOrder order = null;
+//                CustomerMySqlTransaction trans = MyDBHelper.Instance.CreateTrans();
+//                try
+//                {
+//                    order = OrderController.Instance.CreateSellOrder(userName, sellStonesCount);
+//                    if (order.ValueRMB <= 0)
+//                    {
+//                        return -2;
+//                    }
+
+//                    int result = PlayerController.Instance.SellStones(order, trans);
+//                    if (result != 0)
+//                    {
+//                        trans.Rollback();
+//                        return result;
+//                    }
+//                    OrderController.Instance.AddSellOrder(order, trans);
+//                    trans.Commit();
+//                    PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, sellStonesCount);
+
+//                    return result;
+//                }
+//                catch (Exception exc)
+//                {
+//                    string errMessage = "Add Sell Order Exception: ";
+//                    if (order == null)
+//                    {
+//                        errMessage += " (User Error) UserName:" + userName;
+//                    }
+//                    else
+//                    {
+//                        errMessage += " (Order Error) Order:" + order.ToString();
+//                    }
+
+//                    try
+//                    {
+//                        trans.Rollback();
+//                        PlayerController.Instance.RollbackUserFromDB(userName);
+//                        if (order != null)
+//                        {
+//                            OrderController.Instance.ClearSellStonesOrder(order);
+//                        }
+//                        LogHelper.Instance.AddErrorLog(errMessage, exc);
+//                    }
+//                    catch (Exception ee)
+//                    {
+//                        LogHelper.Instance.AddErrorLog("Add Sell Order Rollback Exception: " + errMessage, ee);
+//                    }
+
+//                    return -3;
+//                }
+//                finally
+//                {
+//                    if (trans != null)
+//                    {
+//                        trans.Dispose();
+//                    }
+//                }
+//            }
+//            else
+//            {
+//                throw new Exception();
+//            }
+//        }
+
         public LockSellStonesOrder GetOrderLockedBySelf(string token)
         {
 #if Delay

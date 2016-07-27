@@ -1,7 +1,7 @@
 ﻿
 $().ready(function () {
 
-    var flag = 0;
+    var flag = 1;
     $('#rightArrow').on("click", function () {
         if (flag == 1) {
             $("#floatDivBoxs").animate({ right: '-175px' }, 300);

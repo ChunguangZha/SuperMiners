@@ -27,6 +27,14 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int SellStone(string token, string userName, int sellStonesCount);
 
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebService/CancelSellStone",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //bool CancelSellStone(string token, string userName, string orderNumber);
+
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetAllNotFinishedSellOrders",
             Method = "POST",
