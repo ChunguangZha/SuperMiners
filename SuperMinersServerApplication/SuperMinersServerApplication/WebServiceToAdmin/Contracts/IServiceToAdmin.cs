@@ -1,4 +1,5 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersServerApplication.Model;
 using System;
@@ -116,5 +117,21 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         bool ChangePlayerPassword(string token, string actionPassword, string playerUserName, string newPassword);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetNotices",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        NoticeInfo[] GetNotices(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/CreateNotice",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool CreateNotice(string token, NoticeInfo notice);
     }
 }

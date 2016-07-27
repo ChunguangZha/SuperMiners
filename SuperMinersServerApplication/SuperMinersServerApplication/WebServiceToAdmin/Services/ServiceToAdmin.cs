@@ -217,7 +217,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         this.KickoutByUser(o.ToString());
                     })).Start(token);
 
-                    return "ISLOGGED";
+                    //return "ISLOGGED";
                 }
 
                 RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
@@ -496,6 +496,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public MetaData.NoticeInfo[] GetNotices(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return NoticeController.Instance.GetAllNotices();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetNotices Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool CreateNotice(string token, MetaData.NoticeInfo notice)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return NoticeController.Instance.CreateNotice(notice);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetNotices Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()
@@ -504,5 +544,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         }
 
         #endregion
+
     }
 }

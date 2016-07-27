@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
 SuperMinersCustomServiceSystem
 none
 false
 TRACE;DEBUG;Encrypt
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
-7282204128
+F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
+8-1083111659
 
-42-2047938303
+45-985774194
 16-40985637
-BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\InputActionPasswordWindow.xaml;
+BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\AddNoticeWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\InputActionPasswordWindow.xaml;
 
-False
+True
 

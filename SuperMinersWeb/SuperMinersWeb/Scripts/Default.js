@@ -1,7 +1,6 @@
 ﻿
 $().ready(function () {
     try {
-        alert("start");
         $("#form1").validate({
             rules: {
                 MainContent_txtUserName: {

@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,28 @@ namespace SuperMinersCustomServiceSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this._syn = System.Threading.SynchronizationContext.Current;
+            BindUI();
+
+            GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
+        }
+
+        private void BindUI()
+        {
             Binding bind = new Binding()
             {
-                Source = App.PlayerVMObject.ListFilteredPlayers
+                Source = App.PlayerVMObject
             };
 
-            this.datagridPlayerInfos.SetBinding(DataGrid.ItemsSourceProperty, bind);
+            this.panelPlayersManager.SetBinding(GroupBox.DataContextProperty, bind);
+
             App.PlayerVMObject.AsyncGetListPlayers();
-            GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
+
+            bind = new Binding()
+            {
+                Source = App.NoticeVMObject.ListAllNotices
+            };
+            this.datagridNotices.SetBinding(DataGrid.ItemsSourceProperty, bind);
+            App.NoticeVMObject.AsyncGetAllNotice();
         }
 
         void Client_OnKickoutByUser()
@@ -71,7 +86,6 @@ namespace SuperMinersCustomServiceSystem
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
-            this.txtCount.Text = App.PlayerVMObject.ListFilteredPlayers.Count.ToString();
         }
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)
@@ -92,5 +106,25 @@ namespace SuperMinersCustomServiceSystem
             }
         }
 
+        private void btnCreateNotices_Click(object sender, RoutedEventArgs e)
+        {
+            AddNoticeWindow win = new AddNoticeWindow();
+            win.ShowDialog();
+        }
+
+        private void btnDeleteNotices_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnclearAllNotices_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSelectAllNotices_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

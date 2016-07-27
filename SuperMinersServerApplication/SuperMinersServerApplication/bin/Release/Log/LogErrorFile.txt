@@ -1,14 +1,16 @@
-Error:  [2016/7/20 21:45:19] ---- Log: 启动服务失败。
+Error:  [2016/7/27 15:15:07] ---- Log: 启动服务失败。
 Exc.Message: Unable to connect to any of the specified MySQL hosts.Exc.Stack:    在 MySql.Data.MySqlClient.NativeDriver.Open()
    在 MySql.Data.MySqlClient.Driver.Open()
    在 MySql.Data.MySqlClient.Driver.Create(MySqlConnectionStringBuilder settings)
    在 MySql.Data.MySqlClient.MySqlConnection.Open()
-   在 DataBaseProvider.CustomerMySqlTransaction..ctor(MySqlConnection connection) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 69
-   在 DataBaseProvider.MyDBHelper.CreateTrans() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 52
-   在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 91
-   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 112
-   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 77
+   在 DataBaseProvider.CustomerMySqlTransaction..ctor(MySqlConnection connection) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 67
+   在 DataBaseProvider.MyDBHelper.CreateTrans() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MyDBHelper.cs:行号 50
+   在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 91
+   在 SuperMinersServerApplication.SuperMinersService.GetSystemConfig() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 112
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 77
 -----------------------------------------------------
+
+-
 
 �号 258
    在 SuperMinersServerApplication.WebService.Services.ServiceToClient.SellStone(String token, String userName, Int32 sellStonesCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Order.cs:行号 57

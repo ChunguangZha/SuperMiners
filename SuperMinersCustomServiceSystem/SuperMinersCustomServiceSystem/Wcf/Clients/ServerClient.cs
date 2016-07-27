@@ -1,4 +1,5 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersCustomServiceSystem.Wcf.Channel;
 using SuperMinersServerApplication.Model;
@@ -206,6 +207,18 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void ChangePlayerPassword(string actionPassword, string playerUserName, string newPassword)
         {
             this._invoker.Invoke<bool>(this._context, "ChangePlayerPassword", this.ChangePlayerPasswordCompleted, GlobalData.Token, actionPassword, playerUserName, newPassword);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<NoticeInfo[]>> GetNoticesCompleted;
+        public void GetNotices()
+        {
+            this._invoker.Invoke<NoticeInfo[]>(this._context, "GetNotices", this.GetNoticesCompleted, GlobalData.Token);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<bool>> CreateNoticeCompleted;
+        public void CreateNotice(NoticeInfo notice)
+        {
+            this._invoker.Invoke<bool>(this._context, "CreateNotice", this.CreateNoticeCompleted, GlobalData.Token, notice);
         }
 
         #endregion

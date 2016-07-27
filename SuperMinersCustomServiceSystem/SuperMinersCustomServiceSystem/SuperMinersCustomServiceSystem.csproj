@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -98,6 +98,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
       <Link>Wcf\Datas\Common.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
+      <Link>Wcf\Datas\NoticeInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
@@ -138,7 +141,11 @@
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\PlayerInfoUIModel.cs" />
     <Compile Include="ViewModel\BusyToken.cs" />
+    <Compile Include="ViewModel\NoticeViewModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
+    <Compile Include="View\AddNoticeWindow.xaml.cs">
+      <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditPlayerAlipayWindow.xaml.cs">
       <DependentUpon>EditPlayerAlipayWindow.xaml</DependentUpon>
     </Compile>
@@ -198,6 +205,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EditPlayerAlipayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

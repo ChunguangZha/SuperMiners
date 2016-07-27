@@ -16,12 +16,14 @@ namespace SuperMinersCustomServiceSystem
     {
         public static BusyToken BusyToken = new BusyToken();
         public static PlayerViewModel PlayerVMObject = new PlayerViewModel();
+        public static NoticeViewModel NoticeVMObject = new NoticeViewModel();
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             PlayerVMObject.RegisterEvents();
+            NoticeVMObject.RegisterEvents();
         }
     }
 }

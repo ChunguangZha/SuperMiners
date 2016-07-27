@@ -3,10 +3,10 @@
   <PropertyGroup>
     <PublishUrlHistory>F:\My Work\SuperMinersAdministratorPublish\|publish\</PublishUrlHistory>
     <InstallUrlHistory>http://game.xlwinfo.com/Administrator/|http://ore.xlwinfo.com:8000/Administrator/|http://www.xlore.net:65512/Software/Administrator/|http://www.xlore.net:65512/Software/</InstallUrlHistory>
-    <SupportUrlHistory>http://www.xlore.net:65512/</SupportUrlHistory>
+    <SupportUrlHistory>http://www.xlore.net/|http://www.xlore.net:65512/</SupportUrlHistory>
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
-    <ErrorReportUrlHistory>http://www.xlore.net:65512/</ErrorReportUrlHistory>
+    <ErrorReportUrlHistory>http://www.xlore.net/|http://www.xlore.net:65512/</ErrorReportUrlHistory>
     <FallbackCulture>en-US</FallbackCulture>
     <VerifyUploadedFiles>false</VerifyUploadedFiles>
   </PropertyGroup>

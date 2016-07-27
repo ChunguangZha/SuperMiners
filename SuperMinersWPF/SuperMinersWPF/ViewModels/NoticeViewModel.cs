@@ -67,7 +67,7 @@ namespace SuperMinersWPF.ViewModels
                 this.ListNotices.Add(item);
             }
 
-            this.LastedNotice = e.Result[e.Result.Length - 1];
+            this.LastedNotice = this.ListNotices[0];
         }
 
         void Client_OnSendNewNotice(string obj)

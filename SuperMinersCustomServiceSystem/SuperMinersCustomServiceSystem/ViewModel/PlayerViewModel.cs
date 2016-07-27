@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ using System.Windows;
 
 namespace SuperMinersCustomServiceSystem.ViewModel
 {
-    public class PlayerViewModel
+    public class PlayerViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<PlayerInfoUIModel> _listAllPlayers = new ObservableCollection<PlayerInfoUIModel>();
 
@@ -23,6 +24,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         public ObservableCollection<PlayerInfoUIModel> ListFilteredPlayers
         {
             get { return this._listFilteredPlayers; }
+        }
+
+        public int PlayersCount
+        {
+            get
+            {
+                return this.ListFilteredPlayers.Count;
+            }
         }
 
         public void AsyncGetListPlayers()
@@ -118,6 +127,11 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     ListFilteredPlayers.Add(item);
                 }
             }
+
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("PlayersCount"));
+            }
         }
 
         public int GetCheckPlayersCount()
@@ -194,6 +208,17 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 this.ListAllPlayers.Add(player);
                 this.ListFilteredPlayers.Add(player);
             }
+
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs("PlayersCount"));
+            }
         }
+
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
     }
 }

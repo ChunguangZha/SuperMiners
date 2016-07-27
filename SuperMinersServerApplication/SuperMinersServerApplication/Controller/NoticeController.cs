@@ -32,6 +32,8 @@ namespace SuperMinersServerApplication.Controller
 
         #endregion
 
+        private System.Threading.SynchronizationContext _syn = System.Threading.SynchronizationContext.Current;
+
         private ObservableCollection<NoticeInfo> _listNotices = new ObservableCollection<NoticeInfo>();
 
         public ObservableCollection<NoticeInfo> ListNotices
@@ -77,7 +79,18 @@ namespace SuperMinersServerApplication.Controller
             {
                 notice.Time = DateTime.Now;
                 SaveToXml(Path.Combine(GlobalData.NoticeFolder, notice.FileName), notice);
-                this.ListNotices.Insert(0, notice);
+
+                if (this._syn == System.Threading.SynchronizationContext.Current)
+                {
+                    this.ListNotices.Insert(0, notice);
+                }
+                else
+                {
+                    this._syn.Post(o =>
+                    {
+                        this.ListNotices.Insert(0, notice);
+                    }, null);
+                }
                 if (NoticeAdded != null)
                 {
                     NoticeAdded(notice.Title);
