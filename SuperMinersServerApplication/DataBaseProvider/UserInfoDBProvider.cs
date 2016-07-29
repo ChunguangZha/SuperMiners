@@ -81,6 +81,29 @@ namespace DataBaseProvider
             }
         }
 
+        public bool DeletePlayer(string userName)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "delete from playersimpleinfo where `UserName` = @UserName;";
+                mycmd = new MySqlCommand(textCmd, myconn);
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+            }
+        }
+
         public bool SavePlayerFortuneInfo(PlayerFortuneInfo playerFortune, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;

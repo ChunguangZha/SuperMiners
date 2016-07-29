@@ -350,18 +350,72 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool ChangePlayer(string token, PlayerInfoLoginWrap player)
+        public bool ChangePlayer(string token, string actionPassword, PlayerInfoLoginWrap player)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
+
                     bool isOK = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.Email, player.SimpleInfo.QQ);
                     if (!isOK)
                     {
                         return false;
                     }
                     isOK = PlayerController.Instance.ChangePlayerFortuneInfo(player.FortuneInfo);
+                    return isOK;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public bool DeletePlayers(string token, string actionPassword, string[] playerUserNames)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return false;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return false;
+                    }
+
+                    if (playerUserNames == null)
+                    {
+                        return false;
+                    }
+
+                    foreach (var name in playerUserNames)
+                    {
+                        bool isOK = PlayerController.Instance.DeletePlayer(name);
+                        if (!isOK)
+                        {
+                            return false;
+                        }
+                    }
+
                     return isOK;
                 }
                 catch (Exception exc)

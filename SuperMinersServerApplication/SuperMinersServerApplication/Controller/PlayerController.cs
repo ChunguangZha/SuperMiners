@@ -322,6 +322,13 @@ namespace SuperMinersServerApplication.Controller
             return isOK;
         }
 
+        public bool DeletePlayer(string userName)
+        {
+            PlayerRunnable runnable = null;
+            this._dicOnlinePlayerRuns.TryRemove(userName, out runnable);
+            return DBProvider.UserDBProvider.DeletePlayer(userName);
+        }
+
         public bool LockPlayer(string userName)
         {
             var playerrun = this.GetOnlinePlayerRunnable(userName);
