@@ -23,6 +23,21 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+
+        #region CancelSellStone
+
+
+        /// <summary>
+        /// 0表示成功；1表示操作异常；-1表示查询不到该用户；-2表示订单号为空；-3表示订单号不存在；-4表示非本人订单；-5表示订单已被锁定 
+        /// </summary>
+        public event EventHandler<WebInvokeEventArgs<int>> CancelSellStoneCompleted;
+        public void CancelSellStone(string orderNumber, object userState)
+        {
+            this._invoker.InvokeUserState<int>(this._context, "CancelSellStone", this.CancelSellStoneCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, orderNumber);
+        }
+
+        #endregion
+
         #region GetOrderLockedBySelf
 
         public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder>> GetOrderLockedBySelfCompleted;

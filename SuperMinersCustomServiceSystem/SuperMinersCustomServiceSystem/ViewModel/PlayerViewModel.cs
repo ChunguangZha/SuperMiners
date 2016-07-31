@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using MetaData.User;
+using SuperMinersCustomServiceSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,6 +45,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             App.BusyToken.ShowBusyWindow("正在保存玩家信息...");
             GlobalData.Client.ChangePlayer(player.ParentObject);
+        }
+
+        public void AsyncDeletePlayerInfos(string[] playerUserNames)
+        {
+            App.BusyToken.ShowBusyWindow("正在删除玩家...");
+            GlobalData.Client.DeletePlayers(playerUserNames);
         }
 
         /// <summary>
@@ -165,6 +172,51 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             GlobalData.Client.GetPlayersCompleted += Client_GetPlayersCompleted;
             GlobalData.Client.ChangePlayerCompleted += Client_ChangePlayerCompleted;
+            GlobalData.Client.DeletePlayersCompleted += Client_DeletePlayersCompleted;
+        }
+
+        void Client_DeletePlayersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<DeleteResultInfo> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null || e.Result == null)
+            {
+                MessageBox.Show("删除玩家信息失败。");
+                return;
+            }
+            if (e.Result.AllSucceed)
+            {
+                MessageBox.Show("删除玩家信息成功。");
+            }
+            else
+            {
+                if (e.Result.FailedList == null || e.Result.FailedList.Length == 0 ||e.Result.SucceedList == null || e.Result.SucceedList.Length == 0)
+                {
+                    MessageBox.Show("删除玩家信息失败。");
+                }
+                else
+                {
+                    StringBuilder builderS = new StringBuilder();
+                    StringBuilder builderF = new StringBuilder();
+                    foreach (var item in e.Result.SucceedList)
+                    {
+                        builderS.Append(item);
+                        builderS.Append(",");
+                    }
+                    foreach (var item in e.Result.FailedList)
+                    {
+                        builderF.Append(item);
+                        builderF.Append(",");
+                    }
+                    MessageBox.Show("用户名：" + builderS.ToString(0, builderS.Length - 1) + "  删除成功，用户名：" + builderF.ToString(0, builderF.Length - 1) + " 删除失败。");
+                }
+            }
+
+            this.AsyncGetListPlayers();
         }
 
         void Client_ChangePlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)

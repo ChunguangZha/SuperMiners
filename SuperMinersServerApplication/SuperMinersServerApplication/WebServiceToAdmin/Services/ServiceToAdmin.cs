@@ -386,42 +386,57 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool DeletePlayers(string token, string actionPassword, string[] playerUserNames)
+        public DeleteResultInfo DeletePlayers(string token, string actionPassword, string[] playerUserNames)
         {
             if (RSAProvider.LoadRSA(token))
             {
+                DeleteResultInfo result = new DeleteResultInfo();
                 try
                 {
                     var admin = AdminManager.GetClient(token);
                     if (admin == null)
                     {
-                        return false;
+                        return result;
                     }
                     if (admin.ActionPassword != actionPassword)
                     {
-                        return false;
+                        return result;
                     }
 
                     if (playerUserNames == null)
                     {
-                        return false;
+                        return result;
                     }
+
+                    List<string> listSucceed = new List<string>();
+                    List<string> listFailed = new List<string>();
 
                     foreach (var name in playerUserNames)
                     {
                         bool isOK = PlayerController.Instance.DeletePlayer(name);
-                        if (!isOK)
+                        if (isOK)
                         {
-                            return false;
+                            listSucceed.Add(name);
+                        }
+                        else
+                        {
+                            listFailed.Add(name);
                         }
                     }
 
-                    return isOK;
+                    if (listFailed.Count == 0)
+                    {
+                        result.AllSucceed = true;
+                    }
+
+                    result.SucceedList = listSucceed.ToArray();
+                    result.FailedList = listFailed.ToArray();
+                    return result;
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
-                    return false;
+                    return result;
                 }
             }
             else

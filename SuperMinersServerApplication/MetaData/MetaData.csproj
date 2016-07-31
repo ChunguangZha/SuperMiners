@@ -59,6 +59,7 @@
     <Compile Include="SystemConfig\SystemConfigin1.cs" />
     <Compile Include="Trade\TradeType.cs" />
     <Compile Include="User\AdminInfo.cs" />
+    <Compile Include="User\DeleteResultInfo.cs" />
     <Compile Include="User\TopListInfo.cs" />
     <Compile Include="User\PlayerFortuneInfo.cs" />
     <Compile Include="User\PlayerInfo.cs" />

@@ -106,6 +106,26 @@ namespace SuperMinersCustomServiceSystem
             }
         }
 
+        private void btnDeletePlayer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+
+                    if (MessageBox.Show("删除玩家【" + player.UserName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserName });
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
         private void btnCreateNotices_Click(object sender, RoutedEventArgs e)
         {
             AddNoticeWindow win = new AddNoticeWindow();

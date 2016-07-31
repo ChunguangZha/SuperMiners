@@ -86,6 +86,12 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetAllNotFinishedSellOrders(null);
         }
 
+        public void AsyncCancelSellOrder(string orderNumber)
+        {
+            App.BusyToken.ShowBusyWindow("正在取消订单...");
+            GlobalData.Client.CancelSellStone(orderNumber, null);
+        }
+
         public void RegisterEvent()
         {
             _timer.Elapsed += Timer_Elapsed;
@@ -97,6 +103,53 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.OnOrderAlipayPaySucceed += Client_OnOrderAlipayPaySucceed;
             GlobalData.Client.OnOrderListChanged += Client_OnOrderListChanged;
             GlobalData.Client.LockSellStoneCompleted += Client_LockSellStoneCompleted;
+            GlobalData.Client.CancelSellStoneCompleted += Client_CancelSellStoneCompleted;
+        }
+
+        void Client_CancelSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                return;
+            }
+
+            switch (e.Result)
+            {
+                case 0:
+                    MyMessageBox.ShowInfo("取消订单成功。");
+                    break;
+                case 1:
+                    MyMessageBox.ShowInfo("取消订单异常，请联系客服。");
+                    break;
+                case -1:
+                    MyMessageBox.ShowInfo("查询不到该用户。");
+                    break;
+                case -2:
+                    MyMessageBox.ShowInfo("订单号为空。");
+                    break;
+                case -3:
+                    MyMessageBox.ShowInfo("订单号不存在。");
+                    break;
+                case -4:
+                    MyMessageBox.ShowInfo("该订单并非本要出售，无法取消。");
+                    break;
+                case -5:
+                    MyMessageBox.ShowInfo("该订单已经被他人锁定，无法取消。");
+                    break;
+
+                default:
+                    break;
+            }
+
+            AsyncGetAllNotFinishedSellOrders();
         }
 
         void Client_LockSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)

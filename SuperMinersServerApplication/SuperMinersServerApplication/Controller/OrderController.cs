@@ -46,7 +46,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 dicSellOrders.Clear();
                 DateTime endTime = DateTime.Now;
-                DateTime beginTime = endTime.AddDays(-7);
+                DateTime beginTime = endTime.AddYears(-1);
                 var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
                 foreach (var item in waitOrderDBObjects)
                 {
@@ -275,6 +275,42 @@ namespace SuperMinersServerApplication.Controller
             };
             
             return order;
+        }
+
+        /// <summary>
+        /// 0表示成功；1表示操作异常；-1表示查询不到该用户；-2表示订单号为空；-3表示订单号不存在；-4表示非本人订单；-5表示订单已被锁定 
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public int CancelSellOrder(string sellUserName, string orderNumber)
+        {
+            lock (this._lockListSellOrders)
+            {
+                OrderRunnable runnable = null;
+                this.dicSellOrders.TryGetValue(orderNumber, out runnable);
+                if (runnable == null)
+                {
+                    return -3;
+                }
+                SellStonesOrder order = runnable.GetSellOrder();
+                if (order.SellerUserName != sellUserName)
+                {
+                    return -4;
+                }
+                if (order.OrderState != SellOrderState.Wait)
+                {
+                    return -5;
+                }
+
+                if (DBProvider.OrderDBProvider.CancelSellOrder(order))
+                {
+                    return 0;
+                }
+                else
+                {
+                    return 1;
+                }
+            }
         }
 
         public void AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction myTrans)

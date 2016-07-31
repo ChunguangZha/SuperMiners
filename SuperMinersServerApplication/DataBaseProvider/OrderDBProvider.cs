@@ -43,6 +43,34 @@ namespace DataBaseProvider
             }
         }
 
+        public bool CancelSellOrder(SellStonesOrder order)
+        {
+            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
+            MySqlCommand mycmd = null;
+            try
+            {
+                mycmd = myconn.CreateCommand();
+
+                string cmdTextA = "delete from sellstonesorder where OrderNumber = @OrderNumber;";
+
+                mycmd.CommandText = cmdTextA;
+                mycmd.Parameters.AddWithValue("@OrderNumber", order.OrderNumber);
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans)
         {
             //1.修改订单状态；

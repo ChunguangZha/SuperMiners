@@ -185,6 +185,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<bool>(this._context, "ChangePlayer", this.ChangePlayerCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, player);
         }
 
+        public event EventHandler<WebInvokeEventArgs<DeleteResultInfo>> DeletePlayersCompleted;
+        public void DeletePlayers(string[] playerUserNames)
+        {
+            this._invoker.Invoke<DeleteResultInfo>(this._context, "DeletePlayers", this.DeletePlayersCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, playerUserNames);
+        }
+
         public event EventHandler<WebInvokeEventArgs<bool>> LockPlayerCompleted;
         public void LockPlayer(string playerUserName)
         {

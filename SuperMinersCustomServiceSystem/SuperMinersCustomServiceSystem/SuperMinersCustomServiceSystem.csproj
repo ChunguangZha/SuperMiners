@@ -116,6 +116,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
+      <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
       <Link>Wcf\Datas\CallbackInfo.cs</Link>
     </Compile>

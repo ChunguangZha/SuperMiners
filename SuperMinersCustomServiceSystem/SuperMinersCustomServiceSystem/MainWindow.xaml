@@ -89,7 +89,8 @@
                             <ColumnDefinition/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
-                        <Button Name="btnEditPlayerInfo" Content="修改玩家信息" Width="100" Margin="5" Click="btnEditPlayerInfo_Click"/>
+                        <Button Name="btnEditPlayerInfo" Grid.ColumnSpan="4" HorizontalAlignment="Right" Content="修改玩家信息" Width="100" Margin="10" Click="btnEditPlayerInfo_Click"/>
+                        <Button Name="btnDeletePlayer" Grid.ColumnSpan="4" HorizontalAlignment="Right" Content="删除玩家" Width="100" Margin="10,10,130,10" Click="btnDeletePlayer_Click"/>
                     </Grid>
                 </Grid>
             </TabItem>
