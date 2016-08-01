@@ -185,7 +185,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Shopping\MinerTrade.aspx" />
     <Content Include="Shopping\MineTrade.aspx" />
-    <Content Include="Shopping\ShopList.aspx" />
+    <Content Include="ShopList.aspx" />
     <Content Include="Shopping\StoneTrade.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -284,11 +284,11 @@
     <Compile Include="Shopping\MineTrade.aspx.designer.cs">
       <DependentUpon>MineTrade.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Shopping\ShopList.aspx.cs">
+    <Compile Include="ShopList.aspx.cs">
       <DependentUpon>ShopList.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Shopping\ShopList.aspx.designer.cs">
+    <Compile Include="ShopList.aspx.designer.cs">
       <DependentUpon>ShopList.aspx</DependentUpon>
     </Compile>
     <Compile Include="Shopping\StoneTrade.aspx.cs">

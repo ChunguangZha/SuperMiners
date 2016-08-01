@@ -17,6 +17,7 @@ namespace SuperMinersWeb
         {
             LogHelper.Instance.Init();
             WcfClient.Init();
+            GlobalData.GameConfig = Wcf.WcfClient.Instance.GetGameConfig();
             ScriptManager.ScriptResourceMapping.AddDefinition("jquery", new ScriptResourceDefinition { Path = "~/scripts/jquery-1.7.2.min.js", DebugPath = "~/scripts/jquery-1.7.2.js", CdnPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.7.2.min.js", CdnDebugPath = "http://ajax.microsoft.com/ajax/jQuery/jquery-1.7.2.js" });
         }
 

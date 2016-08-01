@@ -10,15 +10,40 @@ namespace SuperMinersWeb
     {
         public static GameConfig GameConfig;
 
-        public float MinerPrice
+        public static float MinerPrice
         {
             get
             {
-                if (GameConfig == null)
+                if (GameConfig != null)
                 {
-
+                    return (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2);
                 }
-                return (float)Math.Round(GlobalData.GameConfig.GoldCoin_Miner / (GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.Yuan_RMB), 2);
+                return 10000;
+            }
+        }
+
+        public static float MinePrice
+        {
+            get
+            {
+                if (GameConfig != null)
+                {
+                    return (float)Math.Round(GlobalData.GameConfig.RMB_Mine / GlobalData.GameConfig.Yuan_RMB, 2);
+                }
+                return 100000;
+            }
+        }
+
+        public static float StonePrice
+        {
+            get
+            {
+                if (GameConfig != null)
+                {
+                    return (float)Math.Round((1 * 100) / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2);
+                }
+
+                return 100000;
             }
         }
     }

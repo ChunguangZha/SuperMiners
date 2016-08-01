@@ -21,9 +21,9 @@
         <div class="content-wrapper navmenu">
                 <nav>
                     <ul id="menu">
-                        <li><a id="A3" runat="server" href="~/"><span>主页</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A6" runat="server" href="~/Shopping/ShopList.aspx" ><span>网上商城</span></a></li>
+                        <%--<li><a id="A3" runat="server" href="~/"><span>主页</span></a></li>
+                        <li><div class="split"></div></li>--%>
+                        <li><a id="A6" runat="server" href="~/ShopList.aspx" ><span>网上商城</span></a></li>
                         <li><div class="split"></div></li>
                         <li><a id="A4" runat="server" href="~/Register.aspx"><span>矿主注册</span></a></li>
                         <li><div class="split"></div></li>
@@ -39,9 +39,9 @@
                 <div class="floatDtt">联系我们</div>
                 <div class="floatShadow">
                     <ul class="floatDqq">
-                        <li><a href="tencent://message/?uin=502921166&Site=Service&menu=yes"><img src="images/qq.png" />在线客服</a></li>
-                        <li><a href="tencent://message/?uin=502921177&Site=Service&menu=yes"><img src="images/qq.png" />商务合作</a></li>
-                        <li><a href="tencent://message/?uin=566603443&Site=Service&menu=yes"><img src="images/qq.png" />内部测试</a></li>
+                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服</a></div></li>
+                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>
+                        <li><div class="imgQQ"><a href="tencent://message/?uin=566603443&Site=Service&menu=yes">内部测试</a></div></li>
                     </ul>
                 </div>
                 <div class="floatDbg"></div>

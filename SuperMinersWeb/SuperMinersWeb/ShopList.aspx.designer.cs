@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeb.Shopping {
+namespace SuperMinersWeb {
     
     
     public partial class ShopList {

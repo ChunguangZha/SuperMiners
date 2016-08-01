@@ -7,13 +7,13 @@
             <img src="../Images/stones.jpg" />
         </div>
         <div class="shoppageinfo-r">
-            <h2>矿工</h2>
+            <h2>矿石</h2>
             <ul>
                 <li>
                     <span>价格</span>
                     <span class="shoppageinfoprice">
                         <span class="shoppageinfoprice">￥</span>
-                        <span class="shoppageinfoprice">20</span>
+                        <span class="shoppageinfoprice"><asp:Label ID="lblPrice" runat="server"></asp:Label></span>
                     </span>
                 </li>
                 <li>

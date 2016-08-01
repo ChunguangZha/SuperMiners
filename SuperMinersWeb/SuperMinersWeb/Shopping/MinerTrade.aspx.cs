@@ -9,9 +9,11 @@ namespace SuperMinersWeb.Shopping
 {
     public partial class MinerTrade : System.Web.UI.Page
     {
+        public float Price { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            lblPrice.Text = GlobalData.MinerPrice.ToString();
         }
 
         protected void btnPay_Click(object sender, EventArgs e)
