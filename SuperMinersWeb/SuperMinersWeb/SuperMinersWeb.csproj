@@ -61,7 +61,6 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Alipay\notify_url.aspx" />
-    <Content Include="Alipay\readme.txt" />
     <Content Include="Alipay\return_url.aspx" />
     <Content Include="Alipay\AlipayDefault.aspx" />
     <Content Include="AuthCode.aspx" />
