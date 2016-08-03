@@ -186,7 +186,9 @@
     <Content Include="Shopping\MineTrade.aspx" />
     <Content Include="ShopList.aspx" />
     <Content Include="Shopping\StoneTrade.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
@@ -202,11 +204,11 @@
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
-    <Content Include="App_Code\AlipayConfig.cs" />
-    <Content Include="App_Code\AlipayCore.cs" />
-    <Content Include="App_Code\AlipayNotify.cs" />
-    <Content Include="App_Code\AlipaySubmit.cs" />
-    <Content Include="App_Code\RSA.cs" />
+    <Compile Include="AlipayCode\AlipayConfig.cs" />
+    <Compile Include="AlipayCode\AlipayCore.cs" />
+    <Compile Include="AlipayCode\AlipayNotify.cs" />
+    <Compile Include="AlipayCode\AlipaySubmit.cs" />
+    <Compile Include="AlipayCode\RSA.cs" />
     <Compile Include="Alipay\notify_url.aspx.cs">
       <DependentUpon>notify_url.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

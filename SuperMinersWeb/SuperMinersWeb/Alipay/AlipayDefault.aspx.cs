@@ -1,4 +1,5 @@
-﻿using SuperMinersWeb.Wcf;
+﻿using SuperMinersWeb.AlipayCode;
+using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,65 +47,53 @@ namespace SuperMinersWeb.Alipay
 
             //商户订单号，商户网站订单系统中唯一订单号，必填
             string out_trade_no = WIDout_trade_no.Text.Trim();
-            string pattern = @"\d{20,35}";
-            if (!Regex.IsMatch(out_trade_no, pattern))
-            {
-                Response.Write("<script>alert('订单号有误，无法支付。');</script>");
-                return;
-            }
 
             //订单名称，必填
             string subject = WIDsubject.Text.Trim();
 
             //付款金额，必填
             string total_fee = WIDtotal_fee.Text.Trim();
+
+            //商品描述，可空
+            string body = WIDbody.Text.Trim();
+
+            string pattern = @"\d{20,35}";
+            if (!Regex.IsMatch(out_trade_no, pattern))
+            {
+                Response.Write("<script>alert('订单号有误，无法支付。');</script>");
+                return;
+            }
+            
             float money;
             if (!float.TryParse(total_fee, out money) || money <= 0)
             {
                 Response.Write("<script>alert('付款金额有误，无法支付。');</script>");
                 return;
             }
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////
 
-            string alipayAccount = WIDAlipayAccount.Text.Trim();
-            if (string.IsNullOrEmpty(alipayAccount))
-            {
-                Response.Write("<script>alert('请输入支付宝账户');</script>");
-                return;
-            }
-            if (alipayAccount.Length > 30)
-            {
-                Response.Write("<script>alert('输入的支付宝账户过长，请少于30个字符');</script>");
-                return;
-            }
+            //把请求参数打包成数组
+            SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
+            sParaTemp.Add("service", Config.service);
+            sParaTemp.Add("partner", Config.partner);
+            sParaTemp.Add("seller_id", Config.seller_id);
+            sParaTemp.Add("_input_charset", Config.input_charset.ToLower());
+            sParaTemp.Add("payment_type", Config.payment_type);
+            sParaTemp.Add("notify_url", Config.notify_url);
+            sParaTemp.Add("return_url", Config.return_url);
+            sParaTemp.Add("anti_phishing_key", Config.anti_phishing_key);
+            sParaTemp.Add("exter_invoke_ip", Config.exter_invoke_ip);
+            sParaTemp.Add("out_trade_no", out_trade_no);
+            sParaTemp.Add("subject", subject);
+            sParaTemp.Add("total_fee", total_fee);
+            sParaTemp.Add("body", body);
+            //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
+            //如sParaTemp.Add("参数名","参数值");
 
-            WcfClient.Instance.PayCompleted(out_trade_no, money, alipayAccount, true);
-
-            Response.Write("<script>window.opener=null;window.close();</script>");// 不会弹出询问
-
-
-            //////////////////////////////////////////////////////////////////////////////////////////////////
-
-            ////把请求参数打包成数组
-            //SortedDictionary<string, string> sParaTemp = new SortedDictionary<string, string>();
-            //sParaTemp.Add("service", Config.service);
-            //sParaTemp.Add("partner", Config.partner);
-            //sParaTemp.Add("seller_id", Config.seller_id);
-            //sParaTemp.Add("_input_charset", Config.input_charset.ToLower());
-            //sParaTemp.Add("payment_type", Config.payment_type);
-            //sParaTemp.Add("notify_url", Config.notify_url);
-            //sParaTemp.Add("return_url", Config.return_url);
-            //sParaTemp.Add("anti_phishing_key", Config.anti_phishing_key);
-            //sParaTemp.Add("exter_invoke_ip", Config.exter_invoke_ip);
-            //sParaTemp.Add("out_trade_no", out_trade_no);
-            //sParaTemp.Add("subject", subject);
-            //sParaTemp.Add("total_fee", total_fee);
-            //sParaTemp.Add("body", body);
-            ////其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
-            ////如sParaTemp.Add("参数名","参数值");
-
-            ////建立请求
-            //string sHtmlText = Submit.BuildRequest(sParaTemp, "get", "确认");
-            //Response.Write(sHtmlText);
+            //建立请求
+            string sHtmlText = Submit.BuildRequest(sParaTemp, "get", "确认");
+            Response.Write(sHtmlText);
 
         }
     }

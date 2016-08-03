@@ -58,13 +58,13 @@ namespace SuperMinersWeb.Alipay {
         protected global::System.Web.UI.WebControls.TextBox WIDtotal_fee;
         
         /// <summary>
-        /// WIDAlipayAccount control.
+        /// WIDbody control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox WIDAlipayAccount;
+        protected global::System.Web.UI.WebControls.TextBox WIDbody;
         
         /// <summary>
         /// BtnAlipay control.

@@ -1,27 +1,15 @@
-﻿using System.Web;
-using System.Text;
-using System.Security.Cryptography;
-using System.IO;
-using System.Net;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Xml;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 
-namespace SuperMinersWeb.App_Code
+namespace SuperMinersWeb.AlipayCode
 {
-    /// <summary>
-    /// 类名：Core
-    /// 功能：支付宝接口公用函数类
-    /// 详细：该类是请求、通知返回两个文件所调用的公用函数核心处理文件，不需要修改
-    /// 版本：3.4
-    /// 修改日期：2016-03-08
-    /// 说明：
-    /// 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
-    /// 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
-    /// </summary>
     public class Core
     {
-
         public Core()
         {
         }

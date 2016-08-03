@@ -314,12 +314,11 @@
                 </div>
             </div>
 			<div class="element">
-				<div class="etitle">支付宝账户:</div>
+				<div class="etitle">商品描述:</div>
 				<div class="einput">
-				<asp:TextBox ID="WIDAlipayAccount" Text="" runat="server" MaxLength="30"></asp:TextBox>
+				    <asp:TextBox ID="WIDbody" name="WIDbody" Text="" runat="server" ReadOnly="true"></asp:TextBox>
 				</div>
-				<br>
-				<div class="mark">测试阶段，手动输入支付宝账户来模拟支付操作</div>
+				<br/>
 			</div>
             <div class="element">
 
