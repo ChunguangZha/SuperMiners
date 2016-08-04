@@ -10,7 +10,7 @@
 namespace SuperMinersWeb.Alipay {
     
     
-    public partial class WebForm1 {
+    public partial class AlipayDefault {
         
         /// <summary>
         /// Head1 control.

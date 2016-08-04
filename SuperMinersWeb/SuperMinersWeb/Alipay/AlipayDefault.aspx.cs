@@ -25,8 +25,10 @@ namespace SuperMinersWeb.Alipay
     /// 3、支持中心（https://support.open.alipay.com/alipay/support/index.htm）
     /// 如果不想使用扩展功能请把扩展功能参数赋空值。
     /// </summary>
-    public partial class WebForm1 : System.Web.UI.Page
+    public partial class AlipayDefault : System.Web.UI.Page
     {
+        string playerClientIP;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!this.IsPostBack)
@@ -34,6 +36,7 @@ namespace SuperMinersWeb.Alipay
                 string orderNumber = Request.QueryString["on"];
                 string shopName = Request.QueryString["sn"];
                 string money = Request.QueryString["mn"];
+                playerClientIP = Request.QueryString["cp"];
 
                 this.WIDout_trade_no.Text = orderNumber;
                 this.WIDsubject.Text = shopName;
@@ -83,11 +86,13 @@ namespace SuperMinersWeb.Alipay
             sParaTemp.Add("notify_url", Config.notify_url);
             sParaTemp.Add("return_url", Config.return_url);
             sParaTemp.Add("anti_phishing_key", Config.anti_phishing_key);
-            sParaTemp.Add("exter_invoke_ip", Config.exter_invoke_ip);
+            //sParaTemp.Add("exter_invoke_ip", Config.exter_invoke_ip);
+            sParaTemp.Add("exter_invoke_ip", playerClientIP);
             sParaTemp.Add("out_trade_no", out_trade_no);
             sParaTemp.Add("subject", subject);
             sParaTemp.Add("total_fee", total_fee);
             sParaTemp.Add("body", body);
+            sParaTemp.Add("it_b_pay", "1h");
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
             //如sParaTemp.Add("参数名","参数值");
 

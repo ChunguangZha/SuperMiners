@@ -225,7 +225,7 @@ namespace SuperMinersServerApplication.Controller
             builder.Append(time.Minute.ToString("00"));
             builder.Append(time.Second.ToString("00"));
             builder.Append(time.Millisecond.ToString("0000"));
-            builder.Append((int)TradeType.StoneTrade);//表示此为矿石交易，对应还有矿山交易等
+            builder.Append((int)AlipayTradeInType.BuyStone);//表示此为矿石交易，对应还有矿山交易等
             builder.Append(Math.Abs(userName.GetHashCode()));
             builder.Append((new Random()).Next(1000, 9999));
             return builder.ToString();

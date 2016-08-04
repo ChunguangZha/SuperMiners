@@ -189,13 +189,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 }
                 bool isOK;
                 float rmb = money * GlobalConfig.GameConfig.Yuan_RMB;
-                TradeType tradeType = (TradeType)tradeTypeInt;
+                AlipayTradeInType tradeType = (AlipayTradeInType)tradeTypeInt;
                 switch (tradeType)
                 {
-                    case TradeType.StoneTrade:
+                    case AlipayTradeInType.BuyStone:
                         isOK = OrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
                         break;
-                    case TradeType.MineTrade:
+                    case AlipayTradeInType.BuyMine:
                         break;
                     default:
                         break;

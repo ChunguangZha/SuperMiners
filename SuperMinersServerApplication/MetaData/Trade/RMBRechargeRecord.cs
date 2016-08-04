@@ -10,6 +10,8 @@ namespace MetaData
     {
         public string UserName = "";
 
+        public string AlipayTradeNo = "";
+
         /// <summary>
         /// 充值金额
         /// </summary>

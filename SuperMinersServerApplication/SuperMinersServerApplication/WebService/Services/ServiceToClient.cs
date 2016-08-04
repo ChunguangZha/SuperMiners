@@ -50,7 +50,7 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             new Thread(new ParameterizedThreadStart(o =>
             {
-                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.TradeType.StoneTrade, arg2);
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.AlipayTradeInType.BuyStone, arg2);
             })).Start();
         }
 
@@ -58,7 +58,7 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             new Thread(new ParameterizedThreadStart(o =>
             {
-                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.TradeType.StoneTrade, arg2);
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.AlipayTradeInType.BuyStone, arg2);
             })).Start();
         }
 
