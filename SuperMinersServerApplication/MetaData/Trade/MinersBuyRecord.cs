@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace MetaData
 {
     /// <summary>
-    /// 矿工购买记录
+    /// 矿工购买记录。（注：矿工是金币交易，不需要订单号）
     /// </summary>
     public class MinersBuyRecord
     {

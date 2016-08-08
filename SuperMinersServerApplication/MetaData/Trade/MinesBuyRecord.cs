@@ -13,6 +13,8 @@ namespace MetaData
     {
         public string UserName = "";
 
+        public string OrderNumber = "";
+
         /// <summary>
         /// 花费的金币数
         /// </summary>

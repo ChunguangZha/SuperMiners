@@ -13,6 +13,11 @@ namespace MetaData
         public string AlipayTradeNo = "";
 
         /// <summary>
+        /// 系统交易单号
+        /// </summary>
+        public string SysTradeNo = "";
+
+        /// <summary>
         /// 充值金额
         /// </summary>
         public float RechargeMoney = 0;
