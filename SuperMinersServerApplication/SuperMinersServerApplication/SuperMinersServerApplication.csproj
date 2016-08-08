@@ -108,6 +108,9 @@
     <Compile Include="Controller\AdminController.cs" />
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
+    <Compile Include="Controller\GoldCoinOrderController.cs" />
+    <Compile Include="Controller\MineOrderController.cs" />
+    <Compile Include="Controller\MinerOrderController.cs" />
     <Compile Include="Controller\NoticeController.cs" />
     <Compile Include="Controller\OrderController.cs" />
     <Compile Include="Controller\OrderRunnable.cs" />

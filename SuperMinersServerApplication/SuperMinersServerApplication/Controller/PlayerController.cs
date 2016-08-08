@@ -385,7 +385,7 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMiner(minersCount);
         }
 
-        public int BuyMine(string userName, int minesCount)
+        public int BuyMineByRMB(string userName, int minesCount)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -393,7 +393,12 @@ namespace SuperMinersServerApplication.Controller
                 return -1;
             }
 
-            return playerrun.BuyMine(minesCount);
+            return playerrun.BuyMineByRMB(minesCount);
+        }
+
+        public string BuyMineByAlipay(string userName, int minesCount)
+        {
+
         }
 
         public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)

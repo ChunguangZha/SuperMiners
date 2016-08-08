@@ -52,7 +52,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return -1;
                 }
 
-                return PlayerController.Instance.BuyMine(userName, minesCount);
+                return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
             }
             else
             {

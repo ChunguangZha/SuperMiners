@@ -278,7 +278,7 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMine(int minesCount)
+        public int BuyMineByRMB(int minesCount)
         {
             if (minesCount <= 0)
             {

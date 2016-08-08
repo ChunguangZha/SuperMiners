@@ -215,7 +215,7 @@ namespace SuperMinersServerApplication.Controller
             return expense;
         }
 
-        private string CreateOrderNumber(string userName, DateTime time)
+        private string CreateOrderNumber(string userName, DateTime time, AlipayTradeInType tradeType)
         {
             StringBuilder builder = new StringBuilder();
             builder.Append(time.Year.ToString("0000"));
@@ -225,7 +225,7 @@ namespace SuperMinersServerApplication.Controller
             builder.Append(time.Minute.ToString("00"));
             builder.Append(time.Second.ToString("00"));
             builder.Append(time.Millisecond.ToString("0000"));
-            builder.Append((int)AlipayTradeInType.BuyStone);//表示此为矿石交易，对应还有矿山交易等
+            builder.Append((int)tradeType);//表示此为矿石交易，对应还有矿山交易等
             builder.Append(Math.Abs(userName.GetHashCode()));
             builder.Append((new Random()).Next(1000, 9999));
             return builder.ToString();
@@ -265,7 +265,7 @@ namespace SuperMinersServerApplication.Controller
             DateTime time = DateTime.Now;
             SellStonesOrder order = new SellStonesOrder()
             {
-                OrderNumber = CreateOrderNumber(userName, time),
+                OrderNumber = CreateOrderNumber(userName, time, AlipayTradeInType.BuyStone),
                 SellStonesCount = sellStonesCount,
                 OrderState = SellOrderState.Wait,
                 SellerUserName = userName,
