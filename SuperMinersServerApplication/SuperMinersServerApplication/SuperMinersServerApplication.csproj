@@ -112,6 +112,7 @@
     <Compile Include="Controller\Trade\MineOrderController.cs" />
     <Compile Include="Controller\Trade\MinerOrderController.cs" />
     <Compile Include="Controller\NoticeController.cs" />
+    <Compile Include="Controller\Trade\OrderController.cs" />
     <Compile Include="Controller\Trade\StoneOrderController.cs" />
     <Compile Include="Controller\Trade\StoneOrderRunnable.cs" />
     <Compile Include="Controller\PlayerActionController.cs" />

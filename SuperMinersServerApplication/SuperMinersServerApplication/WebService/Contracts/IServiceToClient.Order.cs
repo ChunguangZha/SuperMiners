@@ -89,7 +89,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool PayStoneOrder(string token, string orderNumber, float rmb, int tradeType);
+        bool PayStoneOrder(string token, string orderNumber, float rmb, int payType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SearchUserSellStoneOrders",

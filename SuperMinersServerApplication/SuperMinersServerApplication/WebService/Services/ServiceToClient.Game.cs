@@ -1,5 +1,8 @@
-﻿using MetaData.User;
+﻿using MetaData;
+using MetaData.Trade;
+using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.WebService.Contracts;
 using System;
@@ -14,7 +17,7 @@ namespace SuperMinersServerApplication.WebService.Services
     public partial class ServiceToClient : IServiceToClient
     {
 
-        public int BuyMiner(string token, string userName, int minersCount, int tradeType)
+        public int BuyMiner(string token, string userName, int minersCount, int payType)
         {
 #if Delay
 
@@ -37,7 +40,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int BuyMine(string token, string userName, int minesCount, int tradeType)
+        public TradeOperResult BuyMine(string token, string userName, int minesCount, int payType)
         {
 #if Delay
 
@@ -47,9 +50,30 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
+                TradeOperResult result = new TradeOperResult();
+
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
-                    return -1;
+                    return result;
+                }
+
+                DateTime timenow = DateTime.Now;
+                string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
+                MinesBuyRecord record = new MinesBuyRecord()
+                {
+                    OrderNumber = orderNumber,
+                     Time = timenow,
+                      UserName = userName,
+                      
+                };
+
+                if (payType == (int)PayType.Alipay)
+                {
+
+                }
+                else if (payType == (int)PayType.RMB)
+                {
+                    int value = PlayerController.Instance.BuyMineByRMB(userName, minesCount);
                 }
 
                 return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
@@ -60,7 +84,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int GoldCoinRecharge(string token, string userName, int goldCoinCount, int tradeType)
+        public int GoldCoinRecharge(string token, string userName, int goldCoinCount, int payType)
         {
 #if Delay
 

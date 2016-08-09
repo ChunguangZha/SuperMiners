@@ -2,6 +2,7 @@
 using MetaData;
 using MetaData.Trade;
 using MetaData.User;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService;
@@ -16,22 +17,6 @@ namespace SuperMinersServerApplication.Controller
 {
     public class StoneOrderController
     {
-        #region Single Stone
-
-        private static StoneOrderController _instance = new StoneOrderController();
-
-        public static StoneOrderController Instance
-        {
-            get { return _instance; }
-        }
-
-        private StoneOrderController()
-        {
-
-        }
-
-        #endregion
-
         object _lockListSellOrders = new object();
         /// <summary>
         /// Key为订单号
@@ -215,22 +200,6 @@ namespace SuperMinersServerApplication.Controller
             return expense;
         }
 
-        private string CreateOrderNumber(string userName, DateTime time, AlipayTradeInType tradeType)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append(time.Year.ToString("0000"));
-            builder.Append(time.Month.ToString("00"));
-            builder.Append(time.Day.ToString("00"));
-            builder.Append(time.Hour.ToString("00"));
-            builder.Append(time.Minute.ToString("00"));
-            builder.Append(time.Second.ToString("00"));
-            builder.Append(time.Millisecond.ToString("0000"));
-            builder.Append((int)tradeType);//表示此为矿石交易，对应还有矿山交易等
-            builder.Append(Math.Abs(userName.GetHashCode()));
-            builder.Append((new Random()).Next(1000, 9999));
-            return builder.ToString();
-        }
-
         public int GetTradeType(string orderNumber)
         {
             if (orderNumber.Length < 20)
@@ -265,7 +234,7 @@ namespace SuperMinersServerApplication.Controller
             DateTime time = DateTime.Now;
             SellStonesOrder order = new SellStonesOrder()
             {
-                OrderNumber = CreateOrderNumber(userName, time, AlipayTradeInType.BuyStone),
+                OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.BuyStone),
                 SellStonesCount = sellStonesCount,
                 OrderState = SellOrderState.Wait,
                 SellerUserName = userName,

@@ -11,9 +11,9 @@ namespace MetaData.Trade
     public class TradeOperResult
     {
         /// <summary>
-        /// 
+        /// 0表示成功；-1表示失败；-2表示异常；
         /// </summary>
-        public int ResultCode;
+        public int ResultCode = -1;
 
         public int TradeType;
 

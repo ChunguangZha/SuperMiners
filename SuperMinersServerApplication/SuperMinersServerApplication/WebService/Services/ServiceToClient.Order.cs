@@ -291,7 +291,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool PayStoneOrder(string token, string orderNumber, float rmb)
+        public bool PayStoneOrder(string token, string orderNumber, float rmb, int payType)
         {
 #if Delay
 
