@@ -37,4 +37,14 @@ namespace MetaData.Trade
         BuyGoldCoin = 22,
 
     }
+
+    /// <summary>
+    /// 订单支付方式
+    /// </summary>
+    public enum PayType
+    {
+        Alipay = 0,
+        RMB = 1,
+        GoldCoin = 2
+    }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller
 {
-    class OrderRunnable
+    class StoneOrderRunnable
     {
         private SellStonesOrder _sellOrder;
         private object _lock = new object();
@@ -48,12 +48,12 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public OrderRunnable(SellStonesOrder sellOrder)
+        public StoneOrderRunnable(SellStonesOrder sellOrder)
         {
             this._sellOrder = sellOrder;
         }
 
-        public OrderRunnable(LockSellStonesOrder lockInfo)
+        public StoneOrderRunnable(LockSellStonesOrder lockInfo)
         {
             _lockOrderObject = lockInfo;
             this._sellOrder = lockInfo.StonesOrder;

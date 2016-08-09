@@ -182,7 +182,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return;
                 }
 
-                int tradeTypeInt = OrderController.Instance.GetTradeType(orderNumber);
+                int tradeTypeInt = StoneOrderController.Instance.GetTradeType(orderNumber);
                 if (tradeTypeInt < 10)
                 {
                     return;
@@ -193,7 +193,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 switch (tradeType)
                 {
                     case AlipayTradeInType.BuyStone:
-                        isOK = OrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
+                        isOK = StoneOrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
                         break;
                     case AlipayTradeInType.BuyMine:
                         break;

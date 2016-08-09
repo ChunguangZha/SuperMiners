@@ -14,7 +14,7 @@ namespace SuperMinersServerApplication.WebService.Services
     public partial class ServiceToClient : IServiceToClient
     {
 
-        public int BuyMiner(string token, string userName, int minersCount)
+        public int BuyMiner(string token, string userName, int minersCount, int tradeType)
         {
 #if Delay
 
@@ -37,7 +37,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int BuyMine(string token, string userName, int minesCount)
+        public int BuyMine(string token, string userName, int minesCount, int tradeType)
         {
 #if Delay
 
@@ -53,6 +53,30 @@ namespace SuperMinersServerApplication.WebService.Services
                 }
 
                 return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int GoldCoinRecharge(string token, string userName, int goldCoinCount, int tradeType)
+        {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return -1;
+                }
+
+                return -1;
+                //return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
             }
             else
             {

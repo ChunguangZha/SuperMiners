@@ -49,7 +49,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 CustomerMySqlTransaction trans = MyDBHelper.Instance.CreateTrans();
                 try
                 {
-                    order = OrderController.Instance.CreateSellOrder(userName, sellStonesCount);
+                    order = StoneOrderController.Instance.CreateSellOrder(userName, sellStonesCount);
                     if (order.ValueRMB <= 0)
                     {
                         return -2;
@@ -61,7 +61,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         trans.Rollback();
                         return result;
                     }
-                    OrderController.Instance.AddSellOrder(order, trans);
+                    StoneOrderController.Instance.AddSellOrder(order, trans);
                     trans.Commit();
                     PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, sellStonesCount);
 
@@ -85,7 +85,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         PlayerController.Instance.RollbackUserFromDB(userName);
                         if (order != null)
                         {
-                            OrderController.Instance.ClearSellStonesOrder(order);
+                            StoneOrderController.Instance.ClearSellStonesOrder(order);
                         }
                         LogHelper.Instance.AddErrorLog(errMessage, exc);
                     }
@@ -138,7 +138,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                 try
                 {
-                    return OrderController.Instance.CancelSellOrder(userName, orderNumber);
+                    return StoneOrderController.Instance.CancelSellOrder(userName, orderNumber);
                 }
                 catch (Exception exc)
                 {
@@ -164,7 +164,7 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.GetLockedOrderByUserName(userName);
+                return StoneOrderController.Instance.GetLockedOrderByUserName(userName);
             }
             else
             {
@@ -182,7 +182,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return OrderController.Instance.GetSellOrders();
+                return StoneOrderController.Instance.GetSellOrders();
             }
             else
             {
@@ -212,12 +212,12 @@ namespace SuperMinersServerApplication.WebService.Services
                     return null;
                 }
 
-                if (OrderController.Instance.CheckUserHasNotPayOrder(userName))
+                if (StoneOrderController.Instance.CheckUserHasNotPayOrder(userName))
                 {
                     return null;
                 }
 
-                return OrderController.Instance.AutoMatchLockSellStone(userName, buyStonesCount);
+                return StoneOrderController.Instance.AutoMatchLockSellStone(userName, buyStonesCount);
             }
             else
             {
@@ -240,12 +240,12 @@ namespace SuperMinersServerApplication.WebService.Services
                     return null;
                 }
 
-                if (OrderController.Instance.CheckUserHasNotPayOrder(userName))
+                if (StoneOrderController.Instance.CheckUserHasNotPayOrder(userName))
                 {
                     return null;
                 }
 
-                return OrderController.Instance.LockSellStone(userName, orderNumber);
+                return StoneOrderController.Instance.LockSellStone(userName, orderNumber);
             }
             else
             {
@@ -264,7 +264,7 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.CheckUserHasNotPayOrder(userName);
+                return StoneOrderController.Instance.CheckUserHasNotPayOrder(userName);
             }
             else
             {
@@ -283,7 +283,7 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.ReleaseLockSellOrder(orderNumber);
+                return StoneOrderController.Instance.ReleaseLockSellOrder(orderNumber);
             }
             else
             {
@@ -291,7 +291,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool PayOrderByRMB(string token, string orderNumber, float rmb)
+        public bool PayStoneOrder(string token, string orderNumber, float rmb)
         {
 #if Delay
 
@@ -317,7 +317,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return false;
                 }
 
-                return OrderController.Instance.PayStoneTrade(player, orderNumber, true, rmb);
+                return StoneOrderController.Instance.PayStoneTrade(player, orderNumber, true, rmb);
             }
             else
             {

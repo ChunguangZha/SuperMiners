@@ -34,8 +34,8 @@ namespace SuperMinersServerApplication.WebService.Services
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
             NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
-            OrderController.Instance.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
-            OrderController.Instance.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+            StoneOrderController.Instance.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
+            StoneOrderController.Instance.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
         }
 
         void Instance_KickOutPlayer(string obj)

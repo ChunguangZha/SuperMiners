@@ -17,7 +17,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int BuyMiner(string token, string userName, int minersCount);
+        int BuyMiner(string token, string userName, int minersCount, int tradeType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/BuyMine",
@@ -25,7 +25,15 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int BuyMine(string token, string userName, int minesCount);
+        int BuyMine(string token, string userName, int minesCount, int tradeType);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GoldCoinRecharge",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int GoldCoinRecharge(string token, string userName, int goldCoinCount, int tradeType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GatherStones",

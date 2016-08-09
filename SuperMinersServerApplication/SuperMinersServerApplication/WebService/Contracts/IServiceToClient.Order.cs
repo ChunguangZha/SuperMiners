@@ -27,13 +27,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int SellStone(string token, string userName, int sellStonesCount);
 
-        //[OperationContract]
-        //[WebInvoke(UriTemplate = "/WebService/CancelSellStone",
-        //    Method = "POST",
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    RequestFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        //bool CancelSellStone(string token, string userName, string orderNumber);
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/CancelSellStone",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool CancelSellStone(string token, string userName, string orderNumber);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetAllNotFinishedSellOrders",
@@ -84,12 +84,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
         bool ReleaseLockOrder(string token, string orderNumber);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/PayOrderByRMB",
+        [WebInvoke(UriTemplate = "/WebService/PayStoneOrder",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool PayOrderByRMB(string token, string orderNumber, float rmb);
+        bool PayStoneOrder(string token, string orderNumber, float rmb, int tradeType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SearchUserSellStoneOrders",

@@ -14,18 +14,18 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller
 {
-    public class OrderController
+    public class StoneOrderController
     {
         #region Single Stone
 
-        private static OrderController _instance = new OrderController();
+        private static StoneOrderController _instance = new StoneOrderController();
 
-        public static OrderController Instance
+        public static StoneOrderController Instance
         {
             get { return _instance; }
         }
 
-        private OrderController()
+        private StoneOrderController()
         {
 
         }
@@ -36,7 +36,7 @@ namespace SuperMinersServerApplication.Controller
         /// <summary>
         /// Key为订单号
         /// </summary>
-        private Dictionary<string, OrderRunnable> dicSellOrders = new Dictionary<string, OrderRunnable>();
+        private Dictionary<string, StoneOrderRunnable> dicSellOrders = new Dictionary<string, StoneOrderRunnable>();
 
         private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
 
@@ -50,8 +50,8 @@ namespace SuperMinersServerApplication.Controller
                 var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
                 foreach (var item in waitOrderDBObjects)
                 {
-                    var runnable = new OrderRunnable(item);
-                    dicSellOrders.Add(item.OrderNumber, new OrderRunnable(item));
+                    var runnable = new StoneOrderRunnable(item);
+                    dicSellOrders.Add(item.OrderNumber, new StoneOrderRunnable(item));
                 }
 
                 var lockedOrderDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList("");
@@ -60,7 +60,7 @@ namespace SuperMinersServerApplication.Controller
                     TimeSpan span = DateTime.Now - item.LockedTime;
                     if (span.TotalSeconds > GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
                     {
-                        var runnable = new OrderRunnable(item);
+                        var runnable = new StoneOrderRunnable(item);
                         runnable.ReleaseLock();
                         //解除锁定后，继续加到集合中
                         dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
@@ -68,7 +68,7 @@ namespace SuperMinersServerApplication.Controller
                     else
                     {
                         item.OrderLockedTimeSpan = (int)span.TotalSeconds;
-                        var runnable = new OrderRunnable(item);
+                        var runnable = new StoneOrderRunnable(item);
                         dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
                     }
                 }
@@ -117,7 +117,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockListSellOrders)
             {
-                OrderRunnable runnable = null;
+                StoneOrderRunnable runnable = null;
                 foreach (var item in dicSellOrders.Values)
                 {
                     if (item.OrderState == SellOrderState.Wait && item.StoneCount <= stoneCount)
@@ -154,7 +154,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockListSellOrders)
             {
-                OrderRunnable runnable = null;
+                StoneOrderRunnable runnable = null;
                 if (dicSellOrders.TryGetValue(orderNumber, out runnable))
                 {
                     if (runnable.OrderState != SellOrderState.Wait)
@@ -286,7 +286,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                OrderRunnable runnable = null;
+                StoneOrderRunnable runnable = null;
                 this.dicSellOrders.TryGetValue(orderNumber, out runnable);
                 if (runnable == null)
                 {
@@ -318,7 +318,7 @@ namespace SuperMinersServerApplication.Controller
             lock (this._lockListSellOrders)
             {
                 DBProvider.OrderDBProvider.AddSellOrder(order, myTrans);
-                dicSellOrders.Add(order.OrderNumber, new OrderRunnable(order));
+                dicSellOrders.Add(order.OrderNumber, new StoneOrderRunnable(order));
             }
         }
 
@@ -340,7 +340,7 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ReleaseLockSellOrder(string orderNumber)
         {
-            OrderRunnable order = null;
+            StoneOrderRunnable order = null;
             lock (this._lockListSellOrders)
             {
                 this.dicSellOrders.TryGetValue(orderNumber, out order);
@@ -365,7 +365,7 @@ namespace SuperMinersServerApplication.Controller
 
         public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans)
         {
-            OrderRunnable runnable = null;
+            StoneOrderRunnable runnable = null;
             lock (this._lockListSellOrders)
             {
                 if (this.dicSellOrders.ContainsKey(orderNumber))
@@ -393,7 +393,7 @@ namespace SuperMinersServerApplication.Controller
             return runnable.Pay(rmb, trans);
         }
 
-        private OrderRunnable FindRunnableByBuyUserName(string buyerUserName)
+        private StoneOrderRunnable FindRunnableByBuyUserName(string buyerUserName)
         {
             lock (this._lockListSellOrders)
             {

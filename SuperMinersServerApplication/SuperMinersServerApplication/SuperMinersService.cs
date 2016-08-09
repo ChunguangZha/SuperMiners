@@ -79,7 +79,7 @@ namespace SuperMinersServerApplication
                     return false;
                 }
 
-                OrderController.Instance.Init();
+                StoneOrderController.Instance.Init();
                 NoticeController.Instance.Init();
 
                 if (!InitServiceToClient())

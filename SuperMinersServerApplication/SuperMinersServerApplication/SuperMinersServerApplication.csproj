@@ -108,12 +108,12 @@
     <Compile Include="Controller\AdminController.cs" />
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
-    <Compile Include="Controller\GoldCoinOrderController.cs" />
-    <Compile Include="Controller\MineOrderController.cs" />
-    <Compile Include="Controller\MinerOrderController.cs" />
+    <Compile Include="Controller\Trade\GoldCoinOrderController.cs" />
+    <Compile Include="Controller\Trade\MineOrderController.cs" />
+    <Compile Include="Controller\Trade\MinerOrderController.cs" />
     <Compile Include="Controller\NoticeController.cs" />
-    <Compile Include="Controller\OrderController.cs" />
-    <Compile Include="Controller\OrderRunnable.cs" />
+    <Compile Include="Controller\Trade\StoneOrderController.cs" />
+    <Compile Include="Controller\Trade\StoneOrderRunnable.cs" />
     <Compile Include="Controller\PlayerActionController.cs" />
     <Compile Include="Controller\PlayerController.cs" />
     <Compile Include="Controller\PlayerRunnable.cs" />
