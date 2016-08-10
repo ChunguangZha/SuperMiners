@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="ActionLog\PlayerActionLog.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Trade\AlipayRechargeRecord.cs" />
     <Compile Include="Trade\BuyStonesOrder.cs" />
     <Compile Include="DatabaseFieldAttribute.cs" />
     <Compile Include="Trade\GoldCoinRechargeRecord.cs" />

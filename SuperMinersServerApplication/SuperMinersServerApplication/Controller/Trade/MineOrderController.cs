@@ -1,4 +1,6 @@
 ﻿using MetaData;
+using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Trade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,16 +14,34 @@ namespace SuperMinersServerApplication.Controller
         private object _lock = new object();
         private Dictionary<string, MinesBuyRecord> _listRecord = new Dictionary<string, MinesBuyRecord>();
 
-        public bool AddBuyRecord(MinesBuyRecord record)
+        public string CreateOrderRecord(string userName, int minesCount)
         {
+            DateTime timenow = DateTime.Now;
+                
+            string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
+            MinesBuyRecord record = new MinesBuyRecord()
+            {
+                OrderNumber = orderNumber,
+                CreateTime = timenow,
+                UserName = userName,
+                GainMinesCount = minesCount,
+                GainStonesReserves = minesCount * (int)GlobalConfig.GameConfig.StonesReservesPerMines,
+                SpendRMB = (int)Math.Ceiling(minesCount * GlobalConfig.GameConfig.RMB_Mine)
+            };
+
             lock (this._lock)
             {
                 this._listRecord.Add(record.OrderNumber, record);
             }
 
-            return true;
+            return orderNumber;
         }
 
+        public bool SaveTempMineTradeRecord(string orderNumber)
+        {
+
+        }
+        
         public int BuyMineByRMB(string userName, int minesCount)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
@@ -37,6 +57,7 @@ namespace SuperMinersServerApplication.Controller
         {
             
         }
+
 
     }
 }

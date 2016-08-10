@@ -51,21 +51,16 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 TradeOperResult result = new TradeOperResult();
+                if (minesCount <= 0)
+                {
+                    return result;
+                }
 
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
                     return result;
                 }
 
-                DateTime timenow = DateTime.Now;
-                string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
-                MinesBuyRecord record = new MinesBuyRecord()
-                {
-                    OrderNumber = orderNumber,
-                     Time = timenow,
-                      UserName = userName,
-                      
-                };
 
                 if (payType == (int)PayType.Alipay)
                 {

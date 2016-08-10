@@ -16,7 +16,7 @@ namespace MetaData
         public string OrderNumber = "";
 
         /// <summary>
-        /// 花费的金币数
+        /// 花费的灵币数
         /// </summary>
         public int SpendRMB = 0;
 
@@ -30,6 +30,8 @@ namespace MetaData
         /// </summary>
         public int GainStonesReserves = 0;
 
-        public DateTime Time;
+        public DateTime CreateTime;
+
+        public DateTime PayTime;
     }
 }
