@@ -15,10 +15,14 @@ namespace SuperMinersServerApplication.Encoder
         private static string Key2 = "ujm503-~";
 
 
+        /// <summary>
         /// DES加密字符串          
         /// 待加密的字符串  
         /// 加密密钥,要求为8位  
         /// 加密成功返回加密后的字符串，失败返回源串   
+        /// </summary>
+        /// <param name="encryptString"></param>
+        /// <returns></returns>
         public static string EncryptDES(string encryptString)
         {
             try
@@ -38,11 +42,15 @@ namespace SuperMinersServerApplication.Encoder
                 return encryptString;
             }
         }
-        ///   
+
+        /// <summary>
         /// DES解密字符串          
         /// 待解密的字符串  
         /// 解密密钥,要求为8位,和加密密钥相同  
         /// 解密成功返回解密后的字符串，失败返源串  
+        /// </summary>
+        /// <param name="decryptString"></param>
+        /// <returns></returns>
         public static string DecryptDES(string decryptString)
         {
             try

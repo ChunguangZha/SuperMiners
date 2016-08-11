@@ -56,20 +56,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return result;
                 }
 
-                if (ClientManager.GetClientUserName(token) != userName)
-                {
-                    return result;
-                }
-
-
-                if (payType == (int)PayType.Alipay)
-                {
-
-                }
-                else if (payType == (int)PayType.RMB)
-                {
-                    int value = PlayerController.Instance.BuyMineByRMB(userName, minesCount);
-                }
+                OrderController.Instance.MineOrderController.BuyMine(userName, minesCount, payType);
 
                 return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
             }

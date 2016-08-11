@@ -274,7 +274,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 矿山只能用RMB购买
+        /// 矿山只能用RMB购买。0表示账户余额不足；-1表示操作失败；minesCount表示成功。
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
@@ -282,7 +282,7 @@ namespace SuperMinersServerApplication.Controller
         {
             if (minesCount <= 0)
             {
-                return 0;
+                return OperResult.RESULTCODE_FAILED;
             }
 
             lock (_lockFortuneAction)
@@ -290,7 +290,7 @@ namespace SuperMinersServerApplication.Controller
                 float needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
                 if (needRMB > BasePlayer.FortuneInfo.RMB)
                 {
-                    return 0;
+                    return OperResult.RESULTCODE_LACKOFBALANCE;
                 }
 
                 float newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
@@ -300,12 +300,41 @@ namespace SuperMinersServerApplication.Controller
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
-                    return -1;
+                    return OperResult.RESULTCODE_FAILED;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
                     "增加了 " + newReservers.ToString() + " 的矿石储量");
-                return minesCount;
+                return OperResult.RESULTCODE_SUCCEED;
+            }
+        }
+
+        /// <summary>
+        /// 用Alipay购买矿山。-1表示操作失败；minesCount表示成功。
+        /// </summary>
+        /// <param name="minesCount"></param>
+        /// <returns></returns>
+        public int BuyMineByAlipay(int minesCount)
+        {
+            if (minesCount <= 0)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                float newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
+                BasePlayer.FortuneInfo.MinesCount += minesCount;
+                BasePlayer.FortuneInfo.StonesReserves += newReservers;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FAILED;
+                }
+
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
+                    "增加了 " + newReservers.ToString() + " 的矿石储量");
+                return OperResult.RESULTCODE_SUCCEED;
             }
         }
 

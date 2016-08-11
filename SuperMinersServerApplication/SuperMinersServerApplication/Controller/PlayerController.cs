@@ -368,7 +368,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return -1;
+                return OperResult.RESULTCODE_FAILED;
             }
 
             return playerrun.GatherStones(stones);
@@ -379,7 +379,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return -1;
+                return OperResult.RESULTCODE_FAILED;
             }
 
             return playerrun.BuyMiner(minersCount);
@@ -390,15 +390,30 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return -1;
+                return OperResult.RESULTCODE_FAILED;
             }
 
             return playerrun.BuyMineByRMB(minesCount);
         }
 
-        public string BuyMineByAlipay(string userName, int minesCount)
+        public int BuyMineByAlipay(string userName, int minesCount)
         {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
 
+            int value = playerrun.BuyMineByAlipay(minesCount);
+            if (value == OperResult.RESULTCODE_SUCCEED)
+            {
+                if (PlayerInfoChanged != null)
+                {
+                    PlayerInfoChanged(playerrun.BasePlayer);
+                }
+            }
+
+            return value;
         }
 
         public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)

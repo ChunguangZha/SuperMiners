@@ -1,4 +1,5 @@
-﻿using SuperMinersWeb.AlipayCode;
+﻿using SuperMinersServerApplication.Encoder;
+using SuperMinersWeb.AlipayCode;
 using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
@@ -31,16 +32,34 @@ namespace SuperMinersWeb.Alipay
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!this.IsPostBack)
+            try
             {
-                string orderNumber = Request.QueryString["on"];
-                string shopName = Request.QueryString["sn"];
-                string money = Request.QueryString["mn"];
-                playerClientIP = Request.QueryString["cp"];
+                if (!this.IsPostBack)
+                {
+                    string p = Request.QueryString["p"];
+                    string secParameter = DESEncrypt.DecryptDES(p);
+                    string[] parameters = secParameter.Split(new char[] { ',' });
 
-                this.WIDout_trade_no.Text = orderNumber;
-                this.WIDsubject.Text = shopName;
-                this.WIDtotal_fee.Text = money;
+                    //string orderNumber = Request.QueryString["on"];
+                    //string shopName = Request.QueryString["sn"];
+                    //string money = Request.QueryString["mn"];
+                    //playerClientIP = Request.QueryString["cp"];
+
+                    //this.WIDout_trade_no.Text = orderNumber;
+                    //this.WIDsubject.Text = shopName;
+                    //this.WIDtotal_fee.Text = money;
+
+
+                    this.WIDout_trade_no.Text = parameters[0];
+                    this.WIDsubject.Text = parameters[1];
+                    this.WIDtotal_fee.Text = parameters[2];
+                    //this.playerClientIP = parameters[3];
+                }
+            }
+            catch (Exception exc)
+            {
+                Response.Write("<script>alert('参数有误，无法支付。');</script>");
+                Response.Redirect("~");
             }
         }
 

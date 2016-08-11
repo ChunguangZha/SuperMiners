@@ -1,4 +1,5 @@
 ﻿using MetaData.Trade;
+using SuperMinersServerApplication.Encoder;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,5 +47,13 @@ namespace SuperMinersServerApplication.Controller.Trade
             return builder.ToString();
         }
 
+        public string CreateAlipayLink(string orderNumber, string shopName, float money, string clientIP)
+        {
+            string srcParameter = orderNumber + "," + shopName + "," + money.ToString("0.00") + "," + clientIP;
+            string desParameter = DESEncrypt.EncryptDES(srcParameter);
+
+            string baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+            return baseuri + "AlipayDefault.aspx?p=" + desParameter;
+        }
     }
 }
