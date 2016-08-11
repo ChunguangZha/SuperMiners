@@ -13,15 +13,20 @@ namespace MetaData
         public string OrderNumber = "";
 
         /// <summary>
-        /// 充值金额
+        /// 花费灵币
         /// </summary>
-        public float RechargeMoney = 0;
+        public float SpendRMB = 0;
 
         /// <summary>
         /// 获取金币值
         /// </summary>
         public float GainGoldCoin = 0;
 
-        public DateTime Time;
+        public DateTime CreateTime;
+
+        /// <summary>
+        /// 临时表不保存该字段
+        /// </summary>
+        public DateTime PayTime;
     }
 }

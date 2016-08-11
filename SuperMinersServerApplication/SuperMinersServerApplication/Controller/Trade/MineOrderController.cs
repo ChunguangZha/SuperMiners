@@ -9,14 +9,27 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller
 {
-    class MineOrderController
+    public class MineOrderController
     {
         private object _lock = new object();
-        private Dictionary<string, MinesBuyRecord> _listRecord = new Dictionary<string, MinesBuyRecord>();
 
-        public bool Init()
+        /// <summary>
+        /// Key:OrderNumber
+        /// </summary>
+        private Dictionary<string, MinesBuyRecord> _listTempRecord = new Dictionary<string, MinesBuyRecord>();
+
+        public void Init()
         {
             //load from DB
+            _listTempRecord.Clear();
+            var list = DBProvider.MineRecordDBProvider.GetAllTempMineTradeRecords();
+            if (list != null)
+            {
+                foreach (var item in list)
+                {
+                    _listTempRecord.Add(item.OrderNumber, item);
+                }
+            }
         }
 
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)
@@ -43,17 +56,17 @@ namespace SuperMinersServerApplication.Controller
                 if (value == OperResult.RESULTCODE_SUCCEED)
                 {
                     record.PayTime = DateTime.Now;
-                    SaveFinalMineTradeRecord(record);
+                    DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record);
                 }
             }
             else if (payType == (int)PayType.Alipay)
             {
                 lock (this._lock)
                 {
-                    this._listRecord.Add(record.OrderNumber, record);
+                    this._listTempRecord.Add(record.OrderNumber, record);
                 }
 
-                SaveTempMineTradeRecord(record);
+                DBProvider.MineRecordDBProvider.SaveTempMineTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_SUCCEED;
                 result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿石", record.SpendRMB / GlobalConfig.GameConfig.Yuan_RMB, "");
             }
@@ -61,45 +74,25 @@ namespace SuperMinersServerApplication.Controller
             return result;
         }
 
-        private bool SaveTempMineTradeRecord(MinesBuyRecord record)
-        {
-            //GlobalConfig.GameConfig.BuyOrderLockTimeMinutes锁定时间
-        }
-
-        private bool SaveFinalMineTradeRecord(MinesBuyRecord record)
-        {
-
-        }
-
-        private bool DeleteTempMineTradeRecord(string orderNumber)
-        {
-
-        }
-
-        private bool SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord)
-        {
-
-        }
-
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
             lock (this._lock)
             {
-                SaveAlipayRechargeRecord(alipayRecord);
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
 
                 MinesBuyRecord buyRecord = null;
-                if (this._listRecord.TryGetValue(alipayRecord.out_trade_no, out buyRecord) && buyRecord!=null)
+                if (this._listTempRecord.TryGetValue(alipayRecord.out_trade_no, out buyRecord) && buyRecord!=null)
                 {
                     if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
                         alipayRecord.total_fee * GlobalConfig.GameConfig.Yuan_RMB >= buyRecord.SpendRMB)
                     {
                         //1.delete from temp DB
-                        DeleteTempMineTradeRecord(buyRecord.OrderNumber);
+                        DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber);
 
                         int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, buyRecord.SpendRMB);
                         if (value == OperResult.RESULTCODE_SUCCEED)
                         {
-                            SaveFinalMineTradeRecord(buyRecord);
+                            DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);
                             return true;
                         }
                     }

@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.Trade;
+using MetaData.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int BuyMine(string token, string userName, int minesCount, int tradeType);
+        TradeOperResult BuyMine(string token, string userName, int minesCount, int tradeType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GoldCoinRecharge",

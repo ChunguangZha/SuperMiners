@@ -30,6 +30,11 @@ namespace SuperMinersServerApplication.Controller.Trade
         public GoldCoinOrderController GoldCoinOrderController = new GoldCoinOrderController();
         public MineOrderController MineOrderController = new MineOrderController();
 
+        public void Init()
+        {
+            MineOrderController.Init();
+            GoldCoinOrderController.Init();
+        }
 
         public string CreateOrderNumber(string userName, DateTime time, AlipayTradeInType tradeType)
         {
@@ -41,7 +46,7 @@ namespace SuperMinersServerApplication.Controller.Trade
             builder.Append(time.Minute.ToString("00"));
             builder.Append(time.Second.ToString("00"));
             builder.Append(time.Millisecond.ToString("0000"));
-            builder.Append((int)tradeType);//表示此为矿石交易，对应还有矿山交易等
+            builder.Append((int)tradeType);//第18到20位
             builder.Append(Math.Abs(userName.GetHashCode()));
             builder.Append((new Random()).Next(1000, 9999));
             return builder.ToString();
@@ -54,6 +59,38 @@ namespace SuperMinersServerApplication.Controller.Trade
 
             string baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
             return baseuri + "AlipayDefault.aspx?p=" + desParameter;
+        }
+
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        {
+            bool isOK = false;
+            AlipayTradeInType type = GetTradeType(alipayRecord.out_trade_no);
+            switch (type)
+            {
+                case AlipayTradeInType.BuyGoldCoin:
+                    break;
+                case AlipayTradeInType.BuyMine:
+                    isOK = this.MineOrderController.AlipayCallback(alipayRecord);
+                    break;
+                case AlipayTradeInType.BuyMiner:
+                    break;
+                case AlipayTradeInType.BuyRMB:
+                    break;
+                case AlipayTradeInType.BuyStone:
+                    break;
+
+                default:
+                    break;
+            }
+
+            return isOK;
+        }
+
+        private AlipayTradeInType GetTradeType(string orderNumber)
+        {
+            string strType = orderNumber.Substring(18, 2);
+            int valueType = Convert.ToInt32(strType);
+            return (AlipayTradeInType)valueType;
         }
     }
 }

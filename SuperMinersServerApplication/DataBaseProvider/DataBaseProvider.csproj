@@ -45,11 +45,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminDBProvider.cs" />
+    <Compile Include="AlipayRecordDBProvider.cs" />
     <Compile Include="BuyMinerRecordDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />
+    <Compile Include="GoldCoinRecordDBProvider.cs" />
     <Compile Include="MetaDBAdapter.cs" />
+    <Compile Include="MineRecordDBProvider.cs" />
     <Compile Include="MyDBHelper.cs" />
-    <Compile Include="OrderDBProvider.cs" />
+    <Compile Include="StoneOrderDBProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RechargeDBProvider.cs" />
     <Compile Include="SystemDBProvider.cs" />

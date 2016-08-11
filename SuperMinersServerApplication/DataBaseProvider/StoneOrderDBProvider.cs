@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataBaseProvider
 {
-    public class OrderDBProvider
+    public class StoneOrderDBProvider
     {
         public bool AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction trans)
         {

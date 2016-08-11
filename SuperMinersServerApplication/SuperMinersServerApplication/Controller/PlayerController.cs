@@ -416,6 +416,37 @@ namespace SuperMinersServerApplication.Controller
             return value;
         }
 
+        public int RechargeGoldCoinByRMB(string userName, int rmbValue, int goldcoinValue)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
+
+            return playerrun.RechargeGoldCoineByRMB(rmbValue, goldcoinValue);
+        }
+
+        public int RechargeGoldCoinByAlipay(string userName, int rmbValue, int goldcoinValue)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
+
+            int value = playerrun.RechargeGoldCoineByAlipay(rmbValue, goldcoinValue);
+            if (value == OperResult.RESULTCODE_SUCCEED)
+            {
+                if (PlayerInfoChanged != null)
+                {
+                    PlayerInfoChanged(playerrun.BasePlayer);
+                }
+            }
+
+            return value;
+        }
+
         public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)
         {
             PlayerRunnable playerBuyerRun = this.GetOnlinePlayerRunnable(playerBuyer.SimpleInfo.UserName);
@@ -472,57 +503,57 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool RechargeRMB(string alipay, string alipayRealName, float yuan)
-        {
-            try
-            {
-                //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-                //if (player == null)
-                //{
-                //    return false;
-                //}
+        //public bool RechargeRMB(string alipay, string alipayRealName, float yuan)
+        //{
+        //    try
+        //    {
+        //        //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
+        //        //if (player == null)
+        //        //{
+        //        //    return false;
+        //        //}
 
-                //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-                //if (playerrun == null)
-                //{
-                //    playerrun = new PlayerRunnable(player);
-                //}
+        //        //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
+        //        //if (playerrun == null)
+        //        //{
+        //        //    playerrun = new PlayerRunnable(player);
+        //        //}
 
-                //playerrun.RechargeRMB(yuan);
-                return true;
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("RechargeRMB exception. alipay = " + alipay + ", reamname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
-                return false;
-            }
-        }
+        //        //playerrun.RechargeRMB(yuan);
+        //        return true;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        LogHelper.Instance.AddErrorLog("RechargeRMB exception. alipay = " + alipay + ", reamname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
+        //        return false;
+        //    }
+        //}
 
-        public bool RechargeGoldCoin(string alipay, string alipayRealName, float yuan)
-        {
-            try
-            {
-                //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-                //if (player == null)
-                //{
-                //    return false;
-                //}
+        //public bool RechargeGoldCoin(string alipay, string alipayRealName, float yuan)
+        //{
+        //    try
+        //    {
+        //        //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
+        //        //if (player == null)
+        //        //{
+        //        //    return false;
+        //        //}
 
-                //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-                //if (playerrun == null)
-                //{
-                //    playerrun = new PlayerRunnable(player);
-                //}
+        //        //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
+        //        //if (playerrun == null)
+        //        //{
+        //        //    playerrun = new PlayerRunnable(player);
+        //        //}
 
-                //playerrun.RechargeRMB(yuan);
-                return true;
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("RechargeGoldCoin exception. alipay = " + alipay + ", realname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
-                return false;
-            }
-        }
+        //        //playerrun.RechargeRMB(yuan);
+        //        return true;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        LogHelper.Instance.AddErrorLog("RechargeGoldCoin exception. alipay = " + alipay + ", realname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
+        //        return false;
+        //    }
+        //}
 
         public PlayerInfo GetPlayerByAlipayAccount(string alipayAccount)
         {

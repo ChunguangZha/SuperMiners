@@ -13,12 +13,18 @@ namespace SuperMinersServerApplication.Controller
 
         public static SystemDBProvider SystemDBProvider = new SystemDBProvider();
 
-        public static RechargeDBProvider RechargeDBProvider = new RechargeDBProvider();
+        //public static RechargeDBProvider RechargeDBProvider = new RechargeDBProvider();
 
         public static AdminDBProvider AdminDBProvider = new AdminDBProvider();
 
-        public static OrderDBProvider OrderDBProvider = new OrderDBProvider();
+        public static StoneOrderDBProvider StoneOrderDBProvider = new StoneOrderDBProvider();
 
         public static BuyMinerRecordDBProvider BuyMinerRecordDBProvider = new BuyMinerRecordDBProvider();
+
+        public static MineRecordDBProvider MineRecordDBProvider = new MineRecordDBProvider();
+
+        public static AlipayRecordDBProvider AlipayRecordDBProvider = new AlipayRecordDBProvider();
+
+        public static GoldCoinRecordDBProvider GoldCoinRecordDBProvider = new GoldCoinRecordDBProvider();
     }
 }

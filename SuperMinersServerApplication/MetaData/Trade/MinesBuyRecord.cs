@@ -32,6 +32,9 @@ namespace MetaData
 
         public DateTime CreateTime;
 
+        /// <summary>
+        /// 临时表不保存该字段
+        /// </summary>
         public DateTime PayTime;
     }
 }

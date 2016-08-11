@@ -56,9 +56,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return result;
                 }
 
-                OrderController.Instance.MineOrderController.BuyMine(userName, minesCount, payType);
-
-                return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
+                return OrderController.Instance.MineOrderController.BuyMine(userName, minesCount, payType);
             }
             else
             {

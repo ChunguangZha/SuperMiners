@@ -3,6 +3,7 @@ using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using System;
@@ -164,49 +165,31 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="orderNumber"></param>
-        /// <param name="money">人民币，需换算为灵币</param>
-        /// <param name="payAlipayAccount"></param>
+        /// <param name="out_trade_no"></param>
+        /// <param name="alipay_trade_no"></param>
+        /// <param name="total_fee">人民币，需换算为灵币</param>
+        /// <param name="buyer_email"></param>
         /// <param name="succeed"></param>
-        public void PayCompleted(string orderNumber, float money, string payAlipayAccount, bool succeed)
+        public void AlipayCallback(string out_trade_no, string alipay_trade_no, float total_fee, string buyer_email, string pay_time)
         {
             try
             {
-                if (!succeed)
+                AlipayRechargeRecord record = new AlipayRechargeRecord()
                 {
-                    return;
-                }
-                PlayerInfo player = PlayerController.Instance.GetPlayerByAlipayAccount(payAlipayAccount);
-                if (player == null)
-                {
-                    return;
-                }
-
-                int tradeTypeInt = StoneOrderController.Instance.GetTradeType(orderNumber);
-                if (tradeTypeInt < 10)
-                {
-                    return;
-                }
-                bool isOK;
-                float rmb = money * GlobalConfig.GameConfig.Yuan_RMB;
-                AlipayTradeInType tradeType = (AlipayTradeInType)tradeTypeInt;
-                switch (tradeType)
-                {
-                    case AlipayTradeInType.BuyStone:
-                        isOK = StoneOrderController.Instance.PayStoneTrade(player, orderNumber, false, rmb);
-                        break;
-                    case AlipayTradeInType.BuyMine:
-                        break;
-                    default:
-                        break;
-                }
+                    alipay_trade_no = alipay_trade_no,
+                    buyer_email = buyer_email,
+                    out_trade_no = out_trade_no,
+                    pay_time = Convert.ToDateTime(pay_time),
+                    total_fee = total_fee
+                };
+                OrderController.Instance.AlipayCallback(record);
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("PayCompleted Exception. " +
-                                            " orderNumber: " + orderNumber + ";" +
-                                            " money: " + money.ToString() + ";" +
-                                            " payAlipayAccount: " + payAlipayAccount, exc);
+                                            " orderNumber: " + out_trade_no + ";" +
+                                            " money: " + total_fee.ToString() + ";" +
+                                            " payAlipayAccount: " + buyer_email, exc);
 
             }
         }

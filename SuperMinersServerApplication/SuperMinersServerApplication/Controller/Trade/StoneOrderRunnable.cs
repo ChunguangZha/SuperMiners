@@ -96,8 +96,8 @@ namespace SuperMinersServerApplication.Controller
                 };
 
                 this._sellOrder.OrderState = SellOrderState.Finish;
-                DBProvider.OrderDBProvider.PayOrder(buyOrder, trans);
-                DBProvider.OrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);
+                DBProvider.StoneOrderDBProvider.PayOrder(buyOrder, trans);
+                DBProvider.StoneOrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);
 
                 return buyOrder;
             }
@@ -129,7 +129,7 @@ namespace SuperMinersServerApplication.Controller
                         OrderLockedTimeSpan = 0
                     };
                     this._sellOrder.OrderState = SellOrderState.Lock;
-                    DBProvider.OrderDBProvider.LockOrder(this._lockOrderObject, trans);
+                    DBProvider.StoneOrderDBProvider.LockOrder(this._lockOrderObject, trans);
 
                     trans.Commit();
 
@@ -182,7 +182,7 @@ namespace SuperMinersServerApplication.Controller
                 try
                 {
                     trans = MyDBHelper.Instance.CreateTrans();
-                    DBProvider.OrderDBProvider.ReleaseOrderLock(this._sellOrder.OrderNumber, trans);
+                    DBProvider.StoneOrderDBProvider.ReleaseOrderLock(this._sellOrder.OrderNumber, trans);
                     trans.Commit();
                     this._sellOrder.OrderState = SellOrderState.Wait;
                     this._lockOrderObject = null;

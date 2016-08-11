@@ -32,14 +32,14 @@ namespace SuperMinersServerApplication.Controller
                 dicSellOrders.Clear();
                 DateTime endTime = DateTime.Now;
                 DateTime beginTime = endTime.AddYears(-1);
-                var waitOrderDBObjects = DBProvider.OrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
+                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new StoneOrderRunnable(item);
                     dicSellOrders.Add(item.OrderNumber, new StoneOrderRunnable(item));
                 }
 
-                var lockedOrderDBObjects = DBProvider.OrderDBProvider.GetLockSellStonesOrderList("");
+                var lockedOrderDBObjects = DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList("");
                 foreach (var item in lockedOrderDBObjects)
                 {
                     TimeSpan span = DateTime.Now - item.LockedTime;
@@ -59,7 +59,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 beginTime = endTime.AddDays(-1);
-                var buyOrderRecords = DBProvider.OrderDBProvider.GetBuyStonesOrderList("", beginTime, endTime);
+                var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", beginTime, endTime);
                 if (buyOrderRecords == null)
                 {
                     this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
@@ -200,19 +200,6 @@ namespace SuperMinersServerApplication.Controller
             return expense;
         }
 
-        public int GetTradeType(string orderNumber)
-        {
-            if (orderNumber.Length < 20)
-            {
-                return -1;
-            }
-
-            string typestring = orderNumber.Substring(18, 2);
-            int typeResult = -1;
-            int.TryParse(typestring, out typeResult);
-            return typeResult;
-        }
-
         public void ClearSellStonesOrder(SellStonesOrder order)
         {
             lock (this._lockListSellOrders)
@@ -271,7 +258,7 @@ namespace SuperMinersServerApplication.Controller
                     return -5;
                 }
 
-                if (DBProvider.OrderDBProvider.CancelSellOrder(order))
+                if (DBProvider.StoneOrderDBProvider.CancelSellOrder(order))
                 {
                     return 0;
                 }
@@ -286,7 +273,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                DBProvider.OrderDBProvider.AddSellOrder(order, myTrans);
+                DBProvider.StoneOrderDBProvider.AddSellOrder(order, myTrans);
                 dicSellOrders.Add(order.OrderNumber, new StoneOrderRunnable(order));
             }
         }

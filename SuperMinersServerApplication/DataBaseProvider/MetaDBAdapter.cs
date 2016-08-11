@@ -265,5 +265,43 @@ namespace DataBaseProvider
             return orders;
         }
 
+        internal static MinesBuyRecord[] GetMinesBuyRecordFromDataTable(DataTable dt)
+        {
+            MinesBuyRecord[] records = new MinesBuyRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                MinesBuyRecord record = new MinesBuyRecord();
+                record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
+                record.GainMinesCount = Convert.ToSingle(dt.Rows[i]["GainMinesCount"]);
+                record.GainStonesReserves = Convert.ToInt32(dt.Rows[i]["GainMinesCount"]);
+                record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
+                record.SpendRMB = Convert.ToInt32(dt.Rows[i]["SpendRMB"]);
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
+        internal static GoldCoinRechargeRecord[] GetGoldCoinRechargeRecordFromDataTable(DataTable dt)
+        {
+            GoldCoinRechargeRecord[] records = new GoldCoinRechargeRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                GoldCoinRechargeRecord record = new GoldCoinRechargeRecord();
+                record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
+                record.GainGoldCoin = Convert.ToSingle(dt.Rows[i]["GainGoldCoin"]);
+                record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
+                record.SpendRMB = Convert.ToInt32(dt.Rows[i]["SpendRMB"]);
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+
+                records[i] = record;
+            }
+
+            return records;
+        }
     }
 }

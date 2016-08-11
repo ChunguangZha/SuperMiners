@@ -33,7 +33,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool CancelSellStone(string token, string userName, string orderNumber);
+        int CancelSellStone(string token, string userName, string orderNumber);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetAllNotFinishedSellOrders",

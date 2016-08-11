@@ -339,6 +339,68 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rmbValue"></param>
+        /// <param name="goldcoinValue"></param>
+        /// <returns></returns>
+        public int RechargeGoldCoineByRMB(int rmbValue, int goldcoinValue)
+        {
+            if (rmbValue <= 0)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                if (rmbValue > BasePlayer.FortuneInfo.RMB)
+                {
+                    return OperResult.RESULTCODE_LACKOFBALANCE;
+                }
+
+                BasePlayer.FortuneInfo.RMB -= rmbValue;
+                BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FAILED;
+                }
+
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
+                    "充值了 " + goldcoinValue.ToString() + " 的金币");
+                return OperResult.RESULTCODE_SUCCEED;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rmbValue"></param>
+        /// <param name="goldcoinValue"></param>
+        /// <returns></returns>
+        public int RechargeGoldCoineByAlipay(int rmbValue, int goldcoinValue)
+        {
+            if (rmbValue <= 0)
+            {
+                return OperResult.RESULTCODE_FAILED;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FAILED;
+                }
+
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
+                    "充值了 " + goldcoinValue.ToString() + " 的金币");
+                return OperResult.RESULTCODE_SUCCEED;
+            }
+        }
+
+        /// <summary>
         /// 支付购买矿石订单后，更新买家信息
         /// </summary>
         /// <param name="order"></param>
@@ -416,73 +478,73 @@ namespace SuperMinersServerApplication.Controller
         }
 
         #region 取消充值功能
-        public bool RechargeGoldCoin(float yuan)
-        {
-            lock (_lockFortuneAction)
-            {
-                GoldCoinRechargeRecord record = new GoldCoinRechargeRecord()
-                {
-                    UserName = BasePlayer.SimpleInfo.UserName,
-                    RechargeMoney = yuan,
-                    GainGoldCoin = yuan * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.RMB_GoldCoin,
-                    Time = DateTime.Now
-                };
-                BasePlayer.FortuneInfo.GoldCoin += record.GainGoldCoin;
+        //public bool RechargeGoldCoin(float yuan)
+        //{
+        //    lock (_lockFortuneAction)
+        //    {
+        //        GoldCoinRechargeRecord record = new GoldCoinRechargeRecord()
+        //        {
+        //            UserName = BasePlayer.SimpleInfo.UserName,
+        //            SpendRMB = yuan,
+        //            GainGoldCoin = yuan * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.RMB_GoldCoin,
+        //            Time = DateTime.Now
+        //        };
+        //        BasePlayer.FortuneInfo.GoldCoin += record.GainGoldCoin;
 
-                var trans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
-                    DBProvider.RechargeDBProvider.AddRechargeGoldCoinRecord(record, trans);
-                    trans.Commit();
-                    return true;
-                }
-                catch (Exception exc)
-                {
-                    trans.Rollback();
-                    RefreshFortune();
-                    throw exc;
-                }
-                finally
-                {
-                    trans.Dispose();
-                }
-            }
-        }
+        //        var trans = MyDBHelper.Instance.CreateTrans();
+        //        try
+        //        {
+        //            DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+        //            DBProvider.RechargeDBProvider.AddRechargeGoldCoinRecord(record, trans);
+        //            trans.Commit();
+        //            return true;
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            trans.Rollback();
+        //            RefreshFortune();
+        //            throw exc;
+        //        }
+        //        finally
+        //        {
+        //            trans.Dispose();
+        //        }
+        //    }
+        //}
 
-        public bool RechargeRMB(float yuan)
-        {
-            lock (_lockFortuneAction)
-            {
-                RMBRechargeRecord record = new RMBRechargeRecord()
-                {
-                    UserName = BasePlayer.SimpleInfo.UserName,
-                    RechargeMoney = yuan,
-                    GainRMB = yuan * GlobalConfig.GameConfig.Yuan_RMB,
-                    Time = DateTime.Now
-                };
-                BasePlayer.FortuneInfo.RMB += record.GainRMB;
+        //public bool RechargeRMB(float yuan)
+        //{
+        //    lock (_lockFortuneAction)
+        //    {
+        //        RMBRechargeRecord record = new RMBRechargeRecord()
+        //        {
+        //            UserName = BasePlayer.SimpleInfo.UserName,
+        //            RechargeMoney = yuan,
+        //            GainRMB = yuan * GlobalConfig.GameConfig.Yuan_RMB,
+        //            Time = DateTime.Now
+        //        };
+        //        BasePlayer.FortuneInfo.RMB += record.GainRMB;
 
-                var trans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
-                    DBProvider.RechargeDBProvider.AddRechargeRMBRecord(record, trans);
-                    trans.Commit();
-                    return true;
-                }
-                catch (Exception exc)
-                {
-                    trans.Rollback();
-                    RefreshFortune();
-                    throw exc;
-                }
-                finally
-                {
-                    trans.Dispose();
-                }
-            }
-        }
+        //        var trans = MyDBHelper.Instance.CreateTrans();
+        //        try
+        //        {
+        //            DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+        //            DBProvider.RechargeDBProvider.AddRechargeRMBRecord(record, trans);
+        //            trans.Commit();
+        //            return true;
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            trans.Rollback();
+        //            RefreshFortune();
+        //            throw exc;
+        //        }
+        //        finally
+        //        {
+        //            trans.Dispose();
+        //        }
+        //    }
+        //}
         #endregion
 
         public bool ReferAward(AwardReferrerConfig awardConfig, CustomerMySqlTransaction trans)
