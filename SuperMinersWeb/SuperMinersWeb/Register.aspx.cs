@@ -1,4 +1,5 @@
-﻿using SuperMinersWeb.Wcf;
+﻿using MetaData;
+using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,57 +97,72 @@ namespace SuperMinersWeb
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
             result = WcfClient.Instance.CheckRegisterIP(ip);
-            if (result < 0)
+            if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
                 Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
                 return;
             }
-            if (result > 0)
+            if (result == OperResult.RESULTCODE_FALSE)
             {
                 Response.Write("<script>alert('此IP注册玩家数，已经超出限制，无法注册!')</script>");
                 return;
             }
+            if (result != OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+                return;
+            }
 
             result = WcfClient.Instance.CheckUserNameExist(userName);
-            if (result < 0)
+            if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
                 Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
                 return;
             }
-            if (result > 0)
+            if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('该用户名已经存在，请选择其它用户名!')</script>");
+                return;
+            }
+            if (result != OperResult.RESULTCODE_FALSE)
+            {
+                Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
                 return;
             }
 
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(qq))
             {
                 result = WcfClient.Instance.CheckEmailExist(email);
-                if (result < 0)
+                if (result == OperResult.RESULTCODE_EXCEPTION)
                 {
                     Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
                     return;
                 }
-                if (result > 0)
+                if (result == OperResult.RESULTCODE_TRUE)
                 {
                     Response.Write("<script>alert('该邮箱已被其它用户使用，请选择其它邮箱!')</script>");
+                    return;
+                }
+                if (result != OperResult.RESULTCODE_FALSE)
+                {
+                    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
                     return;
                 }
             }
 
             result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
-            if (result == 0)
+            if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
                 Response.Redirect("~/");
             }
-            else if (result == 1)
+            else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
             {
                 Response.Write("<script>alert('用户名已经存在!')</script>");
             }
-            else if (result == 2)
+            else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT)
             {
-                Response.Write("<script>alert('同一IP注册用户数超限!')</script>");
+                Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
             }
             else
             {

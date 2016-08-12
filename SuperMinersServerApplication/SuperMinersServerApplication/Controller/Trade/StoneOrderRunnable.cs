@@ -1,6 +1,7 @@
 ﻿using DataBaseProvider;
 using MetaData;
 using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
@@ -123,7 +124,7 @@ namespace SuperMinersServerApplication.Controller
                     this._lockOrderObject = new LockSellStonesOrder()
                     {
                         StonesOrder = this._sellOrder,
-                        PayUrl = this.CreatePayUrl(),
+                        PayUrl = OrderController.Instance.CreateAlipayLink(this.OrderNumber, "迅灵矿石", this.ValueRMB, ""),
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now,
                         OrderLockedTimeSpan = 0
@@ -154,20 +155,6 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
             }
-        }
-
-        private string CreatePayUrl()
-        {
-            float money = this._sellOrder.ValueRMB / GlobalConfig.GameConfig.Yuan_RMB;
-            float money_1 = (float)Math.Round(money, 1);
-            if (money_1 < money)//说明刚才是四舍了，要把他加回来
-            {
-                money_1 += 0.1f;
-            }
-
-            //取到角级
-            string suburl = @"Alipay/AlipayDefault.aspx?on=" + this._sellOrder.OrderNumber + "&sn=矿石&mn=" + money_1.ToString();
-            return suburl;
         }
 
         public bool ReleaseLock()

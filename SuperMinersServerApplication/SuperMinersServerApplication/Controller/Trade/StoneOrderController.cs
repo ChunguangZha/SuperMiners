@@ -234,7 +234,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 0表示成功；1表示操作异常；-1表示查询不到该用户；-2表示订单号为空；-3表示订单号不存在；-4表示非本人订单；-5表示订单已被锁定 
+        /// OperResult
         /// </summary>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
@@ -246,26 +246,24 @@ namespace SuperMinersServerApplication.Controller
                 this.dicSellOrders.TryGetValue(orderNumber, out runnable);
                 if (runnable == null)
                 {
-                    return -3;
+                    return OperResult.RESULTCODE_ORDER_NOT_EXIST;
                 }
                 SellStonesOrder order = runnable.GetSellOrder();
                 if (order.SellerUserName != sellUserName)
                 {
-                    return -4;
+                    return OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
                 }
                 if (order.OrderState != SellOrderState.Wait)
                 {
-                    return -5;
+                    return OperResult.RESULTCODE_ORDER_BE_LOCKED;
                 }
 
                 if (DBProvider.StoneOrderDBProvider.CancelSellOrder(order))
                 {
-                    return 0;
+                    return OperResult.RESULTCODE_TRUE;
                 }
-                else
-                {
-                    return 1;
-                }
+
+                return OperResult.RESULTCODE_FALSE;
             }
         }
 
@@ -319,7 +317,32 @@ namespace SuperMinersServerApplication.Controller
             return isOK;
         }
 
-        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans)
+        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans, ref TradeOperResult result)
+        {
+            StoneOrderRunnable runnable = FindOrderByOrderName(orderNumber);
+            if (runnable == null)
+            {
+                result.ResultCode = OperResult.RESULTCODE_ORDER_NOT_EXIST;
+                LogHelper.Instance.AddInfoLog("支付订单时错误，没有找到订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
+            }
+            if (!runnable.CheckBuyerName(buyerUserName))
+            {
+                result.ResultCode = OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
+                LogHelper.Instance.AddInfoLog("支付订单时错误，此订单不是被当前玩家锁定。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
+            }
+            if (rmb < runnable.ValueRMB)
+            {
+                result.ResultCode = OperResult.RESULTCODE_PARAM_INVALID;
+                LogHelper.Instance.AddInfoLog("支付订单时错误，玩家支付的灵币不足，无法完成订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return null;
+            }
+
+            return runnable.Pay(rmb, trans);
+        }
+
+        private StoneOrderRunnable FindOrderByOrderName(string orderNumber)
         {
             StoneOrderRunnable runnable = null;
             lock (this._lockListSellOrders)
@@ -329,24 +352,8 @@ namespace SuperMinersServerApplication.Controller
                     runnable = this.dicSellOrders[orderNumber];
                 }
             }
-            
-            if (runnable == null)
-            {
-                LogHelper.Instance.AddInfoLog("支付订单时错误，没有找到订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
-            if (!runnable.CheckBuyerName(buyerUserName))
-            {
-                LogHelper.Instance.AddInfoLog("支付订单时错误，此订单不是被当前玩家锁定。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
-            if (rmb < runnable.ValueRMB)
-            {
-                LogHelper.Instance.AddInfoLog("支付订单时错误，玩家支付的灵币不足，无法完成订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
 
-            return runnable.Pay(rmb, trans);
+            return runnable;
         }
 
         private StoneOrderRunnable FindRunnableByBuyUserName(string buyerUserName)
@@ -365,55 +372,60 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool PayStoneTrade(PlayerInfo player, string orderNumber, bool rmbPay, float rmb)
+        /// <summary>
+        /// 此处只需处理RMB支付。Alipay支付的情况，在锁定订单时已经将支付链接返回，客户端可直接链接支付。
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="orderNumber"></param>
+        /// <param name="rmb"></param>
+        /// <param name="payType"></param>
+        /// <returns></returns>
+        public int PayStoneTrade(PlayerInfo player, string orderNumber, float rmb, int payType)
         {
+            TradeOperResult result = new TradeOperResult();
+            result.PayType = payType;
+            result.TradeType = (int)AlipayTradeInType.BuyStone;
+
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                var buyOrder = this.Pay(orderNumber, player.SimpleInfo.UserName, rmb, trans);
+                var buyOrder = this.Pay(orderNumber, player.SimpleInfo.UserName, rmb, trans, ref result);
                 if (buyOrder == null)
                 {
                     trans.Rollback();
-                    return false;
+                    return result;
                 }
 
-                bool isOK = PlayerController.Instance.PayStoneOrder(player, buyOrder, rmbPay, trans);
-                if (!isOK)
+                if (payType == (int)PayType.RMB)
                 {
-                    trans.Rollback();
-                    return false;
+                    bool isOK = PlayerController.Instance.PayStoneOrder(player, buyOrder, trans);
+                    if (!isOK)
+                    {
+                        trans.Rollback();
+                        result.ResultCode = OperResult.RESULTCODE_FALSE;
+                        return result;
+                    }
+                    this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
+
+                }
+                else if (payType == (int)PayType.Alipay)
+                {
+                    result.ResultCode = OperResult.RESULTCODE_TRUE;
+                    result.AlipayLink = OrderController.Instance.CreateAlipayLink(buyOrder.StonesOrder.OrderNumber, "迅灵矿石", buyOrder.StonesOrder.ValueRMB, "");
                 }
 
                 trans.Commit();
 
-                this.dicSellOrders.Remove(buyOrder.StonesOrder.OrderNumber);
+                AddLogNotifyPlayer(player, orderNumber, buyOrder);
 
-                PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
-
-                string tokenBuyer = ClientManager.GetToken(player.SimpleInfo.UserName);
-                if (!string.IsNullOrEmpty(tokenBuyer))
-                {
-                    if (StoneOrderPaySucceedNotifyBuyer != null)
-                    {
-                        StoneOrderPaySucceedNotifyBuyer(tokenBuyer, orderNumber);
-                    }
-                }
-                string tokenSeller = ClientManager.GetToken(buyOrder.StonesOrder.SellerUserName);
-                if (!string.IsNullOrEmpty(tokenSeller))
-                {
-                    if (StoneOrderPaySucceedNotifySeller != null)
-                    {
-                        StoneOrderPaySucceedNotifySeller(tokenSeller, orderNumber);
-                    }
-                }
-
-                return true;
+                return result;
             }
             catch (Exception exc)
             {
+                result.ResultCode = OperResult.RESULTCODE_EXCEPTION;
                 trans.Rollback();
                 LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + orderNumber, exc);
-                return false;
+                return result;
             }
             finally
             {
@@ -423,6 +435,61 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
         }
+
+        private void AddLogNotifyPlayer(PlayerInfo player, string orderNumber, BuyStonesOrder buyOrder)
+        {
+            PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
+
+            string tokenBuyer = ClientManager.GetToken(player.SimpleInfo.UserName);
+            if (!string.IsNullOrEmpty(tokenBuyer))
+            {
+                if (StoneOrderPaySucceedNotifyBuyer != null)
+                {
+                    StoneOrderPaySucceedNotifyBuyer(tokenBuyer, orderNumber);
+                }
+            }
+            string tokenSeller = ClientManager.GetToken(buyOrder.StonesOrder.SellerUserName);
+            if (!string.IsNullOrEmpty(tokenSeller))
+            {
+                if (StoneOrderPaySucceedNotifySeller != null)
+                {
+                    StoneOrderPaySucceedNotifySeller(tokenSeller, orderNumber);
+                }
+            }
+        }
+
+        private void RemoveRecord(string orderNumber)
+        {
+            lock (this._lockListSellOrders)
+            {
+                this.dicSellOrders.Remove(orderNumber);
+            }
+        }
+
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        {
+            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+
+            StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
+            if (runnable != null)
+            {
+                if (alipayRecord.out_trade_no == runnable.OrderNumber &&
+                    alipayRecord.value_rmb >= runnable.ValueRMB)
+                {
+                    PlayerController.Instance.GetPlayerInfo(runnable.
+                    bool isOK = PlayerController.Instance.PayStoneOrder(player, buyOrder, trans);
+                    if (!isOK)
+                    {
+                        trans.Rollback();
+                        result.ResultCode = OperResult.RESULTCODE_FALSE;
+                        return result;
+                    }
+                    this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
+                }
+            }
+
+            return false;
+        }        
 
         //public void PayStoneTradeByAlipay(PlayerInfo player, string orderNumber, float rmb)
         //{

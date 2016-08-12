@@ -38,7 +38,7 @@ namespace SuperMinersWeb.Wcf
         }
 
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FAILED; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -60,7 +60,7 @@ namespace SuperMinersWeb.Wcf
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -77,7 +77,7 @@ namespace SuperMinersWeb.Wcf
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
@@ -95,7 +95,7 @@ namespace SuperMinersWeb.Wcf
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// -RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -112,7 +112,7 @@ namespace SuperMinersWeb.Wcf
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <returns></returns>
@@ -140,11 +140,15 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public void PayCompleted(string orderNumber, float money, string payAlipayAccount, bool succeed)
+
+        #region IServiceToWeb Members
+
+
+        public void AlipayCallback(string out_trade_no, string alipay_trade_no, float total_fee, string buyer_email, string pay_time)
         {
             try
             {
-                base.Channel.PayCompleted(orderNumber, money, payAlipayAccount, succeed);
+                base.Channel.AlipayCallback(out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
             }
             catch (Exception)
             {
@@ -152,5 +156,6 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
+        #endregion
     }
 }

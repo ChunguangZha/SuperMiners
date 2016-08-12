@@ -1,5 +1,6 @@
 ﻿using MetaData.SystemConfig;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService.Contracts;
@@ -74,12 +75,10 @@ namespace SuperMinersServerApplication
                     return false;
                 }
                 LogHelper.Instance.Init();
-                if (!GetSystemConfig())
-                {
-                    return false;
-                }
 
-                StoneOrderController.Instance.Init();
+                GameSystemConfigController.Instance.Init();
+                PlayerController.Instance.Init();
+                OrderController.Instance.Init();
                 NoticeController.Instance.Init();
 
                 if (!InitServiceToClient())
@@ -105,14 +104,6 @@ namespace SuperMinersServerApplication
                 IsStarted = false;
                 return false;
             }
-        }
-
-        private bool GetSystemConfig()
-        {
-            GameSystemConfigController.Instance.Init();
-            PlayerController.Instance.Init();
-
-            return true;
         }
 
         private bool CreateFolder()

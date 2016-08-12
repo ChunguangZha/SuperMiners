@@ -124,15 +124,6 @@ namespace SuperMinersWPF.Views
             if (chkPayType.IsChecked == true)//支付宝支付
             {
                 MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
-//                string baseuri = "";
-//#if DEBUG
-//                baseuri = "http://localhost:8509/";
-//#else
-
-//            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-//#endif
-
-//                Process.Start(new ProcessStartInfo(baseuri + this.LockedOrder.PayUrl));
             }
             else
             {

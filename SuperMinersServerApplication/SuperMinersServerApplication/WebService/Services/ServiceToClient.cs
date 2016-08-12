@@ -1,5 +1,6 @@
 ﻿using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
 using SuperMinersServerApplication.WebService.Contracts;
@@ -34,8 +35,8 @@ namespace SuperMinersServerApplication.WebService.Services
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
             NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
-            StoneOrderController.Instance.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
-            StoneOrderController.Instance.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+            OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
+            OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
         }
 
         void Instance_KickOutPlayer(string obj)

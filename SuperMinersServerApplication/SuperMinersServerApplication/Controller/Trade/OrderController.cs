@@ -32,6 +32,7 @@ namespace SuperMinersServerApplication.Controller.Trade
 
         public void Init()
         {
+            StoneOrderController.Init();
             MineOrderController.Init();
             GoldCoinOrderController.Init();
         }
@@ -52,9 +53,15 @@ namespace SuperMinersServerApplication.Controller.Trade
             return builder.ToString();
         }
 
-        public string CreateAlipayLink(string orderNumber, string shopName, float money, string clientIP)
+        public string CreateAlipayLink(string orderNumber, string shopName, float valueRMB, string clientIP)
         {
-            string srcParameter = orderNumber + "," + shopName + "," + money.ToString("0.00") + "," + clientIP;
+            float money = valueRMB / GlobalConfig.GameConfig.Yuan_RMB;
+            float money_1 = (float)Math.Round(money, 1);
+            if (money_1 < money)//说明刚才是四舍了，要把他加回来
+            {
+                money_1 += 0.1f;
+            }
+            string srcParameter = orderNumber + "," + shopName + "," + money_1.ToString("0.00") + "," + clientIP;
             string desParameter = DESEncrypt.EncryptDES(srcParameter);
 
             string baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
@@ -68,6 +75,7 @@ namespace SuperMinersServerApplication.Controller.Trade
             switch (type)
             {
                 case AlipayTradeInType.BuyGoldCoin:
+                    isOK = this.GoldCoinOrderController.AlipayCallback(alipayRecord);
                     break;
                 case AlipayTradeInType.BuyMine:
                     isOK = this.MineOrderController.AlipayCallback(alipayRecord);

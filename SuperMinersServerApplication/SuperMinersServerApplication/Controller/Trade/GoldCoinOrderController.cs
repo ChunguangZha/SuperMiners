@@ -52,7 +52,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 int value = PlayerController.Instance.BuyMineByRMB(userName, rmbValue);
                 result.ResultCode = value;
-                if (value == OperResult.RESULTCODE_SUCCEED)
+                if (value == OperResult.RESULTCODE_TRUE)
                 {
                     record.PayTime = DateTime.Now;
                     DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(record);
@@ -66,34 +66,48 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 DBProvider.GoldCoinRecordDBProvider.SaveTempGoldCoinRechargeTradeRecord(record);
-                result.ResultCode = OperResult.RESULTCODE_SUCCEED;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵金币", record.SpendRMB / GlobalConfig.GameConfig.Yuan_RMB, "");
+                result.ResultCode = OperResult.RESULTCODE_TRUE;
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵金币", record.SpendRMB, "");
             }
 
             return result;
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        private GoldCoinRechargeRecord FindRecordByOrderNumber(string orderNumber)
         {
             lock (this._lock)
             {
-                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+                GoldCoinRechargeRecord buyRecord = null;
+                this._listTempRecord.TryGetValue(orderNumber, out buyRecord);
+                return buyRecord;
+            }
+        }
 
-                GoldCoinRechargeRecord rechargeRecord = null;
-                if (this._listTempRecord.TryGetValue(alipayRecord.out_trade_no, out rechargeRecord) && rechargeRecord != null)
+        private void RemoveRecord(string orderNumber)
+        {
+            lock (this._lock)
+            {
+                this._listTempRecord.Remove(orderNumber);
+            }
+        }
+
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        {
+            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+
+            GoldCoinRechargeRecord rechargeRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
+            if (rechargeRecord != null)
+            {
+                if (alipayRecord.out_trade_no == rechargeRecord.OrderNumber &&
+                    alipayRecord.value_rmb >= rechargeRecord.SpendRMB)
                 {
-                    if (alipayRecord.out_trade_no == rechargeRecord.OrderNumber &&
-                        alipayRecord.total_fee * GlobalConfig.GameConfig.Yuan_RMB >= rechargeRecord.SpendRMB)
+                    int value = PlayerController.Instance.RechargeGoldCoinByAlipay(rechargeRecord.UserName, (int)rechargeRecord.SpendRMB, (int)(rechargeRecord.SpendRMB * GlobalConfig.GameConfig.RMB_GoldCoin));
+                    if (value == OperResult.RESULTCODE_TRUE)
                     {
-                        //1.delete from temp DB
+                        DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(rechargeRecord);
                         DBProvider.GoldCoinRecordDBProvider.DeleteTempGoldCoinRechargeTradeRecord(rechargeRecord.OrderNumber);
-
-                        int value = PlayerController.Instance.RechargeGoldCoinByAlipay(rechargeRecord.UserName, (int)rechargeRecord.SpendRMB, (int)(rechargeRecord.SpendRMB * GlobalConfig.GameConfig.RMB_GoldCoin));
-                        if (value == OperResult.RESULTCODE_SUCCEED)
-                        {
-                            DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(rechargeRecord);
-                            return true;
-                        }
+                        this.RemoveRecord(alipayRecord.out_trade_no);
+                        return true;
                     }
                 }
             }

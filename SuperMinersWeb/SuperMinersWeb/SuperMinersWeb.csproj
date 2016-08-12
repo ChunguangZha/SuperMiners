@@ -191,6 +191,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
+      <Link>Wcf\OperResult.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>App_Code\GameConfig.cs</Link>
     </Compile>

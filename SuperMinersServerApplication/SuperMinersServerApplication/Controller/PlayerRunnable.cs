@@ -282,7 +282,7 @@ namespace SuperMinersServerApplication.Controller
         {
             if (minesCount <= 0)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             lock (_lockFortuneAction)
@@ -290,7 +290,7 @@ namespace SuperMinersServerApplication.Controller
                 float needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
                 if (needRMB > BasePlayer.FortuneInfo.RMB)
                 {
-                    return OperResult.RESULTCODE_LACKOFBALANCE;
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
                 float newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
@@ -300,12 +300,12 @@ namespace SuperMinersServerApplication.Controller
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
-                    return OperResult.RESULTCODE_FAILED;
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
                     "增加了 " + newReservers.ToString() + " 的矿石储量");
-                return OperResult.RESULTCODE_SUCCEED;
+                return OperResult.RESULTCODE_TRUE;
             }
         }
 
@@ -318,7 +318,7 @@ namespace SuperMinersServerApplication.Controller
         {
             if (minesCount <= 0)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             lock (_lockFortuneAction)
@@ -329,12 +329,12 @@ namespace SuperMinersServerApplication.Controller
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
-                    return OperResult.RESULTCODE_FAILED;
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
                     "增加了 " + newReservers.ToString() + " 的矿石储量");
-                return OperResult.RESULTCODE_SUCCEED;
+                return OperResult.RESULTCODE_TRUE;
             }
         }
 
@@ -348,14 +348,14 @@ namespace SuperMinersServerApplication.Controller
         {
             if (rmbValue <= 0)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             lock (_lockFortuneAction)
             {
                 if (rmbValue > BasePlayer.FortuneInfo.RMB)
                 {
-                    return OperResult.RESULTCODE_LACKOFBALANCE;
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
                 BasePlayer.FortuneInfo.RMB -= rmbValue;
@@ -363,12 +363,12 @@ namespace SuperMinersServerApplication.Controller
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
-                    return OperResult.RESULTCODE_FAILED;
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
                     "充值了 " + goldcoinValue.ToString() + " 的金币");
-                return OperResult.RESULTCODE_SUCCEED;
+                return OperResult.RESULTCODE_TRUE;
             }
         }
 
@@ -382,7 +382,7 @@ namespace SuperMinersServerApplication.Controller
         {
             if (rmbValue <= 0)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             lock (_lockFortuneAction)
@@ -391,12 +391,12 @@ namespace SuperMinersServerApplication.Controller
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
-                    return OperResult.RESULTCODE_FAILED;
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
                     "充值了 " + goldcoinValue.ToString() + " 的金币");
-                return OperResult.RESULTCODE_SUCCEED;
+                return OperResult.RESULTCODE_TRUE;
             }
         }
 
@@ -404,21 +404,17 @@ namespace SuperMinersServerApplication.Controller
         /// 支付购买矿石订单后，更新买家信息
         /// </summary>
         /// <param name="order"></param>
-        /// <param name="rmbPay">true为灵币支付；false为支付宝支付</param>
         /// <param name="trans"></param>
         /// <returns></returns>
-        public bool PayBuyStonesUpdateBuyerInfo(BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)
+        public bool PayBuyStonesUpdateBuyerInfo(BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
-                if (rmbPay)
+                if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
                 {
-                    if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
-                    {
-                        return false;
-                    }
-                    BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
+                    return false;
                 }
+                BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
                 BasePlayer.FortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
                 BasePlayer.FortuneInfo.GoldCoin += order.AwardGoldCoin;
 
@@ -449,7 +445,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 0表示成功；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// RESULTCODE_TRUE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
         /// </summary>
         /// <param name="SellStonesCount"></param>
         /// <returns></returns>
@@ -460,7 +456,7 @@ namespace SuperMinersServerApplication.Controller
                 float sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
                 if (order.SellStonesCount > sellableStones)
                 {
-                    return 1;
+                    return OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK;
                 }
 
                 BasePlayer.FortuneInfo.FreezingStones += order.SellStonesCount;
@@ -468,7 +464,7 @@ namespace SuperMinersServerApplication.Controller
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
             }
 
-            return 0;
+            return OperResult.RESULTCODE_TRUE;
         }
 
         private string CreateOrderNumber(DateTime time, string userName)

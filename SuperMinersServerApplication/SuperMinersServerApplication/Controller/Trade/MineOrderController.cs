@@ -53,7 +53,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 int value = PlayerController.Instance.BuyMineByRMB(userName, minesCount);
                 result.ResultCode = value;
-                if (value == OperResult.RESULTCODE_SUCCEED)
+                if (value == OperResult.RESULTCODE_TRUE)
                 {
                     record.PayTime = DateTime.Now;
                     DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record);
@@ -67,34 +67,48 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 DBProvider.MineRecordDBProvider.SaveTempMineTradeRecord(record);
-                result.ResultCode = OperResult.RESULTCODE_SUCCEED;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿石", record.SpendRMB / GlobalConfig.GameConfig.Yuan_RMB, "");
+                result.ResultCode = OperResult.RESULTCODE_TRUE;
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿山", record.SpendRMB, "");
             }
 
             return result;
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        private MinesBuyRecord FindRecordByOrderNumber(string orderNumber)
         {
             lock (this._lock)
             {
-                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
-
                 MinesBuyRecord buyRecord = null;
-                if (this._listTempRecord.TryGetValue(alipayRecord.out_trade_no, out buyRecord) && buyRecord!=null)
-                {
-                    if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
-                        alipayRecord.total_fee * GlobalConfig.GameConfig.Yuan_RMB >= buyRecord.SpendRMB)
-                    {
-                        //1.delete from temp DB
-                        DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber);
+                this._listTempRecord.TryGetValue(orderNumber, out buyRecord);
+                return buyRecord;
+            }
+        }
 
-                        int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, buyRecord.SpendRMB);
-                        if (value == OperResult.RESULTCODE_SUCCEED)
-                        {
-                            DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);
-                            return true;
-                        }
+        private void RemoveRecord(string orderNumber)
+        {
+            lock (this._lock)
+            {
+                this._listTempRecord.Remove(orderNumber);
+            }
+        }
+
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        {
+            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+
+            MinesBuyRecord buyRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
+            if (buyRecord != null)
+            {
+                if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
+                    alipayRecord.value_rmb >= buyRecord.SpendRMB)
+                {
+                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, buyRecord.SpendRMB);
+                    if (value == OperResult.RESULTCODE_TRUE)
+                    {
+                        DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);
+                        DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber);
+                        this.RemoveRecord(alipayRecord.out_trade_no);
+                        return true;
                     }
                 }
             }

@@ -1,6 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData.SystemConfig;
-using MetaData.Trade;
+using MetaData;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Trade;
@@ -11,13 +11,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MetaData.Trade;
 
 namespace SuperMinersServerApplication.WebServiceToWeb.Services
 {
     class ServiceToWeb : IServiceToWeb
     {
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -32,7 +33,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 if (string.IsNullOrEmpty(userName) || userName.Length < 3)
                 {
-                    return 4;
+                    return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
                 }
                 return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, email, qq, invitationCode);
             }
@@ -41,12 +42,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
                                     + ",email: " + email + ",qq: " + qq, exc);
 
-                return 3;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -56,21 +57,26 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 if (string.IsNullOrEmpty(userName))
                 {
-                    return -2;
+                    return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
-                return count;
+                if (count > 0)
+                {
+                    return OperResult.RESULTCODE_TRUE;
+                }
+
+                return OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckUserNameExist Exception. userName: " + userName, exc);
 
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
@@ -81,22 +87,27 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 if (string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
                 {
-                    return -2;
+                    return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByAlipay(alipayAccount, alipayRealName);
-                return count;
+                if (count > 0)
+                {
+                    return OperResult.RESULTCODE_TRUE;
+                }
+
+                return OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckUserNameExist Exception. alipayAccount: " + alipayAccount 
                     + ", alipayRealName: " + alipayRealName, exc);
 
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -106,21 +117,26 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 if (string.IsNullOrEmpty(email))
                 {
-                    return -2;
+                    return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByEmail(email);
-                return count;
+                if (count > 0)
+                {
+                    return OperResult.RESULTCODE_TRUE;
+                }
+
+                return OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckEmailExist Exception. email: " + email, exc);
 
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <returns></returns>
@@ -130,21 +146,21 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 if (string.IsNullOrEmpty(clientIP))
                 {
-                    return -2;
+                    return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
                 if (count < GlobalConfig.RegisterPlayerConfig.UserCountCreateByOneIP)
                 {
-                    return 0;
+                    return OperResult.RESULTCODE_TRUE;
                 }
 
-                return 1;
+                return OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckRegisterIP Exception. clientIP: " + clientIP, exc);
 
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -180,13 +196,14 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     buyer_email = buyer_email,
                     out_trade_no = out_trade_no,
                     pay_time = Convert.ToDateTime(pay_time),
-                    total_fee = total_fee
+                    total_fee = total_fee,
+                    value_rmb = total_fee * GlobalConfig.GameConfig.Yuan_RMB
                 };
                 OrderController.Instance.AlipayCallback(record);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("PayCompleted Exception. " +
+                LogHelper.Instance.AddErrorLog("AlipayCallback Exception. " +
                                             " orderNumber: " + out_trade_no + ";" +
                                             " money: " + total_fee.ToString() + ";" +
                                             " payAlipayAccount: " + buyer_email, exc);

@@ -56,7 +56,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
+        /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -70,7 +70,7 @@ namespace SuperMinersServerApplication.Controller
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
             {
-                return 1;
+                return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
             }
 
             bool Awardable = false;
@@ -189,7 +189,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
 
-                return 0;
+                return OperResult.RESULTCODE_TRUE;
             }
             catch (Exception exc)
             {
@@ -247,6 +247,29 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// 不论在线还是离线
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public PlayerInfo GetPlayerInfo(string userName)
+        {
+            PlayerInfo player = null;
+
+            PlayerRunnable playerrun = null;
+            if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
+            {
+                player = playerrun.BasePlayer;
+            }
+
+            if (player == null)
+            {
+                player = DBProvider.UserDBProvider.GetPlayer(userName);
+            }
+
+            return player;
         }
 
         private PlayerRunnable GetOnlinePlayerRunnable(string userName)
@@ -368,7 +391,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             return playerrun.GatherStones(stones);
@@ -379,7 +402,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             return playerrun.BuyMiner(minersCount);
@@ -390,7 +413,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             return playerrun.BuyMineByRMB(minesCount);
@@ -401,11 +424,11 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             int value = playerrun.BuyMineByAlipay(minesCount);
-            if (value == OperResult.RESULTCODE_SUCCEED)
+            if (value == OperResult.RESULTCODE_TRUE)
             {
                 if (PlayerInfoChanged != null)
                 {
@@ -421,7 +444,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             return playerrun.RechargeGoldCoineByRMB(rmbValue, goldcoinValue);
@@ -432,11 +455,11 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FAILED;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             int value = playerrun.RechargeGoldCoineByAlipay(rmbValue, goldcoinValue);
-            if (value == OperResult.RESULTCODE_SUCCEED)
+            if (value == OperResult.RESULTCODE_TRUE)
             {
                 if (PlayerInfoChanged != null)
                 {
@@ -447,17 +470,17 @@ namespace SuperMinersServerApplication.Controller
             return value;
         }
 
-        public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, bool rmbPay, CustomerMySqlTransaction trans)
+        public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             PlayerRunnable playerBuyerRun = this.GetOnlinePlayerRunnable(playerBuyer.SimpleInfo.UserName);
             if (playerBuyerRun == null)
             {
                 playerBuyerRun = new PlayerRunnable(playerBuyer);
             }
-            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(order, rmbPay, trans);
+            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(order, trans);
             if (!isOK)
             {
-                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败。 rmbPay: " + rmbPay + "。 " + order.ToString());
+                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败。 Order: " + order.ToString());
                 return false;
             }
 
@@ -467,7 +490,7 @@ namespace SuperMinersServerApplication.Controller
                 var seller = DBProvider.UserDBProvider.GetPlayer(order.StonesOrder.SellerUserName);
                 if (seller == null)
                 {
-                    LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 rmbPay: " + rmbPay + "。 " + order.ToString());
+                    LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 Order: " + order.ToString());
                     return false;
                 }
 
@@ -478,7 +501,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 0表示成功；-2表示该用户不在线；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// 0表示成功；RESULTCODE_USER_OFFLINE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
         /// 如果事务提交失败，则调用RollbackUserFromDB恢复状态
         /// </summary>
         /// <param name="SellStonesCount"></param>
@@ -488,7 +511,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(order.SellerUserName);
             if (playerrun == null)
             {
-                return -2;
+                return OperResult.RESULTCODE_USER_OFFLINE;
             }
 
             return playerrun.SellStones(order, trans);

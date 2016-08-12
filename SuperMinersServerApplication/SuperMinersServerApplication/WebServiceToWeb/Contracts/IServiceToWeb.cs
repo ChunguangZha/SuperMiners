@@ -12,7 +12,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
     public interface IServiceToWeb
     {
         /// <summary>
-        /// 0：成功；1：用户名已经存在；2：同一IP注册用户数超限；3：注册失败; 4: 用户名长度不够
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <param name="userName"></param>
@@ -25,7 +25,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode);
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
@@ -33,7 +33,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int CheckUserNameExist(string userName);
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int CheckUserAlipayExist(string alipayAccount, string alipayRealName);
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -50,7 +50,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int CheckEmailExist(string email);
 
         /// <summary>
-        /// -2表示参数无效，-1表示异常，0,表示可以注册，1表示已经超出限制，不可以注册
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
         /// <returns></returns>

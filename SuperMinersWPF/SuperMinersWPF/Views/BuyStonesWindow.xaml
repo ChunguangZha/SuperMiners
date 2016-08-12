@@ -18,24 +18,24 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto" MinWidth="100"/>
             <ColumnDefinition Width="399*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="订单号：" Margin="5" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
+        <TextBlock Text="订单号" Margin="10,5" FontSize="16" FontWeight="Bold" HorizontalAlignment="Right"/>
         <TextBlock Grid.Column="1" Text="{Binding OrderNumber}" FontSize="16" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="1" Grid.Column="0" Text="卖方：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="卖方" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SellerUserName}" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="挂单时间：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="挂单时间" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SellTime}" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="3" Grid.Column="0" Text="出售矿石：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="出售矿石" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SellStonesCount}" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="支付灵币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="支付灵币" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding ValueRMB}" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="5" Grid.Column="0" Text="奖励金币：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="奖励金币" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding AwardGoldCoin}" Name="txtAwardGoldCoin" Margin="10,5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="支付方式：" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Text="支付方式" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <CheckBox Grid.Row="6" Grid.Column="1" Content="灵币支付" Name="chkPayType" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Top" Foreground="White" Margin="5" Checked="chkPayType_Checked" Unchecked="chkPayType_Unchecked"/>
-        <TextBlock Grid.Row="7" Grid.Column="0" Text="请在" Margin="5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="请在" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <TextBlock Grid.Row="7" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">
             <Run Text="{Binding ValidTimeSecondsString, Mode=OneWay}" Foreground="Red" FontWeight="Bold"/>
             <Run Text="内支付"/>

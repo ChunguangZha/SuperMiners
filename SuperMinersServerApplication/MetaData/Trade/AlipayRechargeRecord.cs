@@ -29,6 +29,11 @@ namespace MetaData.Trade
         public float total_fee;
 
         /// <summary>
+        /// 等值的灵币
+        /// </summary>
+        public float value_rmb;
+
+        /// <summary>
         /// 支付时间
         /// </summary>
         public DateTime pay_time;

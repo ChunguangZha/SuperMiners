@@ -165,7 +165,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     string userName = ClientManager.GetClientUserName(token);
-                    PlayerInfo user = PlayerController.Instance.GetOnlinePlayerInfo(userName);
+                    PlayerInfo user = PlayerController.Instance.GetPlayerInfo(userName);
                     return user;
                 }
                 catch (Exception exc)
