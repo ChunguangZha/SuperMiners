@@ -1,5 +1,5 @@
-Error:  [2016/7/30 22:44:48] ---- Log: ServiceToAdmin.ChangePlayer Exception
-Exc.Message: Cannot delete or update a parent row: a foreign key constraint fails (`superminers`.`playerfortuneinfo`, CONSTRAINT `UserID` FOREIGN KEY (`userId`) REFERENCES `playersimpleinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION)Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/8/13 21:12:55] ---- Log: Lock Order[2016071012002601321116351694356186] by User[Tony] Error
+Exc.Message: Data too long for column 'PayUrl' at row 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
@@ -7,12 +7,20 @@ Exc.Message: Cannot delete or update a parent row: a foreign key constraint fail
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.UserInfoDBProvider.DeletePlayer(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 96
-   在 SuperMinersServerApplication.Controller.PlayerController.DeletePlayer(String userName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 329
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.DeletePlayers(String token, String actionPassword, String[] playerUserNames) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 416
+   在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
+   在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133
 -----------------------------------------------------
 
------------------
-
--------------------------------------------
+Error:  [2016/8/13 21:12:59] ---- Log: Lock Order[2016071012095107421116351694356023] by User[Tony] Error
+Exc.Message: Data too long for column 'PayUrl' at row 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
+   在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133
+-----------------------------------------------------
 

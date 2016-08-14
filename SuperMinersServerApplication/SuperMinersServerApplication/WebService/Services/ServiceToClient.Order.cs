@@ -112,7 +112,7 @@ namespace SuperMinersServerApplication.WebService.Services
         }
 
         /// <summary>
-        /// 0表示成功；1表示操作异常；-1表示查询不到该用户；-2表示订单号为空；-3表示订单号不存在；-4表示非本人订单；-5表示订单已被锁定 
+        /// RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_USER_NOT_EXIST; RESULTCODE_EXCEPTION; RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_ORDER_BE_LOCKED; RESULTCODE_TRUE; RESULTCODE_FALSE
         /// </summary>
         /// <param name="token"></param>
         /// <param name="userName"></param>
@@ -130,11 +130,11 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 if (string.IsNullOrEmpty(orderNumber))
                 {
-                    return -2;
+                    return OperResult.RESULTCODE_ORDER_NOT_EXIST;
                 }
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
-                    return -1;
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
                 try
@@ -145,7 +145,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     string errMessage = "UserName: " + userName + " Cancel Sell Order: " + orderNumber + " Exception.";
                     LogHelper.Instance.AddErrorLog(errMessage, exc);
-                    return 1;
+                    return OperResult.RESULTCODE_EXCEPTION;
                 }
             }
             else
@@ -292,7 +292,14 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool PayStoneOrder(string token, string orderNumber, float rmb, int payType)
+        /// <summary>
+        /// 此处只需处理RMB支付。Alipay支付的情况，在锁定订单时已经将支付链接返回，客户端可直接链接支付。
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="orderNumber"></param>
+        /// <param name="rmb"></param>
+        /// <returns></returns>
+        public int PayStoneOrderByRMB(string token, string orderNumber, float rmb)
         {
 #if Delay
 
@@ -305,16 +312,20 @@ namespace SuperMinersServerApplication.WebService.Services
                 string userName = ClientManager.GetClientUserName(token);
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    return false;
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
                 PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
                 if (player == null)
                 {
-                    return false;
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
+                if (player.FortuneInfo.RMB < rmb)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                return OrderController.Instance.StoneOrderController.PayStoneTrade(player, orderNumber, true, rmb);
+                return OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(player.SimpleInfo.UserName, orderNumber, rmb);
             }
             else
             {

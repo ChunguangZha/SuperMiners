@@ -119,6 +119,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
       <Link>Wcf\Datas\NoticeInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
+      <Link>Wcf\Datas\OperResult.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
@@ -142,6 +145,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeOperResult.cs">
+      <Link>Wcf\Datas\TradeOperResult.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
       <Link>Wcf\Datas\TradeType.cs</Link>
@@ -223,6 +229,7 @@
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="Utility\MyWebPage.cs" />
+    <Compile Include="Utility\ResultCodeMsg.cs" />
     <Compile Include="ViewModels\BusyToken.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />

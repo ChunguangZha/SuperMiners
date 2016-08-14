@@ -313,6 +313,7 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
+    <Compile Include="Utility\Tools.cs" />
     <Compile Include="Wcf\SuperMinersClient.cs" />
     <Compile Include="Wcf\WcfClient.cs" />
   </ItemGroup>

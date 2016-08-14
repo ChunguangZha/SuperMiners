@@ -13,13 +13,17 @@ namespace MetaData.Trade
         /// <summary>
         /// 从OperResult常量中取值
         /// </summary>
+        [DataMember]
         public int ResultCode = OperResult.RESULTCODE_FALSE;
 
+        [DataMember]
         public int TradeType;
 
+        [DataMember]
         public string AlipayLink;
 
-        public int PayType;
+        [DataMember]
+        public int PayType = (int)MetaData.Trade.PayType.RMB;
 
     }
 

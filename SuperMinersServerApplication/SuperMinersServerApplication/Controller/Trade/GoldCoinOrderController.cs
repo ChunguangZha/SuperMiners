@@ -32,7 +32,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public TradeOperResult RechargeGoldCoin(string userName, int rmbValue, int payType)
+        public TradeOperResult RechargeGoldCoin(string userName, int rmbValue, int gainGoldCoin, int payType)
         {
             TradeOperResult result = new TradeOperResult();
             result.PayType = payType;
@@ -45,7 +45,7 @@ namespace SuperMinersServerApplication.Controller
                 CreateTime = timenow,
                 UserName = userName,
                 SpendRMB = rmbValue,
-                GainGoldCoin = rmbValue * (int)GlobalConfig.GameConfig.RMB_GoldCoin
+                GainGoldCoin = gainGoldCoin
             };
 
             if (payType == (int)PayType.RMB)

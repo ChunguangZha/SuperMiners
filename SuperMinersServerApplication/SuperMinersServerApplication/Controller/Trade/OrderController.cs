@@ -53,6 +53,14 @@ namespace SuperMinersServerApplication.Controller.Trade
             return builder.ToString();
         }
 
+        /// <summary>
+        /// 相对URL，需要客户端拼接根URL
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <param name="shopName"></param>
+        /// <param name="valueRMB"></param>
+        /// <param name="clientIP"></param>
+        /// <returns></returns>
         public string CreateAlipayLink(string orderNumber, string shopName, float valueRMB, string clientIP)
         {
             float money = valueRMB / GlobalConfig.GameConfig.Yuan_RMB;
@@ -64,8 +72,9 @@ namespace SuperMinersServerApplication.Controller.Trade
             string srcParameter = orderNumber + "," + shopName + "," + money_1.ToString("0.00") + "," + clientIP;
             string desParameter = DESEncrypt.EncryptDES(srcParameter);
 
-            string baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
-            return baseuri + "AlipayDefault.aspx?p=" + desParameter;
+            string p = System.Web.HttpUtility.UrlEncode(desParameter, Encoding.UTF8);
+
+            return "Alipay/AlipayDefault.aspx?p=" + p;
         }
 
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)

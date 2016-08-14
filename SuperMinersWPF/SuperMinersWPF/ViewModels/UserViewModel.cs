@@ -115,9 +115,9 @@ namespace SuperMinersWPF.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// -1表示清空临时产出
         /// </summary>
-        /// <param name="stones">0表示清空临时产出</param>
+        /// <param name="stones"></param>
         public void AsyncGatherStones(float stones)
         {
             if (stones == 0)

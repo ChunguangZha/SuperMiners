@@ -16,7 +16,14 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
-
+        /// <summary>
+        /// RESULTCODE_USER_NOT_EXIST; RESULTCODE_FALSE
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="userName"></param>
+        /// <param name="minersCount"></param>
+        /// <param name="payType"></param>
+        /// <returns></returns>
         public int BuyMiner(string token, string userName, int minersCount, int payType)
         {
 #if Delay
@@ -27,9 +34,14 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
+                if (minersCount <= 0)
+                {
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
-                    return -1;
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
                 return PlayerController.Instance.BuyMiner(userName, minersCount);
@@ -51,6 +63,7 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 TradeOperResult result = new TradeOperResult();
+                result.PayType = payType;
                 if (minesCount <= 0)
                 {
                     return result;
@@ -64,7 +77,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int GoldCoinRecharge(string token, string userName, int goldCoinCount, int payType)
+        public TradeOperResult GoldCoinRecharge(string token, string userName, int goldCoinCount, int payType)
         {
 #if Delay
 
@@ -74,13 +87,17 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
+                TradeOperResult result = new TradeOperResult();
+                result.PayType = payType;
+                result.TradeType = (int)AlipayTradeInType.BuyGoldCoin;
+
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
-                    return -1;
+                    result.ResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
-                return -1;
-                //return PlayerController.Instance.BuyMineByRMB(userName, minesCount);
+                int valueRMB =(int)Math.Ceiling(goldCoinCount / GlobalConfig.GameConfig.RMB_GoldCoin);
+                return OrderController.Instance.GoldCoinOrderController.RechargeGoldCoin(userName, valueRMB, goldCoinCount, payType);
             }
             else
             {
@@ -88,6 +105,13 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="userName"></param>
+        /// <param name="stones">-1表示清空临时产出</param>
+        /// <returns></returns>
         public int GatherStones(string token, string userName, float stones)
         {
 #if Delay
@@ -100,9 +124,12 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 if (ClientManager.GetClientUserName(token) != userName)
                 {
-                    return -1;
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
-
+                if (stones == 0)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
                 return PlayerController.Instance.GatherStones(userName, stones);
             }
             else

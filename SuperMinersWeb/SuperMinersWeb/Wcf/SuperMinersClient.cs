@@ -140,10 +140,6 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-
-        #region IServiceToWeb Members
-
-
         public void AlipayCallback(string out_trade_no, string alipay_trade_no, float total_fee, string buyer_email, string pay_time)
         {
             try
@@ -156,6 +152,5 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        #endregion
     }
 }

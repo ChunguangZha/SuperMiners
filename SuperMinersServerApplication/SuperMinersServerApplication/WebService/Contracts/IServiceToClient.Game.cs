@@ -34,7 +34,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int GoldCoinRecharge(string token, string userName, int goldCoinCount, int tradeType);
+        TradeOperResult GoldCoinRecharge(string token, string userName, int goldCoinCount, int tradeType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GatherStones",

@@ -4,6 +4,7 @@ using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -37,7 +38,10 @@ namespace SuperMinersWeb.Alipay
                 if (!this.IsPostBack)
                 {
                     string p = Request.QueryString["p"];
+
                     string secParameter = DESEncrypt.DecryptDES(p);
+                    //string resultP = System.Web.HttpUtility.UrlDecode(secParameter, Encoding.UTF8);
+
                     string[] parameters = secParameter.Split(new char[] { ',' });
 
                     //string orderNumber = Request.QueryString["on"];

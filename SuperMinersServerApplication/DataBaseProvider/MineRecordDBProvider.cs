@@ -18,8 +18,9 @@ namespace DataBaseProvider
             try
             {
                 DataTable table = new DataTable();
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
-                string cmdText = "select * from tempminesbuyrecord";
+                string cmdText = "select a.*, b.UserName from tempminesbuyrecord a left join playersimpleinfo b on a.UserID=b.id ";
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
@@ -50,6 +51,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "insert into tempminesbuyrecord " +
@@ -87,6 +89,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "delete from tempminesbuyrecord where OrderNumber = @OrderNumber;";
@@ -117,6 +120,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "insert into minesbuyrecord " +

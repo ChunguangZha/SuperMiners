@@ -38,7 +38,7 @@ namespace SuperMinersWPF.Views
 
         private void btnDiscard_Click(object sender, RoutedEventArgs e)
         {
-            App.UserVMObject.AsyncGatherStones(0);
+            App.UserVMObject.AsyncGatherStones(-1);
             this.DialogResult = true;
         }
 

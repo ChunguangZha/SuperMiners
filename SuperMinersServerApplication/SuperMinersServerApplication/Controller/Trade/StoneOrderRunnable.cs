@@ -83,7 +83,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
         
-        public BuyStonesOrder Pay(float rmb, CustomerMySqlTransaction trans)
+        public BuyStonesOrder Pay(CustomerMySqlTransaction trans)
         {
             lock (this._lock)
             {

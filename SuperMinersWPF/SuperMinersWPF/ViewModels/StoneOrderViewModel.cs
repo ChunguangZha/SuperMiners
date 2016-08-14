@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
@@ -53,7 +54,7 @@ namespace SuperMinersWPF.ViewModels
         public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
-            GlobalData.Client.PayOrderByRMB(orderNumber, valueRMB, null);
+            GlobalData.Client.PayStoneOrderByRMB(orderNumber, valueRMB, null);
         }
 
         public void AsyncCheckPlayerHasNotPayedOrder()
@@ -98,7 +99,7 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetOrderLockedBySelfCompleted += Client_GetOrderLockedBySelfCompleted;
             GlobalData.Client.AutoMatchLockSellStoneCompleted += Client_AutoMatchLockSellStoneCompleted;
             GlobalData.Client.CheckUserHasNotPayOrderCompleted += Client_CheckUserHasNotPayOrderCompleted;
-            GlobalData.Client.PayOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
+            GlobalData.Client.PayStoneOrderByRMBCompleted += Client_PayOrderByRMBCompleted;
             GlobalData.Client.GetAllNotFinishedSellOrdersCompleted += Client_GetAllNotFinishedSellOrdersCompleted;
             GlobalData.Client.OnOrderAlipayPaySucceed += Client_OnOrderAlipayPaySucceed;
             GlobalData.Client.OnOrderListChanged += Client_OnOrderListChanged;
@@ -121,32 +122,13 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
-            switch (e.Result)
+            if (e.Result == OperResult.RESULTCODE_TRUE)
             {
-                case 0:
-                    MyMessageBox.ShowInfo("取消订单成功。");
-                    break;
-                case 1:
-                    MyMessageBox.ShowInfo("取消订单异常，请联系客服。");
-                    break;
-                case -1:
-                    MyMessageBox.ShowInfo("查询不到该用户。");
-                    break;
-                case -2:
-                    MyMessageBox.ShowInfo("订单号为空。");
-                    break;
-                case -3:
-                    MyMessageBox.ShowInfo("订单号不存在。");
-                    break;
-                case -4:
-                    MyMessageBox.ShowInfo("该订单并非本要出售，无法取消。");
-                    break;
-                case -5:
-                    MyMessageBox.ShowInfo("该订单已经被他人锁定，无法取消。");
-                    break;
-
-                default:
-                    break;
+                MyMessageBox.ShowInfo("订单取消成功");
+            }
+            else
+            {
+                MyMessageBox.ShowInfo("订单取消失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
             }
 
             AsyncGetAllNotFinishedSellOrders();
@@ -202,22 +184,36 @@ namespace SuperMinersWPF.ViewModels
         void Client_OnOrderAlipayPaySucceed(int tradeType, string orderNumber)
         {
             App.BusyToken.CloseBusyWindow();
-            if (tradeType == (int)TradeType.StoneTrade)
-            {
-                var lockedOrder = this.GetFirstLockedStoneOrder();
-                if (lockedOrder != null && lockedOrder.OrderNumber == orderNumber)
-                {
-                    MyMessageBox.ShowInfo("矿石购买成功。");
-                    App.UserVMObject.AsyncGetPlayerInfo();
-                    this.AsyncGetAllNotFinishedSellOrders();
+            App.UserVMObject.AsyncGetPlayerInfo();
 
-                    if (StoneOrderPaySucceed != null)
+            switch ((AlipayTradeInType)tradeType)
+            {
+                case AlipayTradeInType.BuyStone:
+                    var lockedOrder = this.GetFirstLockedStoneOrder();
+                    if (lockedOrder != null && lockedOrder.OrderNumber == orderNumber)
                     {
-                        StoneOrderPaySucceed();
+                        MyMessageBox.ShowInfo("矿石购买成功。");
+                        this.AsyncGetAllNotFinishedSellOrders();
+
+                        if (StoneOrderPaySucceed != null)
+                        {
+                            StoneOrderPaySucceed();
+                        }
+                        this._myBuyNotFinishedStoneOrders.Clear();
                     }
-                    this._myBuyNotFinishedStoneOrders.Clear();
-                }
+                    break;
+                case AlipayTradeInType.BuyMine:
+                    break;
+                case AlipayTradeInType.BuyMiner:
+                    break;
+                case AlipayTradeInType.BuyRMB:
+                    break;
+                case AlipayTradeInType.BuyGoldCoin:
+                    break;
+                default:
+                    break;
             }
+
         }
 
         void Client_GetAllNotFinishedSellOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
@@ -276,7 +272,7 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
@@ -290,9 +286,10 @@ namespace SuperMinersWPF.ViewModels
                 LogHelper.Instance.AddErrorLog("Client_PayOrderByRMBCompleted Exception。", e.Error);
                 return;
             }
-            if (e.Result)
+
+            if (e.Result == OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("矿石购买成功。");
+                MyMessageBox.ShowInfo("购买矿石成功。");
 
                 if (StoneOrderPaySucceed != null)
                 {
@@ -302,7 +299,7 @@ namespace SuperMinersWPF.ViewModels
             }
             else
             {
-                MyMessageBox.ShowInfo("矿石购买失败。");
+                MyMessageBox.ShowInfo("购买矿石失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
             }
         }
 

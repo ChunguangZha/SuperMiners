@@ -272,6 +272,21 @@ namespace SuperMinersServerApplication.Controller
             return player;
         }
 
+        public PlayerRunnable GetRunnable(string userName)
+        {
+            PlayerRunnable playerSellerRun = this.GetOnlinePlayerRunnable(userName);
+            if (playerSellerRun == null)
+            {
+                var seller = DBProvider.UserDBProvider.GetPlayer(userName);
+                if (seller != null)
+                {
+                    playerSellerRun = new PlayerRunnable(seller);
+                }
+            }
+
+            return playerSellerRun;
+        }
+
         private PlayerRunnable GetOnlinePlayerRunnable(string userName)
         {
             PlayerRunnable playerrun = null;
@@ -384,19 +399,25 @@ namespace SuperMinersServerApplication.Controller
         /// 收取生产出来的矿石
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="stonesCount">0表示清空临时产出</param>
+        /// <param name="stonesCount">-1表示清空临时产出</param>
         /// <returns></returns>
         public int GatherStones(string userName, float stones)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FALSE;
+                return OperResult.RESULTCODE_USER_OFFLINE;
             }
 
             return playerrun.GatherStones(stones);
         }
 
+        /// <summary>
+        /// RESULTCODE_USER_NOT_EXIST; 
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="minersCount"></param>
+        /// <returns></returns>
         public int BuyMiner(string userName, int minersCount)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
@@ -470,31 +491,26 @@ namespace SuperMinersServerApplication.Controller
             return value;
         }
 
-        public bool PayStoneOrder(PlayerInfo playerBuyer, BuyStonesOrder order, CustomerMySqlTransaction trans)
+        public bool PayStoneOrder(bool isAlipayPay, string buyerUserName, BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
-            PlayerRunnable playerBuyerRun = this.GetOnlinePlayerRunnable(playerBuyer.SimpleInfo.UserName);
+            PlayerRunnable playerBuyerRun = this.GetRunnable(buyerUserName);
             if (playerBuyerRun == null)
             {
-                playerBuyerRun = new PlayerRunnable(playerBuyer);
+                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败（数据库中没有买方玩家信息）。 Order: " + order.ToString());
+                return false;
             }
-            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(order, trans);
+            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(isAlipayPay, order, trans);
             if (!isOK)
             {
                 LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败。 Order: " + order.ToString());
                 return false;
             }
 
-            PlayerRunnable playerSellerRun = this.GetOnlinePlayerRunnable(order.StonesOrder.SellerUserName);
+            PlayerRunnable playerSellerRun = this.GetRunnable(order.StonesOrder.SellerUserName);
             if (playerSellerRun == null)
             {
-                var seller = DBProvider.UserDBProvider.GetPlayer(order.StonesOrder.SellerUserName);
-                if (seller == null)
-                {
-                    LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 Order: " + order.ToString());
-                    return false;
-                }
-
-                playerSellerRun = new PlayerRunnable(seller);
+                LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 Order: " + order.ToString());
+                return false;
             }
 
             return playerSellerRun.PayBuyStonesUpdateSellerInfo(order, trans);

@@ -49,6 +49,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "delete from sellstonesorder where OrderNumber = @OrderNumber;";

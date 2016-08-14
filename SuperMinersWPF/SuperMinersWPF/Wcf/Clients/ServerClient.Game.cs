@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.Trade;
+using MetaData.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +22,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region BuyMine
 
-        public event EventHandler<WebInvokeEventArgs<int>> BuyMineCompleted;
-        public void BuyMine(int minesCount)
+        public event EventHandler<WebInvokeEventArgs<TradeOperResult>> BuyMineCompleted;
+        public void BuyMine(int minesCount, int payType)
         {
-            this._invoker.Invoke<int>(this._context, "BuyMine", this.BuyMineCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, minesCount);
+            this._invoker.Invoke<TradeOperResult>(this._context, "BuyMine", this.BuyMineCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, minesCount, payType);
         }
 
         #endregion
@@ -35,6 +36,16 @@ namespace SuperMinersWPF.Wcf.Clients
         public void GatherStones(float stones)
         {
             this._invoker.Invoke<int>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, stones);
+        }
+
+        #endregion
+
+        #region GoldCoinRecharge
+
+        public event EventHandler<WebInvokeEventArgs<TradeOperResult>> GoldCoinRechargeCompleted;
+        public void GoldCoinRecharge(int goldCoinCount, int payType)
+        {
+            this._invoker.Invoke<TradeOperResult>(this._context, "GoldCoinRecharge", this.GoldCoinRechargeCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, goldCoinCount, payType);
         }
 
         #endregion

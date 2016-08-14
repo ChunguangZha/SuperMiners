@@ -18,8 +18,9 @@ namespace DataBaseProvider
             try
             {
                 DataTable table = new DataTable();
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
-                string cmdText = "select * from tempgoldcoinrechargerecord";
+                string cmdText = "select a.*, b.UserName from tempgoldcoinrechargerecord a left join playersimpleinfo b on a.UserID=b.id ";
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
@@ -50,6 +51,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "insert into tempgoldcoinrechargerecord " +
@@ -86,6 +88,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "delete from tempgoldcoinrechargerecord where OrderNumber = @OrderNumber;";
@@ -116,6 +119,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "insert into goldcoinrechargerecord " +

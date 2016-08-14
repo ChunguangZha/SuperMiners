@@ -1,4 +1,6 @@
-﻿using SuperMinersWPF.StringResources;
+﻿using MetaData;
+using MetaData.Trade;
+using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -33,7 +35,7 @@ namespace SuperMinersWPF.Views
             this.txtRMB_Mine.Text = GlobalData.GameConfig.RMB_Mine.ToString();
         }
 
-        void Client_BuyMineCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        void Client_BuyMineCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<TradeOperResult> e)
         {
             if (e.Cancelled)
             {
@@ -46,16 +48,17 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            int result = e.Result;
-            if (result < 0)
+            TradeOperResult result = e.Result;
+            if (result.ResultCode != OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("服务器不存在当前用户，请联系平台客服。");
+                MyMessageBox.ShowInfo("勘探矿山失败。原因：" + ResultCodeMsg.GetMsg(result.ResultCode));
                 return;
             }
-            if (result == 0)
+            if (result.PayType == (int)PayType.Alipay)
             {
-                MyMessageBox.ShowInfo("购买失败。");
-                return;
+                MyWebPage.ShowMyWebPage(result.AlipayLink);
+                MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                //return;
             }
 
             App.UserVMObject.AsyncGetPlayerInfo();
@@ -72,14 +75,19 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            float money = count * GlobalData.GameConfig.RMB_Mine;
-            this.txtNeedMoney.Text = money.ToString();
-            if (money > GlobalData.CurrentUser.RMB)
+            int payType = (int)PayType.Alipay;
+            if (this.chkPayType.IsChecked == false)
             {
-                MyMessageBox.ShowInfo("账户余额不足，请充值。");
-                return;
+                payType = (int)PayType.RMB;
+                float money = count * GlobalData.GameConfig.RMB_Mine;
+                this.txtNeedMoney.Text = money.ToString();
+                if (money > GlobalData.CurrentUser.RMB)
+                {
+                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    return;
+                }
             }
-            GlobalData.Client.BuyMine(count);
+            GlobalData.Client.BuyMine(count, payType);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -100,6 +108,16 @@ namespace SuperMinersWPF.Views
             {
                 this.txtError.Visibility = System.Windows.Visibility.Collapsed;
             }
+        }
+
+        private void chkPayType_Checked(object sender, RoutedEventArgs e)
+        {
+            this.chkPayType.Content = "支付宝支付";
+        }
+
+        private void chkPayType_Unchecked(object sender, RoutedEventArgs e)
+        {
+            this.chkPayType.Content = "灵币支付";
         }
     }
 }

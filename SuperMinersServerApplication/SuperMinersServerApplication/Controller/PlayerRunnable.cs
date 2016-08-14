@@ -144,7 +144,7 @@ namespace SuperMinersServerApplication.Controller
         /// 收取生产出来的矿石
         /// </summary>
         /// <param name="userName"></param>
-        /// <param name="stones"></param>
+        /// <param name="stones">-1表示清空临时产出</param>
         /// <returns></returns>
         public int GatherStones(float stones)
         {
@@ -155,14 +155,14 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
-                return 0;
+                return OperResult.RESULTCODE_TRUE;
             }
 
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
-                return 0;
+                return OperResult.RESULTCODE_FALSE;
             }
 
             TimeSpan span = stopTime - BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
@@ -194,26 +194,26 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GatherStone, IntTempOutput);
-                return IntTempOutput;
+                return OperResult.RESULTCODE_TRUE;
             }
 
-            return 0;
+            return OperResult.RESULTCODE_FALSE;
         }
 
+        /// <summary>
+        /// RESULTCODE_LACK_OF_BALANCE; RESULTCODE_TRUE; 
+        /// </summary>
+        /// <param name="minersCount"></param>
+        /// <returns></returns>
         public int BuyMiner(int minersCount)
         {
-            if (minersCount <= 0)
-            {
-                return 0;
-            }
-
             lock (_lockFortuneAction)
             {
                 float allGoldCoin = BasePlayer.FortuneInfo.GoldCoin + BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
                 float allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
                 if (allNeedGoldCoin > allGoldCoin)
                 {
-                    return 0;
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
                 if (allNeedGoldCoin < BasePlayer.FortuneInfo.GoldCoin)
@@ -226,7 +226,7 @@ namespace SuperMinersServerApplication.Controller
                     int needRMB = (int)Math.Ceiling(gc / GlobalConfig.GameConfig.RMB_GoldCoin);
                     if (needRMB > BasePlayer.FortuneInfo.RMB)
                     {
-                        return 0;
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
                     }
 
                     BasePlayer.FortuneInfo.RMB -= needRMB;
@@ -242,7 +242,7 @@ namespace SuperMinersServerApplication.Controller
                     {
                         trans.Rollback();
                         RefreshFortune();
-                        return -1;
+                        return OperResult.RESULTCODE_FALSE;
                     }
                     MinersBuyRecord record = new MinersBuyRecord()
                     {
@@ -254,11 +254,14 @@ namespace SuperMinersServerApplication.Controller
                     DBProvider.BuyMinerRecordDBProvider.AddBuyMinerRecord(record, trans);
 
                     trans.Commit();
+                    PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMiner, minersCount);
+                    return OperResult.RESULTCODE_TRUE;
                 }
                 catch (Exception exc)
                 {
                     trans.Rollback();
                     LogHelper.Instance.AddErrorLog("Buy Miners Error!", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
                 }
                 finally
                 {
@@ -268,8 +271,6 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMiner, minersCount);
-                return minersCount;
             }
         }
 
@@ -406,15 +407,19 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="order"></param>
         /// <param name="trans"></param>
         /// <returns></returns>
-        public bool PayBuyStonesUpdateBuyerInfo(BuyStonesOrder order, CustomerMySqlTransaction trans)
+        public bool PayBuyStonesUpdateBuyerInfo(bool isAlipayPay, BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
-                if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
+                if (!isAlipayPay)
                 {
-                    return false;
+                    if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
+                    {
+                        return false;
+                    }
+
+                    BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
                 }
-                BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
                 BasePlayer.FortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
                 BasePlayer.FortuneInfo.GoldCoin += order.AwardGoldCoin;
 

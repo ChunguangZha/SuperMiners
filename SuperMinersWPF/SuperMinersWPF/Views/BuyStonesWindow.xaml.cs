@@ -124,6 +124,7 @@ namespace SuperMinersWPF.Views
             if (chkPayType.IsChecked == true)//支付宝支付
             {
                 MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
+                MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
             }
             else
             {

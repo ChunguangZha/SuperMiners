@@ -84,12 +84,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
         bool ReleaseLockOrder(string token, string orderNumber);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/PayStoneOrder",
+        [WebInvoke(UriTemplate = "/WebService/PayStoneOrderByRMB",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool PayStoneOrder(string token, string orderNumber, float rmb, int payType);
+        int PayStoneOrderByRMB(string token, string orderNumber, float rmb);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SearchUserSellStoneOrders",

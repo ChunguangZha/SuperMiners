@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using SuperMinersWeb.App_Code;
 using SuperMinersWeb.AlipayCode;
+using SuperMinersWeb.Wcf;
 
 /// <summary>
 /// 功能：页面跳转同步通知页面
@@ -62,14 +63,15 @@ public partial class return_url : System.Web.UI.Page
                     //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                     //如果有做过处理，不执行商户的业务程序
                     string buyer_email = Request.QueryString["buyer_email"];
-                    double total_fee;
-                    if (!double.TryParse(Request.QueryString["total_fee"], out total_fee))
+                    float total_fee;
+                    if (!float.TryParse(Request.QueryString["total_fee"], out total_fee))
                     {
                         //打印页面
                         Response.Write("充值金额错误<br />");
                         return;
                     }
 
+                    WcfClient.Instance.AlipayCallback(out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                 }
                 else
                 {

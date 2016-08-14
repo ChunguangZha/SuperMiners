@@ -28,7 +28,7 @@ namespace SuperMinersWPF.Wcf.Clients
 
 
         /// <summary>
-        /// 0表示成功；1表示操作异常；-1表示查询不到该用户；-2表示订单号为空；-3表示订单号不存在；-4表示非本人订单；-5表示订单已被锁定 
+        /// RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_USER_NOT_EXIST; RESULTCODE_EXCEPTION; RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_ORDER_BE_LOCKED; RESULTCODE_TRUE; RESULTCODE_FALSE
         /// </summary>
         public event EventHandler<WebInvokeEventArgs<int>> CancelSellStoneCompleted;
         public void CancelSellStone(string orderNumber, object userState)
@@ -98,12 +98,12 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
-        #region PayOrderByRMB
+        #region PayStoneOrderByRMB
 
-        public event EventHandler<WebInvokeEventArgs<bool>> PayOrderByRMBCompleted;
-        public void PayOrderByRMB(string orderNumber, float rmb, object userState)
+        public event EventHandler<WebInvokeEventArgs<int>> PayStoneOrderByRMBCompleted;
+        public void PayStoneOrderByRMB(string orderNumber, float rmb, object userState)
         {
-            this._invoker.InvokeUserState<bool>(this._context, "PayOrderByRMB", this.PayOrderByRMBCompleted, userState, GlobalData.Token, orderNumber, rmb);
+            this._invoker.InvokeUserState<int>(this._context, "PayStoneOrderByRMB", this.PayStoneOrderByRMBCompleted, userState, GlobalData.Token, orderNumber, rmb);
         }
 
         #endregion
