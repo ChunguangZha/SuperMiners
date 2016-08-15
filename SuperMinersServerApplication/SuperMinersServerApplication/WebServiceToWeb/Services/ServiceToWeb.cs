@@ -199,6 +199,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     total_fee = total_fee,
                     value_rmb = total_fee * GlobalConfig.GameConfig.Yuan_RMB
                 };
+
+                LogHelper.Instance.AddInfoLog("alipay_trade_no: " + alipay_trade_no);
                 OrderController.Instance.AlipayCallback(record);
             }
             catch (Exception exc)

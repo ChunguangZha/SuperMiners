@@ -78,7 +78,8 @@ public partial class return_url : System.Web.UI.Page
                 }
 
                 //打印页面
-                Response.Write("验证成功<br />");
+                Response.Write("验证成功<br />本页面将在3秒后关闭");
+                Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
 
                 //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 

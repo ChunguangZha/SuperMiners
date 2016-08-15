@@ -240,6 +240,9 @@
     <Compile Include="Views\BusyWindow.xaml.cs">
       <DependentUpon>BusyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BuyGoldCoinWindow.xaml.cs">
+      <DependentUpon>BuyGoldCoinWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BuyMinerWindow.xaml.cs">
       <DependentUpon>BuyMinerWindow.xaml</DependentUpon>
     </Compile>
@@ -334,6 +337,10 @@
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\BusyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BuyGoldCoinWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

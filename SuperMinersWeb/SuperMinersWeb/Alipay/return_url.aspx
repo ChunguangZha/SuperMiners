@@ -6,7 +6,13 @@
 <head runat="server">
     <title>页面跳转同步通知页面</title>
 </head>
-<body>
+<body onload='setTimeout("mm()",3000)'>
+<script>
+    function mm() {
+        window.opener = null;
+        window.close();
+    }
+</script>
     <form id="form1" runat="server">
     </form>
 </body>

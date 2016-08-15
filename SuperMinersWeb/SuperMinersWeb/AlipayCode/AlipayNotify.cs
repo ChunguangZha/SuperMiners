@@ -31,7 +31,8 @@ namespace SuperMinersWeb.AlipayCode
         {
             //初始化基础配置信息
             _partner = Config.partner.Trim();
-            alipay_public_key = getPublicKeyStr(Config.alipay_public_key.Trim());
+            //alipay_public_key = getPublicKeyStr(Config.alipay_public_key.Trim());
+            alipay_public_key = Config.alipay_public_key.Trim();
             _input_charset = Config.input_charset.Trim().ToLower();
             _sign_type = Config.sign_type.Trim().ToUpper();
         }

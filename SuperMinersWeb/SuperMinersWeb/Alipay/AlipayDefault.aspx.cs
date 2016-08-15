@@ -39,6 +39,14 @@ namespace SuperMinersWeb.Alipay
                 {
                     string p = Request.QueryString["p"];
 
+
+                    //Response.Write("<script>alert('Config.notify_url: " + Config.notify_url + "');</script>");
+
+                    if (string.IsNullOrEmpty(p))
+                    {
+                        return;
+                    }
+
                     string secParameter = DESEncrypt.DecryptDES(p);
                     //string resultP = System.Web.HttpUtility.UrlDecode(secParameter, Encoding.UTF8);
 
@@ -57,6 +65,7 @@ namespace SuperMinersWeb.Alipay
                     this.WIDout_trade_no.Text = parameters[0];
                     this.WIDsubject.Text = parameters[1];
                     this.WIDtotal_fee.Text = parameters[2];
+                    //this.WIDbody.Text = "Config.notify_url : " + Config.notify_url;
                     //this.playerClientIP = parameters[3];
                 }
             }

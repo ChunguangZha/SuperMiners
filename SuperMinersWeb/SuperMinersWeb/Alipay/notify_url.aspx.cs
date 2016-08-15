@@ -11,6 +11,7 @@ using System.Web.UI.HtmlControls;
 using System.Collections.Specialized;
 using System.Collections.Generic;
 using SuperMinersWeb.AlipayCode;
+using SuperMinersWeb.Wcf;
 
 /// <summary>
 /// 功能：服务器异步通知页面
@@ -77,6 +78,16 @@ public partial class notify_url : System.Web.UI.Page
 
                     //注意：
                     //付款完成后，支付宝系统发送该交易状态通知
+                    string buyer_email = Request.QueryString["buyer_email"];
+                    float total_fee;
+                    if (!float.TryParse(Request.QueryString["total_fee"], out total_fee))
+                    {
+                        //打印页面
+                        Response.Write("充值金额错误<br />");
+                        return;
+                    }
+
+                    WcfClient.Instance.AlipayCallback(out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                 }
                 else
                 {

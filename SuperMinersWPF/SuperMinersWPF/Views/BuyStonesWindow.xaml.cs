@@ -63,6 +63,14 @@ namespace SuperMinersWPF.Views
             }
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.ReleaseLockOrderCompleted -= Client_ReleaseLockOrderCompleted;
+            //GlobalData.Client.PayOrderByAlipayCompleted -= Client_PayOrderByAlipayCompleted;
+            App.StoneOrderVMObject.StoneOrderLockTimeOut -= StoneOrderVMObject_OrderLockTimeOut;
+            App.StoneOrderVMObject.StoneOrderPaySucceed -= StoneOrderVMObject_PayOrderSucceed;
+        }
+
         void StoneOrderVMObject_PayOrderSucceed()
         {
             this.Close();
