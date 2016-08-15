@@ -10,7 +10,6 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Specialized;
 using System.Collections.Generic;
-using SuperMinersWeb.App_Code;
 using SuperMinersWeb.AlipayCode;
 using SuperMinersWeb.Wcf;
 

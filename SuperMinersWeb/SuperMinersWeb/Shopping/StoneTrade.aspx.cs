@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWeb.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -16,7 +17,8 @@ namespace SuperMinersWeb.Shopping
 
         protected void btnPay_Click(object sender, EventArgs e)
         {
-
+            string subUrl = Tools.CreateAlipayLink("201608131111111111", "矿石", 1, "");
+            Response.Redirect(subUrl);
         }
     }
 }
