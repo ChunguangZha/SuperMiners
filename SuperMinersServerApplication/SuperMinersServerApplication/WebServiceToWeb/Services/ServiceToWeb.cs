@@ -189,7 +189,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="total_fee">人民币，需换算为灵币</param>
         /// <param name="buyer_email"></param>
         /// <param name="succeed"></param>
-        public void AlipayCallback(string out_trade_no, string alipay_trade_no, float total_fee, string buyer_email, string pay_time)
+        public void AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {

@@ -30,6 +30,8 @@ namespace SuperMinersWPF.Views
             set { _lockedOrder = value; }
         }
 
+
+        private bool AlipayPaySucceed = false;
         private System.Threading.SynchronizationContext _syn;
 
 
@@ -49,7 +51,7 @@ namespace SuperMinersWPF.Views
             
             this.DataContext = this.LockedOrder;
 
-            float awardGoldCoin = this.LockedOrder.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
+            decimal awardGoldCoin = this.LockedOrder.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
             this.txtAwardGoldCoin.Text = ((int)awardGoldCoin).ToString();
             if (GlobalData.CurrentUser.RMB < this.LockedOrder.ValueRMB)
             {
@@ -73,6 +75,7 @@ namespace SuperMinersWPF.Views
 
         void StoneOrderVMObject_PayOrderSucceed()
         {
+            AlipayPaySucceed = true;
             this.Close();
         }
 
@@ -85,28 +88,6 @@ namespace SuperMinersWPF.Views
                 this.Close();
             }, null);
         }
-
-        //void Client_PayOrderByAlipayCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
-        //{
-        //    if (e.Cancelled)
-        //    {
-        //        return;
-        //    }
-
-        //    if (e.Error != null)
-        //    {
-        //        MyMessageBox.ShowInfo("连接服务器失败。");
-        //        return;
-        //    }
-
-        //    if (string.IsNullOrEmpty(e.Result))
-        //    {
-        //        MyMessageBox.ShowInfo("购买失败。");
-        //        return;
-        //    }
-
-        //    this.Close();
-        //}
 
         void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
@@ -133,6 +114,21 @@ namespace SuperMinersWPF.Views
             {
                 MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
                 MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+
+                var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                {
+                    if (!AlipayPaySucceed)
+                    {
+                        MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                    }
+                }
+                else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                {
+                    MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
+                    MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                    return;
+                }
             }
             else
             {

@@ -83,7 +83,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public float Value
+        public decimal Value
         {
             get
             {

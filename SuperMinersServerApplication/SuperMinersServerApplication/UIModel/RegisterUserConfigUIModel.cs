@@ -38,12 +38,12 @@ namespace SuperMinersServerApplication.UIModel
         /// <summary>
         /// 给新注册用户赠送贡献值
         /// </summary>
-        private float _giveToNewUserExp = 1;
+        private decimal _giveToNewUserExp = 1;
 
         /// <summary>
         /// 给新注册用户赠送贡献值
         /// </summary>
-        public float GiveToNewUserExp
+        public decimal GiveToNewUserExp
         {
             get { return this._giveToNewUserExp; }
             set
@@ -57,12 +57,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _giveToNewUserGoldCoin = 5;
+        private decimal _giveToNewUserGoldCoin = 5;
 
         /// <summary>
         /// 给新注册用户赠送金币数
         /// </summary>
-        public float GiveToNewUserGoldCoin
+        public decimal GiveToNewUserGoldCoin
         {
             get { return this._giveToNewUserGoldCoin; }
             set
@@ -76,12 +76,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _giveToNewUserMines = 0;
+        private decimal _giveToNewUserMines = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿山数
         /// </summary>
-        public float GiveToNewUserMines
+        public decimal GiveToNewUserMines
         {
             get { return this._giveToNewUserMines; }
             set
@@ -114,12 +114,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _giveToNewUserStones = 0;
+        private decimal _giveToNewUserStones = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿石数
         /// </summary>
-        public float GiveToNewUserStones
+        public decimal GiveToNewUserStones
         {
             get { return this._giveToNewUserStones; }
             set

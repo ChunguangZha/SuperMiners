@@ -41,7 +41,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public float ValueRMB
+        public decimal ValueRMB
         {
             get
             {

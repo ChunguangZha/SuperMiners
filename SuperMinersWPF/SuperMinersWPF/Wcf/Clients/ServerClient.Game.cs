@@ -33,7 +33,7 @@ namespace SuperMinersWPF.Wcf.Clients
         #region GatherStones
 
         public event EventHandler<WebInvokeEventArgs<int>> GatherStonesCompleted;
-        public void GatherStones(float stones)
+        public void GatherStones(decimal stones)
         {
             this._invoker.Invoke<int>(this._context, "GatherStones", this.GatherStonesCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName, stones);
         }

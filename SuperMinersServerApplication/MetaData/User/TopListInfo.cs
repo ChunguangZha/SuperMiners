@@ -17,6 +17,6 @@ namespace MetaData.User
         public string NickName;
 
         [DataMember]
-        public float Value;
+        public decimal Value;
     }
 }

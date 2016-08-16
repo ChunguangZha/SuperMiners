@@ -59,7 +59,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public float Expense
+        public decimal Expense
         {
             get
             {
@@ -67,7 +67,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public float ValueRMB
+        public decimal ValueRMB
         {
             get
             {

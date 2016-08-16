@@ -190,9 +190,9 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        private float GetExpense(float valueRMB)
+        private decimal GetExpense(decimal valueRMB)
         {
-            float expense = valueRMB * GlobalConfig.GameConfig.ExchangeExpensePercent / 100;
+            decimal expense = valueRMB * GlobalConfig.GameConfig.ExchangeExpensePercent / 100;
             if (expense < GlobalConfig.GameConfig.ExchangeExpenseMinNumber)
             {
                 expense = GlobalConfig.GameConfig.ExchangeExpenseMinNumber;
@@ -217,7 +217,7 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public SellStonesOrder CreateSellOrder(string userName, int sellStonesCount)
         {
-            float valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
+            decimal valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
             DateTime time = DateTime.Now;
             SellStonesOrder order = new SellStonesOrder()
             {
@@ -326,7 +326,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="trans"></param>
         /// <param name="result"></param>
         /// <returns></returns>
-        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, float rmb, CustomerMySqlTransaction trans, ref int result)
+        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, decimal rmb, CustomerMySqlTransaction trans, ref int result)
         {
             StoneOrderRunnable runnable = FindOrderByOrderName(orderNumber);
             if (runnable == null)
@@ -388,7 +388,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="orderNumber"></param>
         /// <param name="rmb"></param>
         /// <returns></returns>
-        public int PayStoneOrderByRMB(string buyerUserName, string orderNumber, float rmb)
+        public int PayStoneOrderByRMB(string buyerUserName, string orderNumber, decimal rmb)
         {
             int result = OperResult.RESULTCODE_FALSE;
             var trans = MyDBHelper.Instance.CreateTrans();
@@ -416,6 +416,7 @@ namespace SuperMinersServerApplication.Controller
 
                 AddLogNotifyPlayer(buyerUserName, orderNumber, buyOrder);
 
+                result = OperResult.RESULTCODE_TRUE;
                 return result;
             }
             catch (Exception exc)

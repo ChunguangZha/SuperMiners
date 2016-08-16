@@ -40,7 +40,7 @@ namespace MetaData.Trade
         }
 
         [DataMember]
-        public float AwardGoldCoin;
+        public decimal AwardGoldCoin;
 
         public override string ToString()
         {

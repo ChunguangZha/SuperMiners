@@ -31,46 +31,46 @@ namespace MetaData.User
         /// 贡献值
         /// </summary>
         [DataMember]
-        public float Exp { get; set; }
+        public decimal Exp { get; set; }
 
         [DataMember]
-        public float RMB { get; set; }
+        public decimal RMB { get; set; }
 
         [DataMember]
-        public float FreezingRMB { get; set; }
+        public decimal FreezingRMB { get; set; }
 
         [DataMember]
-        public float GoldCoin { get; set; }
+        public decimal GoldCoin { get; set; }
 
         /// <summary>
         /// 矿山数
         /// </summary>
         [DataMember]
-        public float MinesCount { get; set; }
+        public decimal MinesCount { get; set; }
 
         /// <summary>
         /// 矿石储量。该值为累计值，即每次购买矿山，将矿山储量值累加到该值上。
         /// </summary>
         [DataMember]
-        public float StonesReserves { get; set; }
+        public decimal StonesReserves { get; set; }
 
         /// <summary>
         /// 累计总产出矿石数。和StonesReserves的差值，为当前可开采的矿石数。
         /// </summary>
         [DataMember]
-        public float TotalProducedStonesCount { get; set; }
+        public decimal TotalProducedStonesCount { get; set; }
 
         /// <summary>
         /// 矿工数
         /// </summary>
         [DataMember]
-        public float MinersCount { get; set; }
+        public decimal MinersCount { get; set; }
 
         /// <summary>
         /// 库存矿石数
         /// </summary>
         [DataMember]
-        public float StockOfStones { get; set; }
+        public decimal StockOfStones { get; set; }
 
         public DateTime? TempOutputStonesStartTime = null;
         [DataMember]
@@ -98,25 +98,25 @@ namespace MetaData.User
         }
 
         [DataMember]
-        public float TempOutputStones;
+        public decimal TempOutputStones;
 
         /// <summary>
         /// 冻结的矿石数
         /// </summary>
         [DataMember]
-        public float FreezingStones { get; set; }
+        public decimal FreezingStones { get; set; }
 
         /// <summary>
         /// 库存钻石数
         /// </summary>
         [DataMember]
-        public float StockOfDiamonds { get; set; }
+        public decimal StockOfDiamonds { get; set; }
 
         /// <summary>
         /// 冻结的钻石数
         /// </summary>
         [DataMember]
-        public float FreezingDiamonds { get; set; }
+        public decimal FreezingDiamonds { get; set; }
 
         public PlayerFortuneInfo CopyTo()
         {

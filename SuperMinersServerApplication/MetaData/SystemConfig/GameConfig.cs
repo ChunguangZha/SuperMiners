@@ -14,49 +14,49 @@ namespace MetaData.SystemConfig
         /// 人民币兑换RMB
         /// </summary>
         [DataMember]
-        public float Yuan_RMB = 10;
+        public decimal Yuan_RMB = 10;
 
         /// <summary>
         /// RMB兑换金币
         /// </summary>
         [DataMember]
-        public float RMB_GoldCoin = 1000;
+        public decimal RMB_GoldCoin = 1000;
 
         /// <summary>
         /// 购买矿山所需要的RMB
         /// </summary>
         [DataMember]
-        public float RMB_Mine = 3000;
+        public decimal RMB_Mine = 3000;
 
         /// <summary>
         /// 购买矿工所需要的金币
         /// </summary>
         [DataMember]
-        public float GoldCoin_Miner = 10000;
+        public decimal GoldCoin_Miner = 10000;
 
         /// <summary>
         /// 多少矿石等价于1RMB
         /// </summary>
         [DataMember]
-        public float Stones_RMB = 10;
+        public decimal Stones_RMB = 10;
 
         /// <summary>
         /// 多少钻石等价于1RMB
         /// </summary>
         [DataMember]
-        public float Diamonds_RMB = 1;
+        public decimal Diamonds_RMB = 1;
 
         /// <summary>
         /// 每个矿工每小时生产矿石数
         /// </summary>
         [DataMember]
-        public float OutputStonesPerHour = 0.138f;
+        public decimal OutputStonesPerHour = 0.138m;
 
         /// <summary>
         /// 每座矿山的矿石储量
         /// </summary>
         [DataMember]
-        public float StonesReservesPerMines = 100000;
+        public decimal StonesReservesPerMines = 100000;
 
         /// <summary>
         /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。
@@ -68,19 +68,19 @@ namespace MetaData.SystemConfig
         /// 矿石买家奖励金币倍数
         /// </summary>
         [DataMember]
-        public float StoneBuyerAwardGoldCoinMultiple = 0.05f;
+        public decimal StoneBuyerAwardGoldCoinMultiple = 0.05m;
 
         /// <summary>
         /// 提现手续费比例数
         /// </summary>
         [DataMember]
-        public float ExchangeExpensePercent = 0.05f;
+        public decimal ExchangeExpensePercent = 0.05m;
 
         /// <summary>
         /// 提现手续费手续费最小金额
         /// </summary>
         [DataMember]
-        public float ExchangeExpenseMinNumber;
+        public decimal ExchangeExpenseMinNumber;
 
         /// <summary>
         /// 玩家可以拥有最大矿工数
@@ -110,7 +110,7 @@ namespace MetaData.SystemConfig
         /// 打折
         /// </summary>
         [DataMember]
-        public float Discount = 0.99f;
+        public decimal Discount = 0.99m;
 
     }
 }

@@ -87,7 +87,7 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
-            float tempOutput = (float)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
+            decimal tempOutput = (decimal)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
 
             if (tempOutput > GlobalData.CurrentUser.MaxTempStonesOutput)
             {
@@ -118,7 +118,7 @@ namespace SuperMinersWPF.ViewModels
         /// -1表示清空临时产出
         /// </summary>
         /// <param name="stones"></param>
-        public void AsyncGatherStones(float stones)
+        public void AsyncGatherStones(decimal stones)
         {
             if (stones == 0)
             {

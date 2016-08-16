@@ -37,7 +37,7 @@ namespace SuperMinersServerApplication.Controller
         private int maxListCount = 100;
         private object _lockList = new object();
 
-        public void AddLog(string userName, ActionType actionType, int operNumber, string remark = "")
+        public void AddLog(string userName, ActionType actionType, decimal operNumber, string remark = "")
         {
             try
             {

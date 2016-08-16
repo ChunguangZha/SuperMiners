@@ -26,12 +26,12 @@ namespace MetaData.Trade
         /// <summary>
         /// 支付金额人民币元
         /// </summary>
-        public float total_fee;
+        public decimal total_fee;
 
         /// <summary>
         /// 等值的灵币
         /// </summary>
-        public float value_rmb;
+        public decimal value_rmb;
 
         /// <summary>
         /// 支付时间

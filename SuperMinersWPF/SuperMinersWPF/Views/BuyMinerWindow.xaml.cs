@@ -80,7 +80,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            float money = count * GlobalData.GameConfig.GoldCoin_Miner;
+            decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
             this.txtNeedMoney.Text = money.ToString();
             if (money > GlobalData.CurrentUser.GoldCoin)
             {
@@ -98,11 +98,11 @@ namespace SuperMinersWPF.Views
         private void numMinersCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int count = (int)this.numMinersCount.Value;
-            float money = count * GlobalData.GameConfig.GoldCoin_Miner;
+            decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
             this.txtNeedMoney.Text = money.ToString();
             if (money > GlobalData.CurrentUser.GoldCoin)
             {
-                float allGoldcoin = GlobalData.CurrentUser.GoldCoin + GlobalData.CurrentUser.RMB * GlobalData.GameConfig.RMB_GoldCoin;
+                decimal allGoldcoin = GlobalData.CurrentUser.GoldCoin + GlobalData.CurrentUser.RMB * GlobalData.GameConfig.RMB_GoldCoin;
                 if (money > allGoldcoin)
                 {
                     this.txtError.Visibility = System.Windows.Visibility.Visible;

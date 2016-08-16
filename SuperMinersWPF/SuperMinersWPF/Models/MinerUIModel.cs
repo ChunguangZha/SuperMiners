@@ -19,9 +19,9 @@ namespace SuperMinersWPF.Models
             set { createTime = value; }
         }
 
-        private float rateOfOutput;
+        private decimal rateOfOutput;
 
-        public float RateOfOutput
+        public decimal RateOfOutput
         {
             get { return rateOfOutput; }
             set { rateOfOutput = value; }

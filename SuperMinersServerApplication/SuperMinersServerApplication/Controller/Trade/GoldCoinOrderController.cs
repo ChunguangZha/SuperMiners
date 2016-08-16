@@ -51,7 +51,7 @@ namespace SuperMinersServerApplication.Controller
 
             if (payType == (int)PayType.RMB)
             {
-                int value = PlayerController.Instance.BuyMineByRMB(userName, rmbValue);
+                int value = PlayerController.Instance.RechargeGoldCoinByRMB(userName, rmbValue, gainGoldCoin);
                 result.ResultCode = value;
                 if (value == OperResult.RESULTCODE_TRUE)
                 {

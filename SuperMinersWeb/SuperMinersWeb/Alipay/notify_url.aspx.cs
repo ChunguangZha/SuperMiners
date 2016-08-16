@@ -79,8 +79,8 @@ public partial class notify_url : System.Web.UI.Page
                     //注意：
                     //付款完成后，支付宝系统发送该交易状态通知
                     string buyer_email = Request.QueryString["buyer_email"];
-                    float total_fee;
-                    if (!float.TryParse(Request.QueryString["total_fee"], out total_fee))
+                    decimal total_fee;
+                    if (!decimal.TryParse(Request.QueryString["total_fee"], out total_fee))
                     {
                         //打印页面
                         Response.Write("充值金额错误<br />");

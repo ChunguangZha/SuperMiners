@@ -31,23 +31,23 @@ namespace DataBaseProvider
                 if (dt.Rows.Count != 0)
                 {
                     config = new GameConfig();
-                    config.Yuan_RMB = Convert.ToSingle(dt.Rows[0]["Yuan_RMB"]);
-                    config.RMB_GoldCoin = Convert.ToSingle(dt.Rows[0]["RMB_GoldCoin"]);
-                    config.RMB_Mine = Convert.ToSingle(dt.Rows[0]["RMB_Mine"]);
-                    config.GoldCoin_Miner = Convert.ToSingle(dt.Rows[0]["GoldCoin_Miner"]);
-                    config.Stones_RMB = Convert.ToSingle(dt.Rows[0]["Stones_RMB"]);
-                    config.Diamonds_RMB = Convert.ToSingle(dt.Rows[0]["Diamonds_RMB"]);
-                    config.StoneBuyerAwardGoldCoinMultiple = Convert.ToSingle(dt.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
-                    config.OutputStonesPerHour = Convert.ToSingle(dt.Rows[0]["OutputStonesPerHour"]);
+                    config.Yuan_RMB = Convert.ToDecimal(dt.Rows[0]["Yuan_RMB"]);
+                    config.RMB_GoldCoin = Convert.ToDecimal(dt.Rows[0]["RMB_GoldCoin"]);
+                    config.RMB_Mine = Convert.ToDecimal(dt.Rows[0]["RMB_Mine"]);
+                    config.GoldCoin_Miner = Convert.ToDecimal(dt.Rows[0]["GoldCoin_Miner"]);
+                    config.Stones_RMB = Convert.ToDecimal(dt.Rows[0]["Stones_RMB"]);
+                    config.Diamonds_RMB = Convert.ToDecimal(dt.Rows[0]["Diamonds_RMB"]);
+                    config.StoneBuyerAwardGoldCoinMultiple = Convert.ToDecimal(dt.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
+                    config.OutputStonesPerHour = Convert.ToDecimal(dt.Rows[0]["OutputStonesPerHour"]);
                     config.TempStoneOutputValidHour = Convert.ToInt32(dt.Rows[0]["TempStoneOutputValidHour"]);
-                    config.StonesReservesPerMines = Convert.ToSingle(dt.Rows[0]["StonesReservesPerMines"]);
-                    config.ExchangeExpensePercent = Convert.ToSingle(dt.Rows[0]["ExchangeExpensePercent"]);
-                    config.ExchangeExpenseMinNumber = Convert.ToSingle(dt.Rows[0]["ExchangeExpenseMinNumber"]);
+                    config.StonesReservesPerMines = Convert.ToDecimal(dt.Rows[0]["StonesReservesPerMines"]);
+                    config.ExchangeExpensePercent = Convert.ToDecimal(dt.Rows[0]["ExchangeExpensePercent"]);
+                    config.ExchangeExpenseMinNumber = Convert.ToDecimal(dt.Rows[0]["ExchangeExpenseMinNumber"]);
                     config.UserMaxHaveMinersCount = Convert.ToInt32(dt.Rows[0]["UserMaxHaveMinersCount"]);
                     config.BuyOrderLockTimeMinutes = Convert.ToInt32(dt.Rows[0]["BuyOrderLockTimeMinutes"]);
                     config.CanExchangeMinExp = Convert.ToInt32(dt.Rows[0]["CanExchangeMinExp"]);
                     config.CanDiscountMinExp = Convert.ToInt32(dt.Rows[0]["CanDiscountMinExp"]);
-                    config.Discount = Convert.ToSingle(dt.Rows[0]["Discount"]);
+                    config.Discount = Convert.ToDecimal(dt.Rows[0]["Discount"]);
 
                     dt.Dispose();
                 }
@@ -193,11 +193,11 @@ namespace DataBaseProvider
                 {
                     config = new RegisterUserConfig();
                     config.UserCountCreateByOneIP = Convert.ToInt32(dt.Rows[0]["UserCountCreateByOneIP"]);
-                    config.GiveToNewUserExp = Convert.ToSingle(dt.Rows[0]["GiveToNewUserExp"]);
-                    config.GiveToNewUserGoldCoin = Convert.ToSingle(dt.Rows[0]["GiveToNewUserGoldCoin"]);
-                    config.GiveToNewUserMines = Convert.ToSingle(dt.Rows[0]["GiveToNewUserMines"]);
+                    config.GiveToNewUserExp = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserExp"]);
+                    config.GiveToNewUserGoldCoin = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserGoldCoin"]);
+                    config.GiveToNewUserMines = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserMines"]);
                     config.GiveToNewUserMiners = Convert.ToInt32(dt.Rows[0]["GiveToNewUserMiners"]);
-                    config.GiveToNewUserStones = Convert.ToSingle(dt.Rows[0]["GiveToNewUserStones"]);
+                    config.GiveToNewUserStones = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserStones"]);
 
                     dt.Dispose();
                 }
@@ -259,12 +259,12 @@ namespace DataBaseProvider
                 {
                     AwardReferrerConfig config = new AwardReferrerConfig();
                     config.ReferLevel = Convert.ToInt32(dt.Rows[i]["ReferLevel"]);
-                    config.AwardReferrerExp = Convert.ToSingle(dt.Rows[i]["AwardReferrerExp"]);
-                    config.AwardReferrerGoldCoin = Convert.ToSingle(dt.Rows[i]["AwardReferrerGoldCoin"]);
-                    config.AwardReferrerMines = Convert.ToSingle(dt.Rows[i]["AwardReferrerMines"]);
+                    config.AwardReferrerExp = Convert.ToDecimal(dt.Rows[i]["AwardReferrerExp"]);
+                    config.AwardReferrerGoldCoin = Convert.ToDecimal(dt.Rows[i]["AwardReferrerGoldCoin"]);
+                    config.AwardReferrerMines = Convert.ToDecimal(dt.Rows[i]["AwardReferrerMines"]);
                     config.AwardReferrerMiners = Convert.ToInt32(dt.Rows[i]["AwardReferrerMiners"]);
-                    config.AwardReferrerStones = Convert.ToSingle(dt.Rows[i]["AwardReferrerStones"]);
-                    config.AwardReferrerDiamond = Convert.ToSingle(dt.Rows[i]["AwardReferrerDiamond"]);
+                    config.AwardReferrerStones = Convert.ToDecimal(dt.Rows[i]["AwardReferrerStones"]);
+                    config.AwardReferrerDiamond = Convert.ToDecimal(dt.Rows[i]["AwardReferrerDiamond"]);
                     listAwardConfig.Add(config);
                 }
 

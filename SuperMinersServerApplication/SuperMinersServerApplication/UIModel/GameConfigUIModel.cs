@@ -16,12 +16,12 @@ namespace SuperMinersServerApplication.UIModel
 
         public bool IsChanged { get; set; }
 
-        private float _Yuan_RMB = 1;
+        private decimal _Yuan_RMB = 1;
 
         /// <summary>
         /// 人民币兑换RMB
         /// </summary>
-        public float Yuan_RMB
+        public decimal Yuan_RMB
         {
             get { return this._Yuan_RMB; }
             set
@@ -35,12 +35,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _RMB_GoldCoin = 1000;
+        private decimal _RMB_GoldCoin = 1000;
 
         /// <summary>
         /// RMB兑换金币
         /// </summary>
-        public float RMB_GoldCoin
+        public decimal RMB_GoldCoin
         {
             get { return this._RMB_GoldCoin; }
             set
@@ -54,12 +54,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _RMB_Mine = 10;
+        private decimal _RMB_Mine = 10;
 
         /// <summary>
         /// 购买矿山所需要的RMB
         /// </summary>
-        public float RMB_Mine
+        public decimal RMB_Mine
         {
             get { return this._RMB_Mine; }
             set
@@ -73,12 +73,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _GoldCoin_Miner = 1000;
+        private decimal _GoldCoin_Miner = 1000;
 
         /// <summary>
         /// 购买矿工所需要的金币
         /// </summary>
-        public float GoldCoin_Miner
+        public decimal GoldCoin_Miner
         {
             get { return this._GoldCoin_Miner; }
             set
@@ -92,12 +92,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _Stones_RMB = 10000;
+        private decimal _Stones_RMB = 10000;
 
         /// <summary>
         /// 多少矿石等价于1RMB
         /// </summary>
-        public float Stones_RMB
+        public decimal Stones_RMB
         {
             get { return this._Stones_RMB; }
             set
@@ -111,12 +111,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _Diamonds_RMB = 10;
+        private decimal _Diamonds_RMB = 10;
 
         /// <summary>
         /// 多少钻石等价于1RMB
         /// </summary>
-        public float Diamonds_RMB
+        public decimal Diamonds_RMB
         {
             get { return this._Diamonds_RMB; }
             set
@@ -130,12 +130,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _StoneBuyerAwardGoldCoinMultiple = 1;
+        private decimal _StoneBuyerAwardGoldCoinMultiple = 1;
 
         /// <summary>
         /// 矿石买家奖励金币数
         /// </summary>
-        public float StoneBuyerAwardGoldCoinMultiple
+        public decimal StoneBuyerAwardGoldCoinMultiple
         {
             get { return this._StoneBuyerAwardGoldCoinMultiple; }
             set
@@ -149,12 +149,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _OutputStonesPerHour = 0.003f;
+        private decimal _OutputStonesPerHour = 0.003m;
 
         /// <summary>
         /// 每个矿工每小时生产矿石数
         /// </summary>
-        public float OutputStonesPerHour
+        public decimal OutputStonesPerHour
         {
             get { return this._OutputStonesPerHour; }
             set
@@ -168,12 +168,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _StonesReservesPerMines = 1000;
+        private decimal _StonesReservesPerMines = 1000;
 
         /// <summary>
         /// 每座矿山的矿石储量
         /// </summary>
-        public float StonesReservesPerMines
+        public decimal StonesReservesPerMines
         {
             get { return this._StonesReservesPerMines; }
             set
@@ -187,12 +187,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _ExchangeExpensePercent = 5;
+        private decimal _ExchangeExpensePercent = 5;
 
         /// <summary>
         /// 提现手续费比例百分数，值为1，表示1%
         /// </summary>
-        public float ExchangeExpensePercent
+        public decimal ExchangeExpensePercent
         {
             get { return this._ExchangeExpensePercent; }
             set
@@ -206,12 +206,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _ExchangeExpenseMinNumber = 1;
+        private decimal _ExchangeExpenseMinNumber = 1;
 
         /// <summary>
         /// 提现手续费手续费最小金额
         /// </summary>
-        public float ExchangeExpenseMinNumber
+        public decimal ExchangeExpenseMinNumber
         {
             get { return this._ExchangeExpenseMinNumber; }
             set
@@ -295,9 +295,9 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _Discount;
+        private decimal _Discount;
 
-        public float Discount
+        public decimal Discount
         {
             get { return _Discount; }
             set

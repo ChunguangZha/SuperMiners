@@ -23,19 +23,19 @@ namespace MetaData.SystemConfig
         /// 给新注册用户赠送贡献值
         /// </summary>
         [DataMember]
-        public float GiveToNewUserExp = 1;
+        public decimal GiveToNewUserExp = 1;
 
         /// <summary>
         /// 给新注册用户赠送金币数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserGoldCoin = 2500;
+        public decimal GiveToNewUserGoldCoin = 2500;
 
         /// <summary>
         /// 给新注册用户赠送矿山数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserMines = 0.6f;
+        public decimal GiveToNewUserMines = 0.6m;
 
         /// <summary>
         /// 给新注册用户赠送矿工数
@@ -47,7 +47,7 @@ namespace MetaData.SystemConfig
         /// 给新注册用户赠送矿石数
         /// </summary>
         [DataMember]
-        public float GiveToNewUserStones = 0f;
+        public decimal GiveToNewUserStones = 0m;
 
         public string ToString()
         {

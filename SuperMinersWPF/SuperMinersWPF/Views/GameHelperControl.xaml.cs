@@ -42,7 +42,7 @@ namespace SuperMinersWPF.Views
 "九、	兴奋剂系统\r\n" +
 "一个合格的矿场主要学会压榨矿工所有的剩余劳动力，让矿工快去干活；兴奋剂可以增加当前产量，但是矿工也是人，会累的，兴奋剂使用之后会进入一个疲劳期，想延长矿工的疲劳期的到来，那就来连续使用兴奋剂，最长可以累积7天哦。在使用兴奋剂的期间矿产是可以自动收取的哦，无需上线手动操作；\r\n";
 
-        private Dictionary<string, float> _kv = new Dictionary<string, float>();
+        private Dictionary<string, decimal> _kv = new Dictionary<string, decimal>();
 
         public GameHelperControl()
         {

@@ -76,20 +76,20 @@ namespace SuperMinersWPF.Views
             {
                 return;
             }
-            float allrmb = GetAllRMB();
-            float expense = GetExpense(allrmb);
+            decimal allrmb = GetAllRMB();
+            decimal expense = GetExpense(allrmb);
             this.txtExpense.Text = expense.ToString();
             this.txtGetRMB.Text = (allrmb - expense).ToString("0.00");
         }
 
-        private float GetAllRMB()
+        private decimal GetAllRMB()
         {
             return (int)this.numSellStones.Value / GlobalData.GameConfig.Stones_RMB;
         }
 
-        private float GetExpense(float allRMB)
+        private decimal GetExpense(decimal allRMB)
         {
-            float expense = allRMB * GlobalData.GameConfig.ExchangeExpensePercent / 100;
+            decimal expense = allRMB * GlobalData.GameConfig.ExchangeExpensePercent / 100;
             if (expense < GlobalData.GameConfig.ExchangeExpenseMinNumber)
             {
                 expense = GlobalData.GameConfig.ExchangeExpenseMinNumber;
@@ -99,9 +99,9 @@ namespace SuperMinersWPF.Views
 
         private void btnSell_Click(object sender, RoutedEventArgs e)
         {
-            float rmb = GetAllRMB();
-            float expense = GetExpense(rmb);
-            float getRMB = rmb - expense;
+            decimal rmb = GetAllRMB();
+            decimal expense = GetExpense(rmb);
+            decimal getRMB = rmb - expense;
             if (getRMB <= 0)
             {
                 MyMessageBox.ShowInfo("出售" + Strings.Stone + "最少手续费为：" + GlobalData.GameConfig.ExchangeExpenseMinNumber.ToString()

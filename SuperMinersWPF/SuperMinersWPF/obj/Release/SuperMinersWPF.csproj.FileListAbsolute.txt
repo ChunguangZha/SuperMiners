@@ -162,9 +162,15 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ChatUserC
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\FunnyUserControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ChatUserControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\FunnyUserControl.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\ListAllNoticesWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Utility\MessageBoxAlipayPayQuestion.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MyKuangChangControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Utility\MessageBoxAlipayPayQuestion.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BuyGoldCoinWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MyKuangChangControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\BuyGoldCoinWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache

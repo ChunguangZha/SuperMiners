@@ -16,7 +16,7 @@ namespace MetaData
         /// <summary>
         /// 花费的金币数
         /// </summary>
-        public float SpendGoldCoin = 0;
+        public decimal SpendGoldCoin = 0;
 
         /// <summary>
         /// 获取矿工数

@@ -47,8 +47,8 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        public float _systemAllOutputStoneCount;
-        public float SystemAllOutputStoneCount
+        public decimal _systemAllOutputStoneCount;
+        public decimal SystemAllOutputStoneCount
         {
             get { return this._systemAllOutputStoneCount; }
             private set

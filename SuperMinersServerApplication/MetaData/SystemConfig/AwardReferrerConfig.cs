@@ -71,19 +71,19 @@ namespace MetaData.SystemConfig
         /// 奖励推荐人贡献值
         /// </summary>
         [DataMember]
-        public float AwardReferrerExp = 1;
+        public decimal AwardReferrerExp = 1;
 
         /// <summary>
         /// 奖励推荐人金币数
         /// </summary>
         [DataMember]
-        public float AwardReferrerGoldCoin = 5;
+        public decimal AwardReferrerGoldCoin = 5;
 
         /// <summary>
         /// 奖励推荐人矿山数
         /// </summary>
         [DataMember]
-        public float AwardReferrerMines = 0;
+        public decimal AwardReferrerMines = 0;
 
         /// <summary>
         /// 奖励推荐人矿工数
@@ -95,13 +95,13 @@ namespace MetaData.SystemConfig
         /// 奖励推荐人矿石数
         /// </summary>
         [DataMember]
-        public float AwardReferrerStones = 0.05f;
+        public decimal AwardReferrerStones = 0.05m;
 
         /// <summary>
         /// 奖励推荐人钻石数
         /// </summary>
         [DataMember]
-        public float AwardReferrerDiamond = 0.0f;
+        public decimal AwardReferrerDiamond = 0.0m;
 
         public string ToString()
         {

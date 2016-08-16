@@ -17,13 +17,13 @@ namespace SuperMinersWeb.Utility
         /// <param name="valueRMB"></param>
         /// <param name="clientIP"></param>
         /// <returns></returns>
-        public static string CreateAlipayLink(string orderNumber, string shopName, float valueRMB, string clientIP)
+        public static string CreateAlipayLink(string orderNumber, string shopName, decimal valueRMB, string clientIP)
         {
-            float money = valueRMB / GlobalData.GameConfig.Yuan_RMB;
-            float money_1 = (float)Math.Round(money, 1);
+            decimal money = valueRMB / GlobalData.GameConfig.Yuan_RMB;
+            decimal money_1 = (decimal)Math.Round(money, 1);
             if (money_1 < money)//说明刚才是四舍了，要把他加回来
             {
-                money_1 += 0.1f;
+                money_1 += 0.1m;
             }
             string srcParameter = orderNumber + "," + shopName + "," + money_1.ToString("0.00") + "," + clientIP;
             string desParameter = DESEncrypt.EncryptDES(srcParameter);

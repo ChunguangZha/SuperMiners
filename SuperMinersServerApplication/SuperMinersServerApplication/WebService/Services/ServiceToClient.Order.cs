@@ -299,7 +299,7 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <param name="orderNumber"></param>
         /// <param name="rmb"></param>
         /// <returns></returns>
-        public int PayStoneOrderByRMB(string token, string orderNumber, float rmb)
+        public int PayStoneOrderByRMB(string token, string orderNumber, decimal rmb)
         {
 #if Delay
 
@@ -310,7 +310,7 @@ namespace SuperMinersServerApplication.WebService.Services
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = ClientManager.GetClientUserName(token);
-                if (!string.IsNullOrEmpty(userName))
+                if (string.IsNullOrEmpty(userName))
                 {
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }

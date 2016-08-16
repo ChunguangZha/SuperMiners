@@ -108,7 +108,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            float GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+            decimal GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
             this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
             int payType;
             if (chkPayType.IsChecked == false)
@@ -135,7 +135,7 @@ namespace SuperMinersWPF.Views
         private void numRechargeRMB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int spendRMB = (int)this.numRechargeRMB.Value;
-            float gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+            decimal gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
             this.txtGainGoldCoin.Text = gainGoldCoin.ToString();
 
             if (chkPayType.IsChecked == true)

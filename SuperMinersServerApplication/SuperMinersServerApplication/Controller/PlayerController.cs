@@ -41,8 +41,8 @@ namespace SuperMinersServerApplication.Controller
         public event Action<string> KickOutPlayer;
 
         public int RegisteredPlayersCount { get; private set; }
-        public float AllMiners { get; private set; }
-        public float AllOutputStones { get; private set; }
+        public decimal AllMiners { get; private set; }
+        public decimal AllOutputStones { get; private set; }
 
         private ConcurrentDictionary<string, PlayerRunnable> _dicOnlinePlayerRuns = new ConcurrentDictionary<string, PlayerRunnable>();
 
@@ -401,7 +401,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stonesCount">-1表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(string userName, float stones)
+        public int GatherStones(string userName, decimal stones)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -440,7 +440,7 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMineByRMB(minesCount);
         }
 
-        public int BuyMineByAlipay(string userName, int minesCount)
+        public int BuyMineByAlipay(string userName, decimal minesCount)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
@@ -542,7 +542,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        //public bool RechargeRMB(string alipay, string alipayRealName, float yuan)
+        //public bool RechargeRMB(string alipay, string alipayRealName, decimal yuan)
         //{
         //    try
         //    {
@@ -568,7 +568,7 @@ namespace SuperMinersServerApplication.Controller
         //    }
         //}
 
-        //public bool RechargeGoldCoin(string alipay, string alipayRealName, float yuan)
+        //public bool RechargeGoldCoin(string alipay, string alipayRealName, decimal yuan)
         //{
         //    try
         //    {

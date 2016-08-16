@@ -39,7 +39,6 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\bin\Debug\SuperMinersCustomServiceSystem.pdb
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.exe
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.pdb
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\InputActionPasswordWindow.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\InputActionPasswordWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\GeneratedInternalTypeHelper.g.cs

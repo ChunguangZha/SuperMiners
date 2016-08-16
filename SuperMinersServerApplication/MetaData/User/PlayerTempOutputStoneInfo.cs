@@ -42,6 +42,6 @@
 //        }
         
 //        [DataMember]
-//        public float TempOutput;
+//        public decimal TempOutput;
 //    }
 //}

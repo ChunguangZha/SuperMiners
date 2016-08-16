@@ -35,13 +35,13 @@ namespace MetaData.Trade
         /// 手续费
         /// </summary>
         [DataMember]
-        public float Expense = 0;
+        public decimal Expense = 0;
 
         /// <summary>
         /// 买方需要支付的RMB数（即总价值），卖方可收获的RMB=ValueRMB-Expense;
         /// </summary>
         [DataMember]
-        public float ValueRMB = 0;
+        public decimal ValueRMB = 0;
 
         public DateTime SellTime;
         [DataMember]

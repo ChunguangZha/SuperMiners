@@ -15,12 +15,12 @@ namespace MetaData
         /// <summary>
         /// 花费灵币
         /// </summary>
-        public float SpendRMB = 0;
+        public decimal SpendRMB = 0;
 
         /// <summary>
         /// 获取金币值
         /// </summary>
-        public float GainGoldCoin = 0;
+        public decimal GainGoldCoin = 0;
 
         public DateTime CreateTime;
 

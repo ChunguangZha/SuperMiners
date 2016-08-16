@@ -87,8 +87,8 @@ namespace SuperMinersWeb.Alipay
                 return;
             }
             
-            float money;
-            if (!float.TryParse(total_fee, out money) || money <= 0)
+            decimal money;
+            if (!decimal.TryParse(total_fee, out money) || money <= 0)
             {
                 Response.Write("<script>alert('付款金额有误，无法支付。');</script>");
                 return;
@@ -128,6 +128,9 @@ namespace SuperMinersWeb.Alipay
             Response.Write(sHtmlText);
 
 #endif
+
+            Response.Write("本页面将在3秒后关闭");
+            Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
         }
     }
 }

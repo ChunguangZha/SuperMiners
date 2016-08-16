@@ -97,7 +97,7 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.InvitationCode; }
         }
 
-        public float Exp
+        public decimal Exp
         {
             get { return this._parentObject.FortuneInfo.Exp; }
         }
@@ -110,12 +110,12 @@ namespace SuperMinersWPF.Models
             set { userIcon = value; }
         }
 
-        public float RMB
+        public decimal RMB
         {
             get { return this._parentObject.FortuneInfo.RMB; }
         }
 
-        public float FreezingRMB
+        public decimal FreezingRMB
         {
             get { return this._parentObject.FortuneInfo.FreezingRMB; }
         }
@@ -123,7 +123,7 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 金币数
         /// </summary>
-        public float GoldCoin
+        public decimal GoldCoin
         {
             get { return this._parentObject.FortuneInfo.GoldCoin; }
         }
@@ -131,7 +131,7 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 矿山数
         /// </summary>
-        public float MinesCount
+        public decimal MinesCount
         {
             get { return this._parentObject.FortuneInfo.MinesCount; }
         }
@@ -139,20 +139,20 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 矿石储量
         /// </summary>
-        public float StonesReserves 
+        public decimal StonesReserves 
         {
-            get { return this._parentObject.FortuneInfo.StonesReserves; }
+            get { return (decimal)this._parentObject.FortuneInfo.StonesReserves; }
         }
 
-        public float TotalProducedStonesCount
+        public decimal TotalProducedStonesCount
         {
-            get { return this._parentObject.FortuneInfo.TotalProducedStonesCount; }
+            get { return (decimal)this._parentObject.FortuneInfo.TotalProducedStonesCount; }
         }
 
         /// <summary>
         /// 矿工数
         /// </summary>
-        public float MinersCount
+        public decimal MinersCount
         {
             get { return this._parentObject.FortuneInfo.MinersCount; }
         }
@@ -160,7 +160,7 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 所有矿工每小时总产量
         /// </summary>
-        public float AllOutputPerHour
+        public decimal AllOutputPerHour
         {
             get
             {
@@ -171,7 +171,7 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 所有矿工每天总产量
         /// </summary>
-        public float AllOutputPerDay
+        public decimal AllOutputPerDay
         {
             get
             {
@@ -199,11 +199,11 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 可开采矿石储量
         /// </summary>
-        public float WorkableStonesReservers
+        public decimal WorkableStonesReservers
         {
             get
             {
-                float workable = this.StonesReserves - this.TotalProducedStonesCount;
+                decimal workable = this.StonesReserves - this.TotalProducedStonesCount;
                 if (workable < 0)
                 {
                     return 0;
@@ -226,7 +226,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public float MaxTempStonesOutput
+        public decimal MaxTempStonesOutput
         {
             get
             {
@@ -234,7 +234,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public float TempOutputStones
+        public decimal TempOutputStones
         {
             get { return this._parentObject.FortuneInfo.TempOutputStones; }
             set
@@ -264,17 +264,17 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 库存矿石数
         /// </summary>
-        public float StockOfStones
+        public decimal StockOfStones
         {
             get { return this._parentObject.FortuneInfo.StockOfStones; }
         }
 
-        public float FreezingStones
+        public decimal FreezingStones
         {
             get { return this._parentObject.FortuneInfo.FreezingStones; }
         }
 
-        public float SellableStones
+        public decimal SellableStones
         {
             get { return StockOfStones - FreezingStones; }
         }
@@ -282,17 +282,17 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 库存钻石数
         /// </summary>
-        public float StockOfDiamonds
+        public decimal StockOfDiamonds
         {
             get { return this._parentObject.FortuneInfo.StockOfDiamonds; }
         }
 
-        public float FreezingDiamonds
+        public decimal FreezingDiamonds
         {
             get { return this._parentObject.FortuneInfo.FreezingDiamonds; }
         }
 
-        public float SellableDiamonds
+        public decimal SellableDiamonds
         {
             get { return StockOfDiamonds - FreezingDiamonds; }
         }

@@ -1,4 +1,5 @@
-﻿using SuperMinersWeb.Wcf;
+﻿using MetaData;
+using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +19,14 @@ namespace SuperMinersWeb
             var email = context.Request["Email"];
 
             int result = WcfClient.Instance.CheckEmailExist(email);
-            if (result < 0)
+            if (result == OperResult.RESULTCODE_FALSE)
             {
-                return;
+                context.Response.Write("OK");
             }
-            if (result > 0)
+            else if (result == OperResult.RESULTCODE_TRUE)
             {
                 context.Response.Write("该邮箱已被其它用户使用，请选择其它邮箱");
-                return;
             }
-            context.Response.Write("OK");
         }
 
         public bool IsReusable

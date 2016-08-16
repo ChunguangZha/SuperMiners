@@ -140,15 +140,15 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public void AlipayCallback(string out_trade_no, string alipay_trade_no, float total_fee, string buyer_email, string pay_time)
+        public void AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
                 base.Channel.AlipayCallback(out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
-
+                Console.WriteLine(exc);
             }
         }
 

@@ -20,11 +20,11 @@ namespace SuperMinersCustomServiceSystem.View
     public partial class EditPlayerRMBWindow : Window
     {
         string _userName;
-        float _currentRMB;
+        decimal _currentRMB;
 
-        public float ChangedRMB { get; private set; }
+        public decimal ChangedRMB { get; private set; }
 
-        public EditPlayerRMBWindow(string userName, float currentRMB)
+        public EditPlayerRMBWindow(string userName, decimal currentRMB)
         {
             InitializeComponent();
             this._userName = userName;
@@ -32,12 +32,12 @@ namespace SuperMinersCustomServiceSystem.View
 
             this.txtUserName.Text = userName;
             this.txtCurrentRMB.Text = currentRMB.ToString();
-            this.txtRMBChanged.Value = currentRMB;
+            this.txtRMBChanged.Value = (double)currentRMB;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            this.ChangedRMB = (float)this.txtRMBChanged.Value;
+            this.ChangedRMB = (decimal)this.txtRMBChanged.Value;
             this.DialogResult = true;
         }
 
@@ -60,8 +60,8 @@ namespace SuperMinersCustomServiceSystem.View
 
         private void NumericTextBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.ChangedRMB = this._currentRMB + (((float)this.numYuanValue.Value) * GlobalData.GameConfig.Yuan_RMB);
-            this.txtRMBChanged.Value = this.ChangedRMB;
+            this.ChangedRMB = this._currentRMB + (((decimal)this.numYuanValue.Value) * GlobalData.GameConfig.Yuan_RMB);
+            this.txtRMBChanged.Value = (double)this.ChangedRMB;
         }
     }
 }

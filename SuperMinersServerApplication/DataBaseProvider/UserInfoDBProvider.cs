@@ -441,7 +441,7 @@ namespace DataBaseProvider
             }
         }
 
-        public float GetAllMinersCount()
+        public decimal GetAllMinersCount()
         {
             MySqlConnection myconn = null;
             try
@@ -458,7 +458,7 @@ namespace DataBaseProvider
                 {
                     return 0;
                 }
-                return Convert.ToSingle(objResult);
+                return Convert.ToDecimal(objResult);
             }
             catch (Exception exc)
             {
@@ -470,7 +470,7 @@ namespace DataBaseProvider
             }
         }
 
-        public float GetAllOutputStonesCount()
+        public decimal GetAllOutputStonesCount()
         {
             MySqlConnection myconn = null;
             try
@@ -487,7 +487,7 @@ namespace DataBaseProvider
                 {
                     return 0;
                 }
-                return Convert.ToSingle(objResult);
+                return Convert.ToDecimal(objResult);
             }
             catch (Exception exc)
             {

@@ -113,7 +113,7 @@ namespace SuperMinersWPF.Views
             if (this.chkPayType.IsChecked == false)
             {
                 payType = (int)PayType.RMB;
-                float money = count * GlobalData.GameConfig.RMB_Mine;
+                decimal money = count * GlobalData.GameConfig.RMB_Mine;
                 this.txtNeedMoney.Text = money.ToString();
                 if (money > GlobalData.CurrentUser.RMB)
                 {
@@ -132,7 +132,7 @@ namespace SuperMinersWPF.Views
         private void numMinersCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int count = (int)this.numMinesCount.Value;
-            float spendRMB = count * GlobalData.GameConfig.RMB_Mine;
+            decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
             this.txtNeedMoney.Text = spendRMB.ToString();
 
             if (chkPayType.IsChecked == true)
@@ -163,7 +163,7 @@ namespace SuperMinersWPF.Views
             this.chkPayType.Content = "灵币支付";
 
             int count = (int)this.numMinesCount.Value;
-            float spendRMB = count * GlobalData.GameConfig.RMB_Mine;
+            decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
             if (spendRMB > GlobalData.CurrentUser.RMB)
             {
                 this.txtError.Visibility = System.Windows.Visibility.Visible;

@@ -20,12 +20,12 @@ namespace MetaData
         /// <summary>
         /// 充值金额
         /// </summary>
-        public float RechargeMoney = 0;
+        public decimal RechargeMoney = 0;
 
         /// <summary>
         /// 获取RMB值
         /// </summary>
-        public float GainRMB = 0;
+        public decimal GainRMB = 0;
 
         public DateTime Time;
     }

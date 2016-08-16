@@ -1,4 +1,5 @@
-﻿using SuperMinersWeb.Wcf;
+﻿using MetaData;
+using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,14 @@ namespace SuperMinersWeb
             var userName = context.Request["UserName"];
             int result;
             result = WcfClient.Instance.CheckUserNameExist(userName);
-            if (result < 0)
+            if (result == OperResult.RESULTCODE_FALSE)
             {
-                return;
+                context.Response.Write("OK");
             }
-            if (result > 0)
+            else if (result == OperResult.RESULTCODE_TRUE)
             {
                 context.Response.Write("用户名已经存在，请选择其它用户名");
-                return;
             }
-
-            context.Response.Write("OK");
         }
 
         public bool IsReusable

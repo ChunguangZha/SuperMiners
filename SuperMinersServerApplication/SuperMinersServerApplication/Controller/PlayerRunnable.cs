@@ -37,7 +37,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public float MaxTempStonesOutput
+        public decimal MaxTempStonesOutput
         {
             get
             {
@@ -126,7 +126,7 @@ namespace SuperMinersServerApplication.Controller
 
             lock (this._lockFortuneAction)
             {
-                float tempOutput = (float)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
+                decimal tempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
 
                 if (tempOutput > MaxTempStonesOutput)
                 {
@@ -146,7 +146,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stones">-1表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(float stones)
+        public int GatherStones(decimal stones)
         {
             int IntTempOutput;
             DateTime stopTime = DateTime.Now;
@@ -170,7 +170,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 lock (this._lockFortuneAction)
                 {
-                    float tempOutput = (float)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
+                    decimal tempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
 
                     if (tempOutput > MaxTempStonesOutput)
                     {
@@ -181,7 +181,7 @@ namespace SuperMinersServerApplication.Controller
                         tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
 
-                    float computeTempOutput = stones < tempOutput ? stones : tempOutput;
+                    decimal computeTempOutput = stones < tempOutput ? stones : tempOutput;
                     IntTempOutput = (int)computeTempOutput;
 
                     BasePlayer.FortuneInfo.TempOutputStones = 0;
@@ -209,8 +209,8 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                float allGoldCoin = BasePlayer.FortuneInfo.GoldCoin + BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
-                float allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
+                decimal allGoldCoin = BasePlayer.FortuneInfo.GoldCoin + BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
+                decimal allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
                 if (allNeedGoldCoin > allGoldCoin)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
@@ -222,7 +222,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 else
                 {
-                    float gc = allNeedGoldCoin - BasePlayer.FortuneInfo.GoldCoin;
+                    decimal gc = allNeedGoldCoin - BasePlayer.FortuneInfo.GoldCoin;
                     int needRMB = (int)Math.Ceiling(gc / GlobalConfig.GameConfig.RMB_GoldCoin);
                     if (needRMB > BasePlayer.FortuneInfo.RMB)
                     {
@@ -288,13 +288,13 @@ namespace SuperMinersServerApplication.Controller
 
             lock (_lockFortuneAction)
             {
-                float needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
+                decimal needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
                 if (needRMB > BasePlayer.FortuneInfo.RMB)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                float newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
+                decimal newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
                 BasePlayer.FortuneInfo.RMB -= needRMB;
                 BasePlayer.FortuneInfo.MinesCount += minesCount;
                 BasePlayer.FortuneInfo.StonesReserves += newReservers;
@@ -315,7 +315,7 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByAlipay(int minesCount)
+        public int BuyMineByAlipay(decimal minesCount)
         {
             if (minesCount <= 0)
             {
@@ -324,7 +324,7 @@ namespace SuperMinersServerApplication.Controller
 
             lock (_lockFortuneAction)
             {
-                float newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
+                decimal newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
                 BasePlayer.FortuneInfo.MinesCount += minesCount;
                 BasePlayer.FortuneInfo.StonesReserves += newReservers;
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
@@ -334,7 +334,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
-                    "增加了 " + newReservers.ToString() + " 的矿石储量");
+                    "增加了 " + ((decimal)newReservers).ToString() + " 的矿石储量");
                 return OperResult.RESULTCODE_TRUE;
             }
         }
@@ -367,7 +367,7 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,
                     "充值了 " + goldcoinValue.ToString() + " 的金币");
                 return OperResult.RESULTCODE_TRUE;
             }
@@ -458,7 +458,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                float sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
+                decimal sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
                 if (order.SellStonesCount > sellableStones)
                 {
                     return OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK;
@@ -479,7 +479,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         #region 取消充值功能
-        //public bool RechargeGoldCoin(float yuan)
+        //public bool RechargeGoldCoin(decimal yuan)
         //{
         //    lock (_lockFortuneAction)
         //    {
@@ -513,7 +513,7 @@ namespace SuperMinersServerApplication.Controller
         //    }
         //}
 
-        //public bool RechargeRMB(float yuan)
+        //public bool RechargeRMB(decimal yuan)
         //{
         //    lock (_lockFortuneAction)
         //    {

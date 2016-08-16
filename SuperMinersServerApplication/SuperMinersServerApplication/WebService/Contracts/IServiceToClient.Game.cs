@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int GatherStones(string token, string userName, float stones);
+        int GatherStones(string token, string userName, decimal stones);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetExpTopList",

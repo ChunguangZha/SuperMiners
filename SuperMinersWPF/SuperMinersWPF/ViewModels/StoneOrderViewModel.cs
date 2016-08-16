@@ -51,7 +51,7 @@ namespace SuperMinersWPF.ViewModels
             return this._myBuyNotFinishedStoneOrders[0];
         }
 
-        public void AsyncPayOrderByRMB(string orderNumber, float valueRMB)
+        public void AsyncPayOrderByRMB(string orderNumber, decimal valueRMB)
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
             GlobalData.Client.PayStoneOrderByRMB(orderNumber, valueRMB, null);

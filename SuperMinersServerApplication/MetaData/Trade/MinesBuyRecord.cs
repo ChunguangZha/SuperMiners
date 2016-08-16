@@ -23,7 +23,7 @@ namespace MetaData
         /// <summary>
         /// 获取矿山数
         /// </summary>
-        public float GainMinesCount = 0;
+        public decimal GainMinesCount = 0;
 
         /// <summary>
         /// 获取的矿石储量，将该值累加到用户的StonesReserves值中

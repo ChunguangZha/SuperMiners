@@ -101,7 +101,7 @@ namespace SuperMinersWPF.Wcf.Clients
         #region PayStoneOrderByRMB
 
         public event EventHandler<WebInvokeEventArgs<int>> PayStoneOrderByRMBCompleted;
-        public void PayStoneOrderByRMB(string orderNumber, float rmb, object userState)
+        public void PayStoneOrderByRMB(string orderNumber, decimal rmb, object userState)
         {
             this._invoker.InvokeUserState<int>(this._context, "PayStoneOrderByRMB", this.PayStoneOrderByRMBCompleted, userState, GlobalData.Token, orderNumber, rmb);
         }

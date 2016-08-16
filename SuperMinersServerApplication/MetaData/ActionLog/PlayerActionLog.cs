@@ -17,7 +17,7 @@ namespace MetaData.ActionLog
         public ActionType ActionType;
 
         [DataMember]
-        public int OperNumber;
+        public decimal OperNumber;
 
         [DataMember]
         public string Remark;
@@ -50,7 +50,7 @@ namespace MetaData.ActionLog
         public int SystemAllMinerCount;
 
         [DataMember]
-        public float SystemAllOutputStoneCount;
+        public decimal SystemAllOutputStoneCount;
 
     }
 

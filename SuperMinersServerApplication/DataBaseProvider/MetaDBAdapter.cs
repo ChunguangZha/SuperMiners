@@ -66,7 +66,7 @@ namespace DataBaseProvider
 
                 info.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 info.NickName = string.IsNullOrEmpty(encryptedNickName) ? info.UserName : DESEncrypt.DecryptDES(encryptedNickName);
-                info.Value = Convert.ToSingle(dt.Rows[i][valueType]);
+                info.Value = Convert.ToDecimal(dt.Rows[i][valueType]);
 
                 toplistInfos[i] = info;
             }
@@ -144,15 +144,15 @@ namespace DataBaseProvider
                 }
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
-                player.FortuneInfo.Exp = Convert.ToSingle(dt.Rows[i]["Exp"]);
-                player.FortuneInfo.RMB = Convert.ToSingle(dt.Rows[i]["RMB"]);
-                player.FortuneInfo.FreezingRMB = Convert.ToSingle(dt.Rows[i]["FreezingRMB"]);
-                player.FortuneInfo.GoldCoin = Convert.ToSingle(dt.Rows[i]["GoldCoin"]);
-                player.FortuneInfo.MinesCount = Convert.ToSingle(dt.Rows[i]["MinesCount"]);
-                player.FortuneInfo.MinersCount = Convert.ToSingle(dt.Rows[i]["MinersCount"]);
-                player.FortuneInfo.StonesReserves = Convert.ToSingle(dt.Rows[i]["StonesReserves"]);
-                player.FortuneInfo.TotalProducedStonesCount = Convert.ToSingle(dt.Rows[i]["TotalProducedStonesCount"]);
-                player.FortuneInfo.StockOfStones = Convert.ToSingle(dt.Rows[i]["StockOfStones"]);
+                player.FortuneInfo.Exp = Convert.ToDecimal(dt.Rows[i]["Exp"]);
+                player.FortuneInfo.RMB = Convert.ToDecimal(dt.Rows[i]["RMB"]);
+                player.FortuneInfo.FreezingRMB = Convert.ToDecimal(dt.Rows[i]["FreezingRMB"]);
+                player.FortuneInfo.GoldCoin = Convert.ToDecimal(dt.Rows[i]["GoldCoin"]);
+                player.FortuneInfo.MinesCount = Convert.ToDecimal(dt.Rows[i]["MinesCount"]);
+                player.FortuneInfo.MinersCount = Convert.ToDecimal(dt.Rows[i]["MinersCount"]);
+                player.FortuneInfo.StonesReserves = Convert.ToDecimal(dt.Rows[i]["StonesReserves"]);
+                player.FortuneInfo.TotalProducedStonesCount = Convert.ToDecimal(dt.Rows[i]["TotalProducedStonesCount"]);
+                player.FortuneInfo.StockOfStones = Convert.ToDecimal(dt.Rows[i]["StockOfStones"]);
                 if (dt.Rows[i]["TempOutputStonesStartTime"] == DBNull.Value)
                 {
                     player.FortuneInfo.TempOutputStonesStartTime = null;
@@ -161,10 +161,10 @@ namespace DataBaseProvider
                 {
                     player.FortuneInfo.TempOutputStonesStartTime = Convert.ToDateTime(dt.Rows[i]["TempOutputStonesStartTime"]);
                 }
-                player.FortuneInfo.TempOutputStones = Convert.ToSingle(dt.Rows[i]["TempOutputStones"]);
-                player.FortuneInfo.FreezingStones = Convert.ToSingle(dt.Rows[i]["FreezingStones"]);
-                player.FortuneInfo.StockOfDiamonds = Convert.ToSingle(dt.Rows[i]["StockOfDiamonds"]);
-                player.FortuneInfo.FreezingDiamonds = Convert.ToSingle(dt.Rows[i]["FreezingDiamonds"]);
+                player.FortuneInfo.TempOutputStones = Convert.ToDecimal(dt.Rows[i]["TempOutputStones"]);
+                player.FortuneInfo.FreezingStones = Convert.ToDecimal(dt.Rows[i]["FreezingStones"]);
+                player.FortuneInfo.StockOfDiamonds = Convert.ToDecimal(dt.Rows[i]["StockOfDiamonds"]);
+                player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
 
                 players[i] = player;
             }
@@ -201,8 +201,8 @@ namespace DataBaseProvider
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
-                order.StonesOrder.Expense = Convert.ToSingle(dt.Rows[i]["Expense"]);
-                order.StonesOrder.ValueRMB = Convert.ToSingle(dt.Rows[i]["ValueRMB"]);
+                order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
+                order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
                 order.StonesOrder.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
                 order.StonesOrder.OrderState = (SellOrderState)Convert.ToInt32(dt.Rows[i]["OrderState"]);
 
@@ -228,15 +228,15 @@ namespace DataBaseProvider
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
-                order.StonesOrder.Expense = Convert.ToSingle(dt.Rows[i]["Expense"]);
-                order.StonesOrder.ValueRMB = Convert.ToSingle(dt.Rows[i]["ValueRMB"]);
+                order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
+                order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
                 order.StonesOrder.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
                 order.StonesOrder.OrderState = (SellOrderState)Convert.ToInt32(dt.Rows[i]["OrderState"]);
 
                 string encryptedBuyerUserName = dt.Rows[i]["BuyerUserName"].ToString();
                 order.BuyerUserName = DESEncrypt.DecryptDES(encryptedBuyerUserName);
                 order.BuyTime = Convert.ToDateTime(dt.Rows[i]["BuyTime"]);
-                order.AwardGoldCoin = Convert.ToSingle(dt.Rows[i]["AwardGoldCoin"]);
+                order.AwardGoldCoin = Convert.ToDecimal(dt.Rows[i]["AwardGoldCoin"]);
 
                 orders[i] = order;
             }
@@ -254,8 +254,8 @@ namespace DataBaseProvider
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
                 order.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
-                order.Expense = Convert.ToSingle(dt.Rows[i]["Expense"]);
-                order.ValueRMB = Convert.ToSingle(dt.Rows[i]["ValueRMB"]);
+                order.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
+                order.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
                 order.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
                 order.OrderState = (SellOrderState)Convert.ToInt32(dt.Rows[i]["OrderState"]);
                 
@@ -272,7 +272,7 @@ namespace DataBaseProvider
             {
                 MinesBuyRecord record = new MinesBuyRecord();
                 record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
-                record.GainMinesCount = Convert.ToSingle(dt.Rows[i]["GainMinesCount"]);
+                record.GainMinesCount = Convert.ToDecimal(dt.Rows[i]["GainMinesCount"]);
                 record.GainStonesReserves = Convert.ToInt32(dt.Rows[i]["GainMinesCount"]);
                 record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
                 record.SpendRMB = Convert.ToInt32(dt.Rows[i]["SpendRMB"]);
@@ -292,7 +292,7 @@ namespace DataBaseProvider
             {
                 GoldCoinRechargeRecord record = new GoldCoinRechargeRecord();
                 record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
-                record.GainGoldCoin = Convert.ToSingle(dt.Rows[i]["GainGoldCoin"]);
+                record.GainGoldCoin = Convert.ToDecimal(dt.Rows[i]["GainGoldCoin"]);
                 record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
                 record.SpendRMB = Convert.ToInt32(dt.Rows[i]["SpendRMB"]);
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();

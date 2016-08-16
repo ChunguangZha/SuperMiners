@@ -112,7 +112,7 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <param name="userName"></param>
         /// <param name="stones">-1表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(string token, string userName, float stones)
+        public int GatherStones(string token, string userName, decimal stones)
         {
 #if Delay
 

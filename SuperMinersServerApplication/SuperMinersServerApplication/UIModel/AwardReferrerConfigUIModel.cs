@@ -33,12 +33,12 @@ namespace SuperMinersServerApplication.UIModel
         }
 
 
-        private float _awardReferrerExp = 1;
+        private decimal _awardReferrerExp = 1;
 
         /// <summary>
         /// 奖励推荐人贡献值
         /// </summary>
-        public float AwardReferrerExp
+        public decimal AwardReferrerExp
         {
             get { return this._awardReferrerExp; }
             set
@@ -52,12 +52,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _awardReferrerGoldCoin = 5;
+        private decimal _awardReferrerGoldCoin = 5;
 
         /// <summary>
         /// 奖励推荐人金币数
         /// </summary>
-        public float AwardReferrerGoldCoin
+        public decimal AwardReferrerGoldCoin
         {
             get { return this._awardReferrerGoldCoin; }
             set
@@ -71,12 +71,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _awardReferrerMines = 0;
+        private decimal _awardReferrerMines = 0;
 
         /// <summary>
         /// 奖励推荐人矿山数
         /// </summary>
-        public float AwardReferrerMines
+        public decimal AwardReferrerMines
         {
             get { return this._awardReferrerMines; }
             set
@@ -109,12 +109,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _awardReferrerStones = 0.05f;
+        private decimal _awardReferrerStones = 0.05m;
 
         /// <summary>
         /// 奖励推荐人矿石数
         /// </summary>
-        public float AwardReferrerStones
+        public decimal AwardReferrerStones
         {
             get { return this._awardReferrerStones; }
             set
@@ -128,12 +128,12 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private float _awardReferrerDiamond = 0.05f;
+        private decimal _awardReferrerDiamond = 0.05m;
 
         /// <summary>
         /// 奖励推荐人钻石数
         /// </summary>
-        public float AwardReferrerDiamond
+        public decimal AwardReferrerDiamond
         {
             get { return this._awardReferrerDiamond; }
             set
