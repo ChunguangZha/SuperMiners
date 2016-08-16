@@ -60,12 +60,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
-                if (count > 0)
+                if (count == 0)
                 {
-                    return OperResult.RESULTCODE_TRUE;
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
-                return OperResult.RESULTCODE_FALSE;
+                return OperResult.RESULTCODE_TRUE;
             }
             catch (Exception exc)
             {
@@ -90,12 +91,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByAlipay(alipayAccount, alipayRealName);
-                if (count > 0)
+                if (count == 0)
                 {
-                    return OperResult.RESULTCODE_TRUE;
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
-                return OperResult.RESULTCODE_FALSE;
+                return OperResult.RESULTCODE_TRUE;
             }
             catch (Exception exc)
             {
@@ -120,12 +122,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
                 int count = DBProvider.UserDBProvider.GetPlayerCountByEmail(email);
-                if (count > 0)
+                if (count == 0)
                 {
-                    return OperResult.RESULTCODE_TRUE;
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
-                return OperResult.RESULTCODE_FALSE;
+                return OperResult.RESULTCODE_TRUE;
             }
             catch (Exception exc)
             {

@@ -112,7 +112,7 @@ namespace SuperMinersWPF
                     GlobalData.InitToken(null);
                     MyMessageBox.ShowInfo("网络异常，或系统故障，无法连接服务器，请稍后重试。");
                 }
-                this.IsBackToLogin = true;
+                this.IsBackToLogin = false;
                 this.Close();
             }, null);
         }
@@ -132,7 +132,8 @@ namespace SuperMinersWPF
 
         private void btnGoldCoinRecharge_Click(object sender, RoutedEventArgs e)
         {
-            
+            BuyGoldCoinWindow win = new BuyGoldCoinWindow();
+            win.ShowDialog();
         }
 
         private void btnMinesBuy_Click(object sender, RoutedEventArgs e)

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using System.Windows.Forms;
 
 namespace SuperMinersWPF.Utility
 {
@@ -13,5 +13,19 @@ namespace SuperMinersWPF.Utility
         {
             MessageBox.Show(infoMessage);
         }
+
+        public static MessageBoxAlipayPayQuestionResult ShowAlipayPayQuestion()
+        {
+            MessageBoxAlipayPayQuestion dig = new MessageBoxAlipayPayQuestion();
+            dig.ShowDialog();
+            return dig.Result;
+        }
+    }
+
+    public enum MessageBoxAlipayPayQuestionResult
+    {
+        Succeed,
+        Failed,
+        Cancel
     }
 }

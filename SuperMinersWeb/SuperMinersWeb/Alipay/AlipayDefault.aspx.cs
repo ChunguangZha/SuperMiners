@@ -39,34 +39,22 @@ namespace SuperMinersWeb.Alipay
                 {
                     string p = Request.QueryString["p"];
 
-
-                    //Response.Write("<script>alert('Config.notify_url: " + Config.notify_url + "');</script>");
-
                     if (string.IsNullOrEmpty(p))
                     {
                         return;
                     }
 
                     string secParameter = DESEncrypt.DecryptDES(p);
-                    //string resultP = System.Web.HttpUtility.UrlDecode(secParameter, Encoding.UTF8);
-
                     string[] parameters = secParameter.Split(new char[] { ',' });
 
-                    //string orderNumber = Request.QueryString["on"];
-                    //string shopName = Request.QueryString["sn"];
-                    //string money = Request.QueryString["mn"];
-                    //playerClientIP = Request.QueryString["cp"];
-
-                    //this.WIDout_trade_no.Text = orderNumber;
-                    //this.WIDsubject.Text = shopName;
-                    //this.WIDtotal_fee.Text = money;
-
-
+                    //orderNumber
                     this.WIDout_trade_no.Text = parameters[0];
+                    //shopName
                     this.WIDsubject.Text = parameters[1];
+                    //money
                     this.WIDtotal_fee.Text = parameters[2];
-                    //this.WIDbody.Text = "Config.notify_url : " + Config.notify_url;
-                    //this.playerClientIP = parameters[3];
+
+                    this.WIDbody.Text = parameters[3];
                 }
             }
             catch (Exception exc)
@@ -128,10 +116,18 @@ namespace SuperMinersWeb.Alipay
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
             //如sParaTemp.Add("参数名","参数值");
 
+#if TestAlipay
+
+            int orderNum = new Random().Next(100000, 999999);
+            Response.Redirect("return_url.aspx?out_trade_no=" + out_trade_no + "&trade_no=20190909121212" + orderNum + "&trade_status=TRADE_SUCCESS&buyer_email=testbuyer@qq.com&total_fee=" + total_fee);
+
+#else
+
             //建立请求
             string sHtmlText = Submit.BuildRequest(sParaTemp, "get", "确认");
             Response.Write(sHtmlText);
 
+#endif
         }
     }
 }

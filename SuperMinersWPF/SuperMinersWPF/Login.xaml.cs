@@ -181,6 +181,8 @@ namespace SuperMinersWPF
             else
             {
                 this.Close();
+                Environment.Exit(0);
+                
             }
         }
 

@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.Trade;
 using SuperMinersServerApplication.Controller.Trade;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,7 +69,7 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.MineRecordDBProvider.SaveTempMineTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿山", record.SpendRMB, "");
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿山", record.SpendRMB, "勘探一座矿山，可增加" + GlobalConfig.GameConfig.StonesReservesPerMines + "矿石储量");
             }
 
             return result;
@@ -108,13 +109,25 @@ namespace SuperMinersServerApplication.Controller
                         DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);
                         DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber);
                         this.RemoveRecord(alipayRecord.out_trade_no);
+
+                        string tokenBuyer = ClientManager.GetToken(buyRecord.UserName);
+
+                        if (!string.IsNullOrEmpty(tokenBuyer) && MineOrderPaySucceedNotify != null)
+                        {
+                            MineOrderPaySucceedNotify(tokenBuyer, buyRecord.OrderNumber);
+                        }
                         return true;
                     }
                 }
             }
 
             return false;
-        }        
+        }
+        
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> MineOrderPaySucceedNotify;
 
     }
 }

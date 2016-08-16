@@ -29,7 +29,7 @@ namespace SuperMinersWPF.Views
             _syn = SynchronizationContext.Current;
         }
 
-        private void Window_Loaded_1(object sender, RoutedEventArgs e)
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             GlobalData.Client.BuyMinerCompleted += Client_BuyMinerCompleted;
             this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();

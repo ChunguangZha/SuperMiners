@@ -1,0 +1,19 @@
+﻿<Window x:Class="SuperMinersWPF.Utility.MessageBoxAlipayPayQuestion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="请确认" Height="100" Width="500" WindowStyle="ToolWindow" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Name="btnSucceed" Content="支付成功" Padding="5" Margin="10" VerticalAlignment="Center" Click="btnSucceed_Click"/>
+        <Button Grid.Row="1" Grid.Column="1" Name="btnFailed" Content="支付失败，重新支付" Padding="5" Margin="10" VerticalAlignment="Center" Click="btnFailed_Click"/>
+        <Button Grid.Row="1" Grid.Column="2" Name="btnCancel" Content="取消支付" Padding="5" Margin="10" VerticalAlignment="Center" Click="btnCancel_Click"/>
+    </Grid>
+</Window>

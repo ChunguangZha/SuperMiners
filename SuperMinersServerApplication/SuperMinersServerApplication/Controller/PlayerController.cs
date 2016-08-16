@@ -479,7 +479,7 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_FALSE;
             }
 
-            int value = playerrun.RechargeGoldCoineByAlipay(rmbValue, goldcoinValue);
+            int value = playerrun.RechargeGoldCoinByAlipay(rmbValue, goldcoinValue);
             if (value == OperResult.RESULTCODE_TRUE)
             {
                 if (PlayerInfoChanged != null)

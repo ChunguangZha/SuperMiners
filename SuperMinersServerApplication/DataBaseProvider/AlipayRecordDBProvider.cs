@@ -16,6 +16,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
                 string sqlText = "insert into alipayrechargerecord " +
                     "(`out_trade_no`,`alipay_trade_no`,`buyer_email`,`total_fee`,`pay_time`) " +

@@ -379,7 +379,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="rmbValue"></param>
         /// <param name="goldcoinValue"></param>
         /// <returns></returns>
-        public int RechargeGoldCoineByAlipay(int rmbValue, int goldcoinValue)
+        public int RechargeGoldCoinByAlipay(int rmbValue, int goldcoinValue)
         {
             if (rmbValue <= 0)
             {
@@ -395,7 +395,7 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, rmbValue,
+                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,
                     "充值了 " + goldcoinValue.ToString() + " 的金币");
                 return OperResult.RESULTCODE_TRUE;
             }

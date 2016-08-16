@@ -227,6 +227,9 @@
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
+    <Compile Include="Utility\MessageBoxAlipayPayQuestion.xaml.cs">
+      <DependentUpon>MessageBoxAlipayPayQuestion.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="Utility\MyWebPage.cs" />
     <Compile Include="Utility\ResultCodeMsg.cs" />
@@ -282,6 +285,9 @@
     <Compile Include="Views\ListAllNoticeWindow.xaml.cs">
       <DependentUpon>ListAllNoticeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyKuangChangControl.xaml.cs">
+      <DependentUpon>MyKuangChangControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MySubWindow.cs" />
     <Compile Include="Views\OrderRecordListBuyControl.xaml.cs">
       <DependentUpon>OrderRecordListBuyControl.xaml</DependentUpon>
@@ -336,6 +342,10 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Page Include="Utility\MessageBoxAlipayPayQuestion.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BusyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -393,6 +403,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ListAllNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyKuangChangControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

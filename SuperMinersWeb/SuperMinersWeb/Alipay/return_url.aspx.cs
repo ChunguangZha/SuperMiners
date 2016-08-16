@@ -35,7 +35,18 @@ public partial class return_url : System.Web.UI.Page
         if (sPara.Count > 0)//判断是否有带返回参数
         {
             Notify aliNotify = new Notify();
-            bool verifyResult = aliNotify.Verify(sPara, Request.QueryString["notify_id"], Request.QueryString["sign"]);
+
+            bool verifyResult;
+#if TestAlipay
+
+            verifyResult = true;
+
+#else
+
+            verifyResult = aliNotify.Verify(sPara, Request.QueryString["notify_id"], Request.QueryString["sign"]);
+
+#endif
+            
 
             if (verifyResult)//验证成功
             {

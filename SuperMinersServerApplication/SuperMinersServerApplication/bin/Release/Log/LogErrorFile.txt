@@ -1,5 +1,5 @@
-Error:  [2016/8/13 21:12:55] ---- Log: Lock Order[2016071012002601321116351694356186] by User[Tony] Error
-Exc.Message: Data too long for column 'PayUrl' at row 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/8/16 17:33:33] ---- Log: AlipayCallback Exception.  orderNumber: 201608161725110838224454765441154; money: 0.5; payAlipayAccount: testbuyer@qq.com
+Exc.Message: Duplicate entry 'testbuyer@qq.com' for key 'buyer_email_UNIQUE'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
@@ -7,18 +7,15 @@ Exc.Message: Data too long for column 'PayUrl' at row 1Exc.Stack:    在 MySql.D
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
-   在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133
+   在 DataBaseProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AlipayRecordDBProvider.cs:行号 31
+   在 SuperMinersServerApplication.Controller.GoldCoinOrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\GoldCoinOrderController.cs:行号 97
+   在 SuperMinersServerApplication.Controller.Trade.OrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\OrderController.cs:行号 87
+   在 SuperMinersServerApplication.WebServiceToWeb.Services.ServiceToWeb.AlipayCallback(String out_trade_no, String alipay_trade_no, Single total_fee, String buyer_email, String pay_time) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Services\ServiceToWeb.cs:行号 204
 -----------------------------------------------------
 
-Error:  [2016/8/13 21:12:59] ---- Log: Lock Order[2016071012095107421116351694356023] by User[Tony] Error
-Exc.Message: Data too long for column 'PayUrl' at row 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+--------
+
+lCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
    在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
    在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133

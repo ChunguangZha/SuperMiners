@@ -96,22 +96,22 @@ namespace SuperMinersWeb
             
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            result = WcfClient.Instance.CheckRegisterIP(ip);
-            if (result == OperResult.RESULTCODE_PARAM_INVALID)
-            {
-                Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
-                return;
-            }
-            if (result == OperResult.RESULTCODE_FALSE)
-            {
-                Response.Write("<script>alert('此IP注册玩家数，已经超出限制，无法注册!')</script>");
-                return;
-            }
-            if (result != OperResult.RESULTCODE_TRUE)
-            {
-                Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
-                return;
-            }
+            //result = WcfClient.Instance.CheckRegisterIP(ip);
+            //if (result == OperResult.RESULTCODE_PARAM_INVALID)
+            //{
+            //    Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
+            //    return;
+            //}
+            //if (result == OperResult.RESULTCODE_FALSE)
+            //{
+            //    Response.Write("<script>alert('此IP注册玩家数，已经超出限制，无法注册!')</script>");
+            //    return;
+            //}
+            //if (result != OperResult.RESULTCODE_TRUE)
+            //{
+            //    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+            //    return;
+            //}
 
             result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)

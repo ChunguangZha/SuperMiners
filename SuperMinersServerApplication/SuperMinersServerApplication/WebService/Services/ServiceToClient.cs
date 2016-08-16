@@ -37,6 +37,24 @@ namespace SuperMinersServerApplication.WebService.Services
             NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
             OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
             OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+            OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
+            OrderController.Instance.MineOrderController.MineOrderPaySucceedNotify += MineOrderController_MineOrderPaySucceedNotify;
+        }
+
+        void MineOrderController_MineOrderPaySucceedNotify(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.AlipayTradeInType.BuyMine, arg2);
+            })).Start();
+        }
+
+        void GoldCoinOrderController_GoldCoinOrderPaySucceedNotify(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.AlipayTradeInType.BuyGoldCoin, arg2);
+            })).Start();
         }
 
         void Instance_KickOutPlayer(string obj)

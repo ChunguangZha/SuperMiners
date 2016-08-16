@@ -124,7 +124,7 @@ namespace SuperMinersServerApplication.Controller
                     this._lockOrderObject = new LockSellStonesOrder()
                     {
                         StonesOrder = this._sellOrder,
-                        PayUrl = OrderController.Instance.CreateAlipayLink(this.OrderNumber, "迅灵矿石", this.ValueRMB, ""),
+                        PayUrl = OrderController.Instance.CreateAlipayLink(this.OrderNumber, "迅灵矿石", this.ValueRMB, GlobalConfig.GameConfig.Stones_RMB + "矿石 = 1 灵币 = " + 1 / GlobalConfig.GameConfig.Yuan_RMB + "元人民币"),
                         LockedByUserName = playerUserName,
                         LockedTime = DateTime.Now,
                         OrderLockedTimeSpan = 0

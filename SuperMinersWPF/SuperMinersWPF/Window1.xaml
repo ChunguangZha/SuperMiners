@@ -245,7 +245,7 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Image Source="Resources/e1.png" Stretch="None" Margin="5"/>
-                        <TextBlock Grid.Column="1" Text="游戏帮助" FontSize="16"/>
+                        <TextBlock Grid.Column="1" Text="我的矿场" FontSize="16"/>
                     </Grid>
                 </RadioButton>
             </StackPanel>

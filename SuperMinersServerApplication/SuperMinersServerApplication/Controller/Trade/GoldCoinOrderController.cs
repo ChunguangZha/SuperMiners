@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.Trade;
 using SuperMinersServerApplication.Controller.Trade;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.GoldCoinRecordDBProvider.SaveTempGoldCoinRechargeTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵金币", record.SpendRMB, "");
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵金币", record.SpendRMB, "金币可用于购买矿工");
             }
 
             return result;
@@ -107,13 +108,23 @@ namespace SuperMinersServerApplication.Controller
                         DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(rechargeRecord);
                         DBProvider.GoldCoinRecordDBProvider.DeleteTempGoldCoinRechargeTradeRecord(rechargeRecord.OrderNumber);
                         this.RemoveRecord(alipayRecord.out_trade_no);
+
+                        string tokenBuyer = ClientManager.GetToken(rechargeRecord.UserName);
+                        if (GoldCoinOrderPaySucceedNotify != null)
+                        {
+                            GoldCoinOrderPaySucceedNotify(tokenBuyer, rechargeRecord.OrderNumber);
+                        }
                         return true;
                     }
                 }
             }
 
             return false;
-        }        
+        }
 
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> GoldCoinOrderPaySucceedNotify;
     }
 }

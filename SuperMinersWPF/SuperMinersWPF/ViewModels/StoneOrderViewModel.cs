@@ -201,14 +201,32 @@ namespace SuperMinersWPF.ViewModels
                         }
                         this._myBuyNotFinishedStoneOrders.Clear();
                     }
+                    else
+                    {
+                        var sellOrder = this.MySellNotFinishedStoneOrders.FirstOrDefault(o => o.OrderNumber == orderNumber);
+                        if (sellOrder != null)
+                        {
+                            MyMessageBox.ShowInfo("矿石订单 " + orderNumber + " 已成功出售。");
+                            this.AsyncGetAllNotFinishedSellOrders();
+                            App.UserVMObject.AsyncGetPlayerInfo();
+                        }
+                    }
                     break;
                 case AlipayTradeInType.BuyMine:
+                    if (BuyMineAlipayPaySucceed != null)
+                    {
+                        BuyMineAlipayPaySucceed();
+                    }
                     break;
                 case AlipayTradeInType.BuyMiner:
                     break;
                 case AlipayTradeInType.BuyRMB:
                     break;
                 case AlipayTradeInType.BuyGoldCoin:
+                    if (BuyGoldCoinAlipayPaySucceed != null)
+                    {
+                        BuyGoldCoinAlipayPaySucceed();
+                    }
                     break;
                 default:
                     break;
@@ -395,6 +413,9 @@ namespace SuperMinersWPF.ViewModels
         public event Action<LockSellStonesOrderUIModel> StoneOrderLockSucceed;
         public event Action StoneOrderPaySucceed;
         public event Action StoneOrderLockTimeOut;
+
+        public event Action BuyGoldCoinAlipayPaySucceed;
+        public event Action BuyMineAlipayPaySucceed;
 
     }
 }
