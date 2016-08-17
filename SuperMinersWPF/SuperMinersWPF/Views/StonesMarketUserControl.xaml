@@ -103,9 +103,9 @@
                                                 <TextBlock Text="请在" VerticalAlignment="Center"/>
                                                 <TextBlock Text="{Binding ValidTimeSecondsString}" VerticalAlignment="Center"/>
                                                 <TextBlock Text="内付款" VerticalAlignment="Center"/>
-                                                <Button x:Name="btnPay" Content="确认付款" Margin="20,0" Width="100" VerticalAlignment="Center" Click="btnPay_Click"/>
+                                                <Button x:Name="btnPay" Content="确认付款" Margin="20,0" Width="70" VerticalAlignment="Center" Click="btnPay_Click"/>
                                                 <TextBlock Text="如果已经付款，请" VerticalAlignment="Center" Margin="5"/>
-                                                <Button x:Name="btnAppeal" Content="申诉" Width="100" Margin="20,0" VerticalAlignment="Center" Click="btnAppeal_Click"/>
+                                                <Button x:Name="btnAppeal" Content="申诉" Width="70" Margin="20,0" VerticalAlignment="Center" Click="btnAppeal_Click"/>
                                             </StackPanel>
                                         </Grid>
                                     </Border>

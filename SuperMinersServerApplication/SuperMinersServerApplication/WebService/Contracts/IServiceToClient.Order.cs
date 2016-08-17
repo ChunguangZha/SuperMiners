@@ -92,6 +92,14 @@ namespace SuperMinersServerApplication.WebService.Contracts
         int PayStoneOrderByRMB(string token, string orderNumber, decimal rmb);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/StoneOrderSetException",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int StoneOrderSetPayException(string token, string orderNumber);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SearchUserSellStoneOrders",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,

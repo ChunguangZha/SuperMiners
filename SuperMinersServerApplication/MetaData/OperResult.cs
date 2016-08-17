@@ -57,8 +57,13 @@ namespace MetaData
         public const int RESULTCODE_ORDER_BE_LOCKED = 602;
 
         /// <summary>
+        /// 订单没有被锁定
+        /// </summary>
+        public const int RESULTCODE_ORDER_NOT_BE_LOCKED = 603;
+
+        /// <summary>
         /// 可销售的矿石不足
         /// </summary>
-        public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 603;
+        public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
     }
 }

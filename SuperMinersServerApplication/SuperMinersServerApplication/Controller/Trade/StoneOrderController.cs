@@ -173,6 +173,22 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public LockSellStonesOrder GetLockedOrderByOrderNumber(string orderNumber)
+        {
+            lock (_lockListSellOrders)
+            {
+                foreach (var item in dicSellOrders.Values)
+                {
+                    if (item.OrderNumber == orderNumber)
+                    {
+                        return item.GetLockedOrder();
+                    }
+                }
+
+                return null;
+            }
+        }
+
         public SellStonesOrder[] GetSellOrders()
         {
             lock (_lockListSellOrders)
@@ -418,6 +434,46 @@ namespace SuperMinersServerApplication.Controller
 
                 result = OperResult.RESULTCODE_TRUE;
                 return result;
+            }
+            catch (Exception exc)
+            {
+                result = OperResult.RESULTCODE_EXCEPTION;
+                trans.Rollback();
+                LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + orderNumber, exc);
+                return result;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
+                }
+            }
+        }
+
+        public int StoneOrderSetPayException(string buyerUserName, string orderNumber)
+        {
+            int result = OperResult.RESULTCODE_FALSE;
+            var trans = MyDBHelper.Instance.CreateTrans();
+            try
+            {
+                var lockedOrder = GetLockedOrderByOrderNumber(orderNumber);
+                if (lockedOrder == null)
+                {
+                    return OperResult.RESULTCODE_ORDER_NOT_EXIST;
+                }
+
+                if (lockedOrder.StonesOrder.OrderState != SellOrderState.Lock)
+                {
+                    return OperResult.RESULTCODE_ORDER_NOT_BE_LOCKED;
+                }
+
+                if (lockedOrder.LockedByUserName != buyerUserName)
+                {
+                    return OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
+                }
+
+
             }
             catch (Exception exc)
             {

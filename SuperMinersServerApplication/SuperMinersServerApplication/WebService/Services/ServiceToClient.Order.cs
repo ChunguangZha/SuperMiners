@@ -333,6 +333,30 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public int StoneOrderSetPayException(string token, string orderNumber)
+        {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
+            if (RSAProvider.LoadRSA(token))
+            {
+            
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
         {
 #if Delay
