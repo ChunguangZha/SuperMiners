@@ -137,6 +137,30 @@ namespace DataBaseProvider
             }
         }
 
+        public bool SetSellOrderException(string orderNumber)
+        {
+            //1.修改订单状态；
+            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
+            MySqlCommand mycmd = null;
+            try
+            {
+                string textA = "update sellstonesorder set OrderState = @OrderState where OrderNumber = @OrderNumber;";
+
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = textA;
+                mycmd.Parameters.AddWithValue("@OrderState", (int)SellOrderState.Exception);
+                mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+            }
+        }
+
         public bool PayOrder(BuyStonesOrder buyOrder, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;

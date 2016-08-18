@@ -7,6 +7,7 @@ using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,9 +22,31 @@ namespace SuperMinersServerApplication.Controller
         /// <summary>
         /// Key为订单号
         /// </summary>
-        private Dictionary<string, StoneOrderRunnable> dicSellOrders = new Dictionary<string, StoneOrderRunnable>();
+        private ConcurrentDictionary<string, StoneOrderRunnable> dicSellOrders = new ConcurrentDictionary<string, StoneOrderRunnable>();
 
         private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
+
+        System.Timers.Timer _timer = new System.Timers.Timer(10000);
+
+        public void StartThread()
+        {
+            _timer.Elapsed += CheckOrderLockTimeoutTimer_Elapsed;
+        }
+
+        void CheckOrderLockTimeoutTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            try
+            {
+                foreach (var item in this.dicSellOrders.Values)
+                {
+                    item.CheckOrderLockedTimeOut();
+                }
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Check All Order List Lock Timeout Exception.", exc);
+            }
+        }
 
         public bool Init()
         {
@@ -36,7 +59,7 @@ namespace SuperMinersServerApplication.Controller
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new StoneOrderRunnable(item);
-                    dicSellOrders.Add(item.OrderNumber, new StoneOrderRunnable(item));
+                    dicSellOrders[item.OrderNumber] = new StoneOrderRunnable(item);
                 }
 
                 var lockedOrderDBObjects = DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList("");
@@ -48,13 +71,13 @@ namespace SuperMinersServerApplication.Controller
                         var runnable = new StoneOrderRunnable(item);
                         runnable.ReleaseLock();
                         //解除锁定后，继续加到集合中
-                        dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
+                        dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
                     }
                     else
                     {
                         item.OrderLockedTimeSpan = (int)span.TotalSeconds;
                         var runnable = new StoneOrderRunnable(item);
-                        dicSellOrders.Add(item.StonesOrder.OrderNumber, runnable);
+                        dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
                     }
                 }
 
@@ -68,6 +91,9 @@ namespace SuperMinersServerApplication.Controller
                 {
                     this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>(buyOrderRecords);
                 }
+
+
+                StartThread();
                 return true;
             }
             catch (Exception exc)
@@ -76,7 +102,7 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
         }
-
+        
         /// <summary>
         /// 检查该玩家是否存在未支付的订单
         /// </summary>
@@ -162,7 +188,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     if (item.CheckBuyerName(userName))
                     {
-                        if (!item.CheckOrderLockedIsTimeOut())
+                        if (!item.CheckOrderLockedTimeOut())
                         {
                             order = item.GetLockedOrder();
                         }
@@ -173,7 +199,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public LockSellStonesOrder GetLockedOrderByOrderNumber(string orderNumber)
+        public StoneOrderRunnable GetLockedOrderByOrderNumber(string orderNumber)
         {
             lock (_lockListSellOrders)
             {
@@ -181,7 +207,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     if (item.OrderNumber == orderNumber)
                     {
-                        return item.GetLockedOrder();
+                        return item;
                     }
                 }
 
@@ -308,6 +334,11 @@ namespace SuperMinersServerApplication.Controller
         //    return order.Lock(buyerUserName);
         //}
 
+        /// <summary>
+        /// 由客户端检查超时。
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public bool ReleaseLockSellOrder(string orderNumber)
         {
             StoneOrderRunnable order = null;
@@ -451,29 +482,25 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public int StoneOrderSetPayException(string buyerUserName, string orderNumber)
+        /// <summary>
+        /// RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_EXCEPTION; RESULTCODE_ORDER_NOT_BE_LOCKED; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_TRUE; RESULTCODE_FALSE;
+        /// </summary>
+        /// <param name="buyerUserName"></param>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
+        public int SetStoneOrderPayException(string buyerUserName, string orderNumber)
         {
             int result = OperResult.RESULTCODE_FALSE;
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                var lockedOrder = GetLockedOrderByOrderNumber(orderNumber);
-                if (lockedOrder == null)
+                StoneOrderRunnable runnable = GetLockedOrderByOrderNumber(orderNumber);
+                if (runnable == null)
                 {
                     return OperResult.RESULTCODE_ORDER_NOT_EXIST;
                 }
 
-                if (lockedOrder.StonesOrder.OrderState != SellOrderState.Lock)
-                {
-                    return OperResult.RESULTCODE_ORDER_NOT_BE_LOCKED;
-                }
-
-                if (lockedOrder.LockedByUserName != buyerUserName)
-                {
-                    return OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
-                }
-
-
+                return runnable.SetSellOrderPayException(buyerUserName);
             }
             catch (Exception exc)
             {

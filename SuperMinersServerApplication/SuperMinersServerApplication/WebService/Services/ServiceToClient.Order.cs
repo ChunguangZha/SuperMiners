@@ -334,12 +334,12 @@ namespace SuperMinersServerApplication.WebService.Services
         }
 
         /// <summary>
-        /// 
+        /// RESULTCODE_USER_NOT_EXIST; RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_EXCEPTION; RESULTCODE_ORDER_NOT_BE_LOCKED; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_TRUE; RESULTCODE_FALSE;
         /// </summary>
         /// <param name="token"></param>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
-        public int StoneOrderSetPayException(string token, string orderNumber)
+        public int SetStoneOrderPayException(string token, string orderNumber)
         {
 #if Delay
 
@@ -349,7 +349,13 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-            
+                string userName = ClientManager.GetClientUserName(token);
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
+
+                return OrderController.Instance.StoneOrderController.SetStoneOrderPayException(userName, orderNumber);
             }
             else
             {

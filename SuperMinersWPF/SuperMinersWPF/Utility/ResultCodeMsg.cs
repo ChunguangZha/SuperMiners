@@ -17,6 +17,7 @@ namespace SuperMinersWPF.Utility
             _resultCode_Msg.Add(OperResult.RESULTCODE_FALSE, "操作失败");
             _resultCode_Msg.Add(OperResult.RESULTCODE_LACK_OF_BALANCE, "余额不足");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_BE_LOCKED, "订单已经被锁定");
+            _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_BE_LOCKED, "订单没有被锁定");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER, "订单不属于当前玩家");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_EXIST, "订单不存在");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK, "可出售矿石不足");

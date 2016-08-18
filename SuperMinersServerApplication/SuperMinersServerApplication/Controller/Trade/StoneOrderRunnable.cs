@@ -111,7 +111,7 @@ namespace SuperMinersServerApplication.Controller
                 CustomerMySqlTransaction trans = null;
                 try
                 {
-                    if (this._lockOrderObject != null && !CheckOrderLockedIsTimeOut())
+                    if (this._lockOrderObject != null && !CheckOrderLockedTimeOut())
                     {
                         return this._lockOrderObject;
                     }
@@ -157,6 +157,10 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        /// <summary>
+        /// 如果订单状态为异常时，不取消锁定
+        /// </summary>
+        /// <returns></returns>
         public bool ReleaseLock()
         {
             lock (this._lock)
@@ -198,7 +202,7 @@ namespace SuperMinersServerApplication.Controller
         /// 
         /// </summary>
         /// <returns></returns>
-        public bool CheckOrderLockedIsTimeOut()
+        public bool CheckOrderLockedTimeOut()
         {
             if (this._sellOrder.OrderState != SellOrderState.Lock || this._lockOrderObject == null)
             {
@@ -214,6 +218,34 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// RESULTCODE_ORDER_NOT_BE_LOCKED; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_TRUE; RESULTCODE_FALSE;
+        /// </summary>
+        /// <param name="buyerUserName"></param>
+        /// <returns></returns>
+        public int SetSellOrderPayException(string buyerUserName)
+        {
+            lock (this._lock)
+            {
+                if (this.OrderState != SellOrderState.Lock)
+                {
+                    return OperResult.RESULTCODE_ORDER_NOT_BE_LOCKED;
+                }
+
+                if (!this.CheckBuyerName(buyerUserName))
+                {
+                    return OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
+                }
+
+                if (DBProvider.StoneOrderDBProvider.SetSellOrderException(this.OrderNumber))
+                {
+                    return OperResult.RESULTCODE_TRUE;
+                }
+
+                return OperResult.RESULTCODE_FALSE;
+            }
         }
     }
 }

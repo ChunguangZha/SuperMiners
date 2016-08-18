@@ -128,6 +128,16 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region SetStoneOrderPayException
+
+        public event EventHandler<WebInvokeEventArgs<int>> SetStoneOrderPayExceptionCompleted;
+        public void SetStoneOrderPayException(string orderNumber, object userState)
+        {
+            this._invoker.InvokeUserState<int>(this._context, "SetStoneOrderPayException", this.SetStoneOrderPayExceptionCompleted, userState, GlobalData.Token, orderNumber);
+        }
+
+        #endregion
+
         #region Callback
 
         public void RaiseOnOrderAlipayPaySucceed(int tradeType, string orderNumber)

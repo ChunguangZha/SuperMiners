@@ -105,6 +105,39 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.OnOrderListChanged += Client_OnOrderListChanged;
             GlobalData.Client.LockSellStoneCompleted += Client_LockSellStoneCompleted;
             GlobalData.Client.CancelSellStoneCompleted += Client_CancelSellStoneCompleted;
+            GlobalData.Client.SetStoneOrderPayExceptionCompleted += Client_SetStoneOrderPayExceptionCompleted;
+        }
+
+        /// <summary>
+        /// RESULTCODE_USER_NOT_EXIST; RESULTCODE_ORDER_NOT_EXIST; RESULTCODE_EXCEPTION; RESULTCODE_ORDER_NOT_BE_LOCKED; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_TRUE; RESULTCODE_FALSE;
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Client_SetStoneOrderPayExceptionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            App.BusyToken.CloseBusyWindow();
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                MyMessageBox.ShowInfo("连接服务器失败。");
+                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                return;
+            }
+
+            if (e.Result == OperResult.RESULTCODE_TRUE)
+            {
+                MyMessageBox.ShowInfo("申诉提交成功，等待管理员处理");
+            }
+            else
+            {
+                MyMessageBox.ShowInfo("申诉提交失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
+            }
+
+            AsyncGetAllNotFinishedSellOrders();
         }
 
         void Client_CancelSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
