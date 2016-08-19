@@ -1,4 +1,6 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
@@ -597,6 +599,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 {
                     LogHelper.Instance.AddErrorLog("GetNotices Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, sellerUserName, startDate, endDate);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetSellStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList(buyerUserName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetLockedStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
                 }
             }
             else

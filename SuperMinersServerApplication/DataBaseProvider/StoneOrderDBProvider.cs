@@ -245,12 +245,8 @@ namespace DataBaseProvider
         /// <param name="orderState">null表示全部状态, 可以多种状态组合查询</param>
         /// <param name="userName">""表示全部玩家</param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellOrderList(int[] orderStates, string userName, DateTime beginTime, DateTime endTime)
+        public SellStonesOrder[] GetSellOrderList(int[] orderStates, string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
         {
-            if (beginTime >= endTime)
-            {
-                return null;
-            }
             SellStonesOrder[] orders = null;
             MySqlConnection myconn = null;
             try
@@ -259,13 +255,29 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select s.* from sellstonesorder s ";
+
                 StringBuilder builder = new StringBuilder();
-                builder.Append("select s.* from sellstonesorder s ");
-                builder.Append(" where s.SellTime >= @beginTime and s.SellTime < @endTime ");
+                if (myBeginTime != null && !myBeginTime.IsNull && myEndTime != null && !myEndTime.IsNull)
+                {
+                    DateTime beginTime = myBeginTime.ToDateTime();
+                    DateTime endTime = myEndTime.ToDateTime();
+                    if (beginTime >= endTime)
+                    {
+                        return null;
+                    }
+                    builder.Append("  s.SellTime >= @beginTime and s.SellTime < @endTime ");
+                    mycmd.Parameters.AddWithValue("@beginTime", beginTime);
+                    mycmd.Parameters.AddWithValue("@endTime", endTime);
+                }
 
                 if (!string.IsNullOrEmpty(userName))
                 {
                     builder.Append(" and s.SellerUserName = @SellerUserName ");
+                    string encryptUserName = DESEncrypt.EncryptDES(userName);
+                    mycmd.Parameters.AddWithValue("@SellerUserName", encryptUserName);
                 }
                 if (orderStates != null && orderStates.Length != 0)
                 {
@@ -277,26 +289,22 @@ namespace DataBaseProvider
                         {
                             builder.Append(",");
                         }
+
+                        mycmd.Parameters.AddWithValue("@OrderState" + i.ToString(), orderStates[i]);
                     }
                     builder.Append(" )");
                 }
 
-                string cmdText = builder.ToString();
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@beginTime", beginTime);
-                mycmd.Parameters.AddWithValue("@endTime", endTime);
-                if (orderStates != null && orderStates.Length != 0)
+                string sqlFilter = builder.ToString();
+                if (string.IsNullOrEmpty(sqlFilter))
                 {
-                    for (int i = 0; i < orderStates.Length; i++)
-                    {
-                        mycmd.Parameters.AddWithValue("@OrderState" + i.ToString(), orderStates[i]);
-                    }
+                    mycmd.CommandText = sqlTextA;
                 }
-                if (!string.IsNullOrEmpty(userName))
+                else
                 {
-                    string encryptUserName = DESEncrypt.EncryptDES(userName);
-                    mycmd.Parameters.AddWithValue("@SellerUserName", encryptUserName);
+                    mycmd.CommandText = sqlTextA + " where " + sqlFilter;
                 }
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt != null)
@@ -325,6 +333,7 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
+                MySqlCommand mycmd = myconn.CreateCommand();
                 DataTable dt = new DataTable();
 
                 myconn = MyDBHelper.Instance.CreateConnection();
@@ -335,9 +344,12 @@ namespace DataBaseProvider
                 if (!string.IsNullOrEmpty(userName))
                 {
                     cmdText += " where l.LockedByUserName = @LockedByUserName ";
+
+                    string encryptUserName = DESEncrypt.EncryptDES(userName);
+                    mycmd.Parameters.AddWithValue("@LockedByUserName", encryptUserName);
                 }
 
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt != null)

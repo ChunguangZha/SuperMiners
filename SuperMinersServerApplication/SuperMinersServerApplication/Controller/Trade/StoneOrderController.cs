@@ -53,9 +53,7 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 dicSellOrders.Clear();
-                DateTime endTime = DateTime.Now;
-                DateTime beginTime = endTime.AddYears(-1);
-                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", beginTime, endTime);
+                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", null, null);
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new StoneOrderRunnable(item);
@@ -246,7 +244,8 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                dicSellOrders.Remove(order.OrderNumber);
+                StoneOrderRunnable runnable = null;
+                dicSellOrders.TryRemove(order.OrderNumber, out runnable);
             }
         }
 
