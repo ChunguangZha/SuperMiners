@@ -647,6 +647,26 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList(buyerUserName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetLockedStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()

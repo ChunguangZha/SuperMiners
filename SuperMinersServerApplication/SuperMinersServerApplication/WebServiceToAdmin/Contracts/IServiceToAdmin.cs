@@ -150,5 +150,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetSellStonesOrderList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
     }
 }
