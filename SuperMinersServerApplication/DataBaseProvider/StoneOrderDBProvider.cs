@@ -188,12 +188,8 @@ namespace DataBaseProvider
             }
         }
 
-        public BuyStonesOrder[] GetBuyStonesOrderList(string userName, DateTime beginTime, DateTime endTime)
+        public BuyStonesOrder[] GetBuyStonesOrderList(string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
         {
-            if (beginTime >= endTime)
-            {
-                return null;
-            }
             BuyStonesOrder[] orders = null;
             MySqlConnection myconn = null;
             try
@@ -202,27 +198,38 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select b.*, s.* " +
+                                    "from buystonesrecord b " +
+                                    "left join sellstonesorder s on s.OrderNumber = b.OrderNumber ";
 
                 StringBuilder builder = new StringBuilder();
-                builder.Append("select b.*, s.* ");
-                builder.Append("from buystonesrecord b ");
-                builder.Append("left join sellstonesorder s on s.OrderNumber = b.OrderNumber ");
-                builder.Append(" where ");
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" b.BuyerUserName = @BuyerUserName and ");
-                }
-                builder.Append(" b.BuyTime >= @beginTime and b.BuyTime < @endTime ;");
-                string cmdText = builder.ToString();
-
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@beginTime", beginTime);
-                mycmd.Parameters.AddWithValue("@endTime", endTime);
-                if (!string.IsNullOrEmpty(userName))
-                {
+                    builder.Append(" b.BuyerUserName = @BuyerUserName ");
                     string encryptUserName = DESEncrypt.EncryptDES(userName);
                     mycmd.Parameters.AddWithValue("@BuyerUserName", encryptUserName);
                 }
+                if (myBeginTime != null && !myBeginTime.IsNull && myEndTime != null && !myEndTime.IsNull)
+                {
+                    if (builder.Length != 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    DateTime beginTime = myBeginTime.ToDateTime();
+                    DateTime endTime = myEndTime.ToDateTime();
+                    if (beginTime >= endTime)
+                    {
+                        return null;
+                    }
+                    builder.Append(" b.BuyTime >= @beginTime and b.BuyTime < @endTime ;");
+                    mycmd.Parameters.AddWithValue("@beginTime", beginTime);
+                    mycmd.Parameters.AddWithValue("@endTime", endTime);
+                }
+
+                string cmdText = sqlTextA + " where " + builder.ToString();
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt != null)
@@ -275,13 +282,21 @@ namespace DataBaseProvider
 
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" and s.SellerUserName = @SellerUserName ");
+                    if (builder.Length != 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" s.SellerUserName = @SellerUserName ");
                     string encryptUserName = DESEncrypt.EncryptDES(userName);
                     mycmd.Parameters.AddWithValue("@SellerUserName", encryptUserName);
                 }
                 if (orderStates != null && orderStates.Length != 0)
                 {
-                    builder.Append(" and s.OrderState in ( ");
+                    if (builder.Length != 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" s.OrderState in ( ");
                     for (int i = 0; i < orderStates.Length; i++)
                     {
                         builder.Append(" @OrderState" + i.ToString());

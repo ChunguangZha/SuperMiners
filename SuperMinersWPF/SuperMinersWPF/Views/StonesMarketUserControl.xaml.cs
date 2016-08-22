@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Models;
+﻿using MetaData;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -159,14 +160,17 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
+            MyDateTime myBeginTime = MyDateTime.FromDateTime(timeBegin);
+            MyDateTime myEndTime = MyDateTime.FromDateTime(timeEnd);
+
             App.BusyToken.ShowBusyWindow("正在查询订单...");
             if (this.cmbTradeType.SelectedIndex == 0)
             {
-                GlobalData.Client.SearchUserBuyStoneOrders(timeBegin.Year, timeBegin.Month, timeBegin.Day, timeEnd.Year, timeEnd.Month, timeEnd.Day, null);
+                GlobalData.Client.SearchUserBuyStoneOrders(myBeginTime, myEndTime, null);
             }
             else
             {
-                GlobalData.Client.SearchUserSellStoneOrders(timeBegin.Year, timeBegin.Month, timeBegin.Day, timeEnd.Year, timeEnd.Month, timeEnd.Day, null);
+                GlobalData.Client.SearchUserSellStoneOrders(myBeginTime, myEndTime, null);
             }
         }
 

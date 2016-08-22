@@ -79,7 +79,8 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
 
-                beginTime = endTime.AddDays(-1);
+                MyDateTime endTime = MyDateTime.FromDateTime(DateTime.Now);
+                MyDateTime beginTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-1));
                 var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", beginTime, endTime);
                 if (buyOrderRecords == null)
                 {
@@ -197,7 +198,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public StoneOrderRunnable GetLockedOrderByOrderNumber(string orderNumber)
+        internal StoneOrderRunnable GetLockedOrderByOrderNumber(string orderNumber)
         {
             lock (_lockListSellOrders)
             {
@@ -313,7 +314,7 @@ namespace SuperMinersServerApplication.Controller
             lock (this._lockListSellOrders)
             {
                 DBProvider.StoneOrderDBProvider.AddSellOrder(order, myTrans);
-                dicSellOrders.Add(order.OrderNumber, new StoneOrderRunnable(order));
+                dicSellOrders[order.OrderNumber] = new StoneOrderRunnable(order);
             }
         }
 
@@ -543,7 +544,8 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockListSellOrders)
             {
-                this.dicSellOrders.Remove(orderNumber);
+                StoneOrderRunnable runnable = null;
+                this.dicSellOrders.TryRemove(orderNumber, out runnable);
             }
         }
 
