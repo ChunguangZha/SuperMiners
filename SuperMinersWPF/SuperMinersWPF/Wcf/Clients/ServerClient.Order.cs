@@ -111,9 +111,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region SearchUserSellStoneOrders
 
         public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> SearchUserSellStoneOrdersCompleted;
-        public void SearchUserSellStoneOrders(int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, object userState)
+        public void SearchUserSellStoneOrders(MyDateTime myBeginTime, MyDateTime myEndTime, object userState)
         {
-            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "SearchUserSellStoneOrders", this.SearchUserSellStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, beginYear, beginMonth, beginDay, endYear, endMonth, endDay);
+            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "SearchUserSellStoneOrders", this.SearchUserSellStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, myBeginTime, myEndTime);
         }
 
         #endregion
@@ -121,9 +121,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region SearchUserBuyStoneOrders
 
         public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> SearchUserBuyStoneOrdersCompleted;
-        public void SearchUserBuyStoneOrders(int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay, object userState)
+        public void SearchUserBuyStoneOrders(MyDateTime myBeginTime, MyDateTime myEndTime, object userState)
         {
-            this._invoker.InvokeUserState<BuyStonesOrder[]>(this._context, "SearchUserBuyStoneOrders", this.SearchUserBuyStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, beginYear, beginMonth, beginDay, endYear, endMonth, endDay);
+            this._invoker.InvokeUserState<BuyStonesOrder[]>(this._context, "SearchUserBuyStoneOrders", this.SearchUserBuyStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, myBeginTime, myEndTime);
         }
 
         #endregion

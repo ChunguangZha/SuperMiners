@@ -363,7 +363,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
+        public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
         {
 #if Delay
 
@@ -378,9 +378,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return null;
                 }
 
-                DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
-                DateTime endTime = new DateTime(endYear, endMonth, endDay);
-                return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, userName, beginTime, endTime.AddDays(1));
+                return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, userName, myBeginTime, myEndTime);
             }
             else
             {
@@ -388,7 +386,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, int beginYear, int beginMonth, int beginDay, int endYear, int endMonth, int endDay)
+        public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
         {
 #if Delay
 
@@ -403,9 +401,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return null;
                 }
 
-                DateTime beginTime = new DateTime(beginYear, beginMonth, beginDay);
-                DateTime endTime = new DateTime(endYear, endMonth, endDay);
-                return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(userName, beginTime, endTime.AddDays(1));
+                return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(userName, myBeginTime, myEndTime);
             }
             else
             {
