@@ -146,5 +146,41 @@ namespace SuperMinersCustomServiceSystem
         {
 
         }
+
+        void PlayerListContextMenu_ViewBuyMineRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewRechargeGoldCoinRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewBuyMinerRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewSellStoneRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewLockStoneRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewBuyStoneRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        void PlayerListContextMenu_ViewAlipayPayRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

@@ -116,6 +116,15 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
+      <Link>Wcf\Datas\BuyStonesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\LockSellStonesOrder.cs">
+      <Link>Wcf\Datas\LockSellStonesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
+      <Link>Wcf\Datas\SellStonesOrder.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
       <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
     </Compile>
@@ -157,6 +166,24 @@
     </Compile>
     <Compile Include="View\InputActionPasswordWindow.xaml.cs">
       <DependentUpon>InputActionPasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerBuyMineRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerBuyMineRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerBuyMinerRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerBuyMinerRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerBuyStoneRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerBuyStoneRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerGoldCoinRechargeRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerGoldCoinRechargeRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerLockStoneRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerLockStoneRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wcf\Channel\CryptEncoder.cs" />
     <Compile Include="Wcf\Channel\MyWebRequest.cs" />
@@ -221,6 +248,30 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InputActionPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerBuyMineRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerBuyMinerRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerBuyStoneRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerGoldCoinRechargeRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerLockStoneRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerSellStoneRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

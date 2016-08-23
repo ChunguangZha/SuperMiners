@@ -5,7 +5,31 @@
         Loaded="Window_Loaded"
         Closed="Window_Closed">
     <Grid>
-        <TabControl>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <GroupBox Header="状态信息">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="注册玩家" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="1" Width="100" Margin="5" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="2" Text="在线玩家" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="3" Width="100" Margin="5" VerticalAlignment="Center"/>
+            </Grid>
+        </GroupBox>
+        <TabControl Grid.Row="1">
             <TabItem Header="玩家管理">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -80,6 +104,17 @@
                                 <DataGridTextColumn Binding="{Binding MinersCount}" ClipboardContentBinding="{x:Null}" Header="矿工数"/>
                                 <DataGridTextColumn Binding="{Binding StockOfDiamonds}" ClipboardContentBinding="{x:Null}" Header="钻石量"/>
                             </DataGrid.Columns>
+                            <DataGrid.ContextMenu>
+                                <ContextMenu Name="cmenuDataGridPlayer" StaysOpen="True">
+                                    <MenuItem Header="查看矿山购买记录" Click="PlayerListContextMenu_ViewBuyMineRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看金币充值记录" Click="PlayerListContextMenu_ViewRechargeGoldCoinRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看矿工购买记录" Click="PlayerListContextMenu_ViewBuyMinerRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看矿石出售记录" Click="PlayerListContextMenu_ViewSellStoneRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看矿石锁定记录" Click="PlayerListContextMenu_ViewLockStoneRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看矿石购买记录" Click="PlayerListContextMenu_ViewBuyStoneRecordItem_Click"></MenuItem>
+                                    <MenuItem Header="查看支付宝支付记录" Click="PlayerListContextMenu_ViewAlipayPayRecordItem_Click"></MenuItem>
+                                </ContextMenu>
+                            </DataGrid.ContextMenu>
                         </DataGrid>
                     </GroupBox>
                     <Grid Grid.Row="2">

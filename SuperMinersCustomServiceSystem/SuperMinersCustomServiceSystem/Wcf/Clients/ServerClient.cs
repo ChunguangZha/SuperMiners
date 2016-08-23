@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.SystemConfig;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersCustomServiceSystem.Wcf.Channel;
 using SuperMinersServerApplication.Model;
@@ -225,6 +226,24 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void CreateNotice(NoticeInfo notice)
         {
             this._invoker.Invoke<bool>(this._context, "CreateNotice", this.CreateNoticeCompleted, GlobalData.Token, notice);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetSellStonesOrderListCompleted;
+        public void GetSellStonesOrderList(string sellerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            this._invoker.Invoke<SellStonesOrder[]>(this._context, "GetSellStonesOrderList", this.GetSellStonesOrderListCompleted, GlobalData.Token, sellerUserName, startDate, endDate);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder[]>> GetLockedStonesOrderListCompleted;
+        public void GetLockedStonesOrderList(string buyerUserName)
+        {
+            this._invoker.Invoke<LockSellStonesOrder[]>(this._context, "GetLockedStonesOrderList", this.GetLockedStonesOrderListCompleted, GlobalData.Token, buyerUserName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> GetBuyStonesOrderListCompleted;
+        public void GetBuyStonesOrderList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
         }
 
         #endregion

@@ -144,7 +144,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, MyDateTime startDate, MyDateTime endDate);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetSellStonesOrderList",
+        [WebInvoke(UriTemplate = "/WebService/GetLockedStonesOrderList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -152,7 +152,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetSellStonesOrderList",
+        [WebInvoke(UriTemplate = "/WebService/GetBuyStonesOrderList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,

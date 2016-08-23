@@ -1,26 +1,33 @@
-Error:  [2016/8/16 21:50:36] ---- Log: PayStoneTrade Exception. OrderNumber: 201607022250250572114454765444946
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersServerApplication.Controller.StoneOrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderController.cs:行号 483
------------------------------------------------------
-
- Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+Error:  [2016/8/23 16:17:42] ---- Log: Init OrderController Error
+Exc.Message: The CommandText property has not been properly initialized.Exc.Stack:    在 MySql.Data.MySqlClient.ExceptionInterceptor.Throw(Exception exception)
+   在 MySql.Data.MySqlClient.MySqlConnection.Throw(Exception ex)
+   在 MySql.Data.MySqlClient.MySqlCommand.Throw(Exception ex)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
-   在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String userName, MyDateTime myBeginTime, MyDateTime myEndTime) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 234
+   在 SuperMinersServerApplication.Controller.StoneOrderController.Init() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderController.cs:行号 84
 -----------------------------------------------------
 
-oldCoinOrderController.cs:行号 97
-   在 SuperMinersServerApplication.Controller.Trade.OrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\OrderController.cs:行号 87
-   在 SuperMinersServerApplication.WebServiceToWeb.Services.ServiceToWeb.AlipayCallback(String out_trade_no, String alipay_trade_no, Single total_fee, String buyer_email, String pay_time) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Services\ServiceToWeb.cs:行号 204
+Error:  [2016/8/23 16:17:43] ---- Log: Init Service To Admin failed.
+Exc.Message: 在约定“IServiceToAdmin”中，有多个方法为“POST”且 UriTemplate 为“/WebService/GetSellStonesOrderList”的操作。每个操作都需要 UriTemplate 和方法的唯一组合才能明确地调度消息。请使用 WebGetAttribute 或 WebInvokeAttribute 改变操作的 UriTemplate 和方法值。Exc.Stack:    在 System.ServiceModel.Dispatcher.WebHttpDispatchOperationSelector..ctor(ServiceEndpoint endpoint)
+   在 System.ServiceModel.Description.WebHttpBehavior.GetOperationSelector(ServiceEndpoint endpoint)
+   在 System.ServiceModel.Description.WebHttpBehavior.ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher)
+   在 System.ServiceModel.Description.DispatcherBuilder.InitializeServiceHost(ServiceDescription description, ServiceHostBase serviceHost)
+   在 System.ServiceModel.ServiceHostBase.InitializeRuntime()
+   在 System.ServiceModel.ServiceHostBase.OnBeginOpen()
+   在 System.ServiceModel.ServiceHostBase.OnOpen(TimeSpan timeout)
+   在 System.ServiceModel.Channels.CommunicationObject.Open(TimeSpan timeout)
+   在 System.ServiceModel.Channels.CommunicationObject.Open()
+   在 SuperMinersServerApplication.SuperMinersService.InitServiceToAdmin() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 300
 -----------------------------------------------------
 
---------
-
-lCommand.ExecuteReader()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.StoneOrderDBProvider.LockOrder(LockSellStonesOrder lockOrder, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 96
-   在 SuperMinersServerApplication.Controller.StoneOrderRunnable.Lock(String playerUserName) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderRunnable.cs:行号 133
+Error:  [2016/8/23 16:17:43] ---- Log: 停止服务失败。
+Exc.Message: 通信对象 System.ServiceModel.ServiceHost 无法用于通信，因为其处于“出错”状态。Exc.Stack:    在 System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+   在 System.ServiceModel.Channels.CommunicationObject.Close()
+   在 SuperMinersServerApplication.SuperMinersService.StopService() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 324
 -----------------------------------------------------
 

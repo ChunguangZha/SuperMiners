@@ -653,11 +653,11 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             {
                 try
                 {
-                    return DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList(buyerUserName);
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(buyerUserName, startDate, endDate);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("GetLockedStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    LogHelper.Instance.AddErrorLog("GetBuyStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

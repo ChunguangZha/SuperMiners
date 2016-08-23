@@ -229,6 +229,7 @@ namespace DataBaseProvider
                 }
 
                 string cmdText = sqlTextA + " where " + builder.ToString();
+                mycmd.CommandText = cmdText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -345,14 +346,13 @@ namespace DataBaseProvider
         public LockSellStonesOrder[] GetLockSellStonesOrderList(string userName)
         {
             LockSellStonesOrder[] orders = null;
-            MySqlConnection myconn = null;
+            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             try
             {
+                myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
                 DataTable dt = new DataTable();
 
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
                 string cmdText = "select l.*, s.* " +
                                 "from locksellstonesorder l " +
                                 "left join sellstonesorder s on s.OrderNumber = l.OrderNumber ";
