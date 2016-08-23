@@ -167,6 +167,9 @@
     <Compile Include="View\InputActionPasswordWindow.xaml.cs">
       <DependentUpon>InputActionPasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ViewPlayerAlipayPayRecordWindow.xaml.cs">
+      <DependentUpon>ViewPlayerAlipayPayRecordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\ViewPlayerBuyMineRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerBuyMineRecordWindow.xaml</DependentUpon>
     </Compile>
@@ -248,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InputActionPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ViewPlayerAlipayPayRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

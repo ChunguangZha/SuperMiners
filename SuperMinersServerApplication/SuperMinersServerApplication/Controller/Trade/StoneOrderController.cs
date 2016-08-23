@@ -551,9 +551,14 @@ namespace SuperMinersServerApplication.Controller
 
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
+            StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
+            if (runnable != null)
+            {
+                alipayRecord.user_name = runnable.GetLockedOrder().LockedByUserName;
+            }
+
             DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
 
-            StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
             if (runnable != null)
             {
                 var lockOrder = runnable.GetLockedOrder();

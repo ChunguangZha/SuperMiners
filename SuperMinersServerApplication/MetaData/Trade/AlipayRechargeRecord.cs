@@ -23,6 +23,8 @@ namespace MetaData.Trade
         /// </summary>
         public string buyer_email;
 
+        public string user_name;
+
         /// <summary>
         /// 支付金额人民币元
         /// </summary>

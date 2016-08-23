@@ -1,0 +1,30 @@
+﻿<Window x:Class="SuperMinersCustomServiceSystem.View.ViewPlayerAlipayPayRecordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="查看玩家支付宝充值记录" Height="600" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid AutoGenerateColumns="False" FrozenColumnCount="1" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="2*" Header="商品订单号" Binding="{Binding out_trade_no}"/>
+                <DataGridTextColumn Width="2*" Header="支付宝订单号" Binding="{Binding alipay_trade_no}"/>
+                <DataGridTextColumn Width="*"  Header="购买矿山" Binding="{Binding GainMinesCount}"/>
+                <DataGridTextColumn Width="*"  Header="获得储量" Binding="{Binding GainStonesReserves}"/>
+                <DataGridTextColumn Width="*"  Header="花费灵币" Binding="{Binding SpendRMB}"/>
+                <DataGridTextColumn Width="*"  Header="创建时间" Binding="{Binding CreateTime}"/>
+                <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding PayTime}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2" Name="btnClose" Content="关闭" Margin="5" Width="100"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -23,5 +23,10 @@ namespace SuperMinersCustomServiceSystem.View
         {
             InitializeComponent();
         }
+
+        public void SetUser(string user)
+        {
+
+        }
     }
 }

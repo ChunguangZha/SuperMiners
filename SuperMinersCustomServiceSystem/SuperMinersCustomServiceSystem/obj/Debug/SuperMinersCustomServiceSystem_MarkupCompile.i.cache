@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
 SuperMinersCustomServiceSystem
 none
 false
 TRACE;DEBUG;Encrypt
-F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
-14-1147980741
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
+151107428979
 
-551835646832
+56-1481487066
 16-40985637
-BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\AddNoticeWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\InputActionPasswordWindow.xaml;View\ViewPlayerBuyMineRecordWindow.xaml;View\ViewPlayerBuyMinerRecordWindow.xaml;View\ViewPlayerBuyStoneRecordWindow.xaml;View\ViewPlayerGoldCoinRechargeRecordWindow.xaml;View\ViewPlayerLockStoneRecordWindow.xaml;View\ViewPlayerSellStoneRecordWindow.xaml;
+BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\AddNoticeWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\InputActionPasswordWindow.xaml;View\ViewPlayerAlipayPayRecordWindow.xaml;View\ViewPlayerBuyMineRecordWindow.xaml;View\ViewPlayerBuyMinerRecordWindow.xaml;View\ViewPlayerBuyStoneRecordWindow.xaml;View\ViewPlayerGoldCoinRechargeRecordWindow.xaml;View\ViewPlayerLockStoneRecordWindow.xaml;View\ViewPlayerSellStoneRecordWindow.xaml;
 
 False
 

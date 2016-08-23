@@ -95,11 +95,11 @@ namespace SuperMinersServerApplication.Controller
 
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
-            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
-
+            bool isOK = false;
             MinesBuyRecord buyRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
             if (buyRecord != null)
             {
+                alipayRecord.user_name = buyRecord.UserName;
                 if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
                     alipayRecord.value_rmb >= buyRecord.SpendRMB)
                 {
@@ -116,12 +116,14 @@ namespace SuperMinersServerApplication.Controller
                         {
                             MineOrderPaySucceedNotify(tokenBuyer, buyRecord.OrderNumber);
                         }
-                        return true;
+                        isOK = true;
                     }
                 }
             }
 
-            return false;
+            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+
+            return isOK;
         }
         
         /// <summary>

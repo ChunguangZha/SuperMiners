@@ -15,18 +15,13 @@ using System.Windows.Shapes;
 namespace SuperMinersCustomServiceSystem.View
 {
     /// <summary>
-    /// Interaction logic for ViewPlayerBuyMineRecordWindow.xaml
+    /// Interaction logic for ViewPlayerAlipayPayRecordWindow.xaml
     /// </summary>
-    public partial class ViewPlayerBuyMineRecordWindow : Window
+    public partial class ViewPlayerAlipayPayRecordWindow : Window
     {
-        public ViewPlayerBuyMineRecordWindow()
+        public ViewPlayerAlipayPayRecordWindow()
         {
             InitializeComponent();
-        }
-
-        public void SetUser(string buyer)
-        {
-
         }
     }
 }
