@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,11 +23,18 @@ namespace SuperMinersCustomServiceSystem.View
         public ViewPlayerSellStoneRecordWindow()
         {
             InitializeComponent();
+            GlobalData.Client.GetSellStonesOrderListCompleted += Client_GetSellStonesOrderListCompleted;
+        }
+
+        void Client_GetSellStonesOrderListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.SellStonesOrder[]> e)
+        {
+            throw new NotImplementedException();
         }
 
         public void SetUser(string seller)
         {
-
+            this.Title += "  ----" + seller;
+            GlobalData.Client.GetSellStonesOrderList(seller, new MyDateTime(), new MyDateTime());
         }
     }
 }
