@@ -33,6 +33,11 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public MinesBuyRecord[] GetNotFinishRecords(string userName)
+        {
+
+        }
+
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)
         {
             TradeOperResult result = new TradeOperResult();
