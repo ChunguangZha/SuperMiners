@@ -158,5 +158,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesRecordList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        MinesBuyRecord[] GetBuyMinesRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
     }
 }

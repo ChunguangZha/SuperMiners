@@ -26,7 +26,9 @@ namespace SuperMinersCustomServiceSystem.View
 
         public void SetUser(string buyer)
         {
+            this.Title += "  ----" + buyer;
 
+            if(GlobalData.Client.getmi
         }
     }
 }

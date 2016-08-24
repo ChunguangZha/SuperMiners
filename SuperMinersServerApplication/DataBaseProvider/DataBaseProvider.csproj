@@ -54,7 +54,6 @@
     <Compile Include="MyDBHelper.cs" />
     <Compile Include="StoneOrderDBProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RechargeDBProvider.cs" />
     <Compile Include="SystemDBProvider.cs" />
     <Compile Include="UserInfoDBProvider.cs" />
   </ItemGroup>

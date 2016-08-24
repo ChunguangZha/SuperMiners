@@ -246,6 +246,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
         }
 
+        public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> GetBuyStonesOrderListCompleted;
+        public void GetBuyStonesOrderList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
+        }
+
         #endregion
     }
 }
