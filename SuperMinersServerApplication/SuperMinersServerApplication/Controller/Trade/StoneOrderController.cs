@@ -353,15 +353,36 @@ namespace SuperMinersServerApplication.Controller
             }
 
             bool isOK = order.ReleaseLock();
-            //if (isOK)
-            //{
-            //    lock (this._lockListSellOrders)
-            //    {
-            //        this.dicSellOrders.Remove(order.OrderNumber);
-            //    }
-            //}
 
             return isOK;
+        }
+
+        public int SetExceptionOrderCancel(string orderNumber)
+        {
+            StoneOrderRunnable order = null;
+            lock (this._lockListSellOrders)
+            {
+                this.dicSellOrders.TryGetValue(orderNumber, out order);
+            }
+
+            if (order == null)
+            {
+                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
+            }
+
+            order.SetOrderState(SellOrderState.Wait);
+            bool isOK = order.ReleaseLock();
+            if (isOK)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public bool SetExceptionOrderSucceed(AlipayRechargeRecord alipayRecord)
+        {
+            return this.AlipayCallback(alipayRecord);
         }
 
         /// <summary>

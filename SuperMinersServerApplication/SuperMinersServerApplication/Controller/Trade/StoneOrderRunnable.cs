@@ -220,6 +220,14 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
+        public int SetOrderState(SellOrderState state)
+        {
+            lock (this._lock)
+            {
+                this.OrderState = state;
+            }
+        }
+
         /// <summary>
         /// RESULTCODE_ORDER_NOT_BE_LOCKED; RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER; RESULTCODE_TRUE; RESULTCODE_FALSE;
         /// </summary>

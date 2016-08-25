@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +20,44 @@ namespace SuperMinersCustomServiceSystem.View
     /// </summary>
     public partial class StoneOrderResolveException : Window
     {
-        public StoneOrderResolveException()
+        private LockSellStonesOrderUIModel _order = null;
+
+        public StoneOrderResolveException(LockSellStonesOrderUIModel order)
         {
             InitializeComponent();
+            this._order = order;
+            this.DataContext = this._order;
+        }
+
+        private void btnConfirmOrder_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("确认订单支付成功，该操作不可恢复！", "确认订单成功", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void btnCancelOrder_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("确认订单支付失败，该操作不可恢复！", "确认订单失败", MessageBoxButton.YesNo);
+            if (result == MessageBoxResult.Yes)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }
