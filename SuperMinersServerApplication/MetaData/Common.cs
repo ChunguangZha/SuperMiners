@@ -17,7 +17,7 @@ namespace MetaData
     public class MyDateTime
     {
         [DataMember]
-        public bool IsNull;
+        public bool IsNull = true;
 
         [DataMember]
         public int Year;
@@ -28,9 +28,18 @@ namespace MetaData
         [DataMember]
         public int Day;
 
+        [DataMember]
+        public int Hour;
+
+        [DataMember]
+        public int Minute;
+
+        [DataMember]
+        public int Second;
+
         public DateTime ToDateTime()
         {
-            return new DateTime(Year, Month, Day);
+            return new DateTime(Year, Month, Day, Hour, Minute, Second);
         }
 
         public static MyDateTime FromDateTime(DateTime time)
@@ -40,7 +49,10 @@ namespace MetaData
                 IsNull = false,
                 Year = time.Year,
                 Month = time.Month,
-                Day = time.Day
+                Day = time.Day,
+                Hour = time.Hour,
+                Minute = time.Minute,
+                Second = time.Second
             };
         }
     }

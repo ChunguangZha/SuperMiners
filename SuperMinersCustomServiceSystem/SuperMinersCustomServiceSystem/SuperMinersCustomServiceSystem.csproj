@@ -122,6 +122,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\LockSellStonesOrder.cs">
       <Link>Wcf\Datas\LockSellStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinesBuyRecord.cs">
+      <Link>Wcf\Datas\MinesBuyRecord.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
@@ -151,7 +154,10 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BaseModel.cs" />
+    <Compile Include="Model\BuyStonesOrderUIModel.cs" />
+    <Compile Include="Model\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Model\PlayerInfoUIModel.cs" />
+    <Compile Include="Model\SellStonesOrderUIModel.cs" />
     <Compile Include="ViewModel\BusyToken.cs" />
     <Compile Include="ViewModel\NoticeViewModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
@@ -166,6 +172,9 @@
     </Compile>
     <Compile Include="View\InputActionPasswordWindow.xaml.cs">
       <DependentUpon>InputActionPasswordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\StoneOrderResolveException.xaml.cs">
+      <DependentUpon>StoneOrderResolveException.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ViewPlayerAlipayPayRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerAlipayPayRecordWindow.xaml</DependentUpon>
@@ -251,6 +260,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InputActionPasswordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\StoneOrderResolveException.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

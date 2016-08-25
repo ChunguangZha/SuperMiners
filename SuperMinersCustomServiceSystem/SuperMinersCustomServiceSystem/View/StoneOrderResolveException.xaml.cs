@@ -15,25 +15,13 @@ using System.Windows.Shapes;
 namespace SuperMinersCustomServiceSystem.View
 {
     /// <summary>
-    /// Interaction logic for ViewPlayerBuyMineRecordWindow.xaml
+    /// Interaction logic for StoneOrderResolveException.xaml
     /// </summary>
-    public partial class ViewPlayerBuyMineRecordWindow : Window
+    public partial class StoneOrderResolveException : Window
     {
-        public ViewPlayerBuyMineRecordWindow()
+        public StoneOrderResolveException()
         {
             InitializeComponent();
-        }
-
-        public void SetUser(string buyer)
-        {
-            this.Title += "  ----" + buyer;
-
-            //if(GlobalData.Client.getmi
-        }
-
-        private void btnClose_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
         }
     }
 }

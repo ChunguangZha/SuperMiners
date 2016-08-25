@@ -160,11 +160,21 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesRecordList",
+        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesFinishedRecordList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        MinesBuyRecord[] GetBuyMinesRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
+        MinesBuyRecord[] GetBuyMinesFinishedRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesNotFinishedRecordList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        MinesBuyRecord[] GetBuyMinesNotFinishedRecordList(string token, string buyerUserName);
+
+
     }
 }

@@ -28,5 +28,10 @@ namespace SuperMinersCustomServiceSystem.View
         {
 
         }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

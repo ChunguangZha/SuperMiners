@@ -246,10 +246,16 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
         }
 
-        public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> GetBuyStonesOrderListCompleted;
-        public void GetBuyStonesOrderList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        public event EventHandler<WebInvokeEventArgs<MinesBuyRecord[]>> GetBuyMinesFinishedRecordListCompleted;
+        public void GetBuyMinesFinishedRecordList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
         {
-            this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
+            this._invoker.Invoke<MinesBuyRecord[]>(this._context, "GetBuyMinesFinishedRecordList", this.GetBuyMinesFinishedRecordListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<MinesBuyRecord[]>> GetBuyMinesNotFinishedRecordListCompleted;
+        public void GetBuyMinesNotFinishedRecordList(string buyerUserName)
+        {
+            this._invoker.Invoke<MinesBuyRecord[]>(this._context, "GetBuyMinesNotFinishedRecordList", this.GetBuyMinesNotFinishedRecordListCompleted, GlobalData.Token, buyerUserName);
         }
 
         #endregion

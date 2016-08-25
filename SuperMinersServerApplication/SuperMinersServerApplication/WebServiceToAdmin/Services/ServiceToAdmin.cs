@@ -3,6 +3,7 @@ using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
 using SuperMinersServerApplication.Utility;
@@ -658,6 +659,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetBuyStonesOrderList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MinesBuyRecord[] GetBuyMinesFinishedRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return OrderController.Instance.MineOrderController.GetFinishRecords(buyerUserName, startDate, endDate);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetBuyMinesFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MinesBuyRecord[] GetBuyMinesNotFinishedRecordList(string token, string buyerUserName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return OrderController.Instance.MineOrderController.GetNotFinishRecords(buyerUserName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetBuyMinesNotFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

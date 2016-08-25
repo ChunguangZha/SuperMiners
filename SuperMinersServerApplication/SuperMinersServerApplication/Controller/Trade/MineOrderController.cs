@@ -35,7 +35,21 @@ namespace SuperMinersServerApplication.Controller
 
         public MinesBuyRecord[] GetNotFinishRecords(string userName)
         {
+            List<MinesBuyRecord> listRecords = new List<MinesBuyRecord>();
+            lock (this._lock)
+            {
+                foreach (var item in this._listTempRecord.Values)
+                {
+                    listRecords.Add(item);
+                }
+            }
 
+            return listRecords.ToArray();
+        }
+
+        public MinesBuyRecord[] GetFinishRecords(string userName, MyDateTime startDate, MyDateTime endDate)
+        {
+            return DBProvider.MineRecordDBProvider.GetAllMineTradeRecords(userName, startDate, endDate);
         }
 
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)

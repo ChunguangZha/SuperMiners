@@ -157,6 +157,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerBuyMineRecordWindow win = new ViewPlayerBuyMineRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -177,6 +178,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerGoldCoinRechargeRecordWindow win = new ViewPlayerGoldCoinRechargeRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -197,6 +199,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerBuyMinerRecordWindow win = new ViewPlayerBuyMinerRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -217,6 +220,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerSellStoneRecordWindow win = new ViewPlayerSellStoneRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -237,6 +241,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerLockStoneRecordWindow win = new ViewPlayerLockStoneRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -257,6 +262,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }
@@ -277,6 +283,7 @@ namespace SuperMinersCustomServiceSystem
                     if (player != null)
                     {
                         ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
+                        win.Show();
                         win.SetUser(player.UserName);
                     }
                 }

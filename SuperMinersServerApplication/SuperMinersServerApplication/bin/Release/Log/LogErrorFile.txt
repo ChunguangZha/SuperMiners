@@ -1,14 +1,12 @@
-Error:  [2016/8/23 16:17:42] ---- Log: Init OrderController Error
-Exc.Message: The CommandText property has not been properly initialized.Exc.Stack:    在 MySql.Data.MySqlClient.ExceptionInterceptor.Throw(Exception exception)
-   在 MySql.Data.MySqlClient.MySqlConnection.Throw(Exception ex)
-   在 MySql.Data.MySqlClient.MySqlCommand.Throw(Exception ex)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String userName, MyDateTime myBeginTime, MyDateTime myEndTime) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 234
+Error:  [2016/8/25 15:33:42] ---- Log: GetSellStonesOrderList Exception. ClientIP=524e1f98-daa5-4e2f-a5b9-848db1ccfa46
+Exc.Message: 年、月和日参数描述无法表示的 DateTime。Exc.Stack:    在 System.DateTime.DateToTicks(Int32 year, Int32 month, Int32 day)
+   在 System.DateTime..ctor(Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second)
+   在 MetaData.MyDateTime.ToDateTime() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\Common.cs:行号 42
+   在 DataBaseProvider.StoneOrderDBProvider.GetSellOrderList(Int32[] orderStates, String userName, MyDateTime myBeginTime, MyDateTime myEndTime) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 273
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetSellStonesOrderList(String token, String sellerUserName, MyDateTime startDate, MyDateTime endDate) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 617
+-----------------------------------------------------
+
+e myBeginTime, MyDateTime myEndTime) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 234
    在 SuperMinersServerApplication.Controller.StoneOrderController.Init() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderController.cs:行号 84
 -----------------------------------------------------
 

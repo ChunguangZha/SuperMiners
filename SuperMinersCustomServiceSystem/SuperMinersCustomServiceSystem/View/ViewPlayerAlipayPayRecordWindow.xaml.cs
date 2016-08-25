@@ -23,5 +23,17 @@ namespace SuperMinersCustomServiceSystem.View
         {
             InitializeComponent();
         }
+
+        public void SetUser(string buyer)
+        {
+            this.Title += "  ----" + buyer;
+
+            //if(GlobalData.Client.getmi
+        }
+
+        private void btnClose_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
