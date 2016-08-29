@@ -1,4 +1,5 @@
 ﻿using MetaData.Trade;
+using SuperMinersCustomServiceSystem.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +22,7 @@ namespace SuperMinersCustomServiceSystem.View
     /// </summary>
     public partial class ViewPlayerLockStoneRecordWindow : Window
     {
-        private ObservableCollection<LockSellStonesOrder> _list = new ObservableCollection<LockSellStonesOrder>();
+        private ObservableCollection<LockSellStonesOrderUIModel> _list = new ObservableCollection<LockSellStonesOrderUIModel>();
 
 
         public ViewPlayerLockStoneRecordWindow()
@@ -30,6 +31,11 @@ namespace SuperMinersCustomServiceSystem.View
             this.datagrid.ItemsSource = _list;
 
             GlobalData.Client.GetLockedStonesOrderListCompleted += Client_GetLockedStonesOrderListCompleted;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.GetLockedStonesOrderListCompleted -= Client_GetLockedStonesOrderListCompleted;
         }
 
         void Client_GetLockedStonesOrderListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.LockSellStonesOrder[]> e)
@@ -50,7 +56,7 @@ namespace SuperMinersCustomServiceSystem.View
 
             foreach (var item in e.Result)
             {
-                this._list.Add(item);
+                this._list.Add(new LockSellStonesOrderUIModel(item));
             }
 
         }
@@ -66,9 +72,25 @@ namespace SuperMinersCustomServiceSystem.View
             this.Close();
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void HandleButtonContext_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = sender as Button;
+            if (btn == null)
+            {
+                return;
+            }
 
+            LockSellStonesOrderUIModel lockStoneObject = btn.DataContext as LockSellStonesOrderUIModel;
+            if (lockStoneObject == null)
+            {
+                return;
+            }
+
+            StoneOrderResolveExceptionWindow win = new StoneOrderResolveExceptionWindow(lockStoneObject);
+            if (win.ShowDialog() == true)
+            {
+                GlobalData.Client.GetLockedStonesOrderList(lockStoneObject.LockedByUserName);
+            }
         }
     }
 }

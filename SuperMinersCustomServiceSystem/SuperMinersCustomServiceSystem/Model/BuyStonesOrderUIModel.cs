@@ -66,5 +66,33 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get { return this.ParentObject.AwardGoldCoin; }
         }
+
+        public string OrderStateText
+        {
+            get
+            {
+                string stateText = "";
+                switch (this.ParentObject.StonesOrder.OrderState)
+                {
+                    case SellOrderState.Wait:
+                        stateText = "等待";
+                        break;
+                    case SellOrderState.Lock:
+                        stateText = "锁定";
+                        break;
+                    case SellOrderState.Finish:
+                        stateText = "完成";
+                        break;
+                    case SellOrderState.Exception:
+                        stateText = "异常";
+                        break;
+                    default:
+                        break;
+                }
+
+                return stateText;
+            }
+        }
+
     }
 }

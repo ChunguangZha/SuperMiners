@@ -14,5 +14,8 @@ namespace SuperMinersServerApplication.WebService.Contracts
 
         [Callback]
         void OrderAlipayPaySucceed(string token, int tradeType, string orderNumber);
+
+        [Callback]
+        void AppealOrderFailed(string token, int tradeType, string orderNumber);
     }
 }

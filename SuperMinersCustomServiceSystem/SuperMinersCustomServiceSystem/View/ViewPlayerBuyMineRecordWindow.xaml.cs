@@ -24,6 +24,11 @@ namespace SuperMinersCustomServiceSystem.View
             InitializeComponent();
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
+        }
+
         public void SetUser(string buyer)
         {
             this.Title += "  ----" + buyer;

@@ -189,7 +189,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="total_fee">人民币，需换算为灵币</param>
         /// <param name="buyer_email"></param>
         /// <param name="succeed"></param>
-        public void AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        public bool AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
@@ -204,7 +204,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 };
 
                 LogHelper.Instance.AddInfoLog("alipay_trade_no: " + alipay_trade_no);
-                OrderController.Instance.AlipayCallback(record);
+                return OrderController.Instance.AlipayCallback(record);
             }
             catch (Exception exc)
             {
@@ -213,6 +213,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                                             " money: " + total_fee.ToString() + ";" +
                                             " payAlipayAccount: " + buyer_email, exc);
 
+                return false;
             }
         }
     }

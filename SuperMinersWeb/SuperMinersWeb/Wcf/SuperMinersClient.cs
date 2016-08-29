@@ -1,4 +1,5 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using SuperMinersWeb.Utility;
 using System;
@@ -55,7 +56,7 @@ namespace SuperMinersWeb.Wcf
             }
             catch (Exception)
             {
-                return 3;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -72,7 +73,7 @@ namespace SuperMinersWeb.Wcf
             }
             catch (Exception)
             {
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -90,7 +91,7 @@ namespace SuperMinersWeb.Wcf
             }
             catch (Exception)
             {
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -107,7 +108,7 @@ namespace SuperMinersWeb.Wcf
             }
             catch (Exception)
             {
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -124,7 +125,7 @@ namespace SuperMinersWeb.Wcf
             }
             catch (Exception)
             {
-                return -1;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 
@@ -140,15 +141,17 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public void AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        public bool AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
                 base.Channel.AlipayCallback(out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
+                return true;
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
+                return false;
             }
         }
 

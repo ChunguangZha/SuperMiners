@@ -101,7 +101,23 @@ namespace SuperMinersWPF.Views
 
         private void btnAppeal_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = sender as Button;
+            if (btn == null)
+            {
+                return;
+            }
 
+            LockSellStonesOrderUIModel lockStoneOrder = btn.DataContext as LockSellStonesOrderUIModel;
+            if (lockStoneOrder == null)
+            {
+                return;
+            }
+
+            System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                App.StoneOrderVMObject.AsyncSetStoneOrderPayException(lockStoneOrder.OrderNumber);
+            }
         }
 
         private void cmbTradeType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -244,6 +260,11 @@ namespace SuperMinersWPF.Views
             {
                 App.StoneOrderVMObject.AsyncLockStoneOrder(stoneOrder.OrderNumber);
             }
+        }
+
+        private void btnRefreshMySelfOrders_Click(object sender, RoutedEventArgs e)
+        {
+            App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
         }
 
     }

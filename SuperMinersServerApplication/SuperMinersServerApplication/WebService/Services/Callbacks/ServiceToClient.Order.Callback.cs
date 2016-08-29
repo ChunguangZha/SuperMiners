@@ -22,6 +22,12 @@ namespace SuperMinersServerApplication.WebService.Services
             this.InvokeCallback(token, "OrderAlipayPaySucceed", tradeType, orderNumber);
         }
 
+        public void AppealOrderFailed(string token, int tradeType, string orderNumber)
+        {
+            this.InvokeCallback(token, "AppealOrderFailed", tradeType, orderNumber);
+        }
+
         #endregion
+
     }
 }

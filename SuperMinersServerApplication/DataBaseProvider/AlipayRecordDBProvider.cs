@@ -20,8 +20,8 @@ namespace DataBaseProvider
                 myconn.Open();
                 mycmd = myconn.CreateCommand();
                 string sqlText = "insert into alipayrechargerecord " +
-                    "(`out_trade_no`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`pay_time`) " +
-                    " values (@out_trade_no, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@pay_time)";
+                    "(`out_trade_no`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`value_rmb`,`pay_time`) " +
+                    " values (@out_trade_no, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@value_rmb,@pay_time)";
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@out_trade_no", alipayRecord.out_trade_no);
@@ -30,6 +30,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@buyer_email", alipayRecord.buyer_email);
                 mycmd.Parameters.AddWithValue("@total_fee", alipayRecord.total_fee);
                 mycmd.Parameters.AddWithValue("@pay_time", alipayRecord.pay_time);
+                mycmd.Parameters.AddWithValue("@value_rmb", alipayRecord.value_rmb);
                 mycmd.ExecuteNonQuery();
                 return true;
             }
@@ -44,6 +45,42 @@ namespace DataBaseProvider
                     myconn.Close();
                     myconn.Dispose();
                 }
+            }
+        }
+
+        public AlipayRechargeRecord GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(string orderNumber, string alipay_trade_no)
+        {
+            AlipayRechargeRecord[] records = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select * from superminers.alipayrechargerecord where out_trade_no = @orderNumber or alipay_trade_no = @alipay_trade_no ";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@orderNumber", orderNumber);
+                mycmd.Parameters.AddWithValue("@alipay_trade_no", alipay_trade_no);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
+
+                mycmd.Dispose();
+
+                if (records == null || records.Length == 0)
+                {
+                    return null;
+                }
+                return records[0];
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 

@@ -352,3 +352,33 @@ Error:  [2016/8/16 23:23:07] ---- Log: 客户端Tony已退出.
 Error:  [2016/8/16 23:27:41] ---- Log: 客户端xiaocha已退出.
 -----------------------------------------------------
 
+Error:  [2016/8/28 20:22:35] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/28 22:15:51] ---- Log: 服务器连接失败。
+Exc.Message: 无法连接到远程服务器Exc.Stack:    在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass12.<Send>b__e(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/8/28 22:18:02] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/28 23:55:56] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/29 0:24:25] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/29 1:03:17] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/29 21:36:17] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/29 22:26:14] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+
+Error:  [2016/8/29 22:33:08] ---- Log: 客户端tony1已退出.
+-----------------------------------------------------
+

@@ -141,7 +141,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, MyDateTime startDate, MyDateTime endDate);
+        SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, int sellOrderState, MyDateTime startDate, MyDateTime endDate);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetLockedStonesOrderList",
@@ -175,6 +175,20 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         MinesBuyRecord[] GetBuyMinesNotFinishedRecordList(string token, string buyerUserName);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/HandleExceptionStoneOrderSucceed",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int HandleExceptionStoneOrderSucceed(string token, AlipayRechargeRecord alipayRecord);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/HandleExceptionStoneOrderFailed",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int HandleExceptionStoneOrderFailed(string token, string orderNumber);
     }
 }

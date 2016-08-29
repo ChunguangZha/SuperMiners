@@ -29,6 +29,10 @@ namespace SuperMinersCustomServiceSystem.View
             InitializeComponent();
             this.datagrid.ItemsSource = _list;
 
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
             GlobalData.Client.GetBuyStonesOrderListCompleted += Client_GetBuyStonesOrderListCompleted;
         }
 

@@ -81,7 +81,13 @@ public partial class return_url : System.Web.UI.Page
                         return;
                     }
 
-                    WcfClient.Instance.AlipayCallback(out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                    bool isOK = WcfClient.Instance.AlipayCallback(out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                    if (!isOK)
+                    {
+                        Response.Write("支付失败<br />请回到软件中重新发起支付<br />本页面将在3秒后关闭");
+                        Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
+                        return;
+                    }
                 }
                 else
                 {
@@ -89,7 +95,7 @@ public partial class return_url : System.Web.UI.Page
                 }
 
                 //打印页面
-                Response.Write("验证成功<br />本页面将在3秒后关闭");
+                Response.Write("支付成功<br />本页面将在3秒后关闭");
                 Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
 
                 //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
@@ -98,7 +104,7 @@ public partial class return_url : System.Web.UI.Page
             }
             else//验证失败
             {
-                Response.Write("验证失败");
+                Response.Write("支付失败");
             }
         }
         else

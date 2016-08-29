@@ -37,6 +37,9 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("LockedTime");
                 NotifyPropertyChange("ValidTimeSeconds");
                 NotifyPropertyChange("ValidTimeSecondsString");
+                NotifyPropertyChange("HandleButtonContext");
+                NotifyPropertyChange("ValidTimeVisibility");
+                NotifyPropertyChange("HandleButtonNotEnable");
 
             }
         }
@@ -160,8 +163,11 @@ namespace SuperMinersWPF.Models
 
         public int ValidTimeSecondsTickDown()
         {
-            this._parentObject.OrderLockedTimeSpan++;
-            NotifyPropertyChange("ValidTimeSecondsString");
+            if (this._parentObject.StonesOrder.OrderState != SellOrderState.Exception)
+            {
+                this._parentObject.OrderLockedTimeSpan++;
+                NotifyPropertyChange("ValidTimeSecondsString");
+            }
             return this.ValidTimeSeconds;
         }
 
@@ -172,6 +178,48 @@ namespace SuperMinersWPF.Models
                 int mintues = this.ValidTimeSeconds / 60;
                 int seconds = this.ValidTimeSeconds % 60;
                 return mintues.ToString() + " 分 " + seconds.ToString() + " 秒";
+            }
+        }
+
+        public string HandleButtonContext
+        {
+            get
+            {
+                if (this._parentObject.StonesOrder.OrderState == SellOrderState.Lock)
+                {
+                    return "申诉";
+                }
+                if (this._parentObject.StonesOrder.OrderState == SellOrderState.Exception)
+                {
+                    return "已经申诉";
+                }
+                return "";
+            }
+        }
+
+        public System.Windows.Visibility ValidTimeVisibility
+        {
+            get
+            {
+                if (this._parentObject.StonesOrder.OrderState == SellOrderState.Lock)
+                {
+                    return System.Windows.Visibility.Visible;
+                }
+
+                return System.Windows.Visibility.Collapsed;
+            }
+        }
+
+        public bool HandleButtonNotEnable
+        {
+            get
+            {
+                if (this._parentObject.StonesOrder.OrderState == SellOrderState.Lock)
+                {
+                    return true;
+                }
+
+                return false;
             }
         }
     }

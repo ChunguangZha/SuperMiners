@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace SuperMinersCustomServiceSystem.Model
@@ -77,6 +78,46 @@ namespace SuperMinersCustomServiceSystem.Model
                 }
 
                 return stateText;
+            }
+        }
+
+        public string HandleButtonContext
+        {
+            get
+            {
+                string stateText = "";
+                switch (this.ParentObject.StonesOrder.OrderState)
+                {
+                    case SellOrderState.Wait:
+                        stateText = "无需处理";
+                        break;
+                    case SellOrderState.Lock:
+                        stateText = "无需处理";
+                        break;
+                    case SellOrderState.Finish:
+                        stateText = "无需处理";
+                        break;
+                    case SellOrderState.Exception:
+                        stateText = "处理异常";
+                        break;
+                    default:
+                        break;
+                }
+
+                return stateText;
+            }
+        }
+
+        public Visibility HandleButtonVisibility
+        {
+            get
+            {
+                if (this.ParentObject.StonesOrder.OrderState == SellOrderState.Exception)
+                {
+                    return Visibility.Visible;
+                }
+
+                return Visibility.Collapsed;
             }
         }
 

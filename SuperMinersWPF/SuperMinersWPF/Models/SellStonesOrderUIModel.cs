@@ -144,5 +144,18 @@ namespace SuperMinersWPF.Models
                 }
             }
         }
+
+        public bool BuyButtonEnable
+        {
+            get
+            {
+                if (this.OrderState == SellOrderState.Wait)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
     }
 }

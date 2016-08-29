@@ -357,34 +357,6 @@ namespace SuperMinersServerApplication.Controller
             return isOK;
         }
 
-        public int SetExceptionOrderCancel(string orderNumber)
-        {
-            StoneOrderRunnable order = null;
-            lock (this._lockListSellOrders)
-            {
-                this.dicSellOrders.TryGetValue(orderNumber, out order);
-            }
-
-            if (order == null)
-            {
-                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
-            }
-
-            order.SetOrderState(SellOrderState.Wait);
-            bool isOK = order.ReleaseLock();
-            if (isOK)
-            {
-                return OperResult.RESULTCODE_TRUE;
-            }
-
-            return OperResult.RESULTCODE_FALSE;
-        }
-
-        public bool SetExceptionOrderSucceed(AlipayRechargeRecord alipayRecord)
-        {
-            return this.AlipayCallback(alipayRecord);
-        }
-
         /// <summary>
         /// 此方法只是订单处理，不关心支付方式
         /// </summary>
@@ -570,7 +542,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord, bool saveAlipayRecord)
         {
             StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
             if (runnable != null)
@@ -578,7 +550,10 @@ namespace SuperMinersServerApplication.Controller
                 alipayRecord.user_name = runnable.GetLockedOrder().LockedByUserName;
             }
 
-            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+            if (saveAlipayRecord)
+            {
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+            }
 
             if (runnable != null)
             {
@@ -632,7 +607,60 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return false;
-        }        
+        }
+
+        public int HandleExceptionOrderCancel(string orderNumber)
+        {
+            StoneOrderRunnable order = null;
+            lock (this._lockListSellOrders)
+            {
+                this.dicSellOrders.TryGetValue(orderNumber, out order);
+            }
+
+            if (order == null)
+            {
+                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
+            }
+
+            string tokenBuyer = ClientManager.GetToken(order.GetLockedOrder().LockedByUserName);
+            order.SetOrderState(SellOrderState.Wait);
+            bool isOK = order.ReleaseLock();
+            if (isOK)
+            {
+                if (!string.IsNullOrEmpty(tokenBuyer) && this.StoneOrderAppealFailed != null)
+                {
+                    this.StoneOrderAppealFailed(tokenBuyer, order.OrderNumber);
+                }
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public int HandleExceptionOrderSucceed(AlipayRechargeRecord alipayRecord)
+        {
+            if (alipayRecord == null)
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+
+            StoneOrderRunnable runnable = this.GetLockedOrderByOrderNumber(alipayRecord.out_trade_no);
+            if (runnable == null)
+            {
+                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
+            }
+
+            runnable.SetOrderState(SellOrderState.Lock);
+
+            var oldRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(alipayRecord.out_trade_no, alipayRecord.alipay_trade_no);
+
+            if (this.AlipayCallback(alipayRecord, oldRecord == null))
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
+        }
 
         /// <summary>
         /// p1: token;  p2: orderNumber
@@ -642,5 +670,9 @@ namespace SuperMinersServerApplication.Controller
         /// p1: token;  p2: orderNumber
         /// </summary>
         public event Action<string, string> StoneOrderPaySucceedNotifySeller;
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> StoneOrderAppealFailed;
     }
 }

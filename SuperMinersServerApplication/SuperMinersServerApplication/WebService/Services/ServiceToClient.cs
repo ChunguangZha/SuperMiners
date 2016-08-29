@@ -39,6 +39,15 @@ namespace SuperMinersServerApplication.WebService.Services
             OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
             OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
             OrderController.Instance.MineOrderController.MineOrderPaySucceedNotify += MineOrderController_MineOrderPaySucceedNotify;
+            OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
+        }
+
+        void StoneOrderController_StoneOrderAppealFailed(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.AppealOrderFailed(arg1, (int)MetaData.Trade.AlipayTradeInType.BuyMine, arg2);
+            })).Start();
         }
 
         void MineOrderController_MineOrderPaySucceedNotify(string arg1, string arg2)

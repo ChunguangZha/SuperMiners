@@ -10,6 +10,7 @@ namespace SuperMinersWPF.Wcf.Clients
 {
     public partial class ServerClient
     {
+        public event Action<int, string> OnAppealOrderFailed;
         public event Action<int, string> OnOrderAlipayPaySucceed;
         public event Action OnOrderListChanged;
 
@@ -155,6 +156,15 @@ namespace SuperMinersWPF.Wcf.Clients
             if (null != handler)
             {
                 handler();
+            }
+        }
+
+        public void RaiseOnAppealOrderFailed(int tradeType, string orderNumber)
+        {
+            Action<int, string> handler = this.OnAppealOrderFailed;
+            if (null != handler)
+            {
+                handler(tradeType, orderNumber);
             }
         }
 

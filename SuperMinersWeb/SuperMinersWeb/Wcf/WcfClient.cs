@@ -22,6 +22,10 @@ namespace SuperMinersWeb.Wcf
         {
             get
             {
+                if (_client.State == CommunicationState.Faulted || _client.State == CommunicationState.Closed)
+                {
+                    Init();
+                }
                 return _client;
             }
         }

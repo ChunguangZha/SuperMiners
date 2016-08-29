@@ -33,6 +33,11 @@ namespace SuperMinersCustomServiceSystem.View
             GlobalData.Client.GetSellStonesOrderListCompleted += Client_GetSellStonesOrderListCompleted;
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.GetSellStonesOrderListCompleted -= Client_GetSellStonesOrderListCompleted;
+        }
+
         void Client_GetSellStonesOrderListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.SellStonesOrder[]> e)
         {
             App.BusyToken.CloseBusyWindow();
@@ -59,7 +64,7 @@ namespace SuperMinersCustomServiceSystem.View
         public void SetUser(string seller)
         {
             this.Title += "  ----" + seller;
-            GlobalData.Client.GetSellStonesOrderList(seller, new MyDateTime(), new MyDateTime());
+            GlobalData.Client.GetSellStonesOrderList(seller, -1, new MyDateTime(), new MyDateTime());
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

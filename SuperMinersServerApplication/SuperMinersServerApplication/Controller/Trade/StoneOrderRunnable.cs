@@ -74,7 +74,8 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lock)
             {
-                if (this._sellOrder.OrderState == SellOrderState.Lock && this._lockOrderObject != null)
+                if ((this._sellOrder.OrderState == SellOrderState.Lock || this._sellOrder.OrderState == SellOrderState.Exception) 
+                    && this._lockOrderObject != null)
                 {
                     return this._lockOrderObject.LockedByUserName == buyerUserName;
                 }
@@ -220,11 +221,11 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
-        public int SetOrderState(SellOrderState state)
+        public void SetOrderState(SellOrderState state)
         {
             lock (this._lock)
             {
-                this.OrderState = state;
+                this._sellOrder.OrderState = state;
             }
         }
 
@@ -249,6 +250,7 @@ namespace SuperMinersServerApplication.Controller
 
                 if (DBProvider.StoneOrderDBProvider.SetSellOrderException(this.OrderNumber))
                 {
+                    this._sellOrder.OrderState = SellOrderState.Exception;
                     return OperResult.RESULTCODE_TRUE;
                 }
 

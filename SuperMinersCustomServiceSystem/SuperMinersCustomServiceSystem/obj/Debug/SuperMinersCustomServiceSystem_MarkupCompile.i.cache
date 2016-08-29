@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;Encrypt
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
-161662861809
+172068130048
 
-61-1272770984
-16-40985637
-BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\AddNoticeWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\InputActionPasswordWindow.xaml;View\StoneOrderResolveException.xaml;View\ViewPlayerAlipayPayRecordWindow.xaml;View\ViewPlayerBuyMineRecordWindow.xaml;View\ViewPlayerBuyMinerRecordWindow.xaml;View\ViewPlayerBuyStoneRecordWindow.xaml;View\ViewPlayerGoldCoinRechargeRecordWindow.xaml;View\ViewPlayerLockStoneRecordWindow.xaml;View\ViewPlayerSellStoneRecordWindow.xaml;
+65-360480195
+231273746584
+BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;View\AddNoticeWindow.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\FillAlipayInfoWindow.xaml;View\InputActionPasswordWindow.xaml;View\StoneOrderResolveExceptionWindow.xaml;View\ViewPlayerAlipayPayRecordWindow.xaml;View\ViewPlayerBuyMineRecordWindow.xaml;View\ViewPlayerBuyMinerRecordWindow.xaml;View\ViewPlayerBuyStoneRecordWindow.xaml;View\ViewPlayerGoldCoinRechargeRecordWindow.xaml;View\ViewPlayerLockStoneRecordWindow.xaml;View\ViewPlayerSellStoneRecordWindow.xaml;
 
-False
+True
 

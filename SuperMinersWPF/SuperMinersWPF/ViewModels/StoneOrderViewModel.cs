@@ -93,6 +93,12 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.CancelSellStone(orderNumber, null);
         }
 
+        public void AsyncSetStoneOrderPayException(string orderNumber)
+        {
+            App.BusyToken.ShowBusyWindow("正在提交申诉...");
+            GlobalData.Client.SetStoneOrderPayException(orderNumber, null);
+        }
+
         public void RegisterEvent()
         {
             _timer.Elapsed += Timer_Elapsed;
@@ -106,6 +112,13 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.LockSellStoneCompleted += Client_LockSellStoneCompleted;
             GlobalData.Client.CancelSellStoneCompleted += Client_CancelSellStoneCompleted;
             GlobalData.Client.SetStoneOrderPayExceptionCompleted += Client_SetStoneOrderPayExceptionCompleted;
+            GlobalData.Client.OnAppealOrderFailed += Client_OnAppealOrderFailed;
+        }
+
+        void Client_OnAppealOrderFailed(int arg1, string arg2)
+        {
+            AsyncGetOrderLockedBySelf();
+            AsyncGetAllNotFinishedSellOrders();
         }
 
         /// <summary>
@@ -128,15 +141,24 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
+            bool isOK = false;
             if (e.Result == OperResult.RESULTCODE_TRUE)
             {
+                isOK = true;
                 MyMessageBox.ShowInfo("申诉提交成功，等待管理员处理");
             }
             else
             {
+                isOK = false;
                 MyMessageBox.ShowInfo("申诉提交失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
             }
 
+            if (SetStoneOrderExceptionFinished != null)
+            {
+                SetStoneOrderExceptionFinished(isOK);
+            }
+
+            AsyncGetOrderLockedBySelf();
             AsyncGetAllNotFinishedSellOrders();
         }
 
@@ -434,10 +456,10 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
+            this.MyBuyNotFinishedStoneOrders.Clear();
             if (e.Result != null)
             {
                 var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
-                this.MyBuyNotFinishedStoneOrders.Clear();
                 this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
                 this._timer.Start();
             }
@@ -446,6 +468,7 @@ namespace SuperMinersWPF.ViewModels
         public event Action<LockSellStonesOrderUIModel> StoneOrderLockSucceed;
         public event Action StoneOrderPaySucceed;
         public event Action StoneOrderLockTimeOut;
+        public event Action<bool> SetStoneOrderExceptionFinished;
 
         public event Action BuyGoldCoinAlipayPaySucceed;
         public event Action BuyMineAlipayPaySucceed;

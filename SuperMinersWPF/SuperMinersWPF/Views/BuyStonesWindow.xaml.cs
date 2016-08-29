@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Models;
+﻿using MetaData;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,7 @@ namespace SuperMinersWPF.Views
             //GlobalData.Client.PayOrderByAlipayCompleted += Client_PayOrderByAlipayCompleted;
             App.StoneOrderVMObject.StoneOrderLockTimeOut += StoneOrderVMObject_OrderLockTimeOut;
             App.StoneOrderVMObject.StoneOrderPaySucceed += StoneOrderVMObject_PayOrderSucceed;
+            App.StoneOrderVMObject.SetStoneOrderExceptionFinished += StoneOrderVMObject_SetStoneOrderExceptionFinished;
             
             this.DataContext = this.LockedOrder;
 
@@ -64,13 +66,24 @@ namespace SuperMinersWPF.Views
                 this.chkPayType.IsEnabled = true;
             }
         }
-
+        
         private void Window_Closed(object sender, EventArgs e)
         {
             GlobalData.Client.ReleaseLockOrderCompleted -= Client_ReleaseLockOrderCompleted;
-            //GlobalData.Client.PayOrderByAlipayCompleted -= Client_PayOrderByAlipayCompleted;
             App.StoneOrderVMObject.StoneOrderLockTimeOut -= StoneOrderVMObject_OrderLockTimeOut;
             App.StoneOrderVMObject.StoneOrderPaySucceed -= StoneOrderVMObject_PayOrderSucceed;
+            App.StoneOrderVMObject.SetStoneOrderExceptionFinished -= StoneOrderVMObject_SetStoneOrderExceptionFinished;
+        }
+
+        void StoneOrderVMObject_SetStoneOrderExceptionFinished(bool obj)
+        {
+            if (obj)
+            {
+                _syn.Post(o =>
+                {
+                    this.Close();
+                }, null);
+            }
         }
 
         void StoneOrderVMObject_PayOrderSucceed()
@@ -81,9 +94,9 @@ namespace SuperMinersWPF.Views
 
         void StoneOrderVMObject_OrderLockTimeOut()
         {
-            this.btnOK.IsEnabled = false;
             _syn.Post(o =>
             {
+                this.btnOK.IsEnabled = false;
                 MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
                 this.Close();
             }, null);
@@ -95,6 +108,8 @@ namespace SuperMinersWPF.Views
             {
                 return;
             }
+
+            App.BusyToken.CloseBusyWindow();
 
             if (e.Error != null)
             {
@@ -120,7 +135,11 @@ namespace SuperMinersWPF.Views
                 {
                     if (!AlipayPaySucceed)
                     {
-                        MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                        System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
+                        if (result == System.Windows.Forms.DialogResult.OK)
+                        {
+                            App.StoneOrderVMObject.AsyncSetStoneOrderPayException(LockedOrder.OrderNumber);
+                        }
                     }
                 }
                 else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
@@ -138,6 +157,7 @@ namespace SuperMinersWPF.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            App.BusyToken.ShowBusyWindow("正在取消订单...");
             GlobalData.Client.ReleaseLockOrder(this._lockedOrder.OrderNumber, null);
         }
 

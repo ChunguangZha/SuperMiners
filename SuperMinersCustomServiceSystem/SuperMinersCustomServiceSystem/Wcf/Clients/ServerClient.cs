@@ -229,9 +229,16 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetSellStonesOrderListCompleted;
-        public void GetSellStonesOrderList(string sellerUserName, MyDateTime startDate, MyDateTime endDate)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sellerUserName"></param>
+        /// <param name="sellOrderState">小于0表示全部</param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        public void GetSellStonesOrderList(string sellerUserName, int sellOrderState, MyDateTime startDate, MyDateTime endDate)
         {
-            this._invoker.Invoke<SellStonesOrder[]>(this._context, "GetSellStonesOrderList", this.GetSellStonesOrderListCompleted, GlobalData.Token, sellerUserName, startDate, endDate);
+            this._invoker.Invoke<SellStonesOrder[]>(this._context, "GetSellStonesOrderList", this.GetSellStonesOrderListCompleted, GlobalData.Token, sellerUserName, sellOrderState, startDate, endDate);
         }
 
         public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder[]>> GetLockedStonesOrderListCompleted;
@@ -256,6 +263,18 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void GetBuyMinesNotFinishedRecordList(string buyerUserName)
         {
             this._invoker.Invoke<MinesBuyRecord[]>(this._context, "GetBuyMinesNotFinishedRecordList", this.GetBuyMinesNotFinishedRecordListCompleted, GlobalData.Token, buyerUserName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionStoneOrderSucceedCompleted;
+        public void HandleExceptionStoneOrderSucceed(AlipayRechargeRecord alipayRecord)
+        {
+            this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderSucceed", this.HandleExceptionStoneOrderSucceedCompleted, GlobalData.Token, alipayRecord);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionStoneOrderFailedCompleted;
+        public void HandleExceptionStoneOrderFailed(string orderNumber)
+        {
+            this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderFailed", this.HandleExceptionStoneOrderFailedCompleted, GlobalData.Token, orderNumber);
         }
 
         #endregion

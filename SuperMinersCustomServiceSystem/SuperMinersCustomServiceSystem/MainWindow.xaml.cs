@@ -277,16 +277,16 @@ namespace SuperMinersCustomServiceSystem
         {
             try
             {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
-                    }
-                }
+                //if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                //{
+                //    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                //    if (player != null)
+                //    {
+                //        ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
+                //        win.Show();
+                //        win.SetUser(player.UserName);
+                //    }
+                //}
             }
             catch (Exception exc)
             {

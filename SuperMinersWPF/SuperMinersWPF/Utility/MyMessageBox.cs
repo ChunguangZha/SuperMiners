@@ -14,6 +14,11 @@ namespace SuperMinersWPF.Utility
             MessageBox.Show(infoMessage);
         }
 
+        public static DialogResult ShowQuestionOKCancel(string infoMessage)
+        {
+            return MessageBox.Show(infoMessage, "请确认", MessageBoxButtons.OKCancel);
+        }
+
         public static MessageBoxAlipayPayQuestionResult ShowAlipayPayQuestion()
         {
             MessageBoxAlipayPayQuestion dig = new MessageBoxAlipayPayQuestion();

@@ -29,6 +29,11 @@ namespace SuperMinersCustomServiceSystem.View
             //GlobalData.Client.GetLockedStonesOrderListCompleted += Client_GetLockedStonesOrderListCompleted;
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+
+        }
+
         //void Client_GetLockedStonesOrderListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.LockSellStonesOrder[]> e)
         //{
         //    App.BusyToken.CloseBusyWindow();
