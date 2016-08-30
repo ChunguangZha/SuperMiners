@@ -28,7 +28,7 @@
                 <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
                 <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
                                 <Run Text="当前系统共累计生产： "/>
-                                <Run Text="{Binding SystemAllOutputStoneCount}"/>
+                                <Run Text="{Binding SystemAllOutputStoneCount, StringFormat='F0'}"/>
                                 <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
                 </TextBlock>
             </StackPanel>

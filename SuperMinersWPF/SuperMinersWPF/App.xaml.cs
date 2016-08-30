@@ -33,39 +33,6 @@ namespace SuperMinersWPF
             UserReferrerTreeVMObject.RegisterEvent();
             NoticeVMObject.RegisterEvent();
             StoneOrderVMObject.RegisterEvent();
-
-//#if !DEBUG
-//            CreateDesktopShortCut();
-//#endif
         }
-
-        //private static void CreateDesktopShortCut()
-        //{
-           
-        //    string path = System.Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
-        //    if (!path.EndsWith("\\"))
-        //    {
-        //        path += "\\";
-        //    }
-        //    path += @"Programs\迅灵信息";
-        //    if (System.IO.Directory.Exists(path))
-        //    {
-        //        string desktop = System.Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        //        if (!desktop.EndsWith("\\"))
-        //        {
-        //            desktop += "\\";
-        //        }
-        //        foreach (String file in System.IO.Directory.GetFiles(path))
-        //        {
-        //            System.IO.FileInfo fi = new System.IO.FileInfo(file);
-        //            if (!System.IO.File.Exists(desktop + fi.Name))
-        //            {
-        //                fi.CopyTo(desktop + fi.Name);
-        //            }
-        //        }
-        //    }
-        //}
-
-
     }
 }

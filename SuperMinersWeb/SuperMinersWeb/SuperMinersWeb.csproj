@@ -147,6 +147,7 @@
     <Content Include="Images\qq.png" />
     <Content Include="Images\yes.png" />
     <Content Include="Scripts\float-contact-us.js" />
+    <Content Include="Scripts\TrafficAnalysis.js" />
     <Content Include="Software\DownLoad.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\1_3.png" />
