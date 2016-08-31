@@ -144,23 +144,31 @@ namespace SuperMinersWPF
 
         private void btnMinersBuy_Click(object sender, RoutedEventArgs e)
         {
-            bool showWin = true;
-            if (GlobalData.CurrentUser.TempOutputStones > 0)
+            try
             {
-                showWin = false;
-                App.UserVMObject.SuspendListen();
-                GatherStonesForBuyMinerWindow winGatherStones = new GatherStonesForBuyMinerWindow();
-                if (winGatherStones.ShowDialog() == true)
+                bool showWin = true;
+                if (GlobalData.CurrentUser.TempOutputStones > 0)
                 {
-                    showWin = true;
+                    showWin = false;
+                    App.UserVMObject.SuspendListen();
+                    GatherStonesForBuyMinerWindow winGatherStones = new GatherStonesForBuyMinerWindow();
+                    if (winGatherStones.ShowDialog() == true)
+                    {
+                        showWin = true;
+                    }
+                    App.UserVMObject.ResumeListen();
                 }
-                App.UserVMObject.ResumeListen();
-            }
 
-            if (showWin)
+                if (showWin)
+                {
+                    BuyMinerWindow win = new BuyMinerWindow();
+                    win.ShowDialog();
+                }
+            }
+            catch (Exception exc)
             {
-                BuyMinerWindow win = new BuyMinerWindow();
-                win.ShowDialog();
+                LogHelper.Instance.AddErrorLog("Buy Miners Exception", exc);
+                MyMessageBox.ShowInfo("购买矿工异常");
             }
         }
 

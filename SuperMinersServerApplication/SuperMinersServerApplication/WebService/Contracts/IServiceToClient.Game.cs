@@ -18,7 +18,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int BuyMiner(string token, string userName, int minersCount, int tradeType);
+        int BuyMiner(string token, string userName, int minersCount);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/BuyMine",

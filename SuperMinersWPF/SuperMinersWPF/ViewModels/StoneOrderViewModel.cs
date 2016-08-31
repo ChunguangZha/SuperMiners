@@ -362,7 +362,8 @@ namespace SuperMinersWPF.ViewModels
 
             if (e.Result == OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("购买矿石成功。");
+                //此处屏蔽提示消息，在交易成功的回调函数中提示。
+                //MyMessageBox.ShowInfo("购买矿石成功。");
 
                 if (StoneOrderPaySucceed != null)
                 {

@@ -102,26 +102,34 @@ namespace SuperMinersWPF.Views
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            int count = (int)this.numMinesCount.Value;
-            if (count == 0)
+            try
             {
-                MyMessageBox.ShowInfo("请输入有效" + Strings.Mine + "数");
-                return;
-            }
-
-            int payType = (int)PayType.Alipay;
-            if (this.chkPayType.IsChecked == false)
-            {
-                payType = (int)PayType.RMB;
-                decimal money = count * GlobalData.GameConfig.RMB_Mine;
-                this.txtNeedMoney.Text = money.ToString();
-                if (money > GlobalData.CurrentUser.RMB)
+                int count = (int)this.numMinesCount.Value;
+                if (count == 0)
                 {
-                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    MyMessageBox.ShowInfo("请输入有效" + Strings.Mine + "数");
                     return;
                 }
+
+                int payType = (int)PayType.Alipay;
+                if (this.chkPayType.IsChecked == false)
+                {
+                    payType = (int)PayType.RMB;
+                    decimal money = count * GlobalData.GameConfig.RMB_Mine;
+                    this.txtNeedMoney.Text = money.ToString();
+                    if (money > GlobalData.CurrentUser.RMB)
+                    {
+                        MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                        return;
+                    }
+                }
+                GlobalData.Client.BuyMine(count, payType);
             }
-            GlobalData.Client.BuyMine(count, payType);
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Buy Mine Exception", exc);
+                MyMessageBox.ShowInfo("勘探矿山失败");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

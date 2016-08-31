@@ -68,7 +68,7 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="同一IP最大允许注册玩家数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                    <TextBlock Text="同一IP可奖励玩家数：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Column="1" Value="{Binding UserCountCreateByOneIP, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
                                         <Run Text="赠送新注册玩家"/>

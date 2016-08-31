@@ -61,6 +61,7 @@
     <Compile Include="SystemConfig\SystemConfigin1.cs" />
     <Compile Include="Trade\TradeOperResult.cs" />
     <Compile Include="Trade\TradeType.cs" />
+    <Compile Include="Trade\WaitToAwardExpRecord.cs" />
     <Compile Include="User\AdminInfo.cs" />
     <Compile Include="User\DeleteResultInfo.cs" />
     <Compile Include="User\TopListInfo.cs" />

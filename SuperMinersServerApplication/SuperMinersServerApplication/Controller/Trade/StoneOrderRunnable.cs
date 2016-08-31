@@ -94,9 +94,9 @@ namespace SuperMinersServerApplication.Controller
                     StonesOrder = this._sellOrder,
                     BuyerUserName = this._lockOrderObject.LockedByUserName,
                     BuyTime = this._lockOrderObject.LockedTime,
-                    AwardGoldCoin = this._sellOrder.SellStonesCount * GlobalConfig.GameConfig.StoneBuyerAwardGoldCoinMultiple
+                    AwardGoldCoin = (int)((this.ValueRMB * GlobalConfig.GameConfig.StoneBuyerAwardGoldCoinMultiple) * GlobalConfig.GameConfig.RMB_GoldCoin)
                 };
-
+                
                 this._sellOrder.OrderState = SellOrderState.Finish;
                 DBProvider.StoneOrderDBProvider.PayOrder(buyOrder, trans);
                 DBProvider.StoneOrderDBProvider.FinishOrderLock(this._sellOrder.OrderNumber, trans);

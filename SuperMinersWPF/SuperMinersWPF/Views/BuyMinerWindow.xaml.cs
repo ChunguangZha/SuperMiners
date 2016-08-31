@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.StringResources;
+﻿using MetaData;
+using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -56,13 +57,13 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("服务器不存在当前用户，请联系平台客服。");
                 return;
             }
-            if (result == 0)
+            if (result != OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("购买失败。");
+                MyMessageBox.ShowInfo("购买失败。原因：" + ResultCodeMsg.GetMsg(result));
                 return;
             }
 
-            MyMessageBox.ShowInfo("成功购买 " + result.ToString() + "位矿工。");
+            MyMessageBox.ShowInfo("购买矿工成功");
             App.UserVMObject.AsyncGetPlayerInfo();
 
             _syn.Post(p =>
@@ -73,21 +74,29 @@ namespace SuperMinersWPF.Views
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            int count = (int)this.numMinersCount.Value;
-            if (count == 0)
+            try
             {
-                MyMessageBox.ShowInfo("请输入有效" + Strings.Miner + "数");
-                return;
-            }
+                int count = (int)this.numMinersCount.Value;
+                if (count == 0)
+                {
+                    MyMessageBox.ShowInfo("请输入有效" + Strings.Miner + "数");
+                    return;
+                }
 
-            decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
-            this.txtNeedMoney.Text = money.ToString();
-            if (money > GlobalData.CurrentUser.GoldCoin)
-            {
-                MyMessageBox.ShowInfo("账户余额不足，请充值。");
-                return;
+                decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
+                this.txtNeedMoney.Text = money.ToString();
+                if (money > GlobalData.CurrentUser.GoldCoin)
+                {
+                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    return;
+                }
+                GlobalData.Client.BuyMiner(count, count);
             }
-            GlobalData.Client.BuyMiner(count, count);
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Buy Miner Exception", exc);
+                MyMessageBox.ShowInfo("购买矿工异常");
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

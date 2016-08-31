@@ -26,7 +26,7 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.txtAllOutputStones.Text = GlobalData.CurrentUser.TempOutputStones.ToString();
+            this.txtAllOutputStones.Text = GlobalData.CurrentUser.TempOutputStones.ToString("0.00");
             this.txtGatherableStones.Text = ((int)GlobalData.CurrentUser.TempOutputStones).ToString();
         }
 

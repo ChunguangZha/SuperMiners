@@ -101,30 +101,38 @@ namespace SuperMinersWPF.Views
         
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            int spendRMB = (int)this.numRechargeRMB.Value;
-            if (spendRMB == 0)
+            try
             {
-                MyMessageBox.ShowInfo("请输入有效" + Strings.RMB + "值");
-                return;
-            }
-
-            decimal GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
-            this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
-            int payType;
-            if (chkPayType.IsChecked == false)
-            {
-                if (spendRMB > GlobalData.CurrentUser.RMB)
+                int spendRMB = (int)this.numRechargeRMB.Value;
+                if (spendRMB == 0)
                 {
-                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    MyMessageBox.ShowInfo("请输入有效" + Strings.RMB + "值");
                     return;
                 }
-                payType = (int)PayType.RMB;
+
+                decimal GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+                int payType;
+                if (chkPayType.IsChecked == false)
+                {
+                    if (spendRMB > GlobalData.CurrentUser.RMB)
+                    {
+                        MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                        return;
+                    }
+                    payType = (int)PayType.RMB;
+                }
+                else
+                {
+                    payType = (int)PayType.Alipay;
+                }
+                GlobalData.Client.GoldCoinRecharge((int)GainGoldCoin, payType);
             }
-            else
+            catch (Exception exc)
             {
-                payType = (int)PayType.Alipay;
+                LogHelper.Instance.AddErrorLog("Buy GoldCoin Exception", exc);
+                MyMessageBox.ShowInfo("充值金币异常");
             }
-            GlobalData.Client.GoldCoinRecharge((int)GainGoldCoin, payType);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

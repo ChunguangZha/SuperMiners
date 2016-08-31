@@ -22,9 +22,8 @@ namespace SuperMinersServerApplication.WebService.Services
         /// <param name="token"></param>
         /// <param name="userName"></param>
         /// <param name="minersCount"></param>
-        /// <param name="payType"></param>
         /// <returns></returns>
-        public int BuyMiner(string token, string userName, int minersCount, int payType)
+        public int BuyMiner(string token, string userName, int minersCount)
         {
 #if Delay
 

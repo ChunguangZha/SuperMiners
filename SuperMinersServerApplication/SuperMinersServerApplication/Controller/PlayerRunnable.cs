@@ -209,7 +209,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                decimal allGoldCoin = BasePlayer.FortuneInfo.GoldCoin + BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
+                decimal allGoldCoin = BasePlayer.FortuneInfo.GoldCoin;// +BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
                 decimal allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
                 if (allNeedGoldCoin > allGoldCoin)
                 {
@@ -222,15 +222,17 @@ namespace SuperMinersServerApplication.Controller
                 }
                 else
                 {
-                    decimal gc = allNeedGoldCoin - BasePlayer.FortuneInfo.GoldCoin;
-                    int needRMB = (int)Math.Ceiling(gc / GlobalConfig.GameConfig.RMB_GoldCoin);
-                    if (needRMB > BasePlayer.FortuneInfo.RMB)
-                    {
-                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
-                    }
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
 
-                    BasePlayer.FortuneInfo.RMB -= needRMB;
-                    BasePlayer.FortuneInfo.GoldCoin = needRMB * GlobalConfig.GameConfig.RMB_GoldCoin - gc;
+                    //decimal gc = allNeedGoldCoin - BasePlayer.FortuneInfo.GoldCoin;
+                    //int needRMB = (int)Math.Ceiling(gc / GlobalConfig.GameConfig.RMB_GoldCoin);
+                    //if (needRMB > BasePlayer.FortuneInfo.RMB)
+                    //{
+                    //    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    //}
+
+                    //BasePlayer.FortuneInfo.RMB -= needRMB;
+                    //BasePlayer.FortuneInfo.GoldCoin = needRMB * GlobalConfig.GameConfig.RMB_GoldCoin - gc;
                 }
                 BasePlayer.FortuneInfo.MinersCount += minersCount;
 

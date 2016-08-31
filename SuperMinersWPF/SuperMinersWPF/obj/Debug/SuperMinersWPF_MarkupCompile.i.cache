@@ -16,5 +16,5 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
 27-1174524522
 Assets\Style.xaml;Login.xaml;Utility\MessageBoxAlipayPayQuestion.xaml;Views\BusyWindow.xaml;Views\BuyGoldCoinWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\ChatUserControl.xaml;Views\DigStoneAreaUserControl.xaml;Views\FunnyUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticesWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\MyKuangChangControl.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
-False
+True
 
