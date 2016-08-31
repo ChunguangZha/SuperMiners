@@ -89,6 +89,7 @@ namespace SuperMinersServerApplication.Controller
             //    Awardable = true;
             //}
 
+            List<WaitToAwardExpRecord> listWaitToAwardExpRecord = new List<WaitToAwardExpRecord>();
             List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
             var trans = MyDBHelper.Instance.CreateTrans();
 
@@ -111,7 +112,15 @@ namespace SuperMinersServerApplication.Controller
                                 playerrun = new PlayerRunnable(referrerLevel1player);
                             }
                             var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
-                            playerrun.ReferAward(awardConfig, trans);
+                            var awardExpRecord = new WaitToAwardExpRecord()
+                            {
+                                AwardGoldCoin = (int)awardConfig.AwardReferrerExp,
+                                NewRegisterUserNme = userName,
+                                ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
+                            };
+                            listWaitToAwardExpRecord.Add(awardExpRecord);
+
+                            //playerrun.ReferAward(awardConfig, trans);
                             listPlayerRun.Add(playerrun);
 
                             PlayerActionController.Instance.AddLog(playerrun.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
@@ -139,7 +148,15 @@ namespace SuperMinersServerApplication.Controller
                             }
 
                             var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
-                            playerrun.ReferAward(awardConfig, trans);
+                            //playerrun.ReferAward(awardConfig, trans);
+                            var awardExpRecord = new WaitToAwardExpRecord()
+                            {
+                                AwardGoldCoin = (int)awardConfig.AwardReferrerExp,
+                                NewRegisterUserNme = userName,
+                                ReferrerUserName = previousReferrerUserName
+                            };
+                            listWaitToAwardExpRecord.Add(awardExpRecord);
+
                             listPlayerRun.Add(playerrun);
 
                             previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
@@ -176,9 +193,13 @@ namespace SuperMinersServerApplication.Controller
                 };
 
                 DBProvider.UserDBProvider.AddPlayer(newplayer, trans);
-                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
-
+                foreach (var item in listWaitToAwardExpRecord)
+                {
+                    DBProvider.WaitToAwardExpRecordDBProvider.SaveWaitToAwardExpRecord(item, trans);
+                }
                 trans.Commit();
+
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
 
                 foreach (var playerrun in listPlayerRun)
                 {
@@ -214,6 +235,20 @@ namespace SuperMinersServerApplication.Controller
             {
                 player.SimpleInfo.LastLoginTime = DateTime.Now;
                 PlayerRunnable playerrun = new PlayerRunnable(player);
+
+                //说明是第一次登录
+                if (player.SimpleInfo.LastLogOutTime == null)
+                {
+                    var awardRecords = DBProvider.WaitToAwardExpRecordDBProvider.GetWaitToAwardExpRecord(userName);
+                    if (awardRecords != null)
+                    {
+                        foreach (var awardrecord in awardRecords)
+                        {
+                            var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
+                            referrerPlayerRunnable.BuyMineByAlipay
+                        }
+                    }
+                }
 
                 //计算玩家上一次退出，到本次登录时，累计矿工产量。
                 playerrun.ComputePlayerOfflineStoneOutput();

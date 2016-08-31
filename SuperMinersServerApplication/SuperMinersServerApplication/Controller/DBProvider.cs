@@ -26,5 +26,7 @@ namespace SuperMinersServerApplication.Controller
         public static AlipayRecordDBProvider AlipayRecordDBProvider = new AlipayRecordDBProvider();
 
         public static GoldCoinRecordDBProvider GoldCoinRecordDBProvider = new GoldCoinRecordDBProvider();
+
+        public static WaitToAwardExpRecordDBProvider WaitToAwardExpRecordDBProvider = new WaitToAwardExpRecordDBProvider();
     }
 }

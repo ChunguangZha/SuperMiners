@@ -325,5 +325,20 @@ namespace DataBaseProvider
             return orders;
         }
 
+        internal static WaitToAwardExpRecord[] GetWaitToAwardExpRecordListFromDataTable(DataTable dt)
+        {
+            WaitToAwardExpRecord[] records = new WaitToAwardExpRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                records[i] = new WaitToAwardExpRecord()
+                {
+                    AwardGoldCoin = Convert.ToInt32(dt.Rows[0]["AwardGoldCoin"]),
+                    NewRegisterUserNme = Convert.ToString(dt.Rows[0]["NewRegisterUserNme"]),
+                    ReferrerUserName = Convert.ToString(dt.Rows[0]["ReferrerUserName"])
+                };
+            }
+
+            return records;
+        }
     }
 }
