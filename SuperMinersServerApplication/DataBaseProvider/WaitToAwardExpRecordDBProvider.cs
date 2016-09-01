@@ -49,13 +49,13 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into waittoawardexprecord " +
-                    "(`ReferrerUserName`,`NewRegisterUserNme`,`AwardGoldCoin`) " +
-                    " values (@ReferrerUserName, @NewRegisterUserNme,@AwardGoldCoin)";
+                    "(`ReferrerUserName`,`NewRegisterUserNme`,`AwardLevel`) " +
+                    " values (@ReferrerUserName, @NewRegisterUserNme,@AwardLevel)";
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(record.ReferrerUserName));
                 mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(record.NewRegisterUserNme));
-                mycmd.Parameters.AddWithValue("@AwardGoldCoin", record.AwardGoldCoin);
+                mycmd.Parameters.AddWithValue("@AwardLevel", record.AwardLevel);
                 mycmd.ExecuteNonQuery();
                 return true;
             }

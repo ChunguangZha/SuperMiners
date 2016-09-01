@@ -62,6 +62,9 @@ namespace SuperMinersWPF.Views
             {
                 return;
             }
+
+            _kv.Clear();
+
             _kv.Add("<$注册赠送矿山价值人民币$>", GlobalData.RegisterUserConfig.GiveToNewUserMines * GlobalData.GameConfig.StonesReservesPerMines /GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB);
             _kv.Add("<$注册赠送矿工数量$>", GlobalData.RegisterUserConfig.GiveToNewUserMiners);
             _kv.Add("<$每天免费收益人民币$>", GlobalData.RegisterUserConfig.GiveToNewUserMiners * GlobalData.GameConfig.OutputStonesPerHour * 24 / GlobalData.GameConfig.Stones_RMB/GlobalData.GameConfig.Yuan_RMB);

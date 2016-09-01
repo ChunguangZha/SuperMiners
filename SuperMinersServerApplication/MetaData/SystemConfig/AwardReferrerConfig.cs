@@ -103,7 +103,7 @@ namespace MetaData.SystemConfig
         [DataMember]
         public decimal AwardReferrerDiamond = 0.0m;
 
-        public string ToString()
+        public override string ToString()
         {
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append(string.Format("第{0}级推荐奖励：", this.ReferLevel));

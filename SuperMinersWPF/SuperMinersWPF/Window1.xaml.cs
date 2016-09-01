@@ -230,7 +230,7 @@ namespace SuperMinersWPF
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Visible;
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
             this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
@@ -242,12 +242,20 @@ namespace SuperMinersWPF
                 return;
             }
 
-            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlChat.Visibility = System.Windows.Visibility.Visible;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
+
+
+            //this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            //this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowTopList_Checked(object sender, RoutedEventArgs e)
@@ -257,13 +265,20 @@ namespace SuperMinersWPF
                 return;
             }
 
-            App.TopListVMObject.AsyncGetExpTopList();
-            this.controlTopList.Visibility = System.Windows.Visibility.Visible;
-            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlChat.Visibility = System.Windows.Visibility.Visible;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
+
+            //App.TopListVMObject.AsyncGetExpTopList();
+            //this.controlTopList.Visibility = System.Windows.Visibility.Visible;
+            //this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowChat_Checked(object sender, RoutedEventArgs e)
@@ -277,7 +292,7 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
 
@@ -293,22 +308,29 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
         }
 
-        private void btnShowGameHelper_Checked(object sender, RoutedEventArgs e)
+        private void btnShowMySuperMiners_Checked(object sender, RoutedEventArgs e)
         {
             if (this.controlDigStoneArea == null)
             {
                 return;
             }
 
-            this.controlGameHelper.Visibility = System.Windows.Visibility.Visible;
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMySuperMiners.Visibility = System.Windows.Visibility.Visible;
             this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
+
+            //this.controlGameHelper.Visibility = System.Windows.Visibility.Visible;
+            //this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
+            //this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void linkNotice_Click(object sender, RoutedEventArgs e)

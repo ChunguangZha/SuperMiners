@@ -33,7 +33,7 @@ namespace SuperMinersWPF.Views
         private void SetAdText()
         {
             StringBuilder builder = new StringBuilder();
-            builder.Append("迅灵矿场，一个挖矿赚钱的网站。");
+            //builder.Append("迅灵矿场，一个挖矿赚钱的网站。");
             //if (GlobalData.RegisterUserConfig != null)
             //{
             //    builder.Append(GlobalData.RegisterUserConfig.ToString());
@@ -52,7 +52,7 @@ namespace SuperMinersWPF.Views
             //    }
             //}
 
-            builder.Append("无需挂机每天上线收取矿石即可，轻轻松松把钱赚。");
+            //builder.Append("无需挂机每天上线收取矿石即可，轻轻松松把钱赚。");
 
             string baseuri = "";
 #if DEBUG
@@ -66,6 +66,7 @@ namespace SuperMinersWPF.Views
             builder.Append(" " + uri);
 
             this.txtInvitationCode.Text = builder.ToString();
+            this.txtReferrerMsg.Text = "推荐好友，注册后成功登录，即可获取如下奖励：" + GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(1).ToString();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

@@ -12,6 +12,6 @@ namespace MetaData.Trade
 
         public string NewRegisterUserNme;
 
-        public int AwardGoldCoin;
+        public int AwardLevel;
     }
 }

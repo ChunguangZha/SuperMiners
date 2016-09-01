@@ -139,7 +139,7 @@
                 <Button Grid.Row="1" Grid.Column="2" x:Name="btnInvitationFriends" Content="邀请好友" Style="{StaticResource UserInfoButtonStyle}" Click="btnInvitationFriends_Click"/>
                 <TextBlock Grid.Row="2" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding RMB, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="2" Grid.Column="2" x:Name="btnGetMoney" Content="提现" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetMoney_Click"/>
+                <Button Grid.Row="2" Grid.Column="2" x:Name="btnGetMoney" Visibility="Collapsed" Content="提现" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetMoney_Click"/>
                 <TextBlock Grid.Row="3" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding GoldCoin, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="3" Grid.Column="2" x:Name="btnGoldCoinRecharge" Content="充值" Style="{StaticResource UserInfoButtonStyle}" Click="btnGoldCoinRecharge_Click"/>
@@ -184,7 +184,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="系统消息：" Margin="10,5" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBlock Text="系统消息：" Margin="10,5" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFF3A1A"/>
                 <TextBlock Grid.Column="1" x:Name="txtLinkNotice" Margin="10,5" FontStyle="Italic" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                     <TextBlock.RenderTransform>
                         <TranslateTransform x:Name="txtLinkNoticeTranslate" Y="0"/>
@@ -243,7 +243,7 @@
                         <TextBlock Grid.Column="1" Text="娱乐" FontSize="16"/>
                     </Grid>
                 </RadioButton>
-                <RadioButton x:Name="btnShowGameHelper" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowGameHelper_Checked">
+                <RadioButton x:Name="btnShowMySuperMiners" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowMySuperMiners_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -259,7 +259,7 @@
             <Views:DigStoneAreaUserControl x:Name="controlDigStoneArea" Visibility="Visible"/>
             <Views:StonesMarketUserControl x:Name="controlStonesMarket" Visibility="Collapsed"/>
             <Views:TopListUserControl x:Name="controlTopList" Visibility="Collapsed"/>
-            <Views:GameHelperControl x:Name="controlGameHelper" Visibility="Collapsed"/>
+            <Views:MySuperMinersControl x:Name="controlMySuperMiners" Visibility="Collapsed"/>
             <Views:ChatUserControl x:Name="controlChat" Visibility="Collapsed"/>
             <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
         </Grid>

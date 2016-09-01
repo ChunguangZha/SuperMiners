@@ -16,6 +16,35 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
+        public int WithdrawRMB(string token, string userName, int getRMBCount)
+        {
+#if Delay
+
+            Thread.Sleep(5000);
+
+#endif
+
+            if (RSAProvider.LoadRSA(token))
+            {
+                if (getRMBCount <= 0)
+                {
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                if (ClientManager.GetClientUserName(token) != userName)
+                {
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
+
+                throw new Exception();
+                //return PlayerController.Instance.BuyMiner(userName, getRMBCount);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         /// <summary>
         /// RESULTCODE_USER_NOT_EXIST; RESULTCODE_FALSE
         /// </summary>

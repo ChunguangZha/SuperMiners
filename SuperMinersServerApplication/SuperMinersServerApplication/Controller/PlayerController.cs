@@ -114,7 +114,7 @@ namespace SuperMinersServerApplication.Controller
                             var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
                             var awardExpRecord = new WaitToAwardExpRecord()
                             {
-                                AwardGoldCoin = (int)awardConfig.AwardReferrerExp,
+                                AwardLevel = 1,
                                 NewRegisterUserNme = userName,
                                 ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
                             };
@@ -122,8 +122,6 @@ namespace SuperMinersServerApplication.Controller
 
                             //playerrun.ReferAward(awardConfig, trans);
                             listPlayerRun.Add(playerrun);
-
-                            PlayerActionController.Instance.AddLog(playerrun.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
 
                             previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
                         }
@@ -151,7 +149,7 @@ namespace SuperMinersServerApplication.Controller
                             //playerrun.ReferAward(awardConfig, trans);
                             var awardExpRecord = new WaitToAwardExpRecord()
                             {
-                                AwardGoldCoin = (int)awardConfig.AwardReferrerExp,
+                                AwardLevel = indexLevel,
                                 NewRegisterUserNme = userName,
                                 ReferrerUserName = previousReferrerUserName
                             };
@@ -242,10 +240,29 @@ namespace SuperMinersServerApplication.Controller
                     var awardRecords = DBProvider.WaitToAwardExpRecordDBProvider.GetWaitToAwardExpRecord(userName);
                     if (awardRecords != null)
                     {
-                        foreach (var awardrecord in awardRecords)
+                        var myTrans = MyDBHelper.Instance.CreateTrans();
+                        try
                         {
-                            var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
-                            referrerPlayerRunnable.BuyMineByAlipay
+                            foreach (var awardrecord in awardRecords)
+                            {
+                                var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
+
+                                var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
+                                referrerPlayerRunnable.ReferAward(GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel), myTrans);
+                                PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
+
+                            }
+
+                            myTrans.Commit();
+                        }
+                        catch (Exception exc)
+                        {
+                            LogHelper.Instance.AddErrorLog("LoginPlayer Award Referrer Exception", exc);
+                            myTrans.Rollback();
+                        }
+                        finally
+                        {
+                            myTrans.Dispose();
                         }
                     }
                 }

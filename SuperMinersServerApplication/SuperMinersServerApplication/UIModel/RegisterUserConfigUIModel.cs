@@ -133,6 +133,23 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
+        private float _FirstAlipayRechargeGoldCoinAwardMultiple;
+
+        public float FirstAlipayRechargeGoldCoinAwardMultiple
+        {
+            get { return _FirstAlipayRechargeGoldCoinAwardMultiple; }
+            set
+            {
+                if (value != this._FirstAlipayRechargeGoldCoinAwardMultiple)
+                {
+                    this._FirstAlipayRechargeGoldCoinAwardMultiple = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("FirstAlipayRechargeGoldCoinAwardMultiple");
+                }
+            }
+        }
+
+
         public static RegisterUserConfigUIModel CreateFromDBObject(RegisterUserConfig parent)
         {
             if (parent == null)
@@ -146,7 +163,8 @@ namespace SuperMinersServerApplication.UIModel
                 GiveToNewUserMiners = parent.GiveToNewUserMiners,
                 GiveToNewUserMines = parent.GiveToNewUserMines,
                 GiveToNewUserStones = parent.GiveToNewUserStones,
-                UserCountCreateByOneIP = parent.UserCountCreateByOneIP
+                UserCountCreateByOneIP = parent.UserCountCreateByOneIP,
+                FirstAlipayRechargeGoldCoinAwardMultiple = parent.FirstAlipayRechargeGoldCoinAwardMultiple
             };
 
             return uiConfig;
@@ -161,7 +179,8 @@ namespace SuperMinersServerApplication.UIModel
                 GiveToNewUserMiners = this.GiveToNewUserMiners,
                 GiveToNewUserMines = this.GiveToNewUserMines,
                 GiveToNewUserStones = this.GiveToNewUserStones,
-                UserCountCreateByOneIP = this.UserCountCreateByOneIP
+                UserCountCreateByOneIP = this.UserCountCreateByOneIP,
+                FirstAlipayRechargeGoldCoinAwardMultiple = this.FirstAlipayRechargeGoldCoinAwardMultiple
             };
 
             return uiConfig;

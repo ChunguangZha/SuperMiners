@@ -49,7 +49,13 @@ namespace MetaData.SystemConfig
         [DataMember]
         public decimal GiveToNewUserStones = 0m;
 
-        public string ToString()
+        /// <summary>
+        /// 第一次支付宝充值金币，奖励金币倍数
+        /// </summary>
+        [DataMember]
+        public float FirstAlipayRechargeGoldCoinAwardMultiple = 0f;
+
+        public override string ToString()
         {
             StringBuilder strBuilder = new StringBuilder();
             strBuilder.Append("注册奖励：");

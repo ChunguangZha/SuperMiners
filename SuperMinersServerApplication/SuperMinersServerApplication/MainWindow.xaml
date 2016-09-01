@@ -100,6 +100,12 @@
                                         <Run Text="："/>
                                     </TextBlock>
                                     <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding GiveToNewUserStones, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
+                                    <TextBlock Grid.Row="6" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10">
+                                        <Run Text="第一次支付宝充值"/>
+                                        <Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/>
+                                        <Run Text="奖励倍数："/>
+                                    </TextBlock>
+                                    <my:NumericTextBox Grid.Row="6" Grid.Column="1" Value="{Binding FirstAlipayRechargeGoldCoinAwardMultiple, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
                                 </Grid>
                             </Grid>
                         </TabItem>

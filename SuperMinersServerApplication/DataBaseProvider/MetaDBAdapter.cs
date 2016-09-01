@@ -332,9 +332,9 @@ namespace DataBaseProvider
             {
                 records[i] = new WaitToAwardExpRecord()
                 {
-                    AwardGoldCoin = Convert.ToInt32(dt.Rows[0]["AwardGoldCoin"]),
-                    NewRegisterUserNme = Convert.ToString(dt.Rows[0]["NewRegisterUserNme"]),
-                    ReferrerUserName = Convert.ToString(dt.Rows[0]["ReferrerUserName"])
+                    AwardLevel = Convert.ToInt32(dt.Rows[0]["AwardLevel"]),
+                    NewRegisterUserNme = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[0]["NewRegisterUserNme"])),
+                    ReferrerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[0]["ReferrerUserName"]))
                 };
             }
 

@@ -198,6 +198,7 @@ namespace DataBaseProvider
                     config.GiveToNewUserMines = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserMines"]);
                     config.GiveToNewUserMiners = Convert.ToInt32(dt.Rows[0]["GiveToNewUserMiners"]);
                     config.GiveToNewUserStones = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserStones"]);
+                    config.FirstAlipayRechargeGoldCoinAwardMultiple = Convert.ToSingle(dt.Rows[0]["FirstAlipayRechargeGoldCoinAwardMultiple"]);
 
                     dt.Dispose();
                 }
@@ -229,6 +230,7 @@ namespace DataBaseProvider
             mycmd.Parameters.AddWithValue("@GiveToNewUserMines", config.GiveToNewUserMines);
             mycmd.Parameters.AddWithValue("@GiveToNewUserMiners", config.GiveToNewUserMiners);
             mycmd.Parameters.AddWithValue("@GiveToNewUserStones", config.GiveToNewUserStones);
+            mycmd.Parameters.AddWithValue("@FirstAlipayRechargeGoldCoinAwardMultiple", config.FirstAlipayRechargeGoldCoinAwardMultiple);
 
             mycmd.ExecuteNonQuery();
             //mycmd.Dispose();

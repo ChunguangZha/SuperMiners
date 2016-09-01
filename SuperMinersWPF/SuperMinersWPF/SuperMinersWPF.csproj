@@ -32,8 +32,8 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>4</ApplicationRevision>
-    <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.1.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -285,10 +285,10 @@
     <Compile Include="Views\ListAllNoticeWindow.xaml.cs">
       <DependentUpon>ListAllNoticeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyKuangChangControl.xaml.cs">
-      <DependentUpon>MyKuangChangControl.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\MySubWindow.cs" />
+    <Compile Include="Views\MySuperMinersControl.xaml.cs">
+      <DependentUpon>MySuperMinersControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\OrderRecordListBuyControl.xaml.cs">
       <DependentUpon>OrderRecordListBuyControl.xaml</DependentUpon>
     </Compile>
@@ -406,7 +406,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MyKuangChangControl.xaml">
+    <Page Include="Views\MySuperMinersControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

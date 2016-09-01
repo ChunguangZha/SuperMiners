@@ -13,6 +13,14 @@ namespace SuperMinersServerApplication.WebService.Contracts
     public partial interface IServiceToClient
     {
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/WithdrawRMB",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int WithdrawRMB(string token, string userName, int getRMBCount);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/BuyMiner",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,

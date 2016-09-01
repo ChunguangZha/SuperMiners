@@ -14,7 +14,11 @@ namespace SuperMinersWeb
         string invitationCode = null;
         protected void Page_Load(object sender, EventArgs e)
         {
-            invitationCode = Request["ic"];
+            if (!IsPostBack)
+            {
+                invitationCode = Request["ic"];
+                Session["ic"] = invitationCode;
+            }
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
@@ -32,6 +36,8 @@ namespace SuperMinersWeb
             {
                 return;
             }
+
+            invitationCode = Session["ic"] as string;
 
             string userName = this.txtUserName.Text;
             string nickName = this.txtNickName.Text;

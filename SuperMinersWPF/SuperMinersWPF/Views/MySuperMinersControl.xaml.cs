@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace SuperMinersWPF.Views
 {
     /// <summary>
-    /// Interaction logic for MyKuangChangControl.xaml
+    /// Interaction logic for MySuperMiners.xaml
     /// </summary>
-    public partial class MyKuangChangControl : UserControl
+    public partial class MySuperMinersControl : UserControl
     {
-        public MyKuangChangControl()
+        public MySuperMinersControl()
         {
             InitializeComponent();
         }
