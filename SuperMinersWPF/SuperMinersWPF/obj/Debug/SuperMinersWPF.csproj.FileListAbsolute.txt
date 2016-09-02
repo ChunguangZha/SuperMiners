@@ -164,4 +164,3 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MyKuangChan
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\BuyGoldCoinWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MySuperMinersControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MySuperMinersControl.baml
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache

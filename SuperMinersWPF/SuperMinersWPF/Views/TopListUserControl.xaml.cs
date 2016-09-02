@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWPF.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,11 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!GlobalData.IsLogined)
+            {
+                return;
+            }
+
             if (datagridTopList != null)
             {
                 datagridTopList.Columns[2].Header = "贡献值";

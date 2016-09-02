@@ -8,6 +8,11 @@
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
         <TabControl FlowDirection="RightToLeft">
+            <TabItem Header="帮助" Width="75" FlowDirection="LeftToRight">
+                <Grid Background="#FFE5E5E5">
+                    <local:GameHelperControl/>
+                </Grid>
+            </TabItem>
             <TabItem Header="设置" Width="75" FlowDirection="LeftToRight">
                 <Grid Background="#FFE5E5E5">
                     <TextBlock Text="该功能即将开放，敬请期待..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -16,11 +21,6 @@
             <TabItem Header="系统消息" Width="75" FlowDirection="LeftToRight">
                 <Grid Background="#FFE5E5E5">
                     <TextBlock Text="该功能即将开放，敬请期待..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="帮助" Width="75" FlowDirection="LeftToRight">
-                <Grid Background="#FFE5E5E5">
-                    <local:GameHelperControl/>
                 </Grid>
             </TabItem>
             <TabItem Header="交易记录" Width="75" FlowDirection="LeftToRight">

@@ -30,6 +30,11 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!GlobalData.IsLogined)
+            {
+                return;
+            }
+
             App.MessageVMObject.GetPlayerActionCompleted += MessageVMObject_GetPlayerActionCompleted;
         }
 

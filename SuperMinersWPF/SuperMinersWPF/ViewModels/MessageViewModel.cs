@@ -86,7 +86,7 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    dtLast = ListPlayerActionLog[ListPlayerActionLog.Count - 1].Time;
+                    dtLast = ListPlayerActionLog[0].Time;
                 }
 
                 App.BusyToken.ShowBusyWindow("正在加载数据...");
@@ -161,6 +161,8 @@ namespace SuperMinersWPF.ViewModels
                 return;
             }
 
+            //服务器返回的记录是按时间升序排列。
+            //需要将其降序显示
             var lastLogFromServer = e.Result[e.Result.Length - 1];
             this.SystemAllMinerCount = lastLogFromServer.SystemAllMinerCount;
             this.SystemAllOutputStoneCount = lastLogFromServer.SystemAllOutputStoneCount;
@@ -168,16 +170,20 @@ namespace SuperMinersWPF.ViewModels
 
             if (ListPlayerActionLog.Count >= this.LogMaxCount)
             {
-                for (int i = 0; i < e.Result.Length; i++)
+                int deleteLastNo = ListPlayerActionLog.Count - e.Result.Length;
+                if (deleteLastNo < 0) deleteLastNo = 0;
+
+                //从后往前删
+                for (int i = ListPlayerActionLog.Count - 1; i >= deleteLastNo; i--)
                 {
-                    ListPlayerActionLog.RemoveAt(0);
+                    ListPlayerActionLog.RemoveAt(i);
                 }
             }
 
             PlayerActionLogUIModel lastLogFromClient = null;
             if (ListPlayerActionLog.Count > 0)
             {
-                lastLogFromClient = ListPlayerActionLog[ListPlayerActionLog.Count - 1];
+                lastLogFromClient = ListPlayerActionLog[0];
             }
             for (int i = 0; i < e.Result.Length; i++)
             {
@@ -189,7 +195,7 @@ namespace SuperMinersWPF.ViewModels
                         continue;
                     }
                 }
-                ListPlayerActionLog.Add(new PlayerActionLogUIModel(log));
+                ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(log));
             }
 
             if (GetPlayerActionCompleted != null)

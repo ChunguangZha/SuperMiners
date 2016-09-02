@@ -261,6 +261,9 @@
     <Compile Include="Views\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\TradeRecordControl.xaml.cs">
+      <DependentUpon>TradeRecordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DigStoneAreaUserControl.xaml.cs">
       <DependentUpon>DigStoneAreaUserControl.xaml</DependentUpon>
     </Compile>
@@ -371,6 +374,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ChatUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\TradeRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

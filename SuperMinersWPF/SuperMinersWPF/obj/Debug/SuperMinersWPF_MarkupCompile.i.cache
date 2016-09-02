@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE;Encrypt
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-28352432602
+291740118720
 
-10397962555
+104666931518
 27-1174524522
-Assets\Style.xaml;Login.xaml;Utility\MessageBoxAlipayPayQuestion.xaml;Views\BusyWindow.xaml;Views\BuyGoldCoinWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\ChatUserControl.xaml;Views\DigStoneAreaUserControl.xaml;Views\FunnyUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticesWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\MySuperMinersControl.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+Assets\Style.xaml;Login.xaml;Utility\MessageBoxAlipayPayQuestion.xaml;Views\BusyWindow.xaml;Views\BuyGoldCoinWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\ChatUserControl.xaml;Views\Controls\TradeRecordControl.xaml;Views\DigStoneAreaUserControl.xaml;Views\FunnyUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticesWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\MySuperMinersControl.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
 False
 

@@ -226,6 +226,10 @@ namespace SuperMinersServerApplication.Utility
                     {
                         this.ListInfoLogs.Add(logFinished);
                     }
+                    if (LogAdded != null)
+                    {
+                        LogAdded(true, logFinished);
+                    }
                 }
                 catch (Exception exc)
                 {

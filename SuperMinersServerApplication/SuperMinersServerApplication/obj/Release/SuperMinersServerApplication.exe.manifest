@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="379904">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="380928">
       <assemblyIdentity name="SuperMinersServerApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3JdPNYzMGQfgDKmd1q1mJlDeg4xI8yqpk5shR2iFzQE=</dsig:DigestValue>
+        <dsig:DigestValue>yIYS/q/Hm60pLpKnWj5XDolnhAeBwYBZ41Brsh77tqg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

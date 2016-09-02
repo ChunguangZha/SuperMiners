@@ -33,6 +33,11 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (!GlobalData.IsLogined)
+            {
+                return;
+            }
+
             this.listboxMyBuyOrders.ItemsSource = App.StoneOrderVMObject.MyBuyNotFinishedStoneOrders;
             this.listboxMySellOrders.ItemsSource = App.StoneOrderVMObject.MySellNotFinishedStoneOrders;
             this.listboxAllSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStoneOrder;

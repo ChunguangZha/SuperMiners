@@ -98,7 +98,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         this._callbackDic[token] = new Queue<CallbackInfo>();
                     }
 
-                    LogHelper.Instance.AddInfoLog("Web login, userId=" + userName + ", remoteIP=" + ClientManager.GetClientIP(token));
+                    LogHelper.Instance.AddInfoLog("玩家登录, 用户名=" + userName + ", IP=" + ClientManager.GetClientIP(token));
 
                 }
             }
@@ -124,7 +124,8 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    PlayerController.Instance.LogoutPlayer(ClientManager.GetClientUserName(token));
+                    string userName = ClientManager.GetClientUserName(token);
+                    PlayerController.Instance.LogoutPlayer(userName);
                     RSAProvider.RemoveRSA(token);
                     ClientManager.RemoveClient(token);
                     lock (this._callbackDicLocker)
@@ -138,6 +139,9 @@ namespace SuperMinersServerApplication.WebService.Services
                             this.LogedOut(o.ToString());
                         })).Start(token);
                     }
+
+                    LogHelper.Instance.AddInfoLog("玩家退出, 用户名=" + userName + ", IP=" + ClientManager.GetClientIP(token));
+
                     return true;
                 }
                 catch (Exception exc)
