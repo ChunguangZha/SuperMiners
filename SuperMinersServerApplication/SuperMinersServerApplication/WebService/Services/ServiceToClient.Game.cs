@@ -36,8 +36,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
-                throw new Exception();
-                //return PlayerController.Instance.BuyMiner(userName, getRMBCount);
+                return PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
             }
             else
             {

@@ -31,7 +31,7 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.txtMessage.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Stones_RMB);
+            this.txtMessage.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
             this.txtUserName.Text = GlobalData.CurrentUser.UserName;
             this.txtNickName.Text = GlobalData.CurrentUser.NickName;
             this.txtAlipayAccount.Text = GlobalData.CurrentUser.Alipay;

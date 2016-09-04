@@ -28,5 +28,7 @@ namespace SuperMinersServerApplication.Controller
         public static GoldCoinRecordDBProvider GoldCoinRecordDBProvider = new GoldCoinRecordDBProvider();
 
         public static WaitToAwardExpRecordDBProvider WaitToAwardExpRecordDBProvider = new WaitToAwardExpRecordDBProvider();
+
+        public static WithdrawRMBRecordDBProvider WithdrawRMBRecordDBProvider = new WithdrawRMBRecordDBProvider();
     }
 }

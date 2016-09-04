@@ -43,7 +43,7 @@ namespace SuperMinersWPF.Views
             if (App.MessageVMObject.ListPlayerActionLog.Count > 0)
             {
                 PlayerActionLogUIModel lastActionLog = App.MessageVMObject.ListPlayerActionLog[App.MessageVMObject.ListPlayerActionLog.Count - 1];
-                this.listboxActionMessage.ScrollIntoView(lastActionLog);
+                //this.listboxActionMessage.ScrollIntoView(lastActionLog);
             }
         }
 

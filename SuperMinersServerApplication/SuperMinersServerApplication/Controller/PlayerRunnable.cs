@@ -209,31 +209,13 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                decimal allGoldCoin = BasePlayer.FortuneInfo.GoldCoin;// +BasePlayer.FortuneInfo.RMB * GlobalConfig.GameConfig.RMB_GoldCoin;
                 decimal allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
-                if (allNeedGoldCoin > allGoldCoin)
+                if (allNeedGoldCoin > BasePlayer.FortuneInfo.GoldCoin)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                if (allNeedGoldCoin < BasePlayer.FortuneInfo.GoldCoin)
-                {
-                    BasePlayer.FortuneInfo.GoldCoin -= allNeedGoldCoin;
-                }
-                else
-                {
-                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
-
-                    //decimal gc = allNeedGoldCoin - BasePlayer.FortuneInfo.GoldCoin;
-                    //int needRMB = (int)Math.Ceiling(gc / GlobalConfig.GameConfig.RMB_GoldCoin);
-                    //if (needRMB > BasePlayer.FortuneInfo.RMB)
-                    //{
-                    //    return OperResult.RESULTCODE_LACK_OF_BALANCE;
-                    //}
-
-                    //BasePlayer.FortuneInfo.RMB -= needRMB;
-                    //BasePlayer.FortuneInfo.GoldCoin = needRMB * GlobalConfig.GameConfig.RMB_GoldCoin - gc;
-                }
+                BasePlayer.FortuneInfo.GoldCoin -= allNeedGoldCoin;
                 BasePlayer.FortuneInfo.MinersCount += minersCount;
 
                 CustomerMySqlTransaction trans = null;
@@ -474,6 +456,58 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
+        public int CreateWithdrawRMB(int getRMBCount)
+        {
+            if (this.BasePlayer.FortuneInfo.RMB < getRMBCount)
+            {
+                return OperResult.RESULTCODE_LACK_OF_BALANCE;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                CustomerMySqlTransaction myTrans = null;
+                try
+                {
+                    WithdrawRMBRecord record = new WithdrawRMBRecord()
+                    {
+                        PlayerUserName = this.BasePlayer.SimpleInfo.UserName,
+                        WidthdrawRMB = getRMBCount,
+                        CreateTime = DateTime.Now,
+                        IsPayedSucceed = false
+                    };
+
+                    this.BasePlayer.FortuneInfo.RMB -= getRMBCount;
+                    this.BasePlayer.FortuneInfo.FreezingRMB += getRMBCount;
+
+                    myTrans = MyDBHelper.Instance.CreateTrans();
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+                    DBProvider.WithdrawRMBRecordDBProvider.AddWithdrawRMBRecord(record, myTrans);
+
+                    myTrans.Commit();
+
+                    return OperResult.RESULTCODE_TRUE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("CreateWithdrawRMB Exception", exc);
+                    if (myTrans != null)
+                    {
+                        myTrans.Rollback();
+                    }
+
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                finally
+                {
+                    if (myTrans != null)
+                    {
+                        myTrans.Dispose();
+                    }
+                }
+            }
+
+        }
+
         private string CreateOrderNumber(DateTime time, string userName)
         {
             Random r = new Random();
@@ -481,39 +515,6 @@ namespace SuperMinersServerApplication.Controller
         }
 
         #region 取消充值功能
-        //public bool RechargeGoldCoin(decimal yuan)
-        //{
-        //    lock (_lockFortuneAction)
-        //    {
-        //        GoldCoinRechargeRecord record = new GoldCoinRechargeRecord()
-        //        {
-        //            UserName = BasePlayer.SimpleInfo.UserName,
-        //            SpendRMB = yuan,
-        //            GainGoldCoin = yuan * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.RMB_GoldCoin,
-        //            Time = DateTime.Now
-        //        };
-        //        BasePlayer.FortuneInfo.GoldCoin += record.GainGoldCoin;
-
-        //        var trans = MyDBHelper.Instance.CreateTrans();
-        //        try
-        //        {
-        //            DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
-        //            DBProvider.RechargeDBProvider.AddRechargeGoldCoinRecord(record, trans);
-        //            trans.Commit();
-        //            return true;
-        //        }
-        //        catch (Exception exc)
-        //        {
-        //            trans.Rollback();
-        //            RefreshFortune();
-        //            throw exc;
-        //        }
-        //        finally
-        //        {
-        //            trans.Dispose();
-        //        }
-        //    }
-        //}
 
         //public bool RechargeRMB(decimal yuan)
         //{

@@ -179,6 +179,9 @@ namespace SuperMinersWPF
 
         private void btnStonesSell_Click(object sender, RoutedEventArgs e)
         {
+            MyMessageBox.ShowInfo("该功能即将开放，敬请期待");
+            return;
+
             if (GlobalData.CurrentUser.SellableStones < 1)
             {
                 MyMessageBox.ShowInfo("没有可出售的" + Strings.Stone);

@@ -658,5 +658,18 @@ namespace SuperMinersServerApplication.Controller
 
             return DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
         }
+
+        public int CreateWithdrawRMB(string userName, int getRMBCount)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return playerrun.CreateWithdrawRMB(getRMBCount);
+        }
+
+        public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;
     }
 }

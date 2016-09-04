@@ -332,9 +332,41 @@ namespace DataBaseProvider
             {
                 records[i] = new WaitToAwardExpRecord()
                 {
-                    AwardLevel = Convert.ToInt32(dt.Rows[0]["AwardLevel"]),
-                    NewRegisterUserNme = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[0]["NewRegisterUserNme"])),
-                    ReferrerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[0]["ReferrerUserName"]))
+                    AwardLevel = Convert.ToInt32(dt.Rows[i]["AwardLevel"]),
+                    NewRegisterUserNme = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["NewRegisterUserNme"])),
+                    ReferrerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["ReferrerUserName"]))
+                };
+            }
+
+            return records;
+        }
+
+        internal static WithdrawRMBRecord[] GetWithdrawRMBRecordListFromDataTable(DataTable dt)
+        {
+            WithdrawRMBRecord[] records = new WithdrawRMBRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                string payerUserName = "";
+                string adminUserName = "";
+                if (dt.Rows[i]["PlayerUserName"] != DBNull.Value)
+                {
+                    payerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["PlayerUserName"]));
+                }
+                if (dt.Rows[i]["AdminUserName"] != DBNull.Value)
+                {
+                    adminUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["AdminUserName"]));
+                }
+
+
+                records[i] = new WithdrawRMBRecord()
+                {
+                    id = Convert.ToInt32(dt.Rows[i]["id"]),
+                    PlayerUserName = payerUserName,
+                    CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]),
+                    WidthdrawRMB = (decimal)Convert.ToSingle(dt.Rows[i]["WidthdrawRMB"]),
+                    IsPayedSucceed = Convert.ToBoolean(dt.Rows[i]["IsPayedSucceed"]),
+                    AdminUserName = adminUserName,
+                    PayTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]),
                 };
             }
 

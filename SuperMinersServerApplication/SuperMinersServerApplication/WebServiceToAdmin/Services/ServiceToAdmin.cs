@@ -33,6 +33,20 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 
         private System.Timers.Timer _userStateCheck = new System.Timers.Timer(10000);
 
+        public ServiceToAdmin()
+        {
+            PlayerController.Instance.SomebodyWithdrawRMB += Instance_SomebodyWithdrawRMB;
+        }
+
+        void Instance_SomebodyWithdrawRMB(WithdrawRMBRecord obj)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.SomebodyWithdrawRMB(o.ToString());
+            })).Start(token);
+
+        }
+
         private void _userStateCheck_Elapsed(object sender, ElapsedEventArgs e)
         {
             this._userStateCheck.Stop();

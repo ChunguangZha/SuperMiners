@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
+﻿using MetaData.Trade;
+using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         public void KickoutByUser(string token)
         {
             this.InvokeCallback(token, "KickoutByUser");
+        }
+
+        public void SomebodyWithdrawRMB(string token, WithdrawRMBRecord record)
+        {
+            this.InvokeCallback(token, "SomebodyWithdrawRMB", record);
         }
 
         #endregion

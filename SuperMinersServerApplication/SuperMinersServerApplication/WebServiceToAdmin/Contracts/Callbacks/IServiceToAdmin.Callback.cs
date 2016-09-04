@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.WebService.Contracts;
+﻿using MetaData.Trade;
+using SuperMinersServerApplication.WebService.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,9 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
 
         [Callback]
         void KickoutByUser(string token);
+
+        [Callback]
+        void SomebodyWithdrawRMB(string token, WithdrawRMBRecord record);
 
     }
 }

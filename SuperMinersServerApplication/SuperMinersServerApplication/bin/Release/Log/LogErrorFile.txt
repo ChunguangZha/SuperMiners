@@ -1,1 +1,5 @@
-﻿
+Error:  [2016/9/3 21:02:58] ---- Log: 启动服务失败。
+Exc.Message: 列“FirstAlipayRechargeGoldCoinAwardMultiple”不属于表 。Exc.Stack:    在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 129
+   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 79
+-----------------------------------------------------
+
