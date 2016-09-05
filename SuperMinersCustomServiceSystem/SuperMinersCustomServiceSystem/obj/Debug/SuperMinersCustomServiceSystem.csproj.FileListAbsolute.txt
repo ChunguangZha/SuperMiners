@@ -96,3 +96,4 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\StoneOrderResolveExceptionWindow.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\StoneOrderResolveExceptionWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\Assets\Style.baml

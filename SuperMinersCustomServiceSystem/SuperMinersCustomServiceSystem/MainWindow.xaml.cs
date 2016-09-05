@@ -34,10 +34,53 @@ namespace SuperMinersCustomServiceSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this._syn = System.Threading.SynchronizationContext.Current;
+            CreateTreeView();
             BindUI();
 
             GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
         }
+        
+        private void CreateTreeView()
+        {
+            CreateTradeSystemTreeView();
+        }
+
+        private void CreateTradeSystemTreeView()
+        {
+            CreateTradeSystemTreeViewItem(App.MinerTradeVMObject);
+            CreateTradeSystemTreeViewItem(App.MineTradeVMObject);
+            CreateTradeSystemTreeViewItem(App.GoldCoinTradeVMObject);
+            CreateTradeSystemTreeViewItem(App.StoneTradeVMObject);
+            CreateTradeSystemTreeViewItem(App.WithdrawRMBVMObject);
+            CreateTradeSystemTreeViewItem(App.AlipayRechargeVMObject);
+        }
+
+        public void CreateTradeSystemTreeViewItem(object ItemDataContext)
+        {
+            TreeViewItem tvItem = new TreeViewItem();
+            tvItem.SetResourceReference(TreeViewItem.StyleProperty, "TVItemL2Style");
+
+            Binding bind = new Binding()
+            {
+                Source = ItemDataContext
+            };
+            tvItem.SetBinding(TreeViewItem.DataContextProperty, bind);
+
+            bind = new Binding("MenuHeader");
+            tvItem.SetBinding(TreeViewItem.HeaderProperty, bind);
+
+            tvItem.Items.Add(new TreeViewItem()
+            {
+                Header = "实时交易",
+            });
+            tvItem.Items.Add(new TreeViewItem()
+            {
+                Header = "交易记录",
+            });
+
+            this.tvL1TradeSystem.Items.Add(tvItem);
+        }
+
 
         private void BindUI()
         {

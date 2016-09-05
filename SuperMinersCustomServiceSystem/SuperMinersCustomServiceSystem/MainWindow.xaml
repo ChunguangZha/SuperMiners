@@ -4,12 +4,23 @@
         Title="矿工管理员系统" Height="600" Width="800"
         Loaded="Window_Loaded"
         Closed="Window_Closed">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Assets/Style.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="43*"/>
+            <ColumnDefinition Width="89*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <GroupBox Header="状态信息">
+        <GroupBox Header="状态信息" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -29,7 +40,19 @@
                 <TextBox Grid.Column="3" Width="100" Margin="5" VerticalAlignment="Center"/>
             </Grid>
         </GroupBox>
-        <TabControl Grid.Row="1">
+        <TreeView Grid.Row="1">
+            <TreeViewItem Name="tvL1PlayerManager" Header="玩家管理" Style="{StaticResource TVItemL1Style}">
+                
+            </TreeViewItem>
+            <TreeViewItem Name="tvL1TradeSystem" Header="交易系统" Style="{StaticResource TVItemL1Style}">
+            </TreeViewItem>
+            <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
+                <TreeViewItem Header="幸运大转盘">
+                    
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+        <TabControl Grid.Row="1" Grid.Column="1">
             <TabItem Header="玩家管理">
                 <Grid Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
@@ -67,7 +90,7 @@
                             <ComboBoxItem Content="在线"/>
                             <ComboBoxItem Content="离线"/>
                         </ComboBox>
-                        
+
                         <Button Grid.Row="2" Grid.Column="3" Name="btnRefresh" Content="刷新" Width="100" Margin="5" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
                         <Button Grid.Row="2" Grid.Column="3" Name="btnSearch" Content="查找" Width="100" Margin="5" HorizontalAlignment="Right" Click="btnSearch_Click"/>
                     </Grid>
@@ -130,7 +153,35 @@
                 </Grid>
             </TabItem>
             <TabItem Header="交易系统">
-                <Grid></Grid>
+                <TabControl>
+                    <TabItem Header="矿工买入交易">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="矿山买入交易">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="金币充值交易">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="矿石买入交易">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="矿石卖出交易">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="灵币提现交易">
+                        <Grid Background="#FFE5E5E5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="15*"/>
+                                <RowDefinition Height="16*"/>
+                                <RowDefinition Height="202*"/>
+                            </Grid.RowDefinitions>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="支付宝充值记录">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                </TabControl>
             </TabItem>
             <TabItem Header="客服系统">
                 <Grid Background="#FFE5E5E5"/>
@@ -182,7 +233,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-        </TabControl>
 
+        </TabControl>
     </Grid>
 </Window>

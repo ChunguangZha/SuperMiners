@@ -177,11 +177,24 @@
     <Compile Include="Model\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Model\PlayerInfoUIModel.cs" />
     <Compile Include="Model\SellStonesOrderUIModel.cs" />
-    <Compile Include="ViewModel\BusyToken.cs" />
+    <Compile Include="Uility\BusyToken.cs" />
+    <Compile Include="ViewModel\AlipayRechargeViewModel.cs" />
+    <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\GoldCoinTradeViewModel.cs" />
+    <Compile Include="ViewModel\MinerTradeViewModel.cs" />
+    <Compile Include="ViewModel\MineTradeViewModel.cs" />
     <Compile Include="ViewModel\NoticeViewModel.cs" />
     <Compile Include="ViewModel\PlayerViewModel.cs" />
+    <Compile Include="ViewModel\StoneTradeViewModel.cs" />
+    <Compile Include="ViewModel\WithdrawRMBViewModel.cs" />
     <Compile Include="View\AddNoticeWindow.xaml.cs">
       <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml.cs">
+      <DependentUpon>WithdrawRMBActiveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml.cs">
+      <DependentUpon>WithdrawRMBHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditPlayerAlipayWindow.xaml.cs">
       <DependentUpon>EditPlayerAlipayWindow.xaml</DependentUpon>
@@ -269,7 +282,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Assets\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

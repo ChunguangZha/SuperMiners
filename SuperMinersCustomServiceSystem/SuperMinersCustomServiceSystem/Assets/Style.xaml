@@ -1,0 +1,33 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="TVItemL1Style" TargetType="TreeViewItem">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+    <Style x:Key="TVItemL2Style" TargetType="TreeViewItem">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Header">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding Header}" Margin="10,5"/>
+                        <Ellipse Grid.Column="1" Visibility="{Binding ActiveItemsCountVisibility}" Stroke="#FFC50606" Width="20" Height="20">
+                            <Ellipse.Fill>
+                                <RadialGradientBrush>
+                                    <GradientStop Color="#FFE60000" Offset="0"/>
+                                    <GradientStop Color="#FFFF6767" Offset="1"/>
+                                </RadialGradientBrush>
+                            </Ellipse.Fill>
+                        </Ellipse>
+                        <TextBlock Grid.Column="1" Text="{Binding ActiveItemsCountString}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

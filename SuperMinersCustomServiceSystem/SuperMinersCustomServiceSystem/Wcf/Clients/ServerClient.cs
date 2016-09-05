@@ -146,12 +146,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
                 handler();
             }
         }
-        public void RaiseOnSomebodyWithdrawRMB()
+        public void RaiseOnSomebodyWithdrawRMB(WithdrawRMBRecord record)
         {
-            Action handler = this.OnLogedOut;
+            Action<WithdrawRMBRecord> handler = this.OnSomebodyWithdrawRMB;
             if (null != handler)
             {
-                handler();
+                handler(record);
             }
         }
 
