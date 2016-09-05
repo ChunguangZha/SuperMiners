@@ -84,6 +84,49 @@ namespace DataBaseProvider
             }
         }
 
+        public WithdrawRMBRecord GetWithdrawRMBRecord(bool isPayed, string playerUserName, int withdrawRMB, DateTime createTime)
+        {
+            WithdrawRMBRecord record = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select * " +
+                                    "from withdrawrmbrecord " +
+                                    "where IsPayedSucceed = @IsPayedSucceed and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime == @CreateTime ";
+                string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
+                mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
+                mycmd.Parameters.AddWithValue("@WidthdrawRMB", withdrawRMB);
+                mycmd.Parameters.AddWithValue("@CreateTime", createTime);
+
+                mycmd.CommandText = sqlTextA;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    var records = MetaDBAdapter<WithdrawRMBRecord>.GetWithdrawRMBRecordListFromDataTable(dt);
+                    if (records != null && records.Length != 0)
+                    {
+                        record = records[0];
+                    }
+                }
+                mycmd.Dispose();
+
+                return record;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         public WithdrawRMBRecord[] GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime)
         {
             WithdrawRMBRecord[] orders = null;
@@ -99,6 +142,7 @@ namespace DataBaseProvider
                 string sqlTextA = "select * " +
                                     "from withdrawrmbrecord " +
                                     "where IsPayedSucceed = @IsPayedSucceed  ";
+                mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))

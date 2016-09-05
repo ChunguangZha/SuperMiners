@@ -141,6 +141,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\WithdrawRMBRecord.cs">
+      <Link>Wcf\Datas\WithdrawRMBRecord.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
       <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
     </Compile>

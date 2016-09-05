@@ -667,7 +667,18 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_FALSE;
             }
 
-            return playerrun.CreateWithdrawRMB(getRMBCount);
+            DateTime createTime = DateTime.Now;
+            int result = playerrun.CreateWithdrawRMB(getRMBCount, createTime);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                var record = DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecord(false, userName, getRMBCount, createTime);
+                if (record != null && SomebodyWithdrawRMB != null)
+                {
+                    SomebodyWithdrawRMB(record);
+                }
+            }
+
+            return result;
         }
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;

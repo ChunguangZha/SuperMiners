@@ -456,7 +456,7 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public int CreateWithdrawRMB(int getRMBCount)
+        public int CreateWithdrawRMB(int getRMBCount, DateTime createTime)
         {
             if (this.BasePlayer.FortuneInfo.RMB < getRMBCount)
             {
@@ -472,7 +472,7 @@ namespace SuperMinersServerApplication.Controller
                     {
                         PlayerUserName = this.BasePlayer.SimpleInfo.UserName,
                         WidthdrawRMB = getRMBCount,
-                        CreateTime = DateTime.Now,
+                        CreateTime = createTime,
                         IsPayedSucceed = false
                     };
 

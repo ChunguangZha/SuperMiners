@@ -110,6 +110,20 @@ namespace SuperMinersServerApplication.WebServiceToAdmin
             }
         }
 
+        public static string[] GetAllOnlineAdministratorTokens()
+        {
+            lock (_locker)
+            {
+                List<string> list = new List<string>();
+                foreach (var info in _infoDic.Values)
+                {
+                    list.Add(info.Token);
+                }
+
+                return list.ToArray();
+            }
+        }
+
         public static string GetToken(string userName)
         {
             lock (_locker)

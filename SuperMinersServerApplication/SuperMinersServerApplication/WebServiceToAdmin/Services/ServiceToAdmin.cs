@@ -38,12 +38,19 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             PlayerController.Instance.SomebodyWithdrawRMB += Instance_SomebodyWithdrawRMB;
         }
 
-        void Instance_SomebodyWithdrawRMB(WithdrawRMBRecord obj)
+        void Instance_SomebodyWithdrawRMB(WithdrawRMBRecord record)
         {
             new Thread(new ParameterizedThreadStart(o =>
             {
-                this.SomebodyWithdrawRMB(o.ToString());
-            })).Start(token);
+                string[] tokens = AdminManager.GetAllOnlineAdministratorTokens();
+                if (tokens != null)
+                {
+                    foreach (var token in tokens)
+                    {
+                        this.SomebodyWithdrawRMB(token, record);
+                    }
+                }
+            })).Start();
 
         }
 

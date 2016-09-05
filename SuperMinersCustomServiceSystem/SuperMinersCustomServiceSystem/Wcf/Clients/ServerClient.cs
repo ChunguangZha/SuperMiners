@@ -84,6 +84,7 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public event Action OnKickoutByUser;
         public event Action OnLogedIn;
         public event Action OnLogedOut;
+        public event Action<WithdrawRMBRecord> OnSomebodyWithdrawRMB;
 
         private RestInvoker<IServiceToAdmin> _invoker = new RestInvoker<IServiceToAdmin>();
         private SynchronizationContext _context;
@@ -145,6 +146,15 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
                 handler();
             }
         }
+        public void RaiseOnSomebodyWithdrawRMB()
+        {
+            Action handler = this.OnLogedOut;
+            if (null != handler)
+            {
+                handler();
+            }
+        }
+
 
         #endregion
 
