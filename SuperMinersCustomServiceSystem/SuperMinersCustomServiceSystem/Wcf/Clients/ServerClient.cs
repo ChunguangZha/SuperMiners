@@ -287,6 +287,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderFailed", this.HandleExceptionStoneOrderFailedCompleted, GlobalData.Token, orderNumber);
         }
 
+        public event EventHandler<WebInvokeEventArgs<int>> PayWithdrawRMBRecordCompleted;
+        public void PayWithdrawRMBRecord(WithdrawRMBRecord record)
+        {
+            this._invoker.Invoke<int>(this._context, "PayWithdrawRMBRecord", this.PayWithdrawRMBRecordCompleted, GlobalData.Token, record);
+        }
+
         #endregion
     }
 }

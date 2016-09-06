@@ -40,6 +40,10 @@ namespace MetaData
         /// 余额不足
         /// </summary>
         public const int RESULTCODE_LACK_OF_BALANCE = 500;
+        /// <summary>
+        /// 不满足提现要求，不能提现
+        /// </summary>
+        public const int RESULTCODE_CANOT_WITHDRAWRMB = 501;
 
         /// <summary>
         /// 订单不存在
@@ -65,5 +69,6 @@ namespace MetaData
         /// 可销售的矿石不足
         /// </summary>
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
+
     }
 }

@@ -664,7 +664,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_FALSE;
+                return OperResult.RESULTCODE_USER_OFFLINE;
             }
 
             DateTime createTime = DateTime.Now;
@@ -679,6 +679,17 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return result;
+        }
+
+        public int PayWithdrawRMB(WithdrawRMBRecord record)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(record.PlayerUserName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerrun.PayWithdrawRMB(record);
         }
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;

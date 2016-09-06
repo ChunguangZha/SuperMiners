@@ -1,7 +1,9 @@
 ﻿using MetaData;
 using MetaData.Trade;
+using SuperMinersCustomServiceSystem.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -18,6 +20,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 return "灵币提现";
             }
         }
+
+        private object LockActiveRecords = new object();
+        public ObservableCollection<WithdrawRMBRecordUIModel> ListActiveWithdrawRecords = new ObservableCollection<WithdrawRMBRecordUIModel>();
+
+        public ObservableCollection<WithdrawRMBRecordUIModel> ListHistoryWithdrawRecords = new ObservableCollection<WithdrawRMBRecordUIModel>();
+
 
         public WithdrawRMBViewModel()
         {
@@ -36,8 +44,25 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         void Client_OnSomebodyWithdrawRMB(WithdrawRMBRecord record)
         {
-            throw new NotImplementedException();
+            lock (LockActiveRecords)
+            {
+                ListActiveWithdrawRecords.Add(new WithdrawRMBRecordUIModel(record));
+            }
         }
 
+        public void RemoveRecordFromActiveRecords(WithdrawRMBRecordUIModel record)
+        {
+            lock (LockActiveRecords)
+            {
+                for (int i = 0; i < this.ListActiveWithdrawRecords.Count; i++)
+                {
+                    if (record.ID == this.ListActiveWithdrawRecords[i].ID)
+                    {
+                        this.ListActiveWithdrawRecords.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+        }
     }
 }

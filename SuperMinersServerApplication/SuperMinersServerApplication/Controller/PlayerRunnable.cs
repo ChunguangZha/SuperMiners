@@ -458,6 +458,21 @@ namespace SuperMinersServerApplication.Controller
 
         public int CreateWithdrawRMB(int getRMBCount, DateTime createTime)
         {
+            if (getRMBCount < 0)
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            //服务器限制，贡献值低于50，不予提现。
+            if (this.BasePlayer.FortuneInfo.Exp < 50)
+            {
+                return OperResult.RESULTCODE_CANOT_WITHDRAWRMB;
+            }
+            //服务器限制，低于5元，不予提现。
+            int ValueYuan = (int)Math.Ceiling(getRMBCount / GlobalConfig.GameConfig.Yuan_RMB);
+            if (ValueYuan < 5)
+            {
+                return OperResult.RESULTCODE_CANOT_WITHDRAWRMB;
+            }
             if (this.BasePlayer.FortuneInfo.RMB < getRMBCount)
             {
                 return OperResult.RESULTCODE_LACK_OF_BALANCE;
@@ -472,6 +487,7 @@ namespace SuperMinersServerApplication.Controller
                     {
                         PlayerUserName = this.BasePlayer.SimpleInfo.UserName,
                         WidthdrawRMB = getRMBCount,
+                        ValueYuan = (int)Math.Ceiling(getRMBCount / GlobalConfig.GameConfig.Yuan_RMB),
                         CreateTime = createTime,
                         IsPayedSucceed = false
                     };
@@ -490,6 +506,50 @@ namespace SuperMinersServerApplication.Controller
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("CreateWithdrawRMB Exception", exc);
+                    if (myTrans != null)
+                    {
+                        myTrans.Rollback();
+                    }
+
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                finally
+                {
+                    if (myTrans != null)
+                    {
+                        myTrans.Dispose();
+                    }
+                }
+            }
+
+        }
+
+        public int PayWithdrawRMB(WithdrawRMBRecord record)
+        {
+            record.PayTime = DateTime.Now;
+            lock (_lockFortuneAction)
+            {
+                CustomerMySqlTransaction myTrans = null;
+                try
+                {
+                    this.BasePlayer.FortuneInfo.FreezingRMB -= record.WidthdrawRMB;
+                    if (this.BasePlayer.FortuneInfo.FreezingRMB < 0)
+                    {
+                        LogHelper.Instance.AddErrorLog("玩家 [" + record.PlayerUserName + "] 灵币提现操作异常，提现后冻结灵币会小于0，请立即检查！！" , null);
+                        return OperResult.RESULTCODE_EXCEPTION;
+                    }
+
+                    myTrans = MyDBHelper.Instance.CreateTrans();
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+                    DBProvider.WithdrawRMBRecordDBProvider.ConfirmWithdrawRMB(record, myTrans);
+
+                    myTrans.Commit();
+
+                    return OperResult.RESULTCODE_TRUE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("PayWithdrawRMB Exception", exc);
                     if (myTrans != null)
                     {
                         myTrans.Rollback();

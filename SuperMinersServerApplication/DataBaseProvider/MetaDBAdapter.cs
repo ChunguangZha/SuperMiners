@@ -364,6 +364,7 @@ namespace DataBaseProvider
                     PlayerUserName = payerUserName,
                     CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]),
                     WidthdrawRMB = (decimal)Convert.ToSingle(dt.Rows[i]["WidthdrawRMB"]),
+                    ValueYuan = Convert.ToInt32(dt.Rows[i]["ValueYuan"]),
                     IsPayedSucceed = Convert.ToBoolean(dt.Rows[i]["IsPayedSucceed"]),
                     AdminUserName = adminUserName,
                     PayTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]),

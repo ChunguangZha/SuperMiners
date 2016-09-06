@@ -783,6 +783,26 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public int PayWithdrawRMBRecord(string token, WithdrawRMBRecord record)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return PlayerController.Instance.PayWithdrawRMB(record);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("PayWithdrawRMBRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()

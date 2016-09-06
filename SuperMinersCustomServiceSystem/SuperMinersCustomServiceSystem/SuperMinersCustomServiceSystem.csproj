@@ -177,6 +177,7 @@
     <Compile Include="Model\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Model\PlayerInfoUIModel.cs" />
     <Compile Include="Model\SellStonesOrderUIModel.cs" />
+    <Compile Include="Model\WithdrawRMBRecordUIModel.cs" />
     <Compile Include="Uility\BusyToken.cs" />
     <Compile Include="ViewModel\AlipayRechargeViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -231,6 +232,9 @@
     </Compile>
     <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\WithdrawRMBPayWindow.xaml.cs">
+      <DependentUpon>WithdrawRMBPayWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Wcf\Channel\CryptEncoder.cs" />
     <Compile Include="Wcf\Channel\MyWebRequest.cs" />
@@ -343,6 +347,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewPlayerSellStoneRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\WithdrawRMBPayWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

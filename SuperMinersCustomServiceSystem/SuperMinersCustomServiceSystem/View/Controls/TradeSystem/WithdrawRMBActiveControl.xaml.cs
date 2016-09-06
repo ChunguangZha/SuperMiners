@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MetaData.Trade;
+using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,24 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public WithdrawRMBActiveControl()
         {
             InitializeComponent();
+
+            this.dgRecords.ItemsSource = App.WithdrawRMBVMObject.ListActiveWithdrawRecords;
+        }
+
+        private void btnPay_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            WithdrawRMBRecordUIModel record = btn.DataContext as WithdrawRMBRecordUIModel;
+            if (record == null)
+            {
+                return;
+            }
+
+            WithdrawRMBPayWindow win = new WithdrawRMBPayWindow(record);
+            if (win.ShowDialog() == true)
+            {
+                App.WithdrawRMBVMObject.RemoveRecordFromActiveRecords(record);
+            }
         }
     }
 }

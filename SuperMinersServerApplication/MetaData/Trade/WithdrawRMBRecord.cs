@@ -19,6 +19,12 @@ namespace MetaData.Trade
         [DataMember]
         public decimal WidthdrawRMB = 0;
 
+        /// <summary>
+        /// 提现人民币金额全部向下取整
+        /// </summary>
+        [DataMember]
+        public int ValueYuan = 0;
+
         public DateTime CreateTime;
         [DataMember]
         public string CreateTimeString
@@ -46,6 +52,9 @@ namespace MetaData.Trade
 
         [DataMember]
         public string AdminUserName;
+
+        [DataMember]
+        public string AlipayOrderNumber = "";
 
         public DateTime? PayTime;
         [DataMember]

@@ -25,6 +25,7 @@ namespace SuperMinersWPF.Utility
             _resultCode_Msg.Add(OperResult.RESULTCODE_TRUE, "成功");
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_NOT_EXIST, "玩家不存在");
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_OFFLINE, "玩家不在线");
+            _resultCode_Msg.Add(OperResult.RESULTCODE_CANOT_WITHDRAWRMB, "只有贡献值大于50的玩家可以提现，且提现金额必须大于5元人民币");
         }
 
         public static string GetMsg(int resultCode)

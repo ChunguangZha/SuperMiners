@@ -18,13 +18,14 @@ namespace DataBaseProvider
             try
             {
                 string sqlText = "insert into withdrawrmbrecord " +
-                    "(`PlayerUserName`, `WidthdrawRMB`, `CreateTime`, `IsPayedSucceed`, `AdminUserName`, `PayTime`) " +
-                    " values (@PlayerUserName, @WidthdrawRMB, @CreateTime, @IsPayedSucceed, @AdminUserName, @PayTime)";
+                    "(`PlayerUserName`, `WidthdrawRMB`, `ValueYuan`,`CreateTime`, `IsPayedSucceed`, `AdminUserName`, `PayTime`) " +
+                    " values (@PlayerUserName, @WidthdrawRMB, @ValueYuan, @CreateTime, @IsPayedSucceed, @AdminUserName, @PayTime)";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@PlayerUserName", DESEncrypt.EncryptDES(record.PlayerUserName));
                 mycmd.Parameters.AddWithValue("@WidthdrawRMB", record.WidthdrawRMB);
+                mycmd.Parameters.AddWithValue("@ValueYuan", record.ValueYuan);
                 mycmd.Parameters.AddWithValue("@CreateTime", record.CreateTime);
                 mycmd.Parameters.AddWithValue("@IsPayedSucceed", false);
                 if (string.IsNullOrEmpty(record.AdminUserName))
@@ -56,21 +57,22 @@ namespace DataBaseProvider
             }
         }
 
-        public bool ConfirmWithdrawRMB(int id, string adminUserName, CustomerMySqlTransaction trans)
+        public bool ConfirmWithdrawRMB(WithdrawRMBRecord record, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
             try
             {
                 string sqlText = "update withdrawrmbrecord set " +
-                    "`IsPayedSucceed` = @IsPayedSucceed, `AdminUserName` = @AdminUserName, `PayTime` = @PayTime) " +
+                    "`IsPayedSucceed` = @IsPayedSucceed, `AdminUserName` = @AdminUserName, `AlipayOrderNumber` = @AlipayOrderNumber, `PayTime` = @PayTime) " +
                     " where id = @id ";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@IsPayedSucceed", true);
-                mycmd.Parameters.AddWithValue("@AdminUserName", DESEncrypt.EncryptDES(adminUserName));
-                mycmd.Parameters.AddWithValue("@PayTime", DateTime.Now);
-                mycmd.Parameters.AddWithValue("@id", id);
+                mycmd.Parameters.AddWithValue("@AdminUserName", DESEncrypt.EncryptDES(record.AdminUserName));
+                mycmd.Parameters.AddWithValue("@AlipayOrderNumber", record.AlipayOrderNumber);
+                mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                mycmd.Parameters.AddWithValue("@id", record.id);
 
                 mycmd.ExecuteNonQuery();
                 return true;

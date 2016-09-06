@@ -190,5 +190,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int HandleExceptionStoneOrderFailed(string token, string orderNumber);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/PayWithdrawRMBRecord",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int PayWithdrawRMBRecord(string token, WithdrawRMBRecord record);
     }
 }
