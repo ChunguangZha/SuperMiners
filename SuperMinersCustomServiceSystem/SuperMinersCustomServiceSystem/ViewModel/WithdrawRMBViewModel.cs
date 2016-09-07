@@ -34,12 +34,18 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public void AsyncPayWithdrawRMBRecord(WithdrawRMBRecord record)
         {
+            if (GlobalData.Client.IsConnected)
+            {
 
+            }
         }
 
         public void AsyncGetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
+            if (GlobalData.Client.IsConnected)
+            {
 
+            }
         }
 
         void Client_OnSomebodyWithdrawRMB(WithdrawRMBRecord record)

@@ -12,5 +12,10 @@ namespace SuperMinersCustomServiceSystem.Actions
         {
             get { return "交易系统\\矿山交易\\交易历史"; }
         }
+
+        public override string MenuHeader
+        {
+            get { return "交易记录"; }
+        }
     }
 }

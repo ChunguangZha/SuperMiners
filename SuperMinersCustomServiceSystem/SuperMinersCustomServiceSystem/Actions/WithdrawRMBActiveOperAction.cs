@@ -12,5 +12,10 @@ namespace SuperMinersCustomServiceSystem.Actions
         {
             get { return "交易系统\\灵币提现\\实时交易"; }
         }
+
+        public override string MenuHeader
+        {
+            get { return "实时交易"; }
+        }
     }
 }

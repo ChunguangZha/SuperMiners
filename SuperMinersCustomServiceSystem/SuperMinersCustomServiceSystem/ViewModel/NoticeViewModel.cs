@@ -21,14 +21,20 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public void AsyncCreateNotice(NoticeInfo notice)
         {
-            App.BusyToken.ShowBusyWindow("正在向服务器提交新的系统消息...");
-            GlobalData.Client.CreateNotice(notice);
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在向服务器提交新的系统消息...");
+                GlobalData.Client.CreateNotice(notice);
+            }
         }
 
         public void AsyncGetAllNotice()
         {
-            App.BusyToken.ShowBusyWindow("正在加载历史系统消息...");
-            GlobalData.Client.GetNotices();
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载历史系统消息...");
+                GlobalData.Client.GetNotices();
+            }
         }
         
         public void RegisterEvents()

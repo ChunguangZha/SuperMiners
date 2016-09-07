@@ -89,8 +89,11 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         private RestInvoker<IServiceToAdmin> _invoker = new RestInvoker<IServiceToAdmin>();
         private SynchronizationContext _context;
 
+        public bool IsConnected { get; private set; }
+
         public ServerClient()
         {
+            IsConnected = false;
             this._invoker.SetCallbackReceiver(this);
             this._invoker.Error += new EventHandler(_invoker_Error);
         }
@@ -106,6 +109,7 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void Init(string host)
         {
             this._invoker.Init(String.Format("http://{0}:33123", host));
+            IsConnected = true;
         }
 
         public void HandleCallback()

@@ -163,14 +163,19 @@
       <Link>Wcf\Datas\ResultCodeMsg.cs</Link>
     </Compile>
     <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\GoldCoinRechargeAction.cs" />
     <Compile Include="Actions\GoldCoinRechargeActiveOperAction.cs" />
     <Compile Include="Actions\GoldCoinRechargeHistoryAction.cs" />
+    <Compile Include="Actions\MinerTradeAction.cs" />
     <Compile Include="Actions\MinerTradeActiveOperAction.cs" />
     <Compile Include="Actions\MinerTradeHistoryAction.cs" />
+    <Compile Include="Actions\MineTradeAction.cs" />
     <Compile Include="Actions\MineTradeActiveOperAction.cs" />
     <Compile Include="Actions\MineTradeHistoryAction.cs" />
+    <Compile Include="Actions\StoneTradeAction.cs" />
     <Compile Include="Actions\StoneTradeActiveOperAction.cs" />
     <Compile Include="Actions\StoneTradeHistoryAction.cs" />
+    <Compile Include="Actions\WithdrawRMBAction.cs" />
     <Compile Include="Actions\WithdrawRMBActiveOperAction.cs" />
     <Compile Include="Actions\WithdrawRMBHistoryAction.cs" />
     <Compile Include="BusyWindow.xaml.cs">
@@ -202,11 +207,44 @@
     <Compile Include="View\AddNoticeWindow.xaml.cs">
       <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\NoticeManageControl.xaml.cs">
+      <DependentUpon>NoticeManageControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\PlayerManagerControl.xaml.cs">
+      <DependentUpon>PlayerManagerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\GoldCoinRechargeActiveControl.xaml.cs">
+      <DependentUpon>GoldCoinRechargeActiveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\GoldCoinRechargeHistoryRecordControl.xaml.cs">
+      <DependentUpon>GoldCoinRechargeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\MinerTradeActiveControl.xaml.cs">
+      <DependentUpon>MinerTradeActiveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\MinerTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>MinerTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\MineTradeActiveControl.xaml.cs">
+      <DependentUpon>MineTradeActiveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\MineTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>MineTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\StoneTradeActiveControl.xaml.cs">
+      <DependentUpon>StoneTradeActiveControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\StoneTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>StoneTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml.cs">
       <DependentUpon>WithdrawRMBActiveControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml.cs">
       <DependentUpon>WithdrawRMBHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\WithdrawRMBShowImageControl.xaml.cs">
+      <DependentUpon>WithdrawRMBShowImageControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditPlayerAlipayWindow.xaml.cs">
       <DependentUpon>EditPlayerAlipayWindow.xaml</DependentUpon>
@@ -305,11 +343,55 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\NoticeManageControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\PlayerManagerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\GoldCoinRechargeActiveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\GoldCoinRechargeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\MinerTradeActiveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\MinerTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\MineTradeActiveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\MineTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\StoneTradeActiveControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\StoneTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\WithdrawRMBShowImageControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,7 +10,12 @@ namespace SuperMinersCustomServiceSystem.Actions
     {
         public override string NavMenu
         {
-            get { return "交易系统\\矿工交易\\实时交易"; }
+            get { return "交易系统\\矿工交易\\"; }
+        }
+
+        public override string MenuHeader
+        {
+            get { return "实时交易"; }
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SuperMinersCustomServiceSystem.Actions
     {
         public abstract string NavMenu { get; }
 
-        //public abstract string MenuHeader { get; }
+        public abstract string MenuHeader { get; }
 
         private int _activeItemsCount;
 
@@ -61,16 +61,18 @@ namespace SuperMinersCustomServiceSystem.Actions
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-        
 
-        private UserControl _userControl;
+        /// <summary>
+        /// 可以为null
+        /// </summary>
+        public UserControl UserControl { get; private set; }
         private TreeViewItem _tvItem;
 
-        public BaseAction(UserControl usercontrol, TreeViewItem tv)
-        {
-            this._userControl = usercontrol;
-            this._tvItem = tv;
-        }
+        //public BaseAction(UserControl usercontrol, TreeViewItem tv)
+        //{
+        //    this.UserControl = usercontrol;
+        //    this._tvItem = tv;
+        //}
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

@@ -37,20 +37,29 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public void AsyncGetListPlayers()
         {
-            App.BusyToken.ShowBusyWindow("正在加载所有玩家信息...");
-            GlobalData.Client.GetPlayers();
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载所有玩家信息...");
+                GlobalData.Client.GetPlayers();
+            }
         }
 
         public void AsyncChangePlayerInfo(PlayerInfoUIModel player)
         {
-            App.BusyToken.ShowBusyWindow("正在保存玩家信息...");
-            GlobalData.Client.ChangePlayer(player.ParentObject);
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在保存玩家信息...");
+                GlobalData.Client.ChangePlayer(player.ParentObject);
+            }
         }
 
         public void AsyncDeletePlayerInfos(string[] playerUserNames)
         {
-            App.BusyToken.ShowBusyWindow("正在删除玩家...");
-            GlobalData.Client.DeletePlayers(playerUserNames);
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在删除玩家...");
+                GlobalData.Client.DeletePlayers(playerUserNames);
+            }
         }
 
         /// <summary>
