@@ -162,6 +162,17 @@
     <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Utility\ResultCodeMsg.cs">
       <Link>Wcf\Datas\ResultCodeMsg.cs</Link>
     </Compile>
+    <Compile Include="Actions\BaseAction.cs" />
+    <Compile Include="Actions\GoldCoinRechargeActiveOperAction.cs" />
+    <Compile Include="Actions\GoldCoinRechargeHistoryAction.cs" />
+    <Compile Include="Actions\MinerTradeActiveOperAction.cs" />
+    <Compile Include="Actions\MinerTradeHistoryAction.cs" />
+    <Compile Include="Actions\MineTradeActiveOperAction.cs" />
+    <Compile Include="Actions\MineTradeHistoryAction.cs" />
+    <Compile Include="Actions\StoneTradeActiveOperAction.cs" />
+    <Compile Include="Actions\StoneTradeHistoryAction.cs" />
+    <Compile Include="Actions\WithdrawRMBActiveOperAction.cs" />
+    <Compile Include="Actions\WithdrawRMBHistoryAction.cs" />
     <Compile Include="BusyWindow.xaml.cs">
       <DependentUpon>BusyWindow.xaml</DependentUpon>
     </Compile>

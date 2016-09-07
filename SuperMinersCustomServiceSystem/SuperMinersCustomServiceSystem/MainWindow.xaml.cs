@@ -337,5 +337,65 @@ namespace SuperMinersCustomServiceSystem
             }
         }
 
+        private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Miner_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Miner_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Mine_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Mine_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Stone_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_Stone_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_GoldCoin_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_GoldCoin_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_WithdrawRMB_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_WithdrawRMB_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_WithdrawRMB_ShowImage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
     }
 }
