@@ -25,7 +25,7 @@
         <TextBlock Grid.Row="3" Text="操作密码：" Margin="5" HorizontalAlignment="Right"/>
         <PasswordBox Grid.Row="3" Grid.Column="1" Name="txtActionPassword" MaxLength="15" Margin="5"/>
         <TextBlock Grid.Row="4" Text="确认操作密码：" Margin="5" HorizontalAlignment="Right"/>
-        <PasswordBox Grid.Row="4" Grid.Column="1" Name="txtConfirmActionPassword" MaxHeight="15" Margin="5"/>
+        <PasswordBox Grid.Row="4" Grid.Column="1" Name="txtConfirmActionPassword" MaxLength="15" Margin="5"/>
         <TextBlock Grid.Row="5" Text="MAC：" Margin="5" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="5" Grid.Column="1" Name="txtMac" MaxHeight="20" Margin="5"/>
         <Button Grid.Row="6" Grid.ColumnSpan="2" Name="btnOK" Content="保存" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,5,120,5" Click="btnOK_Click"/>

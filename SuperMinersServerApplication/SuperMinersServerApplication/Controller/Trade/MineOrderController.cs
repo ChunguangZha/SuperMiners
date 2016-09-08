@@ -88,7 +88,7 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.MineRecordDBProvider.SaveTempMineTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵矿山", record.SpendRMB, "勘探一座矿山，可增加" + GlobalConfig.GameConfig.StonesReservesPerMines + "矿石储量");
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(userName, record.OrderNumber, "迅灵矿山", record.SpendRMB, "勘探一座矿山，可增加" + GlobalConfig.GameConfig.StonesReservesPerMines + "矿石储量");
             }
 
             return result;

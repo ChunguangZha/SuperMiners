@@ -165,6 +165,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.FreezingStones = Convert.ToDecimal(dt.Rows[i]["FreezingStones"]);
                 player.FortuneInfo.StockOfDiamonds = Convert.ToDecimal(dt.Rows[i]["StockOfDiamonds"]);
                 player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
+                player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
 
                 players[i] = player;
             }
@@ -311,9 +312,9 @@ namespace DataBaseProvider
             {
                 AlipayRechargeRecord record = new AlipayRechargeRecord();
                 record.out_trade_no = Convert.ToString(dt.Rows[i]["out_trade_no"]);
+                record.alipay_trade_no = Convert.ToString(dt.Rows[i]["alipay_trade_no"]);
                 string encryptedSellerUserName = dt.Rows[i]["user_name"].ToString();
                 record.user_name = DESEncrypt.DecryptDES(encryptedSellerUserName);
-                record.alipay_trade_no = Convert.ToString(dt.Rows[i]["alipay_trade_no"]);
                 record.buyer_email = Convert.ToString(dt.Rows[i]["buyer_email"]);
                 record.total_fee = Convert.ToDecimal(dt.Rows[i]["total_fee"]);
                 record.value_rmb = Convert.ToDecimal(dt.Rows[i]["value_rmb"]);

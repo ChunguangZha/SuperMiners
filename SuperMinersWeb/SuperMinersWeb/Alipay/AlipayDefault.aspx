@@ -294,6 +294,14 @@
             </div>
 			
             <div class="element">
+                <div class="etitle">用户名:</div>
+                <div class="einput">
+                    <asp:TextBox ID="txtUserName" runat="server" ReadOnly="true"></asp:TextBox>
+                </div>
+
+            </div>
+
+            <div class="element">
                 <div class="etitle">订单号:</div>
                 <div class="einput">
                     <asp:TextBox ID="WIDout_trade_no" runat="server" ReadOnly="true"></asp:TextBox>

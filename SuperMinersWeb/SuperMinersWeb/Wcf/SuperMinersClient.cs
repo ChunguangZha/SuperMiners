@@ -141,11 +141,11 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public bool AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        public bool AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
-                base.Channel.AlipayCallback(out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
+                base.Channel.AlipayCallback(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
                 return true;
             }
             catch (Exception exc)

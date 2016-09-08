@@ -61,6 +61,6 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         GameConfig GetGameConfig();
 
         [OperationContract]
-        bool AlipayCallback(string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
+        bool AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
     }
 }

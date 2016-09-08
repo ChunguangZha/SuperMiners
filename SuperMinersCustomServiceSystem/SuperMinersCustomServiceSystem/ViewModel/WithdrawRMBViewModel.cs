@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.Trade;
 using SuperMinersCustomServiceSystem.Model;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuperMinersCustomServiceSystem.ViewModel
 {
@@ -30,22 +32,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         public WithdrawRMBViewModel()
         {
             GlobalData.Client.OnSomebodyWithdrawRMB += Client_OnSomebodyWithdrawRMB;
+            ListActiveWithdrawRecords.CollectionChanged += ListActiveWithdrawRecords_CollectionChanged;
         }
 
-        public void AsyncPayWithdrawRMBRecord(WithdrawRMBRecord record)
+        void ListActiveWithdrawRecords_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (GlobalData.Client.IsConnected)
-            {
-
-            }
-        }
-
-        public void AsyncGetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
-        {
-            if (GlobalData.Client.IsConnected)
-            {
-
-            }
+            this.ActiveItemsCount = this.ListActiveWithdrawRecords.Count;
         }
 
         void Client_OnSomebodyWithdrawRMB(WithdrawRMBRecord record)
@@ -53,6 +45,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             lock (LockActiveRecords)
             {
                 ListActiveWithdrawRecords.Add(new WithdrawRMBRecordUIModel(record));
+            }
+        }
+        
+        public void AsyncGetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        {
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在提交数据...");
+
             }
         }
 
@@ -70,5 +71,6 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 }
             }
         }
+
     }
 }

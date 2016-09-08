@@ -54,9 +54,9 @@ namespace DataBaseProvider
 
                 string cmdTextB = "insert into playerfortuneinfo " +
                     "(`userId`, `Exp`, `RMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, " +
-                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`) values " +
+                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `FirstRechargeGoldCoinAward` ) values " +
                     " (@userId, @Exp, @RMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, " +
-                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds)";
+                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @FirstRechargeGoldCoinAward)";
                 mycmd.CommandText = cmdTextB;
                 mycmd.Parameters.AddWithValue("@userId", userId);
                 mycmd.Parameters.AddWithValue("@Exp", player.FortuneInfo.Exp);
@@ -70,6 +70,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingStones", player.FortuneInfo.FreezingStones);
                 mycmd.Parameters.AddWithValue("@StockOfDiamonds", player.FortuneInfo.StockOfDiamonds);
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", player.FortuneInfo.FreezingDiamonds);
+                mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", player.FortuneInfo.FirstRechargeGoldCoinAward);
 
                 mycmd.ExecuteNonQuery();
 
@@ -112,7 +113,7 @@ namespace DataBaseProvider
                 string cmdTextB = "UPDATE `playerfortuneinfo` SET "
                     + " `Exp`=@Exp, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
                     + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,`TempOutputStonesStartTime`=@TempOutputStonesStartTime,`TempOutputStones`=@TempOutputStones,"
-                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds "
+                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
@@ -132,6 +133,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingStones", playerFortune.FreezingStones);
                 mycmd.Parameters.AddWithValue("@StockOfDiamonds", playerFortune.StockOfDiamonds);
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", playerFortune.FreezingDiamonds);
+                mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", playerFortune.FirstRechargeGoldCoinAward);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();

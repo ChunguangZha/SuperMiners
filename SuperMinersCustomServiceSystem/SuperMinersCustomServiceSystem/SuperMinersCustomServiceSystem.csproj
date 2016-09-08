@@ -282,6 +282,9 @@
     <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\EditPlayerGoldCoinWindow.xaml.cs">
+      <DependentUpon>EditPlayerGoldCoinWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\WithdrawRMBPayWindow.xaml.cs">
       <DependentUpon>WithdrawRMBPayWindow.xaml</DependentUpon>
     </Compile>
@@ -440,6 +443,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewPlayerSellStoneRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditPlayerGoldCoinWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

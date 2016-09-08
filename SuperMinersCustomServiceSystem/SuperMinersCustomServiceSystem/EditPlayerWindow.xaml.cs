@@ -1,5 +1,6 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.View;
+using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,15 @@ namespace SuperMinersCustomServiceSystem
             if (win.ShowDialog() == true)
             {
                 this._player.SetRMB(win.ChangedRMB);
+            }
+        }
+
+        private void btnEditGoldCoin_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerGoldCoinWindow win = new EditPlayerGoldCoinWindow(this._player.UserName, this._player.GoldCoin);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetGoldCoin(win.ChangedGoldCoin);
             }
         }
 

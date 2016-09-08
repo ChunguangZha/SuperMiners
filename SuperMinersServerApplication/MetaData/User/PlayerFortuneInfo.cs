@@ -118,6 +118,12 @@ namespace MetaData.User
         [DataMember]
         public decimal FreezingDiamonds { get; set; }
 
+        /// <summary>
+        /// 默认为false
+        /// </summary>
+        [DataMember]
+        public bool FirstRechargeGoldCoinAward { get; set; }
+
         public PlayerFortuneInfo CopyTo()
         {
             PlayerFortuneInfo infoB = new PlayerFortuneInfo()
@@ -134,7 +140,8 @@ namespace MetaData.User
                 StonesReserves = this.StonesReserves,
                 TempOutputStones = this.TempOutputStones,
                 TotalProducedStonesCount = this.TotalProducedStonesCount,
-                UserName = this.UserName
+                UserName = this.UserName,
+                FirstRechargeGoldCoinAward = this.FirstRechargeGoldCoinAward
             };
 
             return infoB;

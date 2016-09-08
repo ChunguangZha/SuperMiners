@@ -48,7 +48,7 @@ namespace SuperMinersWPF.Models
                     case ActionType.RMBRecharge:
                         break;
                     case ActionType.GoldCoinRecharge:
-                        message = string.Format("充值 {0} 金币", this._parentObject.OperNumber);
+                        message = this._parentObject.Remark;
                         break;
                     case ActionType.BuyMine:
                         message = string.Format("购买了 {0} 座矿山，" + this._parentObject.Remark, this._parentObject.OperNumber);

@@ -1,5 +1,15 @@
-Error:  [2016/9/3 21:02:58] ---- Log: 启动服务失败。
-Exc.Message: 列“FirstAlipayRechargeGoldCoinAwardMultiple”不属于表 。Exc.Stack:    在 SuperMinersServerApplication.Controller.GameSystemConfigController.Init() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\GameSystemConfigController.cs:行号 129
-   在 SuperMinersServerApplication.SuperMinersService.InitService() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\SuperMinersService.cs:行号 79
+Error:  [2016/9/8 12:14:33] ---- Log: AlipayCallback Exception.  orderNumber: 201609081213110810224454765448838; money: 1.00; payAlipayAccount: testbuyer@qq.com
+Exc.Message: Unknown column 'value_rmb' in 'field list'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   在 DataBaseProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AlipayRecordDBProvider.cs:行号 34
+   在 SuperMinersServerApplication.Controller.GoldCoinOrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\GoldCoinOrderController.cs:行号 123
+   在 SuperMinersServerApplication.Controller.Trade.OrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\OrderController.cs:行号 87
+   在 SuperMinersServerApplication.WebServiceToWeb.Services.ServiceToWeb.AlipayCallback(String userName, String out_trade_no, String alipay_trade_no, Decimal total_fee, String buyer_email, String pay_time) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Services\ServiceToWeb.cs:行号 208
 -----------------------------------------------------
 

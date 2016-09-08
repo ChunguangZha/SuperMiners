@@ -63,7 +63,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             }
             else
             {
-                MessageBox.Show(ResultCodeMsg.GetMsg(e.Result));
+                MessageBox.Show("操作失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
             }
         }
 

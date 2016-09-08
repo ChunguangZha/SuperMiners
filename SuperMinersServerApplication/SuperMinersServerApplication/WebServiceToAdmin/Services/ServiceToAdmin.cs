@@ -812,5 +812,15 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 
         #endregion
 
+
+        #region IServiceToAdmin Members
+
+
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

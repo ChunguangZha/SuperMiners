@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SuperMinersCustomServiceSystem.View.EditPlayerAlipayWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="修改玩家支付宝信息" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True">
+        Title="修改玩家支付宝信息" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

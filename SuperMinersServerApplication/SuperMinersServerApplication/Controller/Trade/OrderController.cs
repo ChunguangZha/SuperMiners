@@ -61,7 +61,7 @@ namespace SuperMinersServerApplication.Controller.Trade
         /// <param name="valueRMB"></param>
         /// <param name="shopDescript"></param>
         /// <returns></returns>
-        public string CreateAlipayLink(string orderNumber, string shopName, decimal valueRMB, string shopDescript)
+        public string CreateAlipayLink(string userName, string orderNumber, string shopName, decimal valueRMB, string shopDescript)
         {
             decimal money = valueRMB / GlobalConfig.GameConfig.Yuan_RMB;
             decimal money_1 = (decimal)Math.Round(money, 1);
@@ -69,7 +69,7 @@ namespace SuperMinersServerApplication.Controller.Trade
             {
                 money_1 += 0.1m;
             }
-            string srcParameter = orderNumber + "," + shopName + "," + money_1.ToString("0.00") + "," + shopDescript;
+            string srcParameter = userName + "," + orderNumber + "," + shopName + "," + money_1.ToString("0.00") + "," + shopDescript;
             string desParameter = DESEncrypt.EncryptDES(srcParameter);
 
             string p = System.Web.HttpUtility.UrlEncode(desParameter, Encoding.UTF8);

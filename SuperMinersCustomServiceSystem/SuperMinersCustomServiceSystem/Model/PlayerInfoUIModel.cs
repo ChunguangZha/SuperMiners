@@ -170,6 +170,12 @@ namespace SuperMinersCustomServiceSystem.Model
             NotifyPropertyChange("RMB");
         }
 
+        public void SetGoldCoin(decimal newGoldCoin)
+        {
+            this._parentObject.FortuneInfo.GoldCoin = newGoldCoin;
+            NotifyPropertyChange("GoldCoin");
+        }
+
         public decimal FreezingRMB
         {
             get { return this._parentObject.FortuneInfo.FreezingRMB; }

@@ -47,14 +47,15 @@ namespace SuperMinersWeb.Alipay
                     string secParameter = DESEncrypt.DecryptDES(p);
                     string[] parameters = secParameter.Split(new char[] { ',' });
 
+                    this.txtUserName.Text = parameters[0];
                     //orderNumber
-                    this.WIDout_trade_no.Text = parameters[0];
+                    this.WIDout_trade_no.Text = parameters[1];
                     //shopName
-                    this.WIDsubject.Text = parameters[1];
+                    this.WIDsubject.Text = parameters[2];
                     //money
-                    this.WIDtotal_fee.Text = parameters[2];
+                    this.WIDtotal_fee.Text = parameters[3];
 
-                    this.WIDbody.Text = parameters[3];
+                    this.WIDbody.Text = parameters[4];
                 }
             }
             catch (Exception exc)
@@ -67,6 +68,8 @@ namespace SuperMinersWeb.Alipay
         protected void BtnAlipay_Click(object sender, EventArgs e)
         {
             ////////////////////////////////////////////请求参数////////////////////////////////////////////
+
+            string userName = this.txtUserName.Text.Trim();
 
             //商户订单号，商户网站订单系统中唯一订单号，必填
             string out_trade_no = WIDout_trade_no.Text.Trim();
@@ -113,6 +116,7 @@ namespace SuperMinersWeb.Alipay
             sParaTemp.Add("total_fee", total_fee);
             sParaTemp.Add("body", body);
             sParaTemp.Add("it_b_pay", "1h");
+            sParaTemp.Add("extra_common_param", userName);
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
             //如sParaTemp.Add("参数名","参数值");
 

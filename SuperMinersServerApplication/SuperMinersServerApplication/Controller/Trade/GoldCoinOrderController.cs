@@ -68,7 +68,7 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.GoldCoinRecordDBProvider.SaveTempGoldCoinRechargeTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(record.OrderNumber, "迅灵金币", record.SpendRMB, "金币可用于购买矿工");
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(userName, record.OrderNumber, "迅灵金币", record.SpendRMB, "金币可用于购买矿工");
             }
 
             return result;

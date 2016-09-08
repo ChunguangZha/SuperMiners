@@ -221,8 +221,8 @@ namespace DataBaseProvider
         {
             MySqlCommand mycmd = trans.CreateCommand();
             string cmdText = "delete from registeruserconfig; " +
-                "insert into registeruserconfig (UserCountCreateByOneIP, GiveToNewUserExp, GiveToNewUserGoldCoin, GiveToNewUserMines, GiveToNewUserMiners, GiveToNewUserStones ) values " +
-                                    " (@UserCountCreateByOneIP, @GiveToNewUserExp, @GiveToNewUserGoldCoin, @GiveToNewUserMines, @GiveToNewUserMiners, @GiveToNewUserStones )";
+                "insert into registeruserconfig (UserCountCreateByOneIP, GiveToNewUserExp, GiveToNewUserGoldCoin, GiveToNewUserMines, GiveToNewUserMiners, GiveToNewUserStones, FirstAlipayRechargeGoldCoinAwardMultiple ) values " +
+                                    " (@UserCountCreateByOneIP, @GiveToNewUserExp, @GiveToNewUserGoldCoin, @GiveToNewUserMines, @GiveToNewUserMiners, @GiveToNewUserStones, @FirstAlipayRechargeGoldCoinAwardMultiple )";
             mycmd.CommandText = cmdText;
             mycmd.Parameters.AddWithValue("@UserCountCreateByOneIP", config.UserCountCreateByOneIP);
             mycmd.Parameters.AddWithValue("@GiveToNewUserExp", config.GiveToNewUserExp);

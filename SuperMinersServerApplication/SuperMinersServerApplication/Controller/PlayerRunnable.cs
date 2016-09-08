@@ -372,7 +372,14 @@ namespace SuperMinersServerApplication.Controller
 
             lock (_lockFortuneAction)
             {
+                int awardGoldCoin = 0;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
+                if (!BasePlayer.FortuneInfo.FirstRechargeGoldCoinAward)
+                {
+                    awardGoldCoin = (int)(goldcoinValue * GlobalConfig.RegisterPlayerConfig.FirstAlipayRechargeGoldCoinAwardMultiple);
+                    BasePlayer.FortuneInfo.FirstRechargeGoldCoinAward = true;
+                    BasePlayer.FortuneInfo.GoldCoin += awardGoldCoin;
+                }
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
@@ -380,7 +387,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,
-                    "充值了 " + goldcoinValue.ToString() + " 的金币");
+                    "充值了 " + goldcoinValue.ToString() + " 金币" + (awardGoldCoin == 0 ? "" : "，同时第一次支付宝充值金币，获取" + awardGoldCoin.ToString() + "金币的额外奖励"));
                 return OperResult.RESULTCODE_TRUE;
             }
         }

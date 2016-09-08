@@ -58,6 +58,8 @@ public partial class notify_url : System.Web.UI.Page
                 //交易状态
                 string trade_status = Request.Form["trade_status"];
 
+                string userName = Request.QueryString["extra_common_param"];
+
 
                 if (Request.Form["trade_status"] == "TRADE_FINISHED")
                 {
@@ -87,7 +89,7 @@ public partial class notify_url : System.Web.UI.Page
                         return;
                     }
 
-                    WcfClient.Instance.AlipayCallback(out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                    WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                 }
                 else
                 {
