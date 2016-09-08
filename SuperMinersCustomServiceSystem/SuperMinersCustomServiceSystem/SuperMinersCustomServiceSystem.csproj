@@ -194,6 +194,9 @@
     <Compile Include="Model\PlayerInfoUIModel.cs" />
     <Compile Include="Model\SellStonesOrderUIModel.cs" />
     <Compile Include="Model\WithdrawRMBRecordUIModel.cs" />
+    <Compile Include="MyControl\MyDateTimePickerControl.xaml.cs">
+      <DependentUpon>MyDateTimePickerControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Uility\BusyToken.cs" />
     <Compile Include="ViewModel\AlipayRechargeViewModel.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -293,6 +296,7 @@
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
     <Page Include="BusyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -339,6 +343,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Assets\Style.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MyControl\MyDateTimePickerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

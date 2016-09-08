@@ -122,7 +122,7 @@ namespace SuperMinersServerApplication.Controller
                 if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
                     alipayRecord.value_rmb >= buyRecord.SpendRMB)
                 {
-                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, buyRecord.GainMinesCount);
+                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
                         DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);

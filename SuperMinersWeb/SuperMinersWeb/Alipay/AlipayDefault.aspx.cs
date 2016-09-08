@@ -96,7 +96,10 @@ namespace SuperMinersWeb.Alipay
                 Response.Write("<script>alert('付款金额有误，无法支付。');</script>");
                 return;
             }
-            
+
+            AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Start To Pay.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";subject=" + subject + ";total_fee=" + total_fee);
+
+
             ////////////////////////////////////////////////////////////////////////////////////////////////
 
             //把请求参数打包成数组
@@ -123,7 +126,7 @@ namespace SuperMinersWeb.Alipay
 #if TestAlipay
 
             int orderNum = new Random().Next(100000, 999999);
-            Response.Redirect("return_url.aspx?out_trade_no=" + out_trade_no + "&trade_no=20190909121212" + orderNum + "&trade_status=TRADE_SUCCESS&buyer_email=testbuyer@qq.com&total_fee=" + total_fee);
+            Response.Redirect("return_url.aspx?out_trade_no=" + out_trade_no + "&trade_no=20190909121212" + orderNum + "&trade_status=TRADE_SUCCESS&buyer_email=testbuyer@qq.com&total_fee=" + total_fee + "&extra_common_param="+userName);
 
 #else
 

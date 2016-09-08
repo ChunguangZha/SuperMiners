@@ -48,12 +48,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
         
-        public void AsyncGetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        public void AsyncGetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             if (GlobalData.Client.IsConnected)
             {
-                App.BusyToken.ShowBusyWindow("正在提交数据...");
-
+                App.BusyToken.ShowBusyWindow("正在查找数据...");
+                GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
             }
         }
 

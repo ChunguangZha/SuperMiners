@@ -77,14 +77,13 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
     }
 
-    public class ServerClient
+    public partial class ServerClient
     {
         public event EventHandler Error;
 
         public event Action OnKickoutByUser;
         public event Action OnLogedIn;
         public event Action OnLogedOut;
-        public event Action<WithdrawRMBRecord> OnSomebodyWithdrawRMB;
 
         private RestInvoker<IServiceToAdmin> _invoker = new RestInvoker<IServiceToAdmin>();
         private SynchronizationContext _context;
@@ -150,15 +149,6 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
                 handler();
             }
         }
-        public void RaiseOnSomebodyWithdrawRMB(WithdrawRMBRecord record)
-        {
-            Action<WithdrawRMBRecord> handler = this.OnSomebodyWithdrawRMB;
-            if (null != handler)
-            {
-                handler(record);
-            }
-        }
-
 
         #endregion
 
@@ -289,12 +279,6 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void HandleExceptionStoneOrderFailed(string orderNumber)
         {
             this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderFailed", this.HandleExceptionStoneOrderFailedCompleted, GlobalData.Token, orderNumber);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<int>> PayWithdrawRMBRecordCompleted;
-        public void PayWithdrawRMBRecord(WithdrawRMBRecord record)
-        {
-            this._invoker.Invoke<int>(this._context, "PayWithdrawRMBRecord", this.PayWithdrawRMBRecordCompleted, GlobalData.Token, record);
         }
 
         #endregion

@@ -129,7 +129,7 @@ namespace DataBaseProvider
             }
         }
 
-        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime)
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             WithdrawRMBRecord[] orders = null;
             MySqlConnection myconn = null;
@@ -153,6 +153,7 @@ namespace DataBaseProvider
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
                 }
+
                 if (beginCreateTime != null && !beginCreateTime.IsNull && endCreateTime != null && !endCreateTime.IsNull)
                 {
                     DateTime beginTime = beginCreateTime.ToDateTime();
@@ -172,6 +173,8 @@ namespace DataBaseProvider
                     string encryptUserName = DESEncrypt.EncryptDES(adminUserName);
                     mycmd.Parameters.AddWithValue("@AdminUserName", encryptUserName);
                 }
+
+                bool orderByPayTime = false;
                 if (beginPayTime != null && !beginPayTime.IsNull && endPayTime != null && !endPayTime.IsNull)
                 {
                     DateTime beginTime = beginPayTime.ToDateTime();
@@ -183,9 +186,22 @@ namespace DataBaseProvider
                     builder.Append(" and PayTime >= @beginPayTime and PayTime < @endPayTime ;");
                     mycmd.Parameters.AddWithValue("@beginPayTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endPayTime", endTime);
+                    orderByPayTime = true;
                 }
 
-                string cmdText = sqlTextA + builder.ToString();
+                string orderByText = "";
+                if (orderByPayTime)
+                {
+                    orderByText = " order by PayTime desc ";
+                }
+                else
+                {
+                    orderByText = " order by CreateTime desc ";
+                }
+
+                int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                string limitText = " limit " + start.ToString() + ", " + pageItemCount;
+                string cmdText = sqlTextA + builder.ToString() + orderByText + limitText;
                 mycmd.CommandText = cmdText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

@@ -46,7 +46,11 @@ public partial class return_url : System.Web.UI.Page
             verifyResult = aliNotify.Verify(sPara, Request.QueryString["notify_id"], Request.QueryString["sign"]);
 
 #endif
-            
+
+            string userName = Request.QueryString["extra_common_param"];
+
+            SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ End Pay.  verifyResult：" + verifyResult);
+
 
             if (verifyResult)//验证成功
             {
@@ -66,8 +70,6 @@ public partial class return_url : System.Web.UI.Page
                 //交易状态
                 string trade_status = Request.QueryString["trade_status"];
 
-                string userName = Request.QueryString["extra_common_param"];
-
 
                 if (Request.QueryString["trade_status"] == "TRADE_FINISHED" || Request.QueryString["trade_status"] == "TRADE_SUCCESS")
                 {
@@ -78,12 +80,17 @@ public partial class return_url : System.Web.UI.Page
                     decimal total_fee;
                     if (!decimal.TryParse(Request.QueryString["total_fee"], out total_fee))
                     {
+                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ End Pay Failed, 充值金额错误.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+
                         //打印页面
                         Response.Write("充值金额错误<br />");
                         return;
                     }
 
                     bool isOK = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+
+                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ End Pay Result: " + isOK + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+
                     if (!isOK)
                     {
                         Response.Write("支付失败<br />请回到软件中重新发起支付<br />本页面将在3秒后关闭");
@@ -93,7 +100,9 @@ public partial class return_url : System.Web.UI.Page
                 }
                 else
                 {
-                    Response.Write("trade_status=" + Request.QueryString["trade_status"]);
+                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ End Pay Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
+
+                    Response.Write("trade_status=" + trade_status);
                 }
 
                 //打印页面

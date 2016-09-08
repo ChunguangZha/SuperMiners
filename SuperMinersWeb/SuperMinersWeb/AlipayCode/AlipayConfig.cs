@@ -43,7 +43,7 @@ namespace SuperMinersWeb.AlipayCode
         public static string sign_type = "RSA";
 
         // 调试用，创建TXT日志文件夹路径，见AlipayCore.cs类中的LogResult(string sWord)打印方法。
-        public static string log_path = HttpRuntime.AppDomainAppPath.ToString() + "log\\";
+        public static string log_path = HttpRuntime.AppDomainAppPath.ToString() + "Logs";
 
         // 字符编码格式 目前支持 gbk 或 utf-8
         public static string input_charset = "utf-8";

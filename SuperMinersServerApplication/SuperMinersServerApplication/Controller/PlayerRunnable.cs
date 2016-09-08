@@ -299,7 +299,7 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByAlipay(decimal minesCount)
+        public int BuyMineByAlipay(decimal moneyYuan, decimal minesCount)
         {
             if (minesCount <= 0)
             {
@@ -311,6 +311,9 @@ namespace SuperMinersServerApplication.Controller
                 decimal newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
                 BasePlayer.FortuneInfo.MinesCount += minesCount;
                 BasePlayer.FortuneInfo.StonesReserves += newReservers;
+
+                BasePlayer.FortuneInfo.Exp += (int)moneyYuan;
+
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();
@@ -363,7 +366,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="rmbValue"></param>
         /// <param name="goldcoinValue"></param>
         /// <returns></returns>
-        public int RechargeGoldCoinByAlipay(int rmbValue, int goldcoinValue)
+        public int RechargeGoldCoinByAlipay(decimal moneyYuan, int rmbValue, int goldcoinValue)
         {
             if (rmbValue <= 0)
             {
@@ -380,6 +383,9 @@ namespace SuperMinersServerApplication.Controller
                     BasePlayer.FortuneInfo.FirstRechargeGoldCoinAward = true;
                     BasePlayer.FortuneInfo.GoldCoin += awardGoldCoin;
                 }
+
+                BasePlayer.FortuneInfo.Exp += (int)moneyYuan;
+
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
                 {
                     RefreshFortune();

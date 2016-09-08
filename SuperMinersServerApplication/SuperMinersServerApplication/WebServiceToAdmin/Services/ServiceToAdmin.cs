@@ -803,6 +803,26 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string token, bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetWithdrawRMBRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()
@@ -815,11 +835,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 
         #region IServiceToAdmin Members
 
-
-        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
-        {
-            throw new NotImplementedException();
-        }
 
         #endregion
     }
