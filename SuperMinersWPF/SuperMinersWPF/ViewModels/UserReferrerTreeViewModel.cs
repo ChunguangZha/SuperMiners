@@ -75,37 +75,45 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetUserReferrerTreeCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.UserReferrerTreeItem[]> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询推荐信息失败。");
+                    return;
+                }
+
+                if (e.Result.Length == 0)
+                {
+                    return;
+                }
+
+                this.UpRefrerrer = null;
+
+                var up = e.Result.FirstOrDefault(u => u.Level < 0);
+                if (up != null)
+                {
+                    this.UpRefrerrer = new UserReferrerTreeItemUIModel(up);
+                }
+
+                this.ListDownRefrerrerTree.Clear();
+                foreach (var item in e.Result.Where(u => u.Level > 0))
+                {
+                    this.ListDownRefrerrerTree.Add(new UserReferrerTreeItemUIModel(item));
+                }
+
+                NotifyPropertyChange("DownRefrerrerCount");
+            }
+            catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("查询推荐信息失败。");
-                return;
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
-
-            if (e.Result.Length == 0)
-            {
-                return;
-            }
-
-            this.UpRefrerrer = null;
-
-            var up = e.Result.FirstOrDefault(u => u.Level < 0);
-            if (up != null)
-            {
-                this.UpRefrerrer = new UserReferrerTreeItemUIModel(up);
-            }
-
-            this.ListDownRefrerrerTree.Clear();
-            foreach (var item in e.Result.Where(u => u.Level > 0))
-            {
-                this.ListDownRefrerrerTree.Add(new UserReferrerTreeItemUIModel(item));
-            }
-
-            NotifyPropertyChange("DownRefrerrerCount");
         }
 
     }

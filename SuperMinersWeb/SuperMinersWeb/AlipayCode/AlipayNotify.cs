@@ -72,8 +72,10 @@ namespace SuperMinersWeb.AlipayCode
             if (notify_id != null && notify_id != "") { responseTxt = GetResponseTxt(notify_id); }
 
             //写日志记录（若要调试，请取消下面两行注释）
-            //string sWord = "responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
-            //Core.LogResult(sWord);
+            string userName = inputPara["extra_common_param"];// Request.QueryString["extra_common_param"];
+
+            string sWord = DateTime.Now.ToString() + "  ------  Verify responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
+            Core.LogResult(userName, sWord);
 
             //判断responsetTxt是否为true，isSign是否为true
             //responsetTxt的结果不是true，与服务器设置问题、合作身份者ID、notify_id一分钟失效有关

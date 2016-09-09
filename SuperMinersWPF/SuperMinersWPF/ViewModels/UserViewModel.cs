@@ -145,35 +145,51 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GatherStonesCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Result > 0)
+            try
             {
-                MyMessageBox.ShowInfo("成功收取" + e.Result.ToString() + "矿石。");
+                App.BusyToken.CloseBusyWindow();
+                if (e.Result > 0)
+                {
+                    MyMessageBox.ShowInfo("成功收取" + e.Result.ToString() + "矿石。");
+                }
+                AsyncGetPlayerInfo();
             }
-            AsyncGetPlayerInfo();
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
+            }
         }
 
         void Client_GetPlayerInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PlayerInfo> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
+
+                if (e.Error != null || e.Result == null)
+                {
+                    App.BusyToken.CloseAllBusyWindow();
+                    MyMessageBox.ShowInfo("获取用户信息失败。");
+                    GlobalData.Client.Logout();
+                    return;
+                }
+
+                GlobalData.InitUser(e.Result);
+
+                if (GetPlayerInfoCompleted != null)
+                {
+                    GetPlayerInfoCompleted(null, null);
+                }
             }
-
-            if (e.Error != null || e.Result == null)
+            catch (Exception exc)
             {
-                App.BusyToken.CloseAllBusyWindow();
-                MyMessageBox.ShowInfo("获取用户信息失败。");
-                GlobalData.Client.Logout();
-                return;
-            }
-
-            GlobalData.InitUser(e.Result);
-
-            if (GetPlayerInfoCompleted != null)
-            {
-                GetPlayerInfoCompleted(null, null);
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 

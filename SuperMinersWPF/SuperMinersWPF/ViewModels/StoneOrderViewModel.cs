@@ -128,107 +128,131 @@ namespace SuperMinersWPF.ViewModels
         /// <param name="e"></param>
         void Client_SetStoneOrderPayExceptionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
-                return;
-            }
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                    return;
+                }
 
-            bool isOK = false;
-            if (e.Result == OperResult.RESULTCODE_TRUE)
-            {
-                isOK = true;
-                MyMessageBox.ShowInfo("申诉提交成功，等待管理员处理");
-            }
-            else
-            {
-                isOK = false;
-                MyMessageBox.ShowInfo("申诉提交失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
-            }
+                bool isOK = false;
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    isOK = true;
+                    MyMessageBox.ShowInfo("申诉提交成功，等待管理员处理");
+                }
+                else
+                {
+                    isOK = false;
+                    MyMessageBox.ShowInfo("申诉提交失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
+                }
 
-            if (SetStoneOrderExceptionFinished != null)
-            {
-                SetStoneOrderExceptionFinished(isOK);
-            }
+                if (SetStoneOrderExceptionFinished != null)
+                {
+                    SetStoneOrderExceptionFinished(isOK);
+                }
 
-            AsyncGetOrderLockedBySelf();
-            AsyncGetAllNotFinishedSellOrders();
+                AsyncGetOrderLockedBySelf();
+                AsyncGetAllNotFinishedSellOrders();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
+            }
         }
 
         void Client_CancelSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
-                return;
-            }
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                    return;
+                }
 
-            if (e.Result == OperResult.RESULTCODE_TRUE)
-            {
-                MyMessageBox.ShowInfo("订单取消成功");
-            }
-            else
-            {
-                MyMessageBox.ShowInfo("订单取消失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
-            }
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("订单取消成功");
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("订单取消失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
+                }
 
-            AsyncGetAllNotFinishedSellOrders();
+                AsyncGetAllNotFinishedSellOrders();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
+            }
         }
 
         void Client_LockSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
-                return;
-            }
-
-            if (e.Result == null)
-            {
-                MyMessageBox.ShowInfo("订单锁定失败。");
-                return;
-            }
-
-            var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
-            this.MyBuyNotFinishedStoneOrders.Clear();
-            this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
-
-            lock (_lockAllNotFinishStoneOrder)
-            {
-                var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
-                if (orderSell != null)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    orderSell.OrderState = SellOrderState.Lock;
+                    return;
                 }
-            }
 
-            this._timer.Start();
-            if (StoneOrderLockSucceed != null)
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_LockSellStoneCompleted Exception。", e.Error);
+                    return;
+                }
+
+                if (e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("订单锁定失败。");
+                    return;
+                }
+
+                var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+                this.MyBuyNotFinishedStoneOrders.Clear();
+                this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+
+                lock (_lockAllNotFinishStoneOrder)
+                {
+                    var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
+                    if (orderSell != null)
+                    {
+                        orderSell.OrderState = SellOrderState.Lock;
+                    }
+                }
+
+                this._timer.Start();
+                if (StoneOrderLockSucceed != null)
+                {
+                    StoneOrderLockSucceed(lockedOrder);
+                }
+
+            }
+            catch (Exception exc)
             {
-                StoneOrderLockSucceed(lockedOrder);
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
-
         }
 
         void Client_OnOrderListChanged()
@@ -238,231 +262,286 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_OnOrderAlipayPaySucceed(int tradeType, string orderNumber)
         {
-            App.BusyToken.CloseBusyWindow();
-            App.UserVMObject.AsyncGetPlayerInfo();
-
-            switch ((AlipayTradeInType)tradeType)
+            try
             {
-                case AlipayTradeInType.BuyStone:
-                    var lockedOrder = this.GetFirstLockedStoneOrder();
-                    if (lockedOrder != null && lockedOrder.OrderNumber == orderNumber)
-                    {
-                        MyMessageBox.ShowInfo("矿石购买成功。");
-                        this.AsyncGetAllNotFinishedSellOrders();
+                App.BusyToken.CloseBusyWindow();
+                App.UserVMObject.AsyncGetPlayerInfo();
 
-                        if (StoneOrderPaySucceed != null)
+                switch ((AlipayTradeInType)tradeType)
+                {
+                    case AlipayTradeInType.BuyStone:
+                        var lockedOrder = this.GetFirstLockedStoneOrder();
+                        if (lockedOrder != null && lockedOrder.OrderNumber == orderNumber)
                         {
-                            StoneOrderPaySucceed();
-                        }
-                        this._myBuyNotFinishedStoneOrders.Clear();
-                    }
-                    else
-                    {
-                        var sellOrder = this.MySellNotFinishedStoneOrders.FirstOrDefault(o => o.OrderNumber == orderNumber);
-                        if (sellOrder != null)
-                        {
-                            MyMessageBox.ShowInfo("矿石订单 " + orderNumber + " 已成功出售。");
+                            MyMessageBox.ShowInfo("矿石购买成功。");
                             this.AsyncGetAllNotFinishedSellOrders();
-                            App.UserVMObject.AsyncGetPlayerInfo();
-                        }
-                    }
-                    break;
-                case AlipayTradeInType.BuyMine:
-                    if (BuyMineAlipayPaySucceed != null)
-                    {
-                        BuyMineAlipayPaySucceed();
-                    }
-                    break;
-                case AlipayTradeInType.BuyMiner:
-                    break;
-                case AlipayTradeInType.BuyRMB:
-                    break;
-                case AlipayTradeInType.BuyGoldCoin:
-                    if (BuyGoldCoinAlipayPaySucceed != null)
-                    {
-                        BuyGoldCoinAlipayPaySucceed();
-                    }
-                    break;
-                default:
-                    break;
-            }
 
+                            if (StoneOrderPaySucceed != null)
+                            {
+                                StoneOrderPaySucceed();
+                            }
+                            this._myBuyNotFinishedStoneOrders.Clear();
+                        }
+                        else
+                        {
+                            var sellOrder = this.MySellNotFinishedStoneOrders.FirstOrDefault(o => o.OrderNumber == orderNumber);
+                            if (sellOrder != null)
+                            {
+                                MyMessageBox.ShowInfo("矿石订单 " + orderNumber + " 已成功出售。");
+                                this.AsyncGetAllNotFinishedSellOrders();
+                                App.UserVMObject.AsyncGetPlayerInfo();
+                            }
+                        }
+                        break;
+                    case AlipayTradeInType.BuyMine:
+                        if (BuyMineAlipayPaySucceed != null)
+                        {
+                            BuyMineAlipayPaySucceed();
+                        }
+                        break;
+                    case AlipayTradeInType.BuyMiner:
+                        break;
+                    case AlipayTradeInType.BuyRMB:
+                        break;
+                    case AlipayTradeInType.BuyGoldCoin:
+                        if (BuyGoldCoinAlipayPaySucceed != null)
+                        {
+                            BuyGoldCoinAlipayPaySucceed();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
+            }
         }
 
         void Client_GetAllNotFinishedSellOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_GetAllNotFinishedSellOrdersCompleted Exception。", e.Error);
-                return;
-            }
-            if (e.Result != null)
-            {
-                lock (_lockAllNotFinishStoneOrder)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    this._allNotFinishStoneOrder.Clear();
-                    this._mySellNotFinishedStonesOrders.Clear();
-                    var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
-                    foreach (var item in listOrderTimeASC)
+                    return;
+                }
+
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_GetAllNotFinishedSellOrdersCompleted Exception。", e.Error);
+                    return;
+                }
+                if (e.Result != null)
+                {
+                    lock (_lockAllNotFinishStoneOrder)
                     {
-                        var uiobj = new SellStonesOrderUIModel(item);
-                        this._allNotFinishStoneOrder.Add(uiobj);
-                        if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                        this._allNotFinishStoneOrder.Clear();
+                        this._mySellNotFinishedStonesOrders.Clear();
+                        var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
+                        foreach (var item in listOrderTimeASC)
                         {
-                            this._mySellNotFinishedStonesOrders.Add(uiobj);
+                            var uiobj = new SellStonesOrderUIModel(item);
+                            this._allNotFinishStoneOrder.Add(uiobj);
+                            if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                            {
+                                this._mySellNotFinishedStonesOrders.Add(uiobj);
+                            }
                         }
                     }
                 }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            var lockedOrder = this.GetFirstLockedStoneOrder();
-            if (lockedOrder == null)
+            try
             {
-                this._timer.Stop();
-            }
-            else
-            {
-                if (lockedOrder.ValidTimeSecondsTickDown() <= 0)
+                var lockedOrder = this.GetFirstLockedStoneOrder();
+                if (lockedOrder == null)
                 {
                     this._timer.Stop();
-                    GlobalData.Client.ReleaseLockOrder(lockedOrder.OrderNumber, null);
-                    if (StoneOrderLockTimeOut != null)
-                    {
-                        StoneOrderLockTimeOut();
-                    }
-                    this.MyBuyNotFinishedStoneOrders.Clear();
                 }
+                else
+                {
+                    if (lockedOrder.ValidTimeSecondsTickDown() <= 0)
+                    {
+                        this._timer.Stop();
+                        GlobalData.Client.ReleaseLockOrder(lockedOrder.OrderNumber, null);
+                        if (StoneOrderLockTimeOut != null)
+                        {
+                            StoneOrderLockTimeOut();
+                        }
+                        this.MyBuyNotFinishedStoneOrders.Clear();
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_PayOrderByRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_PayOrderByRMBCompleted Exception。", e.Error);
-                return;
-            }
-
-            if (e.Result == OperResult.RESULTCODE_TRUE)
-            {
-                //此处屏蔽提示消息，在交易成功的回调函数中提示。
-                //MyMessageBox.ShowInfo("购买矿石成功。");
-
-                if (StoneOrderPaySucceed != null)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    StoneOrderPaySucceed();
+                    return;
                 }
-                this.MyBuyNotFinishedStoneOrders.Clear();
+
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_PayOrderByRMBCompleted Exception。", e.Error);
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    //此处屏蔽提示消息，在交易成功的回调函数中提示。
+                    //MyMessageBox.ShowInfo("购买矿石成功。");
+
+                    if (StoneOrderPaySucceed != null)
+                    {
+                        StoneOrderPaySucceed();
+                    }
+                    this.MyBuyNotFinishedStoneOrders.Clear();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("购买矿石失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
+                }
             }
-            else
+            catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("购买矿石失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_CheckUserHasNotPayOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null)
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_CheckUserHasNotPayOrderCompleted Exception。", e.Error);
+                    return;
+                }
+
+                if (e.Result)
+                {
+                    MyMessageBox.ShowInfo("您当前有未支付的订单，请先完成支付后，再购买新的矿石。");
+                    return;
+                }
+            }
+            catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_CheckUserHasNotPayOrderCompleted Exception。", e.Error);
-                return;
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
-
-            if (e.Result)
-            {
-                MyMessageBox.ShowInfo("您当前有未支付的订单，请先完成支付后，再购买新的矿石。");
-                return;
-            }
-
         }
 
         void Client_AutoMatchLockSellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.LockSellStonesOrder> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("连接服务器失败。");
-                LogHelper.Instance.AddErrorLog("Client_AutoMatchLockSellStoneCompleted Exception。", e.Error);
-                return;
-            }
-
-            if (e.Result == null)
-            {
-                MyMessageBox.ShowInfo("没有找到合适的订单。");
-                return;
-            }
-
-            var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
-            this.MyBuyNotFinishedStoneOrders.Clear();
-            this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
-
-            lock (_lockAllNotFinishStoneOrder)
-            {
-                var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
-                if (orderSell != null)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    orderSell.OrderState = SellOrderState.Lock;
+                    return;
                 }
-            }
 
-            this._timer.Start();
-            if (StoneOrderLockSucceed != null)
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    LogHelper.Instance.AddErrorLog("Client_AutoMatchLockSellStoneCompleted Exception。", e.Error);
+                    return;
+                }
+
+                if (e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("没有找到合适的订单。");
+                    return;
+                }
+
+                var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+                this.MyBuyNotFinishedStoneOrders.Clear();
+                this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+
+                lock (_lockAllNotFinishStoneOrder)
+                {
+                    var orderSell = this._allNotFinishStoneOrder.FirstOrDefault(s => s.OrderNumber == lockedOrder.OrderNumber);
+                    if (orderSell != null)
+                    {
+                        orderSell.OrderState = SellOrderState.Lock;
+                    }
+                }
+
+                this._timer.Start();
+                if (StoneOrderLockSucceed != null)
+                {
+                    StoneOrderLockSucceed(lockedOrder);
+                }
+
+            }
+            catch (Exception exc)
             {
-                StoneOrderLockSucceed(lockedOrder);
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
-
         }
 
         void Client_GetOrderLockedBySelfCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<LockSellStonesOrder> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("获取未完成的订单失败。");
-                LogHelper.Instance.AddErrorLog("Client_GetOrderLockedBySelfCompleted Exception。", e.Error);
-                return;
-            }
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("获取未完成的订单失败。");
+                    LogHelper.Instance.AddErrorLog("Client_GetOrderLockedBySelfCompleted Exception。", e.Error);
+                    return;
+                }
 
-            this.MyBuyNotFinishedStoneOrders.Clear();
-            if (e.Result != null)
+                this.MyBuyNotFinishedStoneOrders.Clear();
+                if (e.Result != null)
+                {
+                    var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
+                    this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
+                    this._timer.Start();
+                }
+            }
+            catch (Exception exc)
             {
-                var lockedOrder = new LockSellStonesOrderUIModel(e.Result);
-                this.MyBuyNotFinishedStoneOrders.Add(lockedOrder);
-                this._timer.Start();
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 

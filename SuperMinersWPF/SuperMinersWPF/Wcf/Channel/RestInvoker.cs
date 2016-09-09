@@ -1,5 +1,6 @@
 ﻿using SuperMinersServerApplication.Model;
 using SuperMinersServerApplication.WebService.Contracts;
+using SuperMinersWPF.Utility;
 using SuperMinersWPF.Wcf.Clients;
 using System;
 using System.Collections.Generic;
@@ -345,98 +346,112 @@ namespace SuperMinersWPF.Wcf.Channel
 
         private void InvokeCallback()
         {
-            if (!GlobalData.IsLogined)
+            try
             {
-                lock (this._callbackRunningLocker)
+                if (!GlobalData.IsLogined)
                 {
-                    this._callbackRunning = false;
-                }
-                return;
-            }
-
-            object[] invokeParas = new object[] { GlobalData.Token };
-
-            MethodData method = GetMethodData(CallbackMethod, typeof(CallbackInfo), invokeParas);
-
-            byte[] paraData = GetParaData(invokeParas, method);
-
-            RestClient.Callback(this._callbackContext, this._baseUrl + method.Url, paraData, new Action<Exception, byte[]>((ex, result) =>
-            {
-                if (null != ex)
-                {
-                    if (ex is WebException)
+                    lock (this._callbackRunningLocker)
                     {
-                        if (null != this.Error)
-                        {
-                            this.Error(this, EventArgs.Empty);
-                        }
-                        return;
+                        this._callbackRunning = false;
                     }
-                    this.InvokeCallback();
                     return;
                 }
 
-                CallbackInfo arg = null;
-                try
-                {
-                    if (result != null && result.Length != 0)
-                    {
-                        DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
-                        using (MemoryStream ms = new MemoryStream(result))
-                        {
-                            arg = (CallbackInfo)s.ReadObject(ms);
-                        }
-                    }
-                }
-                catch
-                {
-                    this.InvokeCallback();
-                    return;
-                }
+                object[] invokeParas = new object[] { GlobalData.Token };
 
-                if (null == arg)
-                {
-                    this.InvokeCallback();
-                    return;
-                }
+                MethodData method = GetMethodData(CallbackMethod, typeof(CallbackInfo), invokeParas);
 
-                MethodInfo mi = null;
-                lock (this._callbackDicLocker)
-                {
-                    if (!this._callbackDic.TryGetValue(arg.MethodName, out mi))
-                    {
-                        mi = null;
-                    }
-                }
+                byte[] paraData = GetParaData(invokeParas, method);
 
-                if (null != mi)
+                RestClient.Callback(this._callbackContext, this._baseUrl + method.Url, paraData, new Action<Exception, byte[]>((ex, result) =>
                 {
                     try
                     {
-                        var pInfos = mi.GetParameters();
-                        object[] paras = null;
-                        if (pInfos.Length > 0)
+                        if (null != ex)
                         {
-                            paras = new object[pInfos.Length];
-                            for (int i = 0; i < paras.Length; i++)
+                            if (ex is WebException)
                             {
-                                DataContractJsonSerializer s = new DataContractJsonSerializer(pInfos[i].ParameterType, this._callbackKnownTypeList);
-                                using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(arg.Parameters[i])))
+                                if (null != this.Error)
                                 {
-                                    paras[i] = s.ReadObject(ms);
+                                    this.Error(this, EventArgs.Empty);
+                                }
+                                return;
+                            }
+                            this.InvokeCallback();
+                            return;
+                        }
+
+                        CallbackInfo arg = null;
+                        try
+                        {
+                            if (result != null && result.Length != 0)
+                            {
+                                DataContractJsonSerializer s = new DataContractJsonSerializer(method.ReturnType, method.ReturnKnownTypes);
+                                using (MemoryStream ms = new MemoryStream(result))
+                                {
+                                    arg = (CallbackInfo)s.ReadObject(ms);
                                 }
                             }
                         }
+                        catch
+                        {
+                            this.InvokeCallback();
+                            return;
+                        }
 
-                        mi.Invoke(this._receiver, paras);
+                        if (null == arg)
+                        {
+                            this.InvokeCallback();
+                            return;
+                        }
+
+                        MethodInfo mi = null;
+                        lock (this._callbackDicLocker)
+                        {
+                            if (!this._callbackDic.TryGetValue(arg.MethodName, out mi))
+                            {
+                                mi = null;
+                            }
+                        }
+
+                        if (null != mi)
+                        {
+                            try
+                            {
+                                var pInfos = mi.GetParameters();
+                                object[] paras = null;
+                                if (pInfos.Length > 0)
+                                {
+                                    paras = new object[pInfos.Length];
+                                    for (int i = 0; i < paras.Length; i++)
+                                    {
+                                        DataContractJsonSerializer s = new DataContractJsonSerializer(pInfos[i].ParameterType, this._callbackKnownTypeList);
+                                        using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(arg.Parameters[i])))
+                                        {
+                                            paras[i] = s.ReadObject(ms);
+                                        }
+                                    }
+                                }
+
+                                mi.Invoke(this._receiver, paras);
+                            }
+                            catch
+                            {
+                            }
+                        }
+
+                        this.InvokeCallback();
                     }
-                    catch
+                    catch (Exception exc)
                     {
+                        LogHelper.Instance.AddErrorLog("Invoke Callback inner Exception", exc);
                     }
-                }
-
-                this.InvokeCallback();
-            }));
+                }));
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Invoke Callback outer Exception", exc);
+            }
         }
 
         private static Type[] GetKnownTypes(Type type)
