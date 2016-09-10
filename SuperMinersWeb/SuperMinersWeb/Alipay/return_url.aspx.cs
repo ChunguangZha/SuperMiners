@@ -88,7 +88,7 @@ public partial class return_url : System.Web.UI.Page
                     }
 
                     bool isOK = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                    if (isOK)
+                    if (!isOK)
                     {
                         WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                     }
