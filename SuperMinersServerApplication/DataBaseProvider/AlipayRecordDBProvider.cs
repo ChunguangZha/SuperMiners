@@ -107,5 +107,69 @@ namespace DataBaseProvider
             }
         }
 
+        public AlipayRechargeRecord[] GetAllExceptionAlipayRechargeRecords()
+        {
+            AlipayRechargeRecord[] records = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select * from superminers.alipayrecharge_exception_record ";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
+
+                mycmd.Dispose();
+
+                return records;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public bool DeleteExceptionAlipayRecord(string alipayTradeNumber, string orderNumber)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlText = "delete from alipayrecharge_exception_record where alipay_trade_no = @alipay_trade_no and out_trade_no = @out_trade_no;";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@alipay_trade_no", alipayTradeNumber);
+                mycmd.Parameters.AddWithValue("@out_trade_no", orderNumber);
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                return false;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
     }
 }

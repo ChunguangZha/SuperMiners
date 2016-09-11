@@ -11,7 +11,7 @@ namespace DataBaseProvider
 {
     public class MineRecordDBProvider
     {
-        public MinesBuyRecord[] GetAllMineTradeRecords(string userName, MyDateTime startDate, MyDateTime endDate)
+        public MinesBuyRecord GetMineTradeRecord(string userName, string orderNumber)
         {
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
@@ -22,6 +22,54 @@ namespace DataBaseProvider
                 mycmd = myconn.CreateCommand();
                 string cmdText = "select a.*, b.UserName from minesbuyrecord a left join playersimpleinfo b on a.UserID=b.id ";
 
+                StringBuilder builder = new StringBuilder();
+                if (!string.IsNullOrEmpty(orderNumber))
+                {
+                    builder.Append(" a.OrderNumber = @OrderNumber ");
+                    mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                }
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    builder.Append(" b.UserName = @UserName ");
+                    mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+                }
+
+                mycmd.CommandText = cmdText;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                if (table.Rows.Count > 0)
+                {
+                    return MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table)[0];
+                }
+
+                return null;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+
+        public MinesBuyRecord[] GetAllMineTradeRecords(string userName, MyDateTime startDate, MyDateTime endDate)
+        {
+            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
+            MySqlCommand mycmd = null;
+            try
+            {
+                DataTable table = new DataTable();
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+                string cmdText = "select a.*, b.UserName from minesbuyrecord a left join playersimpleinfo b on a.UserID=b.id ";
+                string whereText = " where ";
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
@@ -47,6 +95,10 @@ namespace DataBaseProvider
                     mycmd.Parameters.AddWithValue("@endTime", end);
                 }
 
+                if (builder.Length > 0)
+                {
+                    cmdText = cmdText + whereText + builder.ToString();
+                }
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);

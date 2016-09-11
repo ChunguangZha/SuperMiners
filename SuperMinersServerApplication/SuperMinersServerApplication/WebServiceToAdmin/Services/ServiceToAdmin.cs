@@ -843,6 +843,52 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public AlipayRechargeRecord[] GetAllExceptionAlipayRechargeRecords(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.AlipayRecordDBProvider.GetAllExceptionAlipayRechargeRecords();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetFinishedGoldCoinRechargeRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int HandleExceptionAlipayRechargeRecord(string token, AlipayRechargeRecord exceptionRecord)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    bool isOK = OrderController.Instance.AlipayCallback(exceptionRecord);
+                    if (isOK)
+                    {
+                        isOK = DBProvider.AlipayRecordDBProvider.DeleteExceptionAlipayRecord(exceptionRecord.alipay_trade_no, exceptionRecord.out_trade_no);
+                    }
+
+                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("HandleExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()

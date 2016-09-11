@@ -137,9 +137,9 @@ namespace SuperMinersWeb.Alipay
 
 #endif
 
-            Response.Write("本页面将在3秒后关闭");
-            Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
-            Response.Flush();
+            //Response.Write("本页面将在3秒后关闭");
+            //Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
+            //Response.Flush();
         }
     }
 }

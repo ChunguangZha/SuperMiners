@@ -50,10 +50,6 @@ public partial class notify_url : System.Web.UI.Page
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //请在这里加上商户的业务逻辑程序代码
 
-                    Response.Write("success");  //请不要修改或删除
-
-                    return;
-
                     //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
                     //获取支付宝的通知返回参数，可参考技术文档中服务器异步通知参数列表
 
@@ -111,6 +107,7 @@ public partial class notify_url : System.Web.UI.Page
                         }
                         if (result == OperResult.RESULTCODE_TRUE)
                         {
+                            Response.Write("success");  //请不要修改或删除
                             //表示该订单已经被处理过
                             return;
                         }

@@ -141,6 +141,12 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public bool CheckAlipayOrderBeHandled(string userName, string out_trade_no)
+        {
+            var mineTradeRecord = DBProvider.MineRecordDBProvider.GetMineTradeRecord(userName, out_trade_no);
+            return mineTradeRecord != null;
+        }
+
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
             bool isOK = false;

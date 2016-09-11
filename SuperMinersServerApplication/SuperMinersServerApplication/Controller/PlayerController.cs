@@ -352,11 +352,10 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                var player = DBProvider.UserDBProvider.GetPlayer(userName);
-                playerrun = new PlayerRunnable(player);
+                return false;
             }
 
             if (playerrun.BasePlayer.SimpleInfo.Password == oldPassword)
@@ -369,7 +368,7 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ChangePasswordByAdmin(string userName, string newPassword)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 var player = DBProvider.UserDBProvider.GetPlayer(userName);
@@ -381,7 +380,7 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 var player = DBProvider.UserDBProvider.GetPlayer(userName);
@@ -393,11 +392,10 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(fortuneinfo.UserName);
+            var playerrun = this.GetRunnable(fortuneinfo.UserName);
             if (playerrun == null)
             {
-                var player = DBProvider.UserDBProvider.GetPlayer(fortuneinfo.UserName);
-                playerrun = new PlayerRunnable(player);
+                return false;
             }
 
             bool isOK = playerrun.SetFortuneInfo(fortuneinfo);
@@ -421,7 +419,7 @@ namespace SuperMinersServerApplication.Controller
 
         public bool LockPlayer(string userName)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            var playerrun = this.GetRunnable(userName);
             if (playerrun != null)
             {
                 var token = ClientManager.GetToken(playerrun.BasePlayer.SimpleInfo.UserName);
@@ -438,7 +436,7 @@ namespace SuperMinersServerApplication.Controller
 
         public bool UnlockPlayer(string userName)
         {
-            var playerrun = this.GetOnlinePlayerRunnable(userName);
+            var playerrun = this.GetRunnable(userName);
             if (playerrun != null)
             {
                 return playerrun.UnlockPlayer();
@@ -455,7 +453,7 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int GatherStones(string userName, decimal stones)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_USER_OFFLINE;
@@ -472,7 +470,7 @@ namespace SuperMinersServerApplication.Controller
         /// <returns></returns>
         public int BuyMiner(string userName, int minersCount)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
@@ -483,7 +481,7 @@ namespace SuperMinersServerApplication.Controller
 
         public int BuyMineByRMB(string userName, int minesCount, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
@@ -494,7 +492,7 @@ namespace SuperMinersServerApplication.Controller
 
         public int BuyMineByAlipay(string userName, decimal moneyYuan, decimal minesCount, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
@@ -514,7 +512,7 @@ namespace SuperMinersServerApplication.Controller
 
         public int RechargeGoldCoinByRMB(string userName, int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
@@ -525,10 +523,10 @@ namespace SuperMinersServerApplication.Controller
 
         public int RechargeGoldCoinByAlipay(string userName, decimal moneyYuan, int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                LogHelper.Instance.AddInfoLog(DateTime.Now.ToString() + " ---支付宝充值金币，没有找到玩家信息");
+                LogHelper.Instance.AddInfoLog(DateTime.Now.ToString() + " ---支付宝充值金币，没有找到[" + userName + "]玩家信息");
                 return OperResult.RESULTCODE_FALSE;
             }
 

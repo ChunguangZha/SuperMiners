@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using SuperMinersWeb.AlipayCode;
 using SuperMinersWeb.Wcf;
 using MetaData;
+using SuperMinersWeb.DataBaseCode;
 
 /// <summary>
 /// 功能：页面跳转同步通知页面
@@ -74,6 +75,7 @@ public partial class return_url : System.Web.UI.Page
 
                 if (Request.QueryString["trade_status"] == "TRADE_FINISHED" || Request.QueryString["trade_status"] == "TRADE_SUCCESS")
                 {
+                    DateTime timeNow = DateTime.Now;
                     //判断该笔订单是否在商户网站中已经做过处理
                     //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
                     //如果有做过处理，不执行商户的业务程序
@@ -87,17 +89,28 @@ public partial class return_url : System.Web.UI.Page
                         Response.Write("充值金额错误<br />");
                         return;
                     }
+                    int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
+                    if (result == OperResult.RESULTCODE_TRUE)
+                    {
+                        //表示该订单已经被处理过
+                        //打印页面
+                        Response.Write("操作成功<br />本页面将在3秒后关闭");
+                        Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
 
-                    int result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        return;
+                    }
+
+                    result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
                     if (result == OperResult.RESULTCODE_EXCEPTION)
                     {
-                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
                     }
                     SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
 
                     if (result != OperResult.RESULTCODE_TRUE)
                     {
-                        Response.Write("支付成功，但是服务器操作失败，请联系客服。");
+                        DBOper.AddExceptionAlipayRechargeRecord(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
+                        Response.Write("支付成功，但是服务器操作失败，请联系客服，并将以下信息发送给客服。\r\n商品订单号：" + out_trade_no + "，支付宝订单号："+ trade_no + "，付款账户：" + buyer_email);
                         return;
                     }
                 }

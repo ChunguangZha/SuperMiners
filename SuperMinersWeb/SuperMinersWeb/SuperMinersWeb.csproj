@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySql.Data, Version=6.9.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
@@ -239,6 +240,7 @@
     <Compile Include="AuthCode.aspx.designer.cs">
       <DependentUpon>AuthCode.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DataBaseCode\DBOper.cs" />
     <Compile Include="Handler\AuthCodeImageCallbackHandler.ashx.cs">
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
