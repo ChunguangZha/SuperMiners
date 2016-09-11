@@ -70,14 +70,14 @@ namespace SuperMinersServerApplication.WebService.Services
                 }
                 catch (Exception exc)
                 {
-                    string errMessage = "Add Sell Order Exception: ";
+                    string errMessage = "玩家提交矿石销量订单异常。";
                     if (order == null)
                     {
-                        errMessage += " (User Error) UserName:" + userName;
+                        errMessage += " 玩家信息:" + userName;
                     }
                     else
                     {
-                        errMessage += " (Order Error) Order:" + order.ToString();
+                        errMessage += " 订单信息:" + order.ToString();
                     }
 
                     try
@@ -92,7 +92,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     }
                     catch (Exception ee)
                     {
-                        LogHelper.Instance.AddErrorLog("Add Sell Order Rollback Exception: " + errMessage, ee);
+                        LogHelper.Instance.AddErrorLog("A玩家提交矿石销量订单异常。 回滚异常: " + errMessage, ee);
                     }
 
                     return OperResult.RESULTCODE_EXCEPTION;
@@ -143,7 +143,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 }
                 catch (Exception exc)
                 {
-                    string errMessage = "UserName: " + userName + " Cancel Sell Order: " + orderNumber + " Exception.";
+                    string errMessage = "玩家: " + userName + " 取消矿石出售订单: " + orderNumber + " 异常.";
                     LogHelper.Instance.AddErrorLog(errMessage, exc);
                     return OperResult.RESULTCODE_EXCEPTION;
                 }
@@ -164,8 +164,17 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.StoneOrderController.GetLockedOrderByUserName(userName);
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return OrderController.Instance.StoneOrderController.GetLockedOrderByUserName(userName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 获取自己锁定订单异常", exc);
+                    return null;
+                }
             }
             else
             {
@@ -183,7 +192,15 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return OrderController.Instance.StoneOrderController.GetSellOrders();
+                try
+                {
+                    return OrderController.Instance.StoneOrderController.GetSellOrders();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("获取所有未完成的矿石订单异常", exc);
+                    return null;
+                }
             }
             else
             {
@@ -236,17 +253,25 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (ClientManager.GetClientUserName(token) != userName)
+                try
                 {
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return null;
+                    }
+
+                    if (OrderController.Instance.StoneOrderController.CheckUserHasNotPayOrder(userName))
+                    {
+                        return null;
+                    }
+
+                    return OrderController.Instance.StoneOrderController.LockSellStone(userName, orderNumber);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 锁定矿石订单异常", exc);
                     return null;
                 }
-
-                if (OrderController.Instance.StoneOrderController.CheckUserHasNotPayOrder(userName))
-                {
-                    return null;
-                }
-
-                return OrderController.Instance.StoneOrderController.LockSellStone(userName, orderNumber);
             }
             else
             {
@@ -264,8 +289,16 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.StoneOrderController.CheckUserHasNotPayOrder(userName);
+                try
+                {
+                    string userName = ClientManager.GetClientUserName(token);
+                    return OrderController.Instance.StoneOrderController.CheckUserHasNotPayOrder(userName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("检查玩家是否存在未支付的订单异常", exc);
+                    return true;
+                }
             }
             else
             {
@@ -283,8 +316,17 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
-                return OrderController.Instance.StoneOrderController.ReleaseLockSellOrder(orderNumber);
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return OrderController.Instance.StoneOrderController.ReleaseLockSellOrder(orderNumber);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 解除锁定订单" + orderNumber + "，异常", exc);
+                    return false;
+                }
             }
             else
             {
@@ -309,23 +351,32 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
-                if (string.IsNullOrEmpty(userName))
+                string userName = "";
+                try
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
+                    userName = ClientManager.GetClientUserName(token);
+                    if (string.IsNullOrEmpty(userName))
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
 
-                PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
-                if (player == null)
-                {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
-                if (player.FortuneInfo.RMB < rmb)
-                {
-                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
-                }
+                    PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
+                    if (player == null)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+                    if (player.FortuneInfo.RMB < rmb)
+                    {
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    }
 
-                return OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(player.SimpleInfo.UserName, orderNumber, rmb);
+                    return OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(player.SimpleInfo.UserName, orderNumber, rmb);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 灵币支付矿石订单" + orderNumber + "，异常", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
             }
             else
             {
@@ -349,13 +400,22 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
-                if (string.IsNullOrEmpty(userName))
+                string userName = "";
+                try
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
+                    userName = ClientManager.GetClientUserName(token);
+                    if (string.IsNullOrEmpty(userName))
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
 
-                return OrderController.Instance.StoneOrderController.SetStoneOrderPayException(userName, orderNumber);
+                    return OrderController.Instance.StoneOrderController.SetStoneOrderPayException(userName, orderNumber);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 申诉矿石订单" + orderNumber + "，异常", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
             }
             else
             {
@@ -373,12 +433,20 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (ClientManager.GetClientUserName(token) != userName)
+                try
                 {
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return null;
+                    }
+
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, userName, myBeginTime, myEndTime);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 查询矿石出售历史订单异常", exc);
                     return null;
                 }
-
-                return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, userName, myBeginTime, myEndTime);
             }
             else
             {
@@ -396,12 +464,20 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (ClientManager.GetClientUserName(token) != userName)
+                try
                 {
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return null;
+                    }
+
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(userName, myBeginTime, myEndTime);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 查询矿石购买历史订单异常", exc);
                     return null;
                 }
-
-                return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(userName, myBeginTime, myEndTime);
             }
             else
             {

@@ -104,6 +104,40 @@ namespace SuperMinersServerApplication.Controller.Trade
             return isOK;
         }
 
+        public bool CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        {
+            //bool isOK = false;
+            var alipayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(out_trade_no, alipay_trade_no);
+            if (alipayRecord == null)
+            {
+                return false;
+            }
+
+            return true;
+
+            //AlipayTradeInType type = GetTradeType(out_trade_no);
+            //switch (type)
+            //{
+            //    case AlipayTradeInType.BuyGoldCoin:
+            //        isOK = this.GoldCoinOrderController.CheckAlipayOrderBeHandled(userName, out_trade_no);
+            //        break;
+            //    case AlipayTradeInType.BuyMine:
+            //        isOK = this.MineOrderController.AlipayCallback(alipayRecord);
+            //        break;
+            //    case AlipayTradeInType.BuyMiner:
+            //        break;
+            //    case AlipayTradeInType.BuyRMB:
+            //        break;
+            //    case AlipayTradeInType.BuyStone:
+            //        isOK = this.StoneOrderController.AlipayCallback(alipayRecord, true);
+            //        break;
+
+            //    default:
+            //        break;
+            //}
+
+        }
+
         private AlipayTradeInType GetTradeType(string orderNumber)
         {
             string strType = orderNumber.Substring(18, 2);

@@ -263,7 +263,7 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByRMB(int minesCount)
+        public int BuyMineByRMB(int minesCount, CustomerMySqlTransaction myTrans)
         {
             if (minesCount <= 0)
             {
@@ -282,14 +282,12 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.RMB -= needRMB;
                 BasePlayer.FortuneInfo.MinesCount += minesCount;
                 BasePlayer.FortuneInfo.StonesReserves += newReservers;
-                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
-                    "增加了 " + newReservers.ToString() + " 的矿石储量");
                 return OperResult.RESULTCODE_TRUE;
             }
         }
@@ -299,7 +297,7 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByAlipay(decimal moneyYuan, decimal minesCount)
+        public int BuyMineByAlipay(decimal moneyYuan, decimal minesCount, CustomerMySqlTransaction myTrans)
         {
             if (minesCount <= 0)
             {
@@ -313,15 +311,23 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.StonesReserves += newReservers;
 
                 BasePlayer.FortuneInfo.Exp += (int)moneyYuan;
+                ExpChangeRecord expRecord = new ExpChangeRecord()
+                {
+                    UserID = this.BasePlayer.SimpleInfo.UserID,
+                    UserName = this.BasePlayer.SimpleInfo.UserName,
+                    AddExp = (int)moneyYuan,
+                    NewExp = BasePlayer.FortuneInfo.Exp,
+                    Time = DateTime.Now,
+                    OperContent = "玩家支付宝充值金币奖励"
+                };
 
-                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
                 }
+                DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(expRecord, myTrans);
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.BuyMine, minesCount,
-                    "增加了 " + ((decimal)newReservers).ToString() + " 的矿石储量");
                 return OperResult.RESULTCODE_TRUE;
             }
         }
@@ -332,7 +338,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="rmbValue"></param>
         /// <param name="goldcoinValue"></param>
         /// <returns></returns>
-        public int RechargeGoldCoineByRMB(int rmbValue, int goldcoinValue)
+        public int RechargeGoldCoineByRMB(int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
             if (rmbValue <= 0)
             {
@@ -348,14 +354,12 @@ namespace SuperMinersServerApplication.Controller
 
                 BasePlayer.FortuneInfo.RMB -= rmbValue;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
-                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,
-                    "充值了 " + goldcoinValue.ToString() + " 的金币");
                 return OperResult.RESULTCODE_TRUE;
             }
         }
@@ -366,13 +370,8 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="rmbValue"></param>
         /// <param name="goldcoinValue"></param>
         /// <returns></returns>
-        public int RechargeGoldCoinByAlipay(decimal moneyYuan, int rmbValue, int goldcoinValue)
+        public int RechargeGoldCoinByAlipay(decimal moneyYuan, int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
-            if (rmbValue <= 0)
-            {
-                return OperResult.RESULTCODE_FALSE;
-            }
-
             lock (_lockFortuneAction)
             {
                 int awardGoldCoin = 0;
@@ -395,34 +394,13 @@ namespace SuperMinersServerApplication.Controller
                     OperContent = "玩家支付宝充值金币奖励"
                 };
 
-                CustomerMySqlTransaction myTrans = null;
-                try
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
                 {
-                    myTrans = MyDBHelper.Instance.CreateTrans();
-
-                    if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
-                    {
-                        RefreshFortune();
-                        return OperResult.RESULTCODE_FALSE;
-                    }
-                    DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(expRecord, myTrans);
-                    myTrans.Commit();
-                }
-                catch (Exception exc)
-                {
-                    myTrans.Rollback();
+                    LogHelper.Instance.AddInfoLog(this.BasePlayer.SimpleInfo.UserName + " ---支付宝充值金币，保存玩家信息失败");
                     RefreshFortune();
-
-                    LogHelper.Instance.AddErrorLog("RechargeGoldCoinByAlipay Exception", exc);
                     return OperResult.RESULTCODE_FALSE;
                 }
-                finally
-                {
-                    if (myTrans != null)
-                    {
-                        myTrans.Dispose();
-                    }
-                }
+                DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(expRecord, myTrans);
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,
                     "充值了 " + goldcoinValue.ToString() + " 金币" + (awardGoldCoin == 0 ? "" : "，同时第一次支付宝充值金币，获取" + awardGoldCoin.ToString() + "金币的额外奖励"));

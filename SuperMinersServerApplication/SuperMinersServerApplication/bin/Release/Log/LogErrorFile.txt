@@ -1,5 +1,5 @@
-Error:  [2016/9/10 18:16:07] ---- Log: AlipayCallback Exception.  orderNumber: 201609101814550103224454765447240; money: 1.00; payAlipayAccount: testbuyer@qq.com
-Exc.Message: Duplicate entry '201609101814550103224454765447240' for key 'out_trade_no_UNIQUE'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/9/11 15:39:02] ---- Log: Buy Miners Error!
+Exc.Message: Duplicate entry '41' for key 'UserID_UNIQUE'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
@@ -7,9 +7,15 @@ Exc.Message: Duplicate entry '201609101814550103224454765447240' for key 'out_tr
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AlipayRecordDBProvider.cs:行号 34
-   在 SuperMinersServerApplication.Controller.GoldCoinOrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\GoldCoinOrderController.cs:行号 123
-   在 SuperMinersServerApplication.Controller.Trade.OrderController.AlipayCallback(AlipayRechargeRecord alipayRecord) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\OrderController.cs:行号 87
+   在 DataBaseProvider.BuyMinerRecordDBProvider.AddBuyMinerRecord(MinersBuyRecord record, CustomerMySqlTransaction trans) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\BuyMinerRecordDBProvider.cs:行号 30
+   在 SuperMinersServerApplication.Controller.PlayerRunnable.BuyMiner(Int32 minersCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerRunnable.cs:行号 238
+-----------------------------------------------------
+
+cs:行号 89
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.BuyMine(String token, String userName, Int32 minesCount, Int32 payType) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Game.cs:行号 118
+-----------------------------------------------------
+
+行号 87
    在 SuperMinersServerApplication.WebServiceToWeb.Services.ServiceToWeb.AlipayCallback(String userName, String out_trade_no, String alipay_trade_no, Decimal total_fee, String buyer_email, String pay_time) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Services\ServiceToWeb.cs:行号 208
 -----------------------------------------------------
 

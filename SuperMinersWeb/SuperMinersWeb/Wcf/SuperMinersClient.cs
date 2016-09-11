@@ -38,6 +38,18 @@ namespace SuperMinersWeb.Wcf
         {
         }
 
+        public bool Active()
+        {
+            try
+            {
+                return base.Channel.Active();
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FAILED; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
@@ -141,17 +153,29 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public bool AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        public int AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
-                base.Channel.AlipayCallback(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
-                return true;
+                return base.Channel.AlipayCallback(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
             }
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
-                return false;
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public int CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        {
+            try
+            {
+                return base.Channel.CheckAlipayOrderBeHandled(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
             }
         }
 

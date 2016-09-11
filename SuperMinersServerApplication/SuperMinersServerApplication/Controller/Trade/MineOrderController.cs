@@ -1,6 +1,8 @@
-﻿using MetaData;
+﻿using DataBaseProvider;
+using MetaData;
 using MetaData.Trade;
 using SuperMinersServerApplication.Controller.Trade;
+using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
@@ -71,13 +73,7 @@ namespace SuperMinersServerApplication.Controller
 
             if (payType == (int)PayType.RMB)
             {
-                int value = PlayerController.Instance.BuyMineByRMB(userName, minesCount);
-                result.ResultCode = value;
-                if (value == OperResult.RESULTCODE_TRUE)
-                {
-                    record.PayTime = DateTime.Now;
-                    DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record);
-                }
+                BuyMineByRMB(record, result);
             }
             else if (payType == (int)PayType.Alipay)
             {
@@ -92,6 +88,39 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return result;
+        }
+
+        private void BuyMineByRMB(MinesBuyRecord record, TradeOperResult result)
+        {
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                myTrans = MyDBHelper.Instance.CreateTrans();
+
+                int value = PlayerController.Instance.BuyMineByRMB(record.UserName, (int)record.GainMinesCount, myTrans);
+                result.ResultCode = value;
+                if (value == OperResult.RESULTCODE_TRUE)
+                {
+                    record.PayTime = DateTime.Now;
+                    DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record, myTrans);
+                }
+
+                myTrans.Commit();
+                PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.BuyMine, (int)record.GainMinesCount,
+                    "增加了 " + record.GainStonesReserves.ToString() + " 的矿石储量");
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                LogHelper.Instance.AddErrorLog("玩家[" + record.UserName + "], 用灵币购买矿山异常", exc);
+            }
+            finally
+            {
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
+            }
         }
 
         private MinesBuyRecord FindRecordByOrderNumber(string orderNumber)
@@ -115,18 +144,27 @@ namespace SuperMinersServerApplication.Controller
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
             bool isOK = false;
+
             MinesBuyRecord buyRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
-            if (buyRecord != null)
+            if (buyRecord == null)
             {
+                LogHelper.Instance.AddInfoLog("支付宝购买矿山回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
+                return false;
+            }
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                myTrans = MyDBHelper.Instance.CreateTrans();
+
                 alipayRecord.user_name = buyRecord.UserName;
                 if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
                     alipayRecord.value_rmb >= buyRecord.SpendRMB)
                 {
-                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount);
+                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount, myTrans);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
-                        DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord);
-                        DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber);
+                        DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord, myTrans);
+                        DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber, myTrans);
                         this.RemoveRecord(alipayRecord.out_trade_no);
 
                         string tokenBuyer = ClientManager.GetToken(buyRecord.UserName);
@@ -138,10 +176,28 @@ namespace SuperMinersServerApplication.Controller
                         isOK = true;
                     }
                 }
+
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, myTrans);
+
+                myTrans.Commit();
+                PlayerActionController.Instance.AddLog(buyRecord.UserName, MetaData.ActionLog.ActionType.BuyMine, buyRecord.GainMinesCount,
+                    "增加了 " + buyRecord.GainStonesReserves.ToString() + " 的矿石储量");
             }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
 
-            DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
-
+                LogHelper.Instance.AddErrorLog("玩家支付宝金币充值，回调异常。AlipayInfo : " + alipayRecord.ToString(), exc);
+                return false;
+            }
+            finally
+            {
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
+            }
             return isOK;
         }
         

@@ -829,7 +829,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             {
                 try
                 {
-                    return DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+                    return DBProvider.GoldCoinRecordDBProvider.GetFinishedGoldCoinRechargeRecordList(playerUserName, orderNumber, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

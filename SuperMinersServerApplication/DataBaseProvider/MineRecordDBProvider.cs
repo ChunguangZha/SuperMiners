@@ -143,14 +143,12 @@ namespace DataBaseProvider
             }
         }
 
-        public bool DeleteTempMineTradeRecord(string orderNumber)
+        public bool DeleteTempMineTradeRecord(string orderNumber, CustomerMySqlTransaction myTrans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = myTrans.CreateCommand();
 
                 string cmdTextA = "delete from tempminesbuyrecord where OrderNumber = @OrderNumber;";
 
@@ -166,22 +164,15 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
-                }
             }
         }
 
-        public bool SaveFinalMineTradeRecord(MinesBuyRecord record)
+        public bool SaveFinalMineTradeRecord(MinesBuyRecord record, CustomerMySqlTransaction myTrans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = myTrans.CreateCommand();
 
                 string cmdTextA = "insert into minesbuyrecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainMinesCount`,`GainStonesReserves`, `CreateTime`, `PayTime`) values " +
@@ -204,11 +195,6 @@ namespace DataBaseProvider
                 if (mycmd != null)
                 {
                     mycmd.Dispose();
-                }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
                 }
             }
         }

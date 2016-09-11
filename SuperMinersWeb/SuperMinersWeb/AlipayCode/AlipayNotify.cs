@@ -63,7 +63,7 @@ namespace SuperMinersWeb.AlipayCode
         /// <param name="notify_id">通知验证ID</param>
         /// <param name="sign">支付宝生成的签名结果</param>
         /// <returns>验证结果</returns>
-        public bool Verify(SortedDictionary<string, string> inputPara, string notify_id, string sign)
+        public bool Verify(SortedDictionary<string, string> inputPara, string notify_id, string sign, string testOutput)
         {
             //获取返回时的签名验证结果
             bool isSign = GetSignVeryfy(inputPara, sign);
@@ -74,7 +74,7 @@ namespace SuperMinersWeb.AlipayCode
             //写日志记录（若要调试，请取消下面两行注释）
             string userName = inputPara["extra_common_param"];// Request.QueryString["extra_common_param"];
 
-            string sWord = DateTime.Now.ToString() + "  ------  Verify responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
+            string sWord = DateTime.Now.ToString() + "  ------  " + testOutput + " Verify responseTxt=" + responseTxt + "\n isSign=" + isSign.ToString() + "\n 返回回来的参数：" + GetPreSignStr(inputPara) + "\n ";
             Core.LogResult(userName, sWord);
 
             //判断responsetTxt是否为true，isSign是否为true

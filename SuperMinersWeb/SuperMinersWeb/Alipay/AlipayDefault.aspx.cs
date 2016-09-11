@@ -123,6 +123,7 @@ namespace SuperMinersWeb.Alipay
             //其他业务参数根据在线开发文档，添加参数.文档地址:https://doc.open.alipay.com/doc2/detail.htm?spm=a219a.7629140.0.0.O9yorI&treeId=62&articleId=103740&docType=1
             //如sParaTemp.Add("参数名","参数值");
 
+            Response.Clear();
 #if TestAlipay
 
             int orderNum = new Random().Next(100000, 999999);
@@ -138,6 +139,7 @@ namespace SuperMinersWeb.Alipay
 
             Response.Write("本页面将在3秒后关闭");
             Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
+            Response.Flush();
         }
     }
 }

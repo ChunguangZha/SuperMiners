@@ -4,6 +4,7 @@ using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
+using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService.Contracts;
 using System;
 using System.Collections.Generic;
@@ -26,17 +27,25 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (getRMBCount <= 0)
+                try
                 {
-                    return OperResult.RESULTCODE_FALSE;
-                }
+                    if (getRMBCount <= 0)
+                    {
+                        return OperResult.RESULTCODE_FALSE;
+                    }
 
-                if (ClientManager.GetClientUserName(token) != userName)
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+
+                    return PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
+                }
+                catch (Exception exc)
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 灵币提现异常，提现灵币为:" + getRMBCount, exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
                 }
-
-                return PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
             }
             else
             {
@@ -61,17 +70,25 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (minersCount <= 0)
+                try
                 {
-                    return OperResult.RESULTCODE_FALSE;
-                }
+                    if (minersCount <= 0)
+                    {
+                        return OperResult.RESULTCODE_FALSE;
+                    }
 
-                if (ClientManager.GetClientUserName(token) != userName)
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+
+                    return PlayerController.Instance.BuyMiner(userName, minersCount);
+                }
+                catch (Exception exc)
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 购买矿工异常，购买矿工数为:" + minersCount, exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
                 }
-
-                return PlayerController.Instance.BuyMiner(userName, minersCount);
             }
             else
             {
@@ -89,14 +106,22 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                TradeOperResult result = new TradeOperResult();
-                result.PayType = payType;
-                if (minesCount <= 0)
+                try
                 {
-                    return result;
-                }
+                    TradeOperResult result = new TradeOperResult();
+                    result.PayType = payType;
+                    if (minesCount <= 0)
+                    {
+                        return result;
+                    }
 
-                return OrderController.Instance.MineOrderController.BuyMine(userName, minesCount, payType);
+                    return OrderController.Instance.MineOrderController.BuyMine(userName, minesCount, payType);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 购买矿山异常，购买矿山数为:" + minesCount + ",支付类型为:" + ((PayType)payType).ToString(), exc);
+                    return null;
+                }
             }
             else
             {
@@ -114,17 +139,25 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                TradeOperResult result = new TradeOperResult();
-                result.PayType = payType;
-                result.TradeType = (int)AlipayTradeInType.BuyGoldCoin;
-
-                if (ClientManager.GetClientUserName(token) != userName)
+                try
                 {
-                    result.ResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
+                    TradeOperResult result = new TradeOperResult();
+                    result.PayType = payType;
+                    result.TradeType = (int)AlipayTradeInType.BuyGoldCoin;
 
-                int valueRMB =(int)Math.Ceiling(goldCoinCount / GlobalConfig.GameConfig.RMB_GoldCoin);
-                return OrderController.Instance.GoldCoinOrderController.RechargeGoldCoin(userName, valueRMB, goldCoinCount, payType);
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        result.ResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+
+                    int valueRMB = (int)Math.Ceiling(goldCoinCount / GlobalConfig.GameConfig.RMB_GoldCoin);
+                    return OrderController.Instance.GoldCoinOrderController.RechargeGoldCoin(userName, valueRMB, goldCoinCount, payType);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 金币充值异常，充值金币数为:" + goldCoinCount + ",支付类型为:" + ((PayType)payType).ToString(), exc);
+                    return null;
+                }
             }
             else
             {
@@ -149,15 +182,23 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                if (ClientManager.GetClientUserName(token) != userName)
+                try
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+                    if (stones == 0)
+                    {
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    }
+                    return PlayerController.Instance.GatherStones(userName, stones);
                 }
-                if (stones == 0)
+                catch (Exception exc)
                 {
-                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 收取矿石异常，矿石数为:" + stones, exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
                 }
-                return PlayerController.Instance.GatherStones(userName, stones);
             }
             else
             {
@@ -175,7 +216,15 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return DBProvider.UserDBProvider.GetExpTopList();
+                try
+                {
+                    return DBProvider.UserDBProvider.GetExpTopList();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("获取贡献榜异常", exc);
+                    return null;
+                }
             }
             else
             {
@@ -193,7 +242,15 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return DBProvider.UserDBProvider.GetStoneTopList();
+                try
+                {
+                    return DBProvider.UserDBProvider.GetStoneTopList();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("获取矿石榜异常", exc);
+                    return null;
+                }
             }
             else
             {
@@ -211,7 +268,15 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return TopListController.Instance.GetMinerTopList();
+                try
+                {
+                    return TopListController.Instance.GetMinerTopList();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("获取矿工榜异常", exc);
+                    return null;
+                }
             }
             else
             {
@@ -247,7 +312,15 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
-                return TopListController.Instance.GetReferrerTopList();
+                try
+                {
+                    return TopListController.Instance.GetReferrerTopList();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("获取推荐榜异常", exc);
+                    return null;
+                }
             }
             else
             {

@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using SuperMinersWeb.AlipayCode;
 using SuperMinersWeb.Wcf;
+using MetaData;
 
 /// <summary>
 /// 功能：服务器异步通知页面
@@ -31,97 +32,123 @@ public partial class notify_url : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        SortedDictionary<string, string> sPara = GetRequestPost();
-
-        if (sPara.Count > 0)//判断是否有带返回参数
+        try
         {
-            Notify aliNotify = new Notify();
-            bool verifyResult = aliNotify.Verify(sPara, Request.Form["notify_id"], Request.Form["sign"]);
+            SortedDictionary<string, string> sPara = GetRequestPost();
 
-            string userName = Request.QueryString["extra_common_param"];
-
-            SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
-
-            if (verifyResult)//验证成功
+            if (sPara.Count > 0)//判断是否有带返回参数
             {
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //请在这里加上商户的业务逻辑程序代码
+                Notify aliNotify = new Notify();
+                bool verifyResult = aliNotify.Verify(sPara, Request.Form["notify_id"], Request.Form["sign"], " Notify ");
 
+                string userName = sPara["extra_common_param"];
 
-                //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-                //获取支付宝的通知返回参数，可参考技术文档中服务器异步通知参数列表
+                SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
 
-                //商户订单号
-
-                string out_trade_no = Request.Form["out_trade_no"];
-
-                //支付宝交易号
-
-                string trade_no = Request.Form["trade_no"];
-
-                //交易状态
-                string trade_status = Request.Form["trade_status"];
-
-
-                if (Request.Form["trade_status"] == "TRADE_FINISHED")
+                if (verifyResult)//验证成功
                 {
-                    //判断该笔订单是否在商户网站中已经做过处理
-                    //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                    //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                    //如果有做过处理，不执行商户的业务程序
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                    //请在这里加上商户的业务逻辑程序代码
 
-                    //注意：
-                    //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-                }
-                else if (Request.Form["trade_status"] == "TRADE_SUCCESS")
-                {
-                    //判断该笔订单是否在商户网站中已经做过处理
-                    //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                    //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                    //如果有做过处理，不执行商户的业务程序
+                    Response.Write("success");  //请不要修改或删除
 
-                    //注意：
-                    //付款完成后，支付宝系统发送该交易状态通知
-                    string buyer_email = Request.QueryString["buyer_email"];
-                    decimal total_fee;
-                    if (!decimal.TryParse(Request.QueryString["total_fee"], out total_fee))
+                    return;
+
+                    //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
+                    //获取支付宝的通知返回参数，可参考技术文档中服务器异步通知参数列表
+
+                    //商户订单号
+
+                    string out_trade_no = sPara["out_trade_no"];
+
+                    //支付宝交易号
+
+                    string trade_no = sPara["trade_no"];
+
+                    //交易状态
+                    string trade_status = sPara["trade_status"];
+
+                    string sell_id = sPara["seller_id"];
+                    if (sell_id != Config.seller_id)
                     {
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2 Failed, 充值金额错误.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
-
-                        //打印页面
-                        Response.Write("充值金额错误<br />");
                         return;
                     }
 
-                    bool isOK = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                    if (isOK)
+                    if (sPara["trade_status"] == "TRADE_FINISHED")
                     {
-                        WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        //判断该笔订单是否在商户网站中已经做过处理
+                        //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+                        //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+                        //如果有做过处理，不执行商户的业务程序
+
+                        //注意：
+                        //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+                    }
+                    else if (sPara["trade_status"] == "TRADE_SUCCESS")
+                    {
+                        //判断该笔订单是否在商户网站中已经做过处理
+                        //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
+                        //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
+                        //如果有做过处理，不执行商户的业务程序
+
+                        //注意：
+                        //付款完成后，支付宝系统发送该交易状态通知
+                        string buyer_email = sPara["buyer_email"];
+                        decimal total_fee;
+                        if (!decimal.TryParse(sPara["total_fee"], out total_fee))
+                        {
+                            SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2 Failed, 充值金额错误.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+
+                            //打印页面
+                            Response.Write("充值金额错误<br />");
+                            return;
+                        }
+
+                        int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        if (result == OperResult.RESULTCODE_EXCEPTION)
+                        {
+                            result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        }
+                        if (result == OperResult.RESULTCODE_TRUE)
+                        {
+                            //表示该订单已经被处理过
+                            return;
+                        }
+
+                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        if (result == OperResult.RESULTCODE_EXCEPTION)
+                        {
+                            result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        }
+
+                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+
+                    }
+                    else
+                    {
+                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
+
                     }
 
-                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 3 Result: " + isOK + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+                    //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
+                    Response.Write("success");  //请不要修改或删除
+
+                    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 }
-                else
+                else//验证失败
                 {
-                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
-
+                    Response.Write("fail");
                 }
-
-                //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-                Response.Write("success");  //请不要修改或删除
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////
             }
-            else//验证失败
+            else
             {
-                Response.Write("fail");
+                Response.Write("无通知参数");
             }
         }
-        else
+        catch (Exception exc)
         {
-            Response.Write("无通知参数");
+            SuperMinersWeb.AlipayCode.Core.LogResult("", "Notify Exception. msg: " + exc.Message);
         }
     }
 

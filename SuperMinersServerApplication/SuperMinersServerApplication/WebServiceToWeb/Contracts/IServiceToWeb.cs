@@ -11,6 +11,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
     [ServiceContract]
     public interface IServiceToWeb
     {
+        [OperationContract]
+        bool Active();
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
         /// </summary>
@@ -61,6 +64,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         GameConfig GetGameConfig();
 
         [OperationContract]
-        bool AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
+        int AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
+
+        [OperationContract]
+        int CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
     }
 }

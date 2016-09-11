@@ -117,11 +117,11 @@ namespace SuperMinersServerApplication
                         {
                             for (int i = 0; i < 10; i++)
                             {
-                                ListErrorLogsOutput.RemoveAt(0);
+                                ListErrorLogsOutput.RemoveAt(ListErrorLogsOutput.Count - 1);
                             }
                         }
 
-                        ListErrorLogsOutput.Add(log);
+                        ListErrorLogsOutput.Insert(0, log);
                     }, null);
                 }
             }

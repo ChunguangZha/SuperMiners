@@ -17,6 +17,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 {
     class ServiceToWeb : IServiceToWeb
     {
+        public bool Active()
+        {
+            return true;
+        }
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
@@ -189,7 +194,42 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="total_fee">人民币，需换算为灵币</param>
         /// <param name="buyer_email"></param>
         /// <param name="succeed"></param>
-        public bool AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        public int AlipayCallback(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
+        {
+            try
+            {
+                AlipayRechargeRecord record = new AlipayRechargeRecord()
+                {
+                    alipay_trade_no = alipay_trade_no,
+                    buyer_email = buyer_email,
+                    out_trade_no = out_trade_no,
+                    pay_time = Convert.ToDateTime(pay_time),
+                    total_fee = total_fee,
+                    value_rmb = total_fee * GlobalConfig.GameConfig.Yuan_RMB,
+                    user_name = userName
+                };
+
+                LogHelper.Instance.AddInfoLog(userName + " ----alipay_trade_no: " + alipay_trade_no);
+                if (record.value_rmb <= 0)
+                {
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                bool isOK = OrderController.Instance.AlipayCallback(record);
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("AlipayCallback Exception. " +
+                                            " orderNumber: " + out_trade_no + ";" +
+                                            " money: " + total_fee.ToString() + ";" +
+                                            " payAlipayAccount: " + buyer_email, exc);
+
+                return OperResult.RESULTCODE_FALSE;
+            }
+        }
+
+        public int CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)
         {
             try
             {
@@ -205,16 +245,17 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 };
 
                 LogHelper.Instance.AddInfoLog("alipay_trade_no: " + alipay_trade_no);
-                return OrderController.Instance.AlipayCallback(record);
+                bool isOK = OrderController.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("AlipayCallback Exception. " +
+                LogHelper.Instance.AddErrorLog("CheckAlipayOrderBeHandled Exception. " +
                                             " orderNumber: " + out_trade_no + ";" +
                                             " money: " + total_fee.ToString() + ";" +
                                             " payAlipayAccount: " + buyer_email, exc);
 
-                return false;
+                return OperResult.RESULTCODE_FALSE;
             }
         }
     }

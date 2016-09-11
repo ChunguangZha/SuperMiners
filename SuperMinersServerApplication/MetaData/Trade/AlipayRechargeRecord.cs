@@ -67,5 +67,17 @@ namespace MetaData.Trade
             }
         }
 
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("out_trade_no:" + out_trade_no);
+            builder.Append(",alipay_trade_no:" + alipay_trade_no);
+            builder.Append(",buyer_email:" + buyer_email);
+            builder.Append(",user_name:" + user_name);
+            builder.Append(",total_fee:" + total_fee);
+            builder.Append(",value_rmb:" + value_rmb);
+            builder.Append(",pay_time:" + pay_time);
+            return builder.ToString();
+        }
     }
 }

@@ -38,6 +38,11 @@ namespace SuperMinersWPF.Views
             this.txtGoldCoin_Miner.Text = GlobalData.GameConfig.GoldCoin_Miner.ToString();
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.BuyMinerCompleted -= Client_BuyMinerCompleted;
+        }
+
         void Client_BuyMinerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             if (e.Cancelled)
@@ -52,24 +57,21 @@ namespace SuperMinersWPF.Views
             }
 
             int result = e.Result;
-            if (result < 0)
+            if (result == OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("服务器不存在当前用户，请联系平台客服。");
-                return;
+                MyMessageBox.ShowInfo("购买矿工成功");
+                App.UserVMObject.AsyncGetPlayerInfo();
+                _syn.Post(p =>
+                {
+                    this.DialogResult = true;
+                }, null);
             }
-            if (result != OperResult.RESULTCODE_TRUE)
+            else
             {
                 MyMessageBox.ShowInfo("购买失败。原因：" + ResultCodeMsg.GetMsg(result));
                 return;
             }
 
-            MyMessageBox.ShowInfo("购买矿工成功");
-            App.UserVMObject.AsyncGetPlayerInfo();
-
-            _syn.Post(p =>
-            {
-                this.DialogResult = true;
-            }, null);
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

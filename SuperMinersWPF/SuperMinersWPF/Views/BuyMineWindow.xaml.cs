@@ -59,7 +59,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            if (e.Error != null)
+            if (e.Error != null || e.Result == null)
             {
                 MyMessageBox.ShowInfo("访问服务器失败。");
                 return;

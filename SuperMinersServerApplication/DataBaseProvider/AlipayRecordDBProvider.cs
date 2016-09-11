@@ -11,14 +11,12 @@ namespace DataBaseProvider
 {
     public class AlipayRecordDBProvider
     {
-        public bool SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord)
+        public bool SaveAlipayRechargeRecord(AlipayRechargeRecord alipayRecord, CustomerMySqlTransaction myTrans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into alipayrechargerecord " +
                     "(`out_trade_no`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`value_rmb`,`pay_time`) " +
                     " values (@out_trade_no, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@value_rmb,@pay_time)";
@@ -39,11 +37,6 @@ namespace DataBaseProvider
                 if (mycmd != null)
                 {
                     mycmd.Dispose();
-                }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
                 }
             }
         }

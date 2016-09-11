@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
         Loaded="Window_Loaded"
+        Closed="Window_Closed"
         Title="购买矿工" Height="350" Width="300" 
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{DynamicResource PlayerInfoBackground}" Foreground="White" WindowStyle="ToolWindow">
     <Grid Margin="5">

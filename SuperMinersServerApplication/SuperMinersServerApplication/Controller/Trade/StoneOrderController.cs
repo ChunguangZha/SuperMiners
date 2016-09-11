@@ -545,64 +545,70 @@ namespace SuperMinersServerApplication.Controller
         public bool AlipayCallback(AlipayRechargeRecord alipayRecord, bool saveAlipayRecord)
         {
             StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
-            if (runnable != null)
+            if (runnable == null)
             {
-                alipayRecord.user_name = runnable.GetLockedOrder().LockedByUserName;
+                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
+                return false;
+            }
+            if (alipayRecord.value_rmb < runnable.ValueRMB)
+            {
+                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
+                return false;
             }
 
-            if (saveAlipayRecord)
+            if (alipayRecord.user_name != runnable.GetLockedOrder().LockedByUserName)
             {
-                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord);
+                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，支付宝回传玩家用户名和锁定订单的用户名[" + runnable.ValueRMB + "] 不匹配。支付宝信息：" + alipayRecord.ToString());
+                return false;
             }
 
-            if (runnable != null)
+            var lockOrder = runnable.GetLockedOrder();
+
+            int result = OperResult.RESULTCODE_FALSE;
+            var trans = MyDBHelper.Instance.CreateTrans();
+            try
             {
-                var lockOrder = runnable.GetLockedOrder();
-                if (alipayRecord.out_trade_no == runnable.OrderNumber &&
-                    alipayRecord.value_rmb >= runnable.ValueRMB)
+                if (saveAlipayRecord)
                 {
-                    int result = OperResult.RESULTCODE_FALSE;
-                    var trans = MyDBHelper.Instance.CreateTrans();
-                    try
-                    {
-                        //订单处理
-                        var buyOrder = this.Pay(runnable.OrderNumber, lockOrder.LockedByUserName, lockOrder.StonesOrder.ValueRMB, trans, ref result);
-                        if (buyOrder == null)
-                        {
-                            trans.Rollback();
-                            return false;
-                        }
+                    DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, trans);
+                }
 
-                        //更新用户信息
-                        bool isOK = PlayerController.Instance.PayStoneOrder(true, lockOrder.LockedByUserName, buyOrder, trans);
-                        if (!isOK)
-                        {
-                            trans.Rollback();
-                            result = OperResult.RESULTCODE_FALSE;
-                            return false;
-                        }
-                        this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
+                //订单处理
+                var buyOrder = this.Pay(runnable.OrderNumber, lockOrder.LockedByUserName, lockOrder.StonesOrder.ValueRMB, trans, ref result);
+                if (buyOrder == null)
+                {
+                    trans.Rollback();
+                    return false;
+                }
 
-                        trans.Commit();
+                //更新用户信息
+                bool isOK = PlayerController.Instance.PayStoneOrder(true, lockOrder.LockedByUserName, buyOrder, trans);
+                if (!isOK)
+                {
+                    trans.Rollback();
+                    result = OperResult.RESULTCODE_FALSE;
+                    return false;
+                }
+                this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
 
-                        AddLogNotifyPlayer(lockOrder.LockedByUserName, runnable.OrderNumber, buyOrder);
+                trans.Commit();
 
-                        return true;
-                    }
-                    catch (Exception exc)
-                    {
-                        result = OperResult.RESULTCODE_EXCEPTION;
-                        trans.Rollback();
-                        LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + runnable.OrderNumber, exc);
-                        return false;
-                    }
-                    finally
-                    {
-                        if (trans != null)
-                        {
-                            trans.Dispose();
-                        }
-                    }
+                AddLogNotifyPlayer(lockOrder.LockedByUserName, runnable.OrderNumber, buyOrder);
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                result = OperResult.RESULTCODE_EXCEPTION;
+                trans.Rollback();
+                LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + runnable.OrderNumber, exc);
+                return false;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
                 }
             }
 

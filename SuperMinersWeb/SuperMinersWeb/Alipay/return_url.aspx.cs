@@ -12,6 +12,7 @@ using System.Collections.Specialized;
 using System.Collections.Generic;
 using SuperMinersWeb.AlipayCode;
 using SuperMinersWeb.Wcf;
+using MetaData;
 
 /// <summary>
 /// 功能：页面跳转同步通知页面
@@ -43,7 +44,7 @@ public partial class return_url : System.Web.UI.Page
 
 #else
 
-            verifyResult = aliNotify.Verify(sPara, Request.QueryString["notify_id"], Request.QueryString["sign"]);
+            verifyResult = aliNotify.Verify(sPara, Request.QueryString["notify_id"], Request.QueryString["sign"], " Return ");
 
 #endif
 
@@ -87,17 +88,16 @@ public partial class return_url : System.Web.UI.Page
                         return;
                     }
 
-                    bool isOK = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                    if (!isOK)
+                    int result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                    if (result == OperResult.RESULTCODE_EXCEPTION)
                     {
-                        WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                     }
-                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 3 Result: " + isOK + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+                    SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
 
-                    if (!isOK)
+                    if (result != OperResult.RESULTCODE_TRUE)
                     {
-                        Response.Write("支付失败<br />请回到软件中重新发起支付<br />本页面将在3秒后关闭");
-                        Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
+                        Response.Write("支付成功，但是服务器操作失败，请联系客服。");
                         return;
                     }
                 }
@@ -109,7 +109,7 @@ public partial class return_url : System.Web.UI.Page
                 }
 
                 //打印页面
-                Response.Write("支付成功<br />本页面将在3秒后关闭");
+                Response.Write("操作成功<br />本页面将在3秒后关闭");
                 Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
 
                 //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——

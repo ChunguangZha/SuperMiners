@@ -82,14 +82,12 @@ namespace DataBaseProvider
             }
         }
 
-        public bool DeleteTempGoldCoinRechargeTradeRecord(string orderNumber)
+        public bool DeleteTempGoldCoinRechargeTradeRecord(string orderNumber, CustomerMySqlTransaction myTrans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = myTrans.CreateCommand();
 
                 string cmdTextA = "delete from tempgoldcoinrechargerecord where OrderNumber = @OrderNumber;";
 
@@ -105,22 +103,15 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
-                }
             }
         }
 
-        public bool SaveFinalGoldCoinRechargeRecord(GoldCoinRechargeRecord record)
+        public bool SaveFinalGoldCoinRechargeRecord(GoldCoinRechargeRecord record, CustomerMySqlTransaction myTrans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = myTrans.CreateCommand();
 
                 string cmdTextA = "insert into goldcoinrechargerecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainGoldCoin`, `CreateTime`, `PayTime`) values " +
@@ -143,15 +134,67 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
+            }
+        }
+
+        public GoldCoinRechargeRecord GetGoldCoinRechargeRecord(string playerUserName, string orderNumber)
+        {
+            GoldCoinRechargeRecord[] records = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select a.*, b.UserName from goldcoinrechargerecord a left join playersimpleinfo b on a.UserID=b.id  ";
+
+                StringBuilder builder = new StringBuilder();
+                if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    myconn.Close();
-                    myconn.Dispose();
+                    builder.Append(" UserName = @UserName ");
+                    string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                    mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
+
+                if (!string.IsNullOrEmpty(orderNumber))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" OrderNumber = @OrderNumber ");
+                    mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                }
+
+                string whereText = builder.Length > 0 ? " where " : "";
+
+                string cmdText = sqlTextA + whereText + builder.ToString();
+                mycmd.CommandText = cmdText;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    records = MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(dt);
+                }
+                mycmd.Dispose();
+
+                if (records.Length > 0)
+                {
+                    return records[0];
+                }
+                return null;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
         
-        public GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string token, string playerUserName, string orderNumber, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        public GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string playerUserName, string orderNumber, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
         {
             GoldCoinRechargeRecord[] records = null;
             MySqlConnection myconn = null;
