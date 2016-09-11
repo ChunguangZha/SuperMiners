@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using SuperMinersWPF.Models;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,25 +50,33 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetNoticesCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<NoticeInfo[]> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null || e.Result.Length == 0)
+                if (e.Error != null || e.Result == null || e.Result.Length == 0)
+                {
+                    return;
+                }
+
+                this.ListNotices.Clear();
+
+                var listOrdered = e.Result.OrderByDescending(n => n.Time);
+                foreach (var item in listOrdered)
+                {
+                    this.ListNotices.Add(item);
+                }
+
+                this.LastedNotice = this.ListNotices[0];
+            }
+            catch (Exception exc)
             {
-                return;
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
-
-            this.ListNotices.Clear();
-
-            var listOrdered = e.Result.OrderByDescending(n => n.Time);
-            foreach (var item in listOrdered)
-            {
-                this.ListNotices.Add(item);
-            }
-
-            this.LastedNotice = this.ListNotices[0];
         }
 
         void Client_OnSendNewNotice(string obj)

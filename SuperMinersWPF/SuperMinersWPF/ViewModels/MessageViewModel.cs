@@ -108,33 +108,41 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SystemConfig.SystemConfigin1> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            bool isOK = true;
-            if (e.Error != null || e.Result == null ||
-                e.Result.AwardReferrerConfigList == null ||
-                e.Result.GameConfig == null ||
-                e.Result.RegisterUserConfig == null)
-            {
-                MyMessageBox.ShowInfo("获取配置信息失败。");
+                bool isOK = true;
+                if (e.Error != null || e.Result == null ||
+                    e.Result.AwardReferrerConfigList == null ||
+                    e.Result.GameConfig == null ||
+                    e.Result.RegisterUserConfig == null)
+                {
+                    MyMessageBox.ShowInfo("获取配置信息失败。");
 
-                isOK = false;
-            }
-            else
-            {
-                GlobalData.GameConfig = e.Result.GameConfig;
-                GlobalData.RegisterUserConfig = e.Result.RegisterUserConfig;
-                GlobalData.AwardReferrerLevelConfig = new AwardReferrerLevelConfig();
-                GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
-                isOK = true;
-            }
+                    isOK = false;
+                }
+                else
+                {
+                    GlobalData.GameConfig = e.Result.GameConfig;
+                    GlobalData.RegisterUserConfig = e.Result.RegisterUserConfig;
+                    GlobalData.AwardReferrerLevelConfig = new AwardReferrerLevelConfig();
+                    GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
+                    isOK = true;
+                }
 
-            if (this.GetSystemConfigCompleted != null)
+                if (this.GetSystemConfigCompleted != null)
+                {
+                    this.GetSystemConfigCompleted(isOK);
+                }
+            }
+            catch (Exception exc)
             {
-                this.GetSystemConfigCompleted(isOK);
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
@@ -150,57 +158,65 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetPlayerActionCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.ActionLog.PlayerActionLog[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }            
-
-            if (e.Error != null || e.Result == null || e.Result.Length == 0)
-            {
-                return;
-            }
-
-            //服务器返回的记录是按时间升序排列。
-            //需要将其降序显示
-            var lastLogFromServer = e.Result[e.Result.Length - 1];
-            this.SystemAllMinerCount = lastLogFromServer.SystemAllMinerCount;
-            this.SystemAllOutputStoneCount = lastLogFromServer.SystemAllOutputStoneCount;
-            this.SystemAllPlayerCount = lastLogFromServer.SystemAllPlayerCount;
-
-            if (ListPlayerActionLog.Count >= this.LogMaxCount)
-            {
-                int deleteLastNo = ListPlayerActionLog.Count - e.Result.Length;
-                if (deleteLastNo < 0) deleteLastNo = 0;
-
-                //从后往前删
-                for (int i = ListPlayerActionLog.Count - 1; i >= deleteLastNo; i--)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    ListPlayerActionLog.RemoveAt(i);
+                    return;
                 }
-            }
 
-            PlayerActionLogUIModel lastLogFromClient = null;
-            if (ListPlayerActionLog.Count > 0)
-            {
-                lastLogFromClient = ListPlayerActionLog[0];
-            }
-            for (int i = 0; i < e.Result.Length; i++)
-            {
-                var log = e.Result[i];
-                if (lastLogFromClient != null)
+                if (e.Error != null || e.Result == null || e.Result.Length == 0)
                 {
-                    if (lastLogFromClient.Time >= log.Time)
+                    return;
+                }
+
+                //服务器返回的记录是按时间升序排列。
+                //需要将其降序显示
+                var lastLogFromServer = e.Result[e.Result.Length - 1];
+                this.SystemAllMinerCount = lastLogFromServer.SystemAllMinerCount;
+                this.SystemAllOutputStoneCount = lastLogFromServer.SystemAllOutputStoneCount;
+                this.SystemAllPlayerCount = lastLogFromServer.SystemAllPlayerCount;
+
+                if (ListPlayerActionLog.Count >= this.LogMaxCount)
+                {
+                    int deleteLastNo = ListPlayerActionLog.Count - e.Result.Length;
+                    if (deleteLastNo < 0) deleteLastNo = 0;
+
+                    //从后往前删
+                    for (int i = ListPlayerActionLog.Count - 1; i >= deleteLastNo; i--)
                     {
-                        continue;
+                        ListPlayerActionLog.RemoveAt(i);
                     }
                 }
-                ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(log));
-            }
 
-            if (GetPlayerActionCompleted != null)
+                PlayerActionLogUIModel lastLogFromClient = null;
+                if (ListPlayerActionLog.Count > 0)
+                {
+                    lastLogFromClient = ListPlayerActionLog[0];
+                }
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var log = e.Result[i];
+                    if (lastLogFromClient != null)
+                    {
+                        if (lastLogFromClient.Time >= log.Time)
+                        {
+                            continue;
+                        }
+                    }
+                    ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(log));
+                }
+
+                if (GetPlayerActionCompleted != null)
+                {
+                    GetPlayerActionCompleted(null, null);
+                }
+            }
+            catch (Exception exc)
             {
-                GetPlayerActionCompleted(null, null);
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 

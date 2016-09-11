@@ -91,111 +91,151 @@ namespace SuperMinersWPF.ViewModels
 
         void Client_GetReferrerTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("查询排行榜失败。");
-                return;
-            }
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询排行榜失败。");
+                    return;
+                }
 
-            this.ListReferrerCountTopList.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+                this.ListReferrerCountTopList.Clear();
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var item = e.Result[i];
+                    this.ListReferrerCountTopList.Add(new TopListInfoUIModel(i, item));
+                }
+            }
+            catch (Exception exc)
             {
-                var item = e.Result[i];
-                this.ListReferrerCountTopList.Add(new TopListInfoUIModel(i, item));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_GetGoldCoinTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("查询排行榜失败。");
-                return;
-            }
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询排行榜失败。");
+                    return;
+                }
 
-            this.ListGoldCoinTopList.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+                this.ListGoldCoinTopList.Clear();
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var item = e.Result[i];
+                    this.ListGoldCoinTopList.Add(new TopListInfoUIModel(i, item));
+                }
+            }
+            catch (Exception exc)
             {
-                var item = e.Result[i];
-                this.ListGoldCoinTopList.Add(new TopListInfoUIModel(i, item));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_GetMinerTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("查询排行榜失败。");
-                return;
-            }
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询排行榜失败。");
+                    return;
+                }
 
-            this.ListMinerTopList.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+                this.ListMinerTopList.Clear();
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var item = e.Result[i];
+                    this.ListMinerTopList.Add(new TopListInfoUIModel(i, item));
+                }
+            }
+            catch (Exception exc)
             {
-                var item = e.Result[i];
-                this.ListMinerTopList.Add(new TopListInfoUIModel(i, item));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_GetStoneTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("查询排行榜失败。");
-                return;
-            }
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询排行榜失败。");
+                    return;
+                }
 
-            this.ListStoneTopList.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+                this.ListStoneTopList.Clear();
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var item = e.Result[i];
+                    this.ListStoneTopList.Add(new TopListInfoUIModel(i, item));
+                }
+            }
+            catch (Exception exc)
             {
-                var item = e.Result[i];
-                this.ListStoneTopList.Add(new TopListInfoUIModel(i, item));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
         void Client_GetExpTopListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.User.TopListInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("查询排行榜失败。");
-                return;
-            }
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("查询排行榜失败。");
+                    return;
+                }
 
-            this.ListExpTopList.Clear();
-            for (int i = 0; i < e.Result.Length; i++)
+                this.ListExpTopList.Clear();
+                for (int i = 0; i < e.Result.Length; i++)
+                {
+                    var item = e.Result[i];
+                    this.ListExpTopList.Add(new TopListInfoUIModel(i, item));
+                }
+            }
+            catch (Exception exc)
             {
-                var item = e.Result[i];
-                this.ListExpTopList.Add(new TopListInfoUIModel(i, item));
+                MyMessageBox.ShowInfo("服务器连接失败。");
+                LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
         }
 
