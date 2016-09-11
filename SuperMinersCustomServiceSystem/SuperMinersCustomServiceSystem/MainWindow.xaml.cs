@@ -38,6 +38,8 @@ namespace SuperMinersCustomServiceSystem
             BindUI();
 
             GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
+
+            this.tvL1PlayerManager.IsSelected = true;
         }
         
         //private void CreateTreeView()

@@ -385,11 +385,43 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 BasePlayer.FortuneInfo.Exp += (int)moneyYuan;
-
-                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo))
+                ExpChangeRecord expRecord = new ExpChangeRecord()
                 {
+                    UserID = this.BasePlayer.SimpleInfo.UserID,
+                    UserName = this.BasePlayer.SimpleInfo.UserName,
+                    AddExp = (int)moneyYuan,
+                    NewExp = BasePlayer.FortuneInfo.Exp,
+                    Time = DateTime.Now,
+                    OperContent = "玩家支付宝充值金币奖励"
+                };
+
+                CustomerMySqlTransaction myTrans = null;
+                try
+                {
+                    myTrans = MyDBHelper.Instance.CreateTrans();
+
+                    if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
+                    {
+                        RefreshFortune();
+                        return OperResult.RESULTCODE_FALSE;
+                    }
+                    DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(expRecord, myTrans);
+                    myTrans.Commit();
+                }
+                catch (Exception exc)
+                {
+                    myTrans.Rollback();
                     RefreshFortune();
+
+                    LogHelper.Instance.AddErrorLog("RechargeGoldCoinByAlipay Exception", exc);
                     return OperResult.RESULTCODE_FALSE;
+                }
+                finally
+                {
+                    if (myTrans != null)
+                    {
+                        myTrans.Dispose();
+                    }
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, goldcoinValue,

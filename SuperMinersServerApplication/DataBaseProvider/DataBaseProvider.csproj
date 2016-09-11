@@ -48,6 +48,7 @@
     <Compile Include="AlipayRecordDBProvider.cs" />
     <Compile Include="BuyMinerRecordDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />
+    <Compile Include="ExpChangeRecordDBProvider.cs" />
     <Compile Include="GoldCoinRecordDBProvider.cs" />
     <Compile Include="MetaDBAdapter.cs" />
     <Compile Include="MineRecordDBProvider.cs" />

@@ -24,5 +24,20 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         {
             InitializeComponent();
         }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

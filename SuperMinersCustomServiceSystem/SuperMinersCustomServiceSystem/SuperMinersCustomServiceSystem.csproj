@@ -296,7 +296,9 @@
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.GoldCoinTrade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
+    <Compile Include="Wcf\Datas\GoldCoinRechargeRecord.cs" />
     <Page Include="BusyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

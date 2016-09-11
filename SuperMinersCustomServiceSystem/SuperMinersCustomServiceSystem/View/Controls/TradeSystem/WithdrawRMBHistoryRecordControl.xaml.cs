@@ -30,6 +30,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void cmbIsPay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (this.cmbIsPay == null || this.panelAdminPayed == null)
+            {
+                return;
+            }
+
             if (this.cmbIsPay.SelectedIndex <= 0)
             {
                 this.panelAdminPayed.Visibility = System.Windows.Visibility.Collapsed;

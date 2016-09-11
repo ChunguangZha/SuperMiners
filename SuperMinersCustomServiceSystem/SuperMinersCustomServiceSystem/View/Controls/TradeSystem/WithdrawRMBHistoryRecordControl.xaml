@@ -9,9 +9,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="109*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid>
+        <TextBlock Text="提现交易历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
+
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -48,7 +51,7 @@
                 <Button Name="btnNextPage" Content="下一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnNextPage_Click"/>
             </StackPanel>
         </Grid>
-        <DataGrid Grid.Row="1" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
+        <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding PlayerUserName, Mode=OneWay}" IsReadOnly="True"/>

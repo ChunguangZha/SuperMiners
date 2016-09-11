@@ -30,5 +30,7 @@ namespace SuperMinersServerApplication.Controller
         public static WaitToAwardExpRecordDBProvider WaitToAwardExpRecordDBProvider = new WaitToAwardExpRecordDBProvider();
 
         public static WithdrawRMBRecordDBProvider WithdrawRMBRecordDBProvider = new WithdrawRMBRecordDBProvider();
+
+        public static ExpChangeRecordDBProvider ExpChangeRecordDBProvider = new ExpChangeRecordDBProvider();
     }
 }

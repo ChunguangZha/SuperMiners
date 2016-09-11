@@ -111,6 +111,7 @@ namespace DataBaseProvider
                 string encryptedQQ = dt.Rows[i]["QQ"] == DBNull.Value ? "" : dt.Rows[i]["QQ"].ToString();
                 string encryptedInvitationCode = dt.Rows[i]["InvitationCode"].ToString();
 
+                player.SimpleInfo.UserID = Convert.ToInt32(dt.Rows[i]["id"]);
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
@@ -189,6 +190,26 @@ namespace DataBaseProvider
             }
 
             return admins;
+        }
+
+        internal static ExpChangeRecord[] GetExpChangeRecordListFromDataTable(DataTable dt)
+        {
+            ExpChangeRecord[] records = new ExpChangeRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ExpChangeRecord record = new ExpChangeRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+                record.AddExp = Convert.ToDecimal(dt.Rows[i]["AddExp"]);
+                record.NewExp = Convert.ToDecimal(dt.Rows[i]["NewExp"]);
+                record.Time = Convert.ToDateTime(dt.Rows[i]["Time"]);
+                record.OperContent = dt.Rows[i]["OperContent"].ToString();
+
+                records[i] = record;
+            }
+
+            return records;
         }
 
         internal static LockSellStonesOrder[] GetLockStonesOrderListFromDataTable(DataTable dt)

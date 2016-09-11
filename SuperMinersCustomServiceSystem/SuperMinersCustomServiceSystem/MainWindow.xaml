@@ -75,7 +75,7 @@
             </TreeViewItem>
         </TreeView>
         <Grid Grid.Row="1" Grid.Column="1">
-            <Controls:PlayerManagerControl x:Name="controlPlayerManager" Visibility="Collapsed"/>
+            <Controls:PlayerManagerControl x:Name="controlPlayerManager" Visibility="Visible"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManager" Visibility="Collapsed"/>
             <tradeControl:GoldCoinRechargeActiveControl x:Name="controlGoldCoinRechargeActive" Visibility="Collapsed"/>
             <tradeControl:GoldCoinRechargeHistoryRecordControl x:Name="controlGoldCoinRechargeHistory" Visibility="Collapsed"/>

@@ -13,6 +13,8 @@ namespace MetaData.User
     [DataContract]
     public class PlayerSimpleInfo
     {
+        public int UserID { get; set; }
+
         /// <summary>
         /// maxlength=15
         /// </summary>

@@ -46,6 +46,7 @@
     <Compile Include="Trade\AlipayRechargeRecord.cs" />
     <Compile Include="Trade\BuyStonesOrder.cs" />
     <Compile Include="DatabaseFieldAttribute.cs" />
+    <Compile Include="Trade\ExpChangeRecord.cs" />
     <Compile Include="Trade\GoldCoinRechargeRecord.cs" />
     <Compile Include="NoticeInfo.cs" />
     <Compile Include="SystemConfig\AwardReferrerConfig.cs" />
