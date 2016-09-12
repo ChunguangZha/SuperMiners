@@ -43,7 +43,11 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditExp_Click(object sender, RoutedEventArgs e)
         {
-
+            EditPlayerExpWindow win = new EditPlayerExpWindow(this._player.UserName, this._player.Exp);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetExp(win.ExpChanged);
+            }
         }
 
         private void btnEditRMB_Click(object sender, RoutedEventArgs e)

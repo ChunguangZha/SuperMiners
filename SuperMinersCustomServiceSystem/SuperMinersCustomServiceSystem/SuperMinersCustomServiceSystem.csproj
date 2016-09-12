@@ -181,7 +181,7 @@
     <Compile Include="BusyWindow.xaml.cs">
       <DependentUpon>BusyWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="EditPlayerWindow.xaml.cs">
+    <Compile Include="View\EditPlayerWindow.xaml.cs">
       <DependentUpon>EditPlayerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="GlobalData.cs" />
@@ -289,8 +289,14 @@
     <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\EditPlayerExpWindow.xaml.cs">
+      <DependentUpon>EditPlayerExpWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\EditPlayerGoldCoinWindow.xaml.cs">
       <DependentUpon>EditPlayerGoldCoinWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\HandleExceptionAlipayRecordWindow.xaml.cs">
+      <DependentUpon>HandleExceptionAlipayRecordWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\WithdrawRMBPayWindow.xaml.cs">
       <DependentUpon>WithdrawRMBPayWindow.xaml</DependentUpon>
@@ -307,7 +313,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="EditPlayerWindow.xaml">
+    <Page Include="View\EditPlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -464,7 +470,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\EditPlayerExpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\EditPlayerGoldCoinWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\HandleExceptionAlipayRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -497,6 +511,7 @@
     </None>
     <AppDesigner Include="Properties\" />
     <None Include="SuperMinersCustomServiceSystem_TemporaryKey.pfx" />
+    <Compile Include="Wcf\Clients\ServerClient.AlipayRecharge.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

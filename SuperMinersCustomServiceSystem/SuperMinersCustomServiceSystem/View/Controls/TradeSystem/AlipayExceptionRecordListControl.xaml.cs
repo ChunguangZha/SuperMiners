@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,26 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnHandleExceptionAlipayRecord_Click(object sender, RoutedEventArgs e)
         {
+            Button btn = sender as Button;
+            AlipayRechargeRecordUIModel alipayrecord = btn.DataContext as AlipayRechargeRecordUIModel;
+            if (alipayrecord == null)
+            {
+                return;
+            }
 
+
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        public void Refresh()
+        {
+            App.AlipayRechargeVMObject.AsyncGetAllExceptionAlipayRechargeRecords();
         }
     }
 }

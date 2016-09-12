@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
 SuperMinersCustomServiceSystem
 none
 false
 TRACE;DEBUG;Encrypt
-F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
 35-994078114
 
 111-567598659
 231273746584
 BusyWindow.xaml;EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;Assets\Style.xaml;MyControl\MyDateTimePickerControl.xaml;View\AddNoticeWindow.xaml;View\Controls\NoticeManageControl.xaml;View\Controls\PlayerManagerControl.xaml;View\Controls\TradeSystem\AlipayExceptionRecordListControl.xaml;View\Controls\TradeSystem\GoldCoinRechargeActiveControl.xaml;View\Controls\TradeSystem\GoldCoinRechargeHistoryRecordControl.xaml;View\Controls\TradeSystem\MinerTradeActiveControl.xaml;View\Controls\TradeSystem\MinerTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\MineTradeActiveControl.xaml;View\Controls\TradeSystem\MineTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\StoneTradeActiveControl.xaml;View\Controls\TradeSystem\StoneTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml;View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml;View\Controls\TradeSystem\WithdrawRMBShowImageControl.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\FillAlipayInfoWindow.xaml;View\InputActionPasswordWindow.xaml;View\StoneOrderResolveExceptionWindow.xaml;View\ViewPlayerAlipayPayRecordWindow.xaml;View\ViewPlayerBuyMineRecordWindow.xaml;View\ViewPlayerBuyMinerRecordWindow.xaml;View\ViewPlayerBuyStoneRecordWindow.xaml;View\ViewPlayerGoldCoinRechargeRecordWindow.xaml;View\ViewPlayerLockStoneRecordWindow.xaml;View\ViewPlayerSellStoneRecordWindow.xaml;View\Windows\EditPlayerGoldCoinWindow.xaml;View\Windows\WithdrawRMBPayWindow.xaml;
 
-False
+True
 

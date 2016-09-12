@@ -151,7 +151,7 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Result != OperResult.RESULTCODE_TRUE)
                 {
-                    MyMessageBox.ShowInfo("收取矿石失败，原因为：" + ResultCodeMsg.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("收取矿石失败，原因为：" + OperResult.GetMsg(e.Result));
                 }
                 AsyncGetPlayerInfo();
             }

@@ -232,7 +232,6 @@
     </Compile>
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="Utility\MyWebPage.cs" />
-    <Compile Include="Utility\ResultCodeMsg.cs" />
     <Compile Include="ViewModels\BusyToken.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />

@@ -1,7 +1,6 @@
 ﻿using MetaData;
 using MetaData.Trade;
 using SuperMinersCustomServiceSystem.Model;
-using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +61,7 @@ namespace SuperMinersCustomServiceSystem.View
             }
             else
             {
-                MessageBox.Show(ResultCodeMsg.GetMsg(e.Result));
+                MessageBox.Show(OperResult.GetMsg(e.Result));
             }
         }
 
@@ -90,7 +89,7 @@ namespace SuperMinersCustomServiceSystem.View
             }
             else
             {
-                MessageBox.Show("操作失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
+                MessageBox.Show("操作失败。原因：" + OperResult.GetMsg(e.Result));
             }
         }
 

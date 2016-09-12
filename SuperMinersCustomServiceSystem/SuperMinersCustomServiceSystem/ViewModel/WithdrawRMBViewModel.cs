@@ -1,7 +1,6 @@
 ﻿using MetaData;
 using MetaData.Trade;
 using SuperMinersCustomServiceSystem.Model;
-using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

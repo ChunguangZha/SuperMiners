@@ -152,7 +152,7 @@ namespace SuperMinersWPF.ViewModels
                 else
                 {
                     isOK = false;
-                    MyMessageBox.ShowInfo("申诉提交失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("申诉提交失败，原因：" + OperResult.GetMsg(e.Result));
                 }
 
                 if (SetStoneOrderExceptionFinished != null)
@@ -193,7 +193,7 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("订单取消失败，原因：" + ResultCodeMsg.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("订单取消失败，原因：" + OperResult.GetMsg(e.Result));
                 }
 
                 AsyncGetAllNotFinishedSellOrders();
@@ -423,7 +423,7 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("购买矿石失败。原因：" + ResultCodeMsg.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("购买矿石失败。原因：" + OperResult.GetMsg(e.Result));
                 }
             }
             catch (Exception exc)

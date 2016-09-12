@@ -68,7 +68,7 @@ namespace SuperMinersWPF.Views
             TradeOperResult result = e.Result;
             if (result.ResultCode != OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("金币充值失败。原因：" + ResultCodeMsg.GetMsg(result.ResultCode));
+                MyMessageBox.ShowInfo("金币充值失败。原因：" + OperResult.GetMsg(result.ResultCode));
                 return;
             }
             if (result.PayType == (int)PayType.Alipay)

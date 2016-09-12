@@ -68,7 +68,7 @@ namespace SuperMinersWPF.Views
             }
             else
             {
-                MyMessageBox.ShowInfo("购买失败。原因：" + ResultCodeMsg.GetMsg(result));
+                MyMessageBox.ShowInfo("购买失败。原因：" + OperResult.GetMsg(result));
                 return;
             }
 

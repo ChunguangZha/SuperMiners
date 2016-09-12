@@ -11,8 +11,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="" FontSize="18" FontWeight="Bold" Margin="10"/>
-        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <TextBlock Text="异常的支付宝订单处理" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
 
         <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
             <DataGrid.Columns>
@@ -27,7 +27,7 @@
                 <DataGridTemplateColumn Width="*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="处理" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click"/>
+                            <Button Content="处理" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnHandleExceptionAlipayRecord_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

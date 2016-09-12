@@ -531,3 +531,18 @@ Error:  [2016/9/11 23:22:39] ---- Log: 客户端Tony已退出.
 Error:  [2016/9/12 17:55:08] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/9/13 0:04:33] ---- Log: 服务器连接失败。
+Exc.Message: 操作过程中出现异常，结果无效。  有关异常的详细信息，请查看 InnerException。Exc.Stack:    在 System.ComponentModel.AsyncCompletedEventArgs.RaiseExceptionIfNecessary()
+   在 SuperMinersWPF.Wcf.Clients.WebInvokeEventArgs`1.get_Result() 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Clients\ServerClient.cs:行号 70
+   在 SuperMinersWPF.ViewModels.UserViewModel.Client_GatherStonesCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\UserViewModel.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/9/13 0:05:59] ---- Log: 服务器连接失败。
+Exc.Message: 操作过程中出现异常，结果无效。  有关异常的详细信息，请查看 InnerException。Exc.Stack:    在 System.ComponentModel.AsyncCompletedEventArgs.RaiseExceptionIfNecessary()
+   在 SuperMinersWPF.Wcf.Clients.WebInvokeEventArgs`1.get_Result() 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Clients\ServerClient.cs:行号 70
+   在 SuperMinersWPF.ViewModels.UserViewModel.Client_GatherStonesCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\UserViewModel.cs:行号 152
+-----------------------------------------------------
+
+Error:  [2016/9/13 0:22:19] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

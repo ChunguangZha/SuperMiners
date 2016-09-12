@@ -7,55 +7,84 @@ using System.Threading.Tasks;
 
 namespace SuperMinersCustomServiceSystem.Model
 {
-    public class AlipayRechargeRecordUIModel
+    public class AlipayRechargeRecordUIModel : BaseModel
     {
         private AlipayRechargeRecord _parentObject;
 
         public AlipayRechargeRecord ParentObject
         {
             get { return _parentObject; }
-            set { _parentObject = value; }
+            set
+            {
+                _parentObject = value;
+                NotifyPropertyChange("out_trade_no");
+                NotifyPropertyChange("TradeTypeText");
+                NotifyPropertyChange("alipay_trade_no");
+                NotifyPropertyChange("buyer_email");
+                NotifyPropertyChange("user_name");
+                NotifyPropertyChange("total_fee");
+                NotifyPropertyChange("value_rmb");
+                NotifyPropertyChange("pay_time");
+            }
         }
 
         public AlipayRechargeRecordUIModel(AlipayRechargeRecord parent)
         {
             this.ParentObject = parent;
+            this._tradeTypeText = GetTradeTypeText(parent.out_trade_no);
+        }
 
-            if (!string.IsNullOrEmpty(parent.out_trade_no) && parent.out_trade_no.Length > 20)
+        //private static AlipayTradeInType GetTradeType(string orderNumber)
+        //{
+        //    string strType = orderNumber.Substring(18, 2);
+        //    int valueType = Convert.ToInt32(strType);
+        //    return (AlipayTradeInType)valueType;
+        //}
+
+        public static string GetTradeTypeText(string orderNumber)
+        {
+            string tradeTypeText = "";
+            if (string.IsNullOrEmpty(orderNumber) || orderNumber.Length < 20)
             {
-                switch (GetTradeType(parent.out_trade_no))
+                return "";
+            }
+            string strType = orderNumber.Substring(18, 2);
+
+            int valueType = -1;
+            if (int.TryParse(strType, out valueType))
+            {
+                switch ((AlipayTradeInType)valueType)
                 {
                     case AlipayTradeInType.BuyStone:
-                        _tradeTypeText = "购买矿石";
+                        tradeTypeText = "购买矿石";
                         break;
                     case AlipayTradeInType.BuyMine:
-                        _tradeTypeText = "购买矿山";
+                        tradeTypeText = "购买矿山";
                         break;
                     case AlipayTradeInType.BuyMiner:
-                        _tradeTypeText = "购买矿工";
+                        tradeTypeText = "购买矿工";
                         break;
                     case AlipayTradeInType.BuyRMB:
-                        _tradeTypeText = "充值灵币";
+                        tradeTypeText = "充值灵币";
                         break;
                     case AlipayTradeInType.BuyGoldCoin:
-                        _tradeTypeText = "充值金币";
+                        tradeTypeText = "充值金币";
                         break;
                     default:
                         break;
                 }
             }
-        }
 
-        private AlipayTradeInType GetTradeType(string orderNumber)
-        {
-            string strType = orderNumber.Substring(18, 2);
-            int valueType = Convert.ToInt32(strType);
-            return (AlipayTradeInType)valueType;
+            return tradeTypeText;
         }
 
         public string out_trade_no
         {
             get { return this.ParentObject.out_trade_no; }
+            set
+            {
+                this.ParentObject.out_trade_no = value;
+            }
         }
 
         private string _tradeTypeText = "";
@@ -70,31 +99,55 @@ namespace SuperMinersCustomServiceSystem.Model
         public string alipay_trade_no
         {
             get { return this.ParentObject.alipay_trade_no; }
+            set
+            {
+                this.ParentObject.alipay_trade_no = value;
+            }
         }
 
         public string buyer_email
         {
             get { return this.ParentObject.buyer_email; }
+            set
+            {
+                this.ParentObject.buyer_email = value;
+            }
         }
 
         public string user_name
         {
             get { return this.ParentObject.user_name; }
+            set
+            {
+                this.ParentObject.user_name = value;
+            }
         }
 
         public decimal total_fee
         {
             get { return this.ParentObject.total_fee; }
+            set
+            {
+                this.ParentObject.total_fee = value;
+            }
         }
 
         public decimal value_rmb
         {
             get { return this.ParentObject.value_rmb; }
+            set
+            {
+                this.ParentObject.value_rmb = value;
+            }
         }
 
         public DateTime pay_time
         {
             get { return this.ParentObject.pay_time; }
+            set
+            {
+                this.ParentObject.pay_time = value;
+            }
         }
     }
 }
