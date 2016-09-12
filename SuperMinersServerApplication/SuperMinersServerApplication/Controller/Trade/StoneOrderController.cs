@@ -547,18 +547,18 @@ namespace SuperMinersServerApplication.Controller
             StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
             if (runnable == null)
             {
-                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
+                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调找不到订单。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
             if (alipayRecord.value_rmb < runnable.ValueRMB)
             {
-                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
+                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
 
             if (alipayRecord.user_name != runnable.GetLockedOrder().LockedByUserName)
             {
-                LogHelper.Instance.AddInfoLog("支付宝购买矿石回调，支付宝回传玩家用户名和锁定订单的用户名[" + runnable.ValueRMB + "] 不匹配。支付宝信息：" + alipayRecord.ToString());
+                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调支付宝回传玩家用户名和锁定订单的用户名[" + runnable.ValueRMB + "] 不匹配。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
 
@@ -593,6 +593,7 @@ namespace SuperMinersServerApplication.Controller
 
                 trans.Commit();
 
+                LogHelper.Instance.AddInfoLog("玩家[" + lockOrder.LockedByUserName + "] 用支付宝成功购买了，玩家[" + lockOrder.StonesOrder.SellerUserName + "] 出售的矿石" + lockOrder.StonesOrder.SellStonesCount + ", no: " + lockOrder.StonesOrder.OrderNumber);
                 AddLogNotifyPlayer(lockOrder.LockedByUserName, runnable.OrderNumber, buyOrder);
 
                 return true;
@@ -601,7 +602,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 result = OperResult.RESULTCODE_EXCEPTION;
                 trans.Rollback();
-                LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + runnable.OrderNumber, exc);
+                LogHelper.Instance.AddErrorLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石回调异常. 支付宝信息: " + alipayRecord.ToString(), exc);
                 return false;
             }
             finally
@@ -611,8 +612,6 @@ namespace SuperMinersServerApplication.Controller
                     trans.Dispose();
                 }
             }
-
-            return false;
         }
 
         public int HandleExceptionOrderCancel(string orderNumber)

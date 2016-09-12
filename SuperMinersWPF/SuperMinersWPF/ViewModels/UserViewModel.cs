@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData;
+using MetaData.User;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -148,9 +149,9 @@ namespace SuperMinersWPF.ViewModels
             try
             {
                 App.BusyToken.CloseBusyWindow();
-                if (e.Result > 0)
+                if (e.Result != OperResult.RESULTCODE_TRUE)
                 {
-                    MyMessageBox.ShowInfo("成功收取" + e.Result.ToString() + "矿石。");
+                    MyMessageBox.ShowInfo("收取矿石失败，原因为：" + ResultCodeMsg.GetMsg(e.Result));
                 }
                 AsyncGetPlayerInfo();
             }

@@ -30,7 +30,10 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     foreach (var token in tokens)
                     {
-                        PlayerController.Instance.LogoutPlayer(ClientManager.GetClientUserName(token));
+                        string userName = ClientManager.GetClientUserName(token);
+                        LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 掉线，退出登录， IP=" + ClientManager.GetClientIP(token));
+
+                        PlayerController.Instance.LogoutPlayer(userName);
                         RSAProvider.RemoveRSA(token);
                         ClientManager.RemoveClient(token);
                         lock (this._callbackDicLocker)
@@ -98,7 +101,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         this._callbackDic[token] = new Queue<CallbackInfo>();
                     }
 
-                    LogHelper.Instance.AddInfoLog("玩家登录, 用户名=" + userName + ", IP=" + ClientManager.GetClientIP(token));
+                    LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登录矿场, IP=" + ClientManager.GetClientIP(token));
 
                 }
             }
@@ -140,7 +143,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         })).Start(token);
                     }
 
-                    LogHelper.Instance.AddInfoLog("玩家退出, 用户名=" + userName + ", IP=" + ClientManager.GetClientIP(token));
+                    LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 退出矿场, IP=" + ClientManager.GetClientIP(token));
 
                     return true;
                 }

@@ -133,7 +133,7 @@ namespace SuperMinersServerApplication.Controller
             GoldCoinRechargeRecord rechargeRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
             if (rechargeRecord == null)
             {
-                LogHelper.Instance.AddInfoLog("支付宝购买金币回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
+                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买金币回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
             CustomerMySqlTransaction myTrans = null;
@@ -158,6 +158,11 @@ namespace SuperMinersServerApplication.Controller
                             GoldCoinOrderPaySucceedNotify(tokenBuyer, rechargeRecord.OrderNumber);
                         }
                         isOK = true;
+                        LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 成功充值" + rechargeRecord.GainGoldCoin + "金币。ano: " + alipayRecord.alipay_trade_no);
+                    }
+                    else
+                    {
+                        LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 金币充值失败，原因为：" + OperResult.GetMsg(value) + "。ano: " + alipayRecord.alipay_trade_no);
                     }
                 }
 
@@ -171,7 +176,7 @@ namespace SuperMinersServerApplication.Controller
                 myTrans.Rollback();
                 PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
 
-                LogHelper.Instance.AddErrorLog("玩家支付宝金币充值，回调异常。AlipayInfo : " + alipayRecord.ToString(), exc);
+                LogHelper.Instance.AddErrorLog("玩家[" + alipayRecord.user_name + "] 支付宝金币充值，回调异常。AlipayInfo : " + alipayRecord.ToString(), exc);
                 return false;
             }
             finally

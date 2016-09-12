@@ -526,7 +526,6 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                LogHelper.Instance.AddInfoLog(DateTime.Now.ToString() + " ---支付宝充值金币，没有找到[" + userName + "]玩家信息");
                 return OperResult.RESULTCODE_FALSE;
             }
 
@@ -539,7 +538,6 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
 
-            LogHelper.Instance.AddInfoLog(DateTime.Now.ToString() + " ---支付宝充值金币，玩家操作结果： " + value);
             return value;
         }
 

@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="SuperMinersCustomServiceSystem.View.Controls.TradeSystem.AlipayExceptionRecordListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+        <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="商品订单号" Width="*" Binding="{Binding out_trade_no, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="订单类型" Width="*" Binding="{Binding TradeTypeText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付宝订单号" Width="*" Binding="{Binding alipay_trade_no, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="付款账户" Width="*" Binding="{Binding buyer_email, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding user_name, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="付款金额" Width="*" Binding="{Binding total_fee, Mode=OneWay, StringFormat='F2'}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="等值灵币" Width="*" Binding="{Binding value_rmb, Mode=OneWay, StringFormat='F2'}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="付款时间" Width="*" Binding="{Binding pay_time, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="处理" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

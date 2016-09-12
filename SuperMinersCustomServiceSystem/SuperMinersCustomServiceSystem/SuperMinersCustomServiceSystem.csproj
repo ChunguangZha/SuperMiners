@@ -141,6 +141,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
+      <Link>Wcf\Datas\TradeType.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\WithdrawRMBRecord.cs">
       <Link>Wcf\Datas\WithdrawRMBRecord.cs</Link>
     </Compile>
@@ -158,9 +161,6 @@
     </Compile>
     <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\MyControl\NumericTextBox.cs">
       <Link>MyControl\NumericTextBox.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersWPF\SuperMinersWPF\Utility\ResultCodeMsg.cs">
-      <Link>Wcf\Datas\ResultCodeMsg.cs</Link>
     </Compile>
     <Compile Include="Actions\BaseAction.cs" />
     <Compile Include="Actions\GoldCoinRechargeAction.cs" />
@@ -188,6 +188,7 @@
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\AlipayRechargeRecordUIModel.cs" />
     <Compile Include="Model\BaseModel.cs" />
     <Compile Include="Model\BuyStonesOrderUIModel.cs" />
     <Compile Include="Model\LockSellStonesOrderUIModel.cs" />
@@ -215,6 +216,9 @@
     </Compile>
     <Compile Include="View\Controls\PlayerManagerControl.xaml.cs">
       <DependentUpon>PlayerManagerControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\AlipayExceptionRecordListControl.xaml.cs">
+      <DependentUpon>AlipayExceptionRecordListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\GoldCoinRechargeActiveControl.xaml.cs">
       <DependentUpon>GoldCoinRechargeActiveControl.xaml</DependentUpon>
@@ -361,6 +365,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\PlayerManagerControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\AlipayExceptionRecordListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
