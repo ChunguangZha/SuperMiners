@@ -90,19 +90,20 @@ namespace DataBaseProvider
                         builder.Append(" and ");
                     }
 
-                    builder.Append(" b.CreateTime >= @beginTime and b.CreateTime < @endTime ;");
+                    builder.Append(" a.CreateTime >= @beginTime and a.CreateTime < @endTime ");
                     mycmd.Parameters.AddWithValue("@beginTime", start);
                     mycmd.Parameters.AddWithValue("@endTime", end);
+                }
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    builder.Append(" order by a.CreateTime desc limit " + start.ToString() + ", " + pageItemCount);
                 }
 
                 if (builder.Length > 0)
                 {
                     cmdText = cmdText + whereText + builder.ToString();
                 }
-                string orderByText = " order by CreateTime desc ";
-                int startIndex = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                string limitText = " limit " + startIndex.ToString() + ", " + pageItemCount;
-                cmdText = cmdText + orderByText + limitText;
 
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

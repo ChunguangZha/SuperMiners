@@ -61,7 +61,7 @@ namespace SuperMinersCustomServiceSystem.View
         public void SetUser(string buyer)
         {
             this.Title += "  ----" + buyer;
-            GlobalData.Client.GetBuyStonesOrderList(buyer, new MetaData.MyDateTime(), new MetaData.MyDateTime());
+            //GlobalData.Client.GetBuyStonesOrderList(buyer, new MetaData.MyDateTime(), new MetaData.MyDateTime());
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

@@ -45,30 +45,36 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         void Client_GetNoticesCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<NoticeInfo[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MessageBox.Show("获取系统消息失败。");
-                return;
-            }
-
-            this.ListAllNotices.Clear();
-
-            if (e.Result != null)
-            {
-                var listOrdered = e.Result.OrderByDescending(n => n.Time);
-
-                foreach (var item in listOrdered)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    this.ListAllNotices.Add(item);
+                    return;
+                }
+
+                if (e.Error != null)
+                {
+                    MessageBox.Show("获取系统消息失败。");
+                    return;
+                }
+
+                this.ListAllNotices.Clear();
+
+                if (e.Result != null)
+                {
+                    var listOrdered = e.Result.OrderByDescending(n => n.Time);
+
+                    foreach (var item in listOrdered)
+                    {
+                        this.ListAllNotices.Add(item);
+                    }
                 }
             }
-
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询系统公告回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_CreateNoticeCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)

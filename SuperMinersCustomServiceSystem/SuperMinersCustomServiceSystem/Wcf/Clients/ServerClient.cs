@@ -232,55 +232,6 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<bool>(this._context, "CreateNotice", this.CreateNoticeCompleted, GlobalData.Token, notice);
         }
 
-        public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> GetSellStonesOrderListCompleted;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sellerUserName"></param>
-        /// <param name="sellOrderState">小于0表示全部</param>
-        /// <param name="startDate"></param>
-        /// <param name="endDate"></param>
-        public void GetSellStonesOrderList(string sellerUserName, int sellOrderState, MyDateTime startDate, MyDateTime endDate)
-        {
-            this._invoker.Invoke<SellStonesOrder[]>(this._context, "GetSellStonesOrderList", this.GetSellStonesOrderListCompleted, GlobalData.Token, sellerUserName, sellOrderState, startDate, endDate);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<LockSellStonesOrder[]>> GetLockedStonesOrderListCompleted;
-        public void GetLockedStonesOrderList(string buyerUserName)
-        {
-            this._invoker.Invoke<LockSellStonesOrder[]>(this._context, "GetLockedStonesOrderList", this.GetLockedStonesOrderListCompleted, GlobalData.Token, buyerUserName);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> GetBuyStonesOrderListCompleted;
-        public void GetBuyStonesOrderList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
-        {
-            this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<MinesBuyRecord[]>> GetBuyMinesFinishedRecordListCompleted;
-        public void GetBuyMinesFinishedRecordList(string buyerUserName, MyDateTime startDate, MyDateTime endDate)
-        {
-            this._invoker.Invoke<MinesBuyRecord[]>(this._context, "GetBuyMinesFinishedRecordList", this.GetBuyMinesFinishedRecordListCompleted, GlobalData.Token, buyerUserName, startDate, endDate);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<MinesBuyRecord[]>> GetBuyMinesNotFinishedRecordListCompleted;
-        public void GetBuyMinesNotFinishedRecordList(string buyerUserName)
-        {
-            this._invoker.Invoke<MinesBuyRecord[]>(this._context, "GetBuyMinesNotFinishedRecordList", this.GetBuyMinesNotFinishedRecordListCompleted, GlobalData.Token, buyerUserName);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionStoneOrderSucceedCompleted;
-        public void HandleExceptionStoneOrderSucceed(AlipayRechargeRecord alipayRecord)
-        {
-            this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderSucceed", this.HandleExceptionStoneOrderSucceedCompleted, GlobalData.Token, alipayRecord);
-        }
-
-        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionStoneOrderFailedCompleted;
-        public void HandleExceptionStoneOrderFailed(string orderNumber)
-        {
-            this._invoker.Invoke<int>(this._context, "HandleExceptionStoneOrderFailed", this.HandleExceptionStoneOrderFailedCompleted, GlobalData.Token, orderNumber);
-        }
-
         #endregion
     }
 }

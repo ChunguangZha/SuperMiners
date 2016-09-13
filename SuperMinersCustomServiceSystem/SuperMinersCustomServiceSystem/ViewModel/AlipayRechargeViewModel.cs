@@ -40,50 +40,64 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         void Client_HandleExceptionAlipayRechargeRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Error != null)
+            try
             {
-                MessageBox.Show("服务器连接失败。" + e.Error);
-                return;
-            }
-            string orderNumber = e.UserState as string;
-
-            if (e.Result == OperResult.RESULTCODE_TRUE)
-            {
-                MessageBox.Show("处理异常的支付宝订单成功，商品订单号为：" + orderNumber);
-                lock (lockList)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
                 {
-                    for (int i = 0; i < this.ListExceptionAlipayRecords.Count; i++)
+                    MessageBox.Show("服务器连接失败。" + e.Error);
+                    return;
+                }
+                string orderNumber = e.UserState as string;
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MessageBox.Show("处理异常的支付宝订单成功，商品订单号为：" + orderNumber);
+                    lock (lockList)
                     {
-                        if (this.ListExceptionAlipayRecords[i].out_trade_no == orderNumber)
+                        for (int i = 0; i < this.ListExceptionAlipayRecords.Count; i++)
                         {
-                            this.ListExceptionAlipayRecords.RemoveAt(i);
-                            break;
+                            if (this.ListExceptionAlipayRecords[i].out_trade_no == orderNumber)
+                            {
+                                this.ListExceptionAlipayRecords.RemoveAt(i);
+                                break;
+                            }
                         }
                     }
                 }
+                else
+                {
+                    MessageBox.Show("处理异常的支付宝订单失败，原因为：" + OperResult.GetMsg(e.Result));
+                }
             }
-            else
+            catch (Exception exc)
             {
-                MessageBox.Show("处理异常的支付宝订单失败，原因为：" + OperResult.GetMsg(e.Result));
+                MessageBox.Show("处理支付宝订单回调异常。" + exc.Message);
             }
         }
 
         void Client_GetAllExceptionAlipayRechargeRecordsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.AlipayRechargeRecord[]> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Error != null)
+            try
             {
-                MessageBox.Show("服务器连接失败。" + e.Error);
-                return;
-            }
-            this.ListExceptionAlipayRecords.Clear();
-            if (e.Result != null)
-            {
-                foreach (var item in e.Result)
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
                 {
-                    this.ListExceptionAlipayRecords.Add(new AlipayRechargeRecordUIModel(item));
+                    MessageBox.Show("服务器连接失败。" + e.Error);
+                    return;
                 }
+                this.ListExceptionAlipayRecords.Clear();
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListExceptionAlipayRecords.Add(new AlipayRechargeRecordUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询异常的支付宝订单回调处理异常。" + exc.Message);
             }
         }
 

@@ -51,5 +51,7 @@ namespace SuperMinersCustomServiceSystem
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
 
         public static readonly string LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
+
+        public const int PageItemsCount = 30;
     }
 }

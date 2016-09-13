@@ -27,6 +27,12 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             this.datagrid.ItemsSource = App.MineTradeVMObject.ListMineBuyRecords;
         }
 
+        public void SetBuyerUserName(string userName)
+        {
+            this.txtPlayerUserName.Text = userName;
+            Search();
+        }
+        
         private void Search()
         {
             string playerUserName = this.txtPlayerUserName.Text.Trim();
@@ -38,7 +44,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.MineTradeVMObject.AsyncGetBuyMineFinishedRecordList(playerUserName, beginCreateTime, endCreateTime, 30, pageIndex);
+            App.MineTradeVMObject.AsyncGetBuyMineFinishedRecordList(playerUserName, beginCreateTime, endCreateTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

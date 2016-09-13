@@ -40,6 +40,72 @@ namespace SuperMinersCustomServiceSystem
             GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
 
             this.tvL1PlayerManager.IsSelected = true;
+
+            this.controlPlayerManager.ViewPlayerAlipayRechargeRecords += controlPlayerManager_ViewPlayerAlipayRechargeRecords;
+            this.controlPlayerManager.ViewPlayerBuyGoldCoinRecords += controlPlayerManager_ViewPlayerBuyGoldCoinRecords;
+            this.controlPlayerManager.ViewPlayerBuyMineRecords += controlPlayerManager_ViewPlayerBuyMineRecords;
+            this.controlPlayerManager.ViewPlayerBuyMinerRecords += controlPlayerManager_ViewPlayerBuyMinerRecords;
+            this.controlPlayerManager.ViewPlayerBuyStoneOrderRecords += controlPlayerManager_ViewPlayerBuyStoneOrderRecords;
+            this.controlPlayerManager.ViewPlayerLockedStoneOrderRecords += controlPlayerManager_ViewPlayerLockedStoneOrderRecords;
+            this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
+        }
+
+        void controlPlayerManager_ViewPlayerSellStoneOrderRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneSellTradeHistory.SetSellerUserName(obj);
+            this.tvL2_TS_Stone_SellHistory.IsSelected = true;
+            this.tvL2_TS_Stone_SellHistory.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerLockedStoneOrderRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.tvL2_TS_Stone_SellHistory.IsSelected = true;
+            this.tvL2_TS_Stone_SellHistory.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerBuyStoneOrderRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneBuyTradeHistory.SetBuyerUserName(obj);
+            this.tvL2_TS_Stone_BuyHistory.IsSelected = true;
+            this.tvL2_TS_Stone_BuyHistory.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerBuyMinerRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlMinerTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlMinerTradeHistory.SetBuyerUserName(obj);
+            this.tvL2_TS_Miner_History.IsSelected = true;
+            this.tvL2_TS_Miner_History.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerBuyMineRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlMineTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlMineTradeHistory.SetBuyerUserName(obj);
+            this.tvL2_TS_Mine_History.IsSelected = true;
+            this.tvL2_TS_Mine_History.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerBuyGoldCoinRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlGoldCoinRechargeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlGoldCoinRechargeHistory.SetBuyerUserName(obj);
+            this.tvL2_TS_GoldCoin_History.IsSelected = true;
+            this.tvL2_TS_GoldCoin_History.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerAlipayRechargeRecords(string obj)
+        {
+
         }
         
         //private void CreateTreeView()
@@ -99,8 +165,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlMinerTradeHistory.DataContext = App.MinerTradeVMObject;
 
             this.tvL2_TS_Stone.DataContext = App.StoneTradeVMObject;
-            this.controlStoneTradeActive.DataContext = App.StoneTradeVMObject;
-            this.controlStoneTradeHistory.DataContext = App.StoneTradeVMObject;
+            this.controlStoneSellTradeHistory.DataContext = App.StoneTradeVMObject;
+            this.controlStoneBuyTradeHistory.DataContext = App.StoneTradeVMObject;
 
             this.tvL2_TS_WithdrawRMB.DataContext = App.WithdrawRMBVMObject;
             this.controlWithdrawRMBActive.DataContext = App.WithdrawRMBVMObject;
@@ -134,7 +200,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlNoticeManager.Visibility = System.Windows.Visibility.Collapsed;
             this.controlPlayerManager.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneTradeActive.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlStoneTradeHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawRMBHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneTradeShowImage.Visibility = System.Windows.Visibility.Collapsed;
@@ -176,10 +243,16 @@ namespace SuperMinersCustomServiceSystem
             this.controlStoneTradeActive.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void tvL2_TS_Stone_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void tvL2_TS_Stone_BuyHistory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HideAllControls();
-            this.controlStoneTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_Stone_SellHistory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_TS_GoldCoin_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)

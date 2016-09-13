@@ -41,31 +41,28 @@
                 <TextBox Grid.Column="3" Width="100" Margin="5" VerticalAlignment="Center"/>
             </Grid>
         </GroupBox>
-        <TreeView Grid.Row="1">
+        <TreeView Grid.Row="1" Name="TreeMenu">
             <TreeViewItem Name="tvL1PlayerManager" Header="玩家管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL1PlayerManager_MouseDoubleClick">
                 
             </TreeViewItem>
             <TreeViewItem Name="tvL1TradeSystem" Header="交易系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Name="tvL2_TS_Miner" Header="矿工交易" Style="{StaticResource TVItemL2Style}">
-                    <TreeViewItem Name="tvL2_TS_Miner_Active" Header="实时交易" MouseDoubleClick="tvL2_TS_Miner_Active_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_Miner_History" Header="交易记录" MouseDoubleClick="tvL2_TS_Miner_History_MouseDoubleClick"/>
                 </TreeViewItem>
                 <TreeViewItem Name="tvL2_TS_Mine" Header="矿山交易" Style="{StaticResource TVItemL2Style}">
-                    <TreeViewItem Name="tvL2_TS_Mine_Active" Header="实时交易" MouseDoubleClick="tvL2_TS_Mine_Active_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_Mine_History" Header="交易记录" MouseDoubleClick="tvL2_TS_Mine_History_MouseDoubleClick"/>
                 </TreeViewItem>
                 <TreeViewItem Name="tvL2_TS_Stone" Header="矿石交易" Style="{StaticResource TVItemL2Style}">
-                    <TreeViewItem Name="tvL2_TS_Stone_Active" Header="实时交易" MouseDoubleClick="tvL2_TS_Stone_Active_MouseDoubleClick"/>
-                    <TreeViewItem Name="tvL2_TS_Stone_History" Header="交易记录" MouseDoubleClick="tvL2_TS_Stone_History_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_Stone_BuyHistory" Header="购买记录" MouseDoubleClick="tvL2_TS_Stone_BuyHistory_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_Stone_SellHistory" Header="出售记录" MouseDoubleClick="tvL2_TS_Stone_SellHistory_MouseDoubleClick"/>
                 </TreeViewItem>
                 <TreeViewItem Name="tvL2_TS_GoldCoin" Header="金币充值" Style="{StaticResource TVItemL2Style}">
-                    <TreeViewItem Name="tvL2_TS_GoldCoin_Active" Header="实时交易" MouseDoubleClick="tvL2_TS_GoldCoin_Active_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_GoldCoin_History" Header="交易记录" MouseDoubleClick="tvL2_TS_GoldCoin_History_MouseDoubleClick"/>
                 </TreeViewItem>
                 <TreeViewItem Name="tvL2_TS_WithdrawRMB" Header="灵币提现" Style="{StaticResource TVItemL2Style}">
                     <TreeViewItem Name="tvL2_TS_WithdrawRMB_Active" Header="实时交易" MouseDoubleClick="tvL2_TS_WithdrawRMB_Active_MouseDoubleClick"/>
-                    <TreeViewItem Name="tvL2_TS_WithdrawRMB_History" Header="交易记录" MouseDoubleClick="tvL2_TS_WithdrawRMB_History_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_WithdrawRMB_ShowImage" Header="提现晒图" MouseDoubleClick="tvL2_TS_WithdrawRMB_ShowImage_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_WithdrawRMB_History" Header="历史记录" MouseDoubleClick="tvL2_TS_WithdrawRMB_History_MouseDoubleClick"/>
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
@@ -86,7 +83,8 @@
             <tradeControl:WithdrawRMBActiveControl x:Name="controlWithdrawRMBActive" Visibility="Collapsed"/>
             <tradeControl:WithdrawRMBHistoryRecordControl x:Name="controlWithdrawRMBHistory" Visibility="Collapsed"/>
             <tradeControl:StoneTradeActiveControl x:Name="controlStoneTradeActive" Visibility="Collapsed"/>
-            <tradeControl:StoneBuyTradeHistoryRecordControl x:Name="controlStoneTradeHistory" Visibility="Collapsed"/>
+            <tradeControl:StoneBuyTradeHistoryRecordControl x:Name="controlStoneBuyTradeHistory" Visibility="Collapsed"/>
+            <tradeControl:StoneSellTradeHistoryRecordControl x:Name="controlStoneSellTradeHistory" Visibility="Collapsed"/>
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
         </Grid>
     </Grid>

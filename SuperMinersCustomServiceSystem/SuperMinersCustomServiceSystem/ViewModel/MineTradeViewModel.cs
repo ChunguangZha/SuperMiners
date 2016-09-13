@@ -38,6 +38,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             try
             {
+                App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
                     MessageBox.Show("查询矿山购买记录失败。" + e.Error.Message);

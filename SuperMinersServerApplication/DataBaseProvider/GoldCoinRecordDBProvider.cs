@@ -238,17 +238,19 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" and CreateTime >= @beginCreateTime and CreateTime < @endCreateTime ;");
+                    builder.Append(" and CreateTime >= @beginCreateTime and CreateTime < @endCreateTime ");
                     mycmd.Parameters.AddWithValue("@beginCreateTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endCreateTime", endTime);
                 }
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    builder.Append(" order by CreateTime desc limit " + start.ToString() + ", " + pageItemCount);
+                }
 
                 string whereText = builder.Length > 0 ? " where " : "";
-                string orderByText = " order by CreateTime desc ";
-                int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                string limitText = " limit " + start.ToString() + ", " + pageItemCount;
 
-                string cmdText = sqlTextA + whereText + builder.ToString() + orderByText + limitText;
+                string cmdText = sqlTextA + whereText + builder.ToString();
                 mycmd.CommandText = cmdText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

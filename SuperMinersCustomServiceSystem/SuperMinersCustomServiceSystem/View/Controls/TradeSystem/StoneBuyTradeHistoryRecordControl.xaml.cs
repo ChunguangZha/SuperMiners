@@ -24,21 +24,43 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public StoneBuyTradeHistoryRecordControl()
         {
             InitializeComponent();
-            this.dgRecords.ItemsSource = App.MineTradeVMObject.ListMineBuyRecords;
+            this.dgRecords.ItemsSource = App.StoneTradeVMObject.ListBuyStoneOrderRecords;
+        }
+
+        public void SetSellerUserName(string sellerUserName)
+        {
+            this.txtSellerUserName.Text = sellerUserName;
+            Search();
+        }
+
+        public void SetBuyerUserName(string buyerUserName)
+        {
+            this.txtBuyerUserName.Text = buyerUserName;
+            Search();
         }
 
         private void Search()
         {
-            string playerUserName = this.txtPlayerUserName.Text.Trim();
+            string sellerUserName = this.txtSellerUserName.Text.Trim();
+            string orderNumber = this.txtOrderNumber.Text.Trim();
+            string buyerUserName = this.txtBuyerUserName.Text.Trim();
+            int orderState = this.cmbOrderState.SelectedIndex;
+
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
             endCreateTime.Hour = 23;
             endCreateTime.Minute = 59;
             endCreateTime.Second = 59;
 
+            MyDateTime beginPayTime = this.dpStartPayTime.ValueTime;
+            MyDateTime endPayTime = this.dpEndPayTime.ValueTime;
+            endPayTime.Hour = 23;
+            endPayTime.Minute = 59;
+            endPayTime.Second = 59;
+
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.MineTradeVMObject.AsyncGetBuyMineFinishedRecordList(playerUserName, beginCreateTime, endCreateTime, 30, pageIndex);
+            App.StoneTradeVMObject.AsyncGetBuyStonesOrderList(sellerUserName, orderNumber, buyerUserName, orderState, beginCreateTime, endCreateTime, beginPayTime, endPayTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -57,7 +79,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
-            if (App.MineTradeVMObject.ListMineBuyRecords.Count > 0)
+            if (App.StoneTradeVMObject.ListBuyStoneOrderRecords.Count > 0)
             {
                 this.numPageIndex.Value = this.numPageIndex.Value + 1;
                 Search();

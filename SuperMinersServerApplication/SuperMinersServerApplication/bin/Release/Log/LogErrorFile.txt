@@ -1,21 +1,42 @@
-Error:  [2016/9/11 15:39:02] ---- Log: Buy Miners Error!
-Exc.Message: Duplicate entry '41' for key 'UserID_UNIQUE'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+Error:  [2016/9/14 0:40:31] ---- Log: GetBuyStonesOrderList Exception. ClientIP=9a91d059-4368-445d-abf7-c60ea289061e
+Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
+   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
+   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
+   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+-----------------------------------------------------
+
+ill(DataTable dataTable)
+   在 DataBaseProvider.StoneOrderDBProvider.GetSellOrderList(String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 391
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetSellStonesOrderList(String token, String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 647
+-----------------------------------------------------
+
+Error:  [2016/9/14 0:36:50] ---- Log: GetBuyStonesOrderList Exception. ClientIP=58ebbb3f-b894-4070-ab3a-5e0ebbcf982b
+Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
+   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
+   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
+   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+-----------------------------------------------------
+
+a.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 DataBaseProvider.BuyMinerRecordDBProvider.GetFinishedBuyMinerRecordList(String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\BuyMinerRecordDBProvider.cs:行号 90
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyMinerFinishedRecordList(String token, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 853
+-----------------------------------------------------
+
+Error:  [2016/9/14 0:31:57] ---- Log: GetBuyMinerFinishedRecordList Exception. ClientIP=52e59484-97e6-4149-8f33-3dc125f3d66f
+Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and Time >= '2016-09-14 00:31:15 ' and Time < '2016-09-14 23:59:59 '  order by C' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
    在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
    在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
-   在 DataBaseProvider.BuyMinerRecordDBProvider.AddBuyMinerRecord(MinersBuyRecord record, CustomerMySqlTransaction trans) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\BuyMinerRecordDBProvider.cs:行号 30
-   在 SuperMinersServerApplication.Controller.PlayerRunnable.BuyMiner(Int32 minersCount) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerRunnable.cs:行号 238
------------------------------------------------------
-
-cs:行号 89
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.BuyMine(String token, String userName, Int32 minesCount, Int32 payType) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Game.cs:行号 118
------------------------------------------------------
-
-行号 87
-   在 SuperMinersServerApplication.WebServiceToWeb.Services.ServiceToWeb.AlipayCallback(String userName, String out_trade_no, String alipay_trade_no, Decimal total_fee, String buyer_email, String pay_time) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Services\ServiceToWeb.cs:行号 208
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
+   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
+   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
+   在 DataBaseProvider.BuyMinerRecordDBProvider.GetFinishedBuyMinerRecordList(String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\BuyMinerRecordDBProvider.cs:行号 90
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyMinerFinishedRecordList(String token, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 853
 -----------------------------------------------------
 

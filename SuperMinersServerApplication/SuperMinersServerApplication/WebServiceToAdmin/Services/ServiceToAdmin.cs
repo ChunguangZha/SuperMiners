@@ -638,18 +638,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, int sellOrderState, MyDateTime startDate, MyDateTime endDate)
+        public SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    int[] orderStateList = null;
-                    if (sellOrderState > 0)
-                    {
-                        orderStateList = new int[] { sellOrderState };
-                    }
-                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(orderStateList, sellerUserName, startDate, endDate);
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(sellerUserName, orderNumber, orderType, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
@@ -683,13 +678,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate)
+        public BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(buyerUserName, startDate, endDate);
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(sellerUserName, orderNumber, buyUserName, orderType, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

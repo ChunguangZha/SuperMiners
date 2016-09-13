@@ -190,6 +190,9 @@
     <Compile Include="Model\GoldCoinRechargeRecordUIModel.cs" />
     <Compile Include="Model\MinersBuyRecordUIModel.cs" />
     <Compile Include="Model\MinesBuyRecordUIModel.cs" />
+    <Compile Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>StoneSellTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditPlayerWindow.xaml.cs">
       <DependentUpon>EditPlayerWindow.xaml</DependentUpon>
     </Compile>
@@ -318,6 +321,10 @@
     <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
     <Page Include="BusyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

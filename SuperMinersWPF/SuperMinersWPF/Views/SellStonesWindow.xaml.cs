@@ -99,6 +99,13 @@ namespace SuperMinersWPF.Views
 
         private void btnSell_Click(object sender, RoutedEventArgs e)
         {
+            int sellStoneCount = (int)this.numSellStones.Value;
+            if (sellStoneCount < 300)
+            {
+                MyMessageBox.ShowInfo("每次至少要出售300块矿石");
+                return;
+            }
+
             decimal rmb = GetAllRMB();
             decimal expense = GetExpense(rmb);
             decimal getRMB = rmb - expense;
@@ -110,7 +117,7 @@ namespace SuperMinersWPF.Views
             }
 
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
-            GlobalData.Client.SellStone((int)this.numSellStones.Value, null);
+            GlobalData.Client.SellStone(sellStoneCount, null);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

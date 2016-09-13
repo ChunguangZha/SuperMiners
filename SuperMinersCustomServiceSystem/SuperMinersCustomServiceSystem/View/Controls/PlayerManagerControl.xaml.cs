@@ -106,9 +106,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerBuyMineRecordWindow win = new ViewPlayerBuyMineRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (this.ViewPlayerBuyMineRecords != null)
+                        {
+                            this.ViewPlayerBuyMineRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -127,9 +128,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerGoldCoinRechargeRecordWindow win = new ViewPlayerGoldCoinRechargeRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (this.ViewPlayerBuyGoldCoinRecords != null)
+                        {
+                            this.ViewPlayerBuyGoldCoinRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -148,9 +150,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerBuyMinerRecordWindow win = new ViewPlayerBuyMinerRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (ViewPlayerBuyMinerRecords != null)
+                        {
+                            this.ViewPlayerBuyMinerRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -169,9 +172,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerSellStoneRecordWindow win = new ViewPlayerSellStoneRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (ViewPlayerSellStoneOrderRecords != null)
+                        {
+                            ViewPlayerSellStoneOrderRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -190,9 +194,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerLockStoneRecordWindow win = new ViewPlayerLockStoneRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (ViewPlayerLockedStoneOrderRecords != null)
+                        {
+                            ViewPlayerLockedStoneOrderRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -211,9 +216,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
                     if (player != null)
                     {
-                        ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
-                        win.Show();
-                        win.SetUser(player.UserName);
+                        if (ViewPlayerBuyStoneOrderRecords != null)
+                        {
+                            ViewPlayerBuyStoneOrderRecords(player.UserName);
+                        }
                     }
                 }
             }
@@ -227,16 +233,17 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         {
             try
             {
-                //if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                //{
-                //    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                //    if (player != null)
-                //    {
-                //        ViewPlayerBuyStoneRecordWindow win = new ViewPlayerBuyStoneRecordWindow();
-                //        win.Show();
-                //        win.SetUser(player.UserName);
-                //    }
-                //}
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (player != null)
+                    {
+                        if (ViewPlayerAlipayRechargeRecords != null)
+                        {
+                            ViewPlayerAlipayRechargeRecords(player.UserName);
+                        }
+                    }
+                }
             }
             catch (Exception exc)
             {
@@ -244,5 +251,13 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             }
         }
 
+
+        public event Action<string> ViewPlayerSellStoneOrderRecords;
+        public event Action<string> ViewPlayerLockedStoneOrderRecords;
+        public event Action<string> ViewPlayerBuyStoneOrderRecords;
+        public event Action<string> ViewPlayerBuyMinerRecords;
+        public event Action<string> ViewPlayerBuyMineRecords;
+        public event Action<string> ViewPlayerBuyGoldCoinRecords;
+        public event Action<string> ViewPlayerAlipayRechargeRecords;
     }
 }

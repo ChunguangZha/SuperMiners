@@ -26,6 +26,12 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             InitializeComponent();
             this.dgRecords.ItemsSource = App.GoldCoinTradeVMObject.ListGoldCoinRechargeRecords;
         }
+
+        public void SetBuyerUserName(string userName)
+        {
+            this.txtPlayerUserName.Text = userName;
+            Search();
+        }
         
         private void Search()
         {
@@ -39,7 +45,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.GoldCoinTradeVMObject.AsyncGetGoldCoinRechargeFinishedRecords(playerUserName, orderNumber, beginCreateTime, endCreateTime, 30, pageIndex);
+            App.GoldCoinTradeVMObject.AsyncGetGoldCoinRechargeFinishedRecords(playerUserName, orderNumber, beginCreateTime, endCreateTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

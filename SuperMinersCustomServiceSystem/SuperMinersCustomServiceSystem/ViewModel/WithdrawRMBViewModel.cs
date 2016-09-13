@@ -39,6 +39,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             try
             {
+                App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
                     MessageBox.Show("查询灵币提现记录失败。" + e.Error.Message);

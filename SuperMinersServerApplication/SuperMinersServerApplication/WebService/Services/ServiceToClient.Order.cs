@@ -440,7 +440,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         return null;
                     }
 
-                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(null, userName, myBeginTime, myEndTime);
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(userName, "", 0, myBeginTime, myEndTime, 0, 0);
                 }
                 catch (Exception exc)
                 {
@@ -471,7 +471,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         return null;
                     }
 
-                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(userName, myBeginTime, myEndTime);
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", userName, 0, myBeginTime, myEndTime, null, null, 1000, 0);
                 }
                 catch (Exception exc)
                 {

@@ -53,7 +53,7 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 dicSellOrders.Clear();
-                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList(new int[] { (int)SellOrderState.Wait }, "", null, null);
+                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList("", "", 0, null, null, 0, 0);
                 foreach (var item in waitOrderDBObjects)
                 {
                     var runnable = new StoneOrderRunnable(item);
@@ -81,7 +81,7 @@ namespace SuperMinersServerApplication.Controller
 
                 MyDateTime endTime = MyDateTime.FromDateTime(DateTime.Now);
                 MyDateTime beginTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-1));
-                var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", beginTime, endTime);
+                var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", "", 0, beginTime, endTime, null, null, 100, 0);
                 if (buyOrderRecords == null)
                 {
                     this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
