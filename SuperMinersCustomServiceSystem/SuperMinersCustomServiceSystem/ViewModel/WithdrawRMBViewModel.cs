@@ -31,7 +31,32 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         public WithdrawRMBViewModel()
         {
             GlobalData.Client.OnSomebodyWithdrawRMB += Client_OnSomebodyWithdrawRMB;
+            GlobalData.Client.GetWithdrawRMBRecordListCompleted += Client_GetWithdrawRMBRecordListCompleted;
             ListActiveWithdrawRecords.CollectionChanged += ListActiveWithdrawRecords_CollectionChanged;
+        }
+
+        void Client_GetWithdrawRMBRecordListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<WithdrawRMBRecord[]> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    MessageBox.Show("查询灵币提现记录失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListHistoryWithdrawRecords.Add(new WithdrawRMBRecordUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询灵币提现记录回调处理异常。" + exc.Message);
+            }
         }
 
         void ListActiveWithdrawRecords_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -52,6 +77,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在查找数据...");
+                ListHistoryWithdrawRecords.Clear();
                 GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
             }
         }

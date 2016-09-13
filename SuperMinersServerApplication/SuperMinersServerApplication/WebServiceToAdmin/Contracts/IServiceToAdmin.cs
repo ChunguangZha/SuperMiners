@@ -160,22 +160,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         BuyStonesOrder[] GetBuyStonesOrderList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesFinishedRecordList",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        MinesBuyRecord[] GetBuyMinesFinishedRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate);
-
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyMinesNotFinishedRecordList",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        MinesBuyRecord[] GetBuyMinesNotFinishedRecordList(string token, string buyerUserName);
-
-        [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/HandleExceptionStoneOrderSucceed",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
@@ -230,5 +214,21 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int HandleExceptionAlipayRechargeRecord(string token, AlipayRechargeRecord exceptionRecord);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetBuyMinerFinishedRecordList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        MinersBuyRecord[] GetBuyMinerFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetBuyMineFinishedRecordList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        MinesBuyRecord[] GetBuyMineFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
     }
 }

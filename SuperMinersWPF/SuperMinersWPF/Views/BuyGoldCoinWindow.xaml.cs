@@ -54,49 +54,56 @@ namespace SuperMinersWPF.Views
 
         void Client_GoldCoinRechargeCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Trade.TradeOperResult> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("访问服务器失败。");
-                return;
-            }
-
-            TradeOperResult result = e.Result;
-            if (result.ResultCode != OperResult.RESULTCODE_TRUE)
-            {
-                MyMessageBox.ShowInfo("金币充值失败。原因：" + OperResult.GetMsg(result.ResultCode));
-                return;
-            }
-            if (result.PayType == (int)PayType.Alipay)
-            {
-                MyWebPage.ShowMyWebPage(result.AlipayLink);
-                MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-
-                var payResult = MyMessageBox.ShowAlipayPayQuestion();
-                if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                if (e.Cancelled)
                 {
-                    if (!AlipayPaySucceed)
-                    {
-                        MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
-                    }
+                    return;
                 }
-                else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("访问服务器失败。");
+                    return;
+                }
+
+                TradeOperResult result = e.Result;
+                if (result.ResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("金币充值失败。原因：" + OperResult.GetMsg(result.ResultCode));
+                    return;
+                }
+                if (result.PayType == (int)PayType.Alipay)
                 {
                     MyWebPage.ShowMyWebPage(result.AlipayLink);
                     MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-                    return;
-                }
-            }
 
-            App.UserVMObject.AsyncGetPlayerInfo();
-            _syn.Post(p =>
+                    var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                    if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                    {
+                        if (!AlipayPaySucceed)
+                        {
+                            MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                        }
+                    }
+                    else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                    {
+                        MyWebPage.ShowMyWebPage(result.AlipayLink);
+                        MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                        return;
+                    }
+                }
+
+                App.UserVMObject.AsyncGetPlayerInfo();
+                _syn.Post(p =>
+                {
+                    this.DialogResult = true;
+                }, null);
+            }
+            catch (Exception exc)
             {
-                this.DialogResult = true;
-            }, null);
+                MyMessageBox.ShowInfo("充值金币，服务器回调处理异常。" + exc.Message);
+            }
         }
         
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -142,24 +149,31 @@ namespace SuperMinersWPF.Views
 
         private void numRechargeRMB_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int spendRMB = (int)this.numRechargeRMB.Value;
-            decimal gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
-            this.txtGainGoldCoin.Text = gainGoldCoin.ToString();
+            try
+            {
+                int spendRMB = (int)this.numRechargeRMB.Value;
+                decimal gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                this.txtGainGoldCoin.Text = gainGoldCoin.ToString();
 
-            if (chkPayType.IsChecked == true)
-            {
-                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                if (spendRMB > GlobalData.CurrentUser.RMB)
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
+                if (chkPayType.IsChecked == true)
                 {
                     this.txtError.Visibility = System.Windows.Visibility.Collapsed;
                 }
+                else
+                {
+                    if (spendRMB > GlobalData.CurrentUser.RMB)
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Visible;
+                    }
+                    else
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("充值金币，输入灵币时异常。" + exc.Message);
             }
         }
 

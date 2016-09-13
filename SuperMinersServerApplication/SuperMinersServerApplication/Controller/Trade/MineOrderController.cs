@@ -49,11 +49,6 @@ namespace SuperMinersServerApplication.Controller
             return listRecords.ToArray();
         }
 
-        public MinesBuyRecord[] GetFinishRecords(string userName, MyDateTime startDate, MyDateTime endDate)
-        {
-            return DBProvider.MineRecordDBProvider.GetAllMineTradeRecords(userName, startDate, endDate);
-        }
-
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)
         {
             TradeOperResult result = new TradeOperResult();

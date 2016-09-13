@@ -132,8 +132,14 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
       <Link>Wcf\Datas\BuyStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\GoldCoinRechargeRecord.cs">
+      <Link>Wcf\Datas\GoldCoinRechargeRecord.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\LockSellStonesOrder.cs">
       <Link>Wcf\Datas\LockSellStonesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinersBuyRecord.cs">
+      <Link>Wcf\Datas\MinersBuyRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinesBuyRecord.cs">
       <Link>Wcf\Datas\MinesBuyRecord.cs</Link>
@@ -181,6 +187,9 @@
     <Compile Include="BusyWindow.xaml.cs">
       <DependentUpon>BusyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\GoldCoinRechargeRecordUIModel.cs" />
+    <Compile Include="Model\MinersBuyRecordUIModel.cs" />
+    <Compile Include="Model\MinesBuyRecordUIModel.cs" />
     <Compile Include="View\EditPlayerWindow.xaml.cs">
       <DependentUpon>EditPlayerWindow.xaml</DependentUpon>
     </Compile>
@@ -241,8 +250,8 @@
     <Compile Include="View\Controls\TradeSystem\StoneTradeActiveControl.xaml.cs">
       <DependentUpon>StoneTradeActiveControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\TradeSystem\StoneTradeHistoryRecordControl.xaml.cs">
-      <DependentUpon>StoneTradeHistoryRecordControl.xaml</DependentUpon>
+    <Compile Include="View\Controls\TradeSystem\StoneBuyTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>StoneBuyTradeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml.cs">
       <DependentUpon>WithdrawRMBActiveControl.xaml</DependentUpon>
@@ -306,9 +315,8 @@
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
-    <Compile Include="Wcf\Clients\ServerClient.GoldCoinTrade.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
-    <Compile Include="Wcf\Datas\GoldCoinRechargeRecord.cs" />
     <Page Include="BusyWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -406,7 +414,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\TradeSystem\StoneTradeHistoryRecordControl.xaml">
+    <Page Include="View\Controls\TradeSystem\StoneBuyTradeHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

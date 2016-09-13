@@ -35,7 +35,7 @@
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
         <Line Grid.Row="3" Grid.ColumnSpan="3" Height="3" Stroke="#FFC1C4FD" X1="0" Y1="0" X2="300" Y2="0" StrokeThickness="3"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="购买" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <my:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numMinesCount" VerticalAlignment="Center" Margin="5" ValueChanged="numMinersCount_ValueChanged"/>
+        <my:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numMinesCount" VerticalAlignment="Center" Margin="5" ValueChanged="numMinesCount_ValueChanged"/>
         <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Text="支付方式" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <CheckBox Grid.Row="5" Grid.Column="1" Content="灵币支付" Name="chkPayType" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Top" Foreground="White" Margin="5" Checked="chkPayType_Checked" Unchecked="chkPayType_Unchecked"/>

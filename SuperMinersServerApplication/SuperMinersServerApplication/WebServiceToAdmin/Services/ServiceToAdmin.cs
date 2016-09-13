@@ -703,46 +703,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public MinesBuyRecord[] GetBuyMinesFinishedRecordList(string token, string buyerUserName, MyDateTime startDate, MyDateTime endDate)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                try
-                {
-                    return OrderController.Instance.MineOrderController.GetFinishRecords(buyerUserName, startDate, endDate);
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("GetBuyMinesFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
-                    return null;
-                }
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-
-        public MinesBuyRecord[] GetBuyMinesNotFinishedRecordList(string token, string buyerUserName)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                try
-                {
-                    return OrderController.Instance.MineOrderController.GetNotFinishRecords(buyerUserName);
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("GetBuyMinesNotFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
-                    return null;
-                }
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-
         public int HandleExceptionStoneOrderSucceed(string token, AlipayRechargeRecord alipayRecord)
         {
             if (RSAProvider.LoadRSA(token))
@@ -881,6 +841,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 {
                     LogHelper.Instance.AddErrorLog("HandleExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MinersBuyRecord[] GetBuyMinerFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.BuyMinerRecordDBProvider.GetFinishedBuyMinerRecordList(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetBuyMinerFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MinesBuyRecord[] GetBuyMineFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.MineRecordDBProvider.GetAllMineTradeRecords(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetBuyMineFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
                 }
             }
             else

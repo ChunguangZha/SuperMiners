@@ -59,7 +59,7 @@ namespace DataBaseProvider
         }
 
 
-        public MinesBuyRecord[] GetAllMineTradeRecords(string userName, MyDateTime startDate, MyDateTime endDate)
+        public MinesBuyRecord[] GetAllMineTradeRecords(string userName, MyDateTime startDate, MyDateTime endDate, int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
@@ -99,6 +99,11 @@ namespace DataBaseProvider
                 {
                     cmdText = cmdText + whereText + builder.ToString();
                 }
+                string orderByText = " order by CreateTime desc ";
+                int startIndex = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                string limitText = " limit " + startIndex.ToString() + ", " + pageItemCount;
+                cmdText = cmdText + orderByText + limitText;
+
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);

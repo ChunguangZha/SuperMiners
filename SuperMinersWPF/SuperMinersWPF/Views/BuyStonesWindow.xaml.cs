@@ -77,81 +77,116 @@ namespace SuperMinersWPF.Views
 
         void StoneOrderVMObject_SetStoneOrderExceptionFinished(bool obj)
         {
-            if (obj)
+            try
             {
-                _syn.Post(o =>
+                if (obj)
                 {
-                    this.Close();
-                }, null);
+                    _syn.Post(o =>
+                    {
+                        this.Close();
+                    }, null);
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿石，申诉订单回调处理异常。" + exc.Message);
             }
         }
 
         void StoneOrderVMObject_PayOrderSucceed()
         {
-            AlipayPaySucceed = true;
-            this.Close();
+            try
+            {
+                AlipayPaySucceed = true;
+                this.Close();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿石，支付成功服务器回调处理异常。" + exc.Message);
+            }
         }
 
         void StoneOrderVMObject_OrderLockTimeOut()
         {
-            _syn.Post(o =>
+            try
             {
-                this.btnOK.IsEnabled = false;
-                MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
-                this.Close();
-            }, null);
+                _syn.Post(o =>
+                {
+                    this.btnOK.IsEnabled = false;
+                    MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
+                    this.Close();
+                }, null);
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿石，锁定订单超时处理异常。" + exc.Message);
+            }
         }
 
         void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            App.BusyToken.CloseBusyWindow();
-
-            if (e.Error != null)
-            {
-                _syn.Post(o =>
+                if (e.Cancelled)
                 {
-                    MyMessageBox.ShowInfo("连接服务器失败。");
-                }, null);
-                return;
-            }
+                    return;
+                }
 
-            this.Close();
+                App.BusyToken.CloseBusyWindow();
+
+                if (e.Error != null)
+                {
+                    _syn.Post(o =>
+                    {
+                        MyMessageBox.ShowInfo("连接服务器失败。");
+                    }, null);
+                    return;
+                }
+
+                this.Close();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿石，取消购买矿石订单，回调处理异常。" + exc.Message);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (chkPayType.IsChecked == true)//支付宝支付
+            try
             {
-                MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
-                MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-
-                var payResult = MyMessageBox.ShowAlipayPayQuestion();
-                if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
-                {
-                    if (!AlipayPaySucceed)
-                    {
-                        System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
-                        if (result == System.Windows.Forms.DialogResult.OK)
-                        {
-                            App.StoneOrderVMObject.AsyncSetStoneOrderPayException(LockedOrder.OrderNumber);
-                        }
-                    }
-                }
-                else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                if (chkPayType.IsChecked == true)//支付宝支付
                 {
                     MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
                     MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-                    return;
+
+                    var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                    if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                    {
+                        if (!AlipayPaySucceed)
+                        {
+                            System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
+                            if (result == System.Windows.Forms.DialogResult.OK)
+                            {
+                                App.StoneOrderVMObject.AsyncSetStoneOrderPayException(LockedOrder.OrderNumber);
+                            }
+                        }
+                    }
+                    else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                    {
+                        MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
+                        MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                        return;
+                    }
+                }
+                else
+                {
+                    App.StoneOrderVMObject.AsyncPayOrderByRMB(LockedOrder.OrderNumber, LockedOrder.ValueRMB);
                 }
             }
-            else
+            catch (Exception exc)
             {
-                App.StoneOrderVMObject.AsyncPayOrderByRMB(LockedOrder.OrderNumber, LockedOrder.ValueRMB);
+                MyMessageBox.ShowInfo("购买矿石，处理异常。" + exc.Message);
             }
         }
 

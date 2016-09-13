@@ -45,33 +45,39 @@ namespace SuperMinersWPF.Views
 
         void Client_BuyMinerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MyMessageBox.ShowInfo("访问服务器失败。");
-                return;
-            }
-
-            int result = e.Result;
-            if (result == OperResult.RESULTCODE_TRUE)
-            {
-                MyMessageBox.ShowInfo("购买矿工成功");
-                App.UserVMObject.AsyncGetPlayerInfo();
-                _syn.Post(p =>
+                if (e.Cancelled)
                 {
-                    this.DialogResult = true;
-                }, null);
-            }
-            else
-            {
-                MyMessageBox.ShowInfo("购买失败。原因：" + OperResult.GetMsg(result));
-                return;
-            }
+                    return;
+                }
 
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("访问服务器失败。");
+                    return;
+                }
+
+                int result = e.Result;
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("购买矿工成功");
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                    _syn.Post(p =>
+                    {
+                        this.DialogResult = true;
+                    }, null);
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("购买失败。原因：" + OperResult.GetMsg(result));
+                    return;
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿工，服务器回调处理异常。" + exc.Message);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -108,20 +114,27 @@ namespace SuperMinersWPF.Views
 
         private void numMinersCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int count = (int)this.numMinersCount.Value;
-            decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
-            this.txtNeedMoney.Text = money.ToString();
-            if (money > GlobalData.CurrentUser.GoldCoin)
+            try
             {
-                decimal allGoldcoin = GlobalData.CurrentUser.GoldCoin + GlobalData.CurrentUser.RMB * GlobalData.GameConfig.RMB_GoldCoin;
-                if (money > allGoldcoin)
+                int count = (int)this.numMinersCount.Value;
+                decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
+                this.txtNeedMoney.Text = money.ToString();
+                if (money > GlobalData.CurrentUser.GoldCoin)
                 {
-                    this.txtError.Visibility = System.Windows.Visibility.Visible;
+                    decimal allGoldcoin = GlobalData.CurrentUser.GoldCoin + GlobalData.CurrentUser.RMB * GlobalData.GameConfig.RMB_GoldCoin;
+                    if (money > allGoldcoin)
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Visible;
+                    }
+                    else
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+                    }
                 }
-                else
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo(exc.Message);
             }
         }
     }

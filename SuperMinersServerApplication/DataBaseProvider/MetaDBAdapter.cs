@@ -395,5 +395,22 @@ namespace DataBaseProvider
 
             return records;
         }
+
+        internal static MinersBuyRecord[] GetMinersBuyRecordListFromDataTable(DataTable dt)
+        {
+            MinersBuyRecord[] records = new MinersBuyRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                MinersBuyRecord record = new MinersBuyRecord();
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                record.SpendGoldCoin = Convert.ToDecimal(dt.Rows[i]["SpendGoldCoin"]);
+                record.GainMinersCount = Convert.ToInt32(dt.Rows[i]["GainMinersCount"]);
+                record.Time = Convert.ToDateTime(dt.Rows[i]["Time"]);
+                records[i] = record;
+            }
+
+            return records;
+        }
+
     }
 }

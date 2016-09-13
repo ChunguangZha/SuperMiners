@@ -9,12 +9,11 @@
         <CheckBox Name="chkSelectDate" IsChecked="True" Margin="5" VerticalAlignment="Center" Checked="chkSelectDate_Checked" Unchecked="chkSelectDate_Unchecked"/>
         <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" FirstDayOfWeek="Monday" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
         <StackPanel Name="panelTime" Orientation="Horizontal">
-            <MyControl:NumericTextBox x:Name="numHour" Minimum="0" Maximum="23" Width="40" Margin="5" VerticalAlignment="Center" ValueChanged="numHour_ValueChanged"/>
-            <TextBlock Text="时" Margin="5" VerticalAlignment="Center"/>
-            <MyControl:NumericTextBox x:Name="numMinute" Minimum="0" Maximum="59" Width="40" Margin="5" VerticalAlignment="Center" ValueChanged="numMinute_ValueChanged"/>
-            <TextBlock Text="分" Margin="5" VerticalAlignment="Center"/>
-            <MyControl:NumericTextBox x:Name="numSecond" Minimum="0" Maximum="59" Width="40" Margin="5" VerticalAlignment="Center" ValueChanged="numSecond_ValueChanged"/>
-            <TextBlock Text="秒" Margin="5" VerticalAlignment="Center"/>
+            <MyControl:NumericTextBox x:Name="numHour" Minimum="0" Maximum="23" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numHour_ValueChanged"/>
+            <TextBlock Text=":" Margin="0,5" VerticalAlignment="Center"/>
+            <MyControl:NumericTextBox x:Name="numMinute" Minimum="0" Maximum="59" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numMinute_ValueChanged"/>
+            <TextBlock Text=":" Margin="0,5" VerticalAlignment="Center"/>
+            <MyControl:NumericTextBox x:Name="numSecond" Minimum="0" Maximum="59" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numSecond_ValueChanged"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

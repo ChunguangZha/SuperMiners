@@ -86,7 +86,7 @@
             <tradeControl:WithdrawRMBActiveControl x:Name="controlWithdrawRMBActive" Visibility="Collapsed"/>
             <tradeControl:WithdrawRMBHistoryRecordControl x:Name="controlWithdrawRMBHistory" Visibility="Collapsed"/>
             <tradeControl:StoneTradeActiveControl x:Name="controlStoneTradeActive" Visibility="Collapsed"/>
-            <tradeControl:StoneTradeHistoryRecordControl x:Name="controlStoneTradeHistory" Visibility="Collapsed"/>
+            <tradeControl:StoneBuyTradeHistoryRecordControl x:Name="controlStoneTradeHistory" Visibility="Collapsed"/>
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
         </Grid>
     </Grid>

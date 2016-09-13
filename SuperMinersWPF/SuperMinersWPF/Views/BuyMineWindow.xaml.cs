@@ -54,50 +54,57 @@ namespace SuperMinersWPF.Views
 
         void Client_BuyMineCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<TradeOperResult> e)
         {
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null || e.Result == null)
-            {
-                MyMessageBox.ShowInfo("访问服务器失败。");
-                return;
-            }
-
-            TradeOperResult result = e.Result;
-            if (result.ResultCode != OperResult.RESULTCODE_TRUE)
-            {
-                MyMessageBox.ShowInfo("勘探矿山失败。原因：" + OperResult.GetMsg(result.ResultCode));
-                return;
-            }
-            if (result.PayType == (int)PayType.Alipay)
-            {
-                MyWebPage.ShowMyWebPage(result.AlipayLink);
-                MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-
-                var payResult = MyMessageBox.ShowAlipayPayQuestion();
-                if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                if (e.Cancelled)
                 {
-                    if (!AlipayPaySucceed)
-                    {
-                        MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
-                    }
+                    return;
                 }
-                else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+
+                if (e.Error != null || e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("访问服务器失败。");
+                    return;
+                }
+
+                TradeOperResult result = e.Result;
+                if (result.ResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("勘探矿山失败。原因：" + OperResult.GetMsg(result.ResultCode));
+                    return;
+                }
+                if (result.PayType == (int)PayType.Alipay)
                 {
                     MyWebPage.ShowMyWebPage(result.AlipayLink);
                     MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-                    return;
+
+                    var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                    if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                    {
+                        if (!AlipayPaySucceed)
+                        {
+                            MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                        }
+                    }
+                    else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                    {
+                        MyWebPage.ShowMyWebPage(result.AlipayLink);
+                        MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                        return;
+                    }
                 }
+
+                App.UserVMObject.AsyncGetPlayerInfo();
+
+                _syn.Post(p =>
+                {
+                    this.DialogResult = true;
+                }, null);
             }
-
-            App.UserVMObject.AsyncGetPlayerInfo();
-
-            _syn.Post(p =>
+            catch (Exception exc)
             {
-                this.DialogResult = true;
-            }, null);
+                MyMessageBox.ShowInfo("购买矿山，服务器回调处理异常。" + exc.Message);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -137,26 +144,33 @@ namespace SuperMinersWPF.Views
             this.DialogResult = false;
         }
 
-        private void numMinersCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void numMinesCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int count = (int)this.numMinesCount.Value;
-            decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
-            this.txtNeedMoney.Text = spendRMB.ToString();
+            try
+            {
+                int count = (int)this.numMinesCount.Value;
+                decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
+                this.txtNeedMoney.Text = spendRMB.ToString();
 
-            if (chkPayType.IsChecked == true)
-            {
-                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                if (spendRMB > GlobalData.CurrentUser.RMB)
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Visible;
-                }
-                else
+                if (chkPayType.IsChecked == true)
                 {
                     this.txtError.Visibility = System.Windows.Visibility.Collapsed;
                 }
+                else
+                {
+                    if (spendRMB > GlobalData.CurrentUser.RMB)
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Visible;
+                    }
+                    else
+                    {
+                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买矿山，输入矿山数时异常。" + exc.Message);
             }
         }
 

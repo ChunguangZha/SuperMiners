@@ -546,3 +546,147 @@ Exc.Message: 操作过程中出现异常，结果无效。  有关异常的详�
 Error:  [2016/9/13 0:22:19] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/9/13 11:23:09] ---- Log: Buy Miners Exception
+Exc.Message: 只能在创建 Window 并且作为对话框显示之后才能设置 DialogResult。Exc.Stack:    在 System.Windows.Window.set_DialogResult(Nullable`1 value)
+   在 SuperMinersWPF.Views.BuyMinerWindow.<Client_BuyMinerCompleted>b__0(Object p) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 66
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 System.Windows.Forms.SafeNativeMethods.MessageBox(HandleRef hWnd, String text, String caption, Int32 type)
+   在 System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   在 System.Windows.Forms.MessageBox.Show(String text)
+   在 SuperMinersWPF.Utility.MyMessageBox.ShowInfo(String infoMessage) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Utility\MyMessageBox.cs:行号 14
+   在 SuperMinersWPF.Views.BuyMinerWindow.Client_BuyMinerCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 63
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 336
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<>c__DisplayClass24.<Receive>b__1e(Object _) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 234
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 System.Windows.Forms.SafeNativeMethods.MessageBox(HandleRef hWnd, String text, String caption, Int32 type)
+   在 System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   在 System.Windows.Forms.MessageBox.Show(String text)
+   在 SuperMinersWPF.Utility.MyMessageBox.ShowInfo(String infoMessage) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Utility\MyMessageBox.cs:行号 14
+   在 SuperMinersWPF.Views.BuyMinerWindow.Client_BuyMinerCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 63
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 336
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<>c__DisplayClass24.<Receive>b__1e(Object _) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 234
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 System.Windows.Forms.SafeNativeMethods.MessageBox(HandleRef hWnd, String text, String caption, Int32 type)
+   在 System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   在 System.Windows.Forms.MessageBox.Show(String text)
+   在 SuperMinersWPF.Utility.MyMessageBox.ShowInfo(String infoMessage) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Utility\MyMessageBox.cs:行号 14
+   在 SuperMinersWPF.Views.BuyMinerWindow.Client_BuyMinerCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 63
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 336
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<>c__DisplayClass24.<Receive>b__1e(Object _) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 234
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 System.Windows.Forms.SafeNativeMethods.MessageBox(HandleRef hWnd, String text, String caption, Int32 type)
+   在 System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   在 System.Windows.Forms.MessageBox.Show(String text)
+   在 SuperMinersWPF.Utility.MyMessageBox.ShowInfo(String infoMessage) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Utility\MyMessageBox.cs:行号 14
+   在 SuperMinersWPF.Views.BuyMinerWindow.Client_BuyMinerCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 63
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 336
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<>c__DisplayClass24.<Receive>b__1e(Object _) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 234
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 System.Windows.Forms.SafeNativeMethods.MessageBox(HandleRef hWnd, String text, String caption, Int32 type)
+   在 System.Windows.Forms.MessageBox.ShowCore(IWin32Window owner, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, MessageBoxOptions options, Boolean showHelp)
+   在 System.Windows.Forms.MessageBox.Show(String text)
+   在 SuperMinersWPF.Utility.MyMessageBox.ShowInfo(String infoMessage) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Utility\MyMessageBox.cs:行号 14
+   在 SuperMinersWPF.Views.BuyMinerWindow.Client_BuyMinerCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml.cs:行号 63
+   在 SuperMinersWPF.Wcf.Channel.RestInvoker`1.<>c__DisplayClassc`1.<InvokeUserState>b__b(Exception ex, Byte[] result, Boolean cancel, Object state) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestInvoker.cs:行号 336
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<>c__DisplayClass24.<Receive>b__1e(Object _) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 234
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.DispatcherOperation.InvokeImpl()
+   在 System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state, Boolean preserveSyncCtx)
+   在 System.Threading.ExecutionContext.Run(ExecutionContext executionContext, ContextCallback callback, Object state)
+   在 MS.Internal.CulturePreservingExecutionContext.Run(CulturePreservingExecutionContext executionContext, ContextCallback callback, Object state)
+   在 System.Windows.Threading.DispatcherOperation.Invoke()
+   在 System.Windows.Threading.Dispatcher.ProcessQueue()
+   在 System.Windows.Threading.Dispatcher.WndProcHook(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndWrapper.WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, Boolean& handled)
+   在 MS.Win32.HwndSubclass.DispatcherCallbackOperation(Object o)
+   在 System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
+   在 System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
+   在 System.Windows.Threading.Dispatcher.LegacyInvokeImpl(DispatcherPriority priority, TimeSpan timeout, Delegate method, Object args, Int32 numArgs)
+   在 MS.Win32.HwndSubclass.SubclassWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam)
+   在 MS.Win32.UnsafeNativeMethods.DispatchMessage(MSG& msg)
+   在 System.Windows.Threading.Dispatcher.PushFrameImpl(DispatcherFrame frame)
+   在 System.Windows.Window.ShowHelper(Object booleanBox)
+   在 System.Windows.Window.ShowDialog()
+   在 SuperMinersWPF.Window1.btnMinersBuy_Click(Object sender, RoutedEventArgs e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Window1.xaml.cs:行号 165
+-----------------------------------------------------
+
+Error:  [2016/9/13 17:58:55] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

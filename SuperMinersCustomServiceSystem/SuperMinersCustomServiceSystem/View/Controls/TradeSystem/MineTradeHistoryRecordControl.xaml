@@ -3,15 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
+             xmlns:myc="clr-namespace:SuperMinersCustomServiceSystem.MyControl"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="矿山交易历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <TextBlock Text="玩家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
+            <TextBox Name="txtPlayerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
+            <TextBlock Text="创建时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
+            <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+            <TextBlock Text="到" VerticalAlignment="Center"/>
+            <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>
+            <TextBlock Text="每页显示：30 行" Margin="50,10,10,10" VerticalAlignment="Center"/>
+            <Button Name="btnPreviousPage" Content="上一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnPreviousPage_Click"/>
+            <TextBlock Text="当前显示第" Margin="5,10" VerticalAlignment="Center"/>
+            <MyControl:NumericTextBox x:Name="numPageIndex" MinWidth="50" IsReadOnly="True" Margin="5,10" VerticalAlignment="Center" Minimum="1" Maximum="10000000"/>
+            <TextBlock Text="页" Margin="5,10" VerticalAlignment="Center"/>
+            <Button Name="btnNextPage" Content="下一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnNextPage_Click"/>
+        </StackPanel>
 
+        <DataGrid Grid.Row="3" Name="datagrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*"  Header="用户名" Binding="{Binding UserName}"/>
+                <DataGridTextColumn Width="*"  Header="订单号" Binding="{Binding OrderNumber}"/>
+                <DataGridTextColumn Width="*"  Header="花费灵币" Binding="{Binding SpendRMB}"/>
+                <DataGridTextColumn Width="*"  Header="购买矿山数" Binding="{Binding GainMinesCount}"/>
+                <DataGridTextColumn Width="*"  Header="获取矿石储量" Binding="{Binding GainStonesReserves}"/>
+                <DataGridTextColumn Width="*"  Header="创建时间" Binding="{Binding CreateTime}"/>
+                <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding PayTime}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
