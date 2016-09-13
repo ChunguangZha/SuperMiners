@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,7 +24,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public StoneBuyTradeHistoryRecordControl()
         {
             InitializeComponent();
-            this.datagrid.ItemsSource = App.MineTradeVMObject.ListMineBuyRecords;
+            this.dgRecords.ItemsSource = App.MineTradeVMObject.ListMineBuyRecords;
         }
 
         private void Search()

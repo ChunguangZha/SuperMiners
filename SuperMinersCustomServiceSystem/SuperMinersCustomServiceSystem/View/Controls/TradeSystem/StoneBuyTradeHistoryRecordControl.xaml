@@ -44,12 +44,16 @@
         </Grid>
         <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding UserName, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="订单号" Width="*" Binding="{Binding OrderNumber, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="花费灵币" Width="*" Binding="{Binding SpendRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="获取金币" Width="*" Binding="{Binding GainGoldCoin, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付时间" Width="*" Binding="{Binding PayTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="卖家用户名" Width="*" Binding="{Binding SellerUserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="交易矿石数" Width="*" Binding="{Binding SellStonesCount, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="价值灵币" Width="*" Binding="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="手续费" Width="*" Binding="{Binding Expense, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="出售时间" Width="*" Binding="{Binding SellTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="买家用户名" Width="*" Binding="{Binding BuyerUserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="奖励金币" Width="*" Binding="{Binding AwardGoldCoin, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="订单状态" Width="*" Binding="{Binding OrderStateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付时间" Width="*" Binding="{Binding BuyTime, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
