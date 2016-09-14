@@ -21,6 +21,7 @@ namespace SuperMinersWPF
         internal static UserReferrerTreeViewModel UserReferrerTreeVMObject = new UserReferrerTreeViewModel();
         internal static NoticeViewModel NoticeVMObject = new NoticeViewModel();
         internal static StoneOrderViewModel StoneOrderVMObject = new StoneOrderViewModel();
+        internal static TradeHistoryViewModel TradeHistoryVMObject = new TradeHistoryViewModel();
         internal static BusyToken BusyToken = new BusyToken();
 
         protected override void OnStartup(StartupEventArgs e)

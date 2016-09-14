@@ -90,6 +90,7 @@
                         <MenuItem Header="查看矿石锁定记录" Click="PlayerListContextMenu_ViewLockStoneRecordItem_Click"></MenuItem>
                         <MenuItem Header="查看矿石购买记录" Click="PlayerListContextMenu_ViewBuyStoneRecordItem_Click"></MenuItem>
                         <MenuItem Header="查看支付宝支付记录" Click="PlayerListContextMenu_ViewAlipayPayRecordItem_Click"></MenuItem>
+                        <MenuItem Header="查看灵币提现记录" Click="PlayerListContextMenu_ViewRMBWithdrawRecordItem_Click"></MenuItem>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
             </DataGrid>

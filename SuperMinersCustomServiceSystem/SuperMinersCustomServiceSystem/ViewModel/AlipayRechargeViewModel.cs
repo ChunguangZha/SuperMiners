@@ -32,10 +32,44 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
+        private ObservableCollection<AlipayRechargeRecordUIModel> _listAllAlipayRecords = new ObservableCollection<AlipayRechargeRecordUIModel>();
+
+        public ObservableCollection<AlipayRechargeRecordUIModel> ListAllAlipayRecords
+        {
+            get { return _listAllAlipayRecords; }
+        }
+
         public AlipayRechargeViewModel()
         {
             GlobalData.Client.GetAllExceptionAlipayRechargeRecordsCompleted += Client_GetAllExceptionAlipayRechargeRecordsCompleted;
             GlobalData.Client.HandleExceptionAlipayRechargeRecordCompleted += Client_HandleExceptionAlipayRechargeRecordCompleted;
+            GlobalData.Client.GetAllAlipayRechargeRecordsCompleted += Client_GetAllAlipayRechargeRecordsCompleted;
+        }
+
+        void Client_GetAllAlipayRechargeRecordsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<AlipayRechargeRecord[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("查询支付宝付款记录失败。" + e.Error);
+                    return;
+                }
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        ListAllAlipayRecords.Add(new AlipayRechargeRecordUIModel(item));
+                    }
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("处理支付宝订单回调异常。" + exc.Message);
+            }
         }
 
         void Client_HandleExceptionAlipayRechargeRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -116,6 +150,17 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             {
                 App.BusyToken.ShowBusyWindow("正在提交数据...");
                 GlobalData.Client.HandleExceptionAlipayRechargeRecord(alipayrecord, alipayrecord.out_trade_no);
+            }
+        }
+
+        public void AsyncGetAllAlipayRechargeRecords(string orderNumber, string alipayOrderNumber, string payEmail, string playerUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        {
+            if (GlobalData.Client != null)
+            {
+                App.BusyToken.ShowBusyWindow("正在查询支付宝付款记录...");
+                this.ListAllAlipayRecords.Clear();
+                GlobalData.Client.GetAllAlipayRechargeRecords(orderNumber, alipayOrderNumber, payEmail, playerUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+
             }
         }
     }

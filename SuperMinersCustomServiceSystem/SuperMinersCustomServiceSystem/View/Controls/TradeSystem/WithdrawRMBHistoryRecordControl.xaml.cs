@@ -45,6 +45,12 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             }
         }
 
+        public void SetUserName(string userName)
+        {
+            this.txtPlayerUserName.Text = userName;
+            Search();
+        }
+
         private void Search()
         {
             bool isPayed = this.cmbIsPay.SelectedIndex == 1;

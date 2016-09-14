@@ -35,9 +35,10 @@
 
         <DataGrid Grid.Row="3" Name="datagrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
+                <DataGridTextColumn Width="*"  Header="玩家用户名" Binding="{Binding UserName}"/>
                 <DataGridTextColumn Width="*"  Header="购买矿工" Binding="{Binding GainMinersCount}"/>
                 <DataGridTextColumn Width="*"  Header="花费金币" Binding="{Binding SpendGoldCoin}"/>
-                <DataGridTextColumn Width="*"  Header="创建时间" Binding="{Binding Time}"/>
+                <DataGridTextColumn Width="*"  Header="购买时间" Binding="{Binding Time}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

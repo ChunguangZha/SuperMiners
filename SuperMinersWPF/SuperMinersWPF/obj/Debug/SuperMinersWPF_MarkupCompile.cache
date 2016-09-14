@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\
 SuperMinersWPF
 none
 false
-DEBUG;TRACE;Encrypt
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
-291740118720
+TRACE;DEBUG;Encrypt, Client
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\App.xaml
+351037116304
 
-99-122537104
+1171429708927
 27-1174524522
-Assets\Style.xaml;Login.xaml;Utility\MessageBoxAlipayPayQuestion.xaml;Views\BusyWindow.xaml;Views\BuyGoldCoinWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\ChatUserControl.xaml;Views\Controls\TradeRecordControl.xaml;Views\DigStoneAreaUserControl.xaml;Views\FunnyUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticesWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\MySuperMinersControl.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
+..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\MyControl\MyDateTimePickerControl.xaml;Assets\Style.xaml;Login.xaml;Utility\MessageBoxAlipayPayQuestion.xaml;Views\BusyWindow.xaml;Views\BuyGoldCoinWindow.xaml;Views\BuyMinerWindow.xaml;Views\BuyMineWindow.xaml;Views\BuyStonesWindow.xaml;Views\ChangePasswordWindow.xaml;Views\ChatUserControl.xaml;Views\Controls\AlipayHistoryRecordControl.xaml;Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml;Views\Controls\MinerTradeHistoryRecordControl.xaml;Views\Controls\MineTradeHistoryRecordControl.xaml;Views\Controls\TradeRecordControl.xaml;Views\Controls\WithdrawRMBHistoryRecordControl.xaml;Views\DigStoneAreaUserControl.xaml;Views\FunnyUserControl.xaml;Views\GameHelperControl.xaml;Views\GatherStonesForBuyMinerWindow.xaml;Views\GatherStonesWindow.xaml;Views\InvitationFriendsWindow.xaml;Views\ListAllNoticesWindow.xaml;Views\ListAllNoticeWindow.xaml;Views\MySuperMinersControl.xaml;Views\OrderRecordListBuyControl.xaml;Views\OrderRecordListSellControl.xaml;Views\SellStonesWindow.xaml;Views\SettingWindow.xaml;Views\StonesMarketUserControl.xaml;Views\TopListUserControl.xaml;Views\ViewSingleNoticeWindow.xaml;Views\WinRechargeRMB.xaml;Window1.xaml;
 
 False
 

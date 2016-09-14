@@ -251,6 +251,28 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             }
         }
 
+        private void PlayerListContextMenu_ViewRMBWithdrawRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (player != null)
+                    {
+                        if (ViewPlayerRMBWithdrawRecords != null)
+                        {
+                            ViewPlayerRMBWithdrawRecords(player.UserName);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
 
         public event Action<string> ViewPlayerSellStoneOrderRecords;
         public event Action<string> ViewPlayerLockedStoneOrderRecords;
@@ -259,5 +281,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         public event Action<string> ViewPlayerBuyMineRecords;
         public event Action<string> ViewPlayerBuyGoldCoinRecords;
         public event Action<string> ViewPlayerAlipayRechargeRecords;
+        public event Action<string> ViewPlayerRMBWithdrawRecords;
     }
 }

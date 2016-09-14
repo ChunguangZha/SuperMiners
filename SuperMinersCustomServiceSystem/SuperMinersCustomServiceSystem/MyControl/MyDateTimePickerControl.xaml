@@ -6,14 +6,14 @@
              mc:Ignorable="d" 
              Width="Auto" Height="Auto">
     <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-        <CheckBox Name="chkSelectDate" IsChecked="True" Margin="5" VerticalAlignment="Center" Checked="chkSelectDate_Checked" Unchecked="chkSelectDate_Unchecked"/>
-        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" FirstDayOfWeek="Monday" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
+        <CheckBox Name="chkSelectDate" Margin="5" VerticalAlignment="Center" Checked="chkSelectDate_Checked" Unchecked="chkSelectDate_Unchecked"/>
+        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="5" VerticalAlignment="Center" IsEnabled="False" FirstDayOfWeek="Monday" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
         <StackPanel Name="panelTime" Orientation="Horizontal">
-            <MyControl:NumericTextBox x:Name="numHour" Minimum="0" Maximum="23" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numHour_ValueChanged"/>
+            <MyControl:NumericTextBox x:Name="numHour" Minimum="0" Maximum="23" Width="20" Margin="0,5" IsEnabled="False" VerticalAlignment="Center" ValueChanged="numHour_ValueChanged"/>
             <TextBlock Text=":" Margin="0,5" VerticalAlignment="Center"/>
-            <MyControl:NumericTextBox x:Name="numMinute" Minimum="0" Maximum="59" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numMinute_ValueChanged"/>
+            <MyControl:NumericTextBox x:Name="numMinute" Minimum="0" Maximum="59" Width="20" Margin="0,5" IsEnabled="False" VerticalAlignment="Center" ValueChanged="numMinute_ValueChanged"/>
             <TextBlock Text=":" Margin="0,5" VerticalAlignment="Center"/>
-            <MyControl:NumericTextBox x:Name="numSecond" Minimum="0" Maximum="59" Width="20" Margin="0,5" VerticalAlignment="Center" ValueChanged="numSecond_ValueChanged"/>
+            <MyControl:NumericTextBox x:Name="numSecond" Minimum="0" Maximum="59" Width="20" Margin="0,5" IsEnabled="False" VerticalAlignment="Center" ValueChanged="numSecond_ValueChanged"/>
         </StackPanel>
     </StackPanel>
 </UserControl>

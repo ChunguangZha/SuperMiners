@@ -41,7 +41,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         bool LogoutAdmin(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetGameConfig",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetGameConfig",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -120,7 +120,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         bool ChangePlayerPassword(string token, string actionPassword, string playerUserName, string newPassword);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetNotices",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetNotices",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -128,7 +128,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         NoticeInfo[] GetNotices(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/CreateNotice",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/CreateNotice",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -136,7 +136,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         bool CreateNotice(string token, NoticeInfo notice);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetSellStonesOrderList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetSellStonesOrderList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -144,7 +144,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetLockedStonesOrderList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetLockedStonesOrderList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -152,7 +152,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyStonesOrderList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetBuyStonesOrderList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -160,7 +160,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/HandleExceptionStoneOrderSucceed",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionStoneOrderSucceed",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -168,7 +168,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         int HandleExceptionStoneOrderSucceed(string token, AlipayRechargeRecord alipayRecord);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/HandleExceptionStoneOrderFailed",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionStoneOrderFailed",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -176,7 +176,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         int HandleExceptionStoneOrderFailed(string token, string orderNumber);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/PayWithdrawRMBRecord",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/PayWithdrawRMBRecord",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -184,7 +184,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         int PayWithdrawRMBRecord(string token, WithdrawRMBRecord record);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetWithdrawRMBRecordList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetWithdrawRMBRecordList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -192,7 +192,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         WithdrawRMBRecord[] GetWithdrawRMBRecordList(string token, bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetFinishedGoldCoinRechargeRecordList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetFinishedGoldCoinRechargeRecordList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -200,7 +200,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string token, string playerUserName, string orderNumber, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetAllExceptionAlipayRechargeRecords",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllExceptionAlipayRechargeRecords",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -208,7 +208,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         AlipayRechargeRecord[] GetAllExceptionAlipayRechargeRecords(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/HandleExceptionAlipayRechargeRecord",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionAlipayRechargeRecord",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -216,7 +216,15 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         int HandleExceptionAlipayRechargeRecord(string token, AlipayRechargeRecord exceptionRecord);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyMinerFinishedRecordList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllAlipayRechargeRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        AlipayRechargeRecord[] GetAllAlipayRechargeRecords(string token, string orderNumber, string alipayOrderNumber, string payEmail, string playerUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetBuyMinerFinishedRecordList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -224,7 +232,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         MinersBuyRecord[] GetBuyMinerFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetBuyMineFinishedRecordList",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetBuyMineFinishedRecordList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,

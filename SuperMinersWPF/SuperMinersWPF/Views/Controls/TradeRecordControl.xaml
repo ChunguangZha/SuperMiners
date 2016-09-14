@@ -3,9 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:tradeControl="clr-namespace:SuperMinersWPF.Views.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="547*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="交易类型" Margin="10" VerticalAlignment="Center"/>
+            <ComboBox Name="cmbTradeType" Width="150" Margin="10" SelectedIndex="0" VerticalAlignment="Center" SelectionChanged="cmbTradeType_SelectionChanged">
+                <ComboBoxItem Content="支付宝付款记录"/>
+                <ComboBoxItem Content="金币充值记录"/>
+                <ComboBoxItem Content="矿工购买记录"/>
+                <ComboBoxItem Content="矿山购买记录"/>
+                <ComboBoxItem Content="灵币提现记录"/>
+            </ComboBox>
+        </StackPanel>
+        <tradeControl:AlipayHistoryRecordControl Grid.Row="1" x:Name="controlAlipayHistory"/>
+        <tradeControl:GoldCoinRechargeHistoryRecordControl Grid.Row="1" x:Name="controlGoldCoinHistory" Visibility="Collapsed"/>
+        <tradeControl:MinerTradeHistoryRecordControl Grid.Row="1" x:Name="controlMinerHistory" Visibility="Collapsed"/>
+        <tradeControl:MineTradeHistoryRecordControl Grid.Row="1" x:Name="controlMineHistory" Visibility="Collapsed"/>
+        <tradeControl:WithdrawRMBHistoryRecordControl Grid.Row="1" x:Name="controlWithdrawHistory" Visibility="Collapsed"/>
     </Grid>
 </UserControl>

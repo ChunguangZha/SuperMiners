@@ -1,5 +1,8 @@
 ﻿using MetaData;
 using System;
+#if Client
+using SuperMinersWPF.Models;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +38,11 @@ namespace SuperMinersCustomServiceSystem.Model
         public int GainMinersCount
         {
             get { return this.ParentObject.GainMinersCount; }
+        }
+
+        public DateTime Time
+        {
+            get { return this.ParentObject.Time; }
         }
     }
 }

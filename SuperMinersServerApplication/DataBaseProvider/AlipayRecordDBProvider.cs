@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -77,18 +78,91 @@ namespace DataBaseProvider
             }
         }
 
-        public AlipayRechargeRecord[] GetAllAlipayRechargeRecords()
+        public AlipayRechargeRecord[] GetAllAlipayRechargeRecords(string orderNumber, string alipayOrderNumber, string payEmail, string playerUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             AlipayRechargeRecord[] records = null;
             MySqlConnection myconn = null;
             try
             {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                MySqlCommand mycmd = myconn.CreateCommand();
                 DataTable dt = new DataTable();
 
-                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlTextA = "select * from superminers.alipayrechargerecord ";
+
+                StringBuilder builder = new StringBuilder();
+                if (!string.IsNullOrEmpty(orderNumber))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" out_trade_no = @orderNumber ");
+                    mycmd.Parameters.AddWithValue("@orderNumber", orderNumber);
+                }
+                if (!string.IsNullOrEmpty(alipayOrderNumber))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" alipay_trade_no = @alipayOrderNumber ");
+                    mycmd.Parameters.AddWithValue("@alipayOrderNumber", alipayOrderNumber);
+                }
+                if (!string.IsNullOrEmpty(payEmail))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" buyer_email = @payEmail ");
+                    mycmd.Parameters.AddWithValue("@payEmail", payEmail);
+                }
+                if (!string.IsNullOrEmpty(playerUserName))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" user_name = @playerUserName ");
+                    string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                    mycmd.Parameters.AddWithValue("@playerUserName", encryptUserName);
+                }
+
+                if (beginPayTime != null && !beginPayTime.IsNull && endPayTime != null && !endPayTime.IsNull)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    DateTime beginTime = beginPayTime.ToDateTime();
+                    DateTime endTime = endPayTime.ToDateTime();
+                    if (beginTime >= endTime)
+                    {
+                        return null;
+                    }
+                    builder.Append(" pay_time >= @beginPayTime and pay_time < @endPayTime ");
+                    mycmd.Parameters.AddWithValue("@beginPayTime", beginTime);
+                    mycmd.Parameters.AddWithValue("@endPayTime", endTime);
+                }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by pay_time desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+
                 myconn.Open();
-                string cmdText = "select * from superminers.alipayrechargerecord ";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.CommandText = sqlAllText;
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);

@@ -48,6 +48,16 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerBuyStoneOrderRecords += controlPlayerManager_ViewPlayerBuyStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerLockedStoneOrderRecords += controlPlayerManager_ViewPlayerLockedStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
+            this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
+        }
+
+        void controlPlayerManager_ViewPlayerRMBWithdrawRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlWithdrawRMBHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlWithdrawRMBHistory.SetUserName(obj);
+            this.tvL2_TS_WithdrawRMB_History.IsSelected = true;
+            this.tvL2_TS_WithdrawRMB_History.IsExpanded = true;
         }
 
         void controlPlayerManager_ViewPlayerSellStoneOrderRecords(string obj)
@@ -105,50 +115,12 @@ namespace SuperMinersCustomServiceSystem
 
         void controlPlayerManager_ViewPlayerAlipayRechargeRecords(string obj)
         {
-
+            this.HideAllControls();
+            this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlAlipayRecordHistory.SetBuyerUserName(obj);
+            this.tvL2_TS_Alipay_HistoryRecord.IsSelected = true;
+            this.tvL2_TS_Alipay_HistoryRecord.IsExpanded = true;
         }
-        
-        //private void CreateTreeView()
-        //{
-        //    CreateTradeSystemTreeView();
-        //}
-
-        //private void CreateTradeSystemTreeView()
-        //{
-        //    CreateTradeSystemTreeViewItem(App.MinerTradeVMObject);
-        //    CreateTradeSystemTreeViewItem(App.MineTradeVMObject);
-        //    CreateTradeSystemTreeViewItem(App.GoldCoinTradeVMObject);
-        //    CreateTradeSystemTreeViewItem(App.StoneTradeVMObject);
-        //    CreateTradeSystemTreeViewItem(App.WithdrawRMBVMObject);
-        //    CreateTradeSystemTreeViewItem(App.AlipayRechargeVMObject);
-        //}
-
-        //public void CreateTradeSystemTreeViewItem(object ItemDataContext)
-        //{
-        //    TreeViewItem tvItem = new TreeViewItem();
-        //    tvItem.SetResourceReference(TreeViewItem.StyleProperty, "TVItemL2Style");
-
-        //    Binding bind = new Binding()
-        //    {
-        //        Source = ItemDataContext
-        //    };
-        //    tvItem.SetBinding(TreeViewItem.DataContextProperty, bind);
-
-        //    bind = new Binding("MenuHeader");
-        //    tvItem.SetBinding(TreeViewItem.HeaderProperty, bind);
-
-        //    tvItem.Items.Add(new TreeViewItem()
-        //    {
-        //        Header = "实时交易",
-        //    });
-        //    tvItem.Items.Add(new TreeViewItem()
-        //    {
-        //        Header = "交易记录",
-        //    });
-
-        //    this.tvL1TradeSystem.Items.Add(tvItem);
-        //}
-
 
         private void BindUI()
         {
@@ -205,6 +177,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawRMBHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneTradeShowImage.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlAlipayExceptionRecords.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -283,6 +257,18 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlStoneTradeShowImage.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_Alipay_ExceptionRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlAlipayExceptionRecords.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_Alipay_HistoryRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

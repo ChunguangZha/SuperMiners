@@ -45,7 +45,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;Encrypt</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Encrypt, Client</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -110,6 +110,24 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\AlipayRechargeRecordUIModel.cs">
+      <Link>Models\AlipayRechargeRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\GoldCoinRechargeRecordUIModel.cs">
+      <Link>Models\GoldCoinRechargeRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\MinersBuyRecordUIModel.cs">
+      <Link>Models\MinersBuyRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\MinesBuyRecordUIModel.cs">
+      <Link>Models\MinesBuyRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\WithdrawRMBRecordUIModel.cs">
+      <Link>Models\WithdrawRMBRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\MyControl\MyDateTimePickerControl.xaml.cs">
+      <Link>MyControl\MyDateTimePickerControl.xaml.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
     </Compile>
@@ -137,11 +155,23 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\AlipayRechargeRecord.cs">
+      <Link>Wcf\Datas\AlipayRechargeRecord.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
       <Link>Wcf\Datas\BuyStonesOrder.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\GoldCoinRechargeRecord.cs">
+      <Link>Wcf\Datas\GoldCoinRechargeRecord.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\LockSellStonesOrder.cs">
       <Link>Wcf\Datas\LockSellStonesOrder.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinersBuyRecord.cs">
+      <Link>Wcf\Datas\MinersBuyRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinesBuyRecord.cs">
+      <Link>Wcf\Datas\MinesBuyRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Datas\SellStonesOrder.cs</Link>
@@ -151,6 +181,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
       <Link>Wcf\Datas\TradeType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\WithdrawRMBRecord.cs">
+      <Link>Wcf\Datas\WithdrawRMBRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
@@ -200,6 +233,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.SystemConfig.cs">
       <Link>Wcf\Contracts\IServiceToClient.SystemConfig.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Trade.cs">
+      <Link>Wcf\Callbacks\IServiceToClient.Trade.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.User.cs">
       <Link>Wcf\Contracts\IServiceToClient.User.cs</Link>
     </Compile>
@@ -208,7 +244,6 @@
     <Compile Include="Models\BuyStonesOrderUIModel.cs" />
     <Compile Include="Models\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Models\MineralUIModel.cs" />
-    <Compile Include="Models\MinerUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\SellStonesOrderUIModel.cs" />
     <Compile Include="Models\TopListInfoUIModel.cs" />
@@ -237,6 +272,7 @@
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
+    <Compile Include="ViewModels\TradeHistoryViewModel.cs" />
     <Compile Include="ViewModels\UserReferrerTreeViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\BusyWindow.xaml.cs">
@@ -260,8 +296,23 @@
     <Compile Include="Views\ChatUserControl.xaml.cs">
       <DependentUpon>ChatUserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\AlipayHistoryRecordControl.xaml.cs">
+      <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml.cs">
+      <DependentUpon>GoldCoinRechargeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\MinerTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>MinerTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\MineTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>MineTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\TradeRecordControl.xaml.cs">
       <DependentUpon>TradeRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\WithdrawRMBHistoryRecordControl.xaml.cs">
+      <DependentUpon>WithdrawRMBHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DigStoneAreaUserControl.xaml.cs">
       <DependentUpon>DigStoneAreaUserControl.xaml</DependentUpon>
@@ -325,10 +376,16 @@
     <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.User.cs" />
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Page Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\MyControl\MyDateTimePickerControl.xaml">
+      <Link>MyControl\MyDateTimePickerControl.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Assets\Style.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -376,7 +433,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Controls\AlipayHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MinerTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MineTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\TradeRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\WithdrawRMBHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

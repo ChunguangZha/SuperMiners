@@ -69,7 +69,6 @@ namespace DataBaseProvider
                 myconn.Open();
                 mycmd = myconn.CreateCommand();
                 string cmdText = "select a.*, b.UserName from minesbuyrecord a left join playersimpleinfo b on a.UserID=b.id ";
-                string whereText = " where ";
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
@@ -94,18 +93,22 @@ namespace DataBaseProvider
                     mycmd.Parameters.AddWithValue("@beginTime", start);
                     mycmd.Parameters.AddWithValue("@endTime", end);
                 }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by a.CreateTime desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                    builder.Append(" order by a.CreateTime desc limit " + start.ToString() + ", " + pageItemCount);
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                if (builder.Length > 0)
-                {
-                    cmdText = cmdText + whereText + builder.ToString();
-                }
+                string sqlAllText = cmdText + sqlWhere + sqlOrderLimit;
 
-                mycmd.CommandText = cmdText;
+                mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
                 if (table.Rows.Count > 0)

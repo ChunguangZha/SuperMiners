@@ -21,7 +21,10 @@ namespace SuperMinersCustomServiceSystem.MyControl
     /// </summary>
     public partial class MyDateTimePickerControl : UserControl
     {
-        private MyDateTime _valueTime = MyDateTime.FromDateTime(DateTime.Now);
+        private MyDateTime _valueTime = new MyDateTime()
+        {
+            IsNull = true
+        };
 
         public MyDateTime ValueTime
         {

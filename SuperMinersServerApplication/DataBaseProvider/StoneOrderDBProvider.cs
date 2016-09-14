@@ -259,15 +259,15 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    DateTime beginTime = myBeginCreateTime.ToDateTime();
-                    DateTime endTime = myEndCreateTime.ToDateTime();
-                    if (beginTime >= endTime)
+                    DateTime beginCreateTime = myBeginCreateTime.ToDateTime();
+                    DateTime endCreateTime = myEndCreateTime.ToDateTime();
+                    if (beginCreateTime >= endCreateTime)
                     {
                         return null;
                     }
-                    builder.Append(" s.SellTime >= @beginTime and s.SellTime < @endTime ");
-                    mycmd.Parameters.AddWithValue("@beginTime", beginTime);
-                    mycmd.Parameters.AddWithValue("@endTime", endTime);
+                    builder.Append(" s.SellTime >= @beginCreateTime and s.SellTime < @endCreateTime ");
+                    mycmd.Parameters.AddWithValue("@beginCreateTime", beginCreateTime);
+                    mycmd.Parameters.AddWithValue("@endCreateTime", endCreateTime);
                 }
                 if (myBeginBuyTime != null && !myBeginBuyTime.IsNull && myEndBuyTime != null && !myEndBuyTime.IsNull)
                 {
@@ -275,29 +275,32 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    DateTime beginTime = myBeginBuyTime.ToDateTime();
-                    DateTime endTime = myEndBuyTime.ToDateTime();
-                    if (beginTime >= endTime)
+                    DateTime beginBuyTime = myBeginBuyTime.ToDateTime();
+                    DateTime endBuyTime = myEndBuyTime.ToDateTime();
+                    if (beginBuyTime >= endBuyTime)
                     {
                         return null;
                     }
-                    builder.Append(" b.BuyTime >= @beginTime and b.BuyTime < @endTime ;");
-                    mycmd.Parameters.AddWithValue("@beginTime", beginTime);
-                    mycmd.Parameters.AddWithValue("@endTime", endTime);
+                    builder.Append(" b.BuyTime >= @beginBuyTime and b.BuyTime < @endBuyTime ;");
+                    mycmd.Parameters.AddWithValue("@beginBuyTime", beginBuyTime);
+                    mycmd.Parameters.AddWithValue("@endBuyTime", endBuyTime);
                 }
-                if (pageItemCount > 0)
-                {
-                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                    builder.Append(" order by b.BuyTime desc limit " + start.ToString() + ", " + pageItemCount);
-                }
-
-                string sqlWhere="";
+                string sqlWhere = "";
                 if (builder.Length > 0)
                 {
                     sqlWhere = " where " + builder.ToString();
                 }
-                string cmdText = sqlTextA + sqlWhere;
-                mycmd.CommandText = cmdText;
+
+                string sqlOrderLimit = " order by b.BuyTime desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+
+                mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -359,6 +362,10 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
                     builder.Append("  s.SellTime >= @beginTime and s.SellTime < @endTime ");
                     mycmd.Parameters.AddWithValue("@beginTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endTime", endTime);
@@ -373,17 +380,21 @@ namespace DataBaseProvider
                     builder.Append(" s.OrderState = @OrderState ");
                     mycmd.Parameters.AddWithValue("@OrderState", orderType);
                 }
+
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by s.SellTime desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                    builder.Append(" order by s.SellTime desc limit " + start.ToString() + ", " + pageItemCount);
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA;
-                if (builder.Length > 0)
-                {
-                    sqlAllText = sqlTextA + " where " + builder.ToString();
-                }
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
 
                 mycmd.CommandText = sqlAllText;
 

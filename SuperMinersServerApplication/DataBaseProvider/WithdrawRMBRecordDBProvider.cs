@@ -188,21 +188,29 @@ namespace DataBaseProvider
                     mycmd.Parameters.AddWithValue("@endPayTime", endTime);
                     orderByPayTime = true;
                 }
-
-                string orderByText = "";
-                if (orderByPayTime)
+                string sqlWhere = "";
+                if (builder.Length > 0)
                 {
-                    orderByText = " order by PayTime desc ";
-                }
-                else
-                {
-                    orderByText = " order by CreateTime desc ";
+                    sqlWhere = " where " + builder.ToString();
                 }
 
-                int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                string limitText = " limit " + start.ToString() + ", " + pageItemCount;
-                string cmdText = sqlTextA + builder.ToString() + orderByText + limitText;
-                mycmd.CommandText = cmdText;
+                string sqlOrderLimit = "";
+                if (pageItemCount > 0)
+                {
+                    if (orderByPayTime)
+                    {
+                        sqlOrderLimit = " order by PayTime desc ";
+                    }
+                    else
+                    {
+                        sqlOrderLimit = " order by CreateTime desc ";
+                    }
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);

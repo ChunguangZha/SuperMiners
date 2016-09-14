@@ -16,6 +16,8 @@ namespace SuperMinersWPF
     {
         public static readonly string DebugServer = "localhost";
 
+        public const int PageItemsCount = 30;
+
         public static readonly ServerClient Client = new ServerClient();
 
         public static UserUIModel CurrentUser

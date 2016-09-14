@@ -1,4 +1,7 @@
 ﻿using MetaData.Trade;
+#if Client
+using SuperMinersWPF.Models;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Linq;

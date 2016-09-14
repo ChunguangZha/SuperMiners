@@ -64,6 +64,10 @@
                     <TreeViewItem Name="tvL2_TS_WithdrawRMB_ShowImage" Header="提现晒图" MouseDoubleClick="tvL2_TS_WithdrawRMB_ShowImage_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_WithdrawRMB_History" Header="历史记录" MouseDoubleClick="tvL2_TS_WithdrawRMB_History_MouseDoubleClick"/>
                 </TreeViewItem>
+                <TreeViewItem Name="tvL2_TS_Alipay" Header="支付宝" Style="{StaticResource TVItemL2Style}">
+                    <TreeViewItem Name="tvL2_TS_Alipay_ExceptionRecord" Header="充值异常记录" MouseDoubleClick="tvL2_TS_Alipay_ExceptionRecord_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_Alipay_HistoryRecord" Header="历史记录" MouseDoubleClick="tvL2_TS_Alipay_HistoryRecord_MouseDoubleClick"/>
+                </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Header="幸运大转盘">
@@ -86,6 +90,8 @@
             <tradeControl:StoneBuyTradeHistoryRecordControl x:Name="controlStoneBuyTradeHistory" Visibility="Collapsed"/>
             <tradeControl:StoneSellTradeHistoryRecordControl x:Name="controlStoneSellTradeHistory" Visibility="Collapsed"/>
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
+            <tradeControl:AlipayHistoryRecordControl x:Name="controlAlipayRecordHistory" Visibility="Collapsed"/>
+            <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="2810880">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="2865664">
       <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>dRI3C9+Z0okJH5OAjZLe4hd10yuqVNcQwg07+rjAaoY=</dsig:DigestValue>
+        <dsig:DigestValue>ry2z2xww0wA1dM2njwc0tXfRnHAi9lE3ATd4f1AdKuc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

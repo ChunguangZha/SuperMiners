@@ -24,5 +24,44 @@ namespace SuperMinersWPF.Views.Controls
         {
             InitializeComponent();
         }
+
+        private void cmbTradeType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.controlAlipayHistory == null || this.controlGoldCoinHistory == null)
+            {
+                return;
+            }
+            HideAllControls();
+
+            switch (this.cmbTradeType.SelectedIndex)
+            {
+                case 0:
+                    this.controlAlipayHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 1:
+                    this.controlGoldCoinHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 2:
+                    this.controlMinerHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 3:
+                    this.controlMineHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 4:
+                    this.controlWithdrawHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void HideAllControls()
+        {
+            this.controlAlipayHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlGoldCoinHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMinerHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlMineHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlWithdrawHistory.Visibility = System.Windows.Visibility.Collapsed;
+        }
     }
 }

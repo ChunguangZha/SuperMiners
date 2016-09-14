@@ -71,20 +71,26 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" and Time >= @beginCreateTime and Time < @endCreateTime ");
+                    builder.Append(" Time >= @beginCreateTime and Time < @endCreateTime ");
                     mycmd.Parameters.AddWithValue("@beginCreateTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endCreateTime", endTime);
                 }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by Time desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
-                    builder.Append(" order by CreateTime desc limit " + start.ToString() + ", " + pageItemCount);
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string whereText = builder.Length > 0 ? " where " : "";
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
 
-                string cmdText = sqlTextA + whereText + builder.ToString();
-                mycmd.CommandText = cmdText;
+                mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);

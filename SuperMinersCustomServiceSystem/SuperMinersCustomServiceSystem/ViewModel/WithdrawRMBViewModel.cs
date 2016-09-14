@@ -25,8 +25,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         private object LockActiveRecords = new object();
         public ObservableCollection<WithdrawRMBRecordUIModel> ListActiveWithdrawRecords = new ObservableCollection<WithdrawRMBRecordUIModel>();
 
-        public ObservableCollection<WithdrawRMBRecordUIModel> ListHistoryWithdrawRecords = new ObservableCollection<WithdrawRMBRecordUIModel>();
+        private ObservableCollection<WithdrawRMBRecordUIModel> _listHistoryWithdrawRecords = new ObservableCollection<WithdrawRMBRecordUIModel>();
 
+        public ObservableCollection<WithdrawRMBRecordUIModel> ListHistoryWithdrawRecords
+        {
+            get { return this._listHistoryWithdrawRecords; }
+        }
 
         public WithdrawRMBViewModel()
         {
