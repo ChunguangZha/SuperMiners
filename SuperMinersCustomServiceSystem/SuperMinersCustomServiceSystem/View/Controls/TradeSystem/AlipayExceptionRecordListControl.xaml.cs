@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
                 return;
             }
 
-
+            HandleExceptionAlipayRecordWindow win = new HandleExceptionAlipayRecordWindow(alipayrecord);
+            if (win.ShowDialog() == true)
+            {
+                Refresh();
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

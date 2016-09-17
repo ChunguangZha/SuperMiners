@@ -105,7 +105,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime);
+        SellStonesOrder[] SearchUserSellStoneOrders(string token, string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex);
         
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/SearchUserBuyStoneOrders",
@@ -113,7 +113,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime);
+        BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex);
 
     }
 }

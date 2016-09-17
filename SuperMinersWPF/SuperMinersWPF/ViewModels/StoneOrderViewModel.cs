@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Trade;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
@@ -35,6 +36,20 @@ namespace SuperMinersWPF.ViewModels
         public ObservableCollection<SellStonesOrderUIModel> MySellNotFinishedStoneOrders
         {
             get { return _mySellNotFinishedStonesOrders; }
+        }
+
+        private ObservableCollection<BuyStonesOrderUIModel> _listMyBuyStoneHistoryOrders = new ObservableCollection<BuyStonesOrderUIModel>();
+
+        public ObservableCollection<BuyStonesOrderUIModel> ListMyBuyStoneHistoryOrders
+        {
+            get { return _listMyBuyStoneHistoryOrders; }
+        }
+
+        private ObservableCollection<SellStonesOrderUIModel> _listMySellStoneHistoryOrders = new ObservableCollection<SellStonesOrderUIModel>();
+
+        public ObservableCollection<SellStonesOrderUIModel> ListMySellStoneHistoryOrders
+        {
+            get { return _listMySellStoneHistoryOrders; }
         }
 
 
@@ -99,6 +114,20 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.SetStoneOrderPayException(orderNumber, null);
         }
 
+        public void AsyncSearchUserBuyStoneOrders(string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
+        {
+            App.BusyToken.ShowBusyWindow("正在查询矿石买入订单记录");
+            ListMyBuyStoneHistoryOrders.Clear();
+            GlobalData.Client.SearchUserBuyStoneOrders(sellerUserName, orderNumber, orderState, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex, null);
+        }
+
+        public void AsyncSearchUserSellStoneOrders(string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        {
+            App.BusyToken.ShowBusyWindow("正在查询矿石卖出订单记录");
+            ListMySellStoneHistoryOrders.Clear();
+            GlobalData.Client.SearchUserSellStoneOrders(orderNumber, orderState, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex, null);
+        }
+
         public void RegisterEvent()
         {
             _timer.Elapsed += Timer_Elapsed;
@@ -113,6 +142,58 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.CancelSellStoneCompleted += Client_CancelSellStoneCompleted;
             GlobalData.Client.SetStoneOrderPayExceptionCompleted += Client_SetStoneOrderPayExceptionCompleted;
             GlobalData.Client.OnAppealOrderFailed += Client_OnAppealOrderFailed;
+            GlobalData.Client.SearchUserBuyStoneOrdersCompleted += Client_SearchUserBuyStoneOrdersCompleted;
+            GlobalData.Client.SearchUserSellStoneOrdersCompleted += Client_SearchUserSellStoneOrdersCompleted;
+        }
+
+        void Client_SearchUserSellStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("查询矿石出售订单失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        ListMySellStoneHistoryOrders.Add(new SellStonesOrderUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询矿石出售订单回调处理异常。" + exc.Message);
+            }
+        }
+
+        void Client_SearchUserBuyStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<BuyStonesOrder[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("查询矿石买入订单失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        ListMyBuyStoneHistoryOrders.Add(new BuyStonesOrderUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询矿石买入订单回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_OnAppealOrderFailed(int arg1, string arg2)
@@ -343,12 +424,12 @@ namespace SuperMinersWPF.ViewModels
                     {
                         this._allNotFinishStoneOrder.Clear();
                         this._mySellNotFinishedStonesOrders.Clear();
-                        var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime);
+                        var listOrderTimeASC = e.Result.OrderBy(s => s.SellTime).OrderBy(s=>s.OrderStateInt);
                         foreach (var item in listOrderTimeASC)
                         {
                             var uiobj = new SellStonesOrderUIModel(item);
                             this._allNotFinishStoneOrder.Add(uiobj);
-                            if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName)
+                            if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName && uiobj.OrderState != SellOrderState.Finish)
                             {
                                 this._mySellNotFinishedStonesOrders.Add(uiobj);
                             }

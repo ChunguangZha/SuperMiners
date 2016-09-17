@@ -52,9 +52,23 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
                 if (e.Result != null)
                 {
-                    foreach (var item in e.Result)
+                    string userState = e.UserState as string;
+                    if (userState == "ACTIVE")
                     {
-                        this.ListHistoryWithdrawRecords.Add(new WithdrawRMBRecordUIModel(item));
+                        lock (LockActiveRecords)
+                        {
+                            foreach (var item in e.Result)
+                            {
+                                this.ListActiveWithdrawRecords.Add(new WithdrawRMBRecordUIModel(item));
+                            }
+                        }
+                    }
+                    else if (userState == "HISTORY")
+                    {
+                        foreach (var item in e.Result)
+                        {
+                            this.ListHistoryWithdrawRecords.Add(new WithdrawRMBRecordUIModel(item));
+                        }
                     }
                 }
             }
@@ -83,7 +97,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             {
                 App.BusyToken.ShowBusyWindow("正在查找数据...");
                 ListHistoryWithdrawRecords.Clear();
-                GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+                GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, 
+                    adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex, "HISTORY");
+            }
+        }
+
+        public void AsyncGetWithdrawRMBActiveRecordList()
+        {
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在查找数据...");
+                lock (this.LockActiveRecords)
+                {
+                    ListActiveWithdrawRecords.Clear();
+                }
+                GlobalData.Client.GetWithdrawRMBRecordList(false, "", null, null,
+                "", null, null, 0, 0, "ACTIVE");
             }
         }
 

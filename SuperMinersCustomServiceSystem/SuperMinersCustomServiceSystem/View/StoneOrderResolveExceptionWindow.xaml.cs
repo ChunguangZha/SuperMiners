@@ -33,8 +33,8 @@ namespace SuperMinersCustomServiceSystem.View
             this.DataContext = this._order;
             _syn = SynchronizationContext.Current;
 
-            GlobalData.Client.HandleExceptionStoneOrderSucceedCompleted += Client_HandleExceptionStoneOrderSucceedCompleted;
-            GlobalData.Client.HandleExceptionStoneOrderFailedCompleted += Client_HandleExceptionStoneOrderFailedCompleted;
+            GlobalData.Client.AgreeExceptionStoneOrderCompleted += Client_HandleExceptionStoneOrderSucceedCompleted;
+            GlobalData.Client.RejectExceptionStoneOrderCompleted += Client_RejectExceptionStoneOrderCompleted;
         }
 
         void Client_HandleExceptionStoneOrderSucceedCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -65,7 +65,7 @@ namespace SuperMinersCustomServiceSystem.View
             }
         }
 
-        void Client_HandleExceptionStoneOrderFailedCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        void Client_RejectExceptionStoneOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
@@ -104,7 +104,7 @@ namespace SuperMinersCustomServiceSystem.View
                     AlipayRechargeRecord alipayInfo = win.AlipayPayInfo;
 
                     App.BusyToken.ShowBusyWindow("正在提交数据...");
-                    GlobalData.Client.HandleExceptionStoneOrderSucceed(alipayInfo);
+                    GlobalData.Client.AgreeExceptionStoneOrder(alipayInfo);
                 }
             }
         }
@@ -115,7 +115,7 @@ namespace SuperMinersCustomServiceSystem.View
             if (result == MessageBoxResult.Yes)
             {
                 App.BusyToken.ShowBusyWindow("正在提交数据...");
-                GlobalData.Client.HandleExceptionStoneOrderFailed(this._order.OrderNumber);
+                GlobalData.Client.RejectExceptionStoneOrder(this._order.OrderNumber);
             }
         }
 

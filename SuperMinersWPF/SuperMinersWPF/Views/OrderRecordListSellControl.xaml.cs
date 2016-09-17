@@ -1,4 +1,5 @@
 ﻿using MetaData.Trade;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersWPF.Models;
 using System;
 using System.Collections;

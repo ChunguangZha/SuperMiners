@@ -40,29 +40,36 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         void Client_PayWithdrawRMBRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
-
-            if (e.Error != null)
-            {
-                MessageBox.Show("操作失败。");
-                return;
-            }
-
-            if (e.Result == OperResult.RESULTCODE_TRUE)
-            {
-                MessageBox.Show("操作成功。");
-                _syn.Post(o =>
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
                 {
-                    this.DialogResult = true;
-                }, null);
+                    return;
+                }
+
+                if (e.Error != null)
+                {
+                    MessageBox.Show("操作失败。");
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MessageBox.Show("操作成功。");
+                    _syn.Post(o =>
+                    {
+                        this.DialogResult = true;
+                    }, null);
+                }
+                else
+                {
+                    MessageBox.Show("操作失败。原因：" + OperResult.GetMsg(e.Result));
+                }
             }
-            else
+            catch (Exception exc)
             {
-                MessageBox.Show("操作失败。原因：" + OperResult.GetMsg(e.Result));
+                MessageBox.Show("操作异常。原因：" + exc.Message);
             }
         }
 

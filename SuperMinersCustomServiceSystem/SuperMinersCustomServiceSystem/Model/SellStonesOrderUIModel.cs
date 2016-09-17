@@ -1,5 +1,8 @@
 ﻿using MetaData.Trade;
 using System;
+#if Client
+using SuperMinersWPF.Models;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -54,6 +57,15 @@ namespace SuperMinersCustomServiceSystem.Model
         public DateTime SellTime
         {
             get { return this.ParentObject.SellTime; }
+        }
+
+        public SellOrderState OrderState
+        {
+            get { return this.ParentObject.OrderState; }
+            set
+            {
+                this.ParentObject.OrderState = value;
+            }
         }
 
         public string OrderStateText

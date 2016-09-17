@@ -1,71 +1,105 @@
-Error:  [2016/9/14 13:32:32] ---- Log: GetBuyStonesOrderList Exception. ClientIP=02c5b867-98a6-42ba-8eb7-41b5769b3350
-Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
-   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+Error:  [2016/9/16 16:49:21] ---- Log: RejectExceptionStoneOrder Exception. ClientIP=ea71973e-eec2-429f-affd-c2d572a86255
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersServerApplication.Controller.StoneOrderController.RejectExceptionStoneOrder(String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderController.cs:行号 644
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.RejectExceptionStoneOrder(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 727
 -----------------------------------------------------
 
-Error:  [2016/9/14 13:32:32] ---- Log: GetBuyStonesOrderList Exception. ClientIP=02c5b867-98a6-42ba-8eb7-41b5769b3350
-Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
-   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+9/16 16:37:13] ---- Log: SearchExceptionAlipayRechargeRecord Exception. ClientIP=3893af70-7462-48eb-80d2-e38c103e824b
+Exc.Message: Fatal error encountered during command execution.Exc.Stack:    在 DataBaseProvider.AlipayRecordDBProvider.SearchExceptionAlipayRechargeRecord(String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AlipayRecordDBProvider.cs:行号 208
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.SearchExceptionAlipayRechargeRecord(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827
 -----------------------------------------------------
 
-Error:  [2016/9/14 13:32:33] ---- Log: GetBuyStonesOrderList Exception. ClientIP=02c5b867-98a6-42ba-8eb7-41b5769b3350
-Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
-   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
 -----------------------------------------------------
 
-Error:  [2016/9/14 13:32:33] ---- Log: GetBuyStonesOrderList Exception. ClientIP=02c5b867-98a6-42ba-8eb7-41b5769b3350
-Exc.Message: Parameter '@beginTime' has already been defined.Exc.Stack:    在 MySql.Data.MySqlClient.MySqlParameterCollection.InternalAdd(MySqlParameter value, Int32 index)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.Add(MySqlParameter value)
-   在 MySql.Data.MySqlClient.MySqlParameterCollection.AddWithValue(String parameterName, Object value)
-   在 DataBaseProvider.StoneOrderDBProvider.GetBuyStonesOrderList(String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 285
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetBuyStonesOrderList(String token, String sellerUserName, String orderNumber, String buyUserName, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 687
+Error:  [2016/9/15 2:49:31] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
 -----------------------------------------------------
 
-command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.StoneOrderDBProvider.GetSellOrderList(String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 391
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetSellStonesOrderList(String token, String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 647
+Error:  [2016/9/15 2:49:32] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
 -----------------------------------------------------
 
-Error:  [2016/9/14 11:09:39] ---- Log: GetSellStonesOrderList Exception. ClientIP=5650a21a-6b1f-464a-aa01-82fae617b563
-Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's.SellTime >= '2016-07-01 00:00:00 ' and s.SellTime < '2016-07-31 23:59:59 '  an' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.StoneOrderDBProvider.GetSellOrderList(String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 391
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetSellStonesOrderList(String token, String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 647
+Error:  [2016/9/15 2:49:32] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
 -----------------------------------------------------
 
-Error:  [2016/9/14 11:09:39] ---- Log: GetSellStonesOrderList Exception. ClientIP=5650a21a-6b1f-464a-aa01-82fae617b563
-Exc.Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 's.SellTime >= '2016-07-01 00:00:00 ' and s.SellTime < '2016-07-31 23:59:59 '  an' at line 1Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.StoneOrderDBProvider.GetSellOrderList(String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\StoneOrderDBProvider.cs:行号 391
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetSellStonesOrderList(String token, String sellerUserName, String orderNumber, Int32 orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 647
+Error:  [2016/9/15 2:49:32] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:32] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:32] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:33] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:33] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:33] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:33] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
+-----------------------------------------------------
+
+Error:  [2016/9/15 2:49:33] ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:14383
+Exc.Message: 对象不能从 DBNull 转换为其他类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)
+   在 System.Convert.ToDateTime(Object value)
+   在 DataBaseProvider.MetaDBAdapter`1.GetWithdrawRMBRecordListFromDataTable(DataTable dt) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\MetaDBAdapter.cs:行号 383
+   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 236
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetWithdrawRMBRecordList(String token, Boolean isPayed, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Trade.cs:行号 22
 -----------------------------------------------------
 

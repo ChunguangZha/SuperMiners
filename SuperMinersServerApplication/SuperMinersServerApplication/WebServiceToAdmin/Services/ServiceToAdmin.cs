@@ -638,13 +638,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         /// <param name="startDate"></param>
         /// <param name="endDate"></param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        public SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(sellerUserName, orderNumber, orderType, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(sellerUserName, orderNumber, orderState, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
@@ -658,13 +658,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName)
+        public LockSellStonesOrder[] GetLockedStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList(buyerUserName);
+                    return DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList(sellerUserName, orderNumber, buyUserName, orderState);
                 }
                 catch (Exception exc)
                 {
@@ -678,13 +678,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
+        public BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(sellerUserName, orderNumber, buyUserName, orderType, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(sellerUserName, orderNumber, buyUserName, orderState, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
@@ -698,17 +698,17 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public int HandleExceptionStoneOrderSucceed(string token, AlipayRechargeRecord alipayRecord)
+        public int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return OrderController.Instance.StoneOrderController.HandleExceptionOrderSucceed(alipayRecord);
+                    return OrderController.Instance.StoneOrderController.AgreeExceptionStoneOrder(alipayRecord);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("HandleExceptionStoneOrderSucceed Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    LogHelper.Instance.AddErrorLog("AgreeExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return OperResult.RESULTCODE_EXCEPTION;
                 }
             }
@@ -718,17 +718,17 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public int HandleExceptionStoneOrderFailed(string token, string orderNumber)
+        public int RejectExceptionStoneOrder(string token, string orderNumber)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return OrderController.Instance.StoneOrderController.HandleExceptionOrderCancel(orderNumber);
+                    return OrderController.Instance.StoneOrderController.RejectExceptionStoneOrder(orderNumber);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("HandleExceptionStoneOrderFailed Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    LogHelper.Instance.AddErrorLog("RejectExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return OperResult.RESULTCODE_EXCEPTION;
                 }
             }
@@ -809,6 +809,26 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetFinishedGoldCoinRechargeRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public AlipayRechargeRecord SearchExceptionAlipayRechargeRecord(string token, string orderNumber)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.AlipayRecordDBProvider.SearchExceptionAlipayRechargeRecord(orderNumber);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("SearchExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

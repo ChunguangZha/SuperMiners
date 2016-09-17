@@ -164,6 +164,7 @@ namespace SuperMinersServerApplication.Controller
                     int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount, myTrans);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
+                        buyRecord.PayTime = DateTime.Now;
                         DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord, myTrans);
                         DBProvider.MineRecordDBProvider.DeleteTempMineTradeRecord(buyRecord.OrderNumber, myTrans);
                         this.RemoveRecord(alipayRecord.out_trade_no);

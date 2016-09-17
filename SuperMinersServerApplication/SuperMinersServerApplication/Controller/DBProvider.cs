@@ -32,5 +32,7 @@ namespace SuperMinersServerApplication.Controller
         public static WithdrawRMBRecordDBProvider WithdrawRMBRecordDBProvider = new WithdrawRMBRecordDBProvider();
 
         public static ExpChangeRecordDBProvider ExpChangeRecordDBProvider = new ExpChangeRecordDBProvider();
+
+        public static TestUserLogStateDBProvider TestUserLogStateDBProvider = new TestUserLogStateDBProvider();
     }
 }

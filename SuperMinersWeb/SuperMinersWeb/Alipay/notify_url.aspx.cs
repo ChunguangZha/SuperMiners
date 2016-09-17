@@ -101,6 +101,7 @@ public partial class notify_url : System.Web.UI.Page
                         }
 
                         int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
                         if (result == OperResult.RESULTCODE_EXCEPTION)
                         {
                             result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());

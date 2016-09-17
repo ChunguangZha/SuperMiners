@@ -96,71 +96,74 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 PlayerInfo referrerLevel1player = null;
-                int awardLevelCount = GlobalConfig.AwardReferrerLevelConfig.AwardLevelCount;
-                if (awardLevelCount > 0)
+                if (invitationCode != GlobalData.TestInvitationCode)
                 {
-                    string previousReferrerUserName = null;
-                    referrerLevel1player = DBProvider.UserDBProvider.GetPlayerByInvitationCode(invitationCode);
-
-                    if (Awardable)
+                    int awardLevelCount = GlobalConfig.AwardReferrerLevelConfig.AwardLevelCount;
+                    if (awardLevelCount > 0)
                     {
-                        if (referrerLevel1player != null)
+                        string previousReferrerUserName = null;
+                        referrerLevel1player = DBProvider.UserDBProvider.GetPlayerByInvitationCode(invitationCode);
+
+                        if (Awardable)
                         {
-                            var playerrun = this.GetOnlinePlayerRunnable(referrerLevel1player.SimpleInfo.UserName);
-                            if (playerrun == null)
+                            if (referrerLevel1player != null)
                             {
-                                playerrun = new PlayerRunnable(referrerLevel1player);
-                            }
-                            var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
-                            var awardExpRecord = new WaitToAwardExpRecord()
-                            {
-                                AwardLevel = 1,
-                                NewRegisterUserNme = userName,
-                                ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
-                            };
-                            listWaitToAwardExpRecord.Add(awardExpRecord);
+                                var playerrun = this.GetOnlinePlayerRunnable(referrerLevel1player.SimpleInfo.UserName);
+                                if (playerrun == null)
+                                {
+                                    playerrun = new PlayerRunnable(referrerLevel1player);
+                                }
+                                var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
+                                var awardExpRecord = new WaitToAwardExpRecord()
+                                {
+                                    AwardLevel = 1,
+                                    NewRegisterUserNme = userName,
+                                    ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
+                                };
+                                listWaitToAwardExpRecord.Add(awardExpRecord);
 
-                            //playerrun.ReferAward(awardConfig, trans);
-                            listPlayerRun.Add(playerrun);
+                                //playerrun.ReferAward(awardConfig, trans);
+                                listPlayerRun.Add(playerrun);
 
-                            previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
-                        }
-
-                        int indexLevel = 2;
-                        while (indexLevel <= awardLevelCount)
-                        {
-                            if (string.IsNullOrEmpty(previousReferrerUserName))
-                            {
-                                break;
+                                previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
                             }
 
-                            var playerrun = this.GetOnlinePlayerRunnable(previousReferrerUserName);
-                            if (playerrun == null)
+                            int indexLevel = 2;
+                            while (indexLevel <= awardLevelCount)
                             {
-                                PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayer(previousReferrerUserName);
-                                if (previousReferrerPlayer == null)
+                                if (string.IsNullOrEmpty(previousReferrerUserName))
                                 {
                                     break;
                                 }
-                                playerrun = new PlayerRunnable(previousReferrerPlayer);
+
+                                var playerrun = this.GetOnlinePlayerRunnable(previousReferrerUserName);
+                                if (playerrun == null)
+                                {
+                                    PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayer(previousReferrerUserName);
+                                    if (previousReferrerPlayer == null)
+                                    {
+                                        break;
+                                    }
+                                    playerrun = new PlayerRunnable(previousReferrerPlayer);
+                                }
+
+                                var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
+                                //playerrun.ReferAward(awardConfig, trans);
+                                var awardExpRecord = new WaitToAwardExpRecord()
+                                {
+                                    AwardLevel = indexLevel,
+                                    NewRegisterUserNme = userName,
+                                    ReferrerUserName = previousReferrerUserName
+                                };
+                                listWaitToAwardExpRecord.Add(awardExpRecord);
+
+                                listPlayerRun.Add(playerrun);
+
+                                previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
+                                PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
+
+                                indexLevel++;
                             }
-
-                            var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
-                            //playerrun.ReferAward(awardConfig, trans);
-                            var awardExpRecord = new WaitToAwardExpRecord()
-                            {
-                                AwardLevel = indexLevel,
-                                NewRegisterUserNme = userName,
-                                ReferrerUserName = previousReferrerUserName
-                            };
-                            listWaitToAwardExpRecord.Add(awardExpRecord);
-
-                            listPlayerRun.Add(playerrun);
-
-                            previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
-                            PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
-
-                            indexLevel++;
                         }
                     }
                 }
@@ -173,7 +176,7 @@ namespace SuperMinersServerApplication.Controller
                         Password = password,
                         Email = email,
                         QQ = qq,
-                        InvitationCode = CreateInvitationCode(userName),
+                        InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(userName) : GlobalData.TestInvitationCode,
                         RegisterTime = DateTime.Now,
                         RegisterIP = clientIP,
                         ReferrerUserName = referrerLevel1player == null ? "" : referrerLevel1player.SimpleInfo.UserName
@@ -226,56 +229,51 @@ namespace SuperMinersServerApplication.Controller
             return (Math.Abs(userName.GetHashCode())).ToString();
         }
 
-        public PlayerInfo LoginPlayer(string userName, string password)
+        public bool LoginPlayer(PlayerInfo player)
         {
-            PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(userName);
-            if (null != player && password == player.SimpleInfo.Password)
+            //说明是第一次登录
+            if (player.SimpleInfo.LastLoginTime == null)
             {
-                player.SimpleInfo.LastLoginTime = DateTime.Now;
-                PlayerRunnable playerrun = new PlayerRunnable(player);
-
-                //说明是第一次登录
-                if (player.SimpleInfo.LastLogOutTime == null)
+                var awardRecords = DBProvider.WaitToAwardExpRecordDBProvider.GetWaitToAwardExpRecord(player.SimpleInfo.UserName);
+                if (awardRecords != null)
                 {
-                    var awardRecords = DBProvider.WaitToAwardExpRecordDBProvider.GetWaitToAwardExpRecord(userName);
-                    if (awardRecords != null)
+                    var myTrans = MyDBHelper.Instance.CreateTrans();
+                    try
                     {
-                        var myTrans = MyDBHelper.Instance.CreateTrans();
-                        try
+                        foreach (var awardrecord in awardRecords)
                         {
-                            foreach (var awardrecord in awardRecords)
-                            {
-                                var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
+                            var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
 
-                                var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
-                                referrerPlayerRunnable.ReferAward(GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel), myTrans);
-                                PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
+                            var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
+                            referrerPlayerRunnable.ReferAward(GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel), myTrans);
+                            PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
 
-                            }
+                        }
 
-                            myTrans.Commit();
-                        }
-                        catch (Exception exc)
-                        {
-                            LogHelper.Instance.AddErrorLog("LoginPlayer Award Referrer Exception", exc);
-                            myTrans.Rollback();
-                        }
-                        finally
-                        {
-                            myTrans.Dispose();
-                        }
+                        myTrans.Commit();
+                    }
+                    catch (Exception exc)
+                    {
+                        LogHelper.Instance.AddErrorLog("LoginPlayer Award Referrer Exception", exc);
+                        myTrans.Rollback();
+                    }
+                    finally
+                    {
+                        myTrans.Dispose();
                     }
                 }
-
-                //计算玩家上一次退出，到本次登录时，累计矿工产量。
-                playerrun.ComputePlayerOfflineStoneOutput();
-
-                this._dicOnlinePlayerRuns[userName] = playerrun;
-
-                return player;
             }
+            player.SimpleInfo.LastLoginTime = DateTime.Now;
 
-            return null;
+            DBProvider.UserDBProvider.SavePlayerLoginTime(player.SimpleInfo);
+            PlayerRunnable playerrun = new PlayerRunnable(player);
+
+            //计算玩家上一次退出，到本次登录时，累计矿工产量。
+            playerrun.ComputePlayerOfflineStoneOutput();
+
+            this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
+
+            return true;
         }
 
         public void LogoutPlayer(string userName)
@@ -414,6 +412,7 @@ namespace SuperMinersServerApplication.Controller
         {
             PlayerRunnable runnable = null;
             this._dicOnlinePlayerRuns.TryRemove(userName, out runnable);
+            DBProvider.TestUserLogStateDBProvider.DeleteTestUserLogState(userName);
             return DBProvider.UserDBProvider.DeletePlayer(userName);
         }
 

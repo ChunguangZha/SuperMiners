@@ -181,6 +181,43 @@ namespace DataBaseProvider
             }
         }
 
+        public AlipayRechargeRecord SearchExceptionAlipayRechargeRecord(string orderNumber)
+        {
+            AlipayRechargeRecord[] records = null;
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select * from superminers.alipayrecharge_exception_record where out_trade_no = @out_trade_no ";
+                mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@out_trade_no", orderNumber);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
+                if (records == null || records.Length == 0)
+                {
+                    return null;
+                }
+                return records[0];
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         public AlipayRechargeRecord[] GetAllExceptionAlipayRechargeRecords()
         {
             AlipayRechargeRecord[] records = null;

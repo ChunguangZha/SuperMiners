@@ -18,6 +18,7 @@ namespace SuperMinersWeb.DataBaseCode
             try
             {
                 myconn = new MySqlConnection(CONNECTIONSTRING);
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
 
                 string sqlText = "insert into alipayrecharge_exception_record " +

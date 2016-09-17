@@ -18,44 +18,44 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
-        private System.Timers.Timer _userStateCheck = new System.Timers.Timer(10000);
+        //private System.Timers.Timer _userStateCheck = new System.Timers.Timer(10000);
 
-        private void _userStateCheck_Elapsed(object sender, ElapsedEventArgs e)
-        {
-            this._userStateCheck.Stop();
-            try
-            {
-                string[] tokens = ClientManager.GetInvalidClients();
-                if (null != tokens)
-                {
-                    foreach (var token in tokens)
-                    {
-                        string userName = ClientManager.GetClientUserName(token);
-                        LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 掉线，退出登录， IP=" + ClientManager.GetClientIP(token));
+        //private void _userStateCheck_Elapsed(object sender, ElapsedEventArgs e)
+        //{
+        //    this._userStateCheck.Stop();
+        //    try
+        //    {
+        //        string[] tokens = ClientManager.GetInvalidClients();
+        //        if (null != tokens)
+        //        {
+        //            foreach (var token in tokens)
+        //            {
+        //                string userName = ClientManager.GetClientUserName(token);
+        //                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 掉线，退出登录， IP=" + ClientManager.GetClientIP(token));
 
-                        PlayerController.Instance.LogoutPlayer(userName);
-                        RSAProvider.RemoveRSA(token);
-                        ClientManager.RemoveClient(token);
-                        lock (this._callbackDicLocker)
-                        {
-                            this._callbackDic.Remove(token);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-            }
-            finally
-            {
-                if (App.ServiceToRun.IsStarted)
-                {
-                    this._userStateCheck.Start();
-                }
-            }
-        }
+        //                PlayerController.Instance.LogoutPlayer(userName);
+        //                RSAProvider.RemoveRSA(token);
+        //                ClientManager.RemoveClient(token);
+        //                lock (this._callbackDicLocker)
+        //                {
+        //                    this._callbackDic.Remove(token);
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch
+        //    {
+        //    }
+        //    finally
+        //    {
+        //        if (App.ServiceToRun.IsStarted)
+        //        {
+        //            this._userStateCheck.Start();
+        //        }
+        //    }
+        //}
 
-        public string Login(string userName, string password, string key)
+        public string Login(string userName, string password, string key, string mac)
         {
 #if Delay
 
@@ -78,36 +78,71 @@ namespace SuperMinersServerApplication.WebService.Services
 
                 //return "ISLOGGED";
             }
+
+            string ip = ClientManager.GetCurrentIP();
             try
             {
-                PlayerInfo player = PlayerController.Instance.LoginPlayer(userName, password);
-                if (null != player)
+                PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(userName);
+                if (player == null)
                 {
-                    if (player.SimpleInfo.LockedLogin)
-                    {
-                        return "LOCKED";
-                    }
-
-                    RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-                    rsa.FromXmlString(key);
-
-                    token = Guid.NewGuid().ToString();
-                    RSAProvider.SetRSA(token, rsa);
-                    RSAProvider.LoadRSA(token);
-
-                    ClientManager.AddClient(userName, token);
-                    lock (this._callbackDicLocker)
-                    {
-                        this._callbackDic[token] = new Queue<CallbackInfo>();
-                    }
-
-                    LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登录矿场, IP=" + ClientManager.GetClientIP(token));
-
+                    return "";
                 }
+                if (password != player.SimpleInfo.Password)
+                {
+                    return "";
+                }
+                if (player.SimpleInfo.LockedLogin)
+                {
+                    return "LOCKED";
+                }
+                if (player.SimpleInfo.InvitationCode == GlobalData.TestInvitationCode)
+                {
+                    try
+                    {
+                        var logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByMac(mac);
+                        if (logState == null)
+                        {
+                            logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByUserName(userName);
+                            if (logState != null)
+                            {
+                                return "TESTUSERLOGFAILED";
+                            }
+                            DBProvider.TestUserLogStateDBProvider.AddTestUserLogState(userName, mac, ip);
+                        }
+                        else
+                        {
+                            if (logState.UserName != userName)
+                            {
+                                return "TESTUSERLOGFAILED";
+                            }
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        LogHelper.Instance.AddErrorLog("Test User [" + userName + "] Add Exception.", exc);
+                    }
+                }
+                PlayerController.Instance.LoginPlayer(player);
+
+                RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+                rsa.FromXmlString(key);
+
+                token = Guid.NewGuid().ToString();
+                RSAProvider.SetRSA(token, rsa);
+                RSAProvider.LoadRSA(token);
+
+                ClientManager.AddClient(userName, token);
+                lock (this._callbackDicLocker)
+                {
+                    this._callbackDic[token] = new Queue<CallbackInfo>();
+                }
+
+                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登录矿场, IP=" + ip + ", Mac=" + mac);
+
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.AddErrorLog("Web login failed", ex);
+                LogHelper.Instance.AddErrorLog("玩家 [" + userName + "] 登录矿场失败, IP=" + ip + ", Mac=" + mac, ex);
             }
             if (!string.IsNullOrEmpty(token))
             {

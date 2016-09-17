@@ -188,13 +188,42 @@ namespace DataBaseProvider
             }
         }
 
+        public bool CheckBuyStoneOrderExist(string userName, string orderNumber)
+        {
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select count(id) from buystonesrecord where OrderNumber = @OrderNumber and BuyerUserName = @BuyerUserName ";
+                mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                mycmd.CommandText = sqlTextA;
+                object objValue = mycmd.ExecuteScalar();
+                mycmd.Dispose();
+
+                int value = Convert.ToInt32(objValue);
+                if (value == 1)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="sellerUserName"></param>
         /// <param name="orderNumber"></param>
         /// <param name="buyUserName"></param>
-        /// <param name="orderType">0表示全部</param>
+        /// <param name="orderState">0表示全部</param>
         /// <param name="myBeginCreateTime"></param>
         /// <param name="myEndCreateTime"></param>
         /// <param name="myBeginBuyTime"></param>
@@ -202,7 +231,7 @@ namespace DataBaseProvider
         /// <param name="pageItemCount"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public BuyStonesOrder[] GetBuyStonesOrderList(string sellerUserName, string orderNumber, string buyUserName, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
+        public BuyStonesOrder[] GetBuyStonesOrderList(string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
         {
             BuyStonesOrder[] orders = null;
             MySqlConnection myconn = null;
@@ -244,14 +273,14 @@ namespace DataBaseProvider
                     string encryptUserName = DESEncrypt.EncryptDES(buyUserName);
                     mycmd.Parameters.AddWithValue("@BuyerUserName", encryptUserName);
                 }
-                if (orderType > 0)
+                if (orderState > 0)
                 {
                     if (builder.Length > 0)
                     {
                         builder.Append(" and ");
                     }
                     builder.Append(" s.OrderState = @OrderState ");
-                    mycmd.Parameters.AddWithValue("@OrderState", orderType);
+                    mycmd.Parameters.AddWithValue("@OrderState", orderState);
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
                 {
@@ -281,7 +310,7 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" b.BuyTime >= @beginBuyTime and b.BuyTime < @endBuyTime ;");
+                    builder.Append(" b.BuyTime >= @beginBuyTime and b.BuyTime < @endBuyTime ");
                     mycmd.Parameters.AddWithValue("@beginBuyTime", beginBuyTime);
                     mycmd.Parameters.AddWithValue("@endBuyTime", endBuyTime);
                 }
@@ -324,7 +353,7 @@ namespace DataBaseProvider
         /// <param name="orderState">null表示全部状态, 可以多种状态组合查询</param>
         /// <param name="userName">""表示全部玩家</param>
         /// <returns></returns>
-        public SellStonesOrder[] GetSellOrderList(string sellerUserName, string orderNumber, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        public SellStonesOrder[] GetSellOrderList(string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
         {
             SellStonesOrder[] orders = null;
             MySqlConnection myconn = null;
@@ -371,14 +400,14 @@ namespace DataBaseProvider
                     mycmd.Parameters.AddWithValue("@endTime", endTime);
                 }
 
-                if (orderType > 0)
+                if (orderState > 0)
                 {
                     if (builder.Length > 0)
                     {
                         builder.Append(" and ");
                     }
                     builder.Append(" s.OrderState = @OrderState ");
-                    mycmd.Parameters.AddWithValue("@OrderState", orderType);
+                    mycmd.Parameters.AddWithValue("@OrderState", orderState);
                 }
 
                 string sqlWhere = "";
@@ -420,28 +449,65 @@ namespace DataBaseProvider
         /// </summary>
         /// <param name="userName">""表示所有玩家</param>
         /// <returns></returns>
-        public LockSellStonesOrder[] GetLockSellStonesOrderList(string userName)
+        public LockSellStonesOrder[] GetLockSellStonesOrderList(string sellerUserName, string orderNumber, string buyUserName, int orderState)
         {
             LockSellStonesOrder[] orders = null;
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             try
             {
-                myconn.Open();
-                MySqlCommand mycmd = myconn.CreateCommand();
                 DataTable dt = new DataTable();
 
-                string cmdText = "select l.*, s.* " +
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select l.*, s.* " +
                                 "from locksellstonesorder l " +
                                 "left join sellstonesorder s on s.OrderNumber = l.OrderNumber ";
-                if (!string.IsNullOrEmpty(userName))
+
+                StringBuilder builder = new StringBuilder();
+                if (!string.IsNullOrEmpty(sellerUserName))
                 {
-                    cmdText += " where l.LockedByUserName = @LockedByUserName ";
-
-                    string encryptUserName = DESEncrypt.EncryptDES(userName);
-                    mycmd.Parameters.AddWithValue("@LockedByUserName", encryptUserName);
+                    builder.Append(" s.SellerUserName = @SellerUserName ");
+                    string encryptSellerUserName = DESEncrypt.EncryptDES(sellerUserName);
+                    mycmd.Parameters.AddWithValue("@SellerUserName", encryptSellerUserName);
                 }
-
-                mycmd.CommandText = cmdText;
+                if (!string.IsNullOrEmpty(orderNumber))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" s.OrderNumber = @OrderNumber ");
+                    mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                }
+                if (!string.IsNullOrEmpty(buyUserName))
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" l.LockedByUserName = @BuyerUserName ");
+                    string encryptUserName = DESEncrypt.EncryptDES(buyUserName);
+                    mycmd.Parameters.AddWithValue("@BuyerUserName", encryptUserName);
+                }
+                if (orderState > 0)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" s.OrderState = @OrderState ");
+                    mycmd.Parameters.AddWithValue("@OrderState", orderState);
+                }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+                
+                string sqlAllText = sqlTextA + sqlWhere;
+                mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 if (dt != null)

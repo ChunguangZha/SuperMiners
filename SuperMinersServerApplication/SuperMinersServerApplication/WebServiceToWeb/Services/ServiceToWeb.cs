@@ -209,7 +209,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     user_name = userName
                 };
 
-                LogHelper.Instance.AddInfoLog("玩家[" + userName + "] ---- ano: " + alipay_trade_no + "; fee: " + total_fee + "; on:" + out_trade_no);
+                LogHelper.Instance.AddInfoLog("玩家[" + userName + "] ---- alipay_trade_no: " + alipay_trade_no + "; out_trade_no:" + out_trade_no + "; fee: " + total_fee);
                 if (record.value_rmb <= 0)
                 {
                     return OperResult.RESULTCODE_FALSE;
@@ -244,8 +244,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     user_name = userName
                 };
 
-                LogHelper.Instance.AddInfoLog("alipay_trade_no: " + alipay_trade_no);
                 bool isOK = OrderController.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, alipay_trade_no, total_fee, buyer_email, pay_time);
+                LogHelper.Instance.AddInfoLog("玩家[" + userName + "] ---- alipay_trade_no: " + alipay_trade_no + "; out_trade_no:" + out_trade_no + "; CheckAlipayOrderBeHandled: " + isOK.ToString()); 
+
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
             catch (Exception exc)

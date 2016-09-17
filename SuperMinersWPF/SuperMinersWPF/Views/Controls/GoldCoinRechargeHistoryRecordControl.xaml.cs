@@ -25,6 +25,8 @@ namespace SuperMinersWPF.Views.Controls
         {
             InitializeComponent();
             this.dgRecords.ItemsSource = App.TradeHistoryVMObject.ListGoldCoinRechargeRecords;
+            this.dpStartCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-7));
+            this.dpEndCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now);
         }
 
         private void Search()

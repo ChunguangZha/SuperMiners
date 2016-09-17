@@ -25,46 +25,24 @@ namespace SuperMinersWPF.Views.Controls
         {
             InitializeComponent();
             this.dgRecords.ItemsSource = App.TradeHistoryVMObject.ListHistoryWithdrawRecords;
+            this.dpStartCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-7));
+            this.dpEndCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now);
         }
-
-        private void cmbIsPay_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (this.cmbIsPay == null || this.panelAdminPayed == null)
-            {
-                return;
-            }
-
-            if (this.cmbIsPay.SelectedIndex <= 0)
-            {
-                this.panelAdminPayed.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                this.panelAdminPayed.Visibility = System.Windows.Visibility.Visible;
-            }
-        }
-
+        
         private void Search()
         {
             bool isPayed = this.cmbIsPay.SelectedIndex == 1;
             string playerUserName = GlobalData.CurrentUser.UserName;
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
-
-            string adminUserName = "";
-            MyDateTime beginPayTime = null;
-            MyDateTime endPayTime = null;
-            if (isPayed)
-            {
-                adminUserName = this.txtAdminUserName.Text;
-                beginPayTime = this.dpStartPayTime.ValueTime;
-                endPayTime = this.dpEndPayTime.ValueTime;
-            }
-
+            endCreateTime.Hour = 23;
+            endCreateTime.Minute = 59;
+            endCreateTime.Second = 59;
+            
             int pageIndex = (int)this.numPageIndex.Value;
 
             App.TradeHistoryVMObject.AsyncGetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime,
-                adminUserName, beginPayTime, endPayTime, 30, pageIndex);
+                "", null, null, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

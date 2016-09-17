@@ -166,6 +166,37 @@ namespace DataBaseProvider
             }
         }
 
+        public bool SavePlayerLoginTime(PlayerSimpleInfo playerSimpleInfo)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime where `id` = @id;";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = textCmd;
+                mycmd.Parameters.AddWithValue("@LastLoginTime", playerSimpleInfo.LastLoginTime.Value);
+                mycmd.Parameters.AddWithValue("@id", playerSimpleInfo.UserID);
+
+                mycmd.ExecuteNonQuery();
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool LogoutPlayer(PlayerSimpleInfo playerSimpleInfo, PlayerFortuneInfo playerFortuneInfo)
         {
             CustomerMySqlTransaction trans = null;
@@ -422,7 +453,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "select count(UserName) from playersimpleinfo;";
+                string cmdText = "select count(id) from playersimpleinfo;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 object objResult = mycmd.ExecuteScalar();
                 mycmd.Dispose();

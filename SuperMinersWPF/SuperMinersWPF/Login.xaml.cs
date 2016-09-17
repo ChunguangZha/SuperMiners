@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -111,6 +112,12 @@ namespace SuperMinersWPF
                 MyMessageBox.ShowInfo("您的账户正在其它客户端登录，我们已将对方退出，请重新登录。");
                 return;
             }
+            if (e.Result == "TESTUSERLOGFAILED")
+            {
+                App.BusyToken.CloseBusyWindow();
+                MyMessageBox.ShowInfo("您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户。");
+                return;
+            }
 
             this._syn.Post(o =>
             {
@@ -166,9 +173,41 @@ namespace SuperMinersWPF
 #endif
             string userName = this.txtUserName.Text;
             string password = this.txtPassword.Password;
+            string mac = GetMac();
 
             App.BusyToken.ShowBusyWindow("正在加载...");
-            GlobalData.Client.Login(userName, password, CryptEncoder.Key);
+            GlobalData.Client.Login(userName, password, CryptEncoder.Key, mac);
+        }
+
+        private string GetMac()
+        {
+            NetworkInterface[] adapters = NetworkInterface.GetAllNetworkInterfaces();//获取本地计算机上网络接口的对象
+
+            foreach (NetworkInterface adapter in adapters)
+            {
+                if (adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet || adapter.NetworkInterfaceType == NetworkInterfaceType.Ethernet3Megabit || adapter.NetworkInterfaceType == NetworkInterfaceType.Wireless80211)
+                {
+                    if (adapter.OperationalStatus == OperationalStatus.Up && adapter.Speed > 0)
+                    {
+                        // 格式化显示MAC地址               
+                        PhysicalAddress pa = adapter.GetPhysicalAddress();//获取适配器的媒体访问（MAC）地址
+                        byte[] bytes = pa.GetAddressBytes();//返回当前实例的地址
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < bytes.Length; i++)
+                        {
+                            sb.Append(bytes[i].ToString("X2"));//以十六进制格式化
+                            if (i != bytes.Length - 1)
+                            {
+                                sb.Append("-");
+                            }
+                        }
+
+                        return sb.ToString();
+                    }
+                }
+            }
+
+            return null;
         }
 
         void winMain_Closed(object sender, EventArgs e)

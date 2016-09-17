@@ -38,6 +38,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.id; }
         }
 
+        public string PlayerUserName
+        {
+            get
+            {
+                return this._parentObject.PlayerUserName;
+            }
+        }
+
         public decimal WidthdrawRMB
         {
             get
@@ -67,6 +75,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.IsPayedSucceed;
+            }
+        }
+
+        public string IsPayedSucceedString
+        {
+            get
+            {
+                return (this._parentObject.IsPayedSucceed) ? "支付完成" : "等待支付";
             }
         }
 

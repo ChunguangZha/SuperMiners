@@ -30,13 +30,37 @@ namespace MetaData
         [DataMember]
         public decimal GainGoldCoin = 0;
 
-        [DataMember]
         public DateTime CreateTime;
+
+        [DataMember]
+        public MyDateTime MyCreateTime
+        {
+            get
+            {
+                return MyDateTime.FromDateTime(CreateTime);
+            }
+            set
+            {
+                this.CreateTime = value.ToDateTime();
+            }
+        }
 
         /// <summary>
         /// 临时表不保存该字段
         /// </summary>
-        [DataMember]
         public DateTime PayTime;
+
+        [DataMember]
+        public MyDateTime MyPayTime
+        {
+            get
+            {
+                return MyDateTime.FromDateTime(PayTime);
+            }
+            set
+            {
+                this.PayTime = value.ToDateTime();
+            }
+        }
     }
 }

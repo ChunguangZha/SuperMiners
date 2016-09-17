@@ -27,8 +27,8 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public ServiceToClient()
         {
-            this._userStateCheck.Elapsed += new System.Timers.ElapsedEventHandler(_userStateCheck_Elapsed);
-            this._userStateCheck.Start();
+            //this._userStateCheck.Elapsed += new System.Timers.ElapsedEventHandler(_userStateCheck_Elapsed);
+            //this._userStateCheck.Start();
 
             PlayerController.Instance.PlayerInfoChanged += Instance_PlayerInfoChanged;
             PlayerController.Instance.KickOutPlayer += Instance_KickOutPlayer;
@@ -340,7 +340,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
         public void Dispose()
         {
-            this._userStateCheck.Dispose();
+            //this._userStateCheck.Dispose();
         }
 
         #endregion

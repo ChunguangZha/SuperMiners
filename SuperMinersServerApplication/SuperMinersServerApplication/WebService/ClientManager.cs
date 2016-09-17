@@ -44,7 +44,7 @@ namespace SuperMinersServerApplication.WebService
         private static Dictionary<string, ClientInfo> _infoDic = new Dictionary<string, ClientInfo>();
         private static readonly object _locker = new object();
 
-        public static void AddClient(string userName, string token)
+        public static string GetCurrentIP()
         {
             string ip = null;
             try
@@ -57,6 +57,12 @@ namespace SuperMinersServerApplication.WebService
             {
                 ip = "N/A";
             }
+            return ip;
+        }
+
+        public static void AddClient(string userName, string token)
+        {
+            string ip = GetCurrentIP();
 
             lock (_locker)
             {

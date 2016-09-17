@@ -145,6 +145,7 @@ namespace SuperMinersServerApplication.Controller
                 if (alipayRecord.out_trade_no == rechargeRecord.OrderNumber &&
                     alipayRecord.value_rmb >= rechargeRecord.SpendRMB)
                 {
+                    rechargeRecord.PayTime = DateTime.Now;
                     int value = PlayerController.Instance.RechargeGoldCoinByAlipay(rechargeRecord.UserName, alipayRecord.total_fee, (int)rechargeRecord.SpendRMB, (int)(rechargeRecord.SpendRMB * GlobalConfig.GameConfig.RMB_GoldCoin), myTrans);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {

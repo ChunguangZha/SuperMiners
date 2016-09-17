@@ -44,10 +44,13 @@
 
         <DataGrid Grid.Row="4" Name="datagrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*"  Header="玩家用户名" Binding="{Binding UserName}"/>
-                <DataGridTextColumn Width="*"  Header="购买矿工" Binding="{Binding GainMinersCount}"/>
-                <DataGridTextColumn Width="*"  Header="花费金币" Binding="{Binding SpendGoldCoin}"/>
-                <DataGridTextColumn Width="*"  Header="购买时间" Binding="{Binding Time}"/>
+                <DataGridTextColumn Width="*"  Header="商品订单号" Binding="{Binding out_trade_no}"/>
+                <DataGridTextColumn Width="*"  Header="订单类型" Binding="{Binding TradeTypeText}"/>
+                <DataGridTextColumn Width="*"  Header="支付宝订单号" Binding="{Binding alipay_trade_no}"/>
+                <DataGridTextColumn Width="*"  Header="付款账户" Binding="{Binding buyer_email}"/>
+                <DataGridTextColumn Width="*"  Header="支付金额" Binding="{Binding total_fee}"/>
+                <DataGridTextColumn Width="*"  Header="价值灵币" Binding="{Binding value_rmb}"/>
+                <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding pay_time}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

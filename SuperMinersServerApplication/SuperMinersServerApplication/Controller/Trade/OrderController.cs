@@ -94,7 +94,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.BuyRMB:
                     break;
                 case AlipayTradeInType.BuyStone:
-                    isOK = this.StoneOrderController.AlipayCallback(alipayRecord, true);
+                    isOK = this.StoneOrderController.AlipayCallback(alipayRecord);
                     break;
 
                 default:
@@ -124,7 +124,10 @@ namespace SuperMinersServerApplication.Controller.Trade
                     break;
                 case AlipayTradeInType.BuyMiner:
                 case AlipayTradeInType.BuyRMB:
+                    break;
                 case AlipayTradeInType.BuyStone:
+                    isOK = this.StoneOrderController.CheckAlipayOrderBeHandled(userName, out_trade_no);
+                    break;
                 default:
                     isOK = false;
                     break;

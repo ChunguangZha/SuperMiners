@@ -41,7 +41,6 @@
                 <DataGridTextColumn Width="*"  Header="购买矿山数" Binding="{Binding GainMinesCount}"/>
                 <DataGridTextColumn Width="*"  Header="获取矿石储量" Binding="{Binding GainStonesReserves}"/>
                 <DataGridTextColumn Width="*"  Header="创建时间" Binding="{Binding CreateTime}"/>
-                <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding PayTime}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

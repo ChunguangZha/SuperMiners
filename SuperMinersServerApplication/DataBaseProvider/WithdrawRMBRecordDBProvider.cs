@@ -63,7 +63,7 @@ namespace DataBaseProvider
             try
             {
                 string sqlText = "update withdrawrmbrecord set " +
-                    "`IsPayedSucceed` = @IsPayedSucceed, `AdminUserName` = @AdminUserName, `AlipayOrderNumber` = @AlipayOrderNumber, `PayTime` = @PayTime) " +
+                    "`IsPayedSucceed` = @IsPayedSucceed, `AdminUserName` = @AdminUserName, `AlipayOrderNumber` = @AlipayOrderNumber, `PayTime` = @PayTime " +
                     " where id = @id ";
 
                 mycmd = trans.CreateCommand();
@@ -100,7 +100,7 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select * " +
                                     "from withdrawrmbrecord " +
-                                    "where IsPayedSucceed = @IsPayedSucceed and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime == @CreateTime ";
+                                    "where IsPayedSucceed = @IsPayedSucceed and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime = @CreateTime ";
                 string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                 mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
                 mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
@@ -142,14 +142,19 @@ namespace DataBaseProvider
                 MySqlCommand mycmd = myconn.CreateCommand();
 
                 string sqlTextA = "select * " +
-                                    "from withdrawrmbrecord " +
-                                    "where IsPayedSucceed = @IsPayedSucceed  ";
+                                    "from withdrawrmbrecord ";
+                StringBuilder builder = new StringBuilder();
+
+                builder.Append(" IsPayedSucceed = @IsPayedSucceed  ");
                 mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
 
-                StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" and PlayerUserName = @PlayerUserName ");
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" PlayerUserName = @PlayerUserName ");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
                 }
@@ -162,14 +167,22 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" and CreateTime >= @beginCreateTime and CreateTime < @endCreateTime ;");
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" CreateTime >= @beginCreateTime and CreateTime < @endCreateTime ");
                     mycmd.Parameters.AddWithValue("@beginCreateTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endCreateTime", endTime);
                 }
 
                 if (!string.IsNullOrEmpty(adminUserName))
                 {
-                    builder.Append(" and AdminUserName = @AdminUserName ");
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" AdminUserName = @AdminUserName ");
                     string encryptUserName = DESEncrypt.EncryptDES(adminUserName);
                     mycmd.Parameters.AddWithValue("@AdminUserName", encryptUserName);
                 }
@@ -183,7 +196,11 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" and PayTime >= @beginPayTime and PayTime < @endPayTime ;");
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" PayTime >= @beginPayTime and PayTime < @endPayTime ");
                     mycmd.Parameters.AddWithValue("@beginPayTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endPayTime", endTime);
                     orderByPayTime = true;

@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
@@ -53,7 +54,7 @@ namespace SuperMinersWPF.Views
             
             this.DataContext = this.LockedOrder;
 
-            decimal awardGoldCoin = this.LockedOrder.SellStonesCount * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
+            decimal awardGoldCoin = this.LockedOrder.ValueRMB * GlobalData.GameConfig.RMB_GoldCoin * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple;
             this.txtAwardGoldCoin.Text = ((int)awardGoldCoin).ToString();
             if (GlobalData.CurrentUser.RMB < this.LockedOrder.ValueRMB)
             {
@@ -143,6 +144,8 @@ namespace SuperMinersWPF.Views
                     return;
                 }
 
+                App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
+
                 this.Close();
             }
             catch (Exception exc)
@@ -160,23 +163,26 @@ namespace SuperMinersWPF.Views
                     MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
                     MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
 
-                    var payResult = MyMessageBox.ShowAlipayPayQuestion();
-                    if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                    if (!AlipayPaySucceed)
                     {
-                        if (!AlipayPaySucceed)
+                        var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                        if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
                         {
-                            System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
-                            if (result == System.Windows.Forms.DialogResult.OK)
+                            if (!AlipayPaySucceed)
                             {
-                                App.StoneOrderVMObject.AsyncSetStoneOrderPayException(LockedOrder.OrderNumber);
+                                System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");
+                                if (result == System.Windows.Forms.DialogResult.OK)
+                                {
+                                    App.StoneOrderVMObject.AsyncSetStoneOrderPayException(LockedOrder.OrderNumber);
+                                }
                             }
                         }
-                    }
-                    else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
-                    {
-                        MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
-                        MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-                        return;
+                        else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                        {
+                            MyWebPage.ShowMyWebPage(this.LockedOrder.PayUrl);
+                            MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                            return;
+                        }
                     }
                 }
                 else

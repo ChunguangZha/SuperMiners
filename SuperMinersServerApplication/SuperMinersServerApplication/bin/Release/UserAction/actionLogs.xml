@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<ArrayOfPlayerActionLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <PlayerActionLog>
+    <UserName>小查123</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-17T23:31:37</Time>
+    <SystemAllPlayerCount>6</SystemAllPlayerCount>
+    <SystemAllMinerCount>544</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>6978.09182739258</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/17 23:31:37</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小查123</UserName>
+    <ActionType>SellStone</ActionType>
+    <OperNumber>500</OperNumber>
+    <Remark />
+    <Time>2016-09-17T23:31:46</Time>
+    <SystemAllPlayerCount>6</SystemAllPlayerCount>
+    <SystemAllMinerCount>544</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>6978.09188842774</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/17 23:31:46</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小查123</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>65</OperNumber>
+    <Remark />
+    <Time>2016-09-17T23:31:53</Time>
+    <SystemAllPlayerCount>6</SystemAllPlayerCount>
+    <SystemAllMinerCount>544</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7044.04489135742</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/17 23:31:53</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-17T23:33:46.6062178+08:00</Time>
+    <SystemAllPlayerCount>6</SystemAllPlayerCount>
+    <SystemAllMinerCount>544</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7044.04489135742</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/17 23:33:46</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-17T23:33:56.641934+08:00</Time>
+    <SystemAllPlayerCount>6</SystemAllPlayerCount>
+    <SystemAllMinerCount>544</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7045.79196166992</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/17 23:33:56</LastLoginTimeString>
+  </PlayerActionLog>
+</ArrayOfPlayerActionLog>

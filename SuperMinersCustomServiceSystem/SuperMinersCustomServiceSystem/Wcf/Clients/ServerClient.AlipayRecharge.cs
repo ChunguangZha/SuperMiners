@@ -28,5 +28,11 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<AlipayRechargeRecord[]>(this._context, "GetAllAlipayRechargeRecords", this.GetAllAlipayRechargeRecordsCompleted, GlobalData.Token, orderNumber, alipayOrderNumber, payEmail, playerUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
         }
 
+        public event EventHandler<WebInvokeEventArgs<AlipayRechargeRecord>> SearchExceptionAlipayRechargeRecordCompleted;
+        public void SearchExceptionAlipayRechargeRecord(string orderNumber)
+        {
+            this._invoker.Invoke<AlipayRechargeRecord>(this._context, "SearchExceptionAlipayRechargeRecord", this.SearchExceptionAlipayRechargeRecordCompleted, GlobalData.Token, orderNumber);
+        }
+
     }
 }

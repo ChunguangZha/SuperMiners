@@ -69,6 +69,11 @@ namespace SuperMinersServerApplication.Controller
         {
             return this._lockOrderObject;
         }
+
+        public string GetLockedByUserName()
+        {
+            return this._lockOrderObject.LockedByUserName;
+        }
         
         public bool CheckBuyerName(string buyerUserName)
         {

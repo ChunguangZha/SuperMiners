@@ -177,7 +177,6 @@
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs" />
-    <Compile Include="WebService\Contracts\IServiceToClient.CallbackMessage.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Game.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />

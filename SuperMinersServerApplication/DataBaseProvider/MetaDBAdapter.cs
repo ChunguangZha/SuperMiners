@@ -287,6 +287,23 @@ namespace DataBaseProvider
             return orders;
         }
 
+        internal static TestUserLogState[] GetTestUserLogStateFromDataTable(DataTable dt)
+        {
+            TestUserLogState[] records = new TestUserLogState[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                TestUserLogState record = new TestUserLogState();
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(encryptedUserName);
+                record.Mac = dt.Rows[i]["Mac"].ToString();
+                record.IP = dt.Rows[i]["IP"].ToString();
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
         internal static MinesBuyRecord[] GetMinesBuyRecordFromDataTable(DataTable dt)
         {
             MinesBuyRecord[] records = new MinesBuyRecord[dt.Rows.Count];
@@ -295,7 +312,7 @@ namespace DataBaseProvider
                 MinesBuyRecord record = new MinesBuyRecord();
                 record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
                 record.GainMinesCount = Convert.ToDecimal(dt.Rows[i]["GainMinesCount"]);
-                record.GainStonesReserves = Convert.ToInt32(dt.Rows[i]["GainMinesCount"]);
+                record.GainStonesReserves = Convert.ToInt32(dt.Rows[i]["GainStonesReserves"]);
                 record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
                 record.SpendRMB = Convert.ToInt32(dt.Rows[i]["SpendRMB"]);
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
@@ -379,6 +396,16 @@ namespace DataBaseProvider
                     adminUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["AdminUserName"]));
                 }
 
+                DateTime? payTime = null;
+                if (dt.Rows[i]["PayTime"] != DBNull.Value)
+                {
+                    payTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]);
+                }
+                string alipayOrderNumber = "";
+                if (dt.Rows[i]["AlipayOrderNumber"] != DBNull.Value)
+                {
+                    alipayOrderNumber = dt.Rows[i]["AlipayOrderNumber"] as string;
+                }
 
                 records[i] = new WithdrawRMBRecord()
                 {
@@ -389,7 +416,8 @@ namespace DataBaseProvider
                     ValueYuan = Convert.ToInt32(dt.Rows[i]["ValueYuan"]),
                     IsPayedSucceed = Convert.ToBoolean(dt.Rows[i]["IsPayedSucceed"]),
                     AdminUserName = adminUserName,
-                    PayTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]),
+                    AlipayOrderNumber = alipayOrderNumber,
+                    PayTime = payTime,
                 };
             }
 

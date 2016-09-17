@@ -8,15 +8,17 @@
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="提现交易实时管理" FontSize="18" FontWeight="Bold" Margin="10"/>
-
-        <DataGrid Name="dgRecords" Grid.Row="1" AutoGenerateColumns="False">
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding PlayerUserName, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="提现金额" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="提现灵币" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceed, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Width="*" >

@@ -17,7 +17,11 @@ namespace SuperMinersWeb
             if (!IsPostBack)
             {
                 invitationCode = Request["ic"];
-                Session["ic"] = invitationCode;
+
+                if (!string.IsNullOrEmpty(invitationCode))
+                {
+                    Session["ic"] = invitationCode;
+                }
             }
         }
 
@@ -159,8 +163,8 @@ namespace SuperMinersWeb
             result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                Response.Write("<script>alert('注册成功!');window.location.href =''</script>");
-                Response.Redirect("~/");
+                Response.Write("注册成功<br />本页面将在3秒后关闭");
+                Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
             }
             else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
             {

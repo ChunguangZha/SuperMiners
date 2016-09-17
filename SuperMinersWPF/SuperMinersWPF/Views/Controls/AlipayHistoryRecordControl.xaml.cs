@@ -25,6 +25,8 @@ namespace SuperMinersWPF.Views.Controls
         {
             InitializeComponent();
             this.datagrid.ItemsSource = App.TradeHistoryVMObject.ListAllAlipayRecords;
+            this.dpStartPayTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-7));
+            this.dpEndPayTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now);
         }
 
         private void Search()

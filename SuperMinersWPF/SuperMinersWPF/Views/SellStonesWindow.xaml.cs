@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.StringResources;
+﻿using MetaData;
+using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,11 @@ namespace SuperMinersWPF.Views
             GlobalData.Client.SellStoneCompleted += Client_SellStoneCompleted;
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.SellStoneCompleted -= Client_SellStoneCompleted;
+        }
+
         void Client_SellStoneCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             App.BusyToken.CloseBusyWindow();
@@ -54,9 +60,9 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("挂单出售矿石失败。");
                 return;
             }
-            if (e.Result != 0)
+            if (e.Result != OperResult.RESULTCODE_TRUE)
             {
-                MyMessageBox.ShowInfo("挂单出售矿石失败。");
+                MyMessageBox.ShowInfo("挂单出售矿石失败。原因为：" + OperResult.GetMsg(e.Result));
                 return;
             }
 

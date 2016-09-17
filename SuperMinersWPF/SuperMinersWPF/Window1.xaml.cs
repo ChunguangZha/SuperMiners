@@ -2,6 +2,7 @@
 using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views;
+using SuperMinersWPF.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,8 +61,26 @@ namespace SuperMinersWPF
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             App.NoticeVMObject.LastNoticeChanged += NoticeVMObject_LastNoticeChanged;
+            GlobalData.Client.LogoutCompleted += Client_LogoutCompleted;
             App.NoticeVMObject.AsyncGetNewNotices();
 
+        }
+
+        void Client_LogoutCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("退出失败. " + e.Error);
+                }
+
+                MyMessageBox.ShowInfo(e.Result.ToString());
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("退出异常。" + exc.Message);
+            }
         }
 
         void NoticeVMObject_LastNoticeChanged()
@@ -179,9 +198,6 @@ namespace SuperMinersWPF
 
         private void btnStonesSell_Click(object sender, RoutedEventArgs e)
         {
-            MyMessageBox.ShowInfo("该功能即将开放，敬请期待");
-            return;
-
             if (GlobalData.CurrentUser.SellableStones < 1)
             {
                 MyMessageBox.ShowInfo("没有可出售的" + Strings.Stone);
@@ -193,7 +209,8 @@ namespace SuperMinersWPF
 
         private void btnGetMoney_Click(object sender, RoutedEventArgs e)
         {
-
+            WithdrawRMBWindow win = new WithdrawRMBWindow();
+            win.ShowDialog();
         }
 
         private void btnSetting_Click(object sender, RoutedEventArgs e)
@@ -245,20 +262,13 @@ namespace SuperMinersWPF
                 return;
             }
 
-            this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
+            App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
+            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
             this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
             this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlChat.Visibility = System.Windows.Visibility.Visible;
+            this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
-
-
-            //this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
-            //this.controlDigStoneArea.Visibility = System.Windows.Visibility.Collapsed;
-            //this.controlTopList.Visibility = System.Windows.Visibility.Collapsed;
-            //this.controlGameHelper.Visibility = System.Windows.Visibility.Collapsed;
-            //this.controlChat.Visibility = System.Windows.Visibility.Collapsed;
-            //this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowTopList_Checked(object sender, RoutedEventArgs e)

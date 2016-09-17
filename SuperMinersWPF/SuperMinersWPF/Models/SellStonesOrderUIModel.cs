@@ -32,6 +32,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("SellTime");
                 NotifyPropertyChange("OrderState");
                 NotifyPropertyChange("OrderStateString");
+                NotifyPropertyChange("BuyButtonEnable");
             }
         }
 
@@ -94,6 +95,7 @@ namespace SuperMinersWPF.Models
                 this._parentObject.OrderState = value;
                 NotifyPropertyChange("OrderState");
                 NotifyPropertyChange("OrderStateString");
+                NotifyPropertyChange("BuyButtonEnable");
             }
         }
 

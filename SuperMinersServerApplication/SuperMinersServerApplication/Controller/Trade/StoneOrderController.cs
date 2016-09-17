@@ -24,7 +24,11 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         private ConcurrentDictionary<string, StoneOrderRunnable> dicSellOrders = new ConcurrentDictionary<string, StoneOrderRunnable>();
 
-        private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
+        private object _lockListFinishedOrders = new object();
+        private List<SellStonesOrder> _listFinishedOrders = new List<SellStonesOrder>();
+        private const int MAXLISTFINISHEDORDERCOUNT = 50;
+
+        //private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
 
         System.Timers.Timer _timer = new System.Timers.Timer(10000);
 
@@ -52,44 +56,20 @@ namespace SuperMinersServerApplication.Controller
         {
             try
             {
-                dicSellOrders.Clear();
-                var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList("", "", 0, null, null, 0, 0);
-                foreach (var item in waitOrderDBObjects)
-                {
-                    var runnable = new StoneOrderRunnable(item);
-                    dicSellOrders[item.OrderNumber] = new StoneOrderRunnable(item);
-                }
+                InitNotFinishedOrderList();
+                InitFinishedOrderList();
 
-                var lockedOrderDBObjects = DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList("");
-                foreach (var item in lockedOrderDBObjects)
-                {
-                    TimeSpan span = DateTime.Now - item.LockedTime;
-                    if (span.TotalSeconds > GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
-                    {
-                        var runnable = new StoneOrderRunnable(item);
-                        runnable.ReleaseLock();
-                        //解除锁定后，继续加到集合中
-                        dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
-                    }
-                    else
-                    {
-                        item.OrderLockedTimeSpan = (int)span.TotalSeconds;
-                        var runnable = new StoneOrderRunnable(item);
-                        dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
-                    }
-                }
-
-                MyDateTime endTime = MyDateTime.FromDateTime(DateTime.Now);
-                MyDateTime beginTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-1));
-                var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", "", 0, beginTime, endTime, null, null, 100, 0);
-                if (buyOrderRecords == null)
-                {
-                    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
-                }
-                else
-                {
-                    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>(buyOrderRecords);
-                }
+                //MyDateTime endTime = MyDateTime.FromDateTime(DateTime.Now);
+                //MyDateTime beginTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-1));
+                //var buyOrderRecords = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", "", 0, beginTime, endTime, null, null, 100, 0);
+                //if (buyOrderRecords == null)
+                //{
+                //    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
+                //}
+                //else
+                //{
+                //    this.listBuyStonesOrderLast20 = new List<BuyStonesOrder>(buyOrderRecords);
+                //}
 
 
                 StartThread();
@@ -99,6 +79,53 @@ namespace SuperMinersServerApplication.Controller
             {
                 LogHelper.Instance.AddErrorLog("Init OrderController Error", exc);
                 return false;
+            }
+        }
+
+        private void InitFinishedOrderList()
+        {
+            var finishedList = DBProvider.StoneOrderDBProvider.GetSellOrderList("", "", (int)SellOrderState.Finish, null, null, MAXLISTFINISHEDORDERCOUNT, 1);
+
+            lock (this._lockListFinishedOrders)
+            {
+                this._listFinishedOrders.Clear();
+                if (finishedList != null)
+                {
+                    foreach (var item in finishedList)
+                    {
+                        this._listFinishedOrders.Add(item);
+                    }
+                }
+            }
+        }
+
+        private void InitNotFinishedOrderList()
+        {
+            dicSellOrders.Clear();
+            var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList("", "", (int)SellOrderState.Wait, null, null, 0, 0);
+            foreach (var item in waitOrderDBObjects)
+            {
+                var runnable = new StoneOrderRunnable(item);
+                dicSellOrders[item.OrderNumber] = new StoneOrderRunnable(item);
+            }
+
+            var lockedOrderDBObjects = DBProvider.StoneOrderDBProvider.GetLockSellStonesOrderList("", "", "", 0);
+            foreach (var item in lockedOrderDBObjects)
+            {
+                TimeSpan span = DateTime.Now - item.LockedTime;
+                if (span.TotalSeconds > GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
+                {
+                    var runnable = new StoneOrderRunnable(item);
+                    runnable.ReleaseLock();
+                    //解除锁定后，继续加到集合中
+                    dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
+                }
+                else
+                {
+                    item.OrderLockedTimeSpan = (int)span.TotalSeconds;
+                    var runnable = new StoneOrderRunnable(item);
+                    dicSellOrders[item.StonesOrder.OrderNumber] = runnable;
+                }
             }
         }
         
@@ -216,19 +243,26 @@ namespace SuperMinersServerApplication.Controller
 
         public SellStonesOrder[] GetSellOrders()
         {
+            List<SellStonesOrder> orders = new List<SellStonesOrder>();
             lock (_lockListSellOrders)
             {
-                List<SellStonesOrder> orders = new List<SellStonesOrder>();
                 foreach (var item in dicSellOrders.Values)
                 {
-                    if (item.OrderState != SellOrderState.Finish)
+                    //if (item.OrderState != SellOrderState.Finish)
                     {
                         orders.Add(item.GetSellOrder());
                     }
                 }
-
-                return orders.ToArray();
             }
+
+            lock (_lockListFinishedOrders)
+            {
+                foreach (var item in _listFinishedOrders)
+                {
+                    orders.Add(item);
+                }
+            }
+            return orders.ToArray();
         }
 
         private decimal GetExpense(decimal valueRMB)
@@ -490,6 +524,15 @@ namespace SuperMinersServerApplication.Controller
                 StoneOrderRunnable runnable = GetLockedOrderByOrderNumber(orderNumber);
                 if (runnable == null)
                 {
+                    var finishedOrders = DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", orderNumber, buyerUserName, 0, null, null, null, null, 0, 0);
+                    if (finishedOrders != null && finishedOrders.Length == 1)
+                    {
+                        if (finishedOrders[0].StonesOrder.OrderState == SellOrderState.Finish)
+                        {
+                            return OperResult.RESULTCODE_ORDER_BUY_SUCCEED;
+                        }
+                    }
+
                     return OperResult.RESULTCODE_ORDER_NOT_EXIST;
                 }
 
@@ -513,7 +556,7 @@ namespace SuperMinersServerApplication.Controller
 
         private void AddLogNotifyPlayer(string buyerUserName, string orderNumber, BuyStonesOrder buyOrder)
         {
-            PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount);
+            PlayerActionController.Instance.AddLog(buyOrder.BuyerUserName, MetaData.ActionLog.ActionType.BuyStone, buyOrder.StonesOrder.SellStonesCount, buyOrder.AwardGoldCoin.ToString());
 
             string tokenBuyer = ClientManager.GetToken(buyerUserName);
             if (!string.IsNullOrEmpty(tokenBuyer))
@@ -535,14 +578,30 @@ namespace SuperMinersServerApplication.Controller
 
         private void RemoveRecord(string orderNumber)
         {
+            StoneOrderRunnable runnable = null;
             lock (this._lockListSellOrders)
             {
-                StoneOrderRunnable runnable = null;
                 this.dicSellOrders.TryRemove(orderNumber, out runnable);
+            }
+            lock (_lockListFinishedOrders)
+            {
+                if (runnable != null)
+                {
+                    if (_listFinishedOrders.Count >= MAXLISTFINISHEDORDERCOUNT)
+                    {
+                        _listFinishedOrders.RemoveAt(0);
+                    }
+                    _listFinishedOrders.Add(runnable.GetSellOrder());
+                }
             }
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord, bool saveAlipayRecord)
+        public bool CheckAlipayOrderBeHandled(string userName, string out_trade_no)
+        {
+            return DBProvider.StoneOrderDBProvider.CheckBuyStoneOrderExist(userName, out_trade_no);
+        }
+
+        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
             StoneOrderRunnable runnable = FindOrderByOrderName(alipayRecord.out_trade_no);
             if (runnable == null)
@@ -568,10 +627,7 @@ namespace SuperMinersServerApplication.Controller
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                if (saveAlipayRecord)
-                {
-                    DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, trans);
-                }
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, trans);
 
                 //订单处理
                 var buyOrder = this.Pay(runnable.OrderNumber, lockOrder.LockedByUserName, lockOrder.StonesOrder.ValueRMB, trans, ref result);
@@ -614,7 +670,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public int HandleExceptionOrderCancel(string orderNumber)
+        public int RejectExceptionStoneOrder(string orderNumber)
         {
             StoneOrderRunnable order = null;
             lock (this._lockListSellOrders)
@@ -626,15 +682,23 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_ORDER_NOT_EXIST;
             }
+            if (order.OrderState != SellOrderState.Exception)
+            {
+                return OperResult.RESULTCODE_ORDER_ISNOT_EXCEPTION;
+            }
 
-            string tokenBuyer = ClientManager.GetToken(order.GetLockedOrder().LockedByUserName);
+            string buyerUserName = order.GetLockedByUserName();
             order.SetOrderState(SellOrderState.Wait);
             bool isOK = order.ReleaseLock();
             if (isOK)
             {
-                if (!string.IsNullOrEmpty(tokenBuyer) && this.StoneOrderAppealFailed != null)
+                if (!string.IsNullOrEmpty(buyerUserName))
                 {
-                    this.StoneOrderAppealFailed(tokenBuyer, order.OrderNumber);
+                    string tokenBuyer = ClientManager.GetToken(buyerUserName);
+                    if (!string.IsNullOrEmpty(tokenBuyer) && this.StoneOrderAppealFailed != null)
+                    {
+                        this.StoneOrderAppealFailed(tokenBuyer, order.OrderNumber);
+                    }
                 }
                 return OperResult.RESULTCODE_TRUE;
             }
@@ -642,7 +706,7 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public int HandleExceptionOrderSucceed(AlipayRechargeRecord alipayRecord)
+        public int AgreeExceptionStoneOrder(AlipayRechargeRecord alipayRecord)
         {
             if (alipayRecord == null)
             {
@@ -657,9 +721,9 @@ namespace SuperMinersServerApplication.Controller
 
             runnable.SetOrderState(SellOrderState.Lock);
 
-            var oldRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(alipayRecord.out_trade_no, alipayRecord.alipay_trade_no);
+            //var oldRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(alipayRecord.out_trade_no, alipayRecord.alipay_trade_no);
 
-            if (this.AlipayCallback(alipayRecord, oldRecord == null))
+            if (this.AlipayCallback(alipayRecord))
             {
                 return OperResult.RESULTCODE_TRUE;
             }

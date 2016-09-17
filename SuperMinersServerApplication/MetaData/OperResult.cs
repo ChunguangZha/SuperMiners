@@ -66,6 +66,16 @@ namespace MetaData
         public const int RESULTCODE_ORDER_NOT_BE_LOCKED = 603;
 
         /// <summary>
+        /// 申诉订单时，如果交易已经成功，返回该值
+        /// </summary>
+        public const int RESULTCODE_ORDER_BUY_SUCCEED = 604;
+
+        /// <summary>
+        /// 矿石订单当前不是异常状态，用于异常处理。
+        /// </summary>
+        public const int RESULTCODE_ORDER_ISNOT_EXCEPTION = 605;
+
+        /// <summary>
         /// 可销售的矿石不足
         /// </summary>
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
@@ -88,6 +98,8 @@ namespace MetaData
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_NOT_EXIST, "玩家不存在");
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_OFFLINE, "玩家不在线");
             _resultCode_Msg.Add(OperResult.RESULTCODE_CANOT_WITHDRAWRMB, "只有贡献值大于50的玩家可以提现，且提现金额必须大于5元人民币");
+            _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_BUY_SUCCEED, "矿石交易已经交易成功");
+            _resultCode_Msg.Add(RESULTCODE_ORDER_ISNOT_EXCEPTION, "该订单当前不是异常状态");
         }
 
         public static string GetMsg(int resultCode)

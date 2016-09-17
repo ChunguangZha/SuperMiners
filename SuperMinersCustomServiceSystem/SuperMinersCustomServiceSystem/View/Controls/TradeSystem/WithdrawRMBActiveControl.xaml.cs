@@ -30,6 +30,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             this.dgRecords.ItemsSource = App.WithdrawRMBVMObject.ListActiveWithdrawRecords;
         }
 
+        private void Search()
+        {
+            App.WithdrawRMBVMObject.AsyncGetWithdrawRMBActiveRecordList();
+        }
+
         private void btnPay_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -44,6 +49,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             {
                 App.WithdrawRMBVMObject.RemoveRecordFromActiveRecords(record);
             }
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
         }
     }
 }

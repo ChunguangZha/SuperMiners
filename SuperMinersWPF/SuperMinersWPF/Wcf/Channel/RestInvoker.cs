@@ -350,6 +350,7 @@ namespace SuperMinersWPF.Wcf.Channel
             {
                 if (!GlobalData.IsLogined)
                 {
+                    LogHelper.Instance.AddErrorLog("玩家掉线", null);
                     lock (this._callbackRunningLocker)
                     {
                         this._callbackRunning = false;

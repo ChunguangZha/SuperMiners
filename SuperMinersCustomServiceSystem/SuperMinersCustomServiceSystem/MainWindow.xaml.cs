@@ -72,7 +72,8 @@ namespace SuperMinersCustomServiceSystem
         void controlPlayerManager_ViewPlayerLockedStoneOrderRecords(string obj)
         {
             this.HideAllControls();
-            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlNotFinishStoneTradeRecord.Visibility = System.Windows.Visibility.Visible;
+            this.controlNotFinishStoneTradeRecord.SetBuyerUserName(obj);
             this.tvL2_TS_Stone_SellHistory.IsSelected = true;
             this.tvL2_TS_Stone_SellHistory.IsExpanded = true;
         }
@@ -124,26 +125,26 @@ namespace SuperMinersCustomServiceSystem
 
         private void BindUI()
         {
-            this.tvL2_TS_GoldCoin.DataContext = App.GoldCoinTradeVMObject;
-            this.controlGoldCoinRechargeActive.DataContext = App.GoldCoinTradeVMObject;
-            this.controlGoldCoinRechargeHistory.DataContext = App.GoldCoinTradeVMObject;
+            //this.tvL2_TS_GoldCoin.DataContext = App.GoldCoinTradeVMObject;
+            //this.controlGoldCoinRechargeActive.DataContext = App.GoldCoinTradeVMObject;
+            //this.controlGoldCoinRechargeHistory.DataContext = App.GoldCoinTradeVMObject;
 
-            this.tvL2_TS_Mine.DataContext = App.MineTradeVMObject;
-            this.controlMineTradeActive.DataContext = App.MineTradeVMObject;
-            this.controlMineTradeHistory.DataContext = App.MineTradeVMObject;
+            //this.tvL2_TS_Mine.DataContext = App.MineTradeVMObject;
+            //this.controlMineTradeActive.DataContext = App.MineTradeVMObject;
+            //this.controlMineTradeHistory.DataContext = App.MineTradeVMObject;
 
-            this.tvL2_TS_Miner.DataContext = App.MinerTradeVMObject;
-            this.controlMinerTradeActive.DataContext = App.MinerTradeVMObject;
-            this.controlMinerTradeHistory.DataContext = App.MinerTradeVMObject;
+            //this.tvL2_TS_Miner.DataContext = App.MinerTradeVMObject;
+            //this.controlMinerTradeActive.DataContext = App.MinerTradeVMObject;
+            //this.controlMinerTradeHistory.DataContext = App.MinerTradeVMObject;
 
-            this.tvL2_TS_Stone.DataContext = App.StoneTradeVMObject;
-            this.controlStoneSellTradeHistory.DataContext = App.StoneTradeVMObject;
-            this.controlStoneBuyTradeHistory.DataContext = App.StoneTradeVMObject;
+            //this.tvL2_TS_Stone.DataContext = App.StoneTradeVMObject;
+            //this.controlStoneSellTradeHistory.DataContext = App.StoneTradeVMObject;
+            //this.controlStoneBuyTradeHistory.DataContext = App.StoneTradeVMObject;
 
-            this.tvL2_TS_WithdrawRMB.DataContext = App.WithdrawRMBVMObject;
-            this.controlWithdrawRMBActive.DataContext = App.WithdrawRMBVMObject;
-            this.controlWithdrawRMBHistory.DataContext = App.WithdrawRMBVMObject;
-            this.controlStoneTradeShowImage.DataContext = App.WithdrawRMBVMObject;
+            //this.tvL2_TS_WithdrawRMB.DataContext = App.WithdrawRMBVMObject;
+            //this.controlWithdrawRMBActive.DataContext = App.WithdrawRMBVMObject;
+            //this.controlWithdrawRMBHistory.DataContext = App.WithdrawRMBVMObject;
+            //this.controlStoneTradeShowImage.DataContext = App.WithdrawRMBVMObject;
         }
 
         void Client_OnKickoutByUser()
@@ -174,6 +175,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlStoneTradeActive.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlNotFinishStoneTradeRecord.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawRMBHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneTradeShowImage.Visibility = System.Windows.Visibility.Collapsed;
@@ -241,12 +243,6 @@ namespace SuperMinersCustomServiceSystem
             this.controlGoldCoinRechargeHistory.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void tvL2_TS_WithdrawRMB_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            HideAllControls();
-            this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Visible;
-        }
-
         private void tvL2_TS_WithdrawRMB_History_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HideAllControls();
@@ -269,6 +265,18 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_Stone_NotFinished_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlNotFinishStoneTradeRecord.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL1WithdrawManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

@@ -49,7 +49,6 @@
                 <DataGridTextColumn Header="花费灵币" Width="*" Binding="{Binding SpendRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="获取金币" Width="*" Binding="{Binding GainGoldCoin, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付时间" Width="*" Binding="{Binding PayTime, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

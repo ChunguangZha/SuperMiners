@@ -3,10 +3,12 @@ using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace SuperMinersServerApplication.Controller
 {
@@ -32,7 +34,7 @@ namespace SuperMinersServerApplication.Controller
         #endregion
 
         public event Action PlayerActionAdded;
-
+        
         private List<PlayerActionLog> list = new List<PlayerActionLog>();
         private int maxListCount = 100;
         private object _lockList = new object();
@@ -109,5 +111,46 @@ namespace SuperMinersServerApplication.Controller
                 return actions;
             }
         }
+
+        public void LoadActionLogs()
+        {
+            try
+            {
+                if (File.Exists(GlobalData.UserActionLogFile))
+                {
+                    System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(PlayerActionLog[]));
+                    using (FileStream stream = File.Open(GlobalData.UserActionLogFile, FileMode.Open))
+                    {
+                        PlayerActionLog[] logs = xmlSerializer.Deserialize(stream) as PlayerActionLog[];
+                        if (logs != null)
+                        {
+                            lock (this._lockList)
+                            {
+                                this.list = new List<PlayerActionLog>(logs);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception) { }
+        }
+
+        public void SaveActionLogs()
+        {
+            try
+            {
+                System.Xml.Serialization.XmlSerializer xmlSerializer = new System.Xml.Serialization.XmlSerializer(typeof(PlayerActionLog[]));
+                using (FileStream stream = File.Open(GlobalData.UserActionLogFile, FileMode.Create))
+                {
+                    PlayerActionLog[] logs = this.list.ToArray();
+                    xmlSerializer.Serialize(stream, logs);
+                }
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Save Action Logs Exception", exc);
+            }
+        }
+
     }
 }

@@ -1,0 +1,9 @@
+CREATE TABLE `superminers`.`testuserlogstate` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `UserName` VARCHAR(64) NOT NULL,
+  `Mac` VARCHAR(50) NOT NULL,
+  `IP` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `UserName_UNIQUE` (`UserName` ASC),
+  UNIQUE INDEX `Mac_UNIQUE` (`Mac` ASC));

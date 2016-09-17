@@ -246,16 +246,6 @@ namespace SuperMinersCustomServiceSystem
                         return sb.ToString();
                     }
                 }
-                //Console.WriteLine("描述：" + adapter.Description);
-                //Console.WriteLine("标识符：" + adapter.Id);
-                //Console.WriteLine("名称：" + adapter.Name);
-                //Console.WriteLine("类型：" + adapter.NetworkInterfaceType);
-                //Console.WriteLine("速度：" + adapter.Speed * 0.001 * 0.001 + "M");
-                //Console.WriteLine("操作状态：" + adapter.OperationalStatus);
-                //Console.WriteLine("MAC 地址：" + adapter.GetPhysicalAddress());
-
-                //Console.WriteLine("MAC 地址：" + sb);
-                //Console.WriteLine();
             }
 
             return null;

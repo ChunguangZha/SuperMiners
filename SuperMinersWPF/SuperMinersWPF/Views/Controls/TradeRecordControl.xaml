@@ -19,6 +19,9 @@
                 <ComboBoxItem Content="矿工购买记录"/>
                 <ComboBoxItem Content="矿山购买记录"/>
                 <ComboBoxItem Content="灵币提现记录"/>
+                <ComboBoxItem Content="未完成的矿石订单"/>
+                <ComboBoxItem Content="已完成的矿石买入订单"/>
+                <ComboBoxItem Content="已完成的矿石卖出订单"/>
             </ComboBox>
         </StackPanel>
         <tradeControl:AlipayHistoryRecordControl Grid.Row="1" x:Name="controlAlipayHistory"/>
@@ -26,5 +29,8 @@
         <tradeControl:MinerTradeHistoryRecordControl Grid.Row="1" x:Name="controlMinerHistory" Visibility="Collapsed"/>
         <tradeControl:MineTradeHistoryRecordControl Grid.Row="1" x:Name="controlMineHistory" Visibility="Collapsed"/>
         <tradeControl:WithdrawRMBHistoryRecordControl Grid.Row="1" x:Name="controlWithdrawHistory" Visibility="Collapsed"/>
+        <tradeControl:StoneNotFinishedBuyTradeRecordControl Grid.Row="1" x:Name="controlStoneNotFinishedRecord" Visibility="Collapsed"/>
+        <tradeControl:StoneBuyTradeHistoryRecordControl Grid.Row="1" x:Name="controlStoneBuyHistory" Visibility="Collapsed"/>
+        <tradeControl:StoneSellTradeHistoryRecordControl Grid.Row="1" x:Name="controlStoneSellHistory" Visibility="Collapsed"/>
     </Grid>
 </UserControl>

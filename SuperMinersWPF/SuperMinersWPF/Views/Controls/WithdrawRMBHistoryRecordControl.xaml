@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <TextBlock Text="是否支付完成：" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <ComboBox Name="cmbIsPay" Margin="0,10,5,10" VerticalAlignment="Center" SelectedIndex="1" SelectionChanged="cmbIsPay_SelectionChanged">
+                <ComboBox Name="cmbIsPay" Margin="0,10,5,10" VerticalAlignment="Center" SelectedIndex="1">
                     <ComboBoxItem Content="否"/>
                     <ComboBoxItem Content="是"/>
                 </ComboBox>
@@ -31,14 +31,6 @@
                 <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
                 <TextBlock Text="到" VerticalAlignment="Center"/>
                 <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False"/>
-            </StackPanel>
-            <StackPanel Grid.Row="1" Name="panelAdminPayed" Orientation="Horizontal">
-                <TextBlock Text="管理员用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <TextBox Name="txtAdminUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
-                <TextBlock Text="支付时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpStartPayTime" VerticalAlignment="Center" ShowTime="False"/>
-                <TextBlock Text="到" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpEndPayTime" VerticalAlignment="Center" ShowTime="False"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>
@@ -56,14 +48,7 @@
                 <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding PlayerUserName, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提现金额" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceed, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Width="*" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="支付" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceedString, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

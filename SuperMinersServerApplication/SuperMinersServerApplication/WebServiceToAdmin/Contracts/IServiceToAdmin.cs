@@ -141,7 +141,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex);
+        SellStonesOrder[] GetSellStonesOrderList(string token, string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetLockedStonesOrderList",
@@ -149,7 +149,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        LockSellStonesOrder[] GetLockedStonesOrderList(string token, string buyerUserName);
+        LockSellStonesOrder[] GetLockedStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetBuyStonesOrderList",
@@ -157,23 +157,23 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderType, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex);
+        BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionStoneOrderSucceed",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/AgreeExceptionStoneOrder",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int HandleExceptionStoneOrderSucceed(string token, AlipayRechargeRecord alipayRecord);
+        int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionStoneOrderFailed",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/RejectExceptionStoneOrder",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int HandleExceptionStoneOrderFailed(string token, string orderNumber);
+        int RejectExceptionStoneOrder(string token, string orderNumber);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/PayWithdrawRMBRecord",
@@ -206,6 +206,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         AlipayRechargeRecord[] GetAllExceptionAlipayRechargeRecords(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SearchExceptionAlipayRechargeRecord",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        AlipayRechargeRecord SearchExceptionAlipayRechargeRecord(string token, string orderNumber);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleExceptionAlipayRechargeRecord",

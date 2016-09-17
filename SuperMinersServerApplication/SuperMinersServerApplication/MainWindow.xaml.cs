@@ -21,6 +21,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace SuperMinersServerApplication
 {
@@ -48,9 +49,12 @@ namespace SuperMinersServerApplication
         {
             BindUI();
 
+            //LoadActionLogs();
             StartService();
 
+            PlayerActionController.Instance.LoadActionLogs();
             AdminController.Instance.GetAllAdmin();
+            LogHelper.Instance.AddInfoLog("服务器启动成功");
         }
 
         private void StartService()
@@ -190,6 +194,7 @@ namespace SuperMinersServerApplication
 
         private void btnStopService_Click(object sender, RoutedEventArgs e)
         {
+            PlayerActionController.Instance.SaveActionLogs();
             App.ServiceToRun.Stop();
         }
 

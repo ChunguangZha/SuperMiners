@@ -78,19 +78,22 @@ namespace SuperMinersWPF.Views
                     MyWebPage.ShowMyWebPage(result.AlipayLink);
                     MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
 
-                    var payResult = MyMessageBox.ShowAlipayPayQuestion();
-                    if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
+                    if (!AlipayPaySucceed)
                     {
-                        if (!AlipayPaySucceed)
+                        var payResult = MyMessageBox.ShowAlipayPayQuestion();
+                        if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
                         {
-                            MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                            if (!AlipayPaySucceed)
+                            {
+                                MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
+                            }
                         }
-                    }
-                    else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
-                    {
-                        MyWebPage.ShowMyWebPage(result.AlipayLink);
-                        MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
-                        return;
+                        else if (payResult == MessageBoxAlipayPayQuestionResult.Failed)
+                        {
+                            MyWebPage.ShowMyWebPage(result.AlipayLink);
+                            MyMessageBox.ShowInfo("请在弹出的网页中，登录支付宝进行付款。");
+                            return;
+                        }
                     }
                 }
 

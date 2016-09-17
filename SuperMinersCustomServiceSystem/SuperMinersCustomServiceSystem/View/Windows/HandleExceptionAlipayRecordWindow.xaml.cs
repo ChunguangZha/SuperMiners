@@ -44,6 +44,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         public HandleExceptionAlipayRecordWindow()
         {
+            InitializeComponent();
             _alipayRecord = new AlipayRechargeRecordUIModel(new MetaData.Trade.AlipayRechargeRecord());
         }
 

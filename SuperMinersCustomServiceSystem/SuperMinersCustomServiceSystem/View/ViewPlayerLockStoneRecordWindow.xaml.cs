@@ -64,7 +64,7 @@ namespace SuperMinersCustomServiceSystem.View
         public void SetUser(string buyer)
         {
             this.Title += "  ----" + buyer;
-            GlobalData.Client.GetLockedStonesOrderList(buyer);
+            //GlobalData.Client.GetLockedStonesOrderList(buyer);
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -89,7 +89,7 @@ namespace SuperMinersCustomServiceSystem.View
             StoneOrderResolveExceptionWindow win = new StoneOrderResolveExceptionWindow(lockStoneObject);
             if (win.ShowDialog() == true)
             {
-                GlobalData.Client.GetLockedStonesOrderList(lockStoneObject.LockedByUserName);
+                //GlobalData.Client.GetLockedStonesOrderList(lockStoneObject.LockedByUserName);
             }
         }
     }

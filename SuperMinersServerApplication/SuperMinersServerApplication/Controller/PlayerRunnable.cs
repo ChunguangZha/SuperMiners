@@ -100,20 +100,19 @@ namespace SuperMinersServerApplication.Controller
 
         public void ComputePlayerOfflineStoneOutput()
         {
-            if (BasePlayer.SimpleInfo.LastLogOutTime == null ||
-                BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
-            {
-                //表示该玩家之前没有登录过，以本次登录时间为起始。
-                BasePlayer.FortuneInfo.TempOutputStones = 0;
-                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
-                return;
-            }
+            //if (BasePlayer.SimpleInfo.LastLogOutTime == null ||
+            //    BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
+            //{
+            //    //表示该玩家之前没有登录过，以本次登录时间为起始。
+            //    BasePlayer.FortuneInfo.TempOutputStones = 0;
+            //    BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
+            //    return;
+            //}
 
             DateTime startTime;
-            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
+            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)//如果玩家没有收取过，则以上一次登录时间为开始。
             {
-                //如果没有保存起始时间，则以上一次退出时间为起始。
-                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLogOutTime.Value;
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime.Value;
             }
 
             startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
@@ -446,6 +445,10 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
+                if (BasePlayer.FortuneInfo.FreezingStones < order.StonesOrder.SellStonesCount)
+                {
+                    return false;
+                }
                 BasePlayer.FortuneInfo.RMB += (order.StonesOrder.ValueRMB - order.StonesOrder.Expense);
                 BasePlayer.FortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
                 BasePlayer.FortuneInfo.FreezingStones -= order.StonesOrder.SellStonesCount;
@@ -534,6 +537,8 @@ namespace SuperMinersServerApplication.Controller
                         myTrans.Rollback();
                     }
 
+                    this.RefreshFortune();
+
                     return OperResult.RESULTCODE_FALSE;
                 }
                 finally
@@ -578,6 +583,7 @@ namespace SuperMinersServerApplication.Controller
                         myTrans.Rollback();
                     }
 
+                    this.RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
                 }
                 finally

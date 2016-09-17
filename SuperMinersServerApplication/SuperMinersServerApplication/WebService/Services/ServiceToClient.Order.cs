@@ -423,7 +423,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public SellStonesOrder[] SearchUserSellStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
+        public SellStonesOrder[] SearchUserSellStoneOrders(string token, string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
         {
 #if Delay
 
@@ -435,16 +435,16 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    if (ClientManager.GetClientUserName(token) != userName)
+                    if (ClientManager.GetClientUserName(token) != sellerUserName)
                     {
                         return null;
                     }
 
-                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(userName, "", 0, myBeginTime, myEndTime, 0, 0);
+                    return DBProvider.StoneOrderDBProvider.GetSellOrderList(sellerUserName, orderNumber, orderState, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 查询矿石出售历史订单异常", exc);
+                    LogHelper.Instance.AddErrorLog("玩家[" + sellerUserName + "] 查询矿石出售历史订单异常", exc);
                     return null;
                 }
             }
@@ -454,7 +454,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string userName, MyDateTime myBeginTime, MyDateTime myEndTime)
+        public BuyStonesOrder[] SearchUserBuyStoneOrders(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex)
         {
 #if Delay
 
@@ -466,16 +466,16 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    if (ClientManager.GetClientUserName(token) != userName)
+                    if (ClientManager.GetClientUserName(token) != buyUserName)
                     {
                         return null;
                     }
 
-                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", userName, 0, myBeginTime, myEndTime, null, null, 1000, 0);
+                    return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList(sellerUserName, orderNumber, buyUserName, orderState, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 查询矿石购买历史订单异常", exc);
+                    LogHelper.Instance.AddErrorLog("玩家[" + buyUserName + "] 查询矿石购买历史订单异常", exc);
                     return null;
                 }
             }

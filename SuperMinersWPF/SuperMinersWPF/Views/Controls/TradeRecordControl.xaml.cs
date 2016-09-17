@@ -50,6 +50,15 @@ namespace SuperMinersWPF.Views.Controls
                 case 4:
                     this.controlWithdrawHistory.Visibility = System.Windows.Visibility.Visible;
                     break;
+                case 5:
+                    this.controlStoneNotFinishedRecord.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 6:
+                    this.controlStoneBuyHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
+                case 7:
+                    this.controlStoneSellHistory.Visibility = System.Windows.Visibility.Visible;
+                    break;
                 default:
                     break;
             }
@@ -62,6 +71,9 @@ namespace SuperMinersWPF.Views.Controls
             this.controlMinerHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlMineHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlWithdrawHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneNotFinishedRecord.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneBuyHistory.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneSellHistory.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
         Loaded="Window_Loaded"
-        Title="出售矿石" Height="330" Width="300" ShowInTaskbar="False" ResizeMode="NoResize" WindowStartupLocation="CenterOwner" Topmost="True" Background="{DynamicResource PlayerInfoBackground}" Foreground="White" WindowStyle="ToolWindow">
+        Closed="Window_Closed"
+        Title="出售矿石" Height="330" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{DynamicResource PlayerInfoBackground}" Foreground="White" WindowStyle="ToolWindow">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -30,7 +31,7 @@
         <TextBox Grid.Row="2" Grid.Column="1" Name="txtSellableStones" IsReadOnly="True" Margin="5"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
         <TextBlock Grid.Row="3" Text="本次出售" HorizontalAlignment="Right" Margin="5"/>
-        <my:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numSellStones" Minimum="1" Maximum="10000" Margin="5" ValueChanged="numSellStones_ValueChanged"/>
+        <my:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numSellStones" Minimum="0" Maximum="100000" Margin="5" ValueChanged="numSellStones_ValueChanged"/>
         <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
         <TextBlock Grid.Row="4" Text="可获得" HorizontalAlignment="Right" Margin="5"/>
         <TextBox Grid.Row="4" Grid.Column="1" Name="txtGetRMB" IsReadOnly="True" Foreground="Green" Margin="5"/>

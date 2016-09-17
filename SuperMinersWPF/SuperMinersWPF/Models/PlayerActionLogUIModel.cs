@@ -57,7 +57,7 @@ namespace SuperMinersWPF.Models
                         message = string.Format("购买了 {0} 位矿工", this._parentObject.OperNumber);
                         break;
                     case ActionType.BuyStone:
-                        message = string.Format("购买了 {0} 矿石，并获取了 {1} 金币的奖励", this._parentObject.OperNumber, (int)(this._parentObject.OperNumber * GlobalData.GameConfig.StoneBuyerAwardGoldCoinMultiple));
+                        message = string.Format("购买了 {0} 矿石，并获取了 {1} 金币的奖励", this._parentObject.OperNumber, this._parentObject.Remark);
                         break;
                     case ActionType.SellStone:
                         message = string.Format("挂单出售 {0} 矿石", this._parentObject.OperNumber);

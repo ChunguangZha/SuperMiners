@@ -10,6 +10,16 @@ namespace SuperMinersWPF.Wcf.Clients
 {
     public partial class ServerClient
     {
+        #region WithdrawRMB
+
+        public event EventHandler<WebInvokeEventArgs<int>> WithdrawRMBCompleted;
+        public void WithdrawRMB(int getRMBCount, object userState)
+        {
+            this._invoker.InvokeUserState<int>(this._context, "WithdrawRMB", this.WithdrawRMBCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, getRMBCount);
+        }
+
+        #endregion
+
         #region BuyMiner
 
         public event EventHandler<WebInvokeEventArgs<int>> BuyMinerCompleted;

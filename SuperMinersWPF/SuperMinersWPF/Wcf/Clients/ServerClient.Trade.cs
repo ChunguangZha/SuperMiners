@@ -19,7 +19,7 @@ namespace SuperMinersWPF.Wcf.Clients
         public event EventHandler<WebInvokeEventArgs<WithdrawRMBRecord[]>> GetWithdrawRMBRecordListCompleted;
         public void GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
-            this._invoker.Invoke<WithdrawRMBRecord[]>(this._context, "GetWithdrawRMBRecordList", this.GetWithdrawRMBRecordListCompleted, GlobalData.Token, playerUserName, isPayed, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+            this._invoker.Invoke<WithdrawRMBRecord[]>(this._context, "GetWithdrawRMBRecordList", this.GetWithdrawRMBRecordListCompleted, GlobalData.Token, isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
         }
 
         public event EventHandler<WebInvokeEventArgs<GoldCoinRechargeRecord[]>> GetFinishedGoldCoinRechargeRecordListCompleted;

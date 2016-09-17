@@ -112,9 +112,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region SearchUserSellStoneOrders
 
         public event EventHandler<WebInvokeEventArgs<SellStonesOrder[]>> SearchUserSellStoneOrdersCompleted;
-        public void SearchUserSellStoneOrders(MyDateTime myBeginTime, MyDateTime myEndTime, object userState)
+        public void SearchUserSellStoneOrders(string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex, object userState)
         {
-            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "SearchUserSellStoneOrders", this.SearchUserSellStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, myBeginTime, myEndTime);
+            this._invoker.InvokeUserState<SellStonesOrder[]>(this._context, "SearchUserSellStoneOrders", this.SearchUserSellStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, orderNumber, orderState, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
         }
 
         #endregion
@@ -122,9 +122,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region SearchUserBuyStoneOrders
 
         public event EventHandler<WebInvokeEventArgs<BuyStonesOrder[]>> SearchUserBuyStoneOrdersCompleted;
-        public void SearchUserBuyStoneOrders(MyDateTime myBeginTime, MyDateTime myEndTime, object userState)
+        public void SearchUserBuyStoneOrders(string sellerUserName, string orderNumber, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex, object userState)
         {
-            this._invoker.InvokeUserState<BuyStonesOrder[]>(this._context, "SearchUserBuyStoneOrders", this.SearchUserBuyStoneOrdersCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, myBeginTime, myEndTime);
+            this._invoker.InvokeUserState<BuyStonesOrder[]>(this._context, "SearchUserBuyStoneOrders", this.SearchUserBuyStoneOrdersCompleted, userState, GlobalData.Token, sellerUserName, orderNumber, GlobalData.CurrentUser.UserName, orderState, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
         }
 
         #endregion

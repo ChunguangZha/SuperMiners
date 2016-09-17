@@ -16,12 +16,12 @@ namespace SuperMinersWPF.Wcf.Clients
         public event Action OnLogedOut;
         public event Action OnPlayerInfoChanged;
 
-        #region Logion
+        #region Login
 
         public event EventHandler<WebInvokeEventArgs<string>> LoginCompleted;
-        public void Login(string userName, string password, string key)
+        public void Login(string userName, string password, string key, string mac)
         {
-            this._invoker.Invoke<string>(this._context, "Login", this.LoginCompleted, userName, password, key);
+            this._invoker.Invoke<string>(this._context, "Login", this.LoginCompleted, userName, password, key, mac);
         }
 
         #endregion
