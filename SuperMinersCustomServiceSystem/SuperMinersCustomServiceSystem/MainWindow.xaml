@@ -75,6 +75,9 @@
                     
                 </TreeViewItem>
             </TreeViewItem>
+            <TreeViewItem Name="tvL2NoticeManage" Header="公告管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL2NoticeManage_MouseDoubleClick">
+                
+            </TreeViewItem>
         </TreeView>
         <Grid Grid.Row="1" Grid.Column="1">
             <Controls:PlayerManagerControl x:Name="controlPlayerManager" Visibility="Collapsed"/>
@@ -94,6 +97,7 @@
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
             <tradeControl:AlipayHistoryRecordControl x:Name="controlAlipayRecordHistory" Visibility="Collapsed"/>
             <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
+            <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

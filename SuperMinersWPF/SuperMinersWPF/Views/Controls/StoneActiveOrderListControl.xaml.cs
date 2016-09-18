@@ -39,10 +39,14 @@ namespace SuperMinersWPF.Views.Controls
             }
 
             this.listboxAllSellOrders.ItemsSource = App.StoneOrderVMObject.AllNotFinishStoneOrder;
-            //App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
             App.StoneOrderVMObject.StoneOrderLockSucceed += StoneOrderVMObject_LockOrderSucceed;
 
+        }
+
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            App.StoneOrderVMObject.StoneOrderLockSucceed -= StoneOrderVMObject_LockOrderSucceed;
         }
 
         void StoneOrderVMObject_LockOrderSucceed(LockSellStonesOrderUIModel obj)
@@ -70,6 +74,11 @@ namespace SuperMinersWPF.Views.Controls
         {
             Button btnBuy = sender as Button;
             SellStonesOrderUIModel stoneOrder = btnBuy.DataContext as SellStonesOrderUIModel;
+            if (stoneOrder.SellerUserName == GlobalData.CurrentUser.UserName)
+            {
+                MyMessageBox.ShowInfo("不能购买自己的订单");
+                return;
+            }
             if (stoneOrder != null)
             {
                 App.StoneOrderVMObject.AsyncLockStoneOrder(stoneOrder.OrderNumber);

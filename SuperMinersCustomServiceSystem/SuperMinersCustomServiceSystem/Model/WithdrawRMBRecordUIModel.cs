@@ -26,6 +26,9 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
+                NotifyPropertyChange("PlayerUserName");
+                NotifyPropertyChange("AlipayAccount");
+                NotifyPropertyChange("AlipayRealName");
                 NotifyPropertyChange("IsPayedSucceed");
                 NotifyPropertyChange("PayButtonVisibility");
                 NotifyPropertyChange("AdminUserName");
@@ -43,6 +46,22 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.PlayerUserName;
+            }
+        }
+
+        public string AlipayAccount
+        {
+            get
+            {
+                return this._parentObject.AlipayAccount;
+            }
+        }
+
+        public string AlipayRealName
+        {
+            get
+            {
+                return this._parentObject.AlipayRealName;
             }
         }
 

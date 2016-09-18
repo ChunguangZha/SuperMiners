@@ -396,6 +396,17 @@ namespace DataBaseProvider
                     adminUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["AdminUserName"]));
                 }
 
+                string alipayAccount = "";
+                string alipayRealName = "";
+                if (dt.Rows[i]["AlipayAccount"] != DBNull.Value)
+                {
+                    alipayAccount = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayAccount"].ToString());
+                }
+                if (dt.Rows[i]["AlipayRealName"] != DBNull.Value)
+                {
+                    alipayRealName = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayRealName"].ToString());
+                }
+
                 DateTime? payTime = null;
                 if (dt.Rows[i]["PayTime"] != DBNull.Value)
                 {
@@ -411,6 +422,8 @@ namespace DataBaseProvider
                 {
                     id = Convert.ToInt32(dt.Rows[i]["id"]),
                     PlayerUserName = payerUserName,
+                    AlipayAccount = alipayAccount,
+                    AlipayRealName = alipayRealName,
                     CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]),
                     WidthdrawRMB = (decimal)Convert.ToSingle(dt.Rows[i]["WidthdrawRMB"]),
                     ValueYuan = Convert.ToInt32(dt.Rows[i]["ValueYuan"]),

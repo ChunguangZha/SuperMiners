@@ -17,6 +17,12 @@ namespace MetaData.Trade
         public string PlayerUserName = "";
 
         [DataMember]
+        public string AlipayAccount = "";
+
+        [DataMember]
+        public string AlipayRealName = "";
+
+        [DataMember]
         public decimal WidthdrawRMB = 0;
 
         /// <summary>

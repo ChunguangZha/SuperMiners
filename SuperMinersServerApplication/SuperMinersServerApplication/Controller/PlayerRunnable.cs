@@ -512,6 +512,8 @@ namespace SuperMinersServerApplication.Controller
                     WithdrawRMBRecord record = new WithdrawRMBRecord()
                     {
                         PlayerUserName = this.BasePlayer.SimpleInfo.UserName,
+                        AlipayAccount = this.BasePlayer.SimpleInfo.Alipay,
+                        AlipayRealName = this.BasePlayer.SimpleInfo.AlipayRealName,
                         WidthdrawRMB = getRMBCount,
                         ValueYuan = (int)Math.Ceiling(getRMBCount / GlobalConfig.GameConfig.Yuan_RMB),
                         CreateTime = createTime,

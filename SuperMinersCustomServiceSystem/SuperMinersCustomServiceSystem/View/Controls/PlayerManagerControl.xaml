@@ -67,7 +67,8 @@
                     <DataGridTextColumn Binding="{Binding RegisterIP}" ClipboardContentBinding="{x:Null}" Header="注册IP"/>
                     <DataGridTextColumn Binding="{Binding ReferrerUserName}" ClipboardContentBinding="{x:Null}" Header="推荐人"/>
                     <DataGridTextColumn Binding="{Binding InvitationCode}" ClipboardContentBinding="{x:Null}" Header="邀请码"/>
-                    <DataGridTextColumn Binding="{Binding LastLoginTime}" ClipboardContentBinding="{x:Null}" Header="上一级登录时间"/>
+                    <DataGridTextColumn Binding="{Binding LastLoginTime}" ClipboardContentBinding="{x:Null}" Header="上一次登录时间"/>
+                    <DataGridTextColumn Binding="{Binding LastGatherStoneTime}" Header="上一次收取矿石时间"/>
                     <DataGridTextColumn Binding="{Binding IsLocked}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
                     <DataGridTextColumn Binding="{Binding LockedTime}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
                     <DataGridTextColumn Binding="{Binding Online}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>

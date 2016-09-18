@@ -49,6 +49,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("StockOfDiamonds");
                 NotifyPropertyChange("FreezingDiamonds");
                 NotifyPropertyChange("SellableDiamonds");
+                NotifyPropertyChange("LastGatherStoneTime");
             }
         }
 
@@ -122,6 +123,11 @@ namespace SuperMinersCustomServiceSystem.Model
         public DateTime? LastLoginTime
         {
             get { return this._parentObject.SimpleInfo.LastLoginTime; }
+        }
+
+        public DateTime? LastGatherStoneTime
+        {
+            get { return this._parentObject.FortuneInfo.TempOutputStonesStartTime; }
         }
 
         public bool IsLocked
@@ -203,6 +209,19 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.FortuneInfo.MinesCount; }
         }
 
+        public void SetStone(decimal stonesReserves, decimal stockOfStones, decimal freezingStones)
+        {
+            this._parentObject.FortuneInfo.StonesReserves = stonesReserves;
+            this._parentObject.FortuneInfo.StockOfStones = stockOfStones;
+            this._parentObject.FortuneInfo.FreezingStones = freezingStones;
+
+            NotifyPropertyChange("StonesReserves");
+            NotifyPropertyChange("WorkableStonesReservers");
+            NotifyPropertyChange("StockOfStones");
+            NotifyPropertyChange("FreezingStones");
+            NotifyPropertyChange("SellableStones");
+        }
+
         /// <summary>
         /// 矿石储量
         /// </summary>
@@ -222,6 +241,12 @@ namespace SuperMinersCustomServiceSystem.Model
         public decimal MinersCount
         {
             get { return this._parentObject.FortuneInfo.MinersCount; }
+        }
+
+        public void SetMinersCount(int newMinerCount)
+        {
+            this._parentObject.FortuneInfo.MinersCount = newMinerCount;
+            NotifyPropertyChange("MinersCount");
         }
 
         /// <summary>

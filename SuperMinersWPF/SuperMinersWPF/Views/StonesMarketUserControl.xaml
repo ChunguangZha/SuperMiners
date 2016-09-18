@@ -8,10 +8,10 @@
              d:DesignHeight="600" d:DesignWidth="800">
     <TabControl>
         <TabItem Header="实时订单">
-            <tradeControl:StoneActiveOrderListControl/>
+            <tradeControl:StoneActiveOrderListControl x:Name="controlStoneActiveOrderList"/>
         </TabItem>
         <TabItem Header="未完成的订单">
-            <tradeControl:StoneNotFinishedBuyTradeRecordControl/>
+            <tradeControl:StoneNotFinishedBuyTradeRecordControl x:Name="controlStoneNotFinishedList"/>
         </TabItem>
     </TabControl>
 </UserControl>

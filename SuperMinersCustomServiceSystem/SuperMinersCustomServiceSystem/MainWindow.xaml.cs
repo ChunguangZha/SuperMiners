@@ -181,6 +181,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlStoneTradeShowImage.Visibility = System.Windows.Visibility.Collapsed;
             this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlAlipayExceptionRecords.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlNoticeManage.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -277,6 +278,12 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlWithdrawRMBActive.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2NoticeManage_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlNoticeManage.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

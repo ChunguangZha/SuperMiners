@@ -84,5 +84,26 @@ namespace SuperMinersCustomServiceSystem
         {
             this.DialogResult = false;
         }
+
+        private void btnEditMiners_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerMinerCountWindow win = new EditPlayerMinerCountWindow(this._player.UserName);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetMinersCount(win.ChangedMinerCount);
+            }
+        }
+
+        private void btnChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerPasswordWindow win = new EditPlayerPasswordWindow(this._player.UserName);
+            win.ShowDialog();
+        }
+
+        private void btnEditStone_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerStoneWindow win = new EditPlayerStoneWindow(this._player);
+            win.ShowDialog();
+        }
     }
 }
