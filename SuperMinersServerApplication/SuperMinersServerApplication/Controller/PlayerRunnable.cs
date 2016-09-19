@@ -112,7 +112,7 @@ namespace SuperMinersServerApplication.Controller
             DateTime startTime;
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)//如果玩家没有收取过，则以注册时间为开始。
             {
-                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
+                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.RegisterTime;
                 try
                 {
                     DBProvider.UserDBProvider.SavePlayerLastGatherTime(BasePlayer.SimpleInfo.UserID, BasePlayer.FortuneInfo.TempOutputStonesStartTime);

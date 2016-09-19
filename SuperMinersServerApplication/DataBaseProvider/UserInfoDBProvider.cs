@@ -113,6 +113,7 @@ namespace DataBaseProvider
             {
                 string cmdTextB = "UPDATE `playerfortuneinfo` SET `TempOutputStonesStartTime`=@TempOutputStonesStartTime WHERE `UserID`=@UserID;";
 
+                myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
                 myconn.Open();
                 mycmd.CommandText = cmdTextB;

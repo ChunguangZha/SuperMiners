@@ -76,6 +76,7 @@ namespace SuperMinersCustomServiceSystem
                 if (MessageBox.Show("确定要修改玩家信息？此操作不可更改。", "确认修改", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
                     App.PlayerVMObject.AsyncChangePlayerInfo(this._player);
+                    //this.DialogResult = true;
                 }
             }
         }
