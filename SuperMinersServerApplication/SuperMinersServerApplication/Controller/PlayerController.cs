@@ -269,7 +269,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = new PlayerRunnable(player);
 
             //计算玩家上一次退出，到本次登录时，累计矿工产量。
-            playerrun.ComputePlayerOfflineStoneOutput();
+            decimal tempOutputStone = playerrun.ComputePlayerOfflineStoneOutput();
 
             this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
 

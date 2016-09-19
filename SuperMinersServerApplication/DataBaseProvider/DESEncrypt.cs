@@ -23,6 +23,11 @@ namespace DataBaseProvider
         {
             try
             {
+                if (string.IsNullOrEmpty(encryptString))
+                {
+                    return string.Empty;
+                }
+
                 byte[] rgbKey = Encoding.UTF8.GetBytes(Key2);
                 byte[] rgbIV = Keys;
                 byte[] inputByteArray = Encoding.UTF8.GetBytes(encryptString);

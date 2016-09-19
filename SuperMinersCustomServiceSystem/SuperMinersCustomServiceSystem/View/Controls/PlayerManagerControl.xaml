@@ -45,8 +45,8 @@
                 <ComboBoxItem Content="离线"/>
             </ComboBox>
 
-            <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Name="btnRefresh" Content="刷新" Width="100" Margin="5" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
-            <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Name="btnSearch" Content="查找" Width="100" Margin="120,5,5,5" HorizontalAlignment="Left" Click="btnSearch_Click"/>
+            <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Name="btnRefresh" Content="重新加载玩家列表" Width="150" Margin="5" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+            <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="3" Name="btnSearch" Content="当前页面中查找" Width="100" Margin="170,5,5,5" HorizontalAlignment="Left" Click="btnSearch_Click"/>
         </Grid>
         <GroupBox Grid.Row="2" Name="panelPlayersManager" Margin="5">
             <GroupBox.Header>

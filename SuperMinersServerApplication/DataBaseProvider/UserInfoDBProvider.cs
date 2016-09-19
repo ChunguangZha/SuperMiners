@@ -105,19 +105,61 @@ namespace DataBaseProvider
             }
         }
 
+        public bool SavePlayerLastGatherTime(int userID, DateTime? lastGatherStoneTime)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                string cmdTextB = "UPDATE `playerfortuneinfo` SET `TempOutputStonesStartTime`=@TempOutputStonesStartTime WHERE `UserID`=@UserID;";
+
+                mycmd = myconn.CreateCommand();
+                myconn.Open();
+                mycmd.CommandText = cmdTextB;
+
+                mycmd.Parameters.AddWithValue("@TempOutputStonesStartTime", lastGatherStoneTime);
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool SavePlayerFortuneInfo(PlayerFortuneInfo playerFortune, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
             try
             {
-                string cmdTextB = "UPDATE `playerfortuneinfo` SET "
+                string cmdTextA = "UPDATE `playerfortuneinfo` SET "
                     + " `Exp`=@Exp, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
-                    + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,`TempOutputStonesStartTime`=@TempOutputStonesStartTime,`TempOutputStones`=@TempOutputStones,"
+                    + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,";
+
+                string cmdTextB = "";
+                if (playerFortune.TempOutputStonesStartTime != null)
+                {
+                    cmdTextB = " `TempOutputStonesStartTime`=@TempOutputStonesStartTime,";
+                }
+
+                cmdTextB += " `TempOutputStonesStartTime`=@TempOutputStonesStartTime,"
+                    + " `TempOutputStones`=@TempOutputStones,"
                     + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
-                mycmd.CommandText = cmdTextB;
+                mycmd.CommandText = cmdTextA + cmdTextB;
 
                 mycmd.Parameters.AddWithValue("@Exp", playerFortune.Exp);
                 mycmd.Parameters.AddWithValue("@RMB", playerFortune.RMB);
@@ -128,7 +170,12 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@TotalProducedStonesCount", playerFortune.TotalProducedStonesCount);
                 mycmd.Parameters.AddWithValue("@MinersCount", playerFortune.MinersCount);
                 mycmd.Parameters.AddWithValue("@StockOfStones", playerFortune.StockOfStones);
-                mycmd.Parameters.AddWithValue("@TempOutputStonesStartTime", playerFortune.TempOutputStonesStartTime);
+
+                if (playerFortune.TempOutputStonesStartTime != null)
+                {
+                    mycmd.Parameters.AddWithValue("@TempOutputStonesStartTime", playerFortune.TempOutputStonesStartTime);
+                }
+
                 mycmd.Parameters.AddWithValue("@TempOutputStones", playerFortune.TempOutputStones);
                 mycmd.Parameters.AddWithValue("@FreezingStones", playerFortune.FreezingStones);
                 mycmd.Parameters.AddWithValue("@StockOfDiamonds", playerFortune.StockOfDiamonds);
@@ -290,8 +337,8 @@ namespace DataBaseProvider
                 string textCmd = "update playersimpleinfo set `NickName`=@NickName, `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName, `Email`=@Email, `QQ`=@QQ where `UserName` = @UserName;";
                 mycmd = new MySqlCommand(textCmd, myconn);
                 mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
-                mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
-                mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
+                mycmd.Parameters.AddWithValue("@Alipay", string.IsNullOrEmpty(alipayAccount) ? DBNull.Value : (object)DESEncrypt.EncryptDES(alipayAccount));
+                mycmd.Parameters.AddWithValue("@AlipayRealName", string.IsNullOrEmpty(alipayAccount) ? DBNull.Value : (object)DESEncrypt.EncryptDES(alipayRealName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 mycmd.Parameters.AddWithValue("@Email", DESEncrypt.EncryptDES(email));
                 mycmd.Parameters.AddWithValue("@QQ", DESEncrypt.EncryptDES(qq));

@@ -39,7 +39,7 @@ namespace SuperMinersCustomServiceSystem
 
             GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
 
-            this.tvL1PlayerManager.IsSelected = true;
+            this.tvL1WithdrawManager.IsSelected = true;
 
             this.controlPlayerManager.ViewPlayerAlipayRechargeRecords += controlPlayerManager_ViewPlayerAlipayRechargeRecords;
             this.controlPlayerManager.ViewPlayerBuyGoldCoinRecords += controlPlayerManager_ViewPlayerBuyGoldCoinRecords;

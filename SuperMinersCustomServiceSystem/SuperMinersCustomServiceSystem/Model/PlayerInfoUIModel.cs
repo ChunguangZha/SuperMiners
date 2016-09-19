@@ -50,6 +50,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("FreezingDiamonds");
                 NotifyPropertyChange("SellableDiamonds");
                 NotifyPropertyChange("LastGatherStoneTime");
+                NotifyPropertyChange("LastGatherStoneTime");
             }
         }
 
@@ -123,6 +124,12 @@ namespace SuperMinersCustomServiceSystem.Model
         public DateTime? LastLoginTime
         {
             get { return this._parentObject.SimpleInfo.LastLoginTime; }
+        }
+
+        public void SetLastGatherStoneTime(DateTime time)
+        {
+            this._parentObject.FortuneInfo.TempOutputStonesStartTime = time;
+            NotifyPropertyChange("LastGatherStoneTime");
         }
 
         public DateTime? LastGatherStoneTime

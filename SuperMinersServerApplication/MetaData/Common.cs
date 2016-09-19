@@ -37,6 +37,17 @@ namespace MetaData
         [DataMember]
         public int Second;
 
+        public MyDateTime()
+        {
+            DateTime timenow = DateTime.Now;
+            Year = timenow.Year;
+            Month = timenow.Month;
+            Day = timenow.Day;
+            Hour = timenow.Hour;
+            Minute = timenow.Minute;
+            Second = timenow.Second;
+        }
+
         public DateTime ToDateTime()
         {
             return new DateTime(Year, Month, Day, Hour, Minute, Second);

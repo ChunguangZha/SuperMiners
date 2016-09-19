@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -315,6 +315,9 @@
     <Compile Include="View\Windows\EditPlayerGoldCoinWindow.xaml.cs">
       <DependentUpon>EditPlayerGoldCoinWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\EditPlayerLastGatherStoneTimeWindow.xaml.cs">
+      <DependentUpon>EditPlayerLastGatherStoneTimeWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\EditPlayerMinerCountWindow.xaml.cs">
       <DependentUpon>EditPlayerMinerCountWindow.xaml</DependentUpon>
     </Compile>
@@ -518,6 +521,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EditPlayerGoldCoinWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditPlayerLastGatherStoneTimeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

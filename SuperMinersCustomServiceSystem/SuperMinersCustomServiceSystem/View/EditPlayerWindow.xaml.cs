@@ -105,5 +105,14 @@ namespace SuperMinersCustomServiceSystem
             EditPlayerStoneWindow win = new EditPlayerStoneWindow(this._player);
             win.ShowDialog();
         }
+
+        private void btnEditLastGahterStoneTime_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerLastGatherStoneTimeWindow win = new EditPlayerLastGatherStoneTimeWindow(this._player.UserName, this._player.LastGatherStoneTime);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetLastGatherStoneTime(win.DataTimeValue.ToDateTime());
+            }
+        }
     }
 }

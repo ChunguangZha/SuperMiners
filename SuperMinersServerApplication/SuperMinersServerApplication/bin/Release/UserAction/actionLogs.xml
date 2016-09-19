@@ -38,7 +38,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-09-17T23:33:46.6062178+08:00</Time>
+    <Time>2016-09-17T23:33:46</Time>
     <SystemAllPlayerCount>6</SystemAllPlayerCount>
     <SystemAllMinerCount>544</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7044.04489135742</SystemAllOutputStoneCount>
@@ -49,10 +49,54 @@
     <ActionType>GatherStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-09-17T23:33:56.641934+08:00</Time>
+    <Time>2016-09-17T23:33:56</Time>
     <SystemAllPlayerCount>6</SystemAllPlayerCount>
     <SystemAllMinerCount>544</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7045.79196166992</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/9/17 23:33:56</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>sidou31263</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-19T13:45:06.8351349+08:00</Time>
+    <SystemAllPlayerCount>260</SystemAllPlayerCount>
+    <SystemAllMinerCount>19683</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>69515.4041062594</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/19 13:45:06</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>sidou31263</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-19T13:46:00.5685363+08:00</Time>
+    <SystemAllPlayerCount>260</SystemAllPlayerCount>
+    <SystemAllMinerCount>19683</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>69515.4041062594</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/19 13:46:00</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>sidou31263</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-09-19T13:57:36.1694681+08:00</Time>
+    <SystemAllPlayerCount>260</SystemAllPlayerCount>
+    <SystemAllMinerCount>19683</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>69515.4041062594</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/19 13:57:36</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>sidou31263</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>174</OperNumber>
+    <Remark />
+    <Time>2016-09-19T13:58:25.6584066+08:00</Time>
+    <SystemAllPlayerCount>260</SystemAllPlayerCount>
+    <SystemAllMinerCount>19683</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>69690.12410748</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/9/19 13:58:25</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

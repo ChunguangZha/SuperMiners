@@ -10,5 +10,4 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaDat
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\bin\Release\MetaData.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.pdb
-F:\GitHub\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersServerApplication\MetaData\obj\Release\MetaData.csprojResolveAssemblyReference.cache
