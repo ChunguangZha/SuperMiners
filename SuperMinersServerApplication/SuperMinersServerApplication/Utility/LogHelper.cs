@@ -105,8 +105,10 @@ namespace SuperMinersServerApplication.Utility
                         {
                             foreach (var log in this.ListErrorLogs)
                             {
-                                writer.WriteLine(log);
+                                writer.Write(log);
+                                writer.WriteLine("*********+++++++++++++***********");
                             }
+                            writer.Flush();
                         }
 
                         this.ListErrorLogs.Clear();
@@ -137,10 +139,14 @@ namespace SuperMinersServerApplication.Utility
                     stream = File.OpenWrite(this.LogInfoFilePath);
                     if (stream != null)
                     {
-                        foreach (var log in this.ListInfoLogs)
+                        using (StreamWriter writer = new StreamWriter(stream))
                         {
-                            StreamWriter writer = new StreamWriter(stream);
-                            writer.WriteLine(log);
+                            foreach (var log in this.ListInfoLogs)
+                            {
+                                writer.Write(log);
+                                writer.WriteLine("*********+++++++++++++***********");
+                            }
+                            writer.Flush();
                         }
                         this.ListInfoLogs.Clear();
                     }

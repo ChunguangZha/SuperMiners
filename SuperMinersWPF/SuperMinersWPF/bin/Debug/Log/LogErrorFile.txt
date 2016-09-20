@@ -670,3 +670,16 @@ Error:  [2016/9/19 14:18:38] ---- Log: 客户端卫登剑已退出.
 Error:  [2016/9/19 21:49:13] ---- Log: 客户端Tony已退出.
 -----------------------------------------------------
 
+Error:  [2016/9/20 11:01:24] ---- Log: 服务器连接失败。
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 196
+-----------------------------------------------------
+
+Error:  [2016/9/20 11:09:52] ---- Log: 服务器连接失败。
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass21.<Receive>b__1b(IAsyncResult result) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 196
+-----------------------------------------------------
+
+Error:  [2016/9/20 11:34:33] ---- Log: 客户端Tony已退出.
+-----------------------------------------------------
+

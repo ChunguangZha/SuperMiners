@@ -22,7 +22,7 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into admininfo " +
                         "(`UserName`, `LoginPassword`, `ActionPassword`, `Mac`) values " +
-                        " (@UserName, @LoginPassword, @ActionPassword, @Mac); ";
+                        " (@UserName, @LoginPassword, @ActionPassword, @Mac) ; ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));

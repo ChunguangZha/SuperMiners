@@ -56,7 +56,7 @@ namespace DataBaseProvider
                     "(`userId`, `Exp`, `RMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, " +
                     " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `FirstRechargeGoldCoinAward` ) values " +
                     " (@userId, @Exp, @RMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, " +
-                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @FirstRechargeGoldCoinAward)";
+                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @FirstRechargeGoldCoinAward) ";
                 mycmd.CommandText = cmdTextB;
                 mycmd.Parameters.AddWithValue("@userId", userId);
                 mycmd.Parameters.AddWithValue("@Exp", player.FortuneInfo.Exp);
@@ -111,7 +111,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string cmdTextB = "UPDATE `playerfortuneinfo` SET `TempOutputStonesStartTime`=@TempOutputStonesStartTime WHERE `UserID`=@UserID;";
+                string cmdTextB = "UPDATE `playerfortuneinfo` SET `TempOutputStonesStartTime`=@TempOutputStonesStartTime WHERE `UserID`=@UserID ;";
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
