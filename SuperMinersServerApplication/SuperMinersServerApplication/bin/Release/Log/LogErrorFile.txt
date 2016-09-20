@@ -1,11 +1,10 @@
-Error:  [2016/9/16 16:49:21] ---- Log: RejectExceptionStoneOrder Exception. ClientIP=ea71973e-eec2-429f-affd-c2d572a86255
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersServerApplication.Controller.StoneOrderController.RejectExceptionStoneOrder(String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Trade\StoneOrderController.cs:行号 644
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.RejectExceptionStoneOrder(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 727
+Error:  [2016/9/20 22:47:00] ---- Log: GetPlayerAction Exception. ClientIP=::1:25602, year=2016, month=9, day=20, hour=22, minute=45, second=28
+Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetAllPlayerCount() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 517
+   在 SuperMinersServerApplication.Controller.PlayerActionController.GetActionLogList(Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerActionController.cs:行号 106
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetPlayerAction(String token, Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Message.cs:行号 30
 -----------------------------------------------------
-
-9/16 16:37:13] ---- Log: SearchExceptionAlipayRechargeRecord Exception. ClientIP=3893af70-7462-48eb-80d2-e38c103e824b
-Exc.Message: Fatal error encountered during command execution.Exc.Stack:    在 DataBaseProvider.AlipayRecordDBProvider.SearchExceptionAlipayRechargeRecord(String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AlipayRecordDBProvider.cs:行号 208
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.SearchExceptionAlipayRechargeRecord(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827
+*********+++++++++++++***********
+nersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.SearchExceptionAlipayRechargeRecord(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827
 -----------------------------------------------------
 
 类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)

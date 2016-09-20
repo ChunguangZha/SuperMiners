@@ -64,6 +64,7 @@ namespace SuperMinersWPF
             GlobalData.Client.LogoutCompleted += Client_LogoutCompleted;
             App.NoticeVMObject.AsyncGetNewNotices();
 
+            App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
         }
 
         void Client_LogoutCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
