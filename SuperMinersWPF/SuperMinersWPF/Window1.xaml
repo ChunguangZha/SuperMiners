@@ -185,7 +185,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="系统消息：" Margin="10,5" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#FFFF3A1A"/>
-                <TextBlock Grid.Column="1" x:Name="txtLinkNotice" Margin="10,5" FontStyle="Italic" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <TextBlock Grid.Column="1" x:Name="txtLinkNotice" Margin="10,5" FontStyle="Italic" FontWeight="Bold" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5">
                     <TextBlock.RenderTransform>
                         <TranslateTransform x:Name="txtLinkNoticeTranslate" Y="0"/>
                     </TextBlock.RenderTransform>

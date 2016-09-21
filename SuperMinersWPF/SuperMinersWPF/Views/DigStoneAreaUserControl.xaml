@@ -16,7 +16,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Background="#FFAFBCBB">
+            <StackPanel Background="#FFAFBCBB" Orientation="Horizontal">
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/player.png"/>
                     <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">
@@ -63,7 +63,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Grid Background="#FFAFBCBB">
+            <Grid Background="#FFAFBCBB" Visibility="Collapsed">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition Height="30"/>
@@ -71,7 +71,7 @@
                 <TextBlock Grid.Row="0" Text="提现晒图" Foreground="White" Margin="30,0" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Text="当前系统用300矿主成功提现" Foreground="White" Visibility="Collapsed" Margin="30,0" VerticalAlignment="Center"/>
             </Grid>
-            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Visibility="Collapsed">
                 <ListBox Grid.Row="1" x:Name="listChat" Margin="5">
                     <ListBoxItem>
                         <StackPanel Orientation="Vertical">
