@@ -64,6 +64,7 @@
     <Compile Include="Trade\TradeType.cs" />
     <Compile Include="Trade\WaitToAwardExpRecord.cs" />
     <Compile Include="Trade\WithdrawRMBRecord.cs" />
+    <Compile Include="Trade\WithdrawRMBShowImageRecord.cs" />
     <Compile Include="User\AdminInfo.cs" />
     <Compile Include="User\DeleteResultInfo.cs" />
     <Compile Include="User\TopListInfo.cs" />

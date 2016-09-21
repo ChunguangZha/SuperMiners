@@ -564,6 +564,7 @@ namespace SuperMinersServerApplication.Controller
                 if (StoneOrderPaySucceedNotifyBuyer != null)
                 {
                     StoneOrderPaySucceedNotifyBuyer(tokenBuyer, orderNumber);
+                    LogHelper.Instance.AddInfoLog("订单号： "+ orderNumber+" 矿石交易成功，已经通知买家：" + buyerUserName);
                 }
             }
             string tokenSeller = ClientManager.GetToken(buyOrder.StonesOrder.SellerUserName);
@@ -572,6 +573,7 @@ namespace SuperMinersServerApplication.Controller
                 if (StoneOrderPaySucceedNotifySeller != null)
                 {
                     StoneOrderPaySucceedNotifySeller(tokenSeller, orderNumber);
+                    LogHelper.Instance.AddInfoLog("订单号： " + orderNumber + " 矿石交易成功，已经通知卖家：" + buyOrder.StonesOrder.SellerUserName);
                 }
             }
         }

@@ -16,21 +16,25 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal" Background="#FFAFBCBB">
-                <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/player.png"/>
-                <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">
+            <StackPanel Background="#FFAFBCBB">
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/player.png"/>
+                    <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">
                                 <Run Text="共"/>
                                 <Run Text="{Binding SystemAllPlayerCount}"/>
                                 <Run Text="矿主"/>
                                 <Run Text="{Binding SystemAllMinerCount}"/>
                                 <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
-                </TextBlock>
-                <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
-                <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
-                                <Run Text="当前系统共累计生产： "/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
+                                <Run Text="共生产： "/>
                                 <Run Text="{Binding SystemAllOutputStoneCount, StringFormat='F0'}"/>
                                 <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
-                </TextBlock>
+                    </TextBlock>
+                </StackPanel>
             </StackPanel>
             <ListBox Name="listboxActionMessage" Grid.Row="1" Margin="5" Background="Transparent" ItemsSource="{Binding ListPlayerActionLog}" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
@@ -54,15 +58,20 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Grid Grid.Column="1" Name="gridGetMoneyShowImages" Visibility="Collapsed">
+        <Grid Grid.Column="1" Name="gridGetMoneyShowImages">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="1" Text="提现晒图" Margin="5,0"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="当前系统用300矿主成功提现" Margin="5,0"/>
-            <Border Grid.Row="2" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
+            <Grid Background="#FFAFBCBB">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="提现晒图" Foreground="White" Margin="30,0" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Text="当前系统用300矿主成功提现" Foreground="White" Visibility="Collapsed" Margin="30,0" VerticalAlignment="Center"/>
+            </Grid>
+            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" CornerRadius="5">
                 <ListBox Grid.Row="1" x:Name="listChat" Margin="5">
                     <ListBoxItem>
                         <StackPanel Orientation="Vertical">

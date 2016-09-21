@@ -163,8 +163,8 @@ namespace SuperMinersWeb
             result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                Response.Write("<script>window.opener=null;window.close();</script>");
-                Response.Write("<script>alert('恭喜您成功加入灵币矿场!');</script>");
+                Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='Default.aspx';</script>");
+                //Response.Write("<script>alert('恭喜您成功加入灵币矿场!');</script>");
             }
             else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
             {

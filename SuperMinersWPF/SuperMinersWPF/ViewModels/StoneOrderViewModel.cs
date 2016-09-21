@@ -230,6 +230,12 @@ namespace SuperMinersWPF.ViewModels
                     isOK = true;
                     MyMessageBox.ShowInfo("申诉提交成功，等待管理员处理");
                 }
+                else if (e.Result == OperResult.RESULTCODE_ORDER_BUY_SUCCEED)
+                {
+                    isOK = true;
+                    MyMessageBox.ShowInfo("矿石购买成功。");
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                }
                 else
                 {
                     isOK = false;

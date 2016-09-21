@@ -60,6 +60,7 @@
     <Compile Include="UserInfoDBProvider.cs" />
     <Compile Include="WaitToAwardExpRecordDBProvider.cs" />
     <Compile Include="WithdrawRMBRecordDBProvider.cs" />
+    <Compile Include="WithdrawRMBShowImageRecordDBProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MetaData\MetaData.csproj">
