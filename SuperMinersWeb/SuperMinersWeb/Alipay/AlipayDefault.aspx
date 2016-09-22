@@ -216,6 +216,15 @@
 			color:#999
 		}
 
+        .risk
+        {
+            display: inline-block;
+            color: #d4d3d3;
+            font-size: .9em;
+            vertical-align:central;
+            margin-left:150px;
+        }
+
         .legend {
             margin-left: 100px;
             font-size: 24px;
@@ -291,6 +300,7 @@
         <form id="Form1" class="alipayform" target="_blank" runat="server">
             <div class="element" style="margin-top: 60px;">
                 <div class="legend">支付宝即时到账交易 </div>
+                <div class="risk">投资有风险，游戏需谨慎</div>
             </div>
 			
             <div class="element">
