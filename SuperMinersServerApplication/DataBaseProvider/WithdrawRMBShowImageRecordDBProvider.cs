@@ -44,6 +44,6 @@ namespace DataBaseProvider
             }
         }
 
-        public bool DeleteWithdrawRMBShowImageRecord
+        //public bool DeleteWithdrawRMBShowImageRecord
     }
 }

@@ -300,6 +300,9 @@
     <Compile Include="Views\Controls\AlipayHistoryRecordControl.xaml.cs">
       <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\GameRouletteControl.xaml.cs">
+      <DependentUpon>GameRouletteControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml.cs">
       <DependentUpon>GoldCoinRechargeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
@@ -447,6 +450,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\AlipayHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GameRouletteControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

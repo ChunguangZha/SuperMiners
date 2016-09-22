@@ -673,6 +673,15 @@ namespace SuperMinersServerApplication.Controller
             newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
             newFortuneInfo.StonesReserves += awardConfig.AwardReferrerMines * GlobalConfig.GameConfig.StonesReservesPerMines;
             newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
+            DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(new ExpChangeRecord()
+            {
+                UserID = this.BasePlayer.SimpleInfo.UserID,
+                UserName = this.BasePlayer.SimpleInfo.UserName,
+                AddExp = awardConfig.AwardReferrerExp,
+                NewExp = newFortuneInfo.Exp,
+                OperContent = "邀请玩家获取" + awardConfig.ReferLevel + "级奖励",
+                Time = DateTime.Now
+            }, trans);
             return DBProvider.UserDBProvider.SavePlayerFortuneInfo(newFortuneInfo, trans);
         }
     }
