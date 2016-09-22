@@ -40,7 +40,8 @@
                 <div class="floatDtt">联系我们</div>
                 <div class="floatShadow">
                     <ul class="floatDqq">
-                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服</a></div></li>
+                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服1</a></div></li>
+                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921155&Site=Service&menu=yes">在线客服2</a></div></li>
                         <li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>
                         <li><div class="imgQQ"><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=5a09aacc408d4cdf0c7209a7eef3a1ee027596e3c0b6f2ffe49c465dbe432a4f">官方QQ群</a></div></li>
                     </ul>
