@@ -43,6 +43,8 @@
     <Compile Include="ActionLog\PlayerActionLog.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Game\Roulette\RouletteAwardItem.cs" />
+    <Compile Include="Game\Roulette\RouletteWinAwardResult.cs" />
+    <Compile Include="Game\Roulette\RouletteWinnerRecord.cs" />
     <Compile Include="OperResult.cs" />
     <Compile Include="Trade\AlipayRechargeRecord.cs" />
     <Compile Include="Trade\BuyStonesOrder.cs" />

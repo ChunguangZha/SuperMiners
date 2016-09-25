@@ -1,6 +1,9 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using Microsoft.Win32;
+using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,7 +59,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
+            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.txtInvitationCode.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
         }
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)
@@ -94,6 +97,77 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             catch (Exception exc)
             {
 
+            }
+        }
+
+        private void btnCSV_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveDig = new SaveFileDialog();
+            saveDig.Filter = "CSV文件(*.csv)|.csv";
+            if (saveDig.ShowDialog() == true)
+            {
+                string fileName = saveDig.FileName;
+
+                StringBuilder builder = new StringBuilder();
+                builder.AppendLine("用户名,昵称,支付宝账户,支付宝真实姓名,注册时间,注册IP,推荐人,邀请码,上一次登录时间,上一次收取矿石时间,是否被锁定,锁定时间,是否在线,当前登录IP,贡献值,灵币,金币,矿石储量,累计总产出,矿石量,矿工数,钻石量");
+                foreach (var item in App.PlayerVMObject.ListFilteredPlayers)
+                {
+                    #region
+                    builder.Append(item.UserName);
+                    builder.Append(",");
+                    builder.Append(item.NickName);
+                    builder.Append(",");
+                    builder.Append(item.Alipay);
+                    builder.Append(",");
+                    builder.Append(item.AlipayRealName);
+                    builder.Append(",");
+                    builder.Append(item.RegisterTime);
+                    builder.Append(",");
+                    builder.Append(item.RegisterIP);
+                    builder.Append(",");
+                    builder.Append(item.ReferrerUserName);
+                    builder.Append(",");
+                    builder.Append(item.InvitationCode);
+                    builder.Append(",");
+                    builder.Append(item.LastLoginTime);
+                    builder.Append(",");
+                    builder.Append(item.LastGatherStoneTime);
+                    builder.Append(",");
+                    builder.Append(item.IsLocked);
+                    builder.Append(",");
+                    builder.Append(item.LockedTime);
+                    builder.Append(",");
+                    builder.Append(item.Online);
+                    builder.Append(",");
+                    builder.Append(item.LoginIP);
+                    builder.Append(",");
+                    builder.Append(item.Exp);
+                    builder.Append(",");
+                    builder.Append(item.RMB);
+                    builder.Append(",");
+                    builder.Append(item.GoldCoin);
+                    builder.Append(",");
+                    builder.Append(item.StonesReserves);
+                    builder.Append(",");
+                    builder.Append(item.TotalProducedStonesCount);
+                    builder.Append(",");
+                    builder.Append(item.StockOfStones);
+                    builder.Append(",");
+                    builder.Append(item.MinersCount);
+                    builder.Append(",");
+                    builder.Append(item.StockOfDiamonds);
+                    builder.AppendLine();
+                    #endregion
+                }
+
+                using (FileStream stream = new FileStream(fileName, FileMode.Create))
+                {
+                    StreamWriter writer = new StreamWriter(stream, UTF8Encoding.UTF8);
+                    writer.Write(builder.ToString());
+                    writer.Dispose();
+                }
+
+                MyMessageBox.ShowInfo("保存CSV文件成功");
             }
         }
 

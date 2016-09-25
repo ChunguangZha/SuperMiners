@@ -80,6 +80,11 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
 
+        /// <summary>
+        /// 娱乐功能中，获奖信息不存在
+        /// </summary>
+        public const int RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST = 700;
+
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
 
@@ -100,6 +105,7 @@ namespace MetaData
             _resultCode_Msg.Add(OperResult.RESULTCODE_CANOT_WITHDRAWRMB, "只有贡献值大于50的玩家可以提现，且提现金额必须大于5元人民币");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_BUY_SUCCEED, "矿石交易已经交易成功");
             _resultCode_Msg.Add(RESULTCODE_ORDER_ISNOT_EXCEPTION, "该订单当前不是异常状态");
+            _resultCode_Msg.Add(RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST, "没有找到您的中奖信息");
         }
 
         public static string GetMsg(int resultCode)

@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Game.Roulette;
 using MetaData.Trade;
 using MetaData.User;
 using MySql.Data.MySqlClient;
@@ -122,6 +123,15 @@ namespace DataBaseProvider
                 player.SimpleInfo.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
                 player.SimpleInfo.InvitationCode = DESEncrypt.DecryptDES(encryptedInvitationCode);
                 player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
+
+                if (dt.Rows[i]["LockedLogin"] != DBNull.Value)
+                {
+                    player.SimpleInfo.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
+                }
+                if (dt.Rows[i]["LockedLoginTime"] != DBNull.Value)
+                {
+                    player.SimpleInfo.LockedLoginTime = Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]);
+                }
                 if (dt.Rows[i]["LastLoginTime"] == DBNull.Value)
                 {
                     player.SimpleInfo.LastLoginTime = null;
@@ -264,6 +274,32 @@ namespace DataBaseProvider
             }
 
             return orders;
+        }
+
+        internal static RouletteAwardItem[] GetRouletteAwardItemFromDataTable(DataTable dt)
+        {
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            RouletteAwardItem[] items = new RouletteAwardItem[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                RouletteAwardItem item = new RouletteAwardItem();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                item.AwardName = Convert.ToString(dt.Rows[i]["AwardName"]);
+                item.AwardNumber = Convert.ToInt32(dt.Rows[i]["AwardNumber"]);
+                item.IsLargeAward = Convert.ToBoolean(dt.Rows[i]["IsLargeAward"]);
+                item.IsRealAward = Convert.ToBoolean(dt.Rows[i]["IsRealAward"]);
+                item.RouletteAwardType = (RouletteAwardType)Convert.ToInt32(dt.Rows[i]["RouletteAwardType"]);
+                item.ValueMoneyYuan = Convert.ToSingle(dt.Rows[i]["ValueMoneyYuan"]);
+                item.WinProbability = Convert.ToSingle(dt.Rows[i]["WinProbability"]);
+
+                items[i] = item;
+            }
+
+            return items;
         }
 
         internal static SellStonesOrder[] GetSellStonesOrderFromDataTable(DataTable dt)

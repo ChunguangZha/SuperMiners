@@ -53,6 +53,7 @@
     <Compile Include="MetaDBAdapter.cs" />
     <Compile Include="MineRecordDBProvider.cs" />
     <Compile Include="MyDBHelper.cs" />
+    <Compile Include="GameRouletteDBProvider.cs" />
     <Compile Include="StoneOrderDBProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemDBProvider.cs" />

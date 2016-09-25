@@ -112,5 +112,11 @@ namespace MetaData.SystemConfig
         [DataMember]
         public decimal Discount = 0.99m;
 
+        /// <summary>
+        /// 幸运转盘玩一次，需要的矿石数
+        /// </summary>
+        [DataMember]
+        public int RouletteSpendStone = 100;
+
     }
 }
