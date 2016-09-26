@@ -168,14 +168,17 @@
     </Compile>
     <Compile Include="WebServiceToAdmin\Contracts\Callbacks\IServiceToAdmin.Callback.cs" />
     <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.cs" />
+    <Compile Include="WebServiceToAdmin\Contracts\IServiceToAdmin.FunnyGame.cs" />
     <Compile Include="WebServiceToAdmin\Services\Callbacks\ServiceToAdmin.Callback.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.cs" />
     <Compile Include="WebServiceToAdmin\AdminManager.cs" />
+    <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.FunnyGame.cs" />
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.cs" />
     <Compile Include="WebService\ClientManager.cs" />
     <Compile Include="WebService\Contracts\Callbacks\CallbackAttribute.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
@@ -187,10 +190,12 @@
     <Compile Include="WebService\Contracts\IServiceToClient.Trade.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Services\Callbacks\ServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Order.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Services\ServiceToClient.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.GameRoulette.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Message.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
     <Compile Include="WebService\Services\ServiceToClient.SystemConfig.cs" />

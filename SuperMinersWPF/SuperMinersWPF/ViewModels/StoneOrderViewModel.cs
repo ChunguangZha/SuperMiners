@@ -507,6 +507,7 @@ namespace SuperMinersWPF.ViewModels
                         StoneOrderPaySucceed();
                     }
                     this.MyBuyNotFinishedStoneOrders.Clear();
+                    MyMessageBox.ShowInfo("购买矿石成功。");
                 }
                 else
                 {

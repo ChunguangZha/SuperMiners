@@ -13,5 +13,10 @@ ALTER TABLE `superminers`.`roulettewinnerrecord` CHANGE COLUMN `GotInfo1` `GotIn
 
 -- ------------------------------------------------------------------------------------------------------------------------
 
-ALTER TABLE `superminers`.`roulettewinnerrecord` ADD COLUMN `GotTime` DATETIME NULL  AFTER `IsGot` , ADD COLUMN `PayTime` DATETIME NULL  AFTER `IsPay` ;
+ALTER TABLE `superminers`.`roulettewinnerrecord` ADD COLUMN `GotTime` DATETIME NULL  AFTER `IsGot` , ADD COLUMN `PayTime` DATETIME NULL  AFTER `IsPay` ;
+
+-- -----------------------------------------------------------------------
+
+UPDATE `superminers`.`paramtable` SET `ParamValue`='20160926165700' WHERE `id`='1';
+
 

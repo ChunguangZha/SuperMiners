@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.Game.Roulette;
 using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,25 @@ namespace SuperMinersServerApplication.Controller.Game
 {
     public class RouletteAwardController
     {
+        #region Single
+
+        private static RouletteAwardController _instance = new RouletteAwardController();
+
+        public static RouletteAwardController Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        private RouletteAwardController()
+        {
+
+        }
+
+        #endregion
+
         /// <summary>
         /// 奖项只限12个
         /// </summary>
@@ -49,14 +69,31 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 //从数据库读取
                 _listRouletteAwardItems = DBProvider.GameRouletteDBProvider.GetRouletteAwardItems();
+                if (_listRouletteAwardItems != null)
+                {
+                    var notPayRecords = DBProvider.GameRouletteDBProvider.GetNotPayWinAwardRecords();
+                    if (notPayRecords != null)
+                    {
+                        foreach (var record in notPayRecords)
+                        {
+                            record.AwardItem = _listRouletteAwardItems.FirstOrDefault(o => o.ID == record.RouletteAwardItemID);
+                            this._finishedRouletteWinnerRecord.Add(record.RecordID, record);
+                        }
+                    }
 
-                FindKeyIndex(this._listRouletteAwardItems, out this._noneAwardIndex, out this._level0AwardIndexes, out this._level1AwardIndexes);
-                ReStartLargeAwardExponent();
+                    FindKeyIndex(this._listRouletteAwardItems, out this._noneAwardIndex, out this._level0AwardIndexes, out this._level1AwardIndexes);
+                    ReStartLargeAwardExponent();
+                }
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("RouletteAwardController.Init Exception", exc);
             }
+        }
+
+        public RouletteWinnerRecord[] GetNotPayWinAwardRecords()
+        {
+            return this._finishedRouletteWinnerRecord.Values.ToArray();
         }
 
         private void ReStartLargeAwardExponent()
@@ -234,12 +271,14 @@ namespace SuperMinersServerApplication.Controller.Game
                     _tempRouletteWinnerRecord.Remove(userName);
                 }
                 _tempRouletteWinnerRecord.Add(userName, winAwardNumber);
-
-                return result;
             }
+
+            LogHelper.Instance.AddInfoLog("玩家["+ userName +"]，开始幸运大转盘抽奖。");
+
+            return result;
         }
 
-        public RouletteWinnerRecord Finish(int userID, string userName, int winAwardNumber)
+        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardNumber)
         {
             int serverWinAwardNumber = -1;
 
@@ -258,30 +297,35 @@ namespace SuperMinersServerApplication.Controller.Game
                 AwardItem = this._listRouletteAwardItems[winAwardNumber],
                 UserID = userID,
                 UserName = userName,
+                UserNickName = userNickName,
                 WinTime = DateTime.Now,
                 IsGot = false,
                 IsPay = false
             };
 
-            if (!this._listRouletteAwardItems[winAwardNumber].IsRealAward)
-            {
-                if (RouletteWinVirtualAwardPay != null)
-                {
-                    RouletteWinVirtualAwardPay(userName, this._listRouletteAwardItems[winAwardNumber]);
-                }
-                record.IsGot = true;
-                record.GotTime = DateTime.Now;
-                record.IsPay = true;
-                record.PayTime = DateTime.Now;
-            }
-
             //Save Record
             DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
 
-            //通知
+            var awardItem = this._listRouletteAwardItems[winAwardNumber];
+            if (awardItem.RouletteAwardType != RouletteAwardType.None)
+            {
+                if (!awardItem.IsRealAward)
+                {
+                    var isOK = PlayerController.Instance.RouletteWinVirtualAwardPayUpdatePlayer(userName, awardItem);
+                    if (isOK)
+                    {
+                        record.IsGot = true;
+                        record.GotTime = DateTime.Now;
+                        record.IsPay = true;
+                        record.PayTime = DateTime.Now;
+                    }
+                }
 
-            this._finishedRouletteWinnerRecord.Add(record.RecordID, record);
+                //通知
+                LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，完成了幸运大转盘抽奖。并抽中" + record.AwardItem.AwardName);
 
+                this._finishedRouletteWinnerRecord.Add(record.RecordID, record);
+            }
             return record;
         }
 
@@ -292,7 +336,7 @@ namespace SuperMinersServerApplication.Controller.Game
         /// <param name="recordID"></param>
         /// <param name="info1"></param>
         /// <param name="info2"></param>
-        public int GetAward(string userName, int recordID, string info1, string info2)
+        public int TakeAward(string userName, int recordID, string info1, string info2)
         {
             RouletteWinnerRecord record = null;
             _finishedRouletteWinnerRecord.TryGetValue(recordID, out record);
@@ -310,11 +354,13 @@ namespace SuperMinersServerApplication.Controller.Game
             DBProvider.GameRouletteDBProvider.SetWinnerRecordGot(record);
 
             //Notify Administrator
+            LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，领取了幸运转盘大奖，" + record.AwardItem.AwardName);
+
 
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public int PayAward(string playerUserName, int recordID)
+        public int PayAward(string adminUserName, string playerUserName, int recordID)
         {
             RouletteWinnerRecord record = null;
             _finishedRouletteWinnerRecord.TryGetValue(recordID, out record);
@@ -333,12 +379,25 @@ namespace SuperMinersServerApplication.Controller.Game
             //save To DB
             DBProvider.GameRouletteDBProvider.SetWinnerRecordPay(record);
             //notify player
+            LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "]，确认支付了玩家[" + playerUserName + "]的幸运转盘大奖，" + record.AwardItem.AwardName);
+
+            string playerToken = ClientManager.GetToken(playerUserName);
+            if (!string.IsNullOrEmpty(playerToken))
+            {
+                if (RouletteWinRealAwardPaySucceedNotify != null)
+                {
+                    RouletteWinRealAwardPaySucceedNotify(playerToken, record);
+                }
+            }
 
             _finishedRouletteWinnerRecord.Remove(recordID);
 
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public event Action<string, RouletteAwardItem> RouletteWinVirtualAwardPay;
+        /// <summary>
+        /// key: token
+        /// </summary>
+        public event Action<string, RouletteWinnerRecord> RouletteWinRealAwardPaySucceedNotify;
     }
 }

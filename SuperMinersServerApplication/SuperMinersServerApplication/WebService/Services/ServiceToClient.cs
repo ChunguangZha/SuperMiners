@@ -1,5 +1,6 @@
 ﻿using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
@@ -40,6 +41,15 @@ namespace SuperMinersServerApplication.WebService.Services
             OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
             OrderController.Instance.MineOrderController.MineOrderPaySucceedNotify += MineOrderController_MineOrderPaySucceedNotify;
             OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
+            RouletteAwardController.Instance.RouletteWinRealAwardPaySucceedNotify += Instance_RouletteWinRealAwardPaySucceedNotify;
+        }
+
+        void Instance_RouletteWinRealAwardPaySucceedNotify(string arg1, MetaData.Game.Roulette.RouletteWinnerRecord arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.GameRouletteWinRealAwardPaySucceed(arg1, arg2);
+            })).Start();
         }
 
         void StoneOrderController_StoneOrderAppealFailed(string arg1, string arg2)

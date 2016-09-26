@@ -7,12 +7,12 @@ using System.ServiceModel.Web;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SuperMinersServerApplication.WebService.Contracts
+namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
 {
-    public partial interface IServiceToClient
+    public partial interface IServiceToAdmin
     {
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetAwardItems",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAwardItems",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -20,27 +20,27 @@ namespace SuperMinersServerApplication.WebService.Contracts
         RouletteAwardItem[] GetAwardItems(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/StartRoulette",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SetAwardItems",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteWinAwardResult StartRoulette(string token);
+        bool SetAwardItems(string token, RouletteAwardItem[] items);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/FinishRoulette",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetNotPayWinAwardRecords",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteWinnerRecord FinishRoulette(string token, int winAwardNumber);
+        RouletteWinnerRecord[] GetNotPayWinAwardRecords(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetRouletteAward",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/PayAward",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int TakeRouletteAward(string token, int recordID, string info1, string info2);
+        int PayAward(string token, string adminUserName, string playerUserName, int recordID);
     }
 }

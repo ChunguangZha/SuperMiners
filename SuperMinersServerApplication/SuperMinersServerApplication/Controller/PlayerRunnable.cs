@@ -1,5 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.Game.Roulette;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -657,32 +658,105 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ReferAward(AwardReferrerConfig awardConfig, CustomerMySqlTransaction trans)
         {
-            PlayerFortuneInfo newFortuneInfo = null;
+            bool isOK = false;
             lock (_lockFortuneAction)
             {
+                PlayerFortuneInfo newFortuneInfo = null;
                 //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
                 newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+
+                if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
+                {
+                    newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
+                }
+                newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
+                newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
+                newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
+                newFortuneInfo.StonesReserves += awardConfig.AwardReferrerMines * GlobalConfig.GameConfig.StonesReservesPerMines;
+                newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
+
+                isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(newFortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(newFortuneInfo);
             }
 
-            if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
-            {
-                newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
-            }
-            newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
-            newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
-            newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
-            newFortuneInfo.StonesReserves += awardConfig.AwardReferrerMines * GlobalConfig.GameConfig.StonesReservesPerMines;
-            newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
             DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(new ExpChangeRecord()
             {
                 UserID = this.BasePlayer.SimpleInfo.UserID,
                 UserName = this.BasePlayer.SimpleInfo.UserName,
                 AddExp = awardConfig.AwardReferrerExp,
-                NewExp = newFortuneInfo.Exp,
+                NewExp = this.BasePlayer.FortuneInfo.Exp,
                 OperContent = "邀请玩家获取" + awardConfig.ReferLevel + "级奖励",
                 Time = DateTime.Now
             }, trans);
-            return DBProvider.UserDBProvider.SavePlayerFortuneInfo(newFortuneInfo, trans);
+
+            return isOK;
+        }
+
+        public bool RouletteWinVirtualAwardPayUpdatePlayer(string userName, RouletteAwardItem awardItem)
+        {
+            CustomerMySqlTransaction trans = null;
+            bool isOK = false;
+            try
+            {
+                trans = MyDBHelper.Instance.CreateTrans();
+                lock (_lockFortuneAction)
+                {
+                    PlayerFortuneInfo newFortuneInfo = null;
+                    //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
+                    newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+
+                    switch (awardItem.RouletteAwardType)
+                    {
+                        case RouletteAwardType.None:
+                            return false;
+                        case RouletteAwardType.Stone:
+                            newFortuneInfo.StockOfStones += awardItem.AwardNumber;
+                            break;
+                        case RouletteAwardType.GoldCoin:
+                            newFortuneInfo.GoldCoin += awardItem.AwardNumber;
+                            break;
+                        case RouletteAwardType.Exp:
+                            newFortuneInfo.Exp += awardItem.AwardNumber;
+                            DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(new ExpChangeRecord()
+                            {
+                                UserID = this.BasePlayer.SimpleInfo.UserID,
+                                UserName = this.BasePlayer.SimpleInfo.UserName,
+                                AddExp = awardItem.AwardNumber,
+                                NewExp = newFortuneInfo.Exp,
+                                OperContent = "幸运大转盘中奖",
+                                Time = DateTime.Now
+                            }, trans);
+                            break;
+                        case RouletteAwardType.StoneReserve:
+                            newFortuneInfo.StonesReserves += awardItem.AwardNumber;
+                            break;
+                        default:
+                            return false;
+
+                    }
+
+                    isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(newFortuneInfo, trans);
+                    trans.Commit();
+
+                    BasePlayer.FortuneInfo.CopyFrom(newFortuneInfo);
+
+                }
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                trans.Rollback();
+                LogHelper.Instance.AddErrorLog("PlayerRunnable PayRouletteWinVirtualAward Exception", exc);
+                return false;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
+                }
+            }
         }
     }
 }

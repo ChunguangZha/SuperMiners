@@ -302,6 +302,55 @@ namespace DataBaseProvider
             return items;
         }
 
+        internal static RouletteWinnerRecord[] GetRouletteWinnerRecordFromDataTable(DataTable dt)
+        {
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            RouletteWinnerRecord[] records = new RouletteWinnerRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                RouletteWinnerRecord record = new RouletteWinnerRecord();
+                record.RecordID = Convert.ToInt32(dt.Rows[i]["id"]);
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.UserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserName"]));
+                if (dt.Rows[i]["UserNickName"] == DBNull.Value)
+                {
+                    record.UserNickName = record.UserName;
+                }
+                else
+                {
+                    record.UserNickName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserNickName"]));
+                }
+                record.RouletteAwardItemID = Convert.ToInt32(dt.Rows[i]["AwardItemID"]);
+                record.WinTime = Convert.ToDateTime(dt.Rows[i]["WinTime"]);
+                record.IsGot = Convert.ToBoolean(dt.Rows[i]["IsGot"]);
+                if (dt.Rows[i]["GotTime"] != DBNull.Value)
+                {
+                    record.GotTime = Convert.ToDateTime(dt.Rows[i]["GotTime"]);
+                }
+                record.IsPay = Convert.ToBoolean(dt.Rows[i]["IsPay"]);
+                if (dt.Rows[i]["PayTime"] != DBNull.Value)
+                {
+                    record.PayTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]);
+                }
+                if (dt.Rows[i]["GotInfo1"] != DBNull.Value)
+                {
+                    record.GotInfo1 = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["GotInfo1"]));
+                }
+                if (dt.Rows[i]["GotInfo2"] != DBNull.Value)
+                {
+                    record.GotInfo2 = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["GotInfo2"]));
+                }
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
         internal static SellStonesOrder[] GetSellStonesOrderFromDataTable(DataTable dt)
         {
             SellStonesOrder[] orders = new SellStonesOrder[dt.Rows.Count];

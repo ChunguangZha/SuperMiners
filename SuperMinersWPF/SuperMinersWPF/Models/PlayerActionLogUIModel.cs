@@ -72,6 +72,7 @@ namespace SuperMinersWPF.Models
                         message = "进入矿场";
                         break;
                     default:
+                        message = this._parentObject.Remark;
                         break;
                 }
 

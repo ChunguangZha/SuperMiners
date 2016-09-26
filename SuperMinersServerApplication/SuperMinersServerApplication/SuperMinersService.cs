@@ -1,5 +1,6 @@
 ﻿using MetaData.SystemConfig;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Utility;
@@ -80,6 +81,7 @@ namespace SuperMinersServerApplication
                 PlayerController.Instance.Init();
                 OrderController.Instance.Init();
                 NoticeController.Instance.Init();
+                RouletteAwardController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

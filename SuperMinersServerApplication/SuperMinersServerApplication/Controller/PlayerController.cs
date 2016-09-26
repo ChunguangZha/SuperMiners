@@ -13,6 +13,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using DataBaseProvider;
 using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Game;
+using MetaData.Game.Roulette;
 
 namespace SuperMinersServerApplication.Controller
 {
@@ -55,6 +57,17 @@ namespace SuperMinersServerApplication.Controller
             this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
         }
 
+        public bool RouletteWinVirtualAwardPayUpdatePlayer(string userName, RouletteAwardItem awardItem)
+        {
+            var runnable = this.GetOnlinePlayerRunnable(userName);
+            if (runnable == null)
+            {
+                return false;
+            }
+
+            return runnable.RouletteWinVirtualAwardPayUpdatePlayer(userName, awardItem);
+        }
+        
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
         /// </summary>

@@ -23,6 +23,11 @@ namespace MetaData.Game.Roulette
         public string UserName;
 
         [DataMember]
+        public string UserNickName;
+
+        public int RouletteAwardItemID;
+
+        [DataMember]
         public RouletteAwardItem AwardItem;
 
         [DataMember]
@@ -38,7 +43,7 @@ namespace MetaData.Game.Roulette
         /// 允许为null
         /// </summary>
         [DataMember]
-        public DateTime GotTime;
+        public DateTime? GotTime;
 
         /// <summary>
         /// 是否已支付
@@ -50,12 +55,17 @@ namespace MetaData.Game.Roulette
         /// 允许为null
         /// </summary>
         [DataMember]
-        public DateTime PayTime;
+        public DateTime? PayTime;
 
         [DataMember]
         public string GotInfo1;
 
         [DataMember]
         public string GotInfo2;
+
+        public override string ToString()
+        {
+            return "玩家[" + UserName + "]幸运抽中" + AwardItem.AwardName;
+        }
     }
 }

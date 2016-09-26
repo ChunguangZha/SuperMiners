@@ -146,5 +146,23 @@ namespace MetaData.User
 
             return infoB;
         }
+
+        public void CopyFrom(PlayerFortuneInfo fortuneInfo)
+        {
+            this.Exp = fortuneInfo.Exp;
+            this.FreezingDiamonds = fortuneInfo.FreezingDiamonds;
+            this.FreezingStones = fortuneInfo.FreezingStones;
+            this.GoldCoin = fortuneInfo.GoldCoin;
+            this.MinersCount = fortuneInfo.MinersCount;
+            this.MinesCount = fortuneInfo.MinesCount;
+            this.RMB = fortuneInfo.RMB;
+            this.StockOfDiamonds = fortuneInfo.StockOfDiamonds;
+            this.StockOfStones = fortuneInfo.StockOfStones;
+            this.StonesReserves = fortuneInfo.StonesReserves;
+            this.TempOutputStones = fortuneInfo.TempOutputStones;
+            this.TotalProducedStonesCount = fortuneInfo.TotalProducedStonesCount;
+            this.UserName = fortuneInfo.UserName;
+            this.FirstRechargeGoldCoinAward = fortuneInfo.FirstRechargeGoldCoinAward;
+        }
     }
 }

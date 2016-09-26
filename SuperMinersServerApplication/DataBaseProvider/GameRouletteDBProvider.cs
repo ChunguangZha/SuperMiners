@@ -227,5 +227,81 @@ namespace DataBaseProvider
                 }
             }
         }
+
+        ///// <summary>
+        ///// 没有填充AwardItem属性
+        ///// </summary>
+        ///// <returns></returns>
+        //public RouletteWinnerRecord[] GetNotTokeWinAwardRecords()
+        //{
+        //    RouletteWinnerRecord[] records = null;
+        //    MySqlConnection myconn = null;
+        //    MySqlCommand mycmd = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
+        //        string sqlText = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsGot = @IsGot";
+        //        mycmd = myconn.CreateCommand();
+        //        mycmd.CommandText = sqlText;
+        //        mycmd.Parameters.AddWithValue("@IsGot", false);
+        //        MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+        //        DataTable table = new DataTable();
+        //        adapter.Fill(table);
+        //        records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+        //        return records;
+        //    }
+        //    finally
+        //    {
+        //        if (mycmd != null)
+        //        {
+        //            mycmd.Dispose();
+        //        }
+        //        if (myconn != null)
+        //        {
+        //            myconn.Close();
+        //            myconn.Dispose();
+        //        }
+        //    }
+        //}
+
+        /// <summary>
+        /// 没有填充AwardItem属性
+        /// </summary>
+        /// <returns></returns>
+        public RouletteWinnerRecord[] GetNotPayWinAwardRecords()
+        {
+            RouletteWinnerRecord[] records = null;
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string sqlText = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsPay = @IsPay";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@IsPay", false);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                return records;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
     }
 }
