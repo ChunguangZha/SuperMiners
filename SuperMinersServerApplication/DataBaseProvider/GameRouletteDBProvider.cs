@@ -97,7 +97,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SaveRouletteWinnerRecord(RouletteWinnerRecord record)
+        public bool AddRouletteWinnerRecord(RouletteWinnerRecord record)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -107,8 +107,8 @@ namespace DataBaseProvider
                 myconn.Open();
 
                 string sqlInsertText = "insert into roulettewinnerrecord " +
-                    " (`UserID`, `AwardItemID`, `WinTime`, `IsGot`, `IsPay`, `GotInfo1`, `GotInfo2`) " +
-                    " values (@UserID, @AwardItemID, @WinTime, @IsGot, @IsPay, @GotInfo1, @GotInfo2)";
+                    " (`UserID`, `AwardItemID`, `WinTime`, `IsGot`, `GotTime`, `IsPay`, `PayTime`, `GotInfo1`, `GotInfo2`) " +
+                    " values (@UserID, @AwardItemID, @WinTime, @IsGot, @GotTime, @IsPay, @PayTime, @GotInfo1, @GotInfo2)";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlInsertText;
@@ -116,9 +116,99 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@AwardItemID", record.AwardItem.ID);
                 mycmd.Parameters.AddWithValue("@WinTime", record.WinTime);
                 mycmd.Parameters.AddWithValue("@IsGot", record.IsGot);
+                if (record.GotTime == null)
+                {
+                    mycmd.Parameters.AddWithValue("@GotTime", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@GotTime", record.GotTime);
+                }
                 mycmd.Parameters.AddWithValue("@IsPay", record.IsPay);
-                mycmd.Parameters.AddWithValue("@GotInfo1", record.GotInfo1);
-                mycmd.Parameters.AddWithValue("@GotInfo2", record.GotInfo2);
+                if (record.PayTime == null)
+                {
+                    mycmd.Parameters.AddWithValue("@PayTime", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                }
+                mycmd.Parameters.AddWithValue("@GotInfo1", DESEncrypt.EncryptDES(record.GotInfo1));
+                mycmd.Parameters.AddWithValue("@GotInfo2", DESEncrypt.EncryptDES(record.GotInfo2));
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool SetWinnerRecordGot(RouletteWinnerRecord record)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string sqlInsertText = "update roulettewinnerrecord " +
+                    " set `IsGot` = @IsGot, `GotTime` = @GotTime, `GotInfo1` = @GotInfo1, `GotInfo2` = @GotInfo2 where `id` = @ID ";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@IsGot", record.IsGot);
+                mycmd.Parameters.AddWithValue("@GotTime", record.GotTime);
+                mycmd.Parameters.AddWithValue("@GotInfo1", DESEncrypt.EncryptDES(record.GotInfo1));
+                mycmd.Parameters.AddWithValue("@GotInfo2", DESEncrypt.EncryptDES(record.GotInfo2));
+                mycmd.Parameters.AddWithValue("@ID", record.RecordID);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool SetWinnerRecordPay(RouletteWinnerRecord record)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string sqlInsertText = "update roulettewinnerrecord " +
+                    " set `IsPay` = @IsPay, `PayTime` = @PayTime where `id` = @ID ";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@IsPay", record.IsPay);
+                mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                mycmd.Parameters.AddWithValue("@ID", record.RecordID);
 
                 mycmd.ExecuteNonQuery();
                 mycmd.Dispose();

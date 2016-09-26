@@ -121,11 +121,6 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.FortuneInfo.FreezingRMB; }
         }
 
-        public decimal EnbleRMB
-        {
-            get { return this.RMB - this.FreezingRMB; }
-        }
-
         /// <summary>
         /// 金币数
         /// </summary>

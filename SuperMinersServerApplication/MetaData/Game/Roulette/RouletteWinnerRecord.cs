@@ -35,10 +35,22 @@ namespace MetaData.Game.Roulette
         public bool IsGot;
 
         /// <summary>
+        /// 允许为null
+        /// </summary>
+        [DataMember]
+        public DateTime GotTime;
+
+        /// <summary>
         /// 是否已支付
         /// </summary>
         [DataMember]
         public bool IsPay;
+
+        /// <summary>
+        /// 允许为null
+        /// </summary>
+        [DataMember]
+        public DateTime PayTime;
 
         [DataMember]
         public string GotInfo1;

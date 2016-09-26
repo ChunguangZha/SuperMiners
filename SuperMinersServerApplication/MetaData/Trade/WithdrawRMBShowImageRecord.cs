@@ -10,7 +10,8 @@ namespace MetaData.Trade
     [DataContract]
     public class WithdrawRMBShowImageRecord
     {
-        
+        //[DataMember]
+        //public int RecordID;
 
         /// <summary>
         /// NOT NULL

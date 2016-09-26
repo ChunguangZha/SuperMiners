@@ -35,7 +35,7 @@ namespace SuperMinersWPF.Views.Windows
 
             if (this.txtRMB != null)
             {
-                this.txtRMB.Text = GlobalData.CurrentUser.EnbleRMB.ToString();
+                this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();
                 this.txtYuan_RMB.Text = GlobalData.GameConfig.Yuan_RMB.ToString();
             }
         }

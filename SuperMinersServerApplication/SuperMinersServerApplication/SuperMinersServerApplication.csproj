@@ -180,6 +180,7 @@
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Game.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.GameRoulette.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />

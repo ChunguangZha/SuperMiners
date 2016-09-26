@@ -23,8 +23,8 @@ CREATE TABLE `superminers`.`roulettewinnerrecord` (
   `IsPay` INT(1) NOT NULL,
   `GotInfo1` VARCHAR(45) NOT NULL DEFAULT '',
   `GotInfo2` VARCHAR(45) NOT NULL DEFAULT '',
-  PRIMARY KEY (`RecordID`),
-  UNIQUE INDEX `RecordID_UNIQUE` (`RecordID` ASC),
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ID_UNIQUE` (`id` ASC),
   INDEX `fkey_RouletteWinnerRecord_UserID_idx` (`UserID` ASC),
   INDEX `fkey_RouletteWinnerRecord_AwardItemID_idx` (`AwardItemID` ASC),
   CONSTRAINT `fkey_RouletteWinnerRecord_UserID`
