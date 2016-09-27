@@ -155,6 +155,48 @@ namespace DataBaseProvider
             }
         }
 
+        public RouletteWinnerRecord GetPayWinAwardRecord(string UserName, int RouletteAwardItemID, DateTime WinTime)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlTextA = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  " +
+                    " where s.UserName = @UserName and r.AwardItemID = @AwardItemID and r.WinTime >= @WinTime";
+                string encryptUserName = DESEncrypt.EncryptDES(UserName);
+                mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
+                mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
+                mycmd.Parameters.AddWithValue("@WinTime", WinTime);
+                mycmd.CommandText = sqlTextA;
+                myconn.Open();
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                var records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                if (records != null && records.Length == 1)
+                {
+                    return records[0];
+                }
+
+                return null;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool SetWinnerRecordGot(RouletteWinnerRecord record)
         {
             MySqlConnection myconn = null;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuperMinersCustomServiceSystem.Model
 {
@@ -86,6 +87,11 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this.ParentObject.IsPay; }
         }
 
+        public Visibility PayButtonVisibility
+        {
+            get { return IsPay ? Visibility.Collapsed : Visibility.Visible; }
+        }
+
         /// <summary>
         /// 允许为null
         /// </summary>
@@ -113,5 +119,15 @@ namespace SuperMinersCustomServiceSystem.Model
 
         }
 
+        public override bool Equals(object obj)
+        {
+            RouletteWinnerRecordUIModel other = obj as RouletteWinnerRecordUIModel;
+            if (other == null)
+            {
+                return false;
+            }
+
+            return this.RecordID == other.RecordID;
+        }
     }
 }

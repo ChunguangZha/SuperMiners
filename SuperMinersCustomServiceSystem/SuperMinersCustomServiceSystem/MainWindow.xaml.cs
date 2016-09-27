@@ -182,6 +182,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlAlipayRecordHistory.Visibility = System.Windows.Visibility.Collapsed;
             this.controlAlipayExceptionRecords.Visibility = System.Windows.Visibility.Collapsed;
             this.controlNoticeManage.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlRouletteActiveWinRealAwardRecords.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlRouletteWinAwardHistoryRecords.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -284,6 +286,18 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlNoticeManage.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_FS_Roulette_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlRouletteActiveWinRealAwardRecords.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlRouletteWinAwardHistoryRecords.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

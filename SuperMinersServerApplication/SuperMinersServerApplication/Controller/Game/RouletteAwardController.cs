@@ -320,6 +320,11 @@ namespace SuperMinersServerApplication.Controller.Game
 
             //Save Record
             DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
+            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserName, record.RouletteAwardItemID, record.WinTime);
+            if (dbRecord != null)
+            {
+                record.RecordID = dbRecord.RecordID;
+            }
 
             var awardItem = this._listRouletteAwardItems[winAwardNumber];
             if (awardItem.RouletteAwardType != RouletteAwardType.None)

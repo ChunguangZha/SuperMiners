@@ -4,8 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="幸运大转盘摇中实物奖项处理" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding RecordID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding UserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="中奖信息" Width="*" Binding="{Binding AwardItemName, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="中奖时间" Width="*" Binding="{Binding WinTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="是否领取" Width="*" Binding="{Binding IsGot, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="领取信息1" Width="*" Binding="{Binding GotInfo1, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="领取信息2" Width="*" Binding="{Binding GotInfo1, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="支付" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnPay_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
     </Grid>
 </UserControl>

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,27 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         public RouletteActiveWinRealAwardListControl()
         {
             InitializeComponent();
+        }
+
+        private void btnPay_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            RouletteWinnerRecordUIModel record = btn.DataContext as RouletteWinnerRecordUIModel;
+            if (record == null)
+            {
+                return;
+            }
+
+            GameRouletteWinAwardWindow win = new GameRouletteWinAwardWindow(record);
+            if (win.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        private void btnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            App.GameRouletteVMObject.AsyncGetNotPayWinAwardRecords();
         }
     }
 }

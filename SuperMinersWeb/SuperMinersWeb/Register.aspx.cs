@@ -43,10 +43,10 @@ namespace SuperMinersWeb
 
             invitationCode = Session["ic"] as string;
 
-            string userName = this.txtUserName.Text;
-            string nickName = this.txtNickName.Text;
-            string email = this.txtEmail.Text;
-            string qq = this.txtQQ.Text;
+            string userName = this.txtUserName.Text.Trim();
+            string nickName = this.txtNickName.Text.Trim();
+            string email = this.txtEmail.Text.Trim();
+            string qq = this.txtQQ.Text.Trim();
             string password = this.txtPassword.Text;
             string confirmpwd = this.txtConfirmPassword.Text;
             if (userName.Length < 3)

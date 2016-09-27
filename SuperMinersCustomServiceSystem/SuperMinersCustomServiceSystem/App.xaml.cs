@@ -23,6 +23,7 @@ namespace SuperMinersCustomServiceSystem
         public static MinerTradeViewModel MinerTradeVMObject = new MinerTradeViewModel();
         public static GoldCoinTradeViewModel GoldCoinTradeVMObject = new GoldCoinTradeViewModel();
         public static AlipayRechargeViewModel AlipayRechargeVMObject = new AlipayRechargeViewModel();
+        public static GameRouletteViewModel GameRouletteVMObject = new GameRouletteViewModel();
 
         protected override void OnStartup(StartupEventArgs e)
         {

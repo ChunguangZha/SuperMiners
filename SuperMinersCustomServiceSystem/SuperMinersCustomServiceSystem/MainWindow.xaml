@@ -1,6 +1,7 @@
 ﻿<Window xmlns:Controls="clr-namespace:SuperMinersCustomServiceSystem.View.Controls"  x:Class="SuperMinersCustomServiceSystem.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:tradeControl="clr-namespace:SuperMinersCustomServiceSystem.View.Controls.TradeSystem"
+        xmlns:gameControl="clr-namespace:SuperMinersCustomServiceSystem.View.Controls.GameFunny"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="矿工管理员系统" Height="600" Width="800"
         Loaded="Window_Loaded"
@@ -71,8 +72,9 @@
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
-                <TreeViewItem Header="幸运大转盘">
-                    
+                <TreeViewItem Header="幸运大转盘" Name="tvL2_FS_Roulette" Style="{StaticResource TVItemL2Style}">
+                    <TreeViewItem Name="tvL2_FS_Roulette_Active" Header="未支付的中奖记录" MouseDoubleClick="tvL2_FS_Roulette_Active_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_FS_Roulette_HistoryRecord" Header="中奖历史记录" MouseDoubleClick="tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick"/>
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL2NoticeManage" Header="公告管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL2NoticeManage_MouseDoubleClick">
@@ -97,6 +99,8 @@
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
             <tradeControl:AlipayHistoryRecordControl x:Name="controlAlipayRecordHistory" Visibility="Collapsed"/>
             <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
+            <gameControl:RouletteActiveWinRealAwardListControl x:Name="controlRouletteActiveWinRealAwardRecords" Visibility="Collapsed"/>
+            <gameControl:RouletteWinAwardRecordHistoryControl x:Name="controlRouletteWinAwardHistoryRecords" Visibility="Collapsed"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>

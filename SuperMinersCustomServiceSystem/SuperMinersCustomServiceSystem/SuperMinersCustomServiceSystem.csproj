@@ -345,6 +345,9 @@
     <Compile Include="View\Windows\EditPlayerStoneWindow.xaml.cs">
       <DependentUpon>EditPlayerStoneWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\GameRouletteWinAwardWindow.xaml.cs">
+      <DependentUpon>GameRouletteWinAwardWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\HandleExceptionAlipayRecordWindow.xaml.cs">
       <DependentUpon>HandleExceptionAlipayRecordWindow.xaml</DependentUpon>
     </Compile>
@@ -564,6 +567,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EditPlayerStoneWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\GameRouletteWinAwardWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

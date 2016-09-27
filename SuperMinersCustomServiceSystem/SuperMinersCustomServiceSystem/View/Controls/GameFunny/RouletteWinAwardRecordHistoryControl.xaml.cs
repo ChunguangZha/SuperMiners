@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MetaData;
+using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +26,72 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         public RouletteWinAwardRecordHistoryControl()
         {
             InitializeComponent();
+
+            this.datagrid.ItemsSource = App.GameRouletteVMObject.ListAllPayRouletteWinnerRecords;
+            var listAwardItems = App.GameRouletteVMObject.ListRouletteAwardItems.ToList();
+            if (listAwardItems != null)
+            {
+                listAwardItems.Insert(0, new Model.RouletteAwardItemUIModel(new MetaData.Game.Roulette.RouletteAwardItem()
+                {
+                    ID = -1,
+                    AwardName="全部"
+                }));
+
+                this.cmbAwardItems.ItemsSource = listAwardItems;
+                this.cmbAwardItems.SelectedIndex = 0;
+            }
+        }
+
+        public void SetUserName(string userName)
+        {
+            this.txtUserName.Text = userName;
+            Search();
+        }
+
+        private void Search()
+        {
+            int isGot = this.cmbIsGot.SelectedIndex - 1;
+            int isPay = this.cmbIsPay.SelectedIndex - 1;
+            string playerUserName = this.txtUserName.Text;
+            var selectedAwardItem = this.cmbAwardItems.SelectedItem;
+            if(selectedAwardItem==null)
+            {
+                MyMessageBox.ShowInfo("请选择中奖信息");
+                return;
+            }
+
+            var awardItem = selectedAwardItem as RouletteAwardItemUIModel;
+
+            MyDateTime beginWinTime = this.dpStartWinTime.ValueTime;
+            MyDateTime endWinTime = this.dpEndWinTime.ValueTime;
+
+            int pageIndex = (int)this.numPageIndex.Value;
+
+            App.GameRouletteVMObject.AsyncGetAllPayWinAwardRecords(playerUserName, awardItem.ID, beginWinTime, endWinTime,
+                isGot, isPay, 30, pageIndex);
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void btnPreviousPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.numPageIndex.Value > 1)
+            {
+                this.numPageIndex.Value = this.numPageIndex.Value - 1;
+                Search();
+            }
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (App.WithdrawRMBVMObject.ListHistoryWithdrawRecords.Count > 0)
+            {
+                this.numPageIndex.Value = this.numPageIndex.Value + 1;
+                Search();
+            }
         }
     }
 }
