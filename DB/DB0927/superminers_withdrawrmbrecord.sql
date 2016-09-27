@@ -16,37 +16,37 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `minesbuyrecord`
+-- Table structure for table `withdrawrmbrecord`
 --
 
-DROP TABLE IF EXISTS `minesbuyrecord`;
+DROP TABLE IF EXISTS `withdrawrmbrecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `minesbuyrecord` (
+CREATE TABLE `withdrawrmbrecord` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `OrderNumber` varchar(35) NOT NULL,
-  `UserID` int(10) unsigned NOT NULL,
-  `SpendRMB` int(10) unsigned NOT NULL,
-  `GainMinesCount` float unsigned NOT NULL,
-  `GainStonesReserves` int(10) unsigned NOT NULL,
+  `PlayerUserName` varchar(64) NOT NULL,
+  `AlipayAccount` varchar(128) DEFAULT NULL,
+  `AlipayRealName` varchar(30) DEFAULT NULL,
+  `WidthdrawRMB` float NOT NULL,
+  `ValueYuan` int(11) NOT NULL,
   `CreateTime` datetime NOT NULL,
-  `PayTime` datetime NOT NULL,
+  `IsPayedSucceed` tinyint(1) NOT NULL COMMENT '1:true; 0:false',
+  `AdminUserName` varchar(64) DEFAULT NULL,
+  `AlipayOrderNumber` varchar(45) DEFAULT NULL,
+  `PayTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `OrderNumber_UNIQUE` (`OrderNumber`),
-  KEY `userinfo_id_MinesBuyRecord_userid_idx` (`UserID`),
-  CONSTRAINT `userinfo_id_MinesBuyRecord_userid` FOREIGN KEY (`UserID`) REFERENCES `playersimpleinfo` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `minesbuyrecord`
+-- Dumping data for table `withdrawrmbrecord`
 --
 
-LOCK TABLES `minesbuyrecord` WRITE;
-/*!40000 ALTER TABLE `minesbuyrecord` DISABLE KEYS */;
-INSERT INTO `minesbuyrecord` VALUES (1,'2016091116352703211218123174667470',22,3000,1,100000,'2016-09-11 16:35:27','0001-01-01 00:00:00'),(2,'2016091506014601011218123174664129',22,6000,2,200000,'2016-09-15 06:01:46','0001-01-01 00:00:00');
-/*!40000 ALTER TABLE `minesbuyrecord` ENABLE KEYS */;
+LOCK TABLES `withdrawrmbrecord` WRITE;
+/*!40000 ALTER TABLE `withdrawrmbrecord` DISABLE KEYS */;
+INSERT INTO `withdrawrmbrecord` VALUES (1,'mQtiixLpx3E9I5QceXeCZQ==',NULL,NULL,100,10,'2016-09-16 18:29:40',1,'sV5siY7eaz8=','','2016-09-17 15:03:36'),(2,'mQtiixLpx3E9I5QceXeCZQ==',NULL,NULL,100,10,'2016-09-17 09:17:31',1,'sV5siY7eaz8=','','2016-09-17 15:08:49'),(3,'vsoav0hnqitUiVBmL2IPWg==','2DGcfzq69NsvQXVA2mcRdg==','uxaDUqumA7B22MgplODJPw==',130,13,'2016-09-24 22:03:21',1,'','','2016-09-26 12:35:19');
+/*!40000 ALTER TABLE `withdrawrmbrecord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

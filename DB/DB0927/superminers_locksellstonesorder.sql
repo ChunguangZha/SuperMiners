@@ -16,30 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `paramtable`
+-- Table structure for table `locksellstonesorder`
 --
 
-DROP TABLE IF EXISTS `paramtable`;
+DROP TABLE IF EXISTS `locksellstonesorder`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `paramtable` (
+CREATE TABLE `locksellstonesorder` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ParamName` varchar(45) NOT NULL,
-  `ParamValue` varchar(45) NOT NULL,
+  `OrderNumber` varchar(35) NOT NULL,
+  `PayUrl` varchar(300) NOT NULL,
+  `LockedByUserName` varchar(64) NOT NULL,
+  `LockedTime` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `ParamName_UNIQUE` (`ParamName`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  UNIQUE KEY `OrderNumber_UNIQUE` (`OrderNumber`),
+  KEY `foreign_OrderNumber_idx` (`OrderNumber`),
+  CONSTRAINT `foreign_LockOrderNumber` FOREIGN KEY (`OrderNumber`) REFERENCES `sellstonesorder` (`OrderNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=163 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `paramtable`
+-- Dumping data for table `locksellstonesorder`
 --
 
-LOCK TABLES `paramtable` WRITE;
-/*!40000 ALTER TABLE `paramtable` DISABLE KEYS */;
-INSERT INTO `paramtable` VALUES (1,'DBVERSION','20160918214400');
-/*!40000 ALTER TABLE `paramtable` ENABLE KEYS */;
+LOCK TABLES `locksellstonesorder` WRITE;
+/*!40000 ALTER TABLE `locksellstonesorder` DISABLE KEYS */;
+/*!40000 ALTER TABLE `locksellstonesorder` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -51,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:58
+-- Dump completed on 2016-09-27 13:37:49

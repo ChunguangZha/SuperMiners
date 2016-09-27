@@ -16,33 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `locksellstonesorder`
+-- Table structure for table `rmbrechargerecord`
 --
 
-DROP TABLE IF EXISTS `locksellstonesorder`;
+DROP TABLE IF EXISTS `rmbrechargerecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `locksellstonesorder` (
+CREATE TABLE `rmbrechargerecord` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `OrderNumber` varchar(35) NOT NULL,
-  `PayUrl` varchar(200) NOT NULL,
-  `LockedByUserName` varchar(64) NOT NULL,
-  `LockedTime` datetime NOT NULL,
+  `UserID` int(10) unsigned NOT NULL,
+  `RechargeMoney` float unsigned NOT NULL,
+  `GainRMB` float unsigned NOT NULL,
+  `Time` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `OrderNumber_UNIQUE` (`OrderNumber`),
-  KEY `foreign_OrderNumber_idx` (`OrderNumber`),
-  CONSTRAINT `foreign_LockOrderNumber` FOREIGN KEY (`OrderNumber`) REFERENCES `sellstonesorder` (`OrderNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
+  CONSTRAINT `userinfo_id_RMBRechargeRecord_userid` FOREIGN KEY (`UserID`) REFERENCES `playersimpleinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `locksellstonesorder`
+-- Dumping data for table `rmbrechargerecord`
 --
 
-LOCK TABLES `locksellstonesorder` WRITE;
-/*!40000 ALTER TABLE `locksellstonesorder` DISABLE KEYS */;
-/*!40000 ALTER TABLE `locksellstonesorder` ENABLE KEYS */;
+LOCK TABLES `rmbrechargerecord` WRITE;
+/*!40000 ALTER TABLE `rmbrechargerecord` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rmbrechargerecord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -54,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

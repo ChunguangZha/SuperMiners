@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tempminesbuyrecord`
+-- Table structure for table `minesbuyrecord`
 --
 
-DROP TABLE IF EXISTS `tempminesbuyrecord`;
+DROP TABLE IF EXISTS `minesbuyrecord`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tempminesbuyrecord` (
+CREATE TABLE `minesbuyrecord` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `OrderNumber` varchar(35) NOT NULL,
   `UserID` int(10) unsigned NOT NULL,
@@ -30,21 +30,22 @@ CREATE TABLE `tempminesbuyrecord` (
   `GainMinesCount` float unsigned NOT NULL,
   `GainStonesReserves` int(10) unsigned NOT NULL,
   `CreateTime` datetime NOT NULL,
+  `PayTime` datetime NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `OrderNumber_UNIQUE` (`OrderNumber`),
-  KEY `tempminesbuyrecord_UserID__playersimpleinfo_UserID_foreignK_idx` (`UserID`),
-  CONSTRAINT `tempminesbuyrecord_UserID__playersimpleinfo_UserID_foreignKey` FOREIGN KEY (`UserID`) REFERENCES `playersimpleinfo` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  KEY `userinfo_id_MinesBuyRecord_userid_idx` (`UserID`),
+  CONSTRAINT `userinfo_id_MinesBuyRecord_userid` FOREIGN KEY (`UserID`) REFERENCES `playersimpleinfo` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tempminesbuyrecord`
+-- Dumping data for table `minesbuyrecord`
 --
 
-LOCK TABLES `tempminesbuyrecord` WRITE;
-/*!40000 ALTER TABLE `tempminesbuyrecord` DISABLE KEYS */;
-INSERT INTO `tempminesbuyrecord` VALUES (1,'2016091109141803471218123174663455',22,3000,1,100000,'2016-09-11 09:14:18'),(3,'2016091413063800711218438087478100',82,3000,1,100000,'2016-09-14 13:06:38'),(4,'2016091413073007831218438087475761',82,30000,10,1000000,'2016-09-14 13:07:31'),(5,'2016091413115400871218438087475923',82,30000,10,1000000,'2016-09-14 13:11:54');
-/*!40000 ALTER TABLE `tempminesbuyrecord` ENABLE KEYS */;
+LOCK TABLES `minesbuyrecord` WRITE;
+/*!40000 ALTER TABLE `minesbuyrecord` DISABLE KEYS */;
+/*!40000 ALTER TABLE `minesbuyrecord` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

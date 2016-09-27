@@ -16,37 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `withdrawrmbrecord`
+-- Table structure for table `rouletteawarditem`
 --
 
-DROP TABLE IF EXISTS `withdrawrmbrecord`;
+DROP TABLE IF EXISTS `rouletteawarditem`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `withdrawrmbrecord` (
+CREATE TABLE `rouletteawarditem` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `PlayerUserName` varchar(64) NOT NULL,
-  `AlipayAccount` varchar(128) DEFAULT NULL,
-  `AlipayRealName` varchar(30) DEFAULT NULL,
-  `WidthdrawRMB` float NOT NULL,
-  `ValueYuan` int(11) NOT NULL,
-  `CreateTime` datetime NOT NULL,
-  `IsPayedSucceed` tinyint(1) NOT NULL COMMENT '1:true; 0:false',
-  `AdminUserName` varchar(64) DEFAULT NULL,
-  `AlipayOrderNumber` varchar(45) DEFAULT NULL,
-  `PayTime` datetime DEFAULT NULL,
+  `AwardName` varchar(45) NOT NULL,
+  `AwardNumber` int(11) NOT NULL DEFAULT '1',
+  `RouletteAwardType` int(11) NOT NULL,
+  `ValueMoneyYuan` float NOT NULL DEFAULT '0',
+  `IsLargeAward` int(1) NOT NULL,
+  `IsRealAward` int(1) NOT NULL,
+  `WinProbability` float NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `withdrawrmbrecord`
+-- Dumping data for table `rouletteawarditem`
 --
 
-LOCK TABLES `withdrawrmbrecord` WRITE;
-/*!40000 ALTER TABLE `withdrawrmbrecord` DISABLE KEYS */;
-INSERT INTO `withdrawrmbrecord` VALUES (1,'mQtiixLpx3E9I5QceXeCZQ==',NULL,NULL,100,10,'2016-09-16 18:29:40',1,'sV5siY7eaz8=','','2016-09-17 15:03:36'),(2,'mQtiixLpx3E9I5QceXeCZQ==',NULL,NULL,100,10,'2016-09-17 09:17:31',1,'sV5siY7eaz8=','','2016-09-17 15:08:49');
-/*!40000 ALTER TABLE `withdrawrmbrecord` ENABLE KEYS */;
+LOCK TABLES `rouletteawarditem` WRITE;
+/*!40000 ALTER TABLE `rouletteawarditem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `rouletteawarditem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -58,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

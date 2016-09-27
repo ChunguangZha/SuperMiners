@@ -16,32 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `rmbrechargerecord`
+-- Table structure for table `admininfo`
 --
 
-DROP TABLE IF EXISTS `rmbrechargerecord`;
+DROP TABLE IF EXISTS `admininfo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `rmbrechargerecord` (
+CREATE TABLE `admininfo` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `UserID` int(10) unsigned NOT NULL,
-  `RechargeMoney` float unsigned NOT NULL,
-  `GainRMB` float unsigned NOT NULL,
-  `Time` datetime NOT NULL,
+  `UserName` varchar(64) NOT NULL,
+  `LoginPassword` varchar(30) NOT NULL,
+  `ActionPassword` varchar(30) NOT NULL,
+  `Mac` varchar(200) NOT NULL COMMENT '可以保存多个MAC地址，用逗号分隔。',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UserID_UNIQUE` (`UserID`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  CONSTRAINT `userinfo_id_RMBRechargeRecord_userid` FOREIGN KEY (`UserID`) REFERENCES `playersimpleinfo` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `UserName_UNIQUE` (`UserName`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rmbrechargerecord`
+-- Dumping data for table `admininfo`
 --
 
-LOCK TABLES `rmbrechargerecord` WRITE;
-/*!40000 ALTER TABLE `rmbrechargerecord` DISABLE KEYS */;
-/*!40000 ALTER TABLE `rmbrechargerecord` ENABLE KEYS */;
+LOCK TABLES `admininfo` WRITE;
+/*!40000 ALTER TABLE `admininfo` DISABLE KEYS */;
+INSERT INTO `admininfo` VALUES (1,'zVFjUJTNuKU=','zVFjUJTNuKU=','zVFjUJTNuKU=','00-25-64-B2-D9-E4'),(2,'oy081tZut3M=','NfBi+regarz3uSeHFgBsFg==','NfBi+regarwAF7a9U8V92g==','6c-71-d9-30-e1-44'),(3,'Ke/q6xjAXOKPC8MiyW0m/Q==','MnVwm+9QfKXlzPndNuX2kg==','DmuXjTDosEY=','10-BF-48-DD-72-7E'),(4,'Ke/q6xjAXOK0dhpyGGWgXQ==','MnVwm+9QfKXlzPndNuX2kg==','DmuXjTDosEY=','44-6D-57-FE-AA-32');
+/*!40000 ALTER TABLE `admininfo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

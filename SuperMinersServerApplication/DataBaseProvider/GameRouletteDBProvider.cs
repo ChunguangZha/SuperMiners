@@ -1,4 +1,5 @@
-﻿using MetaData.Game.Roulette;
+﻿using MetaData;
+using MetaData.Game.Roulette;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -228,43 +229,116 @@ namespace DataBaseProvider
             }
         }
 
-        ///// <summary>
-        ///// 没有填充AwardItem属性
-        ///// </summary>
-        ///// <returns></returns>
-        //public RouletteWinnerRecord[] GetNotTokeWinAwardRecords()
-        //{
-        //    RouletteWinnerRecord[] records = null;
-        //    MySqlConnection myconn = null;
-        //    MySqlCommand mycmd = null;
-        //    try
-        //    {
-        //        myconn = MyDBHelper.Instance.CreateConnection();
-        //        myconn.Open();
-        //        string sqlText = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsGot = @IsGot";
-        //        mycmd = myconn.CreateCommand();
-        //        mycmd.CommandText = sqlText;
-        //        mycmd.Parameters.AddWithValue("@IsGot", false);
-        //        MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+        /// <summary>
+        /// 没有填充AwardItem属性
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <param name="RouletteAwardItemID"></param>
+        /// <param name="BeginWinTime"></param>
+        /// <param name="EndWinTime"></param>
+        /// <param name="IsGot">-1表示null;0表示false;1表示true</param>
+        /// <param name="IsPay">-1表示null;0表示false;1表示true</param>
+        /// <param name="pageItemCount"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            RouletteWinnerRecord[] records = null;
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlTextA = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  ";
 
-        //        DataTable table = new DataTable();
-        //        adapter.Fill(table);
-        //        records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
-        //        return records;
-        //    }
-        //    finally
-        //    {
-        //        if (mycmd != null)
-        //        {
-        //            mycmd.Dispose();
-        //        }
-        //        if (myconn != null)
-        //        {
-        //            myconn.Close();
-        //            myconn.Dispose();
-        //        }
-        //    }
-        //}
+                StringBuilder builder = new StringBuilder();
+                if (!string.IsNullOrEmpty(UserName))
+                {
+                    builder.Append(" s.UserName = @UserName ");
+                    string encryptUserName = DESEncrypt.EncryptDES(UserName);
+                    mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
+                }
+                if (RouletteAwardItemID >= 0)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" r.AwardItemID = @AwardItemID ");
+                    mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
+                }
+                if (BeginWinTime != null && !BeginWinTime.IsNull && EndWinTime != null && !EndWinTime.IsNull)
+                {
+                    if (builder.Length != 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    DateTime beginWinTime = BeginWinTime.ToDateTime();
+                    DateTime endWinTime = EndWinTime.ToDateTime();
+                    if (beginWinTime >= endWinTime)
+                    {
+                        return null;
+                    }
+                    builder.Append(" r.WinTime >= @beginWinTime and r.WinTime < @endWinTime ");
+                    mycmd.Parameters.AddWithValue("@beginWinTime", beginWinTime);
+                    mycmd.Parameters.AddWithValue("@endWinTime", endWinTime);
+                }
+                if (IsGot >= 0)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" r.IsGot = @IsGot ");
+                    mycmd.Parameters.AddWithValue("@IsGot", IsGot != 0);
+                }
+                if (IsPay >= 0)
+                {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    builder.Append(" r.IsPay = @IsPay ");
+                    mycmd.Parameters.AddWithValue("@IsPay", IsPay != 0);
+                }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by r.id desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+
+                mycmd.CommandText = sqlAllText;
+                myconn.Open();
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                return records;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
 
         /// <summary>
         /// 没有填充AwardItem属性

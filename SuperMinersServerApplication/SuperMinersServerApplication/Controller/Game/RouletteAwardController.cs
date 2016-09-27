@@ -96,6 +96,21 @@ namespace SuperMinersServerApplication.Controller.Game
             return this._finishedRouletteWinnerRecord.Values.ToArray();
         }
 
+        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            if (this._listRouletteAwardItems == null)
+            {
+                return null;
+            }
+            var records = DBProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+            foreach (var record in records)
+            {
+                record.AwardItem = this._listRouletteAwardItems.FirstOrDefault(item => item.ID == record.RouletteAwardItemID);
+            }
+
+            return records;
+        }
+
         private void ReStartLargeAwardExponent()
         {
             if (this._level1AwardIndexes == null || this._level1AwardIndexes.Length == 0)

@@ -16,35 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `awardreferrerconfig`
+-- Table structure for table `registeruserconfig`
 --
 
-DROP TABLE IF EXISTS `awardreferrerconfig`;
+DROP TABLE IF EXISTS `registeruserconfig`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `awardreferrerconfig` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ReferLevel` int(10) unsigned NOT NULL,
-  `AwardReferrerExp` float NOT NULL COMMENT '奖励推荐人贡献值',
-  `AwardReferrerGoldCoin` float NOT NULL COMMENT '奖励推荐人金币数',
-  `AwardReferrerMines` float NOT NULL,
-  `AwardReferrerMiners` int(11) NOT NULL COMMENT '奖励推荐人矿工数',
-  `AwardReferrerStones` float NOT NULL COMMENT '奖励推荐人矿石数',
-  `AwardReferrerDiamond` float NOT NULL COMMENT '奖励推荐人钻石数',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
-  UNIQUE KEY `ReferLevel_UNIQUE` (`ReferLevel`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COMMENT='奖励推荐人配置';
+CREATE TABLE `registeruserconfig` (
+  `UserCountCreateByOneIP` int(11) NOT NULL DEFAULT '5' COMMENT '同一IP地址，可以注册用户数。',
+  `GiveToNewUserExp` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送贡献值',
+  `GiveToNewUserGoldCoin` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送金币数',
+  `GiveToNewUserMines` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿山数',
+  `GiveToNewUserMiners` int(11) NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿工数',
+  `GiveToNewUserStones` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿石数',
+  `FirstAlipayRechargeGoldCoinAwardMultiple` float NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `awardreferrerconfig`
+-- Dumping data for table `registeruserconfig`
 --
 
-LOCK TABLES `awardreferrerconfig` WRITE;
-/*!40000 ALTER TABLE `awardreferrerconfig` DISABLE KEYS */;
-INSERT INTO `awardreferrerconfig` VALUES (54,1,5,2500,0,0,0,0);
-/*!40000 ALTER TABLE `awardreferrerconfig` ENABLE KEYS */;
+LOCK TABLES `registeruserconfig` WRITE;
+/*!40000 ALTER TABLE `registeruserconfig` DISABLE KEYS */;
+INSERT INTO `registeruserconfig` VALUES (1,0,0,0.6,70,0,0.3);
+/*!40000 ALTER TABLE `registeruserconfig` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -56,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:58
+-- Dump completed on 2016-09-27 13:37:49

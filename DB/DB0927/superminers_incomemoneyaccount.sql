@@ -16,31 +16,26 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `registeruserconfig`
+-- Table structure for table `incomemoneyaccount`
 --
 
-DROP TABLE IF EXISTS `registeruserconfig`;
+DROP TABLE IF EXISTS `incomemoneyaccount`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `registeruserconfig` (
-  `UserCountCreateByOneIP` int(11) NOT NULL DEFAULT '5' COMMENT '同一IP地址，可以注册用户数。',
-  `GiveToNewUserExp` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送贡献值',
-  `GiveToNewUserGoldCoin` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送金币数',
-  `GiveToNewUserMines` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿山数',
-  `GiveToNewUserMiners` int(11) NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿工数',
-  `GiveToNewUserStones` float NOT NULL DEFAULT '0' COMMENT '给新注册用户赠送矿石数',
-  `FirstAlipayRechargeGoldCoinAwardMultiple` float NOT NULL DEFAULT '0'
+CREATE TABLE `incomemoneyaccount` (
+  `IncomeMoneyAlipay` varchar(45) NOT NULL,
+  `IncomeMoneyAlipayRealName` varchar(45) NOT NULL,
+  `Alipay2DCode` blob NOT NULL COMMENT '收款二维码图片序列化后'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `registeruserconfig`
+-- Dumping data for table `incomemoneyaccount`
 --
 
-LOCK TABLES `registeruserconfig` WRITE;
-/*!40000 ALTER TABLE `registeruserconfig` DISABLE KEYS */;
-INSERT INTO `registeruserconfig` VALUES (1,0,0,0.6,70,0,0.3);
-/*!40000 ALTER TABLE `registeruserconfig` ENABLE KEYS */;
+LOCK TABLES `incomemoneyaccount` WRITE;
+/*!40000 ALTER TABLE `incomemoneyaccount` DISABLE KEYS */;
+/*!40000 ALTER TABLE `incomemoneyaccount` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -52,4 +47,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:49

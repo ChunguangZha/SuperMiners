@@ -1,4 +1,5 @@
-﻿using MetaData.Game.Roulette;
+﻿using MetaData;
+using MetaData.Game.Roulette;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         RouletteWinnerRecord[] GetNotPayWinAwardRecords(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllPayWinAwardRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        RouletteWinnerRecord[] GetAllPayWinAwardRecords(string token, string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/PayAward",

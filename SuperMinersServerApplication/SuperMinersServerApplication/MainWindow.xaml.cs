@@ -30,7 +30,7 @@ namespace SuperMinersServerApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int MAXLISTERRORLOGSCOUNT = 100;
+        private int MAXLISTERRORLOGSCOUNT = 1000;
         private object _lockListLogs = new object();
         ObservableCollection<string> ListErrorLogsOutput = new ObservableCollection<string>();
         private System.Threading.SynchronizationContext _syn = SynchronizationContext.Current;

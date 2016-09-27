@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData.Game.Roulette;
+using MetaData.Trade;
 using SuperMinersServerApplication.WebService.Contracts;
 using System;
 using System.Collections.Generic;
@@ -22,5 +23,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         [Callback]
         void SomebodyWithdrawRMB(string token, WithdrawRMBRecord record);
 
+        [Callback]
+        void SomebodyWinRouletteAward(string token, RouletteWinnerRecord record);
     }
 }

@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData.Game.Roulette;
+using MetaData.Trade;
 using SuperMinersServerApplication.WebServiceToAdmin.Contracts;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,11 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         public void SomebodyWithdrawRMB(string token, WithdrawRMBRecord record)
         {
             this.InvokeCallback(token, "SomebodyWithdrawRMB", record);
+        }
+
+        public void SomebodyWinRouletteAward(string token, RouletteWinnerRecord record)
+        {
+            this.InvokeCallback(token, "SomebodyWinRouletteAward", record);
         }
 
         #endregion

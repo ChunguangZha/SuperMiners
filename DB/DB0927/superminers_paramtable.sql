@@ -16,26 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `incomemoneyaccount`
+-- Table structure for table `paramtable`
 --
 
-DROP TABLE IF EXISTS `incomemoneyaccount`;
+DROP TABLE IF EXISTS `paramtable`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `incomemoneyaccount` (
-  `IncomeMoneyAlipay` varchar(45) NOT NULL,
-  `IncomeMoneyAlipayRealName` varchar(45) NOT NULL,
-  `Alipay2DCode` blob NOT NULL COMMENT '收款二维码图片序列化后'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE `paramtable` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `ParamName` varchar(45) NOT NULL,
+  `ParamValue` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `ParamName_UNIQUE` (`ParamName`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `incomemoneyaccount`
+-- Dumping data for table `paramtable`
 --
 
-LOCK TABLES `incomemoneyaccount` WRITE;
-/*!40000 ALTER TABLE `incomemoneyaccount` DISABLE KEYS */;
-/*!40000 ALTER TABLE `incomemoneyaccount` ENABLE KEYS */;
+LOCK TABLES `paramtable` WRITE;
+/*!40000 ALTER TABLE `paramtable` DISABLE KEYS */;
+INSERT INTO `paramtable` VALUES (1,'DBVERSION','20160926165700');
+/*!40000 ALTER TABLE `paramtable` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -47,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-09-19 11:29:59
+-- Dump completed on 2016-09-27 13:37:48

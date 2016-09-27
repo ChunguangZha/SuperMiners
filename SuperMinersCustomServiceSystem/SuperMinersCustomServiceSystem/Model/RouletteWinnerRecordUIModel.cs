@@ -1,0 +1,117 @@
+﻿using MetaData.Game.Roulette;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SuperMinersCustomServiceSystem.Model
+{
+    public class RouletteWinnerRecordUIModel : BaseModel
+    {
+        public RouletteWinnerRecordUIModel(RouletteWinnerRecord parent)
+        {
+            ParentObject = parent;
+        }
+
+        private RouletteWinnerRecord _parentObject;
+
+        public RouletteWinnerRecord ParentObject
+        {
+            get { return _parentObject; }
+            set { _parentObject = value; }
+        }
+
+        public int RecordID
+        {
+            get { return this.ParentObject.RecordID; }
+        }
+
+        public int UserID
+        {
+            get { return this.ParentObject.UserID; }
+        }
+
+        public string UserName
+        {
+            get { return this.ParentObject.UserName; }
+        }
+
+        public string UserNickName
+        {
+            get { return this.ParentObject.UserNickName; }
+        }
+
+        public int RouletteAwardItemID
+        {
+            get { return this.ParentObject.RouletteAwardItemID; }
+        }
+
+        public RouletteAwardItem AwardItem
+        {
+            get { return this.ParentObject.AwardItem; }
+        }
+
+        public string AwardItemName
+        {
+            get { return this.AwardItem.AwardName; }
+        }
+
+        public DateTime WinTime
+        {
+            get { return this.ParentObject.WinTime; }
+        }
+
+        /// <summary>
+        /// 是否已领取
+        /// </summary>
+        public bool IsGot
+        {
+            get { return this.ParentObject.IsGot; }
+        }
+
+        /// <summary>
+        /// 允许为null
+        /// </summary>
+        public DateTime? GotTime
+        {
+            get { return this.ParentObject.GotTime; }
+        }
+
+        /// <summary>
+        /// 是否已支付
+        /// </summary>
+        public bool IsPay
+        {
+            get { return this.ParentObject.IsPay; }
+        }
+
+        /// <summary>
+        /// 允许为null
+        /// </summary>
+        public DateTime? PayTime
+        {
+            get { return this.ParentObject.PayTime; }
+        }
+
+        public string GotInfo1
+        {
+            get { return this.ParentObject.GotInfo1; }
+        }
+
+        public string GotInfo2
+        {
+            get { return this.ParentObject.GotInfo2; }
+        }
+
+        public void SetRecordPay()
+        {
+            this.ParentObject.IsPay = true;
+            this.ParentObject.PayTime = DateTime.Now;
+            NotifyPropertyChange("IsPay");
+            NotifyPropertyChange("PayTime");
+
+        }
+
+    }
+}
