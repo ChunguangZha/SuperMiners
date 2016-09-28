@@ -1,4 +1,5 @@
-﻿using MetaData.Game.Roulette;
+﻿using MetaData;
+using MetaData.Game.Roulette;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteAwardItem[] GetAwardItems(string token);
+        RouletteAwardItem[] GetAwardItems(string token, string userName);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/StartRoulette",
@@ -25,7 +26,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteWinAwardResult StartRoulette(string token);
+        RouletteWinAwardResult StartRoulette(string token, string userName);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/FinishRoulette",
@@ -33,7 +34,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteWinnerRecord FinishRoulette(string token, int winAwardNumber);
+        RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardIndex);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetRouletteAward",
@@ -41,6 +42,15 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int TakeRouletteAward(string token, int recordID, string info1, string info2);
+        int TakeRouletteAward(string token, string userName, int recordID, string info1, string info2);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllWinAwardRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        RouletteWinnerRecord[] GetAllWinAwardRecords(string token, string userName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex);
+
     }
 }

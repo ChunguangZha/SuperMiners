@@ -52,13 +52,20 @@ namespace SuperMinersServerApplication.Controller.Game
         /// </summary>
         public int _tempTotalStone = 0;
         /// <summary>
-        /// 0,1两个指数
+        /// 概率为0的大奖本次中奖下标(每轮随机计算)
         /// </summary>
-        private int _largeAwardExponent = 0;
+        private int _mustWinLargeAwardIndex = -1;
 
         private int _noneAwardIndex = -1;
-        private int[] _level0AwardIndexes = null;
-        private int[] _level1AwardIndexes = null;
+
+        /// <summary>
+        /// 小奖集合
+        /// </summary>
+        private int[] _smallAwardIndexes = null;
+        /// <summary>
+        /// 概率为0的大奖集合
+        /// </summary>
+        private int[] _largeAwardIndexes = null;
 
 
         public object _lockStart = new object();
@@ -81,7 +88,7 @@ namespace SuperMinersServerApplication.Controller.Game
                         }
                     }
 
-                    FindKeyIndex(this._listRouletteAwardItems, out this._noneAwardIndex, out this._level0AwardIndexes, out this._level1AwardIndexes);
+                    FindKeyIndex(this._listRouletteAwardItems, out this._noneAwardIndex, out this._smallAwardIndexes, out this._largeAwardIndexes);
                     ReStartLargeAwardExponent();
                 }
             }
@@ -113,22 +120,18 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private void ReStartLargeAwardExponent()
         {
-            if (this._level1AwardIndexes == null || this._level1AwardIndexes.Length == 0)
+            if (this._largeAwardIndexes == null || this._largeAwardIndexes.Length == 0)
             {
-                _largeAwardExponent = 0;
-            }
-            else
-            {
-                _largeAwardExponent = new Random(1).Next(0, 100) % 2;
+                _mustWinLargeAwardIndex = new Random(1).Next(0, this._largeAwardIndexes.Length);
             }
 
             _tempTotalStone = 0;
         }
 
-        private void FindKeyIndex(RouletteAwardItem[] items, out int noneIndex, out int[] level0AwardIndexes, out int[] level1AwardIndexes)
+        private void FindKeyIndex(RouletteAwardItem[] items, out int noneIndex, out int[] smallAwardIndexes, out int[] largeAwardIndexes)
         {
-            List<int> listLevel0Indexes = new List<int>();
-            List<int> listLevel1Indexes = new List<int>();
+            List<int> listSmallAwardIndexes = new List<int>();
+            List<int> listLargeAwardIndexes = new List<int>();
             int noneAwardIndex = -1;
 
             for (int i = 0; i < items.Length; i++)
@@ -137,22 +140,19 @@ namespace SuperMinersServerApplication.Controller.Game
                 {
                     noneAwardIndex = i;
                 }
-                if (items[i].IsLargeAward)
+                if (items[i].WinProbability == 0)
                 {
-                    if (10 <= items[i].ValueMoneyYuan && items[i].ValueMoneyYuan < 50)
-                    {
-                        listLevel0Indexes.Add(i);
-                    }
-                    if (50 <= items[i].ValueMoneyYuan)
-                    {
-                        listLevel1Indexes.Add(i);
-                    }
+                    listLargeAwardIndexes.Add(i);
+                }
+                else
+                {
+                    listSmallAwardIndexes.Add(i);
                 }
             }
 
             noneIndex = noneAwardIndex;
-            level0AwardIndexes = listLevel0Indexes.ToArray();
-            level1AwardIndexes = listLevel1Indexes.ToArray();
+            smallAwardIndexes = listSmallAwardIndexes.ToArray();
+            largeAwardIndexes = listLargeAwardIndexes.ToArray();
         }
 
         public bool SetAwardItems(RouletteAwardItem[] items)
@@ -178,8 +178,8 @@ namespace SuperMinersServerApplication.Controller.Game
                 {
                     this._listRouletteAwardItems = items;
                     this._noneAwardIndex = noneIndex;
-                    this._level0AwardIndexes = level0AwardIndexes;
-                    this._level1AwardIndexes = level1AwardIndexes;
+                    this._smallAwardIndexes = level0AwardIndexes;
+                    this._largeAwardIndexes = level1AwardIndexes;
                     ReStartLargeAwardExponent();
 
                     //保存到数据库
@@ -215,77 +215,45 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 _tempTotalStone += GlobalConfig.GameConfig.RouletteSpendStone;
 
-                if (_largeAwardExponent == 0)
+                if (_mustWinLargeAwardIndex >= 0)
                 {
-                    if (_tempTotalStone >= 10 * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.Stones_RMB)
+                    var mustWinAwardItem = this._listRouletteAwardItems[_mustWinLargeAwardIndex];
+                    if (_tempTotalStone >= (int)((decimal)mustWinAwardItem.ValueMoneyYuan * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.Stones_RMB))
                     {
-                        if (this._level0AwardIndexes != null && this._level0AwardIndexes.Length != 0)
-                        {
-                            if (this._level0AwardIndexes.Length == 1)
-                            {
-                                result.WinAwardNumber = this._level0AwardIndexes[0];
-                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                                return result;
-                            }
-                            else
-                            {
-                                int index = new Random(1).Next(100) % this._level0AwardIndexes.Length;
-                                result.WinAwardNumber = this._level0AwardIndexes[index];
-                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                                return result;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (_tempTotalStone >= 50 * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.Stones_RMB)
-                    {
-                        if (this._level1AwardIndexes != null && this._level1AwardIndexes.Length != 0)
-                        {
-                            if (this._level1AwardIndexes.Length == 1)
-                            {
-                                result.WinAwardNumber = this._level1AwardIndexes[0];
-                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                                return result;
-                            }
-                            else
-                            {
-                                int index = new Random(1).Next(100) % this._level1AwardIndexes.Length;
-                                result.WinAwardNumber = this._level1AwardIndexes[index];
-                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                                return result;
-                            }
-                        }
+                        result.WinAwardItemIndex = this._mustWinLargeAwardIndex;
+                        result.OperResultCode = OperResult.RESULTCODE_TRUE;
+                        return result;
                     }
                 }
 
                 Random r = new Random(1);
-                int value = r.Next(0, 100);
-                float totalProbabilityMaxValue = 0;
+                int totalProbabilityMaxValue = ComputeWinAwardProbabilitySum();
 
-                int winAwardNumber = this._noneAwardIndex;
+                int value = r.Next(1, totalProbabilityMaxValue);
+                int winAwardIndex = this._noneAwardIndex;
+                int tempTotalProbability = 0;
                 for (int i = 0; i < 12; i++)
                 {
                     var awardItem = this._listRouletteAwardItems[i];
-                    float itemProbabilityMaxValue = totalProbabilityMaxValue + awardItem.WinProbability * 100;
-                    if (value < itemProbabilityMaxValue)
+                    int awardWinProbability = (int)awardItem.WinProbability;
+                    if (awardWinProbability != 0)
                     {
-                        winAwardNumber = i;
-                        break;
+                        if (tempTotalProbability <= value && value <= tempTotalProbability + awardWinProbability)
+                        {
+                            winAwardIndex = i;
+                        }
+                        tempTotalProbability += (int)awardItem.WinProbability;
                     }
-
-                    totalProbabilityMaxValue = itemProbabilityMaxValue;
                 }
 
-                result.WinAwardNumber = winAwardNumber;
+                result.WinAwardItemIndex = winAwardIndex;
                 result.OperResultCode = OperResult.RESULTCODE_TRUE;
 
                 if (_tempRouletteWinnerRecord.ContainsKey(userName))
                 {
                     _tempRouletteWinnerRecord.Remove(userName);
                 }
-                _tempRouletteWinnerRecord.Add(userName, winAwardNumber);
+                _tempRouletteWinnerRecord.Add(userName, winAwardIndex);
             }
 
             LogHelper.Instance.AddInfoLog("玩家["+ userName +"]，开始幸运大转盘抽奖。");
@@ -293,15 +261,27 @@ namespace SuperMinersServerApplication.Controller.Game
             return result;
         }
 
-        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardNumber)
+        public int ComputeWinAwardProbabilitySum()
         {
-            int serverWinAwardNumber = -1;
+            int totalProbabilityMaxValue = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                var awardItem = this._listRouletteAwardItems[i];
+                totalProbabilityMaxValue += (int)awardItem.WinProbability;
+            }
 
-            if (!this._tempRouletteWinnerRecord.TryGetValue(userName, out serverWinAwardNumber))
+            return totalProbabilityMaxValue;
+        }
+
+        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardIndex)
+        {
+            int serverWinAwardIndex = -1;
+
+            if (!this._tempRouletteWinnerRecord.TryGetValue(userName, out serverWinAwardIndex))
             {
                 return null;
             }
-            if (serverWinAwardNumber != winAwardNumber)
+            if (serverWinAwardIndex != winAwardIndex)
             {
                 return null;
             }
@@ -309,7 +289,7 @@ namespace SuperMinersServerApplication.Controller.Game
             
             RouletteWinnerRecord record = new RouletteWinnerRecord()
             {
-                AwardItem = this._listRouletteAwardItems[winAwardNumber],
+                AwardItem = this._listRouletteAwardItems[winAwardIndex],
                 UserID = userID,
                 UserName = userName,
                 UserNickName = userNickName,
@@ -326,7 +306,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 record.RecordID = dbRecord.RecordID;
             }
 
-            var awardItem = this._listRouletteAwardItems[winAwardNumber];
+            var awardItem = this._listRouletteAwardItems[winAwardIndex];
             if (awardItem.RouletteAwardType != RouletteAwardType.None)
             {
                 if (!awardItem.IsRealAward)

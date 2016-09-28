@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="SuperMinersCustomServiceSystem.View.Controls.GameFunny.RouletteAwardItemListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="幸运大转盘奖项集合" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="奖项名称" Width="*" Binding="{Binding AwardName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="奖项数值" Width="*" Binding="{Binding AwardNumber, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="奖项类型" Width="*" Binding="{Binding RouletteAwardType, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueMoneyYuan, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="是否为大奖" Width="*" Binding="{Binding IsLargeAward, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="是否为实物奖项" Width="*" Binding="{Binding IsRealAward, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="中奖概率" Width="*" Binding="{Binding WinProbability, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Width="0" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="修改" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnUpdate_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Grid.Row="3" Name="btnAdd" Content="添加奖项" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnAdd_Click"/>
+        <Button Grid.Row="3" Name="btnSaveAllAwardItems" Content="保存所有奖项" Width="100" Margin="130,10,10,10" HorizontalAlignment="Left" Click="btnSaveAllAwardItems_Click"/>
+    </Grid>
+</UserControl>

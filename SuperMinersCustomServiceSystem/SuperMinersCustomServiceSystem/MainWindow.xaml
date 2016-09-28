@@ -73,6 +73,7 @@
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Header="幸运大转盘" Name="tvL2_FS_Roulette" Style="{StaticResource TVItemL2Style}">
+                    <TreeViewItem Name="tvL2_FS_Roulette_AwardItem" Header="奖项管理" MouseDoubleClick="tvL2_FS_Roulette_AwardItem_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_FS_Roulette_Active" Header="未支付的中奖记录" MouseDoubleClick="tvL2_FS_Roulette_Active_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_FS_Roulette_HistoryRecord" Header="中奖历史记录" MouseDoubleClick="tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick"/>
                 </TreeViewItem>
@@ -101,6 +102,7 @@
             <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
             <gameControl:RouletteActiveWinRealAwardListControl x:Name="controlRouletteActiveWinRealAwardRecords" Visibility="Collapsed"/>
             <gameControl:RouletteWinAwardRecordHistoryControl x:Name="controlRouletteWinAwardHistoryRecords" Visibility="Collapsed"/>
+            <gameControl:RouletteAwardItemListControl x:Name="controlRouletteRouletteAwardItemListControl" Visibility="Collapsed"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>

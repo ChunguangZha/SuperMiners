@@ -38,7 +38,7 @@ namespace MetaData.Game.Roulette
         public bool IsRealAward;
 
         /// <summary>
-        /// 中奖概率，所有奖项概率加一块为1
+        /// 中奖概率倍数，整数值，计算时将所有中中奖概率加一起求百分比
         /// </summary>
         [DataMember]
         public float WinProbability;

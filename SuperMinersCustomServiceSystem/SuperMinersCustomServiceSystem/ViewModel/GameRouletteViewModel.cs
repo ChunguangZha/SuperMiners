@@ -51,6 +51,25 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.SetAwardItemsCompleted += Client_SetAwardItemsCompleted;
             GlobalData.Client.GetNotPayWinAwardRecordsCompleted += Client_GetNotPayWinAwardRecordsCompleted;
             GlobalData.Client.GetAllPayWinAwardRecordsCompleted += Client_GetAllPayWinAwardRecordsCompleted;
+            GlobalData.Client.OnSomebodyWinRouletteAward += Client_OnSomebodyWinRouletteAward;
+        }
+
+        void Client_OnSomebodyWinRouletteAward(RouletteWinnerRecord obj)
+        {
+            try
+            {
+                if (obj == null)
+                {
+                    MyMessageBox.ShowInfo("幸运大转盘开奖，但服务器推送结果为空");
+                    return;
+                }
+
+                this.ListNotPayRouletteWinnerRecords.Add(new RouletteWinnerRecordUIModel(obj));
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("幸运大转盘开奖，服务器推送后处理异常。异常信息：" + exc.Message);
+            }
         }
 
         void Client_GetAllPayWinAwardRecordsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.Roulette.RouletteWinnerRecord[]> e)
@@ -107,7 +126,28 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         void Client_SetAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
-            throw new NotImplementedException();
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("保存所有奖项信息，服务器返回异常。异常信息：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result)
+                {
+                    MyMessageBox.ShowInfo("保存所有奖项信息成功");
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("保存所有奖项信息失败。");
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("保存所有奖项信息，返回后处理异常。异常信息：" + exc.Message);
+            }
         }
 
         void Client_GetAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.Roulette.RouletteAwardItem[]> e)
@@ -157,6 +197,18 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             App.BusyToken.ShowBusyWindow("正在查询幸运大转盘中奖记录");
             GlobalData.Client.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+        }
+
+        public void AsyncSaveAllAwardItem()
+        {
+            App.BusyToken.ShowBusyWindow("正在保存所有奖项信息");
+            List<RouletteAwardItem> listAwardItems = new List<RouletteAwardItem>();
+            foreach (var item in this._listRouletteAwardItems)
+            {
+                listAwardItems.Add(item.ParentObject);
+            }
+
+            GlobalData.Client.SetAwardItems(listAwardItems.ToArray());
         }
     }
 }

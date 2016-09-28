@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Game.Roulette;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.Encoder;
@@ -16,7 +17,7 @@ namespace SuperMinersServerApplication.WebService.Services
     public partial class ServiceToClient : IServiceToClient
     {
 
-        public MetaData.Game.Roulette.RouletteAwardItem[] GetAwardItems(string token)
+        public MetaData.Game.Roulette.RouletteAwardItem[] GetAwardItems(string token, string userName)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -36,11 +37,15 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public MetaData.Game.Roulette.RouletteWinAwardResult StartRoulette(string token)
+        public MetaData.Game.Roulette.RouletteWinAwardResult StartRoulette(string token, string userName)
         {
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
+                string currentUserName = ClientManager.GetClientUserName(token);
+                if (currentUserName != userName)
+                {
+                    return null;
+                }
 
                 try
                 {
@@ -58,11 +63,15 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public MetaData.Game.Roulette.RouletteWinnerRecord FinishRoulette(string token, int winAwardNumber)
+        public MetaData.Game.Roulette.RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
+                string currentUserName = ClientManager.GetClientUserName(token);
+                if (currentUserName != userName)
+                {
+                    return null;
+                }
 
                 try
                 {
@@ -72,13 +81,10 @@ namespace SuperMinersServerApplication.WebService.Services
                         return null;
                     }
 
-                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, user.SimpleInfo.NickName, winAwardNumber);
+                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, user.SimpleInfo.NickName, winAwardIndex);
                     if (result != null)
                     {
-                        new Thread(new ParameterizedThreadStart(o =>
-                        {
-                            this.GameRouletteWinNotify(o.ToString(), result.ToString());
-                        })).Start(token);
+                        RouletteWinAwardNotifyAllPlayers(result);
 
                         if (result.AwardItem.IsLargeAward)
                         {
@@ -100,11 +106,27 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int TakeRouletteAward(string token, int recordID, string info1, string info2)
+        private void RouletteWinAwardNotifyAllPlayers(RouletteWinnerRecord result)
+        {
+            var allClients = ClientManager.AllClients;
+            foreach (var client in allClients)
+            {
+                new Thread(new ParameterizedThreadStart(o =>
+                {
+                    this.GameRouletteWinNotify(o.ToString(), result.ToString());
+                })).Start(client.Token);
+            }
+        }
+
+        public int TakeRouletteAward(string token, string userName, int recordID, string info1, string info2)
         {
             if (RSAProvider.LoadRSA(token))
             {
-                string userName = ClientManager.GetClientUserName(token);
+                string currentUserName = ClientManager.GetClientUserName(token);
+                if (currentUserName != userName)
+                {
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
 
                 try
                 {
@@ -114,6 +136,32 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     LogHelper.Instance.AddErrorLog(userName + " TakeRouletteAward Exception", exc);
                     return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public RouletteWinnerRecord[] GetAllWinAwardRecords(string token, string userName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    string currentUserName = ClientManager.GetClientUserName(token);
+                    if (currentUserName != userName)
+                    {
+                        return null;
+                    }
+
+                    return RouletteAwardController.Instance.GetAllPayWinAwardRecords(userName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAllPayWinAwardRecords Exception.", exc);
+                    return null;
                 }
             }
             else

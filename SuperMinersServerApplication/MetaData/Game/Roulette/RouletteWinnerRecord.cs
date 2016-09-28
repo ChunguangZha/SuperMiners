@@ -65,7 +65,7 @@ namespace MetaData.Game.Roulette
 
         public override string ToString()
         {
-            return "玩家[" + UserName + "]幸运抽中" + AwardItem.AwardName;
+            return "玩家[" + UserName + "]   幸运抽中" + AwardItem.AwardName;
         }
     }
 }

@@ -51,5 +51,19 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "PayAward", this.PayAwardCompleted, GlobalData.Token, adminUserName, playerUserName, recordID);
         }
 
+        #region Callback
+
+        public event Action<RouletteWinnerRecord> OnSomebodyWinRouletteAward;
+
+        public void RaiseOnSomebodyWinRouletteAward(RouletteWinnerRecord record)
+        {
+            Action<RouletteWinnerRecord> handler = this.OnSomebodyWinRouletteAward;
+            if (null != handler)
+            {
+                handler(record);
+            }
+        }
+
+        #endregion
     }
 }

@@ -1,5 +1,8 @@
 ﻿using MetaData.Game.Roulette;
 using System;
+#if Client
+using SuperMinersWPF.Models;
+#endif
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -88,7 +91,7 @@ namespace SuperMinersCustomServiceSystem.Model
         }
 
         /// <summary>
-        /// 中奖概率，所有奖项概率加一块为1
+        /// 中奖概率倍数，整数值，计算时将所有中中奖概率加一起求百分比
         /// </summary>
         public float WinProbability
         {

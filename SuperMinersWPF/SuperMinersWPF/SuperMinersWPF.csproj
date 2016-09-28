@@ -125,6 +125,12 @@
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\MinesBuyRecordUIModel.cs">
       <Link>Models\MinesBuyRecordUIModel.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\RouletteAwardItemUIModel.cs">
+      <Link>Models\RouletteAwardItemUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\RouletteWinnerRecordUIModel.cs">
+      <Link>Models\RouletteWinnerRecordUIModel.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\WithdrawRMBRecordUIModel.cs">
       <Link>Models\WithdrawRMBRecordUIModel.cs</Link>
     </Compile>
@@ -136,6 +142,15 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
       <Link>Wcf\Datas\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\Roulette\RouletteAwardItem.cs">
+      <Link>Wcf\Datas\RouletteAwardItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\Roulette\RouletteWinAwardResult.cs">
+      <Link>Wcf\Datas\RouletteWinAwardResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\Roulette\RouletteWinnerRecord.cs">
+      <Link>Wcf\Datas\RouletteWinnerRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
       <Link>Wcf\Datas\NoticeInfo.cs</Link>
@@ -227,6 +242,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Game.cs">
       <Link>Wcf\Contracts\IServiceToClient.Game.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.GameRoulette.cs">
+      <Link>Wcf\Contracts\IServiceToClient.GameRoulette.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Message.cs">
       <Link>Wcf\Contracts\IServiceToClient.Message.cs</Link>
     </Compile>
@@ -269,6 +287,7 @@
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="Utility\MyWebPage.cs" />
     <Compile Include="ViewModels\BusyToken.cs" />
+    <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
@@ -388,6 +407,7 @@
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Game.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.GameRoulette.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Message.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
