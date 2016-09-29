@@ -22,7 +22,18 @@ namespace SuperMinersCustomServiceSystem.Model
         public RouletteAwardItem ParentObject
         {
             get { return _parentObject; }
-            set { _parentObject = value; }
+            set
+            {
+                _parentObject = value;
+                NotifyPropertyChange("ID");
+                NotifyPropertyChange("AwardName");
+                NotifyPropertyChange("AwardNumber");
+                NotifyPropertyChange("RouletteAwardType");
+                NotifyPropertyChange("ValueMoneyYuan");
+                NotifyPropertyChange("IsLargeAward");
+                NotifyPropertyChange("IsRealAward");
+                NotifyPropertyChange("WinProbability");
+            }
         }
 
         public int ID

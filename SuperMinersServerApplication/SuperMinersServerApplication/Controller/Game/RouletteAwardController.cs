@@ -45,7 +45,7 @@ namespace SuperMinersServerApplication.Controller.Game
         /// <summary>
         /// 最终中奖记录。key: RecordID
         /// </summary>
-        public Dictionary<int, RouletteWinnerRecord> _finishedRouletteWinnerRecord = new Dictionary<int, RouletteWinnerRecord>();
+        public List<RouletteWinnerRecord> _finishedRouletteWinnerRecord = new List<RouletteWinnerRecord>();
 
         /// <summary>
         /// 奖池累计矿石数
@@ -84,7 +84,7 @@ namespace SuperMinersServerApplication.Controller.Game
                         foreach (var record in notPayRecords)
                         {
                             record.AwardItem = _listRouletteAwardItems.FirstOrDefault(o => o.ID == record.RouletteAwardItemID);
-                            this._finishedRouletteWinnerRecord.Add(record.RecordID, record);
+                            this._finishedRouletteWinnerRecord.Add(record);
                         }
                     }
 
@@ -100,7 +100,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
         public RouletteWinnerRecord[] GetNotPayWinAwardRecords()
         {
-            return this._finishedRouletteWinnerRecord.Values.ToArray();
+            return this._finishedRouletteWinnerRecord.ToArray();
         }
 
         public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
@@ -211,6 +211,20 @@ namespace SuperMinersServerApplication.Controller.Game
                 return result;
             }
 
+            var playerRun = PlayerController.Instance.GetRunnable(userName);
+            if (playerRun == null)
+            {
+                result.OperResultCode = OperResult.RESULTCODE_USER_OFFLINE;
+                return result;
+            }
+
+            int value = playerRun.RouletteSpendStone(100);
+            if (value != OperResult.RESULTCODE_TRUE)
+            {
+                result.OperResultCode = value;
+                return result;
+            }
+
             lock (_lockStart)
             {
                 _tempTotalStone += GlobalConfig.GameConfig.RouletteSpendStone;
@@ -226,10 +240,9 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                 }
 
-                Random r = new Random(1);
                 int totalProbabilityMaxValue = ComputeWinAwardProbabilitySum();
 
-                int value = r.Next(1, totalProbabilityMaxValue);
+                value = GetRandomValue(totalProbabilityMaxValue);
                 int winAwardIndex = this._noneAwardIndex;
                 int tempTotalProbability = 0;
                 for (int i = 0; i < 12; i++)
@@ -261,6 +274,20 @@ namespace SuperMinersServerApplication.Controller.Game
             return result;
         }
 
+        private int GetRandomValue(int maxValue)
+        {
+            int value = 0;
+            Random r = new Random(1);
+            for (int i = 0; i < maxValue; i++)
+            {
+                value = r.Next(1, maxValue);
+                //Console.WriteLine(value);
+            }
+
+            Console.WriteLine("Random : " + value);
+            return value;
+        }
+
         public int ComputeWinAwardProbabilitySum()
         {
             int totalProbabilityMaxValue = 0;
@@ -281,7 +308,8 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 return null;
             }
-            if (serverWinAwardIndex != winAwardIndex)
+            
+            if (serverWinAwardIndex != winAwardIndex && winAwardIndex != this._noneAwardIndex)
             {
                 return null;
             }
@@ -324,7 +352,10 @@ namespace SuperMinersServerApplication.Controller.Game
                 //通知
                 LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，完成了幸运大转盘抽奖。并抽中" + record.AwardItem.AwardName);
 
-                this._finishedRouletteWinnerRecord.Add(record.RecordID, record);
+                if (record.AwardItem.IsRealAward)
+                {
+                    this._finishedRouletteWinnerRecord.Add(record);
+                }
             }
             return record;
         }
@@ -338,8 +369,7 @@ namespace SuperMinersServerApplication.Controller.Game
         /// <param name="info2"></param>
         public int TakeAward(string userName, int recordID, string info1, string info2)
         {
-            RouletteWinnerRecord record = null;
-            _finishedRouletteWinnerRecord.TryGetValue(recordID, out record);
+            RouletteWinnerRecord record = _finishedRouletteWinnerRecord.FirstOrDefault(r=>r.RecordID == recordID);
             if (record == null)
             {
                 return OperResult.RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST;
@@ -362,8 +392,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
         public int PayAward(string adminUserName, string playerUserName, int recordID)
         {
-            RouletteWinnerRecord record = null;
-            _finishedRouletteWinnerRecord.TryGetValue(recordID, out record);
+            RouletteWinnerRecord record = _finishedRouletteWinnerRecord.FirstOrDefault(r=>r.RecordID == recordID);
             if (record == null)
             {
                 return OperResult.RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST;
@@ -390,7 +419,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 }
             }
 
-            _finishedRouletteWinnerRecord.Remove(recordID);
+            _finishedRouletteWinnerRecord.Remove(record);
 
             return OperResult.RESULTCODE_TRUE;
         }

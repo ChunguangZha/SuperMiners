@@ -692,6 +692,22 @@ namespace SuperMinersServerApplication.Controller
             return isOK;
         }
 
+        public int RouletteSpendStone(int stoneCount)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfStones < stoneCount)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
+                bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo);
+
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+            }
+        }
+
         public bool RouletteWinVirtualAwardPayUpdatePlayer(string userName, RouletteAwardItem awardItem)
         {
             CustomerMySqlTransaction trans = null;

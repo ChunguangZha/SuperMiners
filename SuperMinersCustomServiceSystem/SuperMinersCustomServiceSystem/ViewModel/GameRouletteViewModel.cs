@@ -29,6 +29,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             set { _listRouletteAwardItems = value; }
         }
 
+        private ObservableCollection<RouletteAwardItemUIModel> _listToComboxRouletteAwardItems = new ObservableCollection<RouletteAwardItemUIModel>();
+
+        public ObservableCollection<RouletteAwardItemUIModel> ListToComboxRouletteAwardItems
+        {
+            get { return _listToComboxRouletteAwardItems; }
+            set { _listToComboxRouletteAwardItems = value; }
+        }
+
         private ObservableCollection<RouletteWinnerRecordUIModel> _listNotPayRouletteWinnerRecords = new ObservableCollection<RouletteWinnerRecordUIModel>();
 
         public ObservableCollection<RouletteWinnerRecordUIModel> ListNotPayRouletteWinnerRecords
@@ -162,11 +170,18 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 }
 
                 this.ListRouletteAwardItems.Clear();
+                this.ListToComboxRouletteAwardItems.Clear();
+                this.ListToComboxRouletteAwardItems.Add(new RouletteAwardItemUIModel(new RouletteAwardItem()
+                {
+                    ID = -1,
+                    AwardName = "全部"
+                }));
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
                         this.ListRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
+                        ListToComboxRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
                     }
                 }
             }

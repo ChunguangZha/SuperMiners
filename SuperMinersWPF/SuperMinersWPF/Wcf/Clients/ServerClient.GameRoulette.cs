@@ -42,10 +42,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region TakeRouletteAward
 
-        public event EventHandler<WebInvokeEventArgs<RouletteAwardItem[]>> TakeRouletteAwardCompleted;
+        public event EventHandler<WebInvokeEventArgs<int>> TakeRouletteAwardCompleted;
         public void TakeRouletteAward(int recordID, string info1, string info2, object userState)
         {
-            this._invoker.InvokeUserState<RouletteAwardItem[]>(this._context, "TakeRouletteAward", this.TakeRouletteAwardCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, recordID, info1, info2);
+            this._invoker.InvokeUserState<int>(this._context, "TakeRouletteAward", this.TakeRouletteAwardCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, recordID, info1, info2);
         }
 
         #endregion

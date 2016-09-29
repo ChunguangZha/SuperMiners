@@ -24,7 +24,7 @@
                 <DataGridTextColumn Header="是否为大奖" Width="*" Binding="{Binding IsLargeAward, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="是否为实物奖项" Width="*" Binding="{Binding IsRealAward, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="中奖概率" Width="*" Binding="{Binding WinProbability, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Width="0" >
+                <DataGridTemplateColumn Width="50" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="修改" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnUpdate_Click"/>

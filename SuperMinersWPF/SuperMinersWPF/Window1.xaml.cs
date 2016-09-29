@@ -65,6 +65,17 @@ namespace SuperMinersWPF
             App.NoticeVMObject.AsyncGetNewNotices();
 
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
+            AddEventHandlers();
+        }
+
+        public void AddEventHandlers()
+        {
+            this.controlFunny.AddEventHandlers();
+        }
+
+        public void RemoveEventHandlers()
+        {
+            this.controlFunny.RemoveEventHandlers();
         }
 
         void Client_LogoutCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
@@ -99,7 +110,7 @@ namespace SuperMinersWPF
             {
                 App.UserVMObject.StopListen();
                 GlobalData.Client.Logout();
-
+                RemoveEventHandlers();
                 LogHelper.Instance.AddErrorLog("客户端" + GlobalData.CurrentUser.UserName + "已退出.", null);
             }
             catch (Exception exc)

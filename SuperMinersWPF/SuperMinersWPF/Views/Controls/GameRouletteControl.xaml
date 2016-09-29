@@ -3,109 +3,195 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="700">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="271*"/>
-            <ColumnDefinition Width="429*"/>
-        </Grid.ColumnDefinitions>
-        <Button Margin="10" Content="小积分 抽大奖"/>
-        <Grid Grid.Row="1">
+        <Grid Name="panelRoulette" Visibility="Collapsed">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="271*"/>
+                <ColumnDefinition Width="429*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="中奖榜" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Column="1" Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic"/>
-            <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="5" HorizontalContentAlignment="Stretch">
-                <ListViewItem Margin="5,0">
-                    <Grid Margin="10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tony"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem Margin="5,0">
-                    <Grid Margin="10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tony"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem Margin="5,0">
-                    <Grid Margin="10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tony"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem Margin="5,0">
-                    <Grid Margin="10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tony"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem Margin="5,0">
-                    <Grid Margin="10,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tony"/>
-                        <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                    </Grid>
-                </ListViewItem>
-            </ListView>
+            <Grid >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Margin="2" Background="#FFE8A25A">
+                    <TextBlock Text="小积分 抽大奖" Margin="10,10" HorizontalAlignment="Center" Foreground="#FFA64D02" FontWeight="Bold" FontSize="14"/>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="中奖榜" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button Grid.Column="1" Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyWinAwardRecord_Click"/>
+                <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="5" HorizontalContentAlignment="Stretch">
+                    <ListViewItem Margin="5,0">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tony"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Margin="5,0">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tony"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Margin="5,0">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tony"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Margin="5,0">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tony"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
+                        </Grid>
+                    </ListViewItem>
+                    <ListViewItem Margin="5,0">
+                        <Grid Margin="10,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Tony"/>
+                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
+                        </Grid>
+                    </ListViewItem>
+                </ListView>
+            </Grid>
+            <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10" Background="#FFFFB97E">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" Name="awardItem1" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" Name="awardItem2" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="2" Name="awardItem3" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="3" Name="awardItem4" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="3" Name="awardItem5" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="3" Name="awardItem6" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="3" Name="awardItem7" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="2" Name="awardItem8" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="1" Name="awardItem9" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="3" Grid.Column="0" Name="awardItem10" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="0" Name="awardItem11" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="1" Grid.Column="0" Name="awardItem12" Margin="5" Background="{Binding Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
+                <Button Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Name="btnStart" Margin="10" Content="开始去抽奖" Background="#FFFF2F0E" Foreground="WhiteSmoke" FontSize="24" FontStyle="Italic" Click="btnStart_Click"/>
+
+            </Grid>
         </Grid>
-        <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Button Grid.Row="0" Grid.Column="0" Name="awardItem1" Content="100矿石" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="0" Grid.Column="1" Name="awardItem2" Content="300矿石" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="0" Grid.Column="2" Name="awardItem3" Content="500矿石" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="0" Grid.Column="3" Name="awardItem4" Content="500金币" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="1" Grid.Column="3" Name="awardItem5" Content="1000金币" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="2" Grid.Column="3" Name="awardItem6" Content="2点贡献值" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="3" Grid.Column="3" Name="awardItem7" Content="10元话费" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="3" Grid.Column="2" Name="awardItem8" Content="50元话费" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="3" Grid.Column="1" Name="awardItem9" Content="爱奇艺会员一个月" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="3" Grid.Column="0" Name="awardItem10" Content="乐视会员一个月" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="2" Grid.Column="0" Name="awardItem11" Content="迅雷会员一个月" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="1" Grid.Column="0" Name="awardItem12" Content="再试一次" Margin="5" Background="#FFF3D200" Foreground="Red" FontSize="16" FontWeight="Bold"/>
-            <Button Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Margin="10" Content="开始去抽奖" Background="#FFFF6005" Foreground="WhiteSmoke" FontSize="24" FontStyle="Italic"/>
-            
+        <Grid Name="panelNotOpen" Visibility="Visible">
+            <TextBlock Text="该功能暂未开放，敬请期待..." FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Uility;
+﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
 using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         public RouletteAwardItemListControl()
         {
             InitializeComponent();
+            this.dgRecords.ItemsSource = App.GameRouletteVMObject.ListRouletteAwardItems;
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -34,7 +36,13 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-
+            Button btn = sender as Button;
+            RouletteAwardItemUIModel awarditem = btn.DataContext as RouletteAwardItemUIModel;
+            if (awarditem != null)
+            {
+                EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow(awarditem);
+                win.ShowDialog();
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -45,7 +53,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
                 return;
             }
 
-            EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow();
+            EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow(App.GameRouletteVMObject.ListRouletteAwardItems.Count);
             win.ShowDialog();
         }
 

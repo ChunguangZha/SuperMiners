@@ -1,4 +1,5 @@
 ﻿using MetaData.Game.Roulette;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,33 @@ namespace SuperMinersCustomServiceSystem.View.Windows
     /// </summary>
     public partial class EditRouletteAwardItemWindow : Window
     {
-        public EditRouletteAwardItemWindow()
+        int maxIndex;
+        bool isAdd = false;
+        RouletteAwardItemUIModel uiItem = null;
+
+        public EditRouletteAwardItemWindow(int count)
         {
             InitializeComponent();
+            isAdd = true;
+            maxIndex = count;
+            this.Title = "添加幸运大转盘奖项";
+        }
+
+        public EditRouletteAwardItemWindow(RouletteAwardItemUIModel awarditem)
+        {
+            InitializeComponent();
+            this.Title = "修改幸运大转盘奖项";
+            isAdd = false;
+            uiItem = awarditem;
+
+            this.txtRecordID.Text = awarditem.ID.ToString();
+            this.txtAwardName.Text = awarditem.AwardName;
+            this.numAwardNumber.Value = awarditem.AwardNumber;
+            this.chkIsLargeAward.IsChecked = awarditem.IsLargeAward;
+            this.chkIsRealAward.IsChecked = awarditem.IsRealAward;
+            this.cmbAwardType.SelectedIndex = (int)awarditem.RouletteAwardType;
+            this.numValueMoneyYuan.Value = awarditem.ValueMoneyYuan;
+            this.numWinProbability.Value = awarditem.WinProbability;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -38,7 +63,12 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             {
                 return;
             }
+
             RouletteAwardItem item = new RouletteAwardItem();
+            if (isAdd)
+            {
+                item.ID = maxIndex + 1;
+            }
             item.AwardName = txtAwardName.Text.Trim();
             item.AwardNumber = (int)this.numAwardNumber.Value;
             item.IsLargeAward = this.chkIsLargeAward.IsChecked.Value;
@@ -47,8 +77,14 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             item.ValueMoneyYuan = (float)this.numValueMoneyYuan.Value;
             item.WinProbability = (int)this.numWinProbability.Value;
 
-            App.GameRouletteVMObject.ListRouletteAwardItems.Add(new Model.RouletteAwardItemUIModel(item));
-
+            if (isAdd)
+            {
+                App.GameRouletteVMObject.ListRouletteAwardItems.Add(new Model.RouletteAwardItemUIModel(item));
+            }
+            else
+            {
+                uiItem.ParentObject = item;
+            }
             this.DialogResult = true;
         }
 

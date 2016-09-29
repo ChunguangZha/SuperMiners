@@ -49,6 +49,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerLockedStoneOrderRecords += controlPlayerManager_ViewPlayerLockedStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
+
+            App.GameRouletteVMObject.AsyncGetAwardItems();
         }
 
         void controlPlayerManager_ViewPlayerRMBWithdrawRecords(string obj)

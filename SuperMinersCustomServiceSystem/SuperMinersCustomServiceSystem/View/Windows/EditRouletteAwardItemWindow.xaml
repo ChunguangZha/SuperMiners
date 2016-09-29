@@ -20,7 +20,7 @@
             <ColumnDefinition Width="181*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="ID" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <TextBox Grid.Column="1" Name="txtRecordID" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="1" Name="txtRecordID" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="1" Text="奖项信息" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBox Grid.Row="1" Grid.Column="1" Name="txtAwardName" Margin="10,5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="2" Text="奖项数值" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -39,12 +39,12 @@
             <ComboBoxItem Content="骏网一卡通"/>
         </ComboBox>
         <TextBlock Grid.Row="4" Text="价值人民币" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <MyControl:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numValueMoneyYuan" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <MyControl:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numValueMoneyYuan" Maximum="100000" Margin="10,5" VerticalAlignment="Center" DecimalPlaces="2"/>
         <CheckBox Grid.Row="5" Grid.Column="1" Name="chkIsLargeAward" Content="是否为大奖" Margin="10,5" VerticalAlignment="Center"/>
         <CheckBox Grid.Row="6" Grid.Column="1" Name="chkIsRealAward" Content="是否为实物奖项" Margin="10,5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="7" Text="中奖概率" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <MyControl:NumericTextBox Grid.Row="7" Grid.Column="1" x:Name="numWinProbability" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
         <Button Grid.Row="9" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="100" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
-        <Button Grid.Row="9" Grid.ColumnSpan="2" Name="btnOK" Content="确认支付" Width="100" Margin="10,10,120,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
+        <Button Grid.Row="9" Grid.ColumnSpan="2" Name="btnOK" Content="确认" Width="100" Margin="10,10,120,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
     </Grid>
 </Window>

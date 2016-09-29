@@ -1,7 +1,10 @@
-Error:  [2016/9/20 22:47:00] ---- Log: GetPlayerAction Exception. ClientIP=::1:25602, year=2016, month=9, day=20, hour=22, minute=45, second=28
-Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetAllPlayerCount() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 517
-   在 SuperMinersServerApplication.Controller.PlayerActionController.GetActionLogList(Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerActionController.cs:行号 106
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetPlayerAction(String token, Int32 year, Int32 month, Int32 day, Int32 hour, Int32 minute, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Message.cs:行号 30
+Error:  [2016/9/30 1:51:50] ---- Log: Tony FinishRoulette Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 DataBaseProvider.GameRouletteDBProvider.GetPayWinAwardRecord(String UserName, Int32 RouletteAwardItemID, DateTime WinTime) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\GameRouletteDBProvider.cs:行号 168
+   在 SuperMinersServerApplication.Controller.Game.RouletteAwardController.Finish(Int32 userID, String userName, String userNickName, Int32 winAwardIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Game\RouletteAwardController.cs:行号 331
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.FinishRoulette(String token, String userName, Int32 winAwardIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 84
+-----------------------------------------------------
+*********+++++++++++++***********
+\WebService\Services\ServiceToClient.Message.cs:行号 30
 -----------------------------------------------------
 *********+++++++++++++***********
 nersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.SearchExceptionAlipayRechargeRecord(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827

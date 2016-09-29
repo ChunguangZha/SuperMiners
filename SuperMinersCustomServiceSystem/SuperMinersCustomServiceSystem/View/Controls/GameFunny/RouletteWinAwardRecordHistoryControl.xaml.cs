@@ -28,18 +28,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
             InitializeComponent();
 
             this.datagrid.ItemsSource = App.GameRouletteVMObject.ListAllPayRouletteWinnerRecords;
-            var listAwardItems = App.GameRouletteVMObject.ListRouletteAwardItems.ToList();
-            if (listAwardItems != null)
-            {
-                listAwardItems.Insert(0, new Model.RouletteAwardItemUIModel(new MetaData.Game.Roulette.RouletteAwardItem()
-                {
-                    ID = -1,
-                    AwardName="全部"
-                }));
-
-                this.cmbAwardItems.ItemsSource = listAwardItems;
-                this.cmbAwardItems.SelectedIndex = 0;
-            }
+            this.cmbAwardItems.ItemsSource = App.GameRouletteVMObject.ListToComboxRouletteAwardItems;
         }
 
         public void SetUserName(string userName)

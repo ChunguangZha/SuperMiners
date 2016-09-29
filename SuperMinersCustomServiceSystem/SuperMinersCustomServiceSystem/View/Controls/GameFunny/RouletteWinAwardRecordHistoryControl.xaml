@@ -20,7 +20,7 @@
             <TextBlock Text="玩家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
             <TextBox Name="txtUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
             <TextBlock Text="中奖信息" Margin="0,10,5,10" VerticalAlignment="Center"/>
-            <ComboBox Name="cmbAwardItems" Width="200" Margin="10,10,5,10" VerticalAlignment="Center"/>
+            <ComboBox Name="cmbAwardItems" Width="200" Margin="10,10,5,10" VerticalAlignment="Center" DisplayMemberPath="AwardName" SelectedValuePath="ID"/>
             <TextBlock Text="已领取：" Margin="10,10,5,10" VerticalAlignment="Center"/>
             <ComboBox Name="cmbIsGot" SelectedIndex="0" Margin="0,10,5,10" Width="70" VerticalAlignment="Center">
                 <ComboBoxItem Content="全部"/>

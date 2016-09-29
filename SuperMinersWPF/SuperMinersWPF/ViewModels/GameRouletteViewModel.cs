@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -123,11 +124,24 @@ namespace SuperMinersWPF.ViewModels
                         this.ListAwardItems.Add(new RouletteAwardItemUIModel(item));
                     }
                 }
+
+                if (AwardItemsListChanged != null)
+                {
+                    AwardItemsListChanged();
+                }
             }
             catch (Exception exc)
             {
                 MyMessageBox.ShowInfo("查询幸运大转盘奖项，返回后处理异常。异常信息：" + exc.Message);
             }
         }
+
+        public void AsyncGetAllAwardItems()
+        {
+            App.BusyToken.ShowBusyWindow("正在加载数据...");
+            GlobalData.Client.GetAwardItems(null);
+        }
+
+        public event Action AwardItemsListChanged;
     }
 }

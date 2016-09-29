@@ -164,6 +164,8 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 string sqlTextA = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  " +
                     " where s.UserName = @UserName and r.AwardItemID = @AwardItemID and r.WinTime >= @WinTime";
+
+                mycmd = myconn.CreateCommand();
                 string encryptUserName = DESEncrypt.EncryptDES(UserName);
                 mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
@@ -395,7 +397,7 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string sqlText = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsPay = @IsPay";
+                string sqlText = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsPay = @IsPay";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@IsPay", false);

@@ -125,9 +125,6 @@
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\MinesBuyRecordUIModel.cs">
       <Link>Models\MinesBuyRecordUIModel.cs</Link>
     </Compile>
-    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\RouletteAwardItemUIModel.cs">
-      <Link>Models\RouletteAwardItemUIModel.cs</Link>
-    </Compile>
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\RouletteWinnerRecordUIModel.cs">
       <Link>Models\RouletteWinnerRecordUIModel.cs</Link>
     </Compile>
@@ -264,6 +261,7 @@
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
+    <Compile Include="Models\RouletteAwardItemUIModel.cs" />
     <Compile Include="Models\SellStonesOrderUIModel.cs" />
     <Compile Include="Models\TopListInfoUIModel.cs" />
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
@@ -394,6 +392,12 @@
     </Compile>
     <Compile Include="Views\ViewSingleNoticeWindow.xaml.cs">
       <DependentUpon>ViewSingleNoticeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\RouletteWinAwardAlertWindow.xaml.cs">
+      <DependentUpon>RouletteWinAwardAlertWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\RouletteWinAwardTakeWindow.xaml.cs">
+      <DependentUpon>RouletteWinAwardTakeWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\WithdrawRMBWindow.xaml.cs">
       <DependentUpon>WithdrawRMBWindow.xaml</DependentUpon>
@@ -570,6 +574,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewSingleNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\RouletteWinAwardAlertWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\RouletteWinAwardTakeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

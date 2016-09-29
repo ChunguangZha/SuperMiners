@@ -22,6 +22,7 @@ namespace SuperMinersWPF
         internal static NoticeViewModel NoticeVMObject = new NoticeViewModel();
         internal static StoneOrderViewModel StoneOrderVMObject = new StoneOrderViewModel();
         internal static TradeHistoryViewModel TradeHistoryVMObject = new TradeHistoryViewModel();
+        internal static GameRouletteViewModel GameRouletteVMObject = new GameRouletteViewModel();
         internal static BusyToken BusyToken = new BusyToken();
 
         protected override void OnStartup(StartupEventArgs e)
