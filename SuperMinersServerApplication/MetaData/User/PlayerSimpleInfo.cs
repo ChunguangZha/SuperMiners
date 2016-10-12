@@ -30,6 +30,9 @@ namespace MetaData.User
         [DataMember]
         public string Password { get; set; }
 
+        [DataMember]
+        public PlayerGroupType GroupType { get; set; }
+
         /// <summary>
         /// 支付宝账户，加密，MaxLength=30
         /// </summary>
@@ -182,5 +185,12 @@ namespace MetaData.User
                 }
             }
         }
+    }
+
+    public enum PlayerGroupType
+    {
+        NormalPlayer=0,
+        TestPlayer,
+        AgentPlayer,
     }
 }

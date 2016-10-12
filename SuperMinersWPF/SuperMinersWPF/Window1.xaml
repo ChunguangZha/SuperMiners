@@ -213,7 +213,7 @@
                         <TextBlock Grid.Column="1" Text="矿石市场" FontSize="16"/>
                     </Grid>
                 </RadioButton>
-                <RadioButton x:Name="btnShowTopList" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowTopList_Checked">
+                <RadioButton x:Name="btnShowTopList" Visibility="Collapsed" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowTopList_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -223,7 +223,7 @@
                         <TextBlock Grid.Column="1" Text="排行榜" FontSize="16"/>
                     </Grid>
                 </RadioButton>
-                <RadioButton x:Name="btnShowChat" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowChat_Checked">
+                <RadioButton x:Name="btnShowChat" Visibility="Collapsed" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowChat_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
