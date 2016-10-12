@@ -138,8 +138,11 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncGetAllAwardItems()
         {
-            App.BusyToken.ShowBusyWindow("正在加载数据...");
-            GlobalData.Client.GetAwardItems(null);
+            if (GlobalData.Client.IsEnable)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载数据...");
+                GlobalData.Client.GetAwardItems(null);
+            }
         }
 
         public event Action AwardItemsListChanged;

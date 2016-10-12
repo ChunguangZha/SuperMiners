@@ -90,6 +90,14 @@ namespace SuperMinersWPF.Wcf.Clients
             this._invoker.Error += new EventHandler(_invoker_Error);
         }
 
+        public bool IsEnable
+        {
+            get
+            {
+                return this._invoker != null;
+            }
+        }
+
         private void _invoker_Error(object sender, EventArgs e)
         {
             if (null != this.Error)

@@ -15,7 +15,10 @@ namespace SuperMinersWPF.Wcf.Clients
         public event EventHandler<WebInvokeEventArgs<RouletteAwardItem[]>> GetAwardItemsCompleted;
         public void GetAwardItems(object userState)
         {
-            this._invoker.InvokeUserState<RouletteAwardItem[]>(this._context, "GetAwardItems", this.GetAwardItemsCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName);
+            if (this._invoker != null)
+            {
+                this._invoker.InvokeUserState<RouletteAwardItem[]>(this._context, "GetAwardItems", this.GetAwardItemsCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName);
+            }
         }
 
         #endregion

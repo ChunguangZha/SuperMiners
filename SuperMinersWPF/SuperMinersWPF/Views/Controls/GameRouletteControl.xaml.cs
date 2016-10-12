@@ -44,7 +44,7 @@ namespace SuperMinersWPF.Views.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            //App.GameRouletteVMObject.AsyncGetAllAwardItems();
         }
 
         public void AddEventHandlers()
