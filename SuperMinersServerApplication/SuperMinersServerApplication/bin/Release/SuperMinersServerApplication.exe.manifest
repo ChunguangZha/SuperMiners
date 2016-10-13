@@ -50,19 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>KgYe69P6ATk34cqYGql4cGQfkn5YTe489nE4ckMIIdQ=</dsig:DigestValue>
+        <dsig:DigestValue>EfoE9kgmy626kAFzu8Pc5dTp58Jaf2RqRykYAqURcIU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="29696">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="30720">
       <assemblyIdentity name="MetaData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6xPPngS5GdmYVnZKpXutgKebcxDKEDxqCfWEugXB/98=</dsig:DigestValue>
+        <dsig:DigestValue>ichxqtXPQIvi2GlROKimSmzmZInwJ2VMdZJAkn9QGTE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>wxxjNwPD45Lqv8e0ns9/M1G31cbkZ8x+g4W1rEIK8xY=</dsig:DigestValue>
+        <dsig:DigestValue>A9wNSdsKDessHfEM7/QGN2BCOyZaUdmNZlpWaUVNRww=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -105,7 +105,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>xephyFGVeJC6e8DTWDwGJcPtEJmtjn7/rSzGE6CgiT4=</dsig:DigestValue>
+      <dsig:DigestValue>85y/8uPKJ3RIHWoutIrK3QQFHpIx1xP1z8Om5rQhKuw=</dsig:DigestValue>
     </hash>
   </file>
   <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">

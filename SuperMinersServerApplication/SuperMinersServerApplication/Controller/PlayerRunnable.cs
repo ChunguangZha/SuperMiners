@@ -576,12 +576,14 @@ namespace SuperMinersServerApplication.Controller
                 CustomerMySqlTransaction myTrans = null;
                 try
                 {
-                    this.BasePlayer.FortuneInfo.FreezingRMB -= record.WidthdrawRMB;
-                    if (this.BasePlayer.FortuneInfo.FreezingRMB < 0)
+                    decimal resultValue = this.BasePlayer.FortuneInfo.FreezingRMB - record.WidthdrawRMB;
+                    if (resultValue < 0)
                     {
                         LogHelper.Instance.AddErrorLog("玩家 [" + record.PlayerUserName + "] 灵币提现操作异常，提现后冻结灵币会小于0，请立即检查！！" , null);
                         return OperResult.RESULTCODE_EXCEPTION;
                     }
+
+                    this.BasePlayer.FortuneInfo.FreezingRMB = resultValue;
 
                     myTrans = MyDBHelper.Instance.CreateTrans();
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
@@ -665,10 +667,11 @@ namespace SuperMinersServerApplication.Controller
                 //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
                 newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
 
-                if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
-                {
+                //按王忠岩要求，无限涨长 20161013
+                //if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
+                //{
                     newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
-                }
+                //}
                 newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
                 newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
                 newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
