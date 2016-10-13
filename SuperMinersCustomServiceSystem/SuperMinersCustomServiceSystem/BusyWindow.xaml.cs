@@ -75,7 +75,7 @@ namespace SuperMinersCustomServiceSystem
             ThreadPool.QueueUserWorkItem(o =>
             {
                 this._wait.WaitOne(Delay);
-                this._syn.Send(o1 =>
+                this._syn.Post(o1 =>
                 {
                     if (this._show)
                     {

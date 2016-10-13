@@ -50,7 +50,6 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
 
-            App.GameRouletteVMObject.AsyncGetAwardItems();
         }
 
         void controlPlayerManager_ViewPlayerRMBWithdrawRecords(string obj)
@@ -293,18 +292,21 @@ namespace SuperMinersCustomServiceSystem
 
         private void tvL2_FS_Roulette_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            App.GameRouletteVMObject.AsyncGetAwardItems();
             HideAllControls();
             this.controlRouletteActiveWinRealAwardRecords.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            App.GameRouletteVMObject.AsyncGetAwardItems();
             HideAllControls();
             this.controlRouletteWinAwardHistoryRecords.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_FS_Roulette_AwardItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            App.GameRouletteVMObject.AsyncGetAwardItems();
             HideAllControls();
             this.controlRouletteRouletteAwardItemListControl.Visibility = System.Windows.Visibility.Visible;
         }
