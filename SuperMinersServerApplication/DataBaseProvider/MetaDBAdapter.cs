@@ -116,6 +116,7 @@ namespace DataBaseProvider
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
+                player.SimpleInfo.GroupType = (PlayerGroupType)Convert.ToInt32(dt.Rows[i]["GroupType"]);
                 player.SimpleInfo.Alipay = DESEncrypt.DecryptDES(encryptedAlipay);
                 player.SimpleInfo.AlipayRealName = DESEncrypt.DecryptDES(encryptedAlipayRealName);
                 player.SimpleInfo.Email = DESEncrypt.DecryptDES(encryptedEmail);
@@ -456,6 +457,7 @@ namespace DataBaseProvider
             {
                 records[i] = new WaitToAwardExpRecord()
                 {
+                    ID = Convert.ToInt32(dt.Rows[i]["id"]),
                     AwardLevel = Convert.ToInt32(dt.Rows[i]["AwardLevel"]),
                     NewRegisterUserNme = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["NewRegisterUserNme"])),
                     ReferrerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["ReferrerUserName"]))

@@ -119,6 +119,10 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 return this._parentObject.AdminUserName;
             }
+            set
+            {
+                this._parentObject.AdminUserName = value;
+            }
         }
 
         public string AlipayOrderNumber
@@ -126,6 +130,10 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.AlipayOrderNumber;
+            }
+            set
+            {
+                this._parentObject.AlipayOrderNumber = value;
             }
         }
 

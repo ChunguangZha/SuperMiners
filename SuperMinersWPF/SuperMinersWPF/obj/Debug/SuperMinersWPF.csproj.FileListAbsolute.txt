@@ -217,3 +217,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\Rou
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardTakeWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardAlertWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardTakeWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardAlertWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardTakeWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardAlertWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\RouletteWinAwardTakeWindow.g.cs

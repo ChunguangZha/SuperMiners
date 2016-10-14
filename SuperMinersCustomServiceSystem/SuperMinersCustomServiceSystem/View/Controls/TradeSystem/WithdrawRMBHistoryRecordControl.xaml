@@ -60,13 +60,7 @@
                 <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceedString, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Width="*" >
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button Content="支付" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="支付宝订单号" Width="*" Binding="{Binding AlipayOrderNumber, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

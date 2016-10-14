@@ -8,6 +8,8 @@ namespace MetaData.Trade
 {
     public class WaitToAwardExpRecord
     {
+        public int ID;
+
         public string ReferrerUserName;
 
         public string NewRegisterUserNme;

@@ -68,18 +68,16 @@ namespace DataBaseProvider
             }
         }
 
-        public bool DeleteWaitToAwardExpRecord(string newRegisterUserName)
+        public bool DeleteWaitToAwardExpRecord(int id, CustomerMySqlTransaction trans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
-                string sqlText = "delete from waittoawardexprecord where NewRegisterUserNme = @NewRegisterUserNme ";
+                mycmd = trans.CreateCommand();
+                string sqlText = "delete from waittoawardexprecord where id = @id ";
                 mycmd.CommandText = sqlText;
 
-                mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(newRegisterUserName));
+                mycmd.Parameters.AddWithValue("@id", id);
                 mycmd.ExecuteNonQuery();
                 return true;
             }
@@ -88,11 +86,6 @@ namespace DataBaseProvider
                 if (mycmd != null)
                 {
                     mycmd.Dispose();
-                }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
                 }
             }
         }

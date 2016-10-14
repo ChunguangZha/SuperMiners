@@ -76,6 +76,7 @@
                     <DataGridTextColumn Binding="{Binding LoginIP}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
                     <DataGridTextColumn Binding="{Binding Exp}" ClipboardContentBinding="{x:Null}" Header="贡献值"/>
                     <DataGridTextColumn Binding="{Binding RMB}" ClipboardContentBinding="{x:Null}" Header="灵币"/>
+                    <DataGridTextColumn Binding="{Binding FreezingRMB}" ClipboardContentBinding="{x:Null}" Header="冻结灵币"/>
                     <DataGridTextColumn Binding="{Binding GoldCoin}" ClipboardContentBinding="{x:Null}" Header="金币"/>
                     <DataGridTextColumn Binding="{Binding StonesReserves}" ClipboardContentBinding="{x:Null}" Header="矿石储量"/>
                     <DataGridTextColumn Binding="{Binding TotalProducedStonesCount}" ClipboardContentBinding="{x:Null}" Header="累计总产出"/>

@@ -46,7 +46,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding PlayerUserName, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="提现金额" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="提现灵币" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="获得人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceedString, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>

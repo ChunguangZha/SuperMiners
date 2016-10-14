@@ -126,7 +126,7 @@ namespace SuperMinersServerApplication.Controller
                                 {
                                     playerrun = new PlayerRunnable(referrerLevel1player);
                                 }
-                                var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
+                                //var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
                                 var awardExpRecord = new WaitToAwardExpRecord()
                                 {
                                     AwardLevel = 1,
@@ -160,7 +160,7 @@ namespace SuperMinersServerApplication.Controller
                                     playerrun = new PlayerRunnable(previousReferrerPlayer);
                                 }
 
-                                var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
+                                //var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
                                 //playerrun.ReferAward(awardConfig, trans);
                                 var awardExpRecord = new WaitToAwardExpRecord()
                                 {
@@ -173,7 +173,7 @@ namespace SuperMinersServerApplication.Controller
                                 listPlayerRun.Add(playerrun);
 
                                 previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
-                                PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
+                                //PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
 
                                 indexLevel++;
                             }
@@ -213,6 +213,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 trans.Commit();
 
+                LogHelper.Instance.AddInfoLog("玩家[" + userName + "]注册成功，推荐人：" + newplayer.SimpleInfo.ReferrerUserName + "。");
                 PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
 
                 foreach (var playerrun in listPlayerRun)
@@ -247,6 +248,7 @@ namespace SuperMinersServerApplication.Controller
             //说明是第一次登录
             if (player.SimpleInfo.LastLoginTime == null)
             {
+                LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "]第一次登录矿场。");
                 var awardRecords = DBProvider.WaitToAwardExpRecordDBProvider.GetWaitToAwardExpRecord(player.SimpleInfo.UserName);
                 if (awardRecords != null)
                 {
@@ -258,9 +260,10 @@ namespace SuperMinersServerApplication.Controller
                             var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
 
                             var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
-                            referrerPlayerRunnable.ReferAward(GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel), myTrans);
+                            referrerPlayerRunnable.ReferAward(award, myTrans);
+                            LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "]，的 " + awardrecord.AwardLevel + " 级推荐人[" + awardrecord.ReferrerUserName + "]收获: " + award.ToString());
                             PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
-
+                            DBProvider.WaitToAwardExpRecordDBProvider.DeleteWaitToAwardExpRecord(awardrecord.ID, myTrans);
                         }
 
                         myTrans.Commit();
@@ -615,59 +618,7 @@ namespace SuperMinersServerApplication.Controller
                 playerrun.RefreshFortune();
             }
         }
-
-        //public bool RechargeRMB(string alipay, string alipayRealName, decimal yuan)
-        //{
-        //    try
-        //    {
-        //        //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-        //        //if (player == null)
-        //        //{
-        //        //    return false;
-        //        //}
-
-        //        //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-        //        //if (playerrun == null)
-        //        //{
-        //        //    playerrun = new PlayerRunnable(player);
-        //        //}
-
-        //        //playerrun.RechargeRMB(yuan);
-        //        return true;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        LogHelper.Instance.AddErrorLog("RechargeRMB exception. alipay = " + alipay + ", reamname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
-        //        return false;
-        //    }
-        //}
-
-        //public bool RechargeGoldCoin(string alipay, string alipayRealName, decimal yuan)
-        //{
-        //    try
-        //    {
-        //        //PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByAlipay(alipay, alipayRealName);
-        //        //if (player == null)
-        //        //{
-        //        //    return false;
-        //        //}
-
-        //        //var playerrun = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
-        //        //if (playerrun == null)
-        //        //{
-        //        //    playerrun = new PlayerRunnable(player);
-        //        //}
-
-        //        //playerrun.RechargeRMB(yuan);
-        //        return true;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        LogHelper.Instance.AddErrorLog("RechargeGoldCoin exception. alipay = " + alipay + ", realname=" + alipayRealName + ", yuan=" + yuan.ToString(), exc);
-        //        return false;
-        //    }
-        //}
-
+        
         public PlayerInfo GetPlayerByAlipayAccount(string alipayAccount)
         {
             foreach (var item in this._dicOnlinePlayerRuns.Values)

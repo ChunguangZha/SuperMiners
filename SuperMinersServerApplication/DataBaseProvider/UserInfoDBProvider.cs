@@ -23,20 +23,21 @@ namespace DataBaseProvider
                 if (string.IsNullOrEmpty(player.SimpleInfo.ReferrerUserName))
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `NickName`, `Password`, `Alipay`, `AlipayRealName`,`Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
-                        " (@UserName, @NickName, @Password, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime); ";
+                        "(`UserName`, `NickName`, `Password`, `GroupType`, `Alipay`, `AlipayRealName`,`Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
+                        " (@UserName, @NickName, @Password, @GroupType, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime); ";
                 }
                 else
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `NickName`, `Password`, `Alipay`, `AlipayRealName`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
-                        " (@UserName, @NickName, @Password, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
+                        "(`UserName`, `NickName`, `Password`, `GroupType`, `Alipay`, `AlipayRealName`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
+                        " (@UserName, @NickName, @Password, @GroupType, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
                     mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(player.SimpleInfo.ReferrerUserName));
                 }
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
                 mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(player.SimpleInfo.NickName));
                 mycmd.Parameters.AddWithValue("@Password", DESEncrypt.EncryptDES(player.SimpleInfo.Password));
+                mycmd.Parameters.AddWithValue("@GroupType", (int)player.SimpleInfo.GroupType);
                 mycmd.Parameters.AddWithValue("@Alipay", string.IsNullOrEmpty(player.SimpleInfo.Alipay) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.Alipay));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", string.IsNullOrEmpty(player.SimpleInfo.AlipayRealName) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.AlipayRealName));
                 mycmd.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(player.SimpleInfo.AlipayRealName) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.Email));

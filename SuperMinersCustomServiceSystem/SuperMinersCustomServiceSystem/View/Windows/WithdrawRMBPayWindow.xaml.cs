@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -80,11 +81,20 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (this.txtAlipayOrderNumber.Text == "")
+            string alipayNo = this.txtAlipayOrderNumber.Text.Trim();
+            if (alipayNo == "")
             {
                 MessageBox.Show("请输入支付宝订单号");
                 return;
             }
+            if (Regex.IsMatch(alipayNo, @"\D"))
+            {
+                MessageBox.Show("请输入正确的支付宝订单号");
+                return;
+            }
+
+            this.Record.AlipayOrderNumber = alipayNo;
+            this.Record.AdminUserName = GlobalData.CurrentAdmin.UserName;
 
             App.BusyToken.ShowBusyWindow("正在提交数据...");
             GlobalData.Client.PayWithdrawRMBRecord(Record.ParentObject);
