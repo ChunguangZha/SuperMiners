@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -202,6 +202,7 @@
     <Compile Include="Model\MinesBuyRecordUIModel.cs" />
     <Compile Include="Model\RouletteAwardItemUIModel.cs" />
     <Compile Include="Model\RouletteWinnerRecordUIModel.cs" />
+    <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />
     <Compile Include="View\Controls\GameFunny\RouletteActiveWinRealAwardListControl.xaml.cs">
@@ -329,6 +330,9 @@
     </Compile>
     <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
       <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EditAgentInfoWindow.xaml.cs">
+      <DependentUpon>EditAgentInfoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\EditPlayerExpWindow.xaml.cs">
       <DependentUpon>EditPlayerExpWindow.xaml</DependentUpon>
@@ -553,6 +557,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ViewPlayerSellStoneRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditAgentInfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

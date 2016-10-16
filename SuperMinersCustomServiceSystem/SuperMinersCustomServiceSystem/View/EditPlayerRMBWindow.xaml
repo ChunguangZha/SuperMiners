@@ -18,7 +18,7 @@
         <TextBox Grid.Column="1" Name="txtUserName" IsReadOnly="True" Margin="5"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="现有灵币：" Margin="5" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="1" Grid.Column="1" Name="txtCurrentRMB" IsReadOnly="True" Margin="5"/>
-        <CheckBox Grid.Row="2" Name="chkChangeType" Margin="5" Content="充值：" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Checked="chkChangeType_Checked" Unchecked="chkChangeType_Unchecked"/>
+        <CheckBox Grid.Row="2" Name="chkChangeType" Margin="5" Content="充值：" IsChecked="True" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Checked="chkChangeType_Checked" Unchecked="chkChangeType_Unchecked"/>
         <StackPanel Grid.Row="2" Grid.Column="1" Name="panelInCharge" Orientation="Horizontal">
             <MyControl:NumericTextBox x:Name="numYuanValue" Margin="5" Width="100" Minimum="0" Maximum="10000" ToolTip="充值时输入充入的人民币值，自动换算成灵币" ValueChanged="NumericTextBox_ValueChanged"/>
             <TextBlock Text="人民币" Margin="5"/>

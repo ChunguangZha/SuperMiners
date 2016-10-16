@@ -220,3 +220,5 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\GameRouletteWinAwardWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditRouletteAwardItemWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditAgentInfoWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditAgentInfoWindow.g.cs

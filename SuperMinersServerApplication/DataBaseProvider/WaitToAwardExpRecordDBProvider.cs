@@ -11,9 +11,9 @@ namespace DataBaseProvider
 {
     public class WaitToAwardExpRecordDBProvider
     {
-        public WaitToAwardExpRecord[] GetWaitToAwardExpRecord(string newRegisterUserName)
+        public WaitToReferAwardRecord[] GetWaitToAwardExpRecord(string newRegisterUserName)
         {
-            WaitToAwardExpRecord[] records = null;
+            WaitToReferAwardRecord[] records = null;
             MySqlConnection myconn = null;
             try
             {
@@ -26,7 +26,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(newRegisterUserName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
-                records = MetaDBAdapter<WaitToAwardExpRecord>.GetWaitToAwardExpRecordListFromDataTable(dt);
+                records = MetaDBAdapter<WaitToReferAwardRecord>.GetWaitToAwardExpRecordListFromDataTable(dt);
 
                 mycmd.Dispose();
 
@@ -42,7 +42,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SaveWaitToAwardExpRecord(WaitToAwardExpRecord record, CustomerMySqlTransaction myTrans)
+        public bool SaveWaitToAwardExpRecord(WaitToReferAwardRecord record, CustomerMySqlTransaction myTrans)
         {
             MySqlCommand mycmd = null;
             try

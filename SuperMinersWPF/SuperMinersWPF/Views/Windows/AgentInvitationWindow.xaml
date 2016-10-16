@@ -1,0 +1,14 @@
+﻿<Window x:Class="SuperMinersWPF.Views.Windows.AgentInvitationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="推广信息" Height="600" Width="600" WindowStyle="ToolWindow" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="45*"/>
+            <RowDefinition Height="43*"/>
+            <RowDefinition Height="440*"/>
+        </Grid.RowDefinitions>
+
+    </Grid>
+</Window>

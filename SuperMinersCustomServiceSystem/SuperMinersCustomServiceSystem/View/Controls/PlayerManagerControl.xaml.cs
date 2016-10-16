@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.Uility;
+using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,11 +87,16 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             {
                 if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
                 {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-
-                    if (MessageBox.Show("删除玩家【" + player.UserName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    InputActionPasswordWindow win = new InputActionPasswordWindow();
+                    if (win.ShowDialog() == true)
                     {
-                        App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserName });
+                        string ActionPassword = win.ActionPassword;
+                        PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+
+                        if (MessageBox.Show("删除玩家【" + player.UserName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserName }, ActionPassword);
+                        }
                     }
                 }
             }
@@ -168,6 +174,95 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 }
 
                 MyMessageBox.ShowInfo("保存CSV文件成功");
+            }
+        }
+
+        private void btnLockPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (player.IsLocked)
+                    {
+                        MyMessageBox.ShowInfo("该玩家已经被锁定");
+                        return;
+                    }
+                    InputActionPasswordWindow win = new InputActionPasswordWindow();
+                    if (win.ShowDialog() == true)
+                    {
+                        string ActionPassword = win.ActionPassword;
+                        if (MessageBox.Show("请确认要锁定玩家【" + player.UserName + "】", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            App.PlayerVMObject.AsyncLockPlayerInfos(player.UserName, ActionPassword);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("锁定玩家异常。" + exc.Message);
+            }
+        }
+
+        private void btnUnLockPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (!player.IsLocked)
+                    {
+                        MyMessageBox.ShowInfo("该玩家没有被锁定");
+                        return;
+                    }
+                    InputActionPasswordWindow win = new InputActionPasswordWindow();
+                    if (win.ShowDialog() == true)
+                    {
+                        string ActionPassword = win.ActionPassword;
+
+                        if (MessageBox.Show("请确认要解锁玩家【" + player.UserName + "】", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        {
+                            App.PlayerVMObject.AsyncUnLockPlayerInfos(player.UserName, ActionPassword);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("解锁玩家异常。" + exc.Message);
+            }
+        }
+
+        private void btnSetPlayerAsAgent_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (MessageBox.Show("请确认要将玩家【" + player.UserName + "】设置为代理？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    {
+                        InputActionPasswordWindow win = new InputActionPasswordWindow();
+                        if (win.ShowDialog() == true)
+                        {
+                            //string ActionPassword = win.ActionPassword;
+
+                            EditAgentInfoWindow winEdit = new EditAgentInfoWindow(player.UserID, player.UserName);
+                            winEdit.ShowDialog();
+                            if (winEdit.ISOK)
+                            {
+                                App.PlayerVMObject.AsyncGetListPlayers();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("解锁玩家异常。" + exc.Message);
             }
         }
 

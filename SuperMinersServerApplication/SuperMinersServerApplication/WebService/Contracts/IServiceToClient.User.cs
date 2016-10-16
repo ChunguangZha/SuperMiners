@@ -1,4 +1,5 @@
-﻿using MetaData.User;
+﻿using MetaData.AgentUser;
+using MetaData.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,5 +73,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         UserReferrerTreeItem[] GetUserReferrerTree(string token, string userName);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetAgentUserInfo",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        AgentUserInfo GetAgentUserInfo(string token, string userName);
     }
 }

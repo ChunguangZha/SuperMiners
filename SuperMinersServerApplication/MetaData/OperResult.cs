@@ -30,6 +30,11 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT = 101;
 
         /// <summary>
+        /// 注册用户时_昵称已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_NICKNAME_EXIST = 102;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
@@ -106,6 +111,7 @@ namespace MetaData
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_BUY_SUCCEED, "矿石交易已经交易成功");
             _resultCode_Msg.Add(RESULTCODE_ORDER_ISNOT_EXCEPTION, "该订单当前不是异常状态");
             _resultCode_Msg.Add(RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST, "没有找到您的中奖信息");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_NICKNAME_EXIST, "用户昵称已经存在");
         }
 
         public static string GetMsg(int resultCode)

@@ -1,13 +1,17 @@
-Error:  [2016/9/30 1:51:50] ---- Log: Tony FinishRoulette Exception
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 DataBaseProvider.GameRouletteDBProvider.GetPayWinAwardRecord(String UserName, Int32 RouletteAwardItemID, DateTime WinTime) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\GameRouletteDBProvider.cs:行号 168
-   在 SuperMinersServerApplication.Controller.Game.RouletteAwardController.Finish(Int32 userID, String userName, String userNickName, Int32 winAwardIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Game\RouletteAwardController.cs:行号 331
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.FinishRoulette(String token, String userName, Int32 winAwardIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 84
+Error:  [2016/10/16 23:44:30] ---- Log: 设置玩家[xiaocha]为代理时异常。
+Exc.Message: Unknown column 'UserID' in 'where clause'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
+   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
+   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
+   在 DataBaseProvider.UserInfoDBProvider.UpdatePlayerGroupType(Int32 userID, PlayerGroupType type, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 125
+   在 SuperMinersServerApplication.Controller.PlayerController.SetPlayerAsAgent(Int32 userID, String userName, String agentReferURL) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 518
 -----------------------------------------------------
 *********+++++++++++++***********
-\WebService\Services\ServiceToClient.Message.cs:行号 30
------------------------------------------------------
-*********+++++++++++++***********
-nersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.SearchExceptionAlipayRechargeRecord(String token, String orderNumber) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827
+:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 827
 -----------------------------------------------------
 
 类型。Exc.Stack:    在 System.DBNull.System.IConvertible.ToDateTime(IFormatProvider provider)

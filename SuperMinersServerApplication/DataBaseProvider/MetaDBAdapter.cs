@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.AgentUser;
 using MetaData.Game.Roulette;
 using MetaData.Trade;
 using MetaData.User;
@@ -96,6 +97,50 @@ namespace DataBaseProvider
             return players;
         }
 
+        internal static AgentUserInfo[] GetAgentUserInfoFromDataTable(DataTable dt, PlayerInfo[] players)
+        {
+            List<AgentUserInfo> listAgents = new List<AgentUserInfo>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int id = Convert.ToInt32(dt.Rows[i]["id"]);
+                int userID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                var player = players.FirstOrDefault(p => p.SimpleInfo.UserID == userID);
+                if (player != null)
+                {
+                    AgentUserInfo agent = new AgentUserInfo();
+                    agent.ID = id;
+                    agent.Player = player;
+                    agent.TotalAwardRMB = Convert.ToDecimal(dt.Rows[i]["TotalAwardRMB"]);
+                    agent.InvitationURL = Convert.ToString(dt.Rows[i]["InvitationURL"]);
+                    listAgents.Add(agent);
+                }
+            }
+
+            return listAgents.ToArray();
+        }
+
+        internal static AgentAwardRecord[] GetAgentAwardRecordFromDataTable(DataTable dt)
+        {
+            AgentAwardRecord[] records = new AgentAwardRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                AgentAwardRecord record = new AgentAwardRecord();
+                record.AgentAwardRMB = Convert.ToDecimal(dt.Rows[i]["AgentAwardRMB"]);
+                record.AgentID = Convert.ToInt32(dt.Rows[i]["AgentID"]);
+                record.AgentUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["AgentUserName"]));
+                record.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                record.PlayerID = Convert.ToInt32(dt.Rows[i]["PlayerID"]);
+                record.PlayerInchargeContent = Convert.ToString(dt.Rows[i]["PlayerInchargeContent"]);
+                record.PlayerInchargeRMB = Convert.ToDecimal(dt.Rows[i]["PlayerInchargeRMB"]);
+                record.PlayerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["PlayerUserName"]));
+                record.Time = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
         internal static PlayerInfo[] GetPlayerInfoFromDataTable(DataTable dt)
         {
             PlayerInfo[] players = new PlayerInfo[dt.Rows.Count];
@@ -117,6 +162,9 @@ namespace DataBaseProvider
                 player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
                 player.SimpleInfo.GroupType = (PlayerGroupType)Convert.ToInt32(dt.Rows[i]["GroupType"]);
+                player.SimpleInfo.IsAgentReferred = Convert.ToBoolean(dt.Rows[i]["IsAgentReferred"]);
+                player.SimpleInfo.AgentReferredLevel = Convert.ToInt32(dt.Rows[i]["AgentReferredLevel"]);
+                player.SimpleInfo.AgentUserID = Convert.ToInt32(dt.Rows[i]["AgentUserID"]);
                 player.SimpleInfo.Alipay = DESEncrypt.DecryptDES(encryptedAlipay);
                 player.SimpleInfo.AlipayRealName = DESEncrypt.DecryptDES(encryptedAlipayRealName);
                 player.SimpleInfo.Email = DESEncrypt.DecryptDES(encryptedEmail);
@@ -450,12 +498,12 @@ namespace DataBaseProvider
             return orders;
         }
 
-        internal static WaitToAwardExpRecord[] GetWaitToAwardExpRecordListFromDataTable(DataTable dt)
+        internal static WaitToReferAwardRecord[] GetWaitToAwardExpRecordListFromDataTable(DataTable dt)
         {
-            WaitToAwardExpRecord[] records = new WaitToAwardExpRecord[dt.Rows.Count];
+            WaitToReferAwardRecord[] records = new WaitToReferAwardRecord[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                records[i] = new WaitToAwardExpRecord()
+                records[i] = new WaitToReferAwardRecord()
                 {
                     ID = Convert.ToInt32(dt.Rows[i]["id"]),
                     AwardLevel = Convert.ToInt32(dt.Rows[i]["AwardLevel"]),

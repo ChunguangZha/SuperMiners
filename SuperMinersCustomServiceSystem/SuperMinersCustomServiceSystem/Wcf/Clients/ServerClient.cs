@@ -184,40 +184,46 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<PlayerInfoLoginWrap[]>(this._context, "GetPlayers", this.GetPlayersCompleted, GlobalData.Token);
         }
 
-        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerCompleted;
-        public void ChangePlayer(PlayerInfoLoginWrap player)
+        public event EventHandler<WebInvokeEventArgs<PlayerInfoLoginWrap>> GetPlayerCompleted;
+        public void GetPlayer(string userName)
         {
-            this._invoker.Invoke<bool>(this._context, "ChangePlayer", this.ChangePlayerCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, player);
+            this._invoker.Invoke<PlayerInfoLoginWrap>(this._context, "GetPlayer", this.GetPlayerCompleted, GlobalData.Token, userName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerCompleted;
+        public void ChangePlayer(PlayerInfoLoginWrap player, string actionPassword)
+        {
+            this._invoker.Invoke<bool>(this._context, "ChangePlayer", this.ChangePlayerCompleted, GlobalData.Token, actionPassword, player);
         }
 
         public event EventHandler<WebInvokeEventArgs<DeleteResultInfo>> DeletePlayersCompleted;
-        public void DeletePlayers(string[] playerUserNames)
+        public void DeletePlayers(string[] playerUserNames, string actionPassword)
         {
-            this._invoker.Invoke<DeleteResultInfo>(this._context, "DeletePlayers", this.DeletePlayersCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, playerUserNames);
+            this._invoker.Invoke<DeleteResultInfo>(this._context, "DeletePlayers", this.DeletePlayersCompleted, GlobalData.Token, actionPassword, playerUserNames);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> LockPlayerCompleted;
-        public void LockPlayer(string playerUserName)
+        public void LockPlayer(string playerUserName, string actionPassword)
         {
-            this._invoker.Invoke<bool>(this._context, "LockPlayer", this.LockPlayerCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, playerUserName);
+            this._invoker.Invoke<bool>(this._context, "LockPlayer", this.LockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> UnlockPlayerCompleted;
-        public void UnlockPlayer(string playerUserName)
+        public void UnlockPlayer(string playerUserName, string actionPassword)
         {
-            this._invoker.Invoke<bool>(this._context, "UnlockPlayer", this.UnlockPlayerCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, playerUserName);
+            this._invoker.Invoke<bool>(this._context, "UnlockPlayer", this.UnlockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> UpdatePlayerFortuneInfoCompleted;
-        public void UpdatePlayerFortuneInfo(MetaData.User.PlayerFortuneInfo fortuneInfo)
+        public void UpdatePlayerFortuneInfo(MetaData.User.PlayerFortuneInfo fortuneInfo, string actionPassword)
         {
-            this._invoker.Invoke<bool>(this._context, "UpdatePlayerFortuneInfo", this.UpdatePlayerFortuneInfoCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, fortuneInfo);
+            this._invoker.Invoke<bool>(this._context, "UpdatePlayerFortuneInfo", this.UpdatePlayerFortuneInfoCompleted, GlobalData.Token, actionPassword, fortuneInfo);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerPasswordCompleted;
-        public void ChangePlayerPassword(string playerUserName, string newPassword)
+        public void ChangePlayerPassword(string playerUserName, string newPassword, string actionPassword)
         {
-            this._invoker.Invoke<bool>(this._context, "ChangePlayerPassword", this.ChangePlayerPasswordCompleted, GlobalData.Token, GlobalData.CurrentAdmin.ActionPassword, playerUserName, newPassword);
+            this._invoker.Invoke<bool>(this._context, "ChangePlayerPassword", this.ChangePlayerPasswordCompleted, GlobalData.Token, actionPassword, playerUserName, newPassword);
         }
 
         public event EventHandler<WebInvokeEventArgs<NoticeInfo[]>> GetNoticesCompleted;
@@ -230,6 +236,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void CreateNotice(NoticeInfo notice)
         {
             this._invoker.Invoke<bool>(this._context, "CreateNotice", this.CreateNoticeCompleted, GlobalData.Token, notice);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> SetPlayerAsAgentCompleted;
+        public void SetPlayerAsAgent(int userID, string userName, string agentReferURL)
+        {
+            this._invoker.Invoke<int>(this._context, "SetPlayerAsAgent", this.SetPlayerAsAgentCompleted, GlobalData.Token, userID, userName, agentReferURL);
         }
 
         #endregion

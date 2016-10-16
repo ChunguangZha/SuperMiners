@@ -13,6 +13,7 @@ namespace MetaData.User
     [DataContract]
     public class PlayerSimpleInfo
     {
+        [DataMember]
         public int UserID { get; set; }
 
         /// <summary>
@@ -32,6 +33,18 @@ namespace MetaData.User
 
         [DataMember]
         public PlayerGroupType GroupType { get; set; }
+
+        [DataMember]
+        public bool IsAgentReferred { get; set; }
+
+        [DataMember]
+        public int AgentReferredLevel { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [DataMember]
+        public int AgentUserID { get; set; }
 
         /// <summary>
         /// 支付宝账户，加密，MaxLength=30

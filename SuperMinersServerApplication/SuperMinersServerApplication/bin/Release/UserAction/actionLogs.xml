@@ -126,10 +126,54 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-10-14T14:01:06.8866388+08:00</Time>
+    <Time>2016-10-14T14:01:06</Time>
     <SystemAllPlayerCount>323</SystemAllPlayerCount>
     <SystemAllMinerCount>24131</SystemAllMinerCount>
     <SystemAllOutputStoneCount>179155.277625531</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/10/14 14:01:06</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-14T21:59:17.5538739+08:00</Time>
+    <SystemAllPlayerCount>12</SystemAllPlayerCount>
+    <SystemAllMinerCount>964</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7228.00384521484</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/14 21:59:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>476</OperNumber>
+    <Remark />
+    <Time>2016-10-14T21:59:46.8857211+08:00</Time>
+    <SystemAllPlayerCount>12</SystemAllPlayerCount>
+    <SystemAllMinerCount>964</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7704.74017333984</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/14 21:59:46</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-14T22:01:45.2358026+08:00</Time>
+    <SystemAllPlayerCount>12</SystemAllPlayerCount>
+    <SystemAllMinerCount>964</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7704.74017333984</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/14 22:01:45</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GoldCoinRecharge</ActionType>
+    <OperNumber>1000</OperNumber>
+    <Remark>充值了 1000 的金币</Remark>
+    <Time>2016-10-14T22:04:59.0711322+08:00</Time>
+    <SystemAllPlayerCount>12</SystemAllPlayerCount>
+    <SystemAllMinerCount>964</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>7704.74407958984</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/14 22:04:59</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

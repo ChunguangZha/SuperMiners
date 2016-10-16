@@ -21,10 +21,11 @@ namespace SuperMinersCustomServiceSystem.View.Windows
     {
         public int ChangedMinerCount;
 
-        public EditPlayerMinerCountWindow(string userName)
+        public EditPlayerMinerCountWindow(string userName, decimal currentMiners)
         {
             InitializeComponent();
             this.txtUserName.Text = userName;
+            this.txtCurrentMinerCount.Text = currentMiners.ToString();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

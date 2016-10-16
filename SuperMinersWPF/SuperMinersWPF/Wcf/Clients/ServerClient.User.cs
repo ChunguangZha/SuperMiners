@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.AgentUser;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -101,6 +102,19 @@ namespace SuperMinersWPF.Wcf.Clients
             if (GlobalData.IsLogined)
             {
                 this._invoker.InvokeUserState<UserReferrerTreeItem[]>(this._context, "GetUserReferrerTree", this.GetUserReferrerTreeCompleted, userState, GlobalData.Token, userName);
+            }
+        }
+
+        #endregion
+
+        #region GetAgentUserInfo
+
+        public event EventHandler<WebInvokeEventArgs<AgentUserInfo>> GetAgentUserInfoCompleted;
+        public void GetAgentUserInfo()
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<AgentUserInfo>(this._context, "GetAgentUserInfo", this.GetAgentUserInfoCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName);
             }
         }
 

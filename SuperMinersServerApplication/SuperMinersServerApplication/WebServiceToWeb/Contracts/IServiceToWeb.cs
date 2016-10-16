@@ -28,12 +28,33 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode);
 
         /// <summary>
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="qq"></param>
+        /// <param name="agentUserName"></param>
+        /// <returns></returns>
+        [OperationContract]
+        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string email, string qq, string agentUserName);
+
+        /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
         [OperationContract]
         int CheckUserNameExist(string userName);
+
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="nickName"></param>
+        /// <returns></returns>
+        [OperationContract]
+        int CheckNickNameExist(string nickName);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION

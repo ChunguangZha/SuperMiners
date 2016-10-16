@@ -92,6 +92,23 @@ namespace SuperMinersWeb.Wcf
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
+        /// <param name="nickName"></param>
+        /// <returns></returns>
+        public int CheckNickNameExist(string nickName)
+        {
+            try
+            {
+                return base.Channel.CheckNickNameExist(nickName);
+            }
+            catch (Exception)
+            {
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
         /// <returns></returns>

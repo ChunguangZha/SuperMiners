@@ -4,6 +4,7 @@ using MetaData.Game.Roulette;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
@@ -73,8 +74,8 @@ namespace SuperMinersServerApplication.Controller
         {
             this.BasePlayer.SimpleInfo.LockedLogin = true;
             this.BasePlayer.SimpleInfo.LockedLoginTime = DateTime.Now;
-            this.BasePlayer.SimpleInfo.LastLogOutTime = null;
-            this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = null;
+            //this.BasePlayer.SimpleInfo.LastLogOutTime = null;
+            //this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = null;
             bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, this.BasePlayer.SimpleInfo.LockedLoginTime);
             return isOK;
         }
@@ -83,6 +84,7 @@ namespace SuperMinersServerApplication.Controller
         {
             this.BasePlayer.SimpleInfo.LockedLogin = false;
             this.BasePlayer.SimpleInfo.LockedLoginTime = null;
+            this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = DateTime.Now;
             bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, null);
             return isOK;
         }
@@ -692,6 +694,11 @@ namespace SuperMinersServerApplication.Controller
                 Time = DateTime.Now
             }, trans);
 
+            if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardConfig.AwardReferrerExp < 50))
+            {
+                AgentAwardController.Instance.PlayerRechargeRMB(this.BasePlayer, AgentAwardType.PlayerAgentExp, 0, trans);
+            }
+
             return isOK;
         }
 
@@ -745,6 +752,12 @@ namespace SuperMinersServerApplication.Controller
                                 OperContent = "幸运大转盘中奖",
                                 Time = DateTime.Now
                             }, trans);
+
+                            if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardItem.AwardNumber < 50))
+                            {
+                                AgentAwardController.Instance.PlayerRechargeRMB(this.BasePlayer, AgentAwardType.PlayerAgentExp, 0, trans);
+                            }
+
                             break;
                         case RouletteAwardType.StoneReserve:
                             newFortuneInfo.StonesReserves += awardItem.AwardNumber;

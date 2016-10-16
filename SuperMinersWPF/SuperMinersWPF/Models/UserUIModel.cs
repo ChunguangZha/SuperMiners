@@ -78,6 +78,11 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.Password; }
         }
 
+        public PlayerGroupType GroupType
+        {
+            get { return this._parentObject.SimpleInfo.GroupType; }
+        }
+
         public string Alipay
         {
             get { return this._parentObject.SimpleInfo.Alipay; }

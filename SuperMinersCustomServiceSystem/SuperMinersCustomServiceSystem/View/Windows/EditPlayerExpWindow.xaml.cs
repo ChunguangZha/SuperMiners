@@ -24,6 +24,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         public EditPlayerExpWindow(string userName, decimal exp)
         {
             InitializeComponent();
+            this.txtUserName.Text = userName;
             this.txtCurrentExp.Text = exp.ToString();
         }
 

@@ -330,6 +330,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public PlayerInfoLoginWrap GetPlayer(string token, string userName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    string adminUserName = AdminManager.GetClientUserName(token);
+                    if (string.IsNullOrEmpty(adminUserName))
+                    {
+                        return null;
+                    }
+
+                    PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(userName);
+                    if (player == null)
+                    {
+                        return null;
+                    }
+                    PlayerInfoLoginWrap user = new PlayerInfoLoginWrap();
+                    user.SimpleInfo = player.SimpleInfo;
+                    user.FortuneInfo = player.FortuneInfo;
+                    user.isOnline = ClientManager.IsExistUserName(player.SimpleInfo.UserName);
+                    if (user.isOnline)
+                    {
+                        user.LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(player.SimpleInfo.UserName));
+                    }
+
+                    return user;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetPlayer Exception", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public PlayerInfoLoginWrap[] GetPlayers(string token)
         {
             if (RSAProvider.LoadRSA(token))
@@ -917,6 +957,18 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     LogHelper.Instance.AddErrorLog("GetBuyMineFinishedRecordList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int SetPlayerAsAgent(string token, int userID, string userName, string agentReferURL)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return PlayerController.Instance.SetPlayerAsAgent(userID, userName, agentReferURL);
             }
             else
             {

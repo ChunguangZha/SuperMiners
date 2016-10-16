@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.AgentUser;
 using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersWPF.Models;
@@ -25,6 +26,8 @@ namespace SuperMinersWPF
             get;
             private set;
         }
+
+        public static AgentUserInfo AgentUserInfo;
         
         public static string Token
         {

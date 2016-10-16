@@ -48,14 +48,20 @@ namespace SuperMinersCustomServiceSystem.View
 
         private void chkChangeType_Checked(object sender, RoutedEventArgs e)
         {
-            this.panelInCharge.IsEnabled = true;
-            this.txtRMBChanged.IsReadOnly = true;
+            if (this.panelInCharge != null)
+            {
+                this.panelInCharge.IsEnabled = true;
+                this.txtRMBChanged.IsReadOnly = true;
+            }
         }
 
         private void chkChangeType_Unchecked(object sender, RoutedEventArgs e)
         {
-            this.panelInCharge.IsEnabled = false;
-            this.txtRMBChanged.IsReadOnly = false;
+            if (this.panelInCharge != null)
+            {
+                this.panelInCharge.IsEnabled = false;
+                this.txtRMBChanged.IsReadOnly = false;
+            }
         }
 
         private void NumericTextBox_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

@@ -1,5 +1,7 @@
-﻿using MetaData.User;
+﻿using MetaData;
+using MetaData.User;
 using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -44,21 +46,48 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        public void AsyncChangePlayerInfo(PlayerInfoUIModel player)
+        public void AsyncGetPlayer(string userName)
+        {
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载玩家信息...");
+                GlobalData.Client.GetPlayer(userName);
+            }
+        }
+
+        public void AsyncChangePlayerInfo(PlayerInfoUIModel player, string actionPassword)
         {
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在保存玩家信息...");
-                GlobalData.Client.ChangePlayer(player.ParentObject);
+                GlobalData.Client.ChangePlayer(player.ParentObject, actionPassword);
             }
         }
 
-        public void AsyncDeletePlayerInfos(string[] playerUserNames)
+        public void AsyncDeletePlayerInfos(string[] playerUserNames, string actionPassword)
         {
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在删除玩家...");
-                GlobalData.Client.DeletePlayers(playerUserNames);
+                GlobalData.Client.DeletePlayers(playerUserNames, actionPassword);
+            }
+        }
+
+        public void AsyncLockPlayerInfos(string playerUserName, string actionPassword)
+        {
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在锁定玩家...");
+                GlobalData.Client.LockPlayer(playerUserName, actionPassword);
+            }
+        }
+
+        public void AsyncUnLockPlayerInfos(string playerUserName, string actionPassword)
+        {
+            if (GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在解锁玩家...");
+                GlobalData.Client.UnlockPlayer(playerUserName, actionPassword);
             }
         }
 
@@ -187,6 +216,96 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.GetPlayersCompleted += Client_GetPlayersCompleted;
             GlobalData.Client.ChangePlayerCompleted += Client_ChangePlayerCompleted;
             GlobalData.Client.DeletePlayersCompleted += Client_DeletePlayersCompleted;
+            GlobalData.Client.LockPlayerCompleted += Client_LockPlayerCompleted;
+            GlobalData.Client.UnlockPlayerCompleted += Client_UnlockPlayerCompleted;
+            GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
+        }
+
+        void Client_GetPlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SuperMinersServerApplication.Model.PlayerInfoLoginWrap> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
+
+                if (e.Error != null || e.Result == null)
+                {
+                    MessageBox.Show("获取玩家信息失败。");
+                    return;
+                }
+
+                var user = this.ListAllPlayers.FirstOrDefault(u => u.UserName == e.Result.SimpleInfo.UserName);
+                if (user != null)
+                {
+                    user.ParentObject = e.Result;
+                }
+                //user = this.ListFilteredPlayers.FirstOrDefault(u => u.UserName == e.Result.SimpleInfo.UserName);
+                //if (user != null)
+                //{
+                //    user.ParentObject = e.Result;
+                //}                
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取玩家信息,服务器回调异常。信息为：" + exc.Message);
+            }
+        }
+
+        void Client_UnlockPlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("解锁玩家失败，服务器返回错误，信息为：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result)
+                {
+                    MyMessageBox.ShowInfo("解锁玩家成功。");
+                    //this.AsyncGetListPlayers();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("解锁玩家失败。");
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("解锁玩家失败，回调处理异常，信息为：" + exc.Message);
+            }
+        }
+
+        void Client_LockPlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("锁定玩家失败，服务器返回错误，信息为：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result)
+                {
+                    MyMessageBox.ShowInfo("锁定玩家成功。");
+                    //this.AsyncGetListPlayers();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("锁定玩家失败。");
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("锁定玩家失败，回调处理异常，信息为：" + exc.Message);
+            }
         }
 
         void Client_DeletePlayersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<DeleteResultInfo> e)
@@ -248,7 +367,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
 
             MessageBox.Show("保存玩家信息成功。");
-            this.AsyncGetListPlayers();
+            //this.AsyncGetListPlayers();
         }
 
         void Client_GetPlayersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SuperMinersServerApplication.Model.PlayerInfoLoginWrap[]> e)

@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="700" Loaded="UserControl_Loaded">
+             d:DesignHeight="600" d:DesignWidth="800" Loaded="UserControl_Loaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -60,8 +60,13 @@
             </GroupBox.Header>
             <DataGrid Name="datagridPlayerInfos" ItemsSource="{Binding ListFilteredPlayers}" SelectionMode="Single" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding UserID}" Header="用户ID"/>
                     <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
                     <DataGridTextColumn Binding="{Binding NickName}" ClipboardContentBinding="{x:Null}" Header="昵称"/>
+                    <DataGridTextColumn Binding="{Binding GroupType}" Header="用户组"/>
+                    <DataGridTextColumn Binding="{Binding IsAgentReferred}" Header="是否为代理推荐"/>
+                    <DataGridTextColumn Binding="{Binding AgentReferredLevel}" Header="代理推荐级别"/>
+                    <DataGridTextColumn Binding="{Binding AgentUserID}" Header="代理用户ID"/>
                     <DataGridTextColumn Binding="{Binding Alipay}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
                     <DataGridTextColumn Binding="{Binding AlipayRealName}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>
                     <DataGridTextColumn Binding="{Binding RegisterTime}" ClipboardContentBinding="{x:Null}" Header="注册时间"/>
@@ -98,16 +103,13 @@
                 </DataGrid.ContextMenu>
             </DataGrid>
         </GroupBox>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Button Name="btnEditPlayerInfo" Grid.ColumnSpan="4" HorizontalAlignment="Right" Content="修改玩家信息" Width="100" Margin="10" Click="btnEditPlayerInfo_Click"/>
-            <Button Name="btnCSV" Grid.ColumnSpan="4" HorizontalAlignment="Right" Content="导出CSV" Width="100" Margin="10,10,130,10" Click="btnCSV_Click"/>
-            <Button Name="btnDeletePlayer" Grid.ColumnSpan="4" HorizontalAlignment="Right" Content="删除玩家" Width="100" Margin="10,10,250,10" Click="btnDeletePlayer_Click"/>
-        </Grid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Name="btnEditPlayerInfo" HorizontalAlignment="Right" Content="修改玩家信息" Width="100" Margin="10" Click="btnEditPlayerInfo_Click"/>
+            <Button Name="btnCSV" HorizontalAlignment="Right" Content="导出CSV" Width="100" Margin="10" Click="btnCSV_Click"/>
+            <Button Name="btnDeletePlayer" HorizontalAlignment="Right" Content="删除玩家" Width="100" Margin="10" Click="btnDeletePlayer_Click"/>
+            <Button Name="btnLockPlayer" HorizontalAlignment="Right" Content="锁定玩家" Width="100" Margin="10" Click="btnLockPlayer_Click"/>
+            <Button Name="btnUnLockPlayer" HorizontalAlignment="Right" Content="解锁玩家" Width="100" Margin="10" Click="btnUnLockPlayer_Click"/>
+            <Button Name="btnSetPlayerAsAgent" HorizontalAlignment="Right" Content="设置玩家为代理" Width="100" Margin="10" Click="btnSetPlayerAsAgent_Click"/>
+        </StackPanel>
     </Grid>
 </UserControl>

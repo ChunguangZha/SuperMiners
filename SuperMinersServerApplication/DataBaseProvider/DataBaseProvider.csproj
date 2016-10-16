@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminDBProvider.cs" />
+    <Compile Include="AgentAwardRecordDBProvider.cs" />
+    <Compile Include="AgentUserInfoDBProvider.cs" />
     <Compile Include="AlipayRecordDBProvider.cs" />
     <Compile Include="BuyMinerRecordDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />

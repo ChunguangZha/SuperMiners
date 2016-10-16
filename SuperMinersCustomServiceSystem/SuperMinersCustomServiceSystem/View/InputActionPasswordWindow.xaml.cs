@@ -19,11 +19,11 @@ namespace SuperMinersCustomServiceSystem.View
     /// </summary>
     public partial class InputActionPasswordWindow : Window
     {
+        public string ActionPassword = "";
+
         public InputActionPasswordWindow()
         {
             InitializeComponent();
-
-            //GlobalData.Client.
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -39,6 +39,8 @@ namespace SuperMinersCustomServiceSystem.View
                 MessageBox.Show("操作密码不正确");
                 return;
             }
+
+            ActionPassword = this.txtActionPassword.Password;
 
             this.DialogResult = true;
         }

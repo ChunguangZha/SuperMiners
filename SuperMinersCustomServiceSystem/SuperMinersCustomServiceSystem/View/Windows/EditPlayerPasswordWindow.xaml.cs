@@ -69,24 +69,28 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (this.txtNewPassword.Password.Length < 6)
+            InputActionPasswordWindow win = new InputActionPasswordWindow();
+            if (win.ShowDialog() == true)
             {
-                MessageBox.Show("请输入至少6位密码");
-                return;
-            }
-            if (this.txtNewPassword.Password != this.txxtConfirmPassword.Password)
-            {
-                MessageBox.Show("两次密码不一至，请重新输入");
-                return;
-            }
+                string ActionPassword = win.ActionPassword;
+                if (this.txtNewPassword.Password.Length < 6)
+                {
+                    MessageBox.Show("请输入至少6位密码");
+                    return;
+                }
+                if (this.txtNewPassword.Password != this.txxtConfirmPassword.Password)
+                {
+                    MessageBox.Show("两次密码不一至，请重新输入");
+                    return;
+                }
 
-            if (MyMessageBox.ShowQuestionOKCancel("请确认要修改玩家密码？") == System.Windows.Forms.DialogResult.OK)
-            {
-                this.NewPassword = this.txtNewPassword.Password;
-                App.BusyToken.ShowBusyWindow("正在修改玩家密码");
-                GlobalData.Client.ChangePlayerPassword(this._userName, NewPassword);
+                if (MyMessageBox.ShowQuestionOKCancel("请确认要修改玩家密码？") == System.Windows.Forms.DialogResult.OK)
+                {
+                    this.NewPassword = this.txtNewPassword.Password;
+                    App.BusyToken.ShowBusyWindow("正在修改玩家密码");
+                    GlobalData.Client.ChangePlayerPassword(this._userName, NewPassword, ActionPassword);
+                }
             }
-
         }
     }
 }

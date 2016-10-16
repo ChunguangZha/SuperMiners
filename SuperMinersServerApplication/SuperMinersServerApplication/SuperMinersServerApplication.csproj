@@ -110,6 +110,7 @@
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
     <Compile Include="Controller\Game\RouletteAwardController.cs" />
+    <Compile Include="Controller\Trade\AgentAwardController.cs" />
     <Compile Include="Controller\Trade\GoldCoinOrderController.cs" />
     <Compile Include="Controller\Trade\MineOrderController.cs" />
     <Compile Include="Controller\Trade\MinerOrderController.cs" />

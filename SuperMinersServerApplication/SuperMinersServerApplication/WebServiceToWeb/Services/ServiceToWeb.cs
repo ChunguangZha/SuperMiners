@@ -52,6 +52,42 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         }
 
         /// <summary>
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="qq"></param>
+        /// <param name="agentUserName"></param>
+        /// <returns></returns>
+        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string email, string qq, string agentUserName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                {
+                    return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
+                }
+
+                var agent = PlayerController.Instance.GetPlayerInfo(agentUserName);
+                if (agent == null)
+                {
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, email, qq, agent.SimpleInfo.InvitationCode);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("RegisterUserByAgent Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password + ",agentUserName: " + agentUserName
+                                    + ",email: " + email + ",qq: " + qq, exc);
+
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="userName"></param>
@@ -76,6 +112,36 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckUserNameExist Exception. userName: " + userName, exc);
+
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public int CheckNickNameExist(string nickName)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(nickName))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                int count = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
+                if (count == 0)
+                {
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("CheckNickNameExist Exception. nickName: " + nickName, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }

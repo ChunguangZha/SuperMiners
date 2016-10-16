@@ -64,6 +64,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         PlayerInfoLoginWrap[] GetPlayers(string token);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetPlayer",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PlayerInfoLoginWrap GetPlayer(string token, string userName);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/ChangePlayer",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
@@ -246,5 +254,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         MinesBuyRecord[] GetBuyMineFinishedRecordList(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SetPlayerAsAgent",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int SetPlayerAsAgent(string token, int userID, string userName, string agentReferURL);
     }
 }

@@ -132,11 +132,44 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GatherStones(stones);
         }
 
+        public void AsyncGetAgentUserInfo()
+        {
+            App.BusyToken.ShowBusyWindow("正在加载代理信息");
+            GlobalData.Client.GetAgentUserInfo();
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerInfoCompleted += Client_GetPlayerInfoCompleted;
             GlobalData.Client.GatherStonesCompleted += Client_GatherStonesCompleted;
             GlobalData.Client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
+            GlobalData.Client.GetAgentUserInfoCompleted += Client_GetAgentUserInfoCompleted;
+        }
+
+        void Client_GetAgentUserInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.AgentUser.AgentUserInfo> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("获取代理信息失败。信息为：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("获取代理信息失败。");
+                }
+                else
+                {
+                    GlobalData.AgentUserInfo = e.Result;
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取代理信息失败。信息为：" + exc.Message);
+            }
         }
 
         void Client_OnPlayerInfoChanged()

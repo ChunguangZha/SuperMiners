@@ -73,9 +73,10 @@ namespace SuperMinersCustomServiceSystem
             InputActionPasswordWindow win = new InputActionPasswordWindow();
             if (win.ShowDialog() == true)
             {
+                string ActionPassword = win.ActionPassword;
                 if (MessageBox.Show("确定要修改玩家信息？此操作不可更改。", "确认修改", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                 {
-                    App.PlayerVMObject.AsyncChangePlayerInfo(this._player);
+                    App.PlayerVMObject.AsyncChangePlayerInfo(this._player, ActionPassword);
                     //this.DialogResult = true;
                 }
             }
@@ -88,7 +89,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditMiners_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerMinerCountWindow win = new EditPlayerMinerCountWindow(this._player.UserName);
+            EditPlayerMinerCountWindow win = new EditPlayerMinerCountWindow(this._player.UserName, this._player.MinersCount);
             if (win.ShowDialog() == true)
             {
                 this._player.SetMinersCount(win.ChangedMinerCount);

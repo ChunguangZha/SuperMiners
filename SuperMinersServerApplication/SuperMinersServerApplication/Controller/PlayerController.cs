@@ -15,6 +15,8 @@ using DataBaseProvider;
 using MetaData.Trade;
 using SuperMinersServerApplication.Controller.Game;
 using MetaData.Game.Roulette;
+using MetaData.AgentUser;
+using SuperMinersServerApplication.Controller.Trade;
 
 namespace SuperMinersServerApplication.Controller
 {
@@ -85,6 +87,11 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
             }
+            //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
+            //if (userCount > 0)
+            //{
+            //    return OperResult.RESULTCODE_REGISTER_NICKNAME_EXIST;
+            //}
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
@@ -102,8 +109,8 @@ namespace SuperMinersServerApplication.Controller
             //    Awardable = true;
             //}
 
-            List<WaitToAwardExpRecord> listWaitToAwardExpRecord = new List<WaitToAwardExpRecord>();
-            List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
+            List<WaitToReferAwardRecord> listWaitToAwardExpRecord = new List<WaitToReferAwardRecord>();
+            //List<PlayerRunnable> listPlayerRun = new List<PlayerRunnable>();
             var trans = MyDBHelper.Instance.CreateTrans();
 
             try
@@ -125,18 +132,21 @@ namespace SuperMinersServerApplication.Controller
                                 if (playerrun == null)
                                 {
                                     playerrun = new PlayerRunnable(referrerLevel1player);
+                                    this._dicOnlinePlayerRuns.TryAdd(playerrun.BasePlayer.SimpleInfo.UserName, playerrun);
                                 }
-                                //var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(1);
-                                var awardExpRecord = new WaitToAwardExpRecord()
-                                {
-                                    AwardLevel = 1,
-                                    NewRegisterUserNme = userName,
-                                    ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
-                                };
-                                listWaitToAwardExpRecord.Add(awardExpRecord);
 
-                                //playerrun.ReferAward(awardConfig, trans);
-                                listPlayerRun.Add(playerrun);
+                                if (referrerLevel1player.SimpleInfo.GroupType != PlayerGroupType.AgentPlayer)
+                                {
+                                    //如果玩家上级推荐人不是代理，才给推荐人奖励
+                                    var awardRecord = new WaitToReferAwardRecord()
+                                    {
+                                        AwardLevel = 1,
+                                        NewRegisterUserNme = userName,
+                                        ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
+                                    };
+                                    listWaitToAwardExpRecord.Add(awardRecord);
+                                    //listPlayerRun.Add(playerrun);
+                                }
 
                                 previousReferrerUserName = referrerLevel1player.SimpleInfo.ReferrerUserName;
                             }
@@ -158,19 +168,22 @@ namespace SuperMinersServerApplication.Controller
                                         break;
                                     }
                                     playerrun = new PlayerRunnable(previousReferrerPlayer);
+                                    this._dicOnlinePlayerRuns.TryAdd(playerrun.BasePlayer.SimpleInfo.UserName, playerrun);
                                 }
 
-                                //var awardConfig = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(indexLevel);
-                                //playerrun.ReferAward(awardConfig, trans);
-                                var awardExpRecord = new WaitToAwardExpRecord()
+                                if (playerrun.BasePlayer.SimpleInfo.GroupType != PlayerGroupType.AgentPlayer)
                                 {
-                                    AwardLevel = indexLevel,
-                                    NewRegisterUserNme = userName,
-                                    ReferrerUserName = previousReferrerUserName
-                                };
-                                listWaitToAwardExpRecord.Add(awardExpRecord);
+                                    //如果玩家上级推荐人不是代理，才给推荐人奖励
+                                    var awardExpRecord = new WaitToReferAwardRecord()
+                                    {
+                                        AwardLevel = indexLevel,
+                                        NewRegisterUserNme = userName,
+                                        ReferrerUserName = previousReferrerUserName
+                                    };
+                                    listWaitToAwardExpRecord.Add(awardExpRecord);
+                                }
 
-                                listPlayerRun.Add(playerrun);
+                                //listPlayerRun.Add(playerrun);
 
                                 previousReferrerUserName = playerrun.BasePlayer.SimpleInfo.UserName;
                                 //PlayerActionController.Instance.AddLog(previousReferrerUserName, MetaData.ActionLog.ActionType.Refer, 1, "收获" + awardConfig.ToString());
@@ -192,7 +205,9 @@ namespace SuperMinersServerApplication.Controller
                         InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(userName) : GlobalData.TestInvitationCode,
                         RegisterTime = DateTime.Now,
                         RegisterIP = clientIP,
-                        ReferrerUserName = referrerLevel1player == null ? "" : referrerLevel1player.SimpleInfo.UserName
+                        ReferrerUserName = referrerLevel1player == null ? "" : referrerLevel1player.SimpleInfo.UserName,
+                        GroupType = PlayerGroupType.NormalPlayer,
+                        AgentReferredLevel = 0,
                     },
                     FortuneInfo = new PlayerFortuneInfo()
                     {
@@ -205,6 +220,28 @@ namespace SuperMinersServerApplication.Controller
                         TotalProducedStonesCount = 0
                     }
                 };
+                if (referrerLevel1player == null)
+                {
+                    newplayer.SimpleInfo.IsAgentReferred = false;
+                }
+                else
+                {
+                    newplayer.SimpleInfo.IsAgentReferred = referrerLevel1player.SimpleInfo.GroupType == PlayerGroupType.AgentPlayer || referrerLevel1player.SimpleInfo.IsAgentReferred;
+                    if (newplayer.SimpleInfo.IsAgentReferred)
+                    {
+                        newplayer.SimpleInfo.AgentReferredLevel = referrerLevel1player.SimpleInfo.AgentReferredLevel + 1;
+
+                        if (referrerLevel1player.SimpleInfo.GroupType == PlayerGroupType.AgentPlayer)
+                        {
+                            newplayer.SimpleInfo.AgentUserID = referrerLevel1player.SimpleInfo.UserID;
+                        }
+                        else
+                        {
+                            newplayer.SimpleInfo.AgentUserID = referrerLevel1player.SimpleInfo.AgentUserID;
+                        }
+                    }
+                }
+
 
                 DBProvider.UserDBProvider.AddPlayer(newplayer, trans);
                 foreach (var item in listWaitToAwardExpRecord)
@@ -216,14 +253,14 @@ namespace SuperMinersServerApplication.Controller
                 LogHelper.Instance.AddInfoLog("玩家[" + userName + "]注册成功，推荐人：" + newplayer.SimpleInfo.ReferrerUserName + "。");
                 PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
 
-                foreach (var playerrun in listPlayerRun)
-                {
-                    playerrun.RefreshFortune();
-                    if (PlayerInfoChanged != null)
-                    {
-                        PlayerInfoChanged(playerrun.BasePlayer);
-                    }
-                }
+                //foreach (var playerrun in listPlayerRun)
+                //{
+                //    playerrun.RefreshFortune();
+                //    if (PlayerInfoChanged != null)
+                //    {
+                //        PlayerInfoChanged(playerrun.BasePlayer);
+                //    }
+                //}
 
                 return OperResult.RESULTCODE_TRUE;
             }
@@ -460,6 +497,44 @@ namespace SuperMinersServerApplication.Controller
             return false;
         }
 
+        public int SetPlayerAsAgent(int userID, string userName, string agentReferURL)
+        {
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                var player = this.GetPlayerInfo(userName);
+                if (player == null)
+                {
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
+                myTrans = MyDBHelper.Instance.CreateTrans();
+                AgentUserInfo agent = new AgentUserInfo()
+                {
+                    Player = player,
+                    InvitationURL = agentReferURL,
+                    TotalAwardRMB = 0
+                };
+
+                DBProvider.UserDBProvider.UpdatePlayerGroupType(userID, PlayerGroupType.AgentPlayer, myTrans);
+                DBProvider.AgentUserInfoDBProvider.AddAgentUser(agent, myTrans);
+                myTrans.Commit();
+                return OperResult.RESULTCODE_TRUE;
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                LogHelper.Instance.AddErrorLog("设置玩家[" + userName + "]为代理时异常。", exc);
+                return OperResult.RESULTCODE_FALSE;
+            }
+            finally
+            {
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
+            }
+        }
+
         /// <summary>
         /// 收取生产出来的矿石
         /// </summary>
@@ -513,6 +588,9 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_FALSE;
             }
 
+            //先给代理计收益，后计算玩家
+            AgentAwardController.Instance.PlayerRechargeRMB(playerrun.BasePlayer, AgentAwardType.PlayerInchargeMine, moneyYuan * GlobalConfig.GameConfig.Yuan_RMB, myTrans);
+
             int value = playerrun.BuyMineByAlipay(moneyYuan, minesCount, myTrans);
             if (value == OperResult.RESULTCODE_TRUE)
             {
@@ -543,6 +621,9 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_FALSE;
             }
+
+            //先给代理计收益，后计算玩家
+            AgentAwardController.Instance.PlayerRechargeRMB(playerrun.BasePlayer, AgentAwardType.PlayerInchargeMine, moneyYuan * GlobalConfig.GameConfig.Yuan_RMB, myTrans);
 
             int value = playerrun.RechargeGoldCoinByAlipay(moneyYuan, rmbValue, goldcoinValue, myTrans);
             if (value == OperResult.RESULTCODE_TRUE)

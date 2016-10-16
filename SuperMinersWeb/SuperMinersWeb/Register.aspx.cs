@@ -105,24 +105,7 @@ namespace SuperMinersWeb
             }
             
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-            //result = WcfClient.Instance.CheckRegisterIP(ip);
-            //if (result == OperResult.RESULTCODE_PARAM_INVALID)
-            //{
-            //    Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
-            //    return;
-            //}
-            //if (result == OperResult.RESULTCODE_FALSE)
-            //{
-            //    Response.Write("<script>alert('此IP注册玩家数，已经超出限制，无法注册!')</script>");
-            //    return;
-            //}
-            //if (result != OperResult.RESULTCODE_TRUE)
-            //{
-            //    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
-            //    return;
-            //}
-
+            
             result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
@@ -138,6 +121,26 @@ namespace SuperMinersWeb
             {
                 Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
                 return;
+            }
+
+            if (nickName != "")
+            {
+                result = WcfClient.Instance.CheckNickNameExist(nickName);
+                if (result == OperResult.RESULTCODE_PARAM_INVALID)
+                {
+                    Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
+                    return;
+                }
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    Response.Write("<script>alert('该昵称已经存在，请选择其它昵称!')</script>");
+                    return;
+                }
+                if (result != OperResult.RESULTCODE_FALSE)
+                {
+                    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+                    return;
+                }
             }
 
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(qq))
@@ -166,18 +169,8 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='Default.aspx';</script>");
                 //Response.Write("<script>alert('恭喜您成功加入灵币矿场!');</script>");
             }
-            else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
-            {
-                Response.Write("<script>alert('用户名已经存在!')</script>");
-            }
-            else if (result == OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT)
-            {
-                Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
-            }
-            else
-            {
-                Response.Write("<script>alert('注册失败!')</script>");
-            }
+
+            Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
         }
         
     }

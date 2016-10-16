@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.AgentUser;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
@@ -354,6 +355,33 @@ namespace SuperMinersServerApplication.WebService.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetUserReferrerTree Exception. userName: " + userName, exc);
+
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public AgentUserInfo GetAgentUserInfo(string token, string userName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+                    if (playerInfo == null)
+                    {
+                        return null;
+                    }
+
+                    return DBProvider.AgentUserInfoDBProvider.GetAgentUserInfo(playerInfo);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetAgentUserInfo Exception. userName: " + userName, exc);
 
                     return null;
                 }

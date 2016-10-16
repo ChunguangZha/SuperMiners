@@ -64,6 +64,11 @@ namespace SuperMinersWPF
             GlobalData.Client.LogoutCompleted += Client_LogoutCompleted;
             App.NoticeVMObject.AsyncGetNewNotices();
 
+            if (GlobalData.CurrentUser.GroupType == MetaData.User.PlayerGroupType.AgentPlayer)
+            {
+                App.UserVMObject.AsyncGetAgentUserInfo();
+            }
+
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
             AddEventHandlers();
         }
@@ -150,10 +155,17 @@ namespace SuperMinersWPF
 
         private void btnInvitationFriends_Click(object sender, RoutedEventArgs e)
         {
-            App.UserReferrerTreeVMObject.AsyncGetUserReferrerTree();
-            InvitationFriendsWindow win = new InvitationFriendsWindow();
-            win.DataContext = App.UserReferrerTreeVMObject;
-            win.ShowDialog();
+            //if (GlobalData.AgentUserInfo == null)
+            {
+                App.UserReferrerTreeVMObject.AsyncGetUserReferrerTree();
+                InvitationFriendsWindow win = new InvitationFriendsWindow();
+                win.DataContext = App.UserReferrerTreeVMObject;
+                win.ShowDialog();
+            }
+            //else
+            //{
+
+            //}
         }
 
         private void btnRMBRecharge_Click(object sender, RoutedEventArgs e)

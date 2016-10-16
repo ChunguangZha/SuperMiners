@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.Model;
+﻿using MetaData.User;
+using SuperMinersServerApplication.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,15 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
+                NotifyPropertyChange("UserID");
                 NotifyPropertyChange("Online");
                 NotifyPropertyChange("LoginIP");
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("NickName");
+                NotifyPropertyChange("GroupType");
+                NotifyPropertyChange("IsAgentReferred");
+                NotifyPropertyChange("AgentReferredLevel");
+                NotifyPropertyChange("AgentUserID");
                 NotifyPropertyChange("Alipay");
                 NotifyPropertyChange("AlipayRealName");
                 NotifyPropertyChange("RegisterTime");
@@ -66,6 +72,11 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
+        public int UserID
+        {
+            get { return this._parentObject.SimpleInfo.UserID; }
+        }
+
         public string UserName
         {
             get { return this._parentObject.SimpleInfo.UserName; }
@@ -79,6 +90,29 @@ namespace SuperMinersCustomServiceSystem.Model
         public string Password
         {
             get { return this._parentObject.SimpleInfo.Password; }
+        }
+
+        public PlayerGroupType GroupType
+        {
+            get { return this._parentObject.SimpleInfo.GroupType; }
+        }
+
+        public bool IsAgentReferred
+        {
+            get { return this._parentObject.SimpleInfo.IsAgentReferred; }
+        }
+
+        public int AgentReferredLevel
+        {
+            get { return this._parentObject.SimpleInfo.AgentReferredLevel; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int AgentUserID
+        {
+            get { return this._parentObject.SimpleInfo.AgentUserID; }
         }
 
         public string Alipay

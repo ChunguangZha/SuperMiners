@@ -36,5 +36,9 @@ namespace SuperMinersServerApplication.Controller
         public static TestUserLogStateDBProvider TestUserLogStateDBProvider = new TestUserLogStateDBProvider();
 
         public static GameRouletteDBProvider GameRouletteDBProvider = new GameRouletteDBProvider();
+
+        public static AgentUserInfoDBProvider AgentUserInfoDBProvider = new AgentUserInfoDBProvider();
+
+        public static AgentAwardRecordDBProvider AgentAwardRecordDBProvider = new AgentAwardRecordDBProvider();
     }
 }
