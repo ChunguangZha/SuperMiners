@@ -50,6 +50,8 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListActiveWithdrawRecords.Clear();
+
                 if (e.Result != null)
                 {
                     string userState = e.UserState as string;

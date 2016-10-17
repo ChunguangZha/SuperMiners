@@ -56,7 +56,9 @@ namespace SuperMinersWPF
             }
             else
             {
+                decimal tempOutputStone = CurrentUser.TempOutputStones;
                 CurrentUser.ParentObject = user;
+                CurrentUser.TempOutputStones = tempOutputStone;
             }
         }
 

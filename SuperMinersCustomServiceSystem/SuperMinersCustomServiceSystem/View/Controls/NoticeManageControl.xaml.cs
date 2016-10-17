@@ -29,6 +29,13 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             App.NoticeVMObject.AsyncGetAllNotice();
+
+            if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)
+            {
+                this.btnclearAllNotices.IsEnabled = false;
+                this.btnCreateNotices.IsEnabled = false;
+                this.btnDeleteNotices.IsEnabled = false;
+            }
         }
 
         private void BindUI()

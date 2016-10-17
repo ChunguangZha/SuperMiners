@@ -735,6 +735,11 @@ namespace SuperMinersServerApplication.Controller
             return result;
         }
 
+        public int RejectPlayerWithdrawRMB(WithdrawRMBRecord record)
+        {
+            return 0;
+        }
+
         public int PayWithdrawRMB(WithdrawRMBRecord record)
         {
             PlayerRunnable playerrun = this.GetRunnable(record.PlayerUserName);

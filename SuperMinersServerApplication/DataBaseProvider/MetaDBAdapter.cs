@@ -243,6 +243,7 @@ namespace DataBaseProvider
                 admin.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 admin.LoginPassword = DESEncrypt.DecryptDES(dt.Rows[i]["LoginPassword"].ToString());
                 admin.ActionPassword = DESEncrypt.DecryptDES(dt.Rows[i]["ActionPassword"].ToString());
+                admin.GroupType = (AdminGroupType)Convert.ToInt32(dt.Rows[i]["GroupType"]);
                 string macs = dt.Rows[i]["Mac"].ToString();
                 admin.Macs = macs.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 admins[i] = admin;

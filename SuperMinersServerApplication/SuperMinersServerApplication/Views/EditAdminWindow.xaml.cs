@@ -85,7 +85,7 @@ namespace SuperMinersServerApplication.Views
 
             if (_isAdd)
             {
-                bool isOK = AdminController.Instance.AddAdmin(this.txtUserName.Text.Trim(), this.txtLoginPassword.Password, this.txtActionPassword.Password, this.txtMac.Text);
+                bool isOK = AdminController.Instance.AddAdmin(this.txtUserName.Text.Trim(), this.txtLoginPassword.Password, this.txtActionPassword.Password, (MetaData.User.AdminGroupType)this.cmbGroup.SelectedIndex, this.txtMac.Text);
                 if (isOK)
                 {
                     this.DialogResult = true;

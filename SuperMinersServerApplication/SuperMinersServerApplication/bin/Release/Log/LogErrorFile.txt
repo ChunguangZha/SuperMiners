@@ -1,6 +1,7 @@
-Error:  [2016/10/16 23:44:30] ---- Log: 设置玩家[xiaocha]为代理时异常。
-Exc.Message: Unknown column 'UserID' in 'where clause'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
+Error:  [2016/10/17 22:33:12] ---- Log: 玩家 [Tony] 灵币提现操作异常，提现后冻结灵币会小于0，请立即检查！！
+-----------------------------------------------------
+*********+++++++++++++***********
+Client.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
    在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
    在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()

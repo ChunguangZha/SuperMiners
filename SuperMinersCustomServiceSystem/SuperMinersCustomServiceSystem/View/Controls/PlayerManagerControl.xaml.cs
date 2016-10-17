@@ -35,6 +35,14 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         {
             App.PlayerVMObject.AsyncGetListPlayers();
 
+            if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)
+            {
+                this.btnDeletePlayer.IsEnabled = false;
+                this.btnEditPlayerInfo.IsEnabled = false;
+                this.btnLockPlayer.IsEnabled = false;
+                this.btnSetPlayerAsAgent.IsEnabled = false;
+                this.btnUnLockPlayer.IsEnabled = false;
+            }
         }
 
         private void BindUI()

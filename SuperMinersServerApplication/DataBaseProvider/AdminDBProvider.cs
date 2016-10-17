@@ -11,7 +11,7 @@ namespace DataBaseProvider
 {
     public class AdminDBProvider
     {
-        public bool AddAdmin(string userName, string loginPassword, string actionPassword, string mac)
+        public bool AddAdmin(string userName, string loginPassword, string actionPassword, AdminGroupType groupType, string mac)
         {
             var myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
@@ -21,13 +21,14 @@ namespace DataBaseProvider
                 mycmd = myconn.CreateCommand();
 
                 string cmdTextA = "insert into admininfo " +
-                        "(`UserName`, `LoginPassword`, `ActionPassword`, `Mac`) values " +
-                        " (@UserName, @LoginPassword, @ActionPassword, @Mac) ; ";
+                        "(`UserName`, `LoginPassword`, `ActionPassword`, `GroupType`, `Mac`) values " +
+                        " (@UserName, @LoginPassword, @ActionPassword, @GroupType, @Mac) ; ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 mycmd.Parameters.AddWithValue("@LoginPassword", DESEncrypt.EncryptDES(loginPassword));
                 mycmd.Parameters.AddWithValue("@ActionPassword", DESEncrypt.EncryptDES(actionPassword));
+                mycmd.Parameters.AddWithValue("@GroupType", (int)groupType);
                 mycmd.Parameters.AddWithValue("@Mac", mac);
                 mycmd.ExecuteNonQuery();
 
@@ -43,7 +44,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool EditAdmin(string userName, string loginPassword, string actionPassword, string mac)
+        public bool EditAdmin(string userName, string loginPassword, string actionPassword, AdminGroupType groupType, string mac)
         {
             var myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
@@ -52,12 +53,13 @@ namespace DataBaseProvider
                 myconn.Open();
                 mycmd = myconn.CreateCommand();
 
-                string cmdTextA = "update admininfo set `UserName` = @UserName, `LoginPassword` = @LoginPassword, `Mac` = @Mac where `UserName` = @UserName ";
+                string cmdTextA = "update admininfo set `UserName` = @UserName, `LoginPassword` = @LoginPassword, `GroupType` = @GroupType, `Mac` = @Mac where `UserName` = @UserName ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 mycmd.Parameters.AddWithValue("@LoginPassword", DESEncrypt.EncryptDES(loginPassword));
                 mycmd.Parameters.AddWithValue("@ActionPassword", DESEncrypt.EncryptDES(actionPassword));
+                mycmd.Parameters.AddWithValue("@GroupType", (int)groupType);
                 mycmd.Parameters.AddWithValue("@Mac", mac);
                 mycmd.ExecuteNonQuery();
 

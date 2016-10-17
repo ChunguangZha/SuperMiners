@@ -358,6 +358,8 @@ namespace SuperMinersWPF.Wcf.Channel
                     return;
                 }
 
+                LogHelper.Instance.AddErrorLog("InvokeCallback 1", null);
+
                 object[] invokeParas = new object[] { GlobalData.Token };
 
                 MethodData method = GetMethodData(CallbackMethod, typeof(CallbackInfo), invokeParas);
@@ -368,6 +370,8 @@ namespace SuperMinersWPF.Wcf.Channel
                 {
                     try
                     {
+                        LogHelper.Instance.AddErrorLog("InvokeCallback 2", null);
+
                         if (null != ex)
                         {
                             if (ex is WebException)
@@ -376,8 +380,13 @@ namespace SuperMinersWPF.Wcf.Channel
                                 {
                                     this.Error(this, EventArgs.Empty);
                                 }
+                                LogHelper.Instance.AddErrorLog("InvokeCallback excep 1", null);
+
                                 return;
                             }
+
+                            LogHelper.Instance.AddErrorLog("InvokeCallback 3", null);
+
                             this.InvokeCallback();
                             return;
                         }
@@ -392,16 +401,23 @@ namespace SuperMinersWPF.Wcf.Channel
                                 {
                                     arg = (CallbackInfo)s.ReadObject(ms);
                                 }
+
+                                LogHelper.Instance.AddErrorLog("InvokeCallback 4 result not null", null);
+
                             }
                         }
                         catch
                         {
+                            LogHelper.Instance.AddErrorLog("InvokeCallback 4 read result exception", null);
+
                             this.InvokeCallback();
                             return;
                         }
 
                         if (null == arg)
                         {
+                            LogHelper.Instance.AddErrorLog("InvokeCallback 5 arg == null", null);
+
                             this.InvokeCallback();
                             return;
                         }
@@ -434,12 +450,16 @@ namespace SuperMinersWPF.Wcf.Channel
                                     }
                                 }
 
+                                LogHelper.Instance.AddErrorLog("InvokeCallback 6 invoke method", null);
+
                                 mi.Invoke(this._receiver, paras);
                             }
                             catch
                             {
                             }
                         }
+
+                        LogHelper.Instance.AddErrorLog("InvokeCallback 7 finish", null);
 
                         this.InvokeCallback();
                     }

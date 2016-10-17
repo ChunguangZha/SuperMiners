@@ -29,6 +29,15 @@ namespace MetaData.User
         public string ActionPassword;
 
         [DataMember]
+        public AdminGroupType GroupType;
+
+        [DataMember]
         public string[] Macs;
+    }
+
+    public enum AdminGroupType
+    {
+        CEO,
+        CFO
     }
 }

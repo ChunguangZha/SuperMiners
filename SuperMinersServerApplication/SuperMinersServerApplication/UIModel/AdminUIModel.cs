@@ -66,6 +66,15 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
+        public AdminGroupType GroupType
+        {
+            get { return this.ParentObject.GroupType; }
+            set
+            {
+                this.ParentObject.GroupType = value;
+            }
+        }
+
         public string Mac
         {
             get

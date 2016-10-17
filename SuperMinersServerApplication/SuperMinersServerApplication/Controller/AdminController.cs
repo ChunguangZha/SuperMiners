@@ -1,4 +1,5 @@
-﻿using SuperMinersServerApplication.UIModel;
+﻿using MetaData.User;
+using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
@@ -79,11 +80,11 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool AddAdmin(string adminUserName, string loginPassword, string actionPassword, string mac)
+        public bool AddAdmin(string adminUserName, string loginPassword, string actionPassword, AdminGroupType groupType, string mac)
         {
             try
             {
-                bool isOK = DBProvider.AdminDBProvider.AddAdmin(adminUserName, loginPassword, actionPassword, mac);
+                bool isOK = DBProvider.AdminDBProvider.AddAdmin(adminUserName, loginPassword, actionPassword, groupType, mac);
                 if (isOK)
                 {
                     this.ListAdmin.Add(new AdminUIModel(new MetaData.User.AdminInfo()
@@ -91,6 +92,7 @@ namespace SuperMinersServerApplication.Controller
                         UserName = adminUserName,
                         LoginPassword = loginPassword,
                         ActionPassword = actionPassword,
+                        GroupType = groupType,
                         Macs = new string[] { mac }
                     }));
                 }
@@ -108,7 +110,7 @@ namespace SuperMinersServerApplication.Controller
         {
             try
             {
-                return DBProvider.AdminDBProvider.EditAdmin(admin.UserName, admin.LoginPassword, admin.ActionPassword, admin.Mac);
+                return DBProvider.AdminDBProvider.EditAdmin(admin.UserName, admin.LoginPassword, admin.ActionPassword, admin.GroupType, admin.Mac);
             }
             catch (Exception exc)
             {
