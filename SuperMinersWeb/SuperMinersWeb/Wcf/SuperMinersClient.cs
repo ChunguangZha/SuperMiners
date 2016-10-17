@@ -72,6 +72,18 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
+        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string agentUserName)
+        {
+            try
+            {
+                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, agentUserName);
+            }
+            catch (Exception)
+            {
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
