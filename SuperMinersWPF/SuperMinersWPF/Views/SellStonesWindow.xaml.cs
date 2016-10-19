@@ -106,9 +106,9 @@ namespace SuperMinersWPF.Views
         private void btnSell_Click(object sender, RoutedEventArgs e)
         {
             int sellStoneCount = (int)this.numSellStones.Value;
-            if (sellStoneCount < 300)
+            if (sellStoneCount < 1000)
             {
-                MyMessageBox.ShowInfo("每次至少要出售300块矿石");
+                MyMessageBox.ShowInfo("每次至少要出售1000块矿石");
                 return;
             }
 

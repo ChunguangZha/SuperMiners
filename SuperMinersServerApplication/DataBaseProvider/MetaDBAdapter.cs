@@ -553,6 +553,11 @@ namespace DataBaseProvider
                 {
                     alipayOrderNumber = dt.Rows[i]["AlipayOrderNumber"] as string;
                 }
+                string message = "";
+                if (dt.Rows[i]["Message"] != DBNull.Value)
+                {
+                    message = dt.Rows[i]["Message"].ToString();
+                }
 
                 records[i] = new WithdrawRMBRecord()
                 {
@@ -563,10 +568,11 @@ namespace DataBaseProvider
                     CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]),
                     WidthdrawRMB = (decimal)Convert.ToSingle(dt.Rows[i]["WidthdrawRMB"]),
                     ValueYuan = Convert.ToInt32(dt.Rows[i]["ValueYuan"]),
-                    IsPayedSucceed = Convert.ToBoolean(dt.Rows[i]["IsPayedSucceed"]),
+                    State = (RMBWithdrawState)Convert.ToInt32(dt.Rows[i]["RMBWithdrawState"]),
                     AdminUserName = adminUserName,
                     AlipayOrderNumber = alipayOrderNumber,
                     PayTime = payTime,
+                    Message = message,
                 };
             }
 

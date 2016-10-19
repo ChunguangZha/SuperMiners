@@ -798,13 +798,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string token, bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string token, int state, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+                    return DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(state, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

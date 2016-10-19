@@ -33,9 +33,15 @@ namespace MetaData.User
         [DataMember]
         public decimal Exp { get; set; }
 
+        /// <summary>
+        /// 灵币，玩家提现时，从该值中减去相应灵币，加到冻结灵币中。
+        /// </summary>
         [DataMember]
         public decimal RMB { get; set; }
 
+        /// <summary>
+        /// 冻结灵币，玩家可以同时多次提现，则冻结灵币值会累加。
+        /// </summary>
         [DataMember]
         public decimal FreezingRMB { get; set; }
 

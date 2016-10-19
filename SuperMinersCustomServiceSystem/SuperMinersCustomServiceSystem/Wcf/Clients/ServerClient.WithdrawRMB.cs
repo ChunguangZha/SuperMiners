@@ -28,9 +28,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<WithdrawRMBRecord[]>> GetWithdrawRMBRecordListCompleted;
-        public void GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex, object userState)
+        public void GetWithdrawRMBRecordList(int state, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex, object userState)
         {
-            this._invoker.InvokeUserState<WithdrawRMBRecord[]>(this._context, "GetWithdrawRMBRecordList", this.GetWithdrawRMBRecordListCompleted, userState, GlobalData.Token, isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+            this._invoker.InvokeUserState<WithdrawRMBRecord[]>(this._context, "GetWithdrawRMBRecordList", this.GetWithdrawRMBRecordListCompleted, userState, GlobalData.Token, state, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
         }
 
     }

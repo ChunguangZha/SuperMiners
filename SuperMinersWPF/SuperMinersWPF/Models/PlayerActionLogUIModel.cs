@@ -71,6 +71,9 @@ namespace SuperMinersWPF.Models
                     case ActionType.Login:
                         message = "进入矿场";
                         break;
+                    case ActionType.WithdrawRMB:
+                        message = this._parentObject.Remark;
+                        break;
                     default:
                         message = this._parentObject.Remark;
                         break;

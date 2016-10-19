@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Trade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,7 +54,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void Search()
         {
-            bool isPayed = this.cmbIsPay.SelectedIndex == 1;
+            int state = this.cmbIsPay.SelectedIndex - 1;
             string playerUserName = this.txtPlayerUserName.Text;
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
@@ -61,7 +62,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             string adminUserName = "";
             MyDateTime beginPayTime = null;
             MyDateTime endPayTime = null;
-            if (isPayed)
+            if (state == (int)RMBWithdrawState.Payed || state == (int)RMBWithdrawState.Rejected)
             {
                 adminUserName = this.txtAdminUserName.Text;
                 beginPayTime = this.dpStartPayTime.ValueTime;
@@ -70,7 +71,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.WithdrawRMBVMObject.AsyncGetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime,
+            App.WithdrawRMBVMObject.AsyncGetWithdrawRMBRecordList(state, playerUserName, beginCreateTime, endCreateTime,
                 adminUserName, beginPayTime, endPayTime, 30, pageIndex);
         }
 

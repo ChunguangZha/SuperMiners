@@ -20,11 +20,18 @@
                 <DataGridTextColumn Header="提现灵币" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceed, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding StateText, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Width="*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="支付" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnPay_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="*" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="拒绝" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnReject_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

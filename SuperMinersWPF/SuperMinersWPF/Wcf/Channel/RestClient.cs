@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWPF.Utility;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -44,20 +45,30 @@ namespace SuperMinersWPF.Wcf.Channel
             try
             {
                 req = new MyWebRequest(HttpWebRequest.Create(url));
+                LogHelper.Instance.AddErrorLog("RestClient Callback 1", null);
+
             }
             catch (Exception ex)
             {
+                LogHelper.Instance.AddErrorLog("RestClient Callback 1. Exception", null);
+
                 context.Post(_ =>
                 {
+                    LogHelper.Instance.AddErrorLog("RestClient Callback 1. Exception. to callback", null);
+
                     resultHandler(ex, null);
                 }, null);
                 return;
             }
 
+            LogHelper.Instance.AddErrorLog("RestClient Callback 2", null);
+
             req.Request.Method = "POST";
             if ((null == data) || (data.Length == 0))
             {
                 req.Request.ContentLength = 0;
+
+                LogHelper.Instance.AddErrorLog("RestClient Callback 3", null);
 
                 ReceiveCallback(context, req, resultHandler);
             }
@@ -70,19 +81,29 @@ namespace SuperMinersWPF.Wcf.Channel
                     data = CryptEncoder.Build(data);
                     req.Request.ContentLength = data.Length;
 
+                    LogHelper.Instance.AddErrorLog("RestClient Callback 4", null);
+
                     req.Request.BeginGetRequestStream(new AsyncCallback(result =>
                     {
+                        LogHelper.Instance.AddErrorLog("RestClient Callback 5", null);
+
                         Stream stream = null;
                         try
                         {
                             stream = req.Request.EndGetRequestStream(result);
                             stream.Write(data, 0, data.Length);
                             stream.Close();
+                            LogHelper.Instance.AddErrorLog("RestClient Callback 6", null);
+
                         }
                         catch (Exception ex)
                         {
+                            LogHelper.Instance.AddErrorLog("RestClient Callback 7", null);
+
                             context.Post(_ =>
                             {
+                                LogHelper.Instance.AddErrorLog("RestClient Callback 8", null);
+
                                 resultHandler(ex, null);
                             }, null);
                             return;
@@ -94,8 +115,12 @@ namespace SuperMinersWPF.Wcf.Channel
                 }
                 catch (Exception ex)
                 {
+                    LogHelper.Instance.AddErrorLog("RestClient Callback 9", null);
+
                     context.Post(_ =>
                     {
+                        LogHelper.Instance.AddErrorLog("RestClient Callback 10", null);
+
                         resultHandler(ex, null);
                     }, null);
                 }
@@ -253,19 +278,27 @@ namespace SuperMinersWPF.Wcf.Channel
         {
             try
             {
+                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1", null);
+
                 req.Request.BeginGetResponse(new AsyncCallback(result =>
                 {
                     WebResponse resp = null;
                     try
                     {
                         resp = req.Request.EndGetResponse(result);
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 2", null);
+
                     }
                     catch (Exception ex)
                     {
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 3", null);
+
                         if (null != resultHandler)
                         {
                             context.Post(_ =>
                             {
+                                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 4", null);
+
                                 resultHandler(ex, null);
                             }, null);
                         }
@@ -276,23 +309,35 @@ namespace SuperMinersWPF.Wcf.Channel
                     try
                     {
                         resultData = CryptEncoder.Read(resp.GetResponseStream());
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 5", null);
+
                     }
                     catch (Exception ex)
                     {
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 6", null);
+
                         if (null != resultHandler)
                         {
+                            LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 7", null);
+
                             context.Post(_ =>
                             {
+                                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 8", null);
+
                                 resultHandler(ex, null);
                             }, null);
                         }
                         return;
                     }
 
+                    LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 9", null);
+
                     if (null != resultHandler)
                     {
                         context.Post(_ =>
                         {
+                            LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 10", null);
+
                             resultHandler(null, resultData);
                         }, null);
                     }
@@ -300,10 +345,14 @@ namespace SuperMinersWPF.Wcf.Channel
             }
             catch (Exception ex)
             {
+                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 11", null);
+
                 if (null != resultHandler)
                 {
                     context.Post(_ =>
                     {
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 12", null);
+
                         resultHandler(ex, null);
                     }, null);
                 }

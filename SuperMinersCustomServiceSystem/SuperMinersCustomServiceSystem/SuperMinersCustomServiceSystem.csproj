@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -364,6 +364,9 @@
     <Compile Include="View\Windows\HandleExceptionStoneOrderWindow.xaml.cs">
       <DependentUpon>HandleExceptionStoneOrderWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\RejectPlayerWithdrawRMBWindow.xaml.cs">
+      <DependentUpon>RejectPlayerWithdrawRMBWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\WithdrawRMBPayWindow.xaml.cs">
       <DependentUpon>WithdrawRMBPayWindow.xaml</DependentUpon>
     </Compile>
@@ -601,6 +604,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\HandleExceptionStoneOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\RejectPlayerWithdrawRMBWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

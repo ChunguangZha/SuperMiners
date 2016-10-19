@@ -47,6 +47,23 @@ namespace SuperMinersWPF
             GlobalData.Client.LoginCompleted += Client_LoginCompleted;
             App.MessageVMObject.GetSystemConfigCompleted += MessageVMObject_GetSystemConfigCompleted;
             this.txtUserName.Focus();
+
+            ReadPassword();
+        }
+
+        public void ReadPassword()
+        {
+            string[] values = RegistryOper.ReadUserNamePassword();
+            if (values != null)
+            {
+                this.txtUserName.Text = values[0];
+                this.txtPassword.Password = values[1];
+                this.chkRememberPwd.IsChecked = true;
+            }
+            else
+            {
+                this.chkRememberPwd.IsChecked = false;
+            }
         }
 
         void MessageVMObject_GetSystemConfigCompleted(bool obj)
@@ -157,6 +174,11 @@ namespace SuperMinersWPF
                 return;
             }
 
+            string userName = this.txtUserName.Text.Trim();
+            string password = this.txtPassword.Password;
+
+            RegistryOper.SaveUserNamePassword(userName, password, this.chkRememberPwd.IsChecked.Value);
+
             GlobalData.InitToken(null);
 
 #if DEBUG
@@ -171,8 +193,6 @@ namespace SuperMinersWPF
 
             GlobalData.Client.Init(serverUri);
 #endif
-            string userName = this.txtUserName.Text;
-            string password = this.txtPassword.Password;
             string mac = GetMac();
 
             App.BusyToken.ShowBusyWindow("正在加载...");
@@ -254,6 +274,16 @@ namespace SuperMinersWPF
             {
                 this.DragMove();
             }
+        }
+
+        private void chkRememberPwd_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkRememberPwd_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -184,13 +184,13 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        public void AsyncGetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        public void AsyncGetWithdrawRMBRecordList(int state, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             if (GlobalData.Client != null)
             {
                 App.BusyToken.ShowBusyWindow("正在查找数据...");
                 ListHistoryWithdrawRecords.Clear();
-                GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
+                GlobalData.Client.GetWithdrawRMBRecordList(state, playerUserName, beginCreateTime, endCreateTime, adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex);
             }
         }
 

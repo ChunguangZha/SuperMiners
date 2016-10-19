@@ -92,14 +92,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 ListActiveWithdrawRecords.Add(new WithdrawRMBRecordUIModel(record));
             }
         }
-        
-        public void AsyncGetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+
+        public void AsyncGetWithdrawRMBRecordList(int state, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在查找数据...");
                 ListHistoryWithdrawRecords.Clear();
-                GlobalData.Client.GetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime, 
+                GlobalData.Client.GetWithdrawRMBRecordList(state, playerUserName, beginCreateTime, endCreateTime, 
                     adminUserName, beginPayTime, endPayTime, pageItemCount, pageIndex, "HISTORY");
             }
         }
@@ -113,7 +113,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 {
                     ListActiveWithdrawRecords.Clear();
                 }
-                GlobalData.Client.GetWithdrawRMBRecordList(false, "", null, null,
+                GlobalData.Client.GetWithdrawRMBRecordList((int)RMBWithdrawState.Waiting, "", null, null,
                 "", null, null, 0, 0, "ACTIVE");
             }
         }

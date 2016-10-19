@@ -67,6 +67,7 @@ namespace MetaData.ActionLog
         SellDiamond,
         GatherStone,
         Login,
-        GameFunny
+        GameFunny,
+        WithdrawRMB
     }
 }

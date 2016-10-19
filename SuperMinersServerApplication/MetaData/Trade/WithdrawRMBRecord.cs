@@ -53,8 +53,11 @@ namespace MetaData.Trade
         }
 
 
+        //[DataMember]
+        //public bool IsPayedSucceed = false;
+
         [DataMember]
-        public bool IsPayedSucceed = false;
+        public RMBWithdrawState State = RMBWithdrawState.Waiting;
 
         [DataMember]
         public string AdminUserName;
@@ -62,6 +65,12 @@ namespace MetaData.Trade
         [DataMember]
         public string AlipayOrderNumber = "";
 
+        [DataMember]
+        public string Message = "";
+
+        /// <summary>
+        /// 处理时间（包括拒绝）
+        /// </summary>
         public DateTime? PayTime;
         [DataMember]
         public string PayTimeString
@@ -91,5 +100,12 @@ namespace MetaData.Trade
             }
         }
 
+    }
+
+    public enum RMBWithdrawState
+    {
+        Waiting,
+        Payed,
+        Rejected
     }
 }

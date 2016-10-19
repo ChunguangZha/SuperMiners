@@ -51,6 +51,16 @@ namespace MetaData
         public const int RESULTCODE_CANOT_WITHDRAWRMB = 501;
 
         /// <summary>
+        /// 为玩家支付灵币提现时，提现灵币和冻结灵币不一致
+        /// </summary>
+        public const int RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR = 502;
+
+        /// <summary>
+        /// 为玩家支付灵币提现时，提现状态错误
+        /// </summary>
+        public const int RESULTCODE_WITHDRAW_RECORD_STATE_ERROR = 503;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -112,6 +122,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_ORDER_ISNOT_EXCEPTION, "该订单当前不是异常状态");
             _resultCode_Msg.Add(RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST, "没有找到您的中奖信息");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_NICKNAME_EXIST, "用户昵称已经存在");
+            _resultCode_Msg.Add(RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR, "提现灵币和冻结灵币不一致");
+            _resultCode_Msg.Add(RESULTCODE_WITHDRAW_RECORD_STATE_ERROR, "提现状态错误");
         }
 
         public static string GetMsg(int resultCode)

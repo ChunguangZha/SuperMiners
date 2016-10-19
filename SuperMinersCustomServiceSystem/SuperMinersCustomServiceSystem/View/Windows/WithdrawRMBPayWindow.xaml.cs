@@ -40,6 +40,11 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             GlobalData.Client.PayWithdrawRMBRecordCompleted += Client_PayWithdrawRMBRecordCompleted;
         }
 
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.PayWithdrawRMBRecordCompleted -= Client_PayWithdrawRMBRecordCompleted;
+        }
+
         void Client_PayWithdrawRMBRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             try
@@ -97,6 +102,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
             this.Record.AlipayOrderNumber = alipayNo;
             this.Record.AdminUserName = GlobalData.CurrentAdmin.UserName;
+            this.Record.State = MetaData.Trade.RMBWithdrawState.Payed;
 
             App.BusyToken.ShowBusyWindow("正在提交数据...");
             GlobalData.Client.PayWithdrawRMBRecord(Record.ParentObject);

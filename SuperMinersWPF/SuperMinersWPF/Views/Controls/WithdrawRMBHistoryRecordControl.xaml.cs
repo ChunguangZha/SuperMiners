@@ -31,7 +31,7 @@ namespace SuperMinersWPF.Views.Controls
         
         private void Search()
         {
-            bool isPayed = this.cmbIsPay.SelectedIndex == 1;
+            int state = this.cmbIsPay.SelectedIndex - 1;
             string playerUserName = GlobalData.CurrentUser.UserName;
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
@@ -41,7 +41,7 @@ namespace SuperMinersWPF.Views.Controls
             
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.TradeHistoryVMObject.AsyncGetWithdrawRMBRecordList(isPayed, playerUserName, beginCreateTime, endCreateTime,
+            App.TradeHistoryVMObject.AsyncGetWithdrawRMBRecordList(state, playerUserName, beginCreateTime, endCreateTime,
                 "", null, null, GlobalData.PageItemsCount, pageIndex);
         }
 

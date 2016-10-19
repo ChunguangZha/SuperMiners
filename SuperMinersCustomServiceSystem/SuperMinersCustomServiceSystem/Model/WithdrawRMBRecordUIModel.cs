@@ -29,10 +29,12 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("PlayerUserName");
                 NotifyPropertyChange("AlipayAccount");
                 NotifyPropertyChange("AlipayRealName");
-                NotifyPropertyChange("IsPayedSucceed");
+                NotifyPropertyChange("State");
+                NotifyPropertyChange("StateText");
                 NotifyPropertyChange("PayButtonVisibility");
                 NotifyPropertyChange("AdminUserName");
                 NotifyPropertyChange("PayTimeString");
+                NotifyPropertyChange("Message");
             }
         }
 
@@ -89,27 +91,55 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
-        public bool IsPayedSucceed
+        public RMBWithdrawState State
         {
             get
             {
-                return this._parentObject.IsPayedSucceed;
+                return this._parentObject.State;
+            }
+            set
+            {
+                this._parentObject.State = value;
             }
         }
 
-        public string IsPayedSucceedString
+        public string StateText
         {
             get
             {
-                return (this._parentObject.IsPayedSucceed) ? "支付完成" : "等待支付";
+                string text = "";
+                switch (this.State)
+                {
+                    case RMBWithdrawState.Waiting:
+                        text = "等待";
+                        break;
+                    case RMBWithdrawState.Payed:
+                        text = "完成";
+                        break;
+                    case RMBWithdrawState.Rejected:
+                        text = "拒绝";
+                        break;
+                    default:
+                        break;
+                }
+
+                return text;
             }
         }
+
+        //public string IsPayedSucceedString
+        //{
+        //    get
+        //    {
+        //        return (this._parentObject.IsPayedSucceed) ? "支付完成" : "等待支付";
+        //    }
+        //}
 
         public Visibility PayButtonVisibility
         {
             get
             {
-                return this.IsPayedSucceed ? Visibility.Collapsed : Visibility.Visible;
+                return this._parentObject.State == RMBWithdrawState.Waiting ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
@@ -145,5 +175,13 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
+        public string Message
+        {
+            get { return this._parentObject.Message; }
+            set
+            {
+                this._parentObject.Message = value;
+            }
+        }
     }
 }

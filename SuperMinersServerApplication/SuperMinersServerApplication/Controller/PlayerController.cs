@@ -725,7 +725,7 @@ namespace SuperMinersServerApplication.Controller
             int result = playerrun.CreateWithdrawRMB(getRMBCount, createTime);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                var record = DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecord(false, userName, getRMBCount, createTime);
+                var record = DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecord((int)RMBWithdrawState.Waiting, userName, getRMBCount, createTime);
                 if (record != null && SomebodyWithdrawRMB != null)
                 {
                     SomebodyWithdrawRMB(record);
@@ -748,7 +748,33 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
-            return playerrun.PayWithdrawRMB(record);
+            int result = playerrun.PayWithdrawRMB(record);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                string outputMessage = "";
+                if (record.State == RMBWithdrawState.Payed)
+                {
+                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币成功，" + record.ValueYuan + "元人民币已经到达其支付宝账户";
+                }
+                else
+                {
+                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币被拒绝，原因为：" + record.Message;
+                }
+                LogHelper.Instance.AddInfoLog(outputMessage);
+
+                PlayerActionController.Instance.AddLog(record.PlayerUserName, MetaData.ActionLog.ActionType.WithdrawRMB, record.WidthdrawRMB, outputMessage.ToString());
+
+                string tokenBuyer = ClientManager.GetToken(record.PlayerUserName);
+                if (!string.IsNullOrEmpty(tokenBuyer))
+                {
+                    if (this.PlayerInfoChanged != null)
+                    {
+                        this.PlayerInfoChanged(playerrun.BasePlayer);
+                    }
+                }
+            }
+
+            return result;
         }
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;

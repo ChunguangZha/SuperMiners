@@ -56,5 +56,22 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         {
             Search();
         }
+
+        private void btnReject_Click(object sender, RoutedEventArgs e)
+        {            
+            Button btn = sender as Button;
+            WithdrawRMBRecordUIModel record = btn.DataContext as WithdrawRMBRecordUIModel;
+            if (record == null)
+            {
+                return;
+            }
+
+            RejectPlayerWithdrawRMBWindow win = new RejectPlayerWithdrawRMBWindow(record);
+            win.ShowDialog();
+            if (win.IsOK)
+            {
+                App.WithdrawRMBVMObject.RemoveRecordFromActiveRecords(record);
+            }
+        }
     }
 }

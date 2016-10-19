@@ -23,9 +23,11 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
                 <TextBlock Text="是否支付完成：" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <ComboBox Name="cmbIsPay" Margin="0,10,5,10" VerticalAlignment="Center" SelectedIndex="1">
-                    <ComboBoxItem Content="否"/>
-                    <ComboBoxItem Content="是"/>
+                <ComboBox Name="cmbIsPay" Margin="0,10,5,10" VerticalAlignment="Center" SelectedIndex="0">
+                    <ComboBoxItem Content="全部"/>
+                    <ComboBoxItem Content="等待"/>
+                    <ComboBoxItem Content="完成"/>
+                    <ComboBoxItem Content="拒绝"/>
                 </ComboBox>
                 <TextBlock Text="创建时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
                 <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
@@ -49,7 +51,9 @@
                 <DataGridTextColumn Header="提现灵币" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="获得人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding IsPayedSucceedString, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding StateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付宝订单号" Width="*" Binding="{Binding AlipayOrderNumber, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="拒绝原因" Width="*" Binding="{Binding Message, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

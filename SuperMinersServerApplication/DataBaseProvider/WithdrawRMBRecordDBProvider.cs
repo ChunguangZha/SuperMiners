@@ -18,8 +18,8 @@ namespace DataBaseProvider
             try
             {
                 string sqlText = "insert into withdrawrmbrecord " +
-                    "(`PlayerUserName`, `AlipayAccount`, `AlipayRealName`, `WidthdrawRMB`, `ValueYuan`,`CreateTime`, `IsPayedSucceed`, `AdminUserName`, `PayTime`) " +
-                    " values (@PlayerUserName, @AlipayAccount, @AlipayRealName, @WidthdrawRMB, @ValueYuan, @CreateTime, @IsPayedSucceed, @AdminUserName, @PayTime)";
+                    "(`PlayerUserName`, `AlipayAccount`, `AlipayRealName`, `WidthdrawRMB`, `ValueYuan`,`CreateTime`, `RMBWithdrawState`, `AdminUserName`, `PayTime`) " +
+                    " values (@PlayerUserName, @AlipayAccount, @AlipayRealName, @WidthdrawRMB, @ValueYuan, @CreateTime, @RMBWithdrawState, @AdminUserName, @PayTime)";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlText;
@@ -29,7 +29,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@WidthdrawRMB", record.WidthdrawRMB);
                 mycmd.Parameters.AddWithValue("@ValueYuan", record.ValueYuan);
                 mycmd.Parameters.AddWithValue("@CreateTime", record.CreateTime);
-                mycmd.Parameters.AddWithValue("@IsPayedSucceed", false);
+                mycmd.Parameters.AddWithValue("@RMBWithdrawState", RMBWithdrawState.Waiting);
                 if (string.IsNullOrEmpty(record.AdminUserName))
                 {
                     mycmd.Parameters.AddWithValue("@AdminUserName", DBNull.Value);
@@ -65,15 +65,16 @@ namespace DataBaseProvider
             try
             {
                 string sqlText = "update withdrawrmbrecord set " +
-                    "`IsPayedSucceed` = @IsPayedSucceed, `AdminUserName` = @AdminUserName, `AlipayOrderNumber` = @AlipayOrderNumber, `PayTime` = @PayTime " +
+                    "`RMBWithdrawState` = @RMBWithdrawState, `AdminUserName` = @AdminUserName, `AlipayOrderNumber` = @AlipayOrderNumber, `PayTime` = @PayTime, `Message` = @Message " +
                     " where id = @id ";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlText;
-                mycmd.Parameters.AddWithValue("@IsPayedSucceed", true);
+                mycmd.Parameters.AddWithValue("@RMBWithdrawState", (int)record.State);
                 mycmd.Parameters.AddWithValue("@AdminUserName", DESEncrypt.EncryptDES(record.AdminUserName));
                 mycmd.Parameters.AddWithValue("@AlipayOrderNumber", record.AlipayOrderNumber);
                 mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                mycmd.Parameters.AddWithValue("@Message", record.Message);
                 mycmd.Parameters.AddWithValue("@id", record.id);
 
                 mycmd.ExecuteNonQuery();
@@ -88,7 +89,7 @@ namespace DataBaseProvider
             }
         }
 
-        public WithdrawRMBRecord GetWithdrawRMBRecord(bool isPayed, string playerUserName, int withdrawRMB, DateTime createTime)
+        public WithdrawRMBRecord GetWithdrawRMBRecord(int state, string playerUserName, int withdrawRMB, DateTime createTime)
         {
             WithdrawRMBRecord record = null;
             MySqlConnection myconn = null;
@@ -102,9 +103,9 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select * " +
                                     "from withdrawrmbrecord " +
-                                    "where IsPayedSucceed = @IsPayedSucceed and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime = @CreateTime ";
+                                    "where RMBWithdrawState = @RMBWithdrawState and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime = @CreateTime ";
                 string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
-                mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
+                mycmd.Parameters.AddWithValue("@RMBWithdrawState", state);
                 mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
                 mycmd.Parameters.AddWithValue("@WidthdrawRMB", withdrawRMB);
                 mycmd.Parameters.AddWithValue("@CreateTime", createTime);
@@ -131,7 +132,20 @@ namespace DataBaseProvider
             }
         }
 
-        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(bool isPayed, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="state">-1表示全部，其它按RMBWithdrawState枚举取值</param>
+        /// <param name="playerUserName"></param>
+        /// <param name="beginCreateTime"></param>
+        /// <param name="endCreateTime"></param>
+        /// <param name="adminUserName"></param>
+        /// <param name="beginPayTime"></param>
+        /// <param name="endPayTime"></param>
+        /// <param name="pageItemCount"></param>
+        /// <param name="pageIndex"></param>
+        /// <returns></returns>
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(int state, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, string adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {
             WithdrawRMBRecord[] orders = null;
             MySqlConnection myconn = null;
@@ -147,8 +161,11 @@ namespace DataBaseProvider
                                     "from withdrawrmbrecord ";
                 StringBuilder builder = new StringBuilder();
 
-                builder.Append(" IsPayedSucceed = @IsPayedSucceed  ");
-                mycmd.Parameters.AddWithValue("@IsPayedSucceed", isPayed);
+                if (state >= 0)
+                {
+                    builder.Append(" RMBWithdrawState = @RMBWithdrawState  ");
+                    mycmd.Parameters.AddWithValue("@RMBWithdrawState", state);
+                }
 
                 if (!string.IsNullOrEmpty(playerUserName))
                 {

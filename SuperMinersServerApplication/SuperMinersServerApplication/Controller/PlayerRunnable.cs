@@ -533,7 +533,7 @@ namespace SuperMinersServerApplication.Controller
                         WidthdrawRMB = getRMBCount,
                         ValueYuan = (int)Math.Ceiling(getRMBCount / GlobalConfig.GameConfig.Yuan_RMB),
                         CreateTime = createTime,
-                        IsPayedSucceed = false
+                        State = RMBWithdrawState.Waiting
                     };
 
                     this.BasePlayer.FortuneInfo.RMB -= getRMBCount;
@@ -578,14 +578,26 @@ namespace SuperMinersServerApplication.Controller
                 CustomerMySqlTransaction myTrans = null;
                 try
                 {
-                    decimal resultValue = this.BasePlayer.FortuneInfo.FreezingRMB - record.WidthdrawRMB;
-                    if (resultValue < 0)
+                    decimal valueRMB = this.BasePlayer.FortuneInfo.FreezingRMB - record.WidthdrawRMB;
+                    if (valueRMB < 0)
                     {
-                        LogHelper.Instance.AddErrorLog("玩家 [" + record.PlayerUserName + "] 灵币提现操作异常，提现后冻结灵币会小于0，请立即检查！！" , null);
-                        return OperResult.RESULTCODE_EXCEPTION;
+                        LogHelper.Instance.AddErrorLog("玩家 [" + record.PlayerUserName + "] 灵币提现操作异常，提现灵币为：" + record.WidthdrawRMB.ToString() + "，冻结灵币为：" + this.BasePlayer.FortuneInfo.FreezingRMB.ToString(), null);
+                        return OperResult.RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR;
                     }
 
-                    this.BasePlayer.FortuneInfo.FreezingRMB = resultValue;
+                    if (record.State == RMBWithdrawState.Payed)
+                    {
+                        this.BasePlayer.FortuneInfo.FreezingRMB = valueRMB;
+                    }
+                    else if (record.State == RMBWithdrawState.Rejected)
+                    {
+                        this.BasePlayer.FortuneInfo.RMB += this.BasePlayer.FortuneInfo.FreezingRMB;
+                        this.BasePlayer.FortuneInfo.FreezingRMB = 0;
+                    }
+                    else
+                    {
+                        return OperResult.RESULTCODE_WITHDRAW_RECORD_STATE_ERROR;
+                    }
 
                     myTrans = MyDBHelper.Instance.CreateTrans();
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);

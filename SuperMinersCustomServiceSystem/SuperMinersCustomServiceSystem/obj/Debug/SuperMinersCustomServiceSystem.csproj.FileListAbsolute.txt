@@ -188,7 +188,6 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\StoneNotFinishedTradeRecordControl.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\HandleExceptionStoneOrderWindow.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\HandleExceptionStoneOrderWindow.g.cs
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditPlayerPasswordWindow.baml
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\HandleExceptionStoneOrderWindow.baml
@@ -234,3 +233,5 @@ F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSys
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\GameRouletteWinAwardWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.baml
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditRouletteAwardItemWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\RejectPlayerWithdrawRMBWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\RejectPlayerWithdrawRMBWindow.g.cs

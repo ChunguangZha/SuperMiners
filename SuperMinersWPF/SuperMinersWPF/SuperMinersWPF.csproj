@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.1.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -281,12 +281,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Strings.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility\DESEncrypt_Client.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\MessageBoxAlipayPayQuestion.xaml.cs">
       <DependentUpon>MessageBoxAlipayPayQuestion.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utility\MyMessageBox.cs" />
     <Compile Include="Utility\MyWebPage.cs" />
+    <Compile Include="Utility\RegistryOper.cs" />
     <Compile Include="ViewModels\BusyToken.cs" />
     <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
