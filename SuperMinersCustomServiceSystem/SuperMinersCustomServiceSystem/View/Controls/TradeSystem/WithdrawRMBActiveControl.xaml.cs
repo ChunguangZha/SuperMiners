@@ -45,7 +45,8 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             }
 
             WithdrawRMBPayWindow win = new WithdrawRMBPayWindow(record);
-            if (win.ShowDialog() == true)
+            win.ShowDialog();
+            if (win.IsOK)
             {
                 App.WithdrawRMBVMObject.RemoveRecordFromActiveRecords(record);
             }

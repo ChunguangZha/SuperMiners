@@ -23,6 +23,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
     /// </summary>
     public partial class WithdrawRMBPayWindow : Window
     {
+        public bool IsOK = false;
         private SynchronizationContext _syn;
         WithdrawRMBRecordUIModel Record = null;
 
@@ -57,10 +58,11 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
                 if (e.Result == OperResult.RESULTCODE_TRUE)
                 {
+                    IsOK = true;
                     MessageBox.Show("操作成功。");
                     _syn.Post(o =>
                     {
-                        this.DialogResult = true;
+                        this.Close();
                     }, null);
                 }
                 else
@@ -76,7 +78,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            this.Close();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

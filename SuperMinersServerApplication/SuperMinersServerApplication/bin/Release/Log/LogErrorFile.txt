@@ -1,11 +1,9 @@
-Error:  [2016/10/17 22:33:12] ---- Log: 玩家 [Tony] 灵币提现操作异常，提现后冻结灵币会小于0，请立即检查！！
+Error:  [2016/10/19 15:00:39] ---- Log: Get All Admin List Exception
+Exc.Message: 列“GroupType”不属于表 。Exc.Stack:    在 DataBaseProvider.AdminDBProvider.GetAllAdmin() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\AdminDBProvider.cs:行号 99
+   在 SuperMinersServerApplication.Controller.AdminController.GetAllAdmin() 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\AdminController.cs:行号 67
 -----------------------------------------------------
 *********+++++++++++++***********
-Client.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+lCommand.ExecuteReader(CommandBehavior behavior)
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
    在 MySql.Data.MySqlClient.MySqlCommand.ExecuteNonQuery()
    在 DataBaseProvider.UserInfoDBProvider.UpdatePlayerGroupType(Int32 userID, PlayerGroupType type, CustomerMySqlTransaction trans) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 125
