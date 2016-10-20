@@ -762,7 +762,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 LogHelper.Instance.AddInfoLog(outputMessage);
 
-                PlayerActionController.Instance.AddLog(record.PlayerUserName, MetaData.ActionLog.ActionType.WithdrawRMB, record.WidthdrawRMB, outputMessage.ToString());
+                //PlayerActionController.Instance.AddLog(record.PlayerUserName, MetaData.ActionLog.ActionType.WithdrawRMB, record.WidthdrawRMB, outputMessage.ToString());
 
                 string tokenBuyer = ClientManager.GetToken(record.PlayerUserName);
                 if (!string.IsNullOrEmpty(tokenBuyer))
