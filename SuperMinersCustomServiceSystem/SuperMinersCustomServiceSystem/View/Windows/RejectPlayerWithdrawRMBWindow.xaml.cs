@@ -55,7 +55,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
                 if (e.Error != null)
                 {
-                    MessageBox.Show("操作失败。");
+                    MessageBox.Show("操作失败，服务器返回异常，信息为：" + e.Error);
                     return;
                 }
 

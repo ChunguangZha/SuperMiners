@@ -84,5 +84,39 @@ namespace SuperMinersWPF.Views.Controls
             App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
         }
 
+        private void btnCancelPay_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null)
+            {
+                return;
+            }
+
+            LockSellStonesOrderUIModel lockStoneOrder = btn.DataContext as LockSellStonesOrderUIModel;
+            if (lockStoneOrder == null)
+            {
+                return;
+            }
+
+            App.StoneOrderVMObject.AsyncCancelBuyStoneOrder(lockStoneOrder.OrderNumber);
+        }
+
+        private void btnCancelSellStone_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null)
+            {
+                return;
+            }
+
+            SellStonesOrderUIModel sellStoneOrder = btn.DataContext as SellStonesOrderUIModel;
+            if (sellStoneOrder == null)
+            {
+                return;
+            }
+
+            App.StoneOrderVMObject.AsyncCancelSellStoneOrder(sellStoneOrder.OrderNumber);
+        }
+
     }
 }

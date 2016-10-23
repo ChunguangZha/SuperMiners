@@ -35,6 +35,7 @@ namespace SuperMinersServerApplication.Controller
         public void StartThread()
         {
             _timer.Elapsed += CheckOrderLockTimeoutTimer_Elapsed;
+            _timer.Start();
         }
 
         void CheckOrderLockTimeoutTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -334,12 +335,32 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_ORDER_BE_LOCKED;
                 }
 
-                if (DBProvider.StoneOrderDBProvider.CancelSellOrder(order))
+                CustomerMySqlTransaction trans=null;
+
+                try
                 {
+                    trans = MyDBHelper.Instance.CreateTrans();
+                    PlayerController.Instance.CancelSellStones(order, trans);
+                    DBProvider.StoneOrderDBProvider.CancelSellOrder(order, trans);
+
+                    trans.Commit();
+
+                    this.dicSellOrders.TryRemove(orderNumber, out runnable);
                     return OperResult.RESULTCODE_TRUE;
                 }
-
-                return OperResult.RESULTCODE_FALSE;
+                catch (Exception exc)
+                {
+                    trans.Rollback();
+                    LogHelper.Instance.AddErrorLog("玩家[" + orderNumber + "]取消矿石订单：" + sellUserName + "异常。", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                finally
+                {
+                    if (trans != null)
+                    {
+                        trans.Dispose();
+                    }
+                }
             }
         }
 

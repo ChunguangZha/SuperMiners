@@ -200,9 +200,19 @@ namespace SuperMinersWPF.ViewModels
                     var log = e.Result[i];
                     if (lastLogFromClient != null)
                     {
-                        if (lastLogFromClient.Time >= log.Time)
+                        if (lastLogFromClient.Time > log.Time)
                         {
                             continue;
+                        }
+                        if (lastLogFromClient.Time == log.Time)
+                        {
+                            if (lastLogFromClient.ParentObject.UserName == log.UserName
+                                && lastLogFromClient.ParentObject.ActionType == log.ActionType
+                                && lastLogFromClient.ParentObject.OperNumber == log.OperNumber
+                                && lastLogFromClient.ParentObject.Remark == log.Remark)
+                            {
+                                continue;
+                            }
                         }
                     }
                     ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(log));

@@ -22,6 +22,13 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="用户名：" HorizontalAlignment="Right" Margin="5"/>
                 <TextBox Name="txtUserName" Margin="5" Width="100" VerticalAlignment="Center"/>
+                <TextBlock Text="用户组" Margin="5"/>
+                <ComboBox Name="cmbUserGroup" SelectedIndex="0" Margin="5" Width="100">
+                    <ComboBoxItem Content="全部"/>
+                    <ComboBoxItem Content="普通玩家"/>
+                    <ComboBoxItem Content="测试玩家"/>
+                    <ComboBoxItem Content="代理玩家"/>
+                </ComboBox>
                 <TextBlock Text="支付宝账户：" HorizontalAlignment="Right" Margin="5"/>
                 <TextBox Name="txtAlipayAccount" Margin="5" Width="150" VerticalAlignment="Center"/>
             </StackPanel>
@@ -63,7 +70,7 @@
                     <DataGridTextColumn Binding="{Binding UserID}" Header="用户ID"/>
                     <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
                     <DataGridTextColumn Binding="{Binding NickName}" ClipboardContentBinding="{x:Null}" Header="昵称"/>
-                    <DataGridTextColumn Binding="{Binding GroupType}" Header="用户组"/>
+                    <DataGridTextColumn Binding="{Binding GroupTypeText}" Header="用户组"/>
                     <DataGridTextColumn Binding="{Binding IsAgentReferred}" Header="是否为代理推荐"/>
                     <DataGridTextColumn Binding="{Binding AgentReferredLevel}" Header="代理推荐级别"/>
                     <DataGridTextColumn Binding="{Binding AgentUserID}" Header="代理用户ID"/>

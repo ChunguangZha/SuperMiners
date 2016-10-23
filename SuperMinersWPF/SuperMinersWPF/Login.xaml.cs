@@ -117,6 +117,13 @@ namespace SuperMinersWPF
                 return;
             }
 
+            if (e.Result == "VERSIONERROR")
+            {
+                App.BusyToken.CloseBusyWindow();
+                MyWebPage.ShowMyWebPage("");
+                MyMessageBox.ShowInfo("请在打开的迅灵矿场官方网站中更新到最新版本。");
+                return;
+            }
             if (e.Result == "LOCKED")
             {
                 App.BusyToken.CloseBusyWindow();
@@ -196,7 +203,9 @@ namespace SuperMinersWPF
             string mac = GetMac();
 
             App.BusyToken.ShowBusyWindow("正在加载...");
-            GlobalData.Client.Login(userName, password, CryptEncoder.Key, mac);
+
+            string clientVersion = System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+            GlobalData.Client.Login(userName, password, CryptEncoder.Key, mac, clientVersion);
         }
 
         private string GetMac()
@@ -274,16 +283,6 @@ namespace SuperMinersWPF
             {
                 this.DragMove();
             }
-        }
-
-        private void chkRememberPwd_Checked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void chkRememberPwd_Unchecked(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

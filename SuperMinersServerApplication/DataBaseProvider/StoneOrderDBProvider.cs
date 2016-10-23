@@ -43,14 +43,12 @@ namespace DataBaseProvider
             }
         }
 
-        public bool CancelSellOrder(SellStonesOrder order)
+        public bool CancelSellOrder(SellStonesOrder order, CustomerMySqlTransaction trans)
         {
-            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
             try
             {
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+                mycmd = trans.CreateCommand();
 
                 string cmdTextA = "delete from sellstonesorder where OrderNumber = @OrderNumber;";
 
@@ -63,11 +61,9 @@ namespace DataBaseProvider
             }
             finally
             {
-                mycmd.Dispose();
-                if (myconn != null)
+                if (mycmd != null)
                 {
-                    myconn.Close();
-                    myconn.Dispose();
+                    mycmd.Dispose();
                 }
             }
         }

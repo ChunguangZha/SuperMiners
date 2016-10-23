@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SuperMinersWPF.Models
 {
@@ -28,7 +29,7 @@ namespace SuperMinersWPF.Models
             get { return this.ParentObject.ID; }
         }
 
-        private SolidColorBrush _background = new SolidColorBrush(Color.FromArgb(255, 255, 241, 167));
+        private SolidColorBrush _background = new SolidColorBrush(Color.FromArgb(255, 255, 220, 21));
 
         public SolidColorBrush Background
         {
@@ -37,6 +38,53 @@ namespace SuperMinersWPF.Models
             {
                 this._background = value;
                 NotifyPropertyChange("Background");
+            }
+        }
+
+        public BitmapImage Icon
+        {
+            get
+            {
+                string imageFile = "";
+                switch (RouletteAwardType)
+                {
+                    case RouletteAwardType.None:
+                        imageFile = "again.png";
+                        break;
+                    case RouletteAwardType.Stone:
+                        imageFile = "stone.png";
+                        break;
+                    case RouletteAwardType.GoldCoin:
+                        imageFile = "goldcoin.png";
+                        break;
+                    case RouletteAwardType.Exp:
+                        imageFile = "exp.png";
+                        break;
+                    case RouletteAwardType.StoneReserve:
+                        imageFile = "";
+                        break;
+                    case RouletteAwardType.Huafei:
+                        imageFile = "phonefees.png";
+                        break;
+                    case RouletteAwardType.IQiyiOneMonth:
+                        imageFile = "iqiyi.png";
+                        break;
+                    case RouletteAwardType.LeTV:
+                        imageFile = "letv.png";
+                        break;
+                    case RouletteAwardType.Xunlei:
+                        imageFile = "xunlei.png";
+                        break;
+                    case RouletteAwardType.Junnet:
+                        break;
+                    default:
+                        break;
+                }
+                if (string.IsNullOrEmpty(imageFile))
+                {
+                    return null;
+                }
+                return new BitmapImage(new Uri("pack://application:,,,/Resources/" + imageFile));
             }
         }
 

@@ -35,11 +35,24 @@
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="注册玩家" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Grid.Column="1" Width="100" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Name="txtAllPlayersCount" MinWidth="100" Margin="5" IsReadOnly="True"/>
                 <TextBlock Grid.Column="2" Text="在线玩家" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                <TextBox Grid.Column="3" Width="100" Margin="5" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="3" Name="txtOnlinePlayersCount" MinWidth="100" Margin="5" IsReadOnly="True" />
+                <TextBlock Grid.Column="4" Text="总矿工数" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Column="5" Name="txtTotalMinersCount" MinWidth="100" Margin="5" IsReadOnly="True"/>
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="总金币数" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Name="txtTotalGoldCoinCount" MinWidth="100" Margin="5" IsReadOnly="True"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="总灵币数" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="1" Grid.Column="3" Name="txtTotalRMBCount" MinWidth="100" Margin="5" IsReadOnly="True"/>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="总充值灵币" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="txtTotalInchargeRMB" MinWidth="100" Margin="5" IsReadOnly="True"/>
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="总提现灵币" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <TextBox Grid.Row="2" Grid.Column="3" Name="txtTotalWithdrawRMB" MinWidth="100" Margin="5" IsReadOnly="True"/>
+                <Button Grid.Row="3" Grid.Column="5" Name="btnRefreshTotalInfo" Content="刷新" Width="100" Margin="5" Click="btnRefreshTotalInfo_Click"/>
             </Grid>
         </GroupBox>
         <TreeView Grid.Row="1" Name="TreeMenu">

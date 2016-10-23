@@ -16,9 +16,9 @@ namespace SuperMinersWPF.ViewModels
 
         bool isStartedListen = false;
         bool isSuspendListen = false;
-
+        
         /// <summary>
-        /// 每分钟执行一次
+        /// 每秒执行一次
         /// </summary>
         private System.Timers.Timer _timerUpdateStoneOutput = new System.Timers.Timer(1000);
 
@@ -44,9 +44,12 @@ namespace SuperMinersWPF.ViewModels
             isSuspendListen = true;
         }
 
-        public void ResumeListen()
+        public void ResumeListen(bool restart)
         {
-            _countdown = COUNTDOWN;
+            if (restart)
+            {
+                _countdown = COUNTDOWN;
+            }
             isSuspendListen = false;
         }
 
@@ -63,7 +66,7 @@ namespace SuperMinersWPF.ViewModels
                             GlobalData.CurrentUser.OutputCountdown = this._countdown--;
                             if (this._countdown < 0)
                             {
-                                ComputeOutput();
+                                ComputeOutputPerMinute();
                                 this._countdown = COUNTDOWN;
                             }
                         }
@@ -78,17 +81,21 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        private void ComputeOutput()
+        /// <summary>
+        /// 每分钟执行一次
+        /// </summary>
+        private void ComputeOutputPerMinute()
         {
-            DateTime startTime = GlobalData.CurrentUser.TempOutputStonesStartTime;
+            //DateTime startTime = GlobalData.CurrentUser.TempOutputStonesStartTime;
 
-            TimeSpan span = DateTime.Now - startTime;
-            if (span.TotalHours < 0)
-            {
-                return;
-            }
+            //TimeSpan span = DateTime.Now - startTime;
+            //if (span.TotalHours < 0)
+            //{
+            //    return;
+            //}
 
-            decimal tempOutput = (decimal)span.TotalHours * GlobalData.CurrentUser.MinersCount * GlobalData.GameConfig.OutputStonesPerHour;
+            decimal tempOutputPerMinute = GlobalData.CurrentUser.MinersCount * (GlobalData.GameConfig.OutputStonesPerHour / 60);
+            decimal tempOutput = GlobalData.CurrentUser.TempOutputStones + tempOutputPerMinute;
 
             if (tempOutput > GlobalData.CurrentUser.MaxTempStonesOutput)
             {
@@ -186,6 +193,9 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MyMessageBox.ShowInfo("收取矿石失败，原因为：" + OperResult.GetMsg(e.Result));
                 }
+
+                GlobalData.CurrentUser.TempOutputStones = 0;
+                App.UserVMObject.ResumeListen(true);
                 AsyncGetPlayerInfo();
             }
             catch (Exception exc)

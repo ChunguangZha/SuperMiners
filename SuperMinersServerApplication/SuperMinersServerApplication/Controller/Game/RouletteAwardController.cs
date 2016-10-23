@@ -211,14 +211,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 return result;
             }
 
-            var playerRun = PlayerController.Instance.GetRunnable(userName);
-            if (playerRun == null)
-            {
-                result.OperResultCode = OperResult.RESULTCODE_USER_OFFLINE;
-                return result;
-            }
-
-            int value = playerRun.RouletteSpendStone(100);
+            int value = PlayerController.Instance.RouletteSpendStone(userName, 100);
             if (value != OperResult.RESULTCODE_TRUE)
             {
                 result.OperResultCode = value;
@@ -274,17 +267,18 @@ namespace SuperMinersServerApplication.Controller.Game
             return result;
         }
 
+        Random r = new Random(1);
+
         private int GetRandomValue(int maxValue)
         {
             int value = 0;
-            Random r = new Random(1);
             for (int i = 0; i < maxValue; i++)
             {
                 value = r.Next(1, maxValue);
                 //Console.WriteLine(value);
             }
 
-            Console.WriteLine("Random : " + value);
+            //Console.WriteLine("Random : " + value);
             return value;
         }
 

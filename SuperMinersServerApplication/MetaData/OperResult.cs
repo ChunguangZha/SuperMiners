@@ -61,6 +61,11 @@ namespace MetaData
         public const int RESULTCODE_WITHDRAW_RECORD_STATE_ERROR = 503;
 
         /// <summary>
+        /// 为玩家支付灵币提现时，该订单已经被处理
+        /// </summary>
+        public const int RESULTCODE_WITHDRAW_ORDER_BEHANDLED = 504;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -124,6 +129,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_NICKNAME_EXIST, "用户昵称已经存在");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR, "提现灵币和冻结灵币不一致");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_RECORD_STATE_ERROR, "提现状态错误");
+            _resultCode_Msg.Add(RESULTCODE_WITHDRAW_ORDER_BEHANDLED, "该提现订单已经被处理，请刷新后再试");
         }
 
         public static string GetMsg(int resultCode)

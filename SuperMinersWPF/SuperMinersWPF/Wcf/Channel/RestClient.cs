@@ -45,7 +45,7 @@ namespace SuperMinersWPF.Wcf.Channel
             try
             {
                 req = new MyWebRequest(HttpWebRequest.Create(url));
-                LogHelper.Instance.AddErrorLog("RestClient Callback 1", null);
+                LogHelper.Instance.AddErrorLog("RestClient Callback 1. " + url, null);
 
             }
             catch (Exception ex)
@@ -61,14 +61,14 @@ namespace SuperMinersWPF.Wcf.Channel
                 return;
             }
 
-            LogHelper.Instance.AddErrorLog("RestClient Callback 2", null);
+            LogHelper.Instance.AddErrorLog("RestClient Callback 2. " + url, null);
 
             req.Request.Method = "POST";
             if ((null == data) || (data.Length == 0))
             {
                 req.Request.ContentLength = 0;
 
-                LogHelper.Instance.AddErrorLog("RestClient Callback 3", null);
+                LogHelper.Instance.AddErrorLog("RestClient Callback 3. " + url, null);
 
                 ReceiveCallback(context, req, resultHandler);
             }
@@ -81,11 +81,11 @@ namespace SuperMinersWPF.Wcf.Channel
                     data = CryptEncoder.Build(data);
                     req.Request.ContentLength = data.Length;
 
-                    LogHelper.Instance.AddErrorLog("RestClient Callback 4", null);
+                    LogHelper.Instance.AddErrorLog("RestClient Callback 4. " + url, null);
 
                     req.Request.BeginGetRequestStream(new AsyncCallback(result =>
                     {
-                        LogHelper.Instance.AddErrorLog("RestClient Callback 5", null);
+                        LogHelper.Instance.AddErrorLog("RestClient Callback 5. " + url, null);
 
                         Stream stream = null;
                         try
@@ -93,16 +93,16 @@ namespace SuperMinersWPF.Wcf.Channel
                             stream = req.Request.EndGetRequestStream(result);
                             stream.Write(data, 0, data.Length);
                             stream.Close();
-                            LogHelper.Instance.AddErrorLog("RestClient Callback 6", null);
+                            LogHelper.Instance.AddErrorLog("RestClient Callback 6. " + url, null);
 
                         }
                         catch (Exception ex)
                         {
-                            LogHelper.Instance.AddErrorLog("RestClient Callback 7", null);
+                            LogHelper.Instance.AddErrorLog("RestClient Callback 7. " + url, null);
 
                             context.Post(_ =>
                             {
-                                LogHelper.Instance.AddErrorLog("RestClient Callback 8", null);
+                                LogHelper.Instance.AddErrorLog("RestClient Callback 8. " + url, null);
 
                                 resultHandler(ex, null);
                             }, null);
@@ -115,11 +115,11 @@ namespace SuperMinersWPF.Wcf.Channel
                 }
                 catch (Exception ex)
                 {
-                    LogHelper.Instance.AddErrorLog("RestClient Callback 9", null);
+                    LogHelper.Instance.AddErrorLog("RestClient Callback 9. " + url, null);
 
                     context.Post(_ =>
                     {
-                        LogHelper.Instance.AddErrorLog("RestClient Callback 10", null);
+                        LogHelper.Instance.AddErrorLog("RestClient Callback 10. " + url, null);
 
                         resultHandler(ex, null);
                     }, null);
@@ -278,7 +278,7 @@ namespace SuperMinersWPF.Wcf.Channel
         {
             try
             {
-                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1", null);
+                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1. " + req.Request.RequestUri.ToString(), null);
 
                 req.Request.BeginGetResponse(new AsyncCallback(result =>
                 {

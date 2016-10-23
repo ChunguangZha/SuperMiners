@@ -6,8 +6,22 @@
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="700">
+    <UserControl.Resources>
+        <Style x:Key="RouletteItemTextStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="RouletteItemIcon" TargetType="Image">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <Grid Name="panelRoulette" Visibility="Collapsed">
+        <Grid Name="panelRoulette" Background="#d71837" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -21,9 +35,12 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Grid Margin="2" Background="#FFE8A25A">
-                    <TextBlock Text="小积分 抽大奖" Margin="10,10" HorizontalAlignment="Center" Foreground="#FFA64D02" FontWeight="Bold" FontSize="14"/>
+                <Grid Margin="2" Background="#7d020c">
+                    <Image Margin="30" Source="/SuperMinersWPF;component/Resources/title.png" />
                 </Grid>
+                <TextBlock Grid.Row="1" Text="每次花费100块矿石，最多可中价值100元人民币的大奖！！快来参加吧！！！" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold">
+                    
+                </TextBlock>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
@@ -34,62 +51,16 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="中奖榜" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button Grid.Column="1" Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyWinAwardRecord_Click"/>
-                <ListView Grid.Row="1" Grid.ColumnSpan="2" Margin="5" HorizontalContentAlignment="Stretch">
-                    <ListViewItem Margin="5,0">
-                        <Grid Margin="10,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tony"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="5,0">
-                        <Grid Margin="10,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tony"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="5,0">
-                        <Grid Margin="10,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tony"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="5,0">
-                        <Grid Margin="10,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tony"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                        </Grid>
-                    </ListViewItem>
-                    <ListViewItem Margin="5,0">
-                        <Grid Margin="10,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="Tony"/>
-                            <TextBlock Grid.Column="1" HorizontalAlignment="Right" Text="抽中50元话费"/>
-                        </Grid>
-                    </ListViewItem>
+                <Grid Background="#7d020c">
+                    <TextBlock Text="中奖榜" Foreground="#ffdc15" FontSize="18" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Column="1" Background="#7d020c">
+                    <Button Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyWinAwardRecord_Click"/>
+                </Grid>
+                <ListView Grid.Row="1" Grid.ColumnSpan="2" Name="listAwardRecords" Margin="5" HorizontalContentAlignment="Stretch" Background="#9d0012" Foreground="White">
                 </ListView>
             </Grid>
-            <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10" Background="#FFFFB97E">
+            <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10" Background="#8e0710">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -104,93 +75,116 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0" Name="awardItem1" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Name="awardItem2" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="2" Name="awardItem3" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="3" Name="awardItem4" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="3" Name="awardItem5" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="2" Grid.Column="3" Name="awardItem6" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="3" Name="awardItem7" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="2" Name="awardItem8" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="1" Name="awardItem9" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="3" Grid.Column="0" Name="awardItem10" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="2" Grid.Column="0" Name="awardItem11" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
                 <Grid Grid.Row="1" Grid.Column="0" Name="awardItem12" Margin="5" Background="{Binding Background}">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="4*"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Foreground="Red" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <Image Source="{Binding Icon}" Style="{StaticResource ResourceKey=RouletteItemIcon}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding AwardName}" Style="{StaticResource ResourceKey=RouletteItemTextStyle}"/>
                 </Grid>
-                <Button Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Name="btnStart" Margin="10" Content="开始去抽奖" Background="#FFFF2F0E" Foreground="WhiteSmoke" FontSize="24" FontStyle="Italic" Click="btnStart_Click"/>
+                <Button Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2" Name="btnStart" Margin="10" Background="#FFFF2F0E" Foreground="WhiteSmoke" FontSize="24" FontStyle="Italic" Click="btnStart_Click">
+                    <Button.Content>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Image Source="/SuperMinersWPF;component/Resources/start.png"/>
+                            <Image Grid.Row="1" Source="/SuperMinersWPF;component/Resources/starttext.png"/>
+                        </Grid>
+                    </Button.Content>
+                </Button>
 
             </Grid>
         </Grid>
-        <Grid Name="panelNotOpen" Visibility="Visible">
+        <Grid Name="panelNotOpen" Visibility="Collapsed">
             <TextBlock Text="该功能暂未开放，敬请期待..." FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         </Grid>
     </Grid>

@@ -199,7 +199,10 @@ namespace SuperMinersWPF
                     {
                         showWin = true;
                     }
-                    App.UserVMObject.ResumeListen();
+                    else
+                    {
+                        App.UserVMObject.ResumeListen(false);
+                    }
                 }
 
                 if (showWin)
@@ -249,8 +252,11 @@ namespace SuperMinersWPF
             {
                 App.UserVMObject.SuspendListen();
                 GatherStonesWindow win = new GatherStonesWindow();
-                win.ShowDialog();
-                App.UserVMObject.ResumeListen();
+                if (win.ShowDialog() == false)
+                {
+                    //只有取消收取时，在此处恢复；否则在VM回调事件里恢复。
+                    App.UserVMObject.ResumeListen(false);
+                }
             }
         }
         

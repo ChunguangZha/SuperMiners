@@ -26,6 +26,7 @@ namespace SuperMinersServerApplication
 
         public static readonly string LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
         public static readonly string ConfigFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Config");
+        public static readonly string ClientVersionFile = Path.Combine(ConfigFolder, "clientVersion.xml");
         public static readonly string UserActionFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UserAction");
         public static readonly string UserActionLogFile = Path.Combine(UserActionFolder, "actionLogs.xml");
         public static readonly string UserWithdrawRMBImagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WithdrawRMBImages");

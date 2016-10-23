@@ -34,8 +34,6 @@ namespace SuperMinersCustomServiceSystem
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this._syn = System.Threading.SynchronizationContext.Current;
-            //CreateTreeView();
-            BindUI();
 
             GlobalData.Client.OnKickoutByUser += Client_OnKickoutByUser;
 
@@ -49,6 +47,11 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerLockedStoneOrderRecords += controlPlayerManager_ViewPlayerLockedStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
+
+        }
+
+        private void btnRefreshTotalInfo_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
@@ -122,30 +125,6 @@ namespace SuperMinersCustomServiceSystem
             this.controlAlipayRecordHistory.SetBuyerUserName(obj);
             this.tvL2_TS_Alipay_HistoryRecord.IsSelected = true;
             this.tvL2_TS_Alipay_HistoryRecord.IsExpanded = true;
-        }
-
-        private void BindUI()
-        {
-            //this.tvL2_TS_GoldCoin.DataContext = App.GoldCoinTradeVMObject;
-            //this.controlGoldCoinRechargeActive.DataContext = App.GoldCoinTradeVMObject;
-            //this.controlGoldCoinRechargeHistory.DataContext = App.GoldCoinTradeVMObject;
-
-            //this.tvL2_TS_Mine.DataContext = App.MineTradeVMObject;
-            //this.controlMineTradeActive.DataContext = App.MineTradeVMObject;
-            //this.controlMineTradeHistory.DataContext = App.MineTradeVMObject;
-
-            //this.tvL2_TS_Miner.DataContext = App.MinerTradeVMObject;
-            //this.controlMinerTradeActive.DataContext = App.MinerTradeVMObject;
-            //this.controlMinerTradeHistory.DataContext = App.MinerTradeVMObject;
-
-            //this.tvL2_TS_Stone.DataContext = App.StoneTradeVMObject;
-            //this.controlStoneSellTradeHistory.DataContext = App.StoneTradeVMObject;
-            //this.controlStoneBuyTradeHistory.DataContext = App.StoneTradeVMObject;
-
-            //this.tvL2_TS_WithdrawRMB.DataContext = App.WithdrawRMBVMObject;
-            //this.controlWithdrawRMBActive.DataContext = App.WithdrawRMBVMObject;
-            //this.controlWithdrawRMBHistory.DataContext = App.WithdrawRMBVMObject;
-            //this.controlStoneTradeShowImage.DataContext = App.WithdrawRMBVMObject;
         }
 
         void Client_OnKickoutByUser()

@@ -56,9 +56,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region GetAllWinAwardRecords
 
         public event EventHandler<WebInvokeEventArgs<RouletteWinnerRecord[]>> GetAllWinAwardRecordsCompleted;
-        public void GetAllWinAwardRecords(int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex, object userState)
+        public void GetAllWinAwardRecords(string userName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex, object userState)
         {
-            this._invoker.InvokeUserState<RouletteWinnerRecord[]>(this._context, "GetAllWinAwardRecords", this.GetAllWinAwardRecordsCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+            this._invoker.InvokeUserState<RouletteWinnerRecord[]>(this._context, "GetAllWinAwardRecords", this.GetAllWinAwardRecordsCompleted, userState, GlobalData.Token, userName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
         }
 
         #endregion

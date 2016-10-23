@@ -8,6 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/goback.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/again.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/exp.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/goldcoin.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/iqiyi.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/letv.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/phonefees.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/start.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/starttext.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/stone.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/title.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/xunlei.png")]
 
 

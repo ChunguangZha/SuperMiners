@@ -66,6 +66,12 @@ namespace SuperMinersWPF.ViewModels
             return this._myBuyNotFinishedStoneOrders[0];
         }
 
+        public void AsyncCancelBuyStoneOrder(string orderNumber)
+        {
+            App.BusyToken.ShowBusyWindow("正在取消矿石订单...");
+            GlobalData.Client.ReleaseLockOrder(orderNumber, null);
+        }
+
         public void AsyncPayOrderByRMB(string orderNumber, decimal valueRMB)
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
@@ -102,7 +108,7 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetAllNotFinishedSellOrders(null);
         }
 
-        public void AsyncCancelSellOrder(string orderNumber)
+        public void AsyncCancelSellStoneOrder(string orderNumber)
         {
             App.BusyToken.ShowBusyWindow("正在取消订单...");
             GlobalData.Client.CancelSellStone(orderNumber, null);
@@ -144,6 +150,41 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.OnAppealOrderFailed += Client_OnAppealOrderFailed;
             GlobalData.Client.SearchUserBuyStoneOrdersCompleted += Client_SearchUserBuyStoneOrdersCompleted;
             GlobalData.Client.SearchUserSellStoneOrdersCompleted += Client_SearchUserSellStoneOrdersCompleted;
+            GlobalData.Client.ReleaseLockOrderCompleted += Client_ReleaseLockOrderCompleted;
+        }
+
+        void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("取消矿石订单失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result)
+                {
+                    MessageBox.Show("取消矿石订单成功。");
+                    this.MyBuyNotFinishedStoneOrders.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("取消矿石订单失败。");
+                }
+
+                AsyncGetAllNotFinishedSellOrders();
+
+                if (ReleaseLockOrderCompleted != null)
+                {
+                    ReleaseLockOrderCompleted(e.Result);
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询矿石出售订单回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_SearchUserSellStoneOrdersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SellStonesOrder[]> e)
@@ -283,6 +324,7 @@ namespace SuperMinersWPF.ViewModels
                     MyMessageBox.ShowInfo("订单取消失败，原因：" + OperResult.GetMsg(e.Result));
                 }
 
+                App.UserVMObject.AsyncGetPlayerInfo();
                 AsyncGetAllNotFinishedSellOrders();
             }
             catch (Exception exc)
@@ -461,15 +503,12 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
+                    //LogHelper.Instance.AddErrorLog("正在检查锁定的矿石订单" + lockedOrder.OrderNumber, null);
                     if (lockedOrder.ValidTimeSecondsTickDown() <= 0)
                     {
+                        //LogHelper.Instance.AddErrorLog("矿石订单" + lockedOrder.OrderNumber + "，锁定超时，正在解锁", null);
                         this._timer.Stop();
-                        GlobalData.Client.ReleaseLockOrder(lockedOrder.OrderNumber, null);
-                        if (StoneOrderLockTimeOut != null)
-                        {
-                            StoneOrderLockTimeOut();
-                        }
-                        this.MyBuyNotFinishedStoneOrders.Clear();
+                        this.AsyncCancelBuyStoneOrder(lockedOrder.OrderNumber);
                     }
                 }
             }
@@ -508,6 +547,7 @@ namespace SuperMinersWPF.ViewModels
                     }
                     this.MyBuyNotFinishedStoneOrders.Clear();
                     MyMessageBox.ShowInfo("购买矿石成功。");
+                    App.UserVMObject.AsyncGetPlayerInfo();
                 }
                 else
                 {
@@ -635,7 +675,8 @@ namespace SuperMinersWPF.ViewModels
 
         public event Action<LockSellStonesOrderUIModel> StoneOrderLockSucceed;
         public event Action StoneOrderPaySucceed;
-        public event Action StoneOrderLockTimeOut;
+        //public event Action StoneOrderLockTimeOut;
+        public event Action<bool> ReleaseLockOrderCompleted;
         public event Action<bool> SetStoneOrderExceptionFinished;
 
         public event Action BuyGoldCoinAlipayPaySucceed;

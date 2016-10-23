@@ -30,7 +30,7 @@ namespace SuperMinersWPF.Utility
                 }
                 else
                 {
-                    subKey = rootKey.OpenSubKey(RegistryPath);
+                    subKey = rootKey.OpenSubKey(RegistryPath, true);
                 }
 
                 if (savePassword)
@@ -54,10 +54,12 @@ namespace SuperMinersWPF.Utility
                 if (subKey != null)
                 {
                     subKey.Close();
+                    subKey.Dispose();
                 }
                 if (rootKey != null)
                 {
                     rootKey.Close();
+                    rootKey.Dispose();
                 }
             }
         }

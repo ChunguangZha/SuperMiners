@@ -160,7 +160,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAllPayWinAwardRecords Exception.", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToClient.GetAllPayWinAwardRecords Exception.", exc);
                     return null;
                 }
             }

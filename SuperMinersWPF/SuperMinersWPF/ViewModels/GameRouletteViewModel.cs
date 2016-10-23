@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using MetaData;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
@@ -28,12 +29,12 @@ namespace SuperMinersWPF.ViewModels
             set { _listActiveWinAwardInfos = value; }
         }
 
-        private ObservableCollection<RouletteWinnerRecordUIModel> _listWinAwardRecords = new ObservableCollection<RouletteWinnerRecordUIModel>();
+        private ObservableCollection<RouletteWinnerRecordUIModel> _listMyWinAwardRecords = new ObservableCollection<RouletteWinnerRecordUIModel>();
 
-        public ObservableCollection<RouletteWinnerRecordUIModel> ListWinAwardRecords
+        public ObservableCollection<RouletteWinnerRecordUIModel> ListMyWinAwardRecords
         {
-            get { return _listWinAwardRecords; }
-            set { _listWinAwardRecords = value; }
+            get { return _listMyWinAwardRecords; }
+            set { _listMyWinAwardRecords = value; }
         }
 
         public GameRouletteViewModel()
@@ -90,12 +91,27 @@ namespace SuperMinersWPF.ViewModels
                     return;
                 }
 
-                this._listWinAwardRecords.Clear();
-                if (e.Result != null)
+                string userState = e.UserState as string;
+                if (string.IsNullOrEmpty(userState))
                 {
-                    foreach (var item in e.Result)
+                    this.ListActiveWinAwardInfos.Clear();
+                    if (e.Result != null)
                     {
-                        this._listWinAwardRecords.Add(new RouletteWinnerRecordUIModel(item));
+                        foreach (var item in e.Result)
+                        {
+                            this.ListActiveWinAwardInfos.Add(item.ToString());
+                        }
+                    }
+                }
+                else
+                {
+                    this.ListMyWinAwardRecords.Clear();
+                    if (e.Result != null)
+                    {
+                        foreach (var item in e.Result)
+                        {
+                            this.ListMyWinAwardRecords.Add(new RouletteWinnerRecordUIModel(item));
+                        }
                     }
                 }
             }
@@ -142,6 +158,24 @@ namespace SuperMinersWPF.ViewModels
             {
                 App.BusyToken.ShowBusyWindow("正在加载数据...");
                 GlobalData.Client.GetAwardItems(null);
+            }
+        }
+
+        public void AsyncGetAllAwardRecord(int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            if (GlobalData.Client.IsEnable)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载数据...");
+                GlobalData.Client.GetAllWinAwardRecords("", RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex, "");
+            }
+        }
+
+        public void AsyncGetMyselfAwardRecord(int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            if (GlobalData.Client.IsEnable)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载数据...");
+                GlobalData.Client.GetAllWinAwardRecords(GlobalData.CurrentUser.UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex, GlobalData.CurrentUser.UserName);
             }
         }
 

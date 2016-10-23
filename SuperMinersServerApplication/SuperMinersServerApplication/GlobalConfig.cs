@@ -71,5 +71,6 @@ namespace SuperMinersServerApplication
 
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
 
+        public static string CurrentClientVersion = "";
     }
 }

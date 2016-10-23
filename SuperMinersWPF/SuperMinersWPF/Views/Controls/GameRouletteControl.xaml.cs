@@ -44,7 +44,16 @@ namespace SuperMinersWPF.Views.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            //App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            BindUI();
+            App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            App.GameRouletteVMObject.AsyncGetAllAwardRecord(-1, null, null, -1, -1, 10, 1);
+        }
+
+        private void BindUI()
+        {
+            Binding bind = new Binding();
+            bind.Source = App.GameRouletteVMObject.ListActiveWinAwardInfos;
+            this.listAwardRecords.SetBinding(ListView.ItemsSourceProperty, bind);
         }
 
         public void AddEventHandlers()
@@ -171,7 +180,7 @@ namespace SuperMinersWPF.Views.Controls
                     _syn.Post(p =>
                     {
                         App.GameRouletteVMObject.ListAwardItems[index].Background = new SolidColorBrush(Color.FromArgb(255, 180, 252, 247));
-                        App.GameRouletteVMObject.ListAwardItems[lastIndex].Background = new SolidColorBrush(Color.FromArgb(255, 255, 241, 167));
+                        App.GameRouletteVMObject.ListAwardItems[lastIndex].Background = new SolidColorBrush(Color.FromArgb(255, 255, 220, 21));
                     }, null);
                     if (i < _downSpeedStartIndex)
                     {

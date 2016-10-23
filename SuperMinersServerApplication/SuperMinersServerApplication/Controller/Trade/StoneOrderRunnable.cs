@@ -215,12 +215,15 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
+
             TimeSpan span = DateTime.Now - this._lockOrderObject.LockedTime;
             this._lockOrderObject.OrderLockedTimeSpan = (int)span.TotalSeconds;
+
             if (this._lockOrderObject.OrderLockedTimeSpan >= GlobalConfig.GameConfig.BuyOrderLockTimeMinutes * 60)
             {
-                this.ReleaseLock();
-                return true;
+                bool isOK = this.ReleaseLock();
+                LogHelper.Instance.AddInfoLog("矿石订单" + this._sellOrder.OrderNumber + " 锁定超间，解锁结果为：" + isOK);
+                return isOK;
             }
 
             return false;

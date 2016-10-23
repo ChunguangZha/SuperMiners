@@ -498,6 +498,18 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
+        public int CancelSellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                BasePlayer.FortuneInfo.FreezingStones -= order.SellStonesCount;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
         public int CreateWithdrawRMB(int getRMBCount, DateTime createTime)
         {
             if (getRMBCount < 0)
@@ -591,8 +603,8 @@ namespace SuperMinersServerApplication.Controller
                     }
                     else if (record.State == RMBWithdrawState.Rejected)
                     {
-                        this.BasePlayer.FortuneInfo.RMB += this.BasePlayer.FortuneInfo.FreezingRMB;
-                        this.BasePlayer.FortuneInfo.FreezingRMB = 0;
+                        this.BasePlayer.FortuneInfo.RMB += record.WidthdrawRMB;
+                        this.BasePlayer.FortuneInfo.FreezingRMB = valueRMB;
                     }
                     else
                     {
@@ -725,7 +737,7 @@ namespace SuperMinersServerApplication.Controller
 
                 this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
                 bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo);
-
+                
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
         }

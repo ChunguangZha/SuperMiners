@@ -99,9 +99,10 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         /// <param name="referrerUserName"></param>
         /// <param name="isLocked">0表示全部，1表示已锁定，2表示非锁定</param>
         /// <param name="isOnline">0表示全部，1表示在线，2表示离线</param>
-        public void SearchPlayers(string userName, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline)
+        public void SearchPlayers(string userName, int groupType, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline)
         {
             bool checkUserNameOK = false;
+            bool checkGroupType = false;
             bool checkUserAlipayOK = false;
             bool checkUserReferrerOK = false;
             bool checkInvitationCodeOK = false;
@@ -111,11 +112,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             ListFilteredPlayers.Clear();
             foreach (var item in this.ListAllPlayers)
             {
-                checkUserNameOK = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = false;
+                checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = false;
 
                 if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
                 {
                     checkUserNameOK = true;
+                }
+                if (groupType < 0 || (int)item.GroupType == groupType)
+                {
+                    checkGroupType = true;
                 }
                 if (string.IsNullOrEmpty(userAlipayAccount) || item.Alipay.Contains(userAlipayAccount))
                 {
@@ -172,7 +177,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     }
                 }
 
-                if (checkUserNameOK && checkUserAlipayOK && checkUserReferrerOK && checkInvitationCodeOK && checkLockedStateOK && checkOnlineStateOK)
+                if (checkUserNameOK && checkGroupType && checkUserAlipayOK && checkUserReferrerOK && checkInvitationCodeOK && checkLockedStateOK && checkOnlineStateOK)
                 {
                     ListFilteredPlayers.Add(item);
                 }

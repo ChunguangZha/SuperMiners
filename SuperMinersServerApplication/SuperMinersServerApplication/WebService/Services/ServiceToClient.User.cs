@@ -56,7 +56,7 @@ namespace SuperMinersServerApplication.WebService.Services
         //    }
         //}
 
-        public string Login(string userName, string password, string key, string mac)
+        public string Login(string userName, string password, string key, string mac, string clientVersion)
         {
 #if Delay
 
@@ -67,6 +67,10 @@ namespace SuperMinersServerApplication.WebService.Services
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
             {
                 return String.Empty;
+            }
+            if (!string.IsNullOrEmpty(GlobalConfig.CurrentClientVersion) && GlobalConfig.CurrentClientVersion != clientVersion)
+            {
+                return "VERSIONERROR";
             }
 
             string token = ClientManager.GetToken(userName);

@@ -44,8 +44,8 @@
                 <Hyperlink Name="hlinkForgetPassword" RequestNavigate="hlinkForgetPassword_RequestNavigate">忘记密码</Hyperlink>
         </TextBlock>
         <Button Grid.Row="4" Grid.Column="1" Name="btnLogin" Content="登录" Width="100" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnLogin_Click" IsDefault="True" Background="#FFF78F75" Foreground="White" FontSize="14"/>
-        <CheckBox Grid.Row="4" Grid.Column="0" Name="chkRememberPwd" Content="记住密码" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Checked="chkRememberPwd_Checked" Unchecked="chkRememberPwd_Unchecked"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+        <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Name="chkRememberPwd" Content="记住密码" Margin="20,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0">
                 <Hyperlink Name="hlinkHomePage" NavigateUri="http://ore.xlwinfo.com" RequestNavigate="hlinkHomePage_RequestNavigate">矿场主页</Hyperlink>
         </TextBlock>
     </Grid>

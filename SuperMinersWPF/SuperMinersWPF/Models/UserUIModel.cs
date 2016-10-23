@@ -32,6 +32,10 @@ namespace SuperMinersWPF.Models
             set
             {
                 this._parentObject = value;
+                if (this._parentObject.FortuneInfo.TempOutputStones != 0)
+                {
+                    this.TempOutputStones = this._parentObject.FortuneInfo.TempOutputStones;
+                }
 
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("NickName");
@@ -240,18 +244,20 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        private decimal _tempOutputStones;
+
         public decimal TempOutputStones
         {
-            get { return this._parentObject.FortuneInfo.TempOutputStones; }
+            get { return this._tempOutputStones; }
             set
             {
                 if (value > this.WorkableStonesReservers)
                 {
-                    this._parentObject.FortuneInfo.TempOutputStones = this.WorkableStonesReservers;
+                    this._tempOutputStones = this.WorkableStonesReservers;
                 }
                 else
                 {
-                    this._parentObject.FortuneInfo.TempOutputStones = value;
+                    this._tempOutputStones = value;
                 }
                 NotifyPropertyChange("TempOutputStones");
                 NotifyPropertyChange("TempOutputStonesString");

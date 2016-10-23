@@ -29,6 +29,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("NickName");
                 NotifyPropertyChange("GroupType");
+                NotifyPropertyChange("GroupTypeText");
                 NotifyPropertyChange("IsAgentReferred");
                 NotifyPropertyChange("AgentReferredLevel");
                 NotifyPropertyChange("AgentUserID");
@@ -95,6 +96,30 @@ namespace SuperMinersCustomServiceSystem.Model
         public PlayerGroupType GroupType
         {
             get { return this._parentObject.SimpleInfo.GroupType; }
+        }
+
+        public string GroupTypeText
+        {
+            get
+            {
+                string text = "";
+                switch (this.GroupType)
+                {
+                    case PlayerGroupType.NormalPlayer:
+                        text = "普通玩家";
+                        break;
+                    case PlayerGroupType.TestPlayer:
+                        text = "测试玩家";
+                        break;
+                    case PlayerGroupType.AgentPlayer:
+                        text = "代理玩家";
+                        break;
+                    default:
+                        break;
+                }
+
+                return text;
+            }
         }
 
         public bool IsAgentReferred

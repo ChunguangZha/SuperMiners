@@ -62,6 +62,8 @@
                 <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding StateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="处理人" Width="*" Binding="{Binding AdminUserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="处理时间" Width="*" Binding="{Binding PayTimeString, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="支付宝订单号" Width="*" Binding="{Binding AlipayOrderNumber, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="原因" Width="*" Binding="{Binding Message, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>

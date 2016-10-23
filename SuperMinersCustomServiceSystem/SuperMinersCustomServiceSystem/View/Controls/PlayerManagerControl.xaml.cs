@@ -68,7 +68,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.txtInvitationCode.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
+            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), cmbUserGroup.SelectedIndex - 1, this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.txtInvitationCode.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
         }
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)

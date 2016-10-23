@@ -1,16 +1,10 @@
-Error:  [2016/10/20 0:23:25] ---- Log: 玩家[Tony] 灵币提现异常，提现灵币为:200
-Exc.Message: Unknown column 'IsPayedSucceed' in 'where clause'Exc.Stack:    在 MySql.Data.MySqlClient.MySqlStream.ReadPacket()
-   在 MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int64& insertedId)
-   在 MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId, Boolean force)
-   在 MySql.Data.MySqlClient.MySqlDataReader.NextResult()
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
-   在 MySql.Data.MySqlClient.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior)
-   在 System.Data.Common.DbCommand.System.Data.IDbCommand.ExecuteReader(CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.FillInternal(DataSet dataset, DataTable[] datatables, Int32 startRecord, Int32 maxRecords, String srcTable, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecord(Boolean isPayed, String playerUserName, Int32 withdrawRMB, DateTime createTime) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 116
+Error:  [2016/10/23 21:17:20] ---- Log: ServiceToAdmin.GetAllPayWinAwardRecords Exception.
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 DataBaseProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(String UserName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\GameRouletteDBProvider.cs:行号 303
+   在 SuperMinersServerApplication.Controller.Game.RouletteAwardController.GetAllPayWinAwardRecords(String UserName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Game\RouletteAwardController.cs:行号 112
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetAllWinAwardRecords(String token, String userName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 159
+-----------------------------------------------------
+*********+++++++++++++***********
+��置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 116
    在 SuperMinersServerApplication.Controller.PlayerController.CreateWithdrawRMB(String userName, Int32 getRMBCount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 728
    在 SuperMinersServerApplication.WebService.Services.ServiceToClient.WithdrawRMB(String token, String userName, Int32 getRMBCount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Game.cs:行号 42
 -----------------------------------------------------

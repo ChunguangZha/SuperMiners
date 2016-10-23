@@ -67,7 +67,13 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            return runnable.RouletteWinVirtualAwardPayUpdatePlayer(userName, awardItem);
+            bool isOK = runnable.RouletteWinVirtualAwardPayUpdatePlayer(userName, awardItem);
+            if (isOK)
+            {
+                NotifyPlayerClient(runnable.BasePlayer);
+            }
+
+            return isOK;
         }
         
         /// <summary>
@@ -452,10 +458,7 @@ namespace SuperMinersServerApplication.Controller
             bool isOK = playerrun.SetFortuneInfo(fortuneinfo);
             if (isOK)
             {
-                if (this.PlayerInfoChanged != null)
-                {
-                    this.PlayerInfoChanged(playerrun.BasePlayer);
-                }
+                NotifyPlayerClient(playerrun.BasePlayer);
             }
 
             return isOK;
@@ -495,6 +498,23 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return false;
+        }
+
+        public int RouletteSpendStone(string userName, int stone)
+        {
+            var playerRun = this.GetRunnable(userName);
+            if (playerRun == null)
+            {
+                return OperResult.RESULTCODE_USER_OFFLINE;
+            }
+
+            int value = playerRun.RouletteSpendStone(stone);
+            if (value == OperResult.RESULTCODE_TRUE)
+            {
+                NotifyPlayerClient(playerRun.BasePlayer);
+            }
+
+            return value;
         }
 
         public int SetPlayerAsAgent(int userID, string userName, string agentReferURL)
@@ -594,10 +614,7 @@ namespace SuperMinersServerApplication.Controller
             int value = playerrun.BuyMineByAlipay(moneyYuan, minesCount, myTrans);
             if (value == OperResult.RESULTCODE_TRUE)
             {
-                if (PlayerInfoChanged != null)
-                {
-                    PlayerInfoChanged(playerrun.BasePlayer);
-                }
+                NotifyPlayerClient(playerrun.BasePlayer);
             }
 
             return value;
@@ -628,10 +645,7 @@ namespace SuperMinersServerApplication.Controller
             int value = playerrun.RechargeGoldCoinByAlipay(moneyYuan, rmbValue, goldcoinValue, myTrans);
             if (value == OperResult.RESULTCODE_TRUE)
             {
-                if (PlayerInfoChanged != null)
-                {
-                    PlayerInfoChanged(playerrun.BasePlayer);
-                }
+                NotifyPlayerClient(playerrun.BasePlayer);
             }
 
             return value;
@@ -691,6 +705,17 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.SellStones(order, trans);
         }
 
+        public int CancelSellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(order.SellerUserName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_USER_OFFLINE;
+            }
+
+            return playerrun.CancelSellStones(order, trans);
+        }
+
         public void RollbackUserFromDB(string userName)
         {
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
@@ -748,6 +773,12 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
+            var finishedRecord = DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordByID(record.id);
+            if (finishedRecord != null && finishedRecord.State != RMBWithdrawState.Waiting)
+            {
+                return OperResult.RESULTCODE_WITHDRAW_ORDER_BEHANDLED;
+            }
+
             int result = playerrun.PayWithdrawRMB(record);
             if (result == OperResult.RESULTCODE_TRUE)
             {
@@ -767,14 +798,19 @@ namespace SuperMinersServerApplication.Controller
                 string tokenBuyer = ClientManager.GetToken(record.PlayerUserName);
                 if (!string.IsNullOrEmpty(tokenBuyer))
                 {
-                    if (this.PlayerInfoChanged != null)
-                    {
-                        this.PlayerInfoChanged(playerrun.BasePlayer);
-                    }
+                    NotifyPlayerClient(playerrun.BasePlayer);
                 }
             }
 
             return result;
+        }
+
+        public void NotifyPlayerClient(PlayerInfo player)
+        {
+            if (this.PlayerInfoChanged != null)
+            {
+                this.PlayerInfoChanged(player);
+            }
         }
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;

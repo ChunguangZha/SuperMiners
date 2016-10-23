@@ -52,9 +52,69 @@ namespace SuperMinersServerApplication
             //LoadActionLogs();
             StartService();
 
+            string clientVersion = LoadValidClientVersion();
+            if (!string.IsNullOrEmpty(clientVersion))
+            {
+                this.txtClientVersion.Text = clientVersion;
+                GlobalConfig.CurrentClientVersion = clientVersion;
+            }
+
             PlayerActionController.Instance.LoadActionLogs();
             AdminController.Instance.GetAllAdmin();
             LogHelper.Instance.AddInfoLog("服务器启动成功");
+        }
+
+        private bool SaveValidClientVersion(string clientVersion)
+        {
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                XmlNode root = doc.CreateElement("root");
+                XmlElement node = doc.CreateElement("clientVersion");
+                node.InnerText = clientVersion;
+                root.AppendChild(node);
+                doc.AppendChild(root);
+                doc.Save(GlobalData.ClientVersionFile);
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private string LoadValidClientVersion()
+        {
+            try
+            {
+                if (File.Exists(GlobalData.ClientVersionFile))
+                {
+                    using (FileStream stream = File.Open(GlobalData.ClientVersionFile, FileMode.Open))
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(stream);
+                        XmlNode root = doc.SelectSingleNode("root");
+                        if (root == null)
+                        {
+                            return null;
+                        }
+                        XmlNode node = root.SelectSingleNode("clientVersion");
+                        if (node == null)
+                        {
+                            return null;
+                        }
+                        string version = node.InnerText;
+                        return version;
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         private void StartService()
@@ -320,6 +380,27 @@ namespace SuperMinersServerApplication
                 {
                     AdminController.Instance.GetAllAdmin();
                 }
+            }
+        }
+
+        private void btnSaveClientVersion_Click(object sender, RoutedEventArgs e)
+        {
+            string clientVersion = this.txtClientVersion.Text.Trim();
+            if (clientVersion == "")
+            {
+                MessageBox.Show("请输入客户端版本号");
+                return;
+            }
+
+            bool isOK = this.SaveValidClientVersion(clientVersion);
+            if (isOK)
+            {
+                GlobalConfig.CurrentClientVersion = clientVersion;
+                MessageBox.Show("客户端版本号保存成功");
+            }
+            else
+            {
+                MessageBox.Show("客户端版本号保存失败");
             }
         }
 

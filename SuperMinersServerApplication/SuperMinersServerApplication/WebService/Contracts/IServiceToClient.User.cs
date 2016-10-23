@@ -18,7 +18,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        string Login(string userName, string password, string key, string mac);
+        string Login(string userName, string password, string key, string mac, string clientVersion);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/Logout",

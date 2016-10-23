@@ -293,7 +293,8 @@ namespace DataBaseProvider
             try
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
-                string sqlTextA = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  ";
+                mycmd = myconn.CreateCommand();
+                string sqlTextA = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(UserName))

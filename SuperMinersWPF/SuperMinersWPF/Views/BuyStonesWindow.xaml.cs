@@ -46,9 +46,9 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            GlobalData.Client.ReleaseLockOrderCompleted += Client_ReleaseLockOrderCompleted;
+            //GlobalData.Client.ReleaseLockOrderCompleted += Client_ReleaseLockOrderCompleted;
             //GlobalData.Client.PayOrderByAlipayCompleted += Client_PayOrderByAlipayCompleted;
-            App.StoneOrderVMObject.StoneOrderLockTimeOut += StoneOrderVMObject_OrderLockTimeOut;
+            App.StoneOrderVMObject.ReleaseLockOrderCompleted += StoneOrderVMObject_ReleaseLockOrderCompleted;
             App.StoneOrderVMObject.StoneOrderPaySucceed += StoneOrderVMObject_PayOrderSucceed;
             App.StoneOrderVMObject.SetStoneOrderExceptionFinished += StoneOrderVMObject_SetStoneOrderExceptionFinished;
             
@@ -70,8 +70,8 @@ namespace SuperMinersWPF.Views
         
         private void Window_Closed(object sender, EventArgs e)
         {
-            GlobalData.Client.ReleaseLockOrderCompleted -= Client_ReleaseLockOrderCompleted;
-            App.StoneOrderVMObject.StoneOrderLockTimeOut -= StoneOrderVMObject_OrderLockTimeOut;
+            //GlobalData.Client.ReleaseLockOrderCompleted -= Client_ReleaseLockOrderCompleted;
+            App.StoneOrderVMObject.ReleaseLockOrderCompleted -= StoneOrderVMObject_ReleaseLockOrderCompleted;
             App.StoneOrderVMObject.StoneOrderPaySucceed -= StoneOrderVMObject_PayOrderSucceed;
             App.StoneOrderVMObject.SetStoneOrderExceptionFinished -= StoneOrderVMObject_SetStoneOrderExceptionFinished;
         }
@@ -107,14 +107,13 @@ namespace SuperMinersWPF.Views
             }
         }
 
-        void StoneOrderVMObject_OrderLockTimeOut()
+        void StoneOrderVMObject_ReleaseLockOrderCompleted(bool isOK)
         {
             try
             {
                 _syn.Post(o =>
                 {
                     this.btnOK.IsEnabled = false;
-                    MyMessageBox.ShowInfo("订单锁定时间超时，已被取消，如已经付款，请与客服联系。");
                     this.Close();
                 }, null);
             }
@@ -124,35 +123,35 @@ namespace SuperMinersWPF.Views
             }
         }
 
-        void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
-        {
-            try
-            {
-                if (e.Cancelled)
-                {
-                    return;
-                }
+        //void Client_ReleaseLockOrderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        //{
+        //    try
+        //    {
+        //        if (e.Cancelled)
+        //        {
+        //            return;
+        //        }
 
-                App.BusyToken.CloseBusyWindow();
+        //        App.BusyToken.CloseBusyWindow();
 
-                if (e.Error != null)
-                {
-                    _syn.Post(o =>
-                    {
-                        MyMessageBox.ShowInfo("连接服务器失败。");
-                    }, null);
-                    return;
-                }
+        //        if (e.Error != null)
+        //        {
+        //            _syn.Post(o =>
+        //            {
+        //                MyMessageBox.ShowInfo("连接服务器失败。");
+        //            }, null);
+        //            return;
+        //        }
 
-                App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
+        //        App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
 
-                this.Close();
-            }
-            catch (Exception exc)
-            {
-                MyMessageBox.ShowInfo("购买矿石，取消购买矿石订单，回调处理异常。" + exc.Message);
-            }
-        }
+        //        this.Close();
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        MyMessageBox.ShowInfo("购买矿石，取消购买矿石订单，回调处理异常。" + exc.Message);
+        //    }
+        //}
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
@@ -198,8 +197,7 @@ namespace SuperMinersWPF.Views
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            App.BusyToken.ShowBusyWindow("正在取消订单...");
-            GlobalData.Client.ReleaseLockOrder(this._lockedOrder.OrderNumber, null);
+            App.StoneOrderVMObject.AsyncCancelBuyStoneOrder(this._lockedOrder.OrderNumber);
         }
 
         private void chkPayType_Checked(object sender, RoutedEventArgs e)

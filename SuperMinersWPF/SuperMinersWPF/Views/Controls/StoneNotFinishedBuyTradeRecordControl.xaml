@@ -62,6 +62,7 @@
                                             <TextBlock Text="{Binding ValidTimeSecondsString}" VerticalAlignment="Center" Visibility="{Binding ValidTimeVisibility}"/>
                                             <TextBlock Text="内付款" VerticalAlignment="Center" Visibility="{Binding ValidTimeVisibility}"/>
                                             <Button x:Name="btnPay" Content="去付款" Margin="20,0" Width="70" VerticalAlignment="Center" Visibility="{Binding ValidTimeVisibility}" Click="btnPay_Click"/>
+                                            <Button Name="btnCancelPay" Content="取消订单" Margin="20,0" Width="70" VerticalAlignment="Center" Visibility="{Binding ValidTimeVisibility}" Click="btnCancelPay_Click"/>
                                             <TextBlock Text="如果已经付款，请" VerticalAlignment="Center" Margin="5" Visibility="{Binding ValidTimeVisibility}"/>
                                             <Button x:Name="btnAppeal" Content="{Binding HandleButtonContext}" IsEnabled="{Binding HandleButtonNotEnable}" Width="70" Margin="20,0" VerticalAlignment="Center" Click="btnAppeal_Click"/>
                                         </StackPanel>
@@ -105,8 +106,9 @@
                                         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding SellTime, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Row="6" Grid.Column="0" Text="订单状态：" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                                         <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding OrderStateString, Mode=OneWay}" IsReadOnly="True" Margin="10,5" VerticalContentAlignment="Center" />
-
-                                    </Grid>
+                                        
+                                        <Button Grid.Row="7" Name="btnCancelSellStone" Content="取消出售矿石" Width="70" Margin="20,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnCancelSellStone_Click"/>
+                                    </Grid> 
                                 </Border>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

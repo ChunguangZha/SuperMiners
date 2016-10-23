@@ -16,6 +16,14 @@ namespace SuperMinersWPF.Models
             this._parentObject = parent;
         }
 
+        public PlayerActionLog ParentObject
+        {
+            get
+            {
+                return _parentObject;
+            }
+        }
+
         public DateTime Time
         {
             get
