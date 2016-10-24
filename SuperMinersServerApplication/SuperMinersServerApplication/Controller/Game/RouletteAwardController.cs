@@ -109,7 +109,7 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 return null;
             }
-            var records = DBProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+            var records = DBProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex, this._listRouletteAwardItems[this._noneAwardIndex]);
             foreach (var record in records)
             {
                 record.AwardItem = this._listRouletteAwardItems.FirstOrDefault(item => item.ID == record.RouletteAwardItemID);
@@ -184,6 +184,8 @@ namespace SuperMinersServerApplication.Controller.Game
 
                     //保存到数据库
                     DBProvider.GameRouletteDBProvider.SaveRouletteAwardItems(items);
+
+                    Init();
                 }
                 return true;
             }

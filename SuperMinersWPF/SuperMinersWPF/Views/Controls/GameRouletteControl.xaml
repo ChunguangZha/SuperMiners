@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="700">
+             d:DesignHeight="700" d:DesignWidth="800">
     <UserControl.Resources>
         <Style x:Key="RouletteItemTextStyle" TargetType="TextBlock">
             <Setter Property="VerticalAlignment" Value="Top"/>
@@ -22,16 +22,22 @@
     </UserControl.Resources>
     <Grid>
         <Grid Name="panelRoulette" Background="#d71837" Visibility="Visible">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="271*"/>
-                <ColumnDefinition Width="429*"/>
+                <ColumnDefinition Width="220"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="490"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="490"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Background="#9d0012" Grid.Column="0" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -39,28 +45,18 @@
                     <Image Margin="30" Source="/SuperMinersWPF;component/Resources/title.png" />
                 </Grid>
                 <TextBlock Grid.Row="1" Text="每次花费100块矿石，最多可中价值100元人民币的大奖！！快来参加吧！！！" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold">
-                    
+
                 </TextBlock>
-            </Grid>
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Grid Background="#7d020c">
+                <Grid Grid.Row="2" Background="#7d020c">
                     <TextBlock Text="中奖榜" Foreground="#ffdc15" FontSize="18" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Column="1" Background="#7d020c">
+                <Grid Grid.Row="3" Background="#7d020c">
                     <Button Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyWinAwardRecord_Click"/>
                 </Grid>
-                <ListView Grid.Row="1" Grid.ColumnSpan="2" Name="listAwardRecords" Margin="5" HorizontalContentAlignment="Stretch" Background="#9d0012" Foreground="White">
+                <ListView Grid.Row="4" Grid.ColumnSpan="2" Name="listAwardRecords" Margin="5" HorizontalContentAlignment="Stretch" Background="Transparent" Foreground="White">
                 </ListView>
             </Grid>
-            <Grid Grid.Column="1" Grid.RowSpan="2" Margin="10" Background="#8e0710">
+            <Grid Grid.Row="1" Grid.Column="2" Margin="30" Background="#8e0710">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
@@ -176,8 +172,8 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Image Source="/SuperMinersWPF;component/Resources/start.png"/>
-                            <Image Grid.Row="1" Source="/SuperMinersWPF;component/Resources/starttext.png"/>
+                            <Image Margin="10" Source="/SuperMinersWPF;component/Resources/start.png"/>
+                            <Image Grid.Row="1" Margin="20" Source="/SuperMinersWPF;component/Resources/starttext.png"/>
                         </Grid>
                     </Button.Content>
                 </Button>

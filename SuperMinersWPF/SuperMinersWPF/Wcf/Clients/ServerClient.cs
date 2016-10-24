@@ -81,11 +81,12 @@ namespace SuperMinersWPF.Wcf.Clients
         public event Action OnSendGameConfig;
         public event Action<string> OnSendNewNotice;
 
-        private RestInvoker<IServiceToClient> _invoker = new RestInvoker<IServiceToClient>();
+        private RestInvoker<IServiceToClient> _invoker = null;
         private SynchronizationContext _context;
 
         public ServerClient()
         {
+            _invoker = new RestInvoker<IServiceToClient>(); 
             this._invoker.SetCallbackReceiver(this);
             this._invoker.Error += new EventHandler(_invoker_Error);
         }

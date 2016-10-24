@@ -28,6 +28,8 @@ namespace SuperMinersWPF.Views.Controls
 
         Thread _thrRoulette = null;
 
+        private Color _selectItemColor = Color.FromArgb(255, 180, 252, 247);
+        private Color _normalItemColor = Color.FromArgb(255, 255, 220, 21);
         private RouletteWinAwardResult _winedAwardResult = null;
         int _startIndex;
         int _downSpeedStartIndex = 3 * 12;
@@ -179,8 +181,8 @@ namespace SuperMinersWPF.Views.Controls
                     int lastIndex = (i - 1) % 12;
                     _syn.Post(p =>
                     {
-                        App.GameRouletteVMObject.ListAwardItems[index].Background = new SolidColorBrush(Color.FromArgb(255, 180, 252, 247));
-                        App.GameRouletteVMObject.ListAwardItems[lastIndex].Background = new SolidColorBrush(Color.FromArgb(255, 255, 220, 21));
+                        App.GameRouletteVMObject.ListAwardItems[index].Background = new SolidColorBrush(_selectItemColor);
+                        App.GameRouletteVMObject.ListAwardItems[lastIndex].Background = new SolidColorBrush(_normalItemColor);
                     }, null);
                     if (i < _downSpeedStartIndex)
                     {
@@ -206,12 +208,22 @@ namespace SuperMinersWPF.Views.Controls
                 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-            if (GlobalData.CurrentUser.StockOfStones < 100)
+            if (GlobalData.CurrentUser.SellableStones < 100)
             {
                 MyMessageBox.ShowInfo("您的矿石不足100，无法抽奖。");
                 return;
             }
+
+            ResetItemBackground();
             GlobalData.Client.StartRoulette(null);
+        }
+
+        private void ResetItemBackground()
+        {
+            for (int i = 0; i < App.GameRouletteVMObject.ListAwardItems.Count; i++)
+            {
+                App.GameRouletteVMObject.ListAwardItems[i].Background = new SolidColorBrush(_normalItemColor);
+            }
         }
 
         private void btnViewMyWinAwardRecord_Click(object sender, RoutedEventArgs e)

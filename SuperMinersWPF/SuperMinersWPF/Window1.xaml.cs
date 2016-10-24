@@ -35,6 +35,7 @@ namespace SuperMinersWPF
             this.Closing += Window1_Closing;
 
             this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+            //this.Title = "内测版";
 
             this._syn = System.Threading.SynchronizationContext.Current;
             GlobalData.Client.SetContext(this._syn);

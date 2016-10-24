@@ -150,11 +150,11 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    string currentUserName = ClientManager.GetClientUserName(token);
-                    if (currentUserName != userName)
-                    {
-                        return null;
-                    }
+                    //string currentUserName = ClientManager.GetClientUserName(token);
+                    //if (currentUserName != userName)
+                    //{
+                    //    return null;
+                    //}
 
                     return RouletteAwardController.Instance.GetAllPayWinAwardRecords(userName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
                 }

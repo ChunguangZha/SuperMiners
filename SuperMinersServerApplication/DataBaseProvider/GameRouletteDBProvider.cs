@@ -285,7 +285,7 @@ namespace DataBaseProvider
         /// <param name="pageItemCount"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex, RouletteAwardItem noneAwardItem)
         {
             RouletteWinnerRecord[] records = null;
             MySqlConnection myconn = null;
@@ -297,12 +297,21 @@ namespace DataBaseProvider
                 string sqlTextA = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  ";
 
                 StringBuilder builder = new StringBuilder();
+
+                builder.Append(" r.AwardItemID != @AwardItemID ");
+                mycmd.Parameters.AddWithValue("@AwardItemID", noneAwardItem.ID);
+
                 if (!string.IsNullOrEmpty(UserName))
                 {
+                    if (builder.Length > 0)
+                    {
+                        builder.Append(" and ");
+                    }
                     builder.Append(" s.UserName = @UserName ");
                     string encryptUserName = DESEncrypt.EncryptDES(UserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
+
                 if (RouletteAwardItemID >= 0)
                 {
                     if (builder.Length > 0)
