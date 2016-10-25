@@ -155,6 +155,8 @@ namespace SuperMinersWPF.Views.Controls
                     RouletteWinAwardAlertWindow win = new RouletteWinAwardAlertWindow(e.Result);
                     win.ShowDialog();
 
+                    this.btnStart.IsEnabled = true;
+                    ResetItemBackground();
                 }, null);
             }
             catch (Exception exc)
@@ -214,7 +216,7 @@ namespace SuperMinersWPF.Views.Controls
                 return;
             }
 
-            ResetItemBackground();
+            this.btnStart.IsEnabled = false;
             GlobalData.Client.StartRoulette(null);
         }
 
