@@ -28,6 +28,30 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             set { _listGoldCoinRechargeRecords = value; }
         }
 
+        private decimal _sumListGoldCoinRechargeRecords_SpendRMB;
+
+        public decimal SumListGoldCoinRechargeRecords_SpendRMB
+        {
+            get { return _sumListGoldCoinRechargeRecords_SpendRMB; }
+            set
+            {
+                _sumListGoldCoinRechargeRecords_SpendRMB = value;
+                NotifyPropertyChanged("SumListGoldCoinRechargeRecords_SpendRMB");
+            }
+        }
+
+        private decimal _sumListGoldCoinRechargeRecords_GotGoldCoin;
+
+        public decimal SumListGoldCoinRechargeRecords_GotGoldCoin
+        {
+            get { return _sumListGoldCoinRechargeRecords_GotGoldCoin; }
+            set
+            {
+                _sumListGoldCoinRechargeRecords_GotGoldCoin = value;
+                NotifyPropertyChanged("SumListGoldCoinRechargeRecords_GotGoldCoin");
+            }
+        }
+
         public GoldCoinTradeViewModel()
         {
             GlobalData.Client.GetFinishedGoldCoinRechargeRecordListCompleted += Client_GetFinishedGoldCoinRechargeRecordListCompleted;
@@ -44,13 +68,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListGoldCoinRechargeRecords.Clear();
+                decimal sumRMB = 0;
+                decimal sumGoldCoin = 0;
+
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
+                        sumRMB += item.SpendRMB;
+                        sumGoldCoin += item.GainGoldCoin;
                         this.ListGoldCoinRechargeRecords.Add(new GoldCoinRechargeRecordUIModel(item));
                     }
                 }
+
+                this.SumListGoldCoinRechargeRecords_GotGoldCoin = sumGoldCoin;
+                this.SumListGoldCoinRechargeRecords_SpendRMB = sumRMB;
             }
             catch (Exception exc)
             {

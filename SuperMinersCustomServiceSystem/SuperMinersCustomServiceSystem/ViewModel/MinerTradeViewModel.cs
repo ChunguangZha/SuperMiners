@@ -28,6 +28,30 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             set { _listMinerBuyRecords = value; }
         }
 
+        private decimal _sumListMinerBuyRecords_SpendGoldCoin;
+
+        public decimal SumListMinerBuyRecords_SpendGoldCoin
+        {
+            get { return _sumListMinerBuyRecords_SpendGoldCoin; }
+            set
+            {
+                _sumListMinerBuyRecords_SpendGoldCoin = value;
+                NotifyPropertyChanged("SumListMinerBuyRecords_SpendGoldCoin");
+            }
+        }
+
+        private decimal _sumListMinerBuyRecords_GotMiner;
+
+        public decimal SumListMinerBuyRecords_GotMiner
+        {
+            get { return _sumListMinerBuyRecords_GotMiner; }
+            set
+            {
+                _sumListMinerBuyRecords_GotMiner = value;
+                NotifyPropertyChanged("SumListMinerBuyRecords_GotMiner");
+            }
+        }
+
 
         public MinerTradeViewModel()
         {
@@ -45,13 +69,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListMinerBuyRecords.Clear();
+                decimal sumMiner = 0;
+                decimal sumGoldCoin = 0;
+
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
+                        sumMiner += item.GainMinersCount;
+                        sumGoldCoin += item.SpendGoldCoin;
                         this.ListMinerBuyRecords.Add(new MinersBuyRecordUIModel(item));
                     }
                 }
+
+                this.SumListMinerBuyRecords_GotMiner = sumMiner;
+                this.SumListMinerBuyRecords_SpendGoldCoin = sumGoldCoin;
             }
             catch (Exception exc)
             {

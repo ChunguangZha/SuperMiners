@@ -13,6 +13,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="矿工交易历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -41,5 +42,11 @@
                 <DataGridTextColumn Width="*"  Header="购买时间" Binding="{Binding Time}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="20,5">
+            <TextBlock Text="当前页面总计购买矿工" Margin="10"/>
+            <TextBox Name="txtSumMiner" Width="200" IsReadOnly="True" Margin="10"/>
+            <TextBlock Text="总计花费金币" Margin="10"/>
+            <TextBox Name="txtSumGoldCoin" Width="200" IsReadOnly="True" Margin="10"/>
+        </StackPanel>
     </Grid>
 </UserControl>

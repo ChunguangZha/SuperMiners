@@ -27,12 +27,97 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return _listSellStoneOrderRecords; }
         }
 
+        private decimal _sumListSellStoneOrderRecords_Stone;
+
+        public decimal SumListSellStoneOrderRecords_Stone
+        {
+            get { return _sumListSellStoneOrderRecords_Stone; }
+            set
+            {
+                _sumListSellStoneOrderRecords_Stone = value;
+                NotifyPropertyChanged("SumListSellStoneOrderRecords_Stone");
+            }
+        }
+
+        private decimal _sumListSellStoneOrderRecords_RMB;
+
+        public decimal SumListSellStoneOrderRecords_RMB
+        {
+            get { return _sumListSellStoneOrderRecords_RMB; }
+            set
+            {
+                _sumListSellStoneOrderRecords_RMB = value;
+                NotifyPropertyChanged("SumListSellStoneOrderRecords_RMB");
+            }
+        }
+
+        private decimal _sumListSellStoneOrderRecords_Fee;
+
+        public decimal SumListSellStoneOrderRecords_Fee
+        {
+            get { return _sumListSellStoneOrderRecords_Fee; }
+            set
+            {
+                _sumListSellStoneOrderRecords_Fee = value;
+                NotifyPropertyChanged("SumListSellStoneOrderRecords_Fee");
+            }
+        }
+
         private ObservableCollection<BuyStonesOrderUIModel> _listBuyStoneOrderRecords = new ObservableCollection<BuyStonesOrderUIModel>();
 
         public ObservableCollection<BuyStonesOrderUIModel> ListBuyStoneOrderRecords
         {
             get { return _listBuyStoneOrderRecords; }
         }
+
+        private decimal _sumListBuyStoneOrderRecords_Stone;
+
+        public decimal SumListBuyStoneOrderRecords_Stone
+        {
+            get { return _sumListBuyStoneOrderRecords_Stone; }
+            set
+            {
+                _sumListBuyStoneOrderRecords_Stone = value;
+                NotifyPropertyChanged("SumListBuyStoneOrderRecords_Stone");
+            }
+        }
+
+        private decimal _sumListBuyStoneOrderRecords_RMB;
+
+        public decimal SumListBuyStoneOrderRecords_RMB
+        {
+            get { return _sumListBuyStoneOrderRecords_RMB; }
+            set
+            {
+                _sumListBuyStoneOrderRecords_RMB = value;
+                NotifyPropertyChanged("SumListBuyStoneOrderRecords_RMB");
+            }
+        }
+
+        private decimal _sumListBuyStoneOrderRecords_Fee;
+
+        public decimal SumListBuyStoneOrderRecords_Fee
+        {
+            get { return _sumListBuyStoneOrderRecords_Fee; }
+            set
+            {
+                _sumListBuyStoneOrderRecords_Fee = value;
+                NotifyPropertyChanged("SumListBuyStoneOrderRecords_Fee");
+            }
+        }
+
+        private decimal _sumListBuyStoneOrderRecords_AwardGoldCoin;
+
+        public decimal SumListBuyStoneOrderRecords_AwardGoldCoin
+        {
+            get { return _sumListBuyStoneOrderRecords_AwardGoldCoin; }
+            set
+            {
+                _sumListBuyStoneOrderRecords_AwardGoldCoin = value;
+                NotifyPropertyChanged("SumListBuyStoneOrderRecords_AwardGoldCoin");
+            }
+        }
+
 
         private ObservableCollection<LockSellStonesOrderUIModel> _listLockedStoneOrderRecords = new ObservableCollection<LockSellStonesOrderUIModel>();
 
@@ -60,6 +145,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListLockedStoneOrderRecords.Clear();
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
@@ -85,13 +171,26 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListSellStoneOrderRecords.Clear();
+                decimal sumStone = 0;
+                decimal sumRMB = 0;
+                decimal sumFee = 0;
+
+
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
+                        sumStone += item.SellStonesCount;
+                        sumRMB += item.ValueRMB;
+                        sumFee += item.Expense;
                         ListSellStoneOrderRecords.Add(new SellStonesOrderUIModel(item));
                     }
                 }
+
+                this.SumListSellStoneOrderRecords_Fee = sumFee;
+                this.SumListSellStoneOrderRecords_RMB = sumRMB;
+                this.SumListSellStoneOrderRecords_Stone = sumStone;
             }
             catch (Exception exc)
             {
@@ -110,13 +209,28 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                this.ListBuyStoneOrderRecords.Clear();
+                decimal sumStone = 0;
+                decimal sumRMB = 0;
+                decimal sumFee = 0;
+                decimal sumGoldCoin = 0;
+
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
+                        sumStone += item.StonesOrder.SellStonesCount;
+                        sumRMB += item.StonesOrder.ValueRMB;
+                        sumFee += item.StonesOrder.Expense;
+                        sumGoldCoin += item.AwardGoldCoin;
                         ListBuyStoneOrderRecords.Add(new BuyStonesOrderUIModel(item));
                     }
                 }
+
+                this.SumListBuyStoneOrderRecords_AwardGoldCoin = sumGoldCoin;
+                this.SumListBuyStoneOrderRecords_Fee = sumFee;
+                this.SumListBuyStoneOrderRecords_RMB = sumRMB;
+                this.SumListBuyStoneOrderRecords_Stone = sumStone;
             }
             catch (Exception exc)
             {

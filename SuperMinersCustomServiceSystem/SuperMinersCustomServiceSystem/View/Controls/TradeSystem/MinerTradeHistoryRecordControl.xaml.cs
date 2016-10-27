@@ -24,7 +24,30 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public MinerTradeHistoryRecordControl()
         {
             InitializeComponent();
+            BindUI();
+        }
+
+        private void BindUI()
+        {
+            if (this.txtSumGoldCoin == null)
+            {
+                return;
+            }
+
             this.datagrid.ItemsSource = App.MinerTradeVMObject.ListMinerBuyRecords;
+            Binding bind = new Binding("SumListMinerBuyRecords_SpendGoldCoin")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumGoldCoin.SetBinding(TextBox.TextProperty, bind);
+
+            bind = new Binding("SumListMinerBuyRecords_GotMiner")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumMiner.SetBinding(TextBox.TextProperty, bind);
+
+            this.DataContext = App.MinerTradeVMObject;
         }
 
         public void SetBuyerUserName(string userName)

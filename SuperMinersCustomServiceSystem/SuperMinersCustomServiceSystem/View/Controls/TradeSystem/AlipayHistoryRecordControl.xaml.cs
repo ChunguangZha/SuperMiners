@@ -24,7 +24,29 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public AlipayHistoryRecordControl()
         {
             InitializeComponent();
+            BindUI();
+        }
+
+        private void BindUI()
+        {
+            if (this.txtSumAlipayYuan == null)
+            {
+                return;
+            }
+
             this.datagrid.ItemsSource = App.AlipayRechargeVMObject.ListAllAlipayRecords;
+            Binding bind = new Binding("SumListAllAlipayRecords_PayYuan")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumAlipayYuan.SetBinding(TextBox.TextProperty, bind); 
+            
+            bind = new Binding("SumListAllAlipayRecords_RMB")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumRMB.SetBinding(TextBox.TextProperty, bind);
+            this.DataContext = App.AlipayRechargeVMObject;
         }
 
         public void SetBuyerUserName(string userName)

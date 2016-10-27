@@ -24,7 +24,34 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public StoneSellTradeHistoryRecordControl()
         {
             InitializeComponent();
+            BindUI();
+        }
+
+        private void BindUI()
+        {
+            if (this.txtSumFee == null)
+            {
+                return;
+            }
+
             this.dgRecords.ItemsSource = App.StoneTradeVMObject.ListSellStoneOrderRecords;
+            Binding bind = new Binding("SumListSellStoneOrderRecords_Fee")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumFee.SetBinding(TextBox.TextProperty, bind);
+            bind = new Binding("SumListSellStoneOrderRecords_RMB")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumRMB.SetBinding(TextBox.TextProperty, bind);
+            bind = new Binding("SumListSellStoneOrderRecords_Stone")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.txtSumStone.SetBinding(TextBox.TextProperty, bind);
+
+            this.DataContext = App.StoneTradeVMObject;
         }
 
         public void SetSellerUserName(string sellerUserName)

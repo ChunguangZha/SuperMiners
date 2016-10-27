@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="支付宝付款历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
         <StackPanel Grid.Row="1" Orientation="Horizontal">
@@ -54,5 +55,11 @@
                 <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding pay_time}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="20,5">
+            <TextBlock Text="当前页面总计支付宝付款金额（人民币元）" Margin="10"/>
+            <TextBox Name="txtSumAlipayYuan" Width="200" Margin="10" IsReadOnly="True"/>
+            <TextBlock Text="价值灵币" Margin="10"/>
+            <TextBox Name="txtSumRMB" Width="200" Margin="10" IsReadOnly="True"/>
+        </StackPanel>
     </Grid>
 </UserControl>

@@ -39,6 +39,32 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return _listAllAlipayRecords; }
         }
 
+        private decimal _sumListAllAlipayRecords_PayYuan;
+
+        public decimal SumListAllAlipayRecords_PayYuan
+        {
+            get { return _sumListAllAlipayRecords_PayYuan; }
+            set
+            {
+                _sumListAllAlipayRecords_PayYuan = value;
+                NotifyPropertyChanged("SumListAllAlipayRecords_PayYuan");
+            }
+        }
+
+        private decimal _sumListAllAlipayRecords_RMB;
+
+        public decimal SumListAllAlipayRecords_RMB
+        {
+            get { return _sumListAllAlipayRecords_RMB; }
+            set
+            {
+                _sumListAllAlipayRecords_RMB = value;
+                NotifyPropertyChanged("SumListAllAlipayRecords_RMB");
+            }
+        }
+
+
+
         public AlipayRechargeViewModel()
         {
             GlobalData.Client.GetAllExceptionAlipayRechargeRecordsCompleted += Client_GetAllExceptionAlipayRechargeRecordsCompleted;
@@ -57,14 +83,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
+                ListAllAlipayRecords.Clear();
+                decimal sumYuan = 0;
+                decimal sumRMB = 0;
+
                 if (e.Result != null)
                 {
                     foreach (var item in e.Result)
                     {
                         ListAllAlipayRecords.Add(new AlipayRechargeRecordUIModel(item));
+                        sumYuan += item.total_fee;
+                        sumRMB += item.value_rmb;
                     }
                 }
 
+                this.SumListAllAlipayRecords_PayYuan = sumYuan;
+                this.SumListAllAlipayRecords_RMB = sumRMB;
             }
             catch (Exception exc)
             {

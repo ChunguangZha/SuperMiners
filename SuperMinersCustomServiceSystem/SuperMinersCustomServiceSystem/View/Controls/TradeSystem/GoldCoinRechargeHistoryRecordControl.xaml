@@ -12,6 +12,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="金币充值历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
         <Grid Grid.Row="1">
@@ -51,5 +52,11 @@
                 <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,5">
+            <TextBlock Text="当前页面总计花费灵币" Margin="10"/>
+            <TextBox Name="txtSumRMB" Width="200" IsReadOnly="True" Margin="10"/>
+            <TextBlock Text="总计获取金币" Margin="10"/>
+            <TextBox Name="txtSumGoldCoin" Width="200" IsReadOnly="True" Margin="10"/>
+        </StackPanel>
     </Grid>
 </UserControl>
