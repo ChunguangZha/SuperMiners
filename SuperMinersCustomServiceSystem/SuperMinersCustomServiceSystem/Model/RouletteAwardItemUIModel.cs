@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace SuperMinersCustomServiceSystem.Model
 {
@@ -25,14 +27,21 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
+                this._icon = null;
+                if (this._parentObject.IconBuffer != null)
+                {
+                    this._icon = new BitmapImage();
+                    this._icon.StreamSource = new MemoryStream(this._parentObject.IconBuffer);
+                }
+
                 NotifyPropertyChange("ID");
                 NotifyPropertyChange("AwardName");
                 NotifyPropertyChange("AwardNumber");
                 NotifyPropertyChange("RouletteAwardType");
                 NotifyPropertyChange("ValueMoneyYuan");
                 NotifyPropertyChange("IsLargeAward");
-                NotifyPropertyChange("IsRealAward");
                 NotifyPropertyChange("WinProbability");
+                NotifyPropertyChange("Icon");
             }
         }
 
@@ -90,18 +99,6 @@ namespace SuperMinersCustomServiceSystem.Model
         }
 
         /// <summary>
-        /// 是否为实物奖品，除了系统内部的都称为实物
-        /// </summary>
-        public bool IsRealAward
-        {
-            get { return this.ParentObject.IsRealAward; }
-            set
-            {
-                this.ParentObject.IsRealAward = value;
-            }
-        }
-
-        /// <summary>
         /// 中奖概率倍数，整数值，计算时将所有中中奖概率加一起求百分比
         /// </summary>
         public float WinProbability
@@ -110,6 +107,16 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 this.ParentObject.WinProbability = value;
+            }
+        }
+
+        private BitmapImage _icon = null;
+
+        public BitmapImage Icon
+        {
+            get
+            {
+                return _icon;
             }
         }
 

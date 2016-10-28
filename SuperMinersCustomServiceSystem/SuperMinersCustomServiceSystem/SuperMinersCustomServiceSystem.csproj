@@ -211,6 +211,9 @@
     <Compile Include="View\Controls\GameFunny\RouletteAwardItemListControl.xaml.cs">
       <DependentUpon>RouletteAwardItemListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\GameFunny\RouletteCurrentAwardItemListControl.xaml.cs">
+      <DependentUpon>RouletteCurrentAwardItemListControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.xaml.cs">
       <DependentUpon>RouletteWinAwardRecordHistoryControl.xaml</DependentUpon>
     </Compile>
@@ -387,6 +390,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\GameFunny\RouletteAwardItemListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\GameFunny\RouletteCurrentAwardItemListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

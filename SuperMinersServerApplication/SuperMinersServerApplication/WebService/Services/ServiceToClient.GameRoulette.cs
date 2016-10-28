@@ -23,7 +23,7 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    return RouletteAwardController.Instance.GetAwardItems();
+                    return RouletteAwardController.Instance.GetCurrentAwardItems();
                 }
                 catch (Exception exc)
                 {

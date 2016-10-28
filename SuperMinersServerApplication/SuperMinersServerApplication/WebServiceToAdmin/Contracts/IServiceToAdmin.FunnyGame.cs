@@ -13,20 +13,52 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
     public partial interface IServiceToAdmin
     {
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAwardItems",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllAwardItems",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteAwardItem[] GetAwardItems(string token);
+        RouletteAwardItem[] GetAllAwardItems(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/SetAwardItems",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/AddAwardItem",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool SetAwardItems(string token, RouletteAwardItem[] items);
+        int AddAwardItem(string token, RouletteAwardItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdateAwardItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int UpdateAwardItem(string token, RouletteAwardItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/DeleteAwardItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int DeleteAwardItem(string token, RouletteAwardItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetCurrentAwardItems",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        RouletteAwardItem[] GetCurrentAwardItems(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SetCurrentAwardItems",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool SetCurrentAwardItems(string token, RouletteAwardItem[] items);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetNotPayWinAwardRecords",

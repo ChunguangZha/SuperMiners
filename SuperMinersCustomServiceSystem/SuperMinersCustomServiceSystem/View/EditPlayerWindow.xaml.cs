@@ -1,4 +1,5 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
 using SuperMinersCustomServiceSystem.View;
 using SuperMinersCustomServiceSystem.View.Windows;
 using System;
@@ -52,10 +53,18 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditRMB_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerRMBWindow win = new EditPlayerRMBWindow(this._player.UserName, this._player.RMB);
-            if (win.ShowDialog() == true)
+            try
             {
-                this._player.SetRMB(win.ChangedRMB);
+                EditPlayerRMBWindow win = new EditPlayerRMBWindow(this._player.UserName, this._player.RMB);
+                win.ShowDialog();
+                if (win.IsOK == true)
+                {
+                    this._player.SetRMB(win.ChangedRMB);
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo(exc.Message);
             }
         }
 

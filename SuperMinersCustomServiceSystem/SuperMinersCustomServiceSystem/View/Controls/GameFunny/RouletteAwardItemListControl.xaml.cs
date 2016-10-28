@@ -61,5 +61,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         {
             App.GameRouletteVMObject.AsyncSaveAllAwardItem();
         }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

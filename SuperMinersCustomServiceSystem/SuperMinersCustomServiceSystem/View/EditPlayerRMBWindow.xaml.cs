@@ -22,6 +22,7 @@ namespace SuperMinersCustomServiceSystem.View
         string _userName;
         decimal _currentRMB;
 
+        public bool IsOK { get; private set; }
         public decimal ChangedRMB { get; private set; }
 
         public EditPlayerRMBWindow(string userName, decimal currentRMB)
@@ -38,12 +39,14 @@ namespace SuperMinersCustomServiceSystem.View
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             this.ChangedRMB = (decimal)this.txtRMBChanged.Value;
-            this.DialogResult = true;
+            this.IsOK = true;
+            this.Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            this.DialogResult = false;
+            this.IsOK = false;
+            this.Close();
         }
 
         private void chkChangeType_Checked(object sender, RoutedEventArgs e)

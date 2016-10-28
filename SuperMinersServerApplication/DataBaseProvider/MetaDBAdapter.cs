@@ -341,10 +341,13 @@ namespace DataBaseProvider
                 item.AwardName = Convert.ToString(dt.Rows[i]["AwardName"]);
                 item.AwardNumber = Convert.ToInt32(dt.Rows[i]["AwardNumber"]);
                 item.IsLargeAward = Convert.ToBoolean(dt.Rows[i]["IsLargeAward"]);
-                item.IsRealAward = Convert.ToBoolean(dt.Rows[i]["IsRealAward"]);
                 item.RouletteAwardType = (RouletteAwardType)Convert.ToInt32(dt.Rows[i]["RouletteAwardType"]);
                 item.ValueMoneyYuan = Convert.ToSingle(dt.Rows[i]["ValueMoneyYuan"]);
                 item.WinProbability = Convert.ToSingle(dt.Rows[i]["WinProbability"]);
+                if (dt.Rows[i]["IconBuffer"] != DBNull.Value)
+                {
+                    item.IconBuffer = (byte[])dt.Rows[i]["IconBuffer"];
+                }
 
                 items[i] = item;
             }

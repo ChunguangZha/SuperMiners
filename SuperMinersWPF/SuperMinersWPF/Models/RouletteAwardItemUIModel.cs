@@ -1,6 +1,7 @@
 ﻿using MetaData.Game.Roulette;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,17 @@ namespace SuperMinersWPF.Models
         public RouletteAwardItem ParentObject
         {
             get { return _parentObject; }
-            set { _parentObject = value; }
+            set
+            {
+                _parentObject = value;
+
+                this._icon = null;
+                if (this._parentObject.IconBuffer != null)
+                {
+                    this._icon = new BitmapImage();
+                    this._icon.StreamSource = new MemoryStream(this._parentObject.IconBuffer);
+                }
+            }
         }
 
         public int ID
@@ -41,52 +52,62 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        private BitmapImage _icon = null;
+
         public BitmapImage Icon
         {
             get
             {
-                string imageFile = "";
-                switch (RouletteAwardType)
-                {
-                    case RouletteAwardType.None:
-                        imageFile = "again.png";
-                        break;
-                    case RouletteAwardType.Stone:
-                        imageFile = "stone.png";
-                        break;
-                    case RouletteAwardType.GoldCoin:
-                        imageFile = "goldcoin.png";
-                        break;
-                    case RouletteAwardType.Exp:
-                        imageFile = "exp.png";
-                        break;
-                    case RouletteAwardType.StoneReserve:
-                        imageFile = "";
-                        break;
-                    case RouletteAwardType.Huafei:
-                        imageFile = "phonefees.png";
-                        break;
-                    case RouletteAwardType.IQiyiOneMonth:
-                        imageFile = "iqiyi.png";
-                        break;
-                    case RouletteAwardType.LeTV:
-                        imageFile = "letv.png";
-                        break;
-                    case RouletteAwardType.Xunlei:
-                        imageFile = "xunlei.png";
-                        break;
-                    case RouletteAwardType.Junnet:
-                        break;
-                    default:
-                        break;
-                }
-                if (string.IsNullOrEmpty(imageFile))
-                {
-                    return null;
-                }
-                return new BitmapImage(new Uri("pack://application:,,,/Resources/" + imageFile));
+                return _icon;
             }
         }
+
+        //public BitmapImage Icon
+        //{
+        //    get
+        //    {
+        //        string imageFile = "";
+        //        switch (RouletteAwardType)
+        //        {
+        //            case RouletteAwardType.None:
+        //                imageFile = "again.png";
+        //                break;
+        //            case RouletteAwardType.Stone:
+        //                imageFile = "stone.png";
+        //                break;
+        //            case RouletteAwardType.GoldCoin:
+        //                imageFile = "goldcoin.png";
+        //                break;
+        //            case RouletteAwardType.Exp:
+        //                imageFile = "exp.png";
+        //                break;
+        //            case RouletteAwardType.StoneReserve:
+        //                imageFile = "";
+        //                break;
+        //            case RouletteAwardType.Huafei:
+        //                imageFile = "phonefees.png";
+        //                break;
+        //            case RouletteAwardType.IQiyiOneMonth:
+        //                imageFile = "iqiyi.png";
+        //                break;
+        //            case RouletteAwardType.LeTV:
+        //                imageFile = "letv.png";
+        //                break;
+        //            case RouletteAwardType.Xunlei:
+        //                imageFile = "xunlei.png";
+        //                break;
+        //            case RouletteAwardType.Junnet:
+        //                break;
+        //            default:
+        //                break;
+        //        }
+        //        if (string.IsNullOrEmpty(imageFile))
+        //        {
+        //            return null;
+        //        }
+        //        return new BitmapImage(new Uri("pack://application:,,,/Resources/" + imageFile));
+        //    }
+        //}
 
         public string AwardName
         {
@@ -136,17 +157,17 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        /// <summary>
-        /// 是否为实物奖品，除了系统内部的都称为实物
-        /// </summary>
-        public bool IsRealAward
-        {
-            get { return this.ParentObject.IsRealAward; }
-            set
-            {
-                this.ParentObject.IsRealAward = value;
-            }
-        }
+        ///// <summary>
+        ///// 是否为实物奖品，除了系统内部的都称为实物
+        ///// </summary>
+        //public bool IsRealAward
+        //{
+        //    get { return this.ParentObject.IsRealAward; }
+        //    set
+        //    {
+        //        this.ParentObject.IsRealAward = value;
+        //    }
+        //}
 
         /// <summary>
         /// 中奖概率倍数，整数值，计算时将所有中中奖概率加一起求百分比

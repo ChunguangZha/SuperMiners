@@ -45,7 +45,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             this.txtAwardName.Text = awarditem.AwardName;
             this.numAwardNumber.Value = awarditem.AwardNumber;
             this.chkIsLargeAward.IsChecked = awarditem.IsLargeAward;
-            this.chkIsRealAward.IsChecked = awarditem.IsRealAward;
+            //this.chkIsRealAward.IsChecked = awarditem.IsRealAward;
             this.cmbAwardType.SelectedIndex = (int)awarditem.RouletteAwardType;
             this.numValueMoneyYuan.Value = awarditem.ValueMoneyYuan;
             this.numWinProbability.Value = awarditem.WinProbability;
@@ -72,7 +72,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             item.AwardName = txtAwardName.Text.Trim();
             item.AwardNumber = (int)this.numAwardNumber.Value;
             item.IsLargeAward = this.chkIsLargeAward.IsChecked.Value;
-            item.IsRealAward = this.chkIsRealAward.IsChecked.Value;
+            //item.IsRealAward = this.chkIsRealAward.IsChecked.Value;
             item.RouletteAwardType = (RouletteAwardType)this.cmbAwardType.SelectedIndex;
             item.ValueMoneyYuan = (float)this.numValueMoneyYuan.Value;
             item.WinProbability = (int)this.numWinProbability.Value;

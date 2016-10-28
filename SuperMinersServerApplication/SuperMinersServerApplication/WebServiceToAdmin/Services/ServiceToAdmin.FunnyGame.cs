@@ -14,18 +14,97 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 {
     public partial class ServiceToAdmin : IServiceToAdmin
     {
-
-        public MetaData.Game.Roulette.RouletteAwardItem[] GetAwardItems(string token)
+        public RouletteAwardItem[] GetAllAwardItems(string token)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return RouletteAwardController.Instance.GetAwardItems();
+                    return RouletteAwardController.Instance.GetAllAwardItems();
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAwardItems Exception.", exc);
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAllAwardItems Exception.", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int AddAwardItem(string token, RouletteAwardItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return RouletteAwardController.Instance.AddAwardItem(item);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.AddAwardItem Exception.", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int UpdateAwardItem(string token, RouletteAwardItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return RouletteAwardController.Instance.UpdateAwardItem(item);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.UpdateAwardItem Exception.", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int DeleteAwardItem(string token, RouletteAwardItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return RouletteAwardController.Instance.DeleteAwardItem(item);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.DeleteAwardItem Exception.", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Game.Roulette.RouletteAwardItem[] GetCurrentAwardItems(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return RouletteAwardController.Instance.GetCurrentAwardItems();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetCurrentAwardItems Exception.", exc);
                     return null;
                 }
             }
@@ -41,14 +120,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         /// <param name="token"></param>
         /// <param name="items"></param>
         /// <returns></returns>
-        public bool SetAwardItems(string token, MetaData.Game.Roulette.RouletteAwardItem[] items)
+        public bool SetCurrentAwardItems(string token, MetaData.Game.Roulette.RouletteAwardItem[] items)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
                     //TODO: 不应该删除已有的奖项信息，否则中奖记录也要丢失，需十一之后处理
-                    return RouletteAwardController.Instance.SetAwardItems(items);
+                    return RouletteAwardController.Instance.SetCurrentAwardItemsList(items);
                 }
                 catch (Exception exc)
                 {
@@ -121,5 +200,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 throw new Exception();
             }
         }
+
     }
 }

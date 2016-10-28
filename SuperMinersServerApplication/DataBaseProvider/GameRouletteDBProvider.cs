@@ -12,7 +12,7 @@ namespace DataBaseProvider
 {
     public class GameRouletteDBProvider
     {
-        public bool SaveRouletteAwardItems(RouletteAwardItem[] items)
+        public bool AddRouletteAwardItem(RouletteAwardItem item)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -21,33 +21,22 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string sqlDeleteText = "delete from rouletteawarditem;";
+                string sqlInsertText = "insert into rouletteawarditem " +
+                    " (`AwardName`, `AwardNumber`, `RouletteAwardType`, `ValueMoneyYuan`, `IsLargeAward`, `WinProbability`, `IconBuffer`) " +
+                    " values (@AwardName, @AwardNumber, @RouletteAwardType, @ValueMoneyYuan, @IsLargeAward, @WinProbability, @IconBuffer)";
+
                 mycmd = myconn.CreateCommand();
-                mycmd.CommandText = sqlDeleteText;
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@AwardName", item.AwardName);
+                mycmd.Parameters.AddWithValue("@AwardNumber", item.AwardNumber);
+                mycmd.Parameters.AddWithValue("@RouletteAwardType", (int)item.RouletteAwardType);
+                mycmd.Parameters.AddWithValue("@ValueMoneyYuan", item.ValueMoneyYuan);
+                mycmd.Parameters.AddWithValue("@IsLargeAward", item.IsLargeAward);
+                mycmd.Parameters.AddWithValue("@WinProbability", item.WinProbability);
+                mycmd.Parameters.AddWithValue("@IconBuffer", item.IconBuffer);
+
                 mycmd.ExecuteNonQuery();
                 mycmd.Dispose();
-
-                foreach (var item in items)
-                {
-                    string sqlInsertText = "insert into rouletteawarditem " +
-                        " (`AwardName`, `AwardNumber`, `RouletteAwardType`, `ValueMoneyYuan`, `IsLargeAward`, `IsRealAward`, `WinProbability`) " +
-                        " values (@AwardName, @AwardNumber, @RouletteAwardType, @ValueMoneyYuan, @IsLargeAward, @IsRealAward, @WinProbability)";
-
-                    mycmd = myconn.CreateCommand();
-                    mycmd.CommandText = sqlInsertText;
-                    mycmd.Parameters.AddWithValue("@AwardName", item.AwardName);
-                    mycmd.Parameters.AddWithValue("@AwardNumber", item.AwardNumber);
-                    mycmd.Parameters.AddWithValue("@RouletteAwardType", (int)item.RouletteAwardType);
-                    mycmd.Parameters.AddWithValue("@ValueMoneyYuan", item.ValueMoneyYuan);
-                    mycmd.Parameters.AddWithValue("@IsLargeAward", item.IsLargeAward);
-                    mycmd.Parameters.AddWithValue("@IsRealAward", item.IsRealAward);
-                    mycmd.Parameters.AddWithValue("@WinProbability", item.WinProbability);
-
-                    mycmd.ExecuteNonQuery();
-                    mycmd.Dispose();
-                }
-
-                mycmd = null;
 
                 return true;
             }
@@ -65,7 +54,165 @@ namespace DataBaseProvider
             }
         }
 
-        public RouletteAwardItem[] GetRouletteAwardItems()
+        public bool UpdateRouletteAwardItem(RouletteAwardItem item)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string sqlInsertText = "update rouletteawarditem " +
+                    " set `AwardName` = @AwardName, `AwardNumber` = @AwardNumber, `RouletteAwardType` = @RouletteAwardType, `ValueMoneyYuan` = @ValueMoneyYuan, `IsLargeAward` = @IsLargeAward, `WinProbability` = @WinProbability, `IconBuffer` = @IconBuffer " +
+                    " where id = @id ;";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@AwardName", item.AwardName);
+                mycmd.Parameters.AddWithValue("@AwardNumber", item.AwardNumber);
+                mycmd.Parameters.AddWithValue("@RouletteAwardType", (int)item.RouletteAwardType);
+                mycmd.Parameters.AddWithValue("@ValueMoneyYuan", item.ValueMoneyYuan);
+                mycmd.Parameters.AddWithValue("@IsLargeAward", item.IsLargeAward);
+                mycmd.Parameters.AddWithValue("@WinProbability", item.WinProbability);
+                mycmd.Parameters.AddWithValue("@IconBuffer", item.IconBuffer);
+                mycmd.Parameters.AddWithValue("@id", item.ID);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool DeleteAwardItem(RouletteAwardItem item)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string sqlText = "delete rouletteawarditem where id = @id ;";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@id", item.ID);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        private bool UpdateRouletteAwardItem_WinProbability(RouletteAwardItem[] items, CustomerMySqlTransaction trans)
+        {
+            foreach (var item in items)
+            {
+                string sqlInsertText = "update rouletteawarditem " +
+                    " set `WinProbability` = @WinProbability ";
+
+                MySqlCommand mycmd = trans.CreateCommand();
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@AwardName", item.AwardName);
+                mycmd.Parameters.AddWithValue("@AwardNumber", item.AwardNumber);
+                mycmd.Parameters.AddWithValue("@RouletteAwardType", (int)item.RouletteAwardType);
+                mycmd.Parameters.AddWithValue("@ValueMoneyYuan", item.ValueMoneyYuan);
+                mycmd.Parameters.AddWithValue("@IsLargeAward", item.IsLargeAward);
+                mycmd.Parameters.AddWithValue("@WinProbability", item.WinProbability);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+            }
+
+            return true;
+        }
+
+        private bool UpdateCurrentAwardItemList(RouletteAwardItem[] items, CustomerMySqlTransaction trans)
+        {
+            string sqlDeleteText = "delete from currentrouletteawarditemlist;";
+            MySqlCommand mycmd = trans.CreateCommand();
+            mycmd.CommandText = sqlDeleteText;
+            mycmd.ExecuteNonQuery();
+            mycmd.Dispose();
+
+            for (int i=0;i<items.Length;i++)
+            {
+                var item = items[i];
+                string sqlInsertText = "insert into currentrouletteawarditemlist " +
+                    " (`Index`, `AwarditemID`) " +
+                    " values (@Index, @AwarditemID)";
+
+                mycmd = trans.CreateCommand();
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@Index", i);
+                mycmd.Parameters.AddWithValue("@AwarditemID", item.ID);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 保存从所有奖项中选出的12个
+        /// </summary>
+        /// <param name="items"></param>
+        /// <returns></returns>
+        public bool SaveCurrentRouletteAwardItemsList(RouletteAwardItem[] items)
+        {
+            CustomerMySqlTransaction trans = null;
+            try
+            {
+                trans = MyDBHelper.Instance.CreateTrans();
+                UpdateRouletteAwardItem_WinProbability(items, trans);
+                UpdateCurrentAwardItemList(items, trans);
+
+                trans.Commit();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                trans.Rollback();
+                throw exc;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
+                }
+            }
+        }
+
+        public RouletteAwardItem[] GetAllRouletteAwardItems()
         {
             RouletteAwardItem[] items = null;
             MySqlConnection myconn = null;
@@ -75,6 +222,39 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 string sqlText = "select * from rouletteawarditem";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                items = MetaDBAdapter<RouletteAwardItem>.GetRouletteAwardItemFromDataTable(table);
+                return items;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public RouletteAwardItem[] GetCurrentRouletteAwardItemsList()
+        {
+            RouletteAwardItem[] items = null;
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string sqlText = "select c.`Index`, c.`AwarditemID`, r.* from currentrouletteawarditemlist c left join rouletteawarditem r on c.`AwarditemID` = r.`id` ;";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
