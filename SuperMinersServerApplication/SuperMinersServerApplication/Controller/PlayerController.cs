@@ -331,6 +331,7 @@ namespace SuperMinersServerApplication.Controller
             decimal tempOutputStone = playerrun.ComputePlayerOfflineStoneOutput();
 
             this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
+            LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "] 冻结灵币为：" + player.FortuneInfo.FreezingRMB);
 
             return true;
         }
@@ -785,11 +786,11 @@ namespace SuperMinersServerApplication.Controller
                 string outputMessage = "";
                 if (record.State == RMBWithdrawState.Payed)
                 {
-                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币成功，" + record.ValueYuan + "元人民币已经到达其支付宝账户";
+                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币成功，" + record.ValueYuan + "元人民币已到账。当前冻结灵币为：" + playerrun.BasePlayer.FortuneInfo.FreezingRMB;
                 }
                 else
                 {
-                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币被拒绝，原因为：" + record.Message;
+                    outputMessage = "玩家[" + record.PlayerUserName + "] 提现 " + record.WidthdrawRMB + " 灵币被拒绝，原因为：" + record.Message + "。当前冻结灵币为：" + playerrun.BasePlayer.FortuneInfo.FreezingRMB;
                 }
                 LogHelper.Instance.AddInfoLog(outputMessage);
 

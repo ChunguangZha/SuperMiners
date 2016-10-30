@@ -21,12 +21,20 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        private ObservableCollection<RouletteAwardItemUIModel> _listRouletteAwardItems = new ObservableCollection<RouletteAwardItemUIModel>();
+        private ObservableCollection<RouletteAwardItemUIModel> _listCurrentRouletteAwardItems = new ObservableCollection<RouletteAwardItemUIModel>();
 
-        public ObservableCollection<RouletteAwardItemUIModel> ListRouletteAwardItems
+        public ObservableCollection<RouletteAwardItemUIModel> ListCurrentRouletteAwardItems
         {
-            get { return _listRouletteAwardItems; }
-            set { _listRouletteAwardItems = value; }
+            get { return _listCurrentRouletteAwardItems; }
+            set { _listCurrentRouletteAwardItems = value; }
+        }
+        
+        private ObservableCollection<RouletteAwardItemUIModel> _listAllRouletteAwardItems = new ObservableCollection<RouletteAwardItemUIModel>();
+
+        public ObservableCollection<RouletteAwardItemUIModel> ListAllRouletteAwardItems
+        {
+            get { return _listAllRouletteAwardItems; }
+            set { _listAllRouletteAwardItems = value; }
         }
 
         private ObservableCollection<RouletteAwardItemUIModel> _listToComboxRouletteAwardItems = new ObservableCollection<RouletteAwardItemUIModel>();
@@ -53,13 +61,78 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             set { _listAllPayRouletteWinnerRecords = value; }
         }
 
+        private ObservableCollection<RouletteRoundInfoUIModel> _listRoundRecords = new ObservableCollection<RouletteRoundInfoUIModel>();
+
+        public ObservableCollection<RouletteRoundInfoUIModel> ListRoundRecords
+        {
+            get { return _listRoundRecords; }
+            set { _listRoundRecords = value; }
+        }
+
+
         public GameRouletteViewModel()
         {
-            GlobalData.Client.GetAwardItemsCompleted += Client_GetAwardItemsCompleted;
-            GlobalData.Client.SetAwardItemsCompleted += Client_SetAwardItemsCompleted;
+            GlobalData.Client.GetAllAwardItemsCompleted += Client_GetAllAwardItemsCompleted;
+            GlobalData.Client.GetCurrentAwardItemsCompleted += Client_GetCurrentAwardItemsCompleted;
+            GlobalData.Client.SetCurrentAwardItemsCompleted += Client_SetCurrentAwardItemsCompleted;
             GlobalData.Client.GetNotPayWinAwardRecordsCompleted += Client_GetNotPayWinAwardRecordsCompleted;
             GlobalData.Client.GetAllPayWinAwardRecordsCompleted += Client_GetAllPayWinAwardRecordsCompleted;
             GlobalData.Client.OnSomebodyWinRouletteAward += Client_OnSomebodyWinRouletteAward;
+            GlobalData.Client.DeleteAwardItemCompleted += Client_DeleteAwardItemCompleted;
+            GlobalData.Client.GetAllRouletteRoundInfoCompleted += Client_GetAllRouletteRoundInfoCompleted;
+        }
+
+        void Client_GetAllRouletteRoundInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<RouletteRoundInfo[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("查询失败，服务器返回异常。异常信息：" + e.Error.Message);
+                    return;
+                }
+
+                this.ListRoundRecords.Clear();
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result.OrderByDescending(r=>r.StartTime))
+                    {
+                        this.ListRoundRecords.Add(new RouletteRoundInfoUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("查询失败，返回后处理异常。异常信息：" + exc.Message);
+            }
+        }
+
+        void Client_DeleteAwardItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("删除幸运大转盘奖项时，服务器返回异常。异常信息：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("删除成功");
+                    this.AsyncGetAllAwardItems();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("删除奖项失败，可能是奖励被使用。" + OperResult.GetMsg(e.Result));
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("删除幸运大转盘奖项时，返回后处理异常。异常信息：" + exc.Message);
+            }
         }
 
         void Client_OnSomebodyWinRouletteAward(RouletteWinnerRecord obj)
@@ -132,7 +205,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        void Client_SetAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_SetCurrentAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
             try
             {
@@ -146,6 +219,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 if (e.Result)
                 {
                     MyMessageBox.ShowInfo("保存所有奖项信息成功");
+                    this.AsyncGetCurrentAwardItems();
                 }
                 else
                 {
@@ -158,18 +232,49 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        void Client_GetAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.Roulette.RouletteAwardItem[]> e)
+        void Client_GetCurrentAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.Roulette.RouletteAwardItem[]> e)
         {
             try
             {
                 App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
-                    MyMessageBox.ShowInfo("查询幸运大转盘奖项服务器返回异常。异常信息：" + e.Error.Message);
+                    MyMessageBox.ShowInfo("查询幸运大转盘当前展示奖项时，服务器返回异常。异常信息：" + e.Error.Message);
                     return;
                 }
 
-                this.ListRouletteAwardItems.Clear();
+                this.ListCurrentRouletteAwardItems.Clear();
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListCurrentRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
+                    }
+                }
+
+                if (GetCurrentAwardItemCompleted != null)
+                {
+                    GetCurrentAwardItemCompleted();
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("查询幸运大转盘当前展示奖项时，返回后处理异常。异常信息：" + exc.Message);
+            }
+        }
+
+        void Client_GetAllAwardItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<RouletteAwardItem[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("查询幸运大转盘所有奖项时，服务器返回异常。异常信息：" + e.Error.Message);
+                    return;
+                }
+
+                this.ListAllRouletteAwardItems.Clear();
                 this.ListToComboxRouletteAwardItems.Clear();
                 this.ListToComboxRouletteAwardItems.Add(new RouletteAwardItemUIModel(new RouletteAwardItem()
                 {
@@ -180,14 +285,19 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 {
                     foreach (var item in e.Result)
                     {
-                        this.ListRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
+                        this.ListAllRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
                         ListToComboxRouletteAwardItems.Add(new RouletteAwardItemUIModel(item));
                     }
+                }
+
+                if (GetAllAwardItemCompleted != null)
+                {
+                    GetAllAwardItemCompleted();
                 }
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("查询幸运大转盘奖项返回后处理异常。异常信息：" + exc.Message);
+                MyMessageBox.ShowInfo("查询幸运大转盘所有奖项时，返回后处理异常。异常信息：" + exc.Message);
             }
         }
 
@@ -196,10 +306,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             this.ListNotPayRouletteWinnerRecords.Remove(record);
         }
 
-        public void AsyncGetAwardItems()
+        public void AsyncGetAllAwardItems()
         {
             App.BusyToken.ShowBusyWindow("正在加载幸运大转盘奖项");
-            GlobalData.Client.GetAwardItems();
+            GlobalData.Client.GetAllAwardItems();
+        }
+
+        public void AsyncGetCurrentAwardItems()
+        {
+            App.BusyToken.ShowBusyWindow("正在加载幸运大转盘奖项");
+            GlobalData.Client.GetCurrentAwardItems();
+        }
+
+        public void AsyncDeleteAwardItem(RouletteAwardItem item)
+        {
+            App.BusyToken.ShowBusyWindow("正在删除幸运大转盘奖项");
+            GlobalData.Client.DeleteAwardItem(item);
         }
 
         public void AsyncGetNotPayWinAwardRecords()
@@ -214,16 +336,19 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
         }
 
-        public void AsyncSaveAllAwardItem()
+        public void AsyncSetCurrentAwardItem(RouletteAwardItem[] items)
         {
             App.BusyToken.ShowBusyWindow("正在保存所有奖项信息");
-            List<RouletteAwardItem> listAwardItems = new List<RouletteAwardItem>();
-            foreach (var item in this._listRouletteAwardItems)
-            {
-                listAwardItems.Add(item.ParentObject);
-            }
-
-            GlobalData.Client.SetAwardItems(listAwardItems.ToArray());
+            GlobalData.Client.SetCurrentAwardItems(items);
         }
+
+        public void AsyncGetAllRouletteRoundInfo()
+        {
+            App.BusyToken.ShowBusyWindow("正在查询");
+            GlobalData.Client.GetAllRouletteRoundInfo();
+        }
+
+        public event Action GetAllAwardItemCompleted;
+        public event Action GetCurrentAwardItemCompleted;
     }
 }

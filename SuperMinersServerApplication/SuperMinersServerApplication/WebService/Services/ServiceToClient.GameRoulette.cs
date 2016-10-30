@@ -63,7 +63,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public MetaData.Game.Roulette.RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardIndex)
+        public MetaData.Game.Roulette.RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardID)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -81,8 +81,8 @@ namespace SuperMinersServerApplication.WebService.Services
                         return null;
                     }
 
-                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, user.SimpleInfo.NickName, winAwardIndex);
-                    if (result != null)
+                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, user.SimpleInfo.NickName, winAwardID);
+                    if (result != null && result.AwardItem.RouletteAwardType != RouletteAwardType.None)
                     {
                         RouletteWinAwardNotifyAllPlayers(result);
 
@@ -156,7 +156,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     //    return null;
                     //}
 
-                    return RouletteAwardController.Instance.GetAllPayWinAwardRecords(userName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+                    return RouletteAwardController.Instance.GetAllPayWinAwardRecords(userName, RouletteAwardItemID, false, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

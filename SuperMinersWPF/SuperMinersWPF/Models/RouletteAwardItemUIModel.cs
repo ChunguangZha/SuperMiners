@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -26,11 +27,36 @@ namespace SuperMinersWPF.Models
             {
                 _parentObject = value;
 
-                this._icon = null;
-                if (this._parentObject.IconBuffer != null)
+                this._icon = GetIconSource(this._parentObject.IconBuffer);
+            }
+        }
+
+        public static BitmapSource GetIconSource(byte[] buffer)
+        {
+            if (buffer == null)
+            {
+                return null;
+            }
+
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(new MemoryStream(buffer));
+                ptr = bmp.GetHbitmap();
+
+                return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                      ptr, IntPtr.Zero, Int32Rect.Empty,
+                      BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                if (ptr != IntPtr.Zero)
                 {
-                    this._icon = new BitmapImage();
-                    this._icon.StreamSource = new MemoryStream(this._parentObject.IconBuffer);
+                    DeleteObject(ptr);
                 }
             }
         }
@@ -52,62 +78,15 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        private BitmapImage _icon = null;
+        private BitmapSource _icon = null;
 
-        public BitmapImage Icon
+        public BitmapSource Icon
         {
             get
             {
                 return _icon;
             }
         }
-
-        //public BitmapImage Icon
-        //{
-        //    get
-        //    {
-        //        string imageFile = "";
-        //        switch (RouletteAwardType)
-        //        {
-        //            case RouletteAwardType.None:
-        //                imageFile = "again.png";
-        //                break;
-        //            case RouletteAwardType.Stone:
-        //                imageFile = "stone.png";
-        //                break;
-        //            case RouletteAwardType.GoldCoin:
-        //                imageFile = "goldcoin.png";
-        //                break;
-        //            case RouletteAwardType.Exp:
-        //                imageFile = "exp.png";
-        //                break;
-        //            case RouletteAwardType.StoneReserve:
-        //                imageFile = "";
-        //                break;
-        //            case RouletteAwardType.Huafei:
-        //                imageFile = "phonefees.png";
-        //                break;
-        //            case RouletteAwardType.IQiyiOneMonth:
-        //                imageFile = "iqiyi.png";
-        //                break;
-        //            case RouletteAwardType.LeTV:
-        //                imageFile = "letv.png";
-        //                break;
-        //            case RouletteAwardType.Xunlei:
-        //                imageFile = "xunlei.png";
-        //                break;
-        //            case RouletteAwardType.Junnet:
-        //                break;
-        //            default:
-        //                break;
-        //        }
-        //        if (string.IsNullOrEmpty(imageFile))
-        //        {
-        //            return null;
-        //        }
-        //        return new BitmapImage(new Uri("pack://application:,,,/Resources/" + imageFile));
-        //    }
-        //}
 
         public string AwardName
         {
@@ -180,6 +159,9 @@ namespace SuperMinersWPF.Models
                 this.ParentObject.WinProbability = value;
             }
         }
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
 
     }
 }

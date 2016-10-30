@@ -25,6 +25,8 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         public RouletteActiveWinRealAwardListControl()
         {
             InitializeComponent();
+
+            this.dgRecords.ItemsSource = App.GameRouletteVMObject.ListNotPayRouletteWinnerRecords;
         }
 
         private void btnPay_Click(object sender, RoutedEventArgs e)

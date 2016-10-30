@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="SuperMinersCustomServiceSystem.View.Controls.GameFunny.RouletteRoundRecordListControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="600">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="幸运大转盘开奖信息" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Width="Auto" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="消耗矿石" Width="*" Binding="{Binding AwardPoolSumStone, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="开出人民币" Width="*" Binding="{Binding WinAwardSumYuan, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="盈利（人民币）" Width="*" Binding="{Binding CurrentRoundProfitYuan, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="开始时间" Width="*" Binding="{Binding StartTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="结束奖项" Width="*" Binding="{Binding MustWinAwardItemID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="是否结束" Width="*" Binding="{Binding Finished, Mode=OneWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -2,11 +2,14 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="5">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -30,13 +33,48 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <TextBlock Text="幸运大转盘当前展出的奖项集合（共12项）" FontSize="18" FontWeight="Bold" Margin="10"/>
-        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <TextBlock Grid.ColumnSpan="4" Text="幸运大转盘当前展出的奖项集合（共12项）" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Button Grid.Row="1" Grid.ColumnSpan="4" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
         <TextBlock Grid.Row="2" Text="顺序" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="16" FontWeight="Bold"/>
         <TextBlock Grid.Row="2" Grid.Column="1" Text="奖项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="16" FontWeight="Bold"/>
         <TextBlock Grid.Row="2" Grid.Column="2" Text="中奖概率" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="16" FontWeight="Bold"/>
         <TextBlock Grid.Row="3" Text="第1项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
-        <ComboBox Grid.Row="3" Grid.Column="1" Name="cmb1" Margin="5"/>
-        <Button Grid.Row="15" Grid.ColumnSpan="3" Name="btnSaveAllAwardItems" Content="保存" Width="100" Margin="130,10,10,10" HorizontalAlignment="Left" Click="btnSaveAllAwardItems_Click"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" Name="cmb1" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="3" Grid.Column="2" x:Name="numWinProbability1" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="4" Text="第2项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="4" Grid.Column="1" Name="cmb2" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="4" Grid.Column="2" x:Name="numWinProbability2" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="5" Text="第3项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" Name="cmb3" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="5" Grid.Column="2" x:Name="numWinProbability3" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="6" Text="第4项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="6" Grid.Column="1" Name="cmb4" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="6" Grid.Column="2" x:Name="numWinProbability4" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="7" Text="第5项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="7" Grid.Column="1" Name="cmb5" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="7" Grid.Column="2" x:Name="numWinProbability5" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="8" Text="第6项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="8" Grid.Column="1" Name="cmb6" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="8" Grid.Column="2" x:Name="numWinProbability6" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="9" Text="第7项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" Name="cmb7" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="9" Grid.Column="2" x:Name="numWinProbability7" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="10" Text="第8项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="10" Grid.Column="1" Name="cmb8" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="10" Grid.Column="2" x:Name="numWinProbability8" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="11" Text="第9项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="11" Grid.Column="1" Name="cmb9" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="11" Grid.Column="2" x:Name="numWinProbability9" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="12" Text="第10项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="12" Grid.Column="1" Name="cmb10" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="12" Grid.Column="2" x:Name="numWinProbability10" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="13" Text="第11项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="13" Grid.Column="1" Name="cmb11" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="13" Grid.Column="2" x:Name="numWinProbability11" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="14" Text="第12项" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5"/>
+        <ComboBox Grid.Row="14" Grid.Column="1" Name="cmb12" DisplayMemberPath="AwardName" SelectedValuePath="ID" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="14" Grid.Column="2" x:Name="numWinProbability12" Maximum="100000" Margin="10,5" VerticalAlignment="Center"/>
+        
+        <Button Grid.Row="16" Grid.ColumnSpan="3" Name="btnSaveAllAwardItems" Content="保存" Width="100" Margin="130,10,10,10" HorizontalAlignment="Left" Click="btnSaveAllAwardItems_Click"/>
     </Grid>
 </UserControl>

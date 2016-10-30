@@ -1,5 +1,6 @@
 ﻿using MetaData.SystemConfig;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.Views;
@@ -255,6 +256,7 @@ namespace SuperMinersServerApplication
         private void btnStopService_Click(object sender, RoutedEventArgs e)
         {
             PlayerActionController.Instance.SaveActionLogs();
+            RouletteAwardController.Instance.SaveRouletteRoundInfoToData();
             App.ServiceToRun.Stop();
         }
 

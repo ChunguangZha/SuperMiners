@@ -137,7 +137,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-10-14T21:59:17.5538739+08:00</Time>
+    <Time>2016-10-14T21:59:17</Time>
     <SystemAllPlayerCount>12</SystemAllPlayerCount>
     <SystemAllMinerCount>964</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7228.00384521484</SystemAllOutputStoneCount>
@@ -148,7 +148,7 @@
     <ActionType>GatherStone</ActionType>
     <OperNumber>476</OperNumber>
     <Remark />
-    <Time>2016-10-14T21:59:46.8857211+08:00</Time>
+    <Time>2016-10-14T21:59:46</Time>
     <SystemAllPlayerCount>12</SystemAllPlayerCount>
     <SystemAllMinerCount>964</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7704.74017333984</SystemAllOutputStoneCount>
@@ -159,7 +159,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-10-14T22:01:45.2358026+08:00</Time>
+    <Time>2016-10-14T22:01:45</Time>
     <SystemAllPlayerCount>12</SystemAllPlayerCount>
     <SystemAllMinerCount>964</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7704.74017333984</SystemAllOutputStoneCount>
@@ -170,10 +170,120 @@
     <ActionType>GoldCoinRecharge</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark>充值了 1000 的金币</Remark>
-    <Time>2016-10-14T22:04:59.0711322+08:00</Time>
+    <Time>2016-10-14T22:04:59</Time>
     <SystemAllPlayerCount>12</SystemAllPlayerCount>
     <SystemAllMinerCount>964</SystemAllMinerCount>
     <SystemAllOutputStoneCount>7704.74407958984</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/10/14 22:04:59</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T16:28:37</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12042.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 16:28:37</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T16:30:46</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12042.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 16:30:46</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T16:40:12</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12042.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 16:40:12</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T22:49:30</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12281.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 22:49:30</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T22:51:31</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12281.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 22:51:31</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-30T23:44:08</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12281.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 23:44:08</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GameFunny</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>玩家[Tony]   幸运抽中10元话费</Remark>
+    <Time>2016-10-30T23:52:37</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12281.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/30 23:52:37</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>40</OperNumber>
+    <Remark />
+    <Time>2016-10-31T00:13:34</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/31 0:13:34</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-31T00:52:30.2797698+08:00</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/31 0:52:30</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GameFunny</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>玩家[Tony]   幸运抽中迅雷会员</Remark>
+    <Time>2016-10-31T01:00:21.3880899+08:00</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/31 1:00:21</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

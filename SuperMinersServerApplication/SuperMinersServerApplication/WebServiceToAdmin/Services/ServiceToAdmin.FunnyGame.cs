@@ -167,11 +167,31 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             {
                 try
                 {
-                    return RouletteAwardController.Instance.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
+                    return RouletteAwardController.Instance.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, true, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAllPayWinAwardRecords Exception.", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public RouletteRoundInfo[] GetAllRouletteRoundInfo(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return RouletteAwardController.Instance.GetAllRouletteRoundInfo();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.GetAllRouletteRoundInfo Exception.", exc);
                     return null;
                 }
             }

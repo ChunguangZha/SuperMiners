@@ -230,6 +230,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.Callback.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.GameRoulette.Callback.cs">
+      <Link>Wcf\Callbacks\IServiceToClient.GameRoulette.Callback.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.Order.Callback.cs</Link>
     </Compile>
@@ -400,6 +403,9 @@
     </Compile>
     <Compile Include="Views\Windows\AgentInvitationWindow.xaml.cs">
       <DependentUpon>AgentInvitationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\RouletteMyWinnedRecordsWindow.xaml.cs">
+      <DependentUpon>RouletteMyWinnedRecordsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\RouletteWinAwardAlertWindow.xaml.cs">
       <DependentUpon>RouletteWinAwardAlertWindow.xaml</DependentUpon>
@@ -586,6 +592,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\AgentInvitationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\RouletteMyWinnedRecordsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

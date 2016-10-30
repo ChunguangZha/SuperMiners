@@ -136,10 +136,11 @@ namespace DataBaseProvider
             foreach (var item in items)
             {
                 string sqlInsertText = "update rouletteawarditem " +
-                    " set `WinProbability` = @WinProbability ";
+                    " set `WinProbability` = @WinProbability where id = @id; ";
 
                 MySqlCommand mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@id", item.ID);
                 mycmd.Parameters.AddWithValue("@AwardName", item.AwardName);
                 mycmd.Parameters.AddWithValue("@AwardNumber", item.AwardNumber);
                 mycmd.Parameters.AddWithValue("@RouletteAwardType", (int)item.RouletteAwardType);
@@ -278,6 +279,140 @@ namespace DataBaseProvider
             }
         }
 
+        public RouletteRoundInfo[] GetAllRouletteRoundInfo()
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string sqlText = "select * from rouletteroundinfo ;";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                var items = MetaDBAdapter<RouletteRoundInfo>.GetRouletteRoundInfoFromDataTable(table);
+                return items;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public RouletteRoundInfo GetLastRouletteRoundInfo()
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string sqlText = "select * from rouletteroundinfo order by id desc limit 1 ;";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                var items = MetaDBAdapter<RouletteRoundInfo>.GetRouletteRoundInfoFromDataTable(table);
+                if (items == null ||items.Length == 0)
+                {
+                    return null;
+                }
+
+                return items[0];
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool SaveRouletteRoundInfo(RouletteRoundInfo info)
+        {
+            bool isAdd = false;
+            var lastInfo = GetLastRouletteRoundInfo();
+            if (lastInfo == null)
+            {
+                isAdd = true;
+            }
+            else if (lastInfo.Finished)
+            {
+                isAdd = true;
+            }
+            else
+            {
+                isAdd = false;
+            }
+
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+
+                string sqlInsertText = "";
+
+                if (isAdd)
+                {
+                    sqlInsertText = "insert into rouletteroundinfo " +
+                        " (`AwardPoolSumStone`, `WinAwardSumYuan`, `StartTime`, `MustWinAwardItemID`, `Finished`) " +
+                        " values (@AwardPoolSumStone, @WinAwardSumYuan, @StartTime, @MustWinAwardItemID, @Finished )";
+                }
+                else
+                {
+                    sqlInsertText = "update rouletteroundinfo " +
+                        " set `AwardPoolSumStone` = @AwardPoolSumStone, `WinAwardSumYuan` = @WinAwardSumYuan, `StartTime` = @StartTime, `MustWinAwardItemID` = @MustWinAwardItemID, `Finished` = @Finished " +
+                        " where id = @id ;";
+                    mycmd.Parameters.AddWithValue("@id", info.ID);
+                }
+                mycmd.CommandText = sqlInsertText;
+                mycmd.Parameters.AddWithValue("@AwardPoolSumStone", info.AwardPoolSumStone);
+                mycmd.Parameters.AddWithValue("@WinAwardSumYuan", info.WinAwardSumYuan);
+                mycmd.Parameters.AddWithValue("@StartTime", info.StartTime);
+                mycmd.Parameters.AddWithValue("@MustWinAwardItemID", info.MustWinAwardItemID);
+                mycmd.Parameters.AddWithValue("@Finished", info.Finished);
+
+                mycmd.ExecuteNonQuery();
+                mycmd.Dispose();
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool AddRouletteWinnerRecord(RouletteWinnerRecord record)
         {
             MySqlConnection myconn = null;
@@ -335,35 +470,41 @@ namespace DataBaseProvider
             }
         }
 
-        public RouletteWinnerRecord GetPayWinAwardRecord(string UserName, int RouletteAwardItemID, DateTime WinTime)
+        public RouletteWinnerRecord GetPayWinAwardRecord(int UserID, string UserName, int RouletteAwardItemID, DateTime WinTime)
         {
+            RouletteWinnerRecord record = null;
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
             try
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
-                string sqlTextA = "select  r.*, s.UserName, s.NickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  " +
-                    " where s.UserName = @UserName and r.AwardItemID = @AwardItemID and r.WinTime >= @WinTime";
-
-                mycmd = myconn.CreateCommand();
-                string encryptUserName = DESEncrypt.EncryptDES(UserName);
-                mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
-                mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
-                mycmd.Parameters.AddWithValue("@WinTime", WinTime);
-                mycmd.CommandText = sqlTextA;
                 myconn.Open();
 
-                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-
                 DataTable table = new DataTable();
+
+                string sqlTextB = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  " +
+                    " where  r.UserID = @UserID and r.AwardItemID = @AwardItemID order by r.id desc limit 1;";// and r.WinTime >= @WinTime";
+
+                mycmd = myconn.CreateCommand();
+                //string encryptUserName = DESEncrypt.EncryptDES(UserName);
+                mycmd.Parameters.AddWithValue("@UserID", UserID);
+                mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
+                //mycmd.Parameters.AddWithValue("@WinTime", WinTime);
+                mycmd.CommandText = sqlTextB;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
                 var records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
-                if (records != null && records.Length == 1)
+                if (records != null && records.Length != 0)
                 {
-                    return records[0];
+                    record = records[records.Length - 1];
+                    if (record.RouletteAwardItemID != RouletteAwardItemID)
+                    {
+                        return null;
+                    }
                 }
 
-                return null;
+                return record;
             }
             finally
             {
@@ -458,6 +599,7 @@ namespace DataBaseProvider
         /// </summary>
         /// <param name="UserName"></param>
         /// <param name="RouletteAwardItemID"></param>
+        /// <param name="ContainsNone"></param>
         /// <param name="BeginWinTime"></param>
         /// <param name="EndWinTime"></param>
         /// <param name="IsGot">-1表示null;0表示false;1表示true</param>
@@ -465,7 +607,7 @@ namespace DataBaseProvider
         /// <param name="pageItemCount"></param>
         /// <param name="pageIndex"></param>
         /// <returns></returns>
-        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex, RouletteAwardItem noneAwardItem)
+        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, bool ContainsNone, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex, RouletteAwardItem noneAwardItem)
         {
             RouletteWinnerRecord[] records = null;
             MySqlConnection myconn = null;
@@ -474,12 +616,15 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  ";
+                string sqlTextA = "select  r.*, s.UserName, s.NickName as UserNickName , m.AwardName, m.RouletteAwardType " +
+                                    " from roulettewinnerrecord r " + 
+                                    " left join playersimpleinfo s on r.UserID = s.id " +
+                                    " left join rouletteawarditem m on r.AwardItemID = m.id ";
 
                 StringBuilder builder = new StringBuilder();
 
-                builder.Append(" r.AwardItemID != @AwardItemID ");
-                mycmd.Parameters.AddWithValue("@AwardItemID", noneAwardItem.ID);
+                //builder.Append(" r.AwardItemID != @AwardItemID ");
+                //mycmd.Parameters.AddWithValue("@AwardItemID", noneAwardItem.ID);
 
                 if (!string.IsNullOrEmpty(UserName))
                 {
@@ -500,6 +645,19 @@ namespace DataBaseProvider
                     }
                     builder.Append(" r.AwardItemID = @AwardItemID ");
                     mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
+                }
+                else
+                {
+                    //如果外部传入中奖类型，则不判断为NONE的情况
+                    if (!ContainsNone)
+                    {
+                        if (builder.Length > 0)
+                        {
+                            builder.Append(" and ");
+                        }
+                        builder.Append(" m.RouletteAwardType != @RouletteAwardType ");
+                        mycmd.Parameters.AddWithValue("@RouletteAwardType", RouletteAwardType.None);
+                    }
                 }
                 if (BeginWinTime != null && !BeginWinTime.IsNull && EndWinTime != null && !EndWinTime.IsNull)
                 {
@@ -587,9 +745,14 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string sqlText = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id where r.IsPay = @IsPay";
+                string sqlText = "select  r.*, s.UserName, s.NickName as UserNickName , m.AwardName, m.RouletteAwardType " +
+                                    " from roulettewinnerrecord r " +
+                                    " left join playersimpleinfo s on r.UserID = s.id " +
+                                    " left join rouletteawarditem m on r.AwardItemID = m.id " +
+                                    " where m.RouletteAwardType = @RouletteAwardType and r.IsPay = @IsPay ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@RouletteAwardType", RouletteAwardType.RealAward);
                 mycmd.Parameters.AddWithValue("@IsPay", false);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
 

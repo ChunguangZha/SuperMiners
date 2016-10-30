@@ -52,13 +52,16 @@
 
         <DataGrid Grid.Row="4" Name="datagrid" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Width="*"  Header="商品订单号" Binding="{Binding out_trade_no}"/>
-                <DataGridTextColumn Width="*"  Header="订单类型" Binding="{Binding TradeTypeText}"/>
-                <DataGridTextColumn Width="*"  Header="支付宝订单号" Binding="{Binding alipay_trade_no}"/>
-                <DataGridTextColumn Width="*"  Header="付款账户" Binding="{Binding buyer_email}"/>
-                <DataGridTextColumn Width="*"  Header="支付金额" Binding="{Binding total_fee}"/>
-                <DataGridTextColumn Width="*"  Header="价值灵币" Binding="{Binding value_rmb}"/>
-                <DataGridTextColumn Width="*"  Header="付款时间" Binding="{Binding pay_time}"/>
+                <DataGridTextColumn Width="*"  Header="记录ID" Binding="{Binding RecordID}"/>
+                <DataGridTextColumn Width="*"  Header="用户名" Binding="{Binding UserName}"/>
+                <DataGridTextColumn Width="*"  Header="所中奖项" Binding="{Binding AwardItemName}"/>
+                <DataGridTextColumn Width="*"  Header="中奖时间" Binding="{Binding WinTime}"/>
+                <DataGridTextColumn Width="*"  Header="领奖QQ" Binding="{Binding GotInfo1}"/>
+                <DataGridTextColumn Width="*"  Header="领奖电话" Binding="{Binding GotInfo2}"/>
+                <DataGridTextColumn Width="*"  Header="是否领取" Binding="{Binding IsGot}"/>
+                <DataGridTextColumn Width="*"  Header="领取时间" Binding="{Binding GotTime}"/>
+                <DataGridTextColumn Width="*"  Header="是否支付" Binding="{Binding IsPay}"/>
+                <DataGridTextColumn Width="*"  Header="支付时间" Binding="{Binding PayTime}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

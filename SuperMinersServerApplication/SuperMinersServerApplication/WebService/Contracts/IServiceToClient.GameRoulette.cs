@@ -34,7 +34,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardIndex);
+        RouletteWinnerRecord FinishRoulette(string token, string userName, int winAwardID);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetRouletteAward",

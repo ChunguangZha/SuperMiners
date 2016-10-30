@@ -28,7 +28,8 @@ namespace SuperMinersCustomServiceSystem
         public MainWindow()
         {
             InitializeComponent();
-            this.Title += "   --" + GlobalData.CurrentAdmin.UserName;
+            //this.Title += "   --" + GlobalData.CurrentAdmin.UserName;
+            this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -48,6 +49,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
 
+            this.controlRouletteCurrentAwardItem.RegisterEvents();
         }
 
         private void btnRefreshTotalInfo_Click(object sender, RoutedEventArgs e)
@@ -139,6 +141,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void Window_Closed(object sender, EventArgs e)
         {
+            this.controlRouletteCurrentAwardItem.RemoveEvents();
             GlobalData.Client.LogoutAdmin();
         }
 
@@ -165,6 +168,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlRouletteActiveWinRealAwardRecords.Visibility = System.Windows.Visibility.Collapsed;
             this.controlRouletteWinAwardHistoryRecords.Visibility = System.Windows.Visibility.Collapsed;
             this.controlRouletteRouletteAwardItemListControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlRouletteCurrentAwardItem.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlRouletteRoundList.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -271,23 +276,40 @@ namespace SuperMinersCustomServiceSystem
 
         private void tvL2_FS_Roulette_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            App.GameRouletteVMObject.AsyncGetAwardItems();
+            App.GameRouletteVMObject.AsyncGetCurrentAwardItems();
+            App.GameRouletteVMObject.AsyncGetNotPayWinAwardRecords();
             HideAllControls();
             this.controlRouletteActiveWinRealAwardRecords.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            App.GameRouletteVMObject.AsyncGetAwardItems();
+            App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            App.GameRouletteVMObject.AsyncGetCurrentAwardItems();
             HideAllControls();
             this.controlRouletteWinAwardHistoryRecords.Visibility = System.Windows.Visibility.Visible;
         }
 
-        private void tvL2_FS_Roulette_AwardItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void tvL2_FS_Roulette_AllAwardItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            App.GameRouletteVMObject.AsyncGetAwardItems();
+            App.GameRouletteVMObject.AsyncGetAllAwardItems();
             HideAllControls();
             this.controlRouletteRouletteAwardItemListControl.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_FS_Roulette_CurrentAwardItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            App.GameRouletteVMObject.AsyncGetCurrentAwardItems();
+            HideAllControls();
+            this.controlRouletteCurrentAwardItem.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_FS_Roulette_RoundList_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            App.GameRouletteVMObject.AsyncGetAllRouletteRoundInfo();
+            HideAllControls();
+            this.controlRouletteRoundList.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

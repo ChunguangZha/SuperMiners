@@ -141,6 +141,8 @@ namespace MetaData.User
                 MinersCount = this.MinersCount,
                 MinesCount = this.MinesCount,
                 RMB = this.RMB,
+                FreezingRMB = this.FreezingRMB,
+                TempOutputStonesStartTime = this.TempOutputStonesStartTime,
                 StockOfDiamonds = this.StockOfDiamonds,
                 StockOfStones = this.StockOfStones,
                 StonesReserves = this.StonesReserves,
@@ -162,6 +164,8 @@ namespace MetaData.User
             this.MinersCount = fortuneInfo.MinersCount;
             this.MinesCount = fortuneInfo.MinesCount;
             this.RMB = fortuneInfo.RMB;
+            this.FreezingRMB = fortuneInfo.FreezingRMB;
+            this.TempOutputStonesStartTime = fortuneInfo.TempOutputStonesStartTime;
             this.StockOfDiamonds = fortuneInfo.StockOfDiamonds;
             this.StockOfStones = fortuneInfo.StockOfStones;
             this.StonesReserves = fortuneInfo.StonesReserves;

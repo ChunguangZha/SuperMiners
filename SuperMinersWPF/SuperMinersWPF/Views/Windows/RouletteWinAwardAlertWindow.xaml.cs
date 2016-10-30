@@ -25,41 +25,41 @@ namespace SuperMinersWPF.Views.Windows
         public RouletteWinAwardAlertWindow(RouletteWinnerRecord record)
         {
             InitializeComponent();
-            this._record = record;
-            this.DataContext = new RouletteAwardItemUIModel(record.AwardItem);
+            //this._record = record;
+            //this.DataContext = new RouletteAwardItemUIModel(record.AwardItem);
 
-            if (record.AwardItem.RouletteAwardType == RouletteAwardType.None)
-            {
-                this.btnTakeAward.Visibility = System.Windows.Visibility.Collapsed;
-                this.txtMessage.Visibility = System.Windows.Visibility.Visible;
-                this.btnClose.Visibility = System.Windows.Visibility.Visible;
-                this.txtMessage.Text = "再来一次吧...";
-            }
-            else
-            {
-                if (this._record.AwardItem.IsRealAward)
-                {
-                    this.btnTakeAward.Visibility = System.Windows.Visibility.Visible;
-                    this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
-                    this.btnClose.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    this.btnTakeAward.Visibility = System.Windows.Visibility.Collapsed;
-                    this.txtMessage.Visibility = System.Windows.Visibility.Visible;
-                    this.btnClose.Visibility = System.Windows.Visibility.Visible;
-                    this.txtMessage.Text = "奖品已经添加到您的账户中，敬请查收。";
-                }
-            }
+            //if (record.AwardItem.RouletteAwardType == RouletteAwardType.None)
+            //{
+            //    this.btnTakeAward.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.txtMessage.Visibility = System.Windows.Visibility.Visible;
+            //    this.btnClose.Visibility = System.Windows.Visibility.Visible;
+            //    this.txtMessage.Text = "再来一次吧...";
+            //}
+            //else
+            //{
+            //    if (this._record.AwardItem.IsRealAward)
+            //    {
+            //        this.btnTakeAward.Visibility = System.Windows.Visibility.Visible;
+            //        this.txtMessage.Visibility = System.Windows.Visibility.Collapsed;
+            //        this.btnClose.Visibility = System.Windows.Visibility.Collapsed;
+            //    }
+            //    else
+            //    {
+            //        this.btnTakeAward.Visibility = System.Windows.Visibility.Collapsed;
+            //        this.txtMessage.Visibility = System.Windows.Visibility.Visible;
+            //        this.btnClose.Visibility = System.Windows.Visibility.Visible;
+            //        this.txtMessage.Text = "奖品已经添加到您的账户中，敬请查收。";
+            //    }
+            //}
         }
 
         private void btnTakeAward_Click(object sender, RoutedEventArgs e)
         {
-            RouletteWinAwardTakeWindow win = new RouletteWinAwardTakeWindow(this._record);
-            if (win.ShowDialog() == true)
-            {
-                this.DialogResult = true;
-            }
+            //RouletteWinAwardTakeWindow win = new RouletteWinAwardTakeWindow(this._record);
+            //if (win.ShowDialog() == true)
+            //{
+            //    this.DialogResult = true;
+            //}
         }
 
         private void btnClose_Click(object sender, RoutedEventArgs e)

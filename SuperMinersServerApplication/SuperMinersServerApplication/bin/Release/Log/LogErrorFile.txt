@@ -1,12 +1,20 @@
-Error:  [2016/10/28 14:58:02] ---- Log: ServiceToClient.GetAllPayWinAwardRecords Exception.
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersServerApplication.Controller.Game.RouletteAwardController.GetAllPayWinAwardRecords(String UserName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\Game\RouletteAwardController.cs:行号 113
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetAllWinAwardRecords(String token, String userName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 159
+Error:  [2016/10/30 18:43:51] ---- Log: 获取贡献榜异常
+Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetTopList(String valueType) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 962
+   在 DataBaseProvider.UserInfoDBProvider.GetExpTopList() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 885
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetExpTopList(String token) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Game.cs:行号 221
 -----------------------------------------------------
 *********+++++++++++++***********
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable[] dataTables, Int32 startRecord, Int32 maxRecords, IDbCommand command, CommandBehavior behavior)
-   在 System.Data.Common.DbDataAdapter.Fill(DataTable dataTable)
-   在 DataBaseProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(Int32 state, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\DataBaseProvider\WithdrawRMBRecordDBProvider.cs:行号 291
-   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.GetWithdrawRMBRecordList(String token, Int32 state, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 807
+, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Message.cs:行号 30
+-----------------------------------------------------
+*********+++++++++++++***********
+tte.cs:行号 52
+-----------------------------------------------------
+*********+++++++++++++***********
+�号 175
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetAllWinAwardRecords(String token, String userName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 159
+-----------------------------------------------------
+*********+++++++++++++***********
+state, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 807
 -----------------------------------------------------
 *********+++++++++++++***********
  ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:3133

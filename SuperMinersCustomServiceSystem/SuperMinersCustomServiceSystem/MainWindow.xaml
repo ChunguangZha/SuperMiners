@@ -86,9 +86,11 @@
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Header="幸运大转盘" Name="tvL2_FS_Roulette" Style="{StaticResource TVItemL2Style}">
-                    <TreeViewItem Name="tvL2_FS_Roulette_AwardItem" Header="奖项管理" MouseDoubleClick="tvL2_FS_Roulette_AwardItem_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_FS_Roulette_AllAwardItem" Header="全部奖项管理" MouseDoubleClick="tvL2_FS_Roulette_AllAwardItem_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_FS_Roulette_CurrentAwardItem" Header="当前展出奖项管理" MouseDoubleClick="tvL2_FS_Roulette_CurrentAwardItem_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_FS_Roulette_Active" Header="未支付的中奖记录" MouseDoubleClick="tvL2_FS_Roulette_Active_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_FS_Roulette_HistoryRecord" Header="中奖历史记录" MouseDoubleClick="tvL2_FS_Roulette_HistoryRecord_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_FS_Roulette_RoundList" Header="每轮开奖信息" MouseDoubleClick="tvL2_FS_Roulette_RoundList_MouseDoubleClick"/>
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL2NoticeManage" Header="公告管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL2NoticeManage_MouseDoubleClick">
@@ -116,6 +118,8 @@
             <gameControl:RouletteActiveWinRealAwardListControl x:Name="controlRouletteActiveWinRealAwardRecords" Visibility="Collapsed"/>
             <gameControl:RouletteWinAwardRecordHistoryControl x:Name="controlRouletteWinAwardHistoryRecords" Visibility="Collapsed"/>
             <gameControl:RouletteAwardItemListControl x:Name="controlRouletteRouletteAwardItemListControl" Visibility="Collapsed"/>
+            <gameControl:RouletteCurrentAwardItemListControl x:Name="controlRouletteCurrentAwardItem" Visibility="Collapsed"/>
+            <gameControl:RouletteRoundRecordListControl x:Name="controlRouletteRoundList" Visibility="Collapsed"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>

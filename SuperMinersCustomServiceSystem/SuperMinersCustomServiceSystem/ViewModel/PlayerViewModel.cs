@@ -39,7 +39,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public void AsyncGetListPlayers()
         {
-            if (GlobalData.Client.IsConnected)
+            if (GlobalData.Client != null && GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在加载所有玩家信息...");
                 GlobalData.Client.GetPlayers();

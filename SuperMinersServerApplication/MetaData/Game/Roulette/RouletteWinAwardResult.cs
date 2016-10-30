@@ -11,7 +11,7 @@ namespace MetaData.Game.Roulette
     public class RouletteWinAwardResult
     {
         [DataMember]
-        public int WinAwardItemIndex;
+        public int WinAwardItemID;
 
         [DataMember]
         public int OperResultCode;

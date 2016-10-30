@@ -326,6 +326,30 @@ namespace DataBaseProvider
             return orders;
         }
 
+        internal static RouletteRoundInfo[] GetRouletteRoundInfoFromDataTable(DataTable dt)
+        {
+            if (dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            RouletteRoundInfo[] items = new RouletteRoundInfo[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                RouletteRoundInfo item = new RouletteRoundInfo();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                item.AwardPoolSumStone = Convert.ToInt32(dt.Rows[i]["AwardPoolSumStone"]);
+                item.WinAwardSumYuan = Convert.ToDecimal(dt.Rows[i]["WinAwardSumYuan"]);
+                item.StartTime = Convert.ToDateTime(dt.Rows[i]["StartTime"]);
+                item.MustWinAwardItemID = Convert.ToInt32(dt.Rows[i]["MustWinAwardItemID"]);
+                item.Finished = Convert.ToBoolean(dt.Rows[i]["Finished"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
         internal static RouletteAwardItem[] GetRouletteAwardItemFromDataTable(DataTable dt)
         {
             if (dt.Rows.Count == 0)

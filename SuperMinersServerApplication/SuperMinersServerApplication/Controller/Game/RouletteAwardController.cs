@@ -32,10 +32,12 @@ namespace SuperMinersServerApplication.Controller.Game
         #endregion
 
         /// <summary>
-        /// 奖项只限12个
+        /// 奖项只限12个。Key：ID
         /// </summary>
-        public RouletteAwardItem[] _listCurrentRouletteAwardItems = null;
+        public Dictionary<int, RouletteAwardItem> _dicCurrentRouletteAwardItems = null;
         private object _lockCurrentAwardIems = new object();
+
+        public Dictionary<int, RouletteAwardItem> _dicAllRouletteAwardItems = null;
 
         /// <summary>
         /// 临时中奖记录。key: UserName, value:AwardItemIndex
@@ -47,25 +49,31 @@ namespace SuperMinersServerApplication.Controller.Game
         /// </summary>
         public List<RouletteWinnerRecord> _finishedRouletteWinnerRecord = new List<RouletteWinnerRecord>();
 
-        /// <summary>
-        /// 奖池累计矿石数
-        /// </summary>
-        public int _tempTotalStone = 0;
-        /// <summary>
-        /// 概率为0的大奖本次中奖下标(每轮随机计算)
-        /// </summary>
-        private int _mustWinLargeAwardIndex = -1;
+        public RouletteRoundInfo _currentRound = null;
 
-        private int _noneAwardIndex = -1;
+        public decimal CurrentRoundProfitYuan
+        {
+            get
+            {
+                if (_currentRound == null)
+                {
+                    return 0;
+                }
+
+                return _currentRound.AwardPoolSumStone / GlobalConfig.GameConfig.Stones_RMB / GlobalConfig.GameConfig.Yuan_RMB - _currentRound.WinAwardSumYuan;
+            }
+        }
+
+        private int _noneAwardID = -1;
 
         /// <summary>
         /// 小奖集合
         /// </summary>
-        private int[] _smallAwardIndexes = null;
+        private List<int> _listSmallAwardID = new List<int>();
         /// <summary>
         /// 概率为0的大奖集合
         /// </summary>
-        private int[] _largeAwardIndexes = null;
+        private List<int> _listLargeAwardID = new List<int>();
 
 
         public object _lockStart = new object();
@@ -75,21 +83,36 @@ namespace SuperMinersServerApplication.Controller.Game
             try
             {
                 //从数据库读取
-                _listCurrentRouletteAwardItems = DBProvider.GameRouletteDBProvider.GetCurrentRouletteAwardItemsList();
-                if (_listCurrentRouletteAwardItems != null)
+                var awardItems = DBProvider.GameRouletteDBProvider.GetCurrentRouletteAwardItemsList();
+                if (awardItems != null)
                 {
+                    _dicCurrentRouletteAwardItems = new Dictionary<int, RouletteAwardItem>();
+                    foreach (var item in awardItems)
+                    {
+                        _dicCurrentRouletteAwardItems.Add(item.ID, item);
+                    }
+
                     var notPayRecords = DBProvider.GameRouletteDBProvider.GetNotPayWinAwardRecords();
                     if (notPayRecords != null)
                     {
                         foreach (var record in notPayRecords)
                         {
-                            record.AwardItem = _listCurrentRouletteAwardItems.FirstOrDefault(o => o.ID == record.RouletteAwardItemID);
+                            _dicCurrentRouletteAwardItems.TryGetValue(record.RouletteAwardItemID, out record.AwardItem);
                             this._finishedRouletteWinnerRecord.Add(record);
                         }
                     }
 
-                    FindKeyIndex(this._listCurrentRouletteAwardItems, out this._noneAwardIndex, out this._smallAwardIndexes, out this._largeAwardIndexes);
-                    ReStartLargeAwardExponent();
+                    FindKeyIndex(); 
+                    InitLastRouletteRoundInfoFromDB();
+                }
+                awardItems = DBProvider.GameRouletteDBProvider.GetAllRouletteAwardItems();
+                if (awardItems != null)
+                {
+                    _dicAllRouletteAwardItems = new Dictionary<int, RouletteAwardItem>();
+                    foreach (var item in awardItems)
+                    {
+                        this._dicAllRouletteAwardItems.Add(item.ID, item);
+                    }
                 }
             }
             catch (Exception exc)
@@ -98,65 +121,117 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
+        public void SaveRouletteRoundInfoToData()
+        {
+            if (this._currentRound != null && this._currentRound.MustWinAwardItemID > 0)
+            {
+                DBProvider.GameRouletteDBProvider.SaveRouletteRoundInfo(this._currentRound);
+            }
+        }
+
+        private void InitLastRouletteRoundInfoFromDB()
+        {
+            this._currentRound = DBProvider.GameRouletteDBProvider.GetLastRouletteRoundInfo();
+            if (this._currentRound == null || this._currentRound.Finished)
+            {
+                this._currentRound = new RouletteRoundInfo()
+                {
+                    StartTime = DateTime.Now,
+                    Finished = false,
+                    MustWinAwardItemID = ReStartLargeAwardExponent()
+                };
+            }
+            else
+            {
+                if (!this._listLargeAwardID.Contains(this._currentRound.MustWinAwardItemID))
+                {
+                    this._currentRound.MustWinAwardItemID = ReStartLargeAwardExponent();
+                }
+            }
+        }
+
+        private void CreateNewRound()
+        {
+
+            this._currentRound = new RouletteRoundInfo()
+            {
+                StartTime = DateTime.Now,
+                Finished = false,
+                MustWinAwardItemID = ReStartLargeAwardExponent()
+            };
+        }
+        
         public RouletteWinnerRecord[] GetNotPayWinAwardRecords()
         {
             return this._finishedRouletteWinnerRecord.ToArray();
         }
 
-        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        public RouletteRoundInfo[] GetAllRouletteRoundInfo()
         {
-            if (this._listCurrentRouletteAwardItems == null)
+            var roundInfos = DBProvider.GameRouletteDBProvider.GetAllRouletteRoundInfo();
+            if (roundInfos == null || roundInfos.Length == 0 || this._currentRound == null)
             {
                 return null;
             }
-            var records = DBProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex, this._listCurrentRouletteAwardItems[this._noneAwardIndex]);
+
+            var lastRound = roundInfos[roundInfos.Length - 1];
+            if (!lastRound.Finished && lastRound.MustWinAwardItemID == this._currentRound.MustWinAwardItemID)
+            {
+                roundInfos[roundInfos.Length - 1] = this._currentRound;
+            }
+
+            return roundInfos;
+        }
+
+        public RouletteWinnerRecord[] GetAllPayWinAwardRecords(string UserName, int RouletteAwardItemID, bool ContainsNone, MyDateTime BeginWinTime, MyDateTime EndWinTime, int IsGot, int IsPay, int pageItemCount, int pageIndex)
+        {
+            if (this._dicAllRouletteAwardItems == null || this._dicAllRouletteAwardItems.Count == 0 || !this._dicAllRouletteAwardItems.ContainsKey(this._noneAwardID))
+            {
+                return null;
+            }
+            var records = DBProvider.GameRouletteDBProvider.GetAllPayWinAwardRecords(UserName, RouletteAwardItemID, ContainsNone, BeginWinTime, EndWinTime, IsGot, IsPay, pageItemCount, pageIndex, this._dicAllRouletteAwardItems[this._noneAwardID]);
 
             if (records != null)
             {
                 foreach (var record in records)
                 {
-                    record.AwardItem = this._listCurrentRouletteAwardItems.FirstOrDefault(item => item.ID == record.RouletteAwardItemID);
+                    this._dicAllRouletteAwardItems.TryGetValue(record.RouletteAwardItemID, out record.AwardItem);
                 }
             }
 
             return records;
         }
 
-        private void ReStartLargeAwardExponent()
+        private int ReStartLargeAwardExponent()
         {
-            if (this._largeAwardIndexes == null || this._largeAwardIndexes.Length == 0)
+            if (this._listLargeAwardID == null || this._listLargeAwardID.Count == 0)
             {
-                _mustWinLargeAwardIndex = new Random(1).Next(0, this._largeAwardIndexes.Length);
+                return -1;
             }
 
-            _tempTotalStone = 0;
+            int index = r.Next(0, this._listLargeAwardID.Count);
+            return this._listLargeAwardID[index];
         }
 
-        private void FindKeyIndex(RouletteAwardItem[] items, out int noneIndex, out int[] smallAwardIndexes, out int[] largeAwardIndexes)
+        private void FindKeyIndex()
         {
-            List<int> listSmallAwardIndexes = new List<int>();
-            List<int> listLargeAwardIndexes = new List<int>();
-            int noneAwardIndex = -1;
-
-            for (int i = 0; i < items.Length; i++)
+            this._listLargeAwardID.Clear();
+            this._listSmallAwardID.Clear();
+            foreach (var item in this._dicCurrentRouletteAwardItems.Values)
             {
-                if (items[i].RouletteAwardType == RouletteAwardType.None)
+                if (item.RouletteAwardType == RouletteAwardType.None)
                 {
-                    noneAwardIndex = i;
+                    this._noneAwardID = item.ID;
                 }
-                if (items[i].WinProbability == 0)
+                if (item.WinProbability == 0)
                 {
-                    listLargeAwardIndexes.Add(i);
+                    this._listLargeAwardID.Add(item.ID);
                 }
                 else
                 {
-                    listSmallAwardIndexes.Add(i);
+                    this._listSmallAwardID.Add(item.ID);
                 }
             }
-
-            noneIndex = noneAwardIndex;
-            smallAwardIndexes = listSmallAwardIndexes.ToArray();
-            largeAwardIndexes = listLargeAwardIndexes.ToArray();
         }
 
         public int AddAwardItem(RouletteAwardItem item)
@@ -177,10 +252,13 @@ namespace SuperMinersServerApplication.Controller.Game
             bool isOK = DBProvider.GameRouletteDBProvider.UpdateRouletteAwardItem(item);
             if (isOK)
             {
-                var tempItem = _listCurrentRouletteAwardItems.FirstOrDefault(r => r.ID == item.ID);
-                if (tempItem != null)
+                if (_dicCurrentRouletteAwardItems != null)
                 {
-                    this.Init();
+                    if (_dicCurrentRouletteAwardItems.ContainsKey(item.ID))
+                    {
+                        SaveRouletteRoundInfoToData();
+                        this.Init();
+                    }
                 }
 
                 return OperResult.RESULTCODE_TRUE;
@@ -209,27 +287,12 @@ namespace SuperMinersServerApplication.Controller.Game
                     return false;
                 }
 
-                int noneIndex = -1;
-                int[] level0AwardIndexes = null;
-                int[] level1AwardIndexes = null;
-                FindKeyIndex(items, out noneIndex, out level0AwardIndexes, out level1AwardIndexes);
-
-                if (noneIndex < 0)
-                {
-                    return false;
-                }
-
                 lock (_lockCurrentAwardIems)
                 {
-                    this._listCurrentRouletteAwardItems = items;
-                    this._noneAwardIndex = noneIndex;
-                    this._smallAwardIndexes = level0AwardIndexes;
-                    this._largeAwardIndexes = level1AwardIndexes;
-                    ReStartLargeAwardExponent();
-
                     //保存到数据库
                     DBProvider.GameRouletteDBProvider.SaveCurrentRouletteAwardItemsList(items);
 
+                    SaveRouletteRoundInfoToData();
                     Init();
                 }
                 return true;
@@ -245,7 +308,12 @@ namespace SuperMinersServerApplication.Controller.Game
         {
             lock (_lockCurrentAwardIems)
             {
-                return this._listCurrentRouletteAwardItems;
+                if (this._dicCurrentRouletteAwardItems == null || this._dicCurrentRouletteAwardItems.Count == 0)
+                {
+                    return null;
+                }
+
+                return this._dicCurrentRouletteAwardItems.Values.ToArray();
             }
         }
 
@@ -257,7 +325,7 @@ namespace SuperMinersServerApplication.Controller.Game
         public RouletteWinAwardResult Start(string userName)
         {
             RouletteWinAwardResult result = new RouletteWinAwardResult();
-            if (_listCurrentRouletteAwardItems == null)
+            if (_dicCurrentRouletteAwardItems == null)
             {
                 result.OperResultCode = OperResult.RESULTCODE_FALSE;
                 return result;
@@ -272,51 +340,75 @@ namespace SuperMinersServerApplication.Controller.Game
 
             lock (_lockStart)
             {
-                _tempTotalStone += GlobalConfig.GameConfig.RouletteSpendStone;
+                this._currentRound.AwardPoolSumStone += GlobalConfig.GameConfig.RouletteSpendStone;
 
-                if (_mustWinLargeAwardIndex >= 0)
+                if (this._currentRound.MustWinAwardItemID > 0)
                 {
-                    var mustWinAwardItem = this._listCurrentRouletteAwardItems[_mustWinLargeAwardIndex];
-                    if (_tempTotalStone >= (int)((decimal)mustWinAwardItem.ValueMoneyYuan * GlobalConfig.GameConfig.Yuan_RMB * GlobalConfig.GameConfig.Stones_RMB))
+                    var mustWinAwardItem = this._dicCurrentRouletteAwardItems[this._currentRound.MustWinAwardItemID];
+                    if (CurrentRoundProfitYuan >= (decimal)mustWinAwardItem.ValueMoneyYuan)
                     {
-                        result.WinAwardItemIndex = this._mustWinLargeAwardIndex;
+                        //返回必中奖项，同时结束本轮，并保存到数据库
+                        this._currentRound.WinAwardSumYuan += (decimal)mustWinAwardItem.ValueMoneyYuan;
+                        this._currentRound.Finished = true;
+                        //保存前一轮信息
+                        this.SaveRouletteRoundInfoToData();
+                        //开始新一轮信息
+                        this.CreateNewRound();
+                        //保存到数据库
+                        this.SaveRouletteRoundInfoToData();
+
+                        result.WinAwardItemID = mustWinAwardItem.ID;
                         result.OperResultCode = OperResult.RESULTCODE_TRUE;
+
+                        if (_tempRouletteWinnerRecord.ContainsKey(userName))
+                        {
+                            _tempRouletteWinnerRecord.Remove(userName);
+                        }
+                        _tempRouletteWinnerRecord.Add(userName, mustWinAwardItem.ID);
                         return result;
                     }
                 }
+                
+                var winAwardItem = ComputeWinAwardItem();
 
-                int totalProbabilityMaxValue = ComputeWinAwardProbabilitySum();
-
-                value = GetRandomValue(totalProbabilityMaxValue);
-                int winAwardIndex = this._noneAwardIndex;
-                int tempTotalProbability = 0;
-                for (int i = 0; i < 12; i++)
-                {
-                    var awardItem = this._listCurrentRouletteAwardItems[i];
-                    int awardWinProbability = (int)awardItem.WinProbability;
-                    if (awardWinProbability != 0)
-                    {
-                        if (tempTotalProbability <= value && value <= tempTotalProbability + awardWinProbability)
-                        {
-                            winAwardIndex = i;
-                        }
-                        tempTotalProbability += (int)awardItem.WinProbability;
-                    }
-                }
-
-                result.WinAwardItemIndex = winAwardIndex;
+                this._currentRound.WinAwardSumYuan += (decimal)winAwardItem.ValueMoneyYuan;
+                result.WinAwardItemID = winAwardItem.ID;
                 result.OperResultCode = OperResult.RESULTCODE_TRUE;
 
                 if (_tempRouletteWinnerRecord.ContainsKey(userName))
                 {
                     _tempRouletteWinnerRecord.Remove(userName);
                 }
-                _tempRouletteWinnerRecord.Add(userName, winAwardIndex);
+                _tempRouletteWinnerRecord.Add(userName, winAwardItem.ID);
             }
 
             LogHelper.Instance.AddInfoLog("玩家["+ userName +"]，开始幸运大转盘抽奖。");
 
             return result;
+        }
+
+        private RouletteAwardItem ComputeWinAwardItem()
+        {
+            RouletteAwardItem winAwardItem = this._dicCurrentRouletteAwardItems[this._noneAwardID];
+            int totalProbabilityMaxValue = ComputeWinAwardProbabilitySum();
+
+            int ran = GetRandomValue(totalProbabilityMaxValue);
+            int tempTotalProbability = 0;
+
+            foreach (var awardItem in this._dicCurrentRouletteAwardItems.Values)
+            {
+                int awardWinProbability = (int)awardItem.WinProbability;
+                if (awardWinProbability != 0)
+                {
+                    if (tempTotalProbability <= ran && ran <= tempTotalProbability + awardWinProbability)
+                    {
+                        winAwardItem = awardItem;
+                    }
+                    tempTotalProbability += (int)awardItem.WinProbability;
+                }
+            }
+
+            return winAwardItem;
         }
 
         Random r = new Random(1);
@@ -327,35 +419,32 @@ namespace SuperMinersServerApplication.Controller.Game
             for (int i = 0; i < maxValue; i++)
             {
                 value = r.Next(1, maxValue);
-                //Console.WriteLine(value);
             }
 
-            //Console.WriteLine("Random : " + value);
             return value;
         }
 
         public int ComputeWinAwardProbabilitySum()
         {
             int totalProbabilityMaxValue = 0;
-            for (int i = 0; i < 12; i++)
+            foreach(var awardItem in this._dicCurrentRouletteAwardItems.Values)
             {
-                var awardItem = this._listCurrentRouletteAwardItems[i];
                 totalProbabilityMaxValue += (int)awardItem.WinProbability;
             }
 
             return totalProbabilityMaxValue;
         }
 
-        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardIndex)
+        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardID)
         {
-            int serverWinAwardIndex = -1;
+            int serverWinAwardID = -1;
 
-            if (!this._tempRouletteWinnerRecord.TryGetValue(userName, out serverWinAwardIndex))
+            if (!this._tempRouletteWinnerRecord.TryGetValue(userName, out serverWinAwardID))
             {
                 return null;
             }
             
-            if (serverWinAwardIndex != winAwardIndex && winAwardIndex != this._noneAwardIndex)
+            if (serverWinAwardID != winAwardID && winAwardID != this._noneAwardID)
             {
                 return null;
             }
@@ -363,7 +452,8 @@ namespace SuperMinersServerApplication.Controller.Game
             
             RouletteWinnerRecord record = new RouletteWinnerRecord()
             {
-                AwardItem = this._listCurrentRouletteAwardItems[winAwardIndex],
+                RouletteAwardItemID = winAwardID,
+                AwardItem = this._dicCurrentRouletteAwardItems[winAwardID],
                 UserID = userID,
                 UserName = userName,
                 UserNickName = userNickName,
@@ -372,15 +462,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 IsPay = false
             };
 
-            //Save Record
-            DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
-            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserName, record.RouletteAwardItemID, record.WinTime);
-            if (dbRecord != null)
-            {
-                record.RecordID = dbRecord.RecordID;
-            }
-
-            var awardItem = this._listCurrentRouletteAwardItems[winAwardIndex];
+            var awardItem = this._dicCurrentRouletteAwardItems[winAwardID];
             if (awardItem.RouletteAwardType != RouletteAwardType.None)
             {
                 if (awardItem.RouletteAwardType != RouletteAwardType.RealAward)
@@ -403,6 +485,15 @@ namespace SuperMinersServerApplication.Controller.Game
                     this._finishedRouletteWinnerRecord.Add(record);
                 }
             }
+
+            //Save Record
+            DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
+            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserID, record.UserName, winAwardID, record.WinTime);
+            if (dbRecord != null)
+            {
+                record.RecordID = dbRecord.RecordID;
+            }
+
             return record;
         }
 
@@ -426,6 +517,8 @@ namespace SuperMinersServerApplication.Controller.Game
             }
             record.IsGot = true;
             record.GotTime = DateTime.Now;
+            record.GotInfo1 = info1;
+            record.GotInfo2 = info2;
             //Save to DB
             DBProvider.GameRouletteDBProvider.SetWinnerRecordGot(record);
 

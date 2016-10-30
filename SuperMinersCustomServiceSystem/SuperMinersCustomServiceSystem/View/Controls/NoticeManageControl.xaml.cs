@@ -28,6 +28,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (App.NoticeVMObject == null || GlobalData.CurrentAdmin == null)
+            {
+                return;
+            }
+
             App.NoticeVMObject.AsyncGetAllNotice();
 
             if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)

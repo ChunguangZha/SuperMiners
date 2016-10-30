@@ -46,14 +46,20 @@
         </Grid>
         <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding PlayerUserName, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="提现灵币" Width="*" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="获得人民币" Width="*" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="提交时间" Width="*" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付状态" Width="*" Binding="{Binding StateText, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付宝订单号" Width="*" Binding="{Binding AlipayOrderNumber, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="拒绝原因" Width="*" Binding="{Binding Message, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ID" Width="Auto" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="提现灵币" Width="Auto" Binding="{Binding WidthdrawRMB, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="获得人民币" Width="Auto" Binding="{Binding ValueYuan, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="提交时间" Width="Auto" Binding="{Binding CreateTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付状态" Width="Auto" Binding="{Binding StateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付宝订单号" Width="Auto" Binding="{Binding AlipayOrderNumber, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="拒绝原因" Width="*"/>
+                <DataGridTemplateColumn Header="" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Message, Mode=OneWay}" IsReadOnly="True" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

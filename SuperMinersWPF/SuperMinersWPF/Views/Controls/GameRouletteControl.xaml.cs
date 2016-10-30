@@ -1,4 +1,5 @@
 ﻿using MetaData.Game.Roulette;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views.Windows;
 using System;
@@ -30,13 +31,12 @@ namespace SuperMinersWPF.Views.Controls
 
         private Color _selectItemColor = Color.FromArgb(255, 180, 252, 247);
         private Color _normalItemColor = Color.FromArgb(255, 255, 220, 21);
-        private RouletteWinAwardResult _winedAwardResult = null;
+        //private RouletteWinAwardResult _winedAwardResult = null;
+        private int _winedAwardItemID = 0;
         int _startIndex;
         int _downSpeedStartIndex = 3 * 12;
         int _endIndex;
         int _endTickIndex;
-        int _noneWinAwardIndex = 11;
-        int _outTimeMillSecond = 4000;
 
         public GameRouletteControl()
         {
@@ -107,22 +107,35 @@ namespace SuperMinersWPF.Views.Controls
             }
         }
 
+        private int FindAwardIDIndex(int awardItemID)
+        {
+            int index = 11;
+            for (int i = 0; i < App.GameRouletteVMObject.ListAwardItems.Count; i++)
+            {
+                if (App.GameRouletteVMObject.ListAwardItems[i].ID == awardItemID)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
         void Client_StartRouletteCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.Roulette.RouletteWinAwardResult> e)
         {
             try
             {
                 if (e.Error != null || e.Result == null)
                 {
-                    _winedAwardResult = new RouletteWinAwardResult()
-                    {
-                        WinAwardItemIndex = _noneWinAwardIndex
-                    };
+                    MyMessageBox.ShowInfo("连接服务器失败。");
+                    return;
                 }
 
-                this._winedAwardResult = e.Result;
+                this._winedAwardItemID = e.Result.WinAwardItemID;
 
                 _startIndex = new Random(1).Next(0, 11);
-                _endIndex = _winedAwardResult.WinAwardItemIndex;
+                _endIndex = FindAwardIDIndex(e.Result.WinAwardItemID);
                 _endTickIndex = 4 * 12 + _endIndex;
                 _downSpeedStartIndex = 3 * 12 + _endIndex;
 
@@ -131,6 +144,7 @@ namespace SuperMinersWPF.Views.Controls
             }
             catch (Exception exc)
             {
+                this.btnStart.IsEnabled = true;
                 MyMessageBox.ShowInfo(exc.Message);
             }
         }
@@ -143,19 +157,26 @@ namespace SuperMinersWPF.Views.Controls
                 if (e.Error != null)
                 {
                     MyMessageBox.ShowInfo("提交服务器异常，请联系管理员。");
+                    this.btnStart.IsEnabled = true;
                     return;
                 }
                 if (e.Result == null)
                 {
                     MyMessageBox.ShowInfo("提交服务器失败，请联系管理员。");
+                    this.btnStart.IsEnabled = true;
                     return;
                 }
                 _syn.Post(o =>
                 {
-                    RouletteWinAwardAlertWindow win = new RouletteWinAwardAlertWindow(e.Result);
-                    win.ShowDialog();
+                    RouletteAwardItemUIModel awardItem = new RouletteAwardItemUIModel(e.Result.AwardItem);
+                    this.imgWinedAwardItem.Source = awardItem.Icon;
+                    this.txtWinedAwardItem.Text = awardItem.AwardName;
+                    this.panelWinedAwardItem.Visibility = System.Windows.Visibility.Visible;
+                    App.GameRouletteVMObject.ListMyWinAwardRecords.Add(new SuperMinersCustomServiceSystem.Model.RouletteWinnerRecordUIModel(e.Result));
 
-                    this.btnStart.IsEnabled = true;
+                    //RouletteWinAwardAlertWindow win = new RouletteWinAwardAlertWindow(e.Result);
+                    //win.ShowDialog();
+
                     ResetItemBackground();
                 }, null);
             }
@@ -199,7 +220,7 @@ namespace SuperMinersWPF.Views.Controls
                 _syn.Post(o =>
                 {
                     App.BusyToken.ShowBusyWindow("正在处理中...");
-                    GlobalData.Client.FinishRoulette(this._winedAwardResult.WinAwardItemIndex, null);
+                    GlobalData.Client.FinishRoulette(this._winedAwardItemID, null);
                 }, null);
             }
             catch (Exception exc)
@@ -230,7 +251,14 @@ namespace SuperMinersWPF.Views.Controls
 
         private void btnViewMyWinAwardRecord_Click(object sender, RoutedEventArgs e)
         {
+            RouletteMyWinnedRecordsWindow win = new RouletteMyWinnedRecordsWindow();
+            win.ShowDialog();
+        }
 
+        private void panelWinedAlardItem_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            this.panelWinedAwardItem.Visibility = System.Windows.Visibility.Collapsed;
+            this.btnStart.IsEnabled = true;
         }
     }
 }

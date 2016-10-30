@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Windows;
 
 namespace SuperMinersCustomServiceSystem.Model
 {
@@ -27,12 +28,8 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
-                this._icon = null;
-                if (this._parentObject.IconBuffer != null)
-                {
-                    this._icon = new BitmapImage();
-                    this._icon.StreamSource = new MemoryStream(this._parentObject.IconBuffer);
-                }
+
+                this._icon = GetIconSource(this._parentObject.IconBuffer);
 
                 NotifyPropertyChange("ID");
                 NotifyPropertyChange("AwardName");
@@ -42,6 +39,42 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("IsLargeAward");
                 NotifyPropertyChange("WinProbability");
                 NotifyPropertyChange("Icon");
+            }
+        }
+
+        public void SetIcon(byte[] buffer)
+        {
+            this._parentObject.IconBuffer = buffer;
+            this._icon = GetIconSource(buffer);
+        }
+
+        public static BitmapSource GetIconSource(byte[] buffer)
+        {
+            if (buffer == null)
+            {
+                return null;
+            }
+
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(new MemoryStream(buffer));
+                ptr = bmp.GetHbitmap();
+
+                return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                      ptr, IntPtr.Zero, Int32Rect.Empty,
+                      BitmapSizeOptions.FromEmptyOptions());
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                if (ptr != IntPtr.Zero)
+                {
+                    DeleteObject(ptr);
+                }
             }
         }
 
@@ -110,15 +143,18 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
-        private BitmapImage _icon = null;
+        private BitmapSource _icon = null;
 
-        public BitmapImage Icon
+        public BitmapSource Icon
         {
             get
             {
                 return _icon;
             }
         }
+
+        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObject);
 
     }
 }

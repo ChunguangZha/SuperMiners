@@ -95,6 +95,19 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return IsPay ? Visibility.Collapsed : Visibility.Visible; }
         }
 
+        public Visibility GetButtonVisibility
+        {
+            get
+            {
+                if (this.AwardItem != null && this.AwardItem.RouletteAwardType == RouletteAwardType.RealAward && !this.IsGot)
+                {
+                    return Visibility.Visible;
+                }
+
+                return Visibility.Collapsed;
+            }
+        }
+
         /// <summary>
         /// 允许为null
         /// </summary>

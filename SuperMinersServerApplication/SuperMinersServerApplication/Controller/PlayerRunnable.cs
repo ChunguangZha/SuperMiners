@@ -557,6 +557,8 @@ namespace SuperMinersServerApplication.Controller
 
                     myTrans.Commit();
 
+                    LogHelper.Instance.AddInfoLog("玩家[" + this.BasePlayer.SimpleInfo.UserName + "] 申请提现" + getRMBCount + " 灵币，当前冻结灵币为：" + this.BasePlayer.FortuneInfo.FreezingRMB);
+
                     return OperResult.RESULTCODE_TRUE;
                 }
                 catch (Exception exc)

@@ -16,30 +16,35 @@
         <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
         <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="ID" Width="Auto" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="奖项名称" Width="*" Binding="{Binding AwardName, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="奖项数值" Width="*" Binding="{Binding AwardNumber, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="奖项类型" Width="*" Binding="{Binding RouletteAwardType, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="价值人民币" Width="*" Binding="{Binding ValueMoneyYuan, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="是否为大奖" Width="*" Binding="{Binding IsLargeAward, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="中奖概率" Width="*" Binding="{Binding WinProbability, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Width="50" >
+                <DataGridTemplateColumn Header="图标" Width="74">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="修改" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnUpdate_Click"/>
+                            <Image Source="{Binding Icon}" Width="64" Height="64" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="50" >
+                <DataGridTemplateColumn Width="90" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="删除" Visibility="{Binding PayButtonVisibility}" Width="70" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnDelete_Click"/>
+                            <Button Content="修改" Visibility="{Binding PayButtonVisibility}" Width="70" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnUpdate_Click"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Width="90" >
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="删除" Visibility="{Binding PayButtonVisibility}" Width="70" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnDelete_Click"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
         <Button Grid.Row="3" Name="btnAdd" Content="添加奖项" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnAdd_Click"/>
-        <Button Grid.Row="3" Name="btnSaveAllAwardItems" Content="保存所有奖项" Width="100" Margin="130,10,10,10" HorizontalAlignment="Left" Click="btnSaveAllAwardItems_Click"/>
     </Grid>
 </UserControl>

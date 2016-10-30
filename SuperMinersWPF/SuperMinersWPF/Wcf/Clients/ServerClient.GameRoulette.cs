@@ -36,9 +36,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region FinishRoulette
 
         public event EventHandler<WebInvokeEventArgs<RouletteWinnerRecord>> FinishRouletteCompleted;
-        public void FinishRoulette(int winAwardIndex, object userState)
+        public void FinishRoulette(int winAwardID, object userState)
         {
-            this._invoker.InvokeUserState<RouletteWinnerRecord>(this._context, "FinishRoulette", this.FinishRouletteCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, winAwardIndex);
+            this._invoker.InvokeUserState<RouletteWinnerRecord>(this._context, "FinishRoulette", this.FinishRouletteCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, winAwardID);
         }
 
         #endregion

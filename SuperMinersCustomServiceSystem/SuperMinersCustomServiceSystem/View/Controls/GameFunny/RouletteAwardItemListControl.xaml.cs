@@ -26,12 +26,12 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
         public RouletteAwardItemListControl()
         {
             InitializeComponent();
-            this.dgRecords.ItemsSource = App.GameRouletteVMObject.ListRouletteAwardItems;
+            this.dgRecords.ItemsSource = App.GameRouletteVMObject.ListAllRouletteAwardItems;
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            App.GameRouletteVMObject.AsyncGetAwardItems();
+            App.GameRouletteVMObject.AsyncGetCurrentAwardItems();
         }
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
@@ -42,29 +42,34 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
             {
                 EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow(awarditem);
                 win.ShowDialog();
+                if (win.IsOK)
+                {
+                    App.GameRouletteVMObject.AsyncGetAllAwardItems();
+                }
             }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            if (App.GameRouletteVMObject.ListRouletteAwardItems.Count == 12)
-            {
-                MyMessageBox.ShowInfo("最多只能添加12个奖项");
-                return;
-            }
-
-            EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow(App.GameRouletteVMObject.ListRouletteAwardItems.Count);
+            EditRouletteAwardItemWindow win = new EditRouletteAwardItemWindow(App.GameRouletteVMObject.ListAllRouletteAwardItems.Count);
             win.ShowDialog();
-        }
-
-        private void btnSaveAllAwardItems_Click(object sender, RoutedEventArgs e)
-        {
-            App.GameRouletteVMObject.AsyncSaveAllAwardItem();
+            if (win.IsOK)
+            {
+                App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            }
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (MyMessageBox.ShowQuestionOKCancel("请确认要删除该奖项？如果该奖项被使用则会删除失败。") == System.Windows.Forms.DialogResult.OK)
+            {
+                Button btn = sender as Button;
+                RouletteAwardItemUIModel awarditem = btn.DataContext as RouletteAwardItemUIModel;
+                if (awarditem != null)
+                {
+                    App.GameRouletteVMObject.AsyncDeleteAwardItem(awarditem.ParentObject);
+                }
+            }
         }
     }
 }

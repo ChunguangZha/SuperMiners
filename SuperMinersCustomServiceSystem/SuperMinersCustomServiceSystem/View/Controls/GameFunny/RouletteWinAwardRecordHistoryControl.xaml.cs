@@ -76,7 +76,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
-            if (App.WithdrawRMBVMObject.ListHistoryWithdrawRecords.Count > 0)
+            if (App.GameRouletteVMObject.ListAllPayRouletteWinnerRecords.Count > 0)
             {
                 this.numPageIndex.Value = this.numPageIndex.Value + 1;
                 Search();

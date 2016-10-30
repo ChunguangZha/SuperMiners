@@ -33,6 +33,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (App.PlayerVMObject == null || GlobalData.CurrentAdmin == null)
+            {
+                return;
+            }
+
             App.PlayerVMObject.AsyncGetListPlayers();
 
             if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)
