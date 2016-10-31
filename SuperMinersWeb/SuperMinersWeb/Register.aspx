@@ -56,6 +56,30 @@
                             </tr>
                             <tr>
                                 <th>
+                                    <label for="txtAlipayAccount"><span>*</span>支付宝账户： </label>
+                                </th>
+                                <td>
+                                    <asp:TextBox ID="txtAlipayAccount" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入支付宝账户！" TabIndex="5" />
+                                </td>
+                                <td>
+                                    <span id="msgAlipayAccount" class="message"></span>
+                                    <img id="imgAlipayAccount" src="Images/yes.png" class="message" style="display:none"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="txtAlipayRealName"><span>*</span>支付宝实名： </label>
+                                </th>
+                                <td>
+                                    <asp:TextBox ID="txtAlipayRealName" runat="server" MaxLength="15" CssClass="textbox" TabIndex="6" />
+                                </td>
+                                <td>
+                                    <span id="msgAlipayRealName" class="message"></span>
+                                    <img id="imgAlipayRealNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     <label for="txtEmail"><span>*</span>邮箱： </label>
                                 </th>
                                 <td>

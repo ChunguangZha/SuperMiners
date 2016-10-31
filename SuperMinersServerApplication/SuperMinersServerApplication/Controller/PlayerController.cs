@@ -86,13 +86,16 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
         {
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
             {
                 return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
             }
+
+            this.
+
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
             //if (userCount > 0)
             //{
@@ -258,15 +261,6 @@ namespace SuperMinersServerApplication.Controller
 
                 LogHelper.Instance.AddInfoLog("玩家[" + userName + "]注册成功，推荐人：" + newplayer.SimpleInfo.ReferrerUserName + "。");
                 PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
-
-                //foreach (var playerrun in listPlayerRun)
-                //{
-                //    playerrun.RefreshFortune();
-                //    if (PlayerInfoChanged != null)
-                //    {
-                //        PlayerInfoChanged(playerrun.BasePlayer);
-                //    }
-                //}
 
                 return OperResult.RESULTCODE_TRUE;
             }

@@ -49,6 +49,24 @@ namespace SuperMinersWeb {
         protected global::System.Web.UI.WebControls.TextBox txtConfirmPassword;
         
         /// <summary>
+        /// txtAlipayAccount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAlipayAccount;
+        
+        /// <summary>
+        /// txtAlipayRealName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtAlipayRealName;
+        
+        /// <summary>
         /// txtEmail control.
         /// </summary>
         /// <remarks>

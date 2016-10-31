@@ -25,7 +25,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="invitationCode"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUser(string clientIP, string userName, string nickName, string password, string email, string qq, string invitationCode);
+        int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode);
 
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
