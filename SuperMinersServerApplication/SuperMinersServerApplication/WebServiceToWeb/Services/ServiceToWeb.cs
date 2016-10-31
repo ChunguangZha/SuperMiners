@@ -153,27 +153,35 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
         /// <returns></returns>
-        public int CheckUserAlipayExist(string alipayAccount, string alipayRealName)
+        public int CheckUserAlipayAccountExist(string alipayAccount)
         {
             try
             {
-                if (string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
-                {
-                    return OperResult.RESULTCODE_PARAM_INVALID;
-                }
-                int count = DBProvider.UserDBProvider.GetPlayerCountByAlipay(alipayAccount, alipayRealName);
-                if (count == 0)
-                {
-                    //不存在
-                    return OperResult.RESULTCODE_FALSE;
-                }
-
-                return OperResult.RESULTCODE_TRUE;
+                return PlayerController.Instance.CheckUserAlipayAccountExist(alipayAccount);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("CheckUserNameExist Exception. alipayAccount: " + alipayAccount 
-                    + ", alipayRealName: " + alipayRealName, exc);
+                LogHelper.Instance.AddErrorLog("CheckUserAlipayAccountExist Exception. alipayAccount: " + alipayAccount, exc);
+
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int CheckUserAlipayRealNameExist(string alipayRealName)
+        {
+            try
+            {
+                return PlayerController.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("CheckUserAlipayRealNameExist Exception. alipayRealName: " + alipayRealName, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }

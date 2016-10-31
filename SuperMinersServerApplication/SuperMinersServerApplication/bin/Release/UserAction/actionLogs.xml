@@ -269,7 +269,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-10-31T00:52:30.2797698+08:00</Time>
+    <Time>2016-10-31T00:52:30</Time>
     <SystemAllPlayerCount>16</SystemAllPlayerCount>
     <SystemAllMinerCount>1244</SystemAllMinerCount>
     <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
@@ -280,10 +280,21 @@
     <ActionType>GameFunny</ActionType>
     <OperNumber>1</OperNumber>
     <Remark>玩家[Tony]   幸运抽中迅雷会员</Remark>
-    <Time>2016-10-31T01:00:21.3880899+08:00</Time>
+    <Time>2016-10-31T01:00:21</Time>
     <SystemAllPlayerCount>16</SystemAllPlayerCount>
     <SystemAllMinerCount>1244</SystemAllMinerCount>
     <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/10/31 1:00:21</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-10-31T23:19:18.0351076+08:00</Time>
+    <SystemAllPlayerCount>16</SystemAllPlayerCount>
+    <SystemAllMinerCount>1244</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/10/31 23:19:18</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

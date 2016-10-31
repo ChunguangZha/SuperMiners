@@ -82,6 +82,8 @@ namespace SuperMinersWPF.Views
             {
                 if (obj)
                 {
+                    App.UserVMObject.AsyncGetPlayerInfo();
+
                     _syn.Post(o =>
                     {
                         this.Close();
@@ -98,6 +100,8 @@ namespace SuperMinersWPF.Views
         {
             try
             {
+                App.UserVMObject.AsyncGetPlayerInfo();
+
                 AlipayPaySucceed = true;
                 this.Close();
             }
@@ -113,6 +117,8 @@ namespace SuperMinersWPF.Views
             {
                 _syn.Post(o =>
                 {
+                    App.UserVMObject.AsyncGetPlayerInfo();
+
                     this.btnOK.IsEnabled = false;
                     this.Close();
                 }, null);
@@ -167,6 +173,8 @@ namespace SuperMinersWPF.Views
                         var payResult = MyMessageBox.ShowAlipayPayQuestion();
                         if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
                         {
+                            App.UserVMObject.AsyncGetPlayerInfo();
+
                             if (!AlipayPaySucceed)
                             {
                                 System.Windows.Forms.DialogResult result = MyMessageBox.ShowQuestionOKCancel("没有接收到支付宝付款信息。如确实付款，请点击【确定】，将对订单进行申诉，同时联系管理员进行处理，否则请点击【取消】。注意：三次恶意订单申诉，请被永久封号。");

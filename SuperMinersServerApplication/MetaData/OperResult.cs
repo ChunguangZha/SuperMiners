@@ -35,6 +35,11 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_NICKNAME_EXIST = 102;
 
         /// <summary>
+        /// 注册用户时_支付宝已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_ALIPAY_EXIST = 103;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
@@ -130,6 +135,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR, "提现灵币和冻结灵币不一致");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_RECORD_STATE_ERROR, "提现状态错误");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_ORDER_BEHANDLED, "该提现订单已经被处理，请刷新后再试");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAY_EXIST, "该支付宝信息已经被其它人使用，无法注册");
         }
 
         public static string GetMsg(int resultCode)

@@ -75,6 +75,38 @@ namespace SuperMinersServerApplication.Controller
 
             return isOK;
         }
+
+        public int CheckUserAlipayAccountExist(string alipayAccount)
+        {
+            if (string.IsNullOrEmpty(alipayAccount))
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            int count = DBProvider.UserDBProvider.GetPlayerCountByAlipayAccount(alipayAccount);
+            if (count == 0)
+            {
+                //不存在
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+        
+        public int CheckUserAlipayRealNameExist(string alipayRealName)
+        {
+            if (string.IsNullOrEmpty(alipayRealName))
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            int count = DBProvider.UserDBProvider.GetPlayerCountByAlipayRealName(alipayRealName);
+            if (count == 0)
+            {
+                //不存在
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
         
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
@@ -94,7 +126,14 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
             }
 
-            this.
+            if (this.CheckUserAlipayAccountExist(alipayAccount) == OperResult.RESULTCODE_TRUE)
+            {
+                return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+            }
+            if (this.CheckUserAlipayRealNameExist(alipayRealName) == OperResult.RESULTCODE_TRUE)
+            {
+                return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+            }
 
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
             //if (userCount > 0)

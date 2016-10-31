@@ -38,7 +38,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="agentUserName"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string email, string qq, string agentUserName);
+        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string agentUserName);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
@@ -56,6 +56,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         [OperationContract]
         int CheckNickNameExist(string nickName);
 
+        [OperationContract]
+        int CheckUserAlipayAccountExist(string alipayAccount);
+
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
@@ -63,7 +66,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="alipayRealName"></param>
         /// <returns></returns>
         [OperationContract]
-        int CheckUserAlipayExist(string alipayAccount, string alipayRealName);
+        int CheckUserAlipayRealNameExist(string alipayRealName);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION

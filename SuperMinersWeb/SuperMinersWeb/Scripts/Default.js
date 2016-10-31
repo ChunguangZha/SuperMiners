@@ -54,6 +54,8 @@ $().ready(function () {
     $("#MainContent_txtEmail").blur(CheckEmail);
     $("#MainContent_txtQQ").blur(CheckQQ);
     $("#MainContent_txtAuthCode").blur(CheckAuthCode);
+    $("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
+    $("#txtAlipayAccount").blur(CheckAlipayRealName);
 });
 
 function CheckUserName() {
@@ -114,6 +116,15 @@ function CheckConfirmPassword() {
 
     $("#imgConfirmPasswordOK").css("display", "inline");
 }
+
+function CheckAlipayAccount() {
+
+}
+
+function CheckAlipayRealName() {
+
+}
+
 function CheckQQ() {
     $("#msgQQ").text("");
     $("#imgQQOK").css("display", "none");

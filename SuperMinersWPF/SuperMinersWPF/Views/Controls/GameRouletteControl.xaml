@@ -36,25 +36,28 @@
             <Grid Background="#9d0012" Grid.Column="0" Grid.RowSpan="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Margin="2" Background="#7d020c">
                     <Image Margin="30" Source="/SuperMinersWPF;component/Resources/title.png" />
                 </Grid>
-                <TextBlock Grid.Row="1" Text="每次花费100块矿石，最多可中价值100元人民币的大奖！！快来参加吧！！！" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold">
-
-                </TextBlock>
+                <StackPanel Grid.Row="1" Orientation="Vertical">
+                    <TextBlock Text="1、投注使用矿石，每投注一次消耗100矿石。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="2、中奖为虚拟物品可直接在账户信息栏查看。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="3、实物奖品需填写联系方式，由在线客服人工发放。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold"/>
+                    <TextBlock Text="4、【我的中奖纪录】提供查询您的中奖记录" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14" FontWeight="Bold"/>
+                </StackPanel>
                 <Grid Grid.Row="2" Background="#7d020c">
                     <TextBlock Text="中奖榜" Foreground="#ffdc15" FontSize="18" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Row="3" Background="#7d020c">
+                <ListView Grid.Row="3" Grid.ColumnSpan="2" Name="listAwardRecords" Margin="5" HorizontalContentAlignment="Stretch" Background="Transparent" Foreground="White">
+                </ListView>
+                <Grid Grid.Row="4" Background="#7d020c">
                     <Button Name="btnViewMyWinAwardRecord" Content="查看我的中奖记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyWinAwardRecord_Click"/>
                 </Grid>
-                <ListView Grid.Row="4" Grid.ColumnSpan="2" Name="listAwardRecords" Margin="5" HorizontalContentAlignment="Stretch" Background="Transparent" Foreground="White">
-                </ListView>
             </Grid>
             <Grid Grid.Row="1" Grid.Column="2" Name="panelCore" Margin="30" Background="#8e0710">
                 <Grid.ColumnDefinitions>
@@ -177,8 +180,9 @@
                         </Grid>
                     </Button.Content>
                 </Button>
-                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" Name="panelWinedAwardItem" Background="White" Visibility="Collapsed" MouseLeftButtonUp="panelWinedAlardItem_MouseLeftButtonUp">
-                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="100" Background="#ffdc15">
+                <Grid Grid.Row="0" Grid.Column="0" Grid.RowSpan="4" Grid.ColumnSpan="4" Name="panelWinedAwardItem" Visibility="Collapsed" MouseLeftButtonUp="panelWinedAlardItem_MouseLeftButtonUp">
+                    <Grid Background="White" Opacity="0.5" />
+                    <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" Height="100" Background="#ffdc15" Opacity="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="6*"/>
                             <RowDefinition Height="4*"/>

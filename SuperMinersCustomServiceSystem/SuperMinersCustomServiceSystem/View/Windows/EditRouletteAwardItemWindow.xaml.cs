@@ -147,7 +147,10 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
             RouletteAwardItem item = new RouletteAwardItem();
 
-            item.ID = Convert.ToInt32(this.txtRecordID.Text);
+            if (this.txtRecordID.Text != "")
+            {
+                item.ID = Convert.ToInt32(this.txtRecordID.Text);
+            }
             item.AwardName = txtAwardName.Text.Trim();
             item.AwardNumber = (int)this.numAwardNumber.Value;
             item.IsLargeAward = this.chkIsLargeAward.IsChecked.Value;

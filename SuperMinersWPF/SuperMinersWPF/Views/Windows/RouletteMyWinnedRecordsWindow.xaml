@@ -3,7 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
         xmlns:myc="clr-namespace:SuperMinersCustomServiceSystem.MyControl"
-        Title="我的幸运大转盘中奖记录" Height="500" Width="700" WindowStartupLocation="CenterScreen">
+        Title="我的幸运大转盘中奖记录"
+        Background="{DynamicResource PlayerInfoBackground}" Foreground="White"
+        Height="500" Width="700" WindowStartupLocation="CenterScreen">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>

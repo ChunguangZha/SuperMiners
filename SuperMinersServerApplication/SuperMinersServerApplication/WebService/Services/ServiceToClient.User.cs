@@ -307,8 +307,13 @@ namespace SuperMinersServerApplication.WebService.Services
                     {
                         return -2;
                     }
-                    int count = DBProvider.UserDBProvider.GetPlayerCountByAlipay(alipayAccount, alipayRealName);
-                    return count;
+                    int result = PlayerController.Instance.CheckUserAlipayAccountExist(alipayAccount);
+                    if (result == OperResult.RESULTCODE_TRUE)
+                    {
+                        return result;
+                    }
+                    result = PlayerController.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+                    return result;
                 }
                 catch (Exception exc)
                 {

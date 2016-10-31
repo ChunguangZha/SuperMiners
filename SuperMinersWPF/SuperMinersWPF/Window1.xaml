@@ -4,7 +4,7 @@
         xmlns:winForm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:Views="clr-namespace:SuperMinersWPF.Views" x:Class="SuperMinersWPF.Window1"
         Loaded="Window_Loaded"
-        Height="620" Width="1100" Icon="Logo128.ico" MinHeight="620" MinWidth="1000">
+        Height="660" Width="1100" Icon="Logo128.ico" MinHeight="620" MinWidth="1000">
     <Window.Resources>
         <SolidColorBrush x:Key="RightTitleMouseOverBackground" Color="#FFC8ECE7"/>
         <SolidColorBrush x:Key="RedButtonBackground" Color="#FFF69068"/>

@@ -703,7 +703,13 @@ namespace DataBaseProvider
             }
         }
 
-        public int GetPlayerCountByAlipay(string alipayAccount, string alipayRealName)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int GetPlayerCountByAlipayAccount(string alipayAccount)
         {
             MySqlConnection myconn = null;
             try
@@ -711,9 +717,44 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "select count(UserName) from playersimpleinfo where Alipay = @Alipay  or AlipayRealName = @AlipayRealName";
+                string cmdText = "select count(id) from playersimpleinfo where Alipay = @Alipay";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
+                object objResult = mycmd.ExecuteScalar();
+                mycmd.Dispose();
+
+                if (objResult == DBNull.Value)
+                {
+                    return 0;
+                }
+                return Convert.ToInt32(objResult);
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int GetPlayerCountByAlipayRealName(string alipayRealName)
+        {
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
+                myconn.Open();
+
+                string cmdText = "select count(id) from playersimpleinfo where AlipayRealName = @AlipayRealName";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
                 object objResult = mycmd.ExecuteScalar();
                 mycmd.Dispose();

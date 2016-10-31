@@ -31,7 +31,8 @@ namespace SuperMinersWPF.Views.Controls
 
         private Color _selectItemColor = Color.FromArgb(255, 180, 252, 247);
         private Color _normalItemColor = Color.FromArgb(255, 255, 220, 21);
-        //private RouletteWinAwardResult _winedAwardResult = null;
+        private RouletteWinnerRecord _winAwardRecord = null;
+
         private int _winedAwardItemID = 0;
         int _startIndex;
         int _downSpeedStartIndex = 3 * 12;
@@ -47,8 +48,6 @@ namespace SuperMinersWPF.Views.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             BindUI();
-            App.GameRouletteVMObject.AsyncGetAllAwardItems();
-            App.GameRouletteVMObject.AsyncGetAllAwardRecord(-1, null, null, -1, -1, 10, 1);
         }
 
         private void BindUI()
@@ -168,14 +167,14 @@ namespace SuperMinersWPF.Views.Controls
                 }
                 _syn.Post(o =>
                 {
+                    this._winAwardRecord = e.Result;
                     RouletteAwardItemUIModel awardItem = new RouletteAwardItemUIModel(e.Result.AwardItem);
                     this.imgWinedAwardItem.Source = awardItem.Icon;
                     this.txtWinedAwardItem.Text = awardItem.AwardName;
                     this.panelWinedAwardItem.Visibility = System.Windows.Visibility.Visible;
                     App.GameRouletteVMObject.ListMyWinAwardRecords.Add(new SuperMinersCustomServiceSystem.Model.RouletteWinnerRecordUIModel(e.Result));
 
-                    //RouletteWinAwardAlertWindow win = new RouletteWinAwardAlertWindow(e.Result);
-                    //win.ShowDialog();
+                    App.UserVMObject.AsyncGetPlayerInfo();
 
                     ResetItemBackground();
                 }, null);
@@ -259,6 +258,11 @@ namespace SuperMinersWPF.Views.Controls
         {
             this.panelWinedAwardItem.Visibility = System.Windows.Visibility.Collapsed;
             this.btnStart.IsEnabled = true;
+            if (this._winAwardRecord != null && this._winAwardRecord.AwardItem.RouletteAwardType == RouletteAwardType.RealAward)
+            {
+                RouletteWinAwardTakeWindow win = new RouletteWinAwardTakeWindow(this._winAwardRecord);
+                win.ShowDialog();
+            }
         }
     }
 }

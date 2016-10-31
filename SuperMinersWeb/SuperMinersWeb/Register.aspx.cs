@@ -27,28 +27,32 @@ namespace SuperMinersWeb
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            if (this.txtUserName.Text == "" ||
-                this.txtPassword.Text == "" ||
-                this.txtConfirmPassword.Text == "" ||
-                this.txtEmail.Text == ""
-                )
-            {
-                return;
-            }
-
-            if (this.txtPassword.Text != this.txtConfirmPassword.Text)
-            {
-                return;
-            }
-
-            invitationCode = Session["ic"] as string;
-
             string userName = this.txtUserName.Text.Trim();
             string nickName = this.txtNickName.Text.Trim();
             string email = this.txtEmail.Text.Trim();
             string qq = this.txtQQ.Text.Trim();
             string password = this.txtPassword.Text;
             string confirmpwd = this.txtConfirmPassword.Text;
+            string alipayAccount = this.txtAlipayAccount.Text.Trim();
+            string alipayRealName = this.txtAlipayAccount.Text.Trim();
+
+            if (userName == "" ||
+               password == "" ||
+                confirmpwd == "" ||
+                email == "" ||
+                alipayAccount == "" ||
+                alipayRealName == "")
+            {
+                return;
+            }
+
+            if (password != confirmpwd)
+            {
+                return;
+            }
+
+            invitationCode = Session["ic"] as string;
+
             if (userName.Length < 3)
             {
                 Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
@@ -143,6 +147,20 @@ namespace SuperMinersWeb
                 }
             }
 
+            result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该支付宝账户已经被使用，无法再注册')</script>");
+                return;
+            }
+            result = WcfClient.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该实名已经被使用，无法再注册')</script>");
+                return;
+            }
+
+
             if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(qq))
             {
                 result = WcfClient.Instance.CheckEmailExist(email);
@@ -163,7 +181,7 @@ namespace SuperMinersWeb
                 }
             }
 
-            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, this.txtPassword.Text, email, qq, invitationCode);
+            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='Default.aspx';</script>");

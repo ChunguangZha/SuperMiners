@@ -70,6 +70,8 @@ namespace SuperMinersWPF
                 App.UserVMObject.AsyncGetAgentUserInfo();
             }
 
+            App.GameRouletteVMObject.AsyncGetAllAwardItems();
+            App.GameRouletteVMObject.AsyncGetAllAwardRecord(-1, null, null, -1, -1, 20, 1);
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
             AddEventHandlers();
         }
