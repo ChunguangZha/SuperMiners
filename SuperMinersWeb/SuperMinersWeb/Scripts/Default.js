@@ -49,13 +49,14 @@ $().ready(function () {
 
     //123
     $("#MainContent_txtUserName").blur(CheckUserName);
+    $("#MainContent_txtNickName").blur(CheckNickName);
     $("#MainContent_txtPassword").blur(CheckPassword);
     $("#MainContent_txtConfirmPassword").blur(CheckConfirmPassword);
     $("#MainContent_txtEmail").blur(CheckEmail);
     $("#MainContent_txtQQ").blur(CheckQQ);
     $("#MainContent_txtAuthCode").blur(CheckAuthCode);
     $("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
-    $("#txtAlipayAccount").blur(CheckAlipayRealName);
+    $("#MainContent_txtAlipayRealName").blur(CheckAlipayRealName);
 });
 
 function CheckUserName() {
@@ -88,7 +89,12 @@ function CheckUserName() {
         });
 }
 function CheckNickName() {
+    $("#msgPassword").text("");
     var nickname = $("#MainContent_txtNickName").val();
+    if (nickname.length == 0) {
+        $("#msgNickName").text("请输入昵称");
+        return;
+    }
 
 }
 function CheckPassword() {
@@ -118,10 +124,62 @@ function CheckConfirmPassword() {
 }
 
 function CheckAlipayAccount() {
+    $("#msgAlipayAccount").text("");
+    $("#imgAlipayAccountOK").css("display", "none");
+
+    var alipayAccount = $("#MainContent_txtAlipayAccount").val();
+    if (alipayAccount.length == 0) {
+        $("#msgAlipayAccount").text("请输入支付宝账户");
+        return;
+    }
+
+    var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    var bChk = szReg.test(alipayAccount);
+    if (!bChk) {
+        szReg = /^([1-9][0-9]*)$/;
+        if (!szReg.test(alipayAccount)) {
+            $("#msgAlipayAccount").text("请输入正确支付宝账户");
+            return;
+        }
+    }
+
+    $.post("CheckAlipayAccount",
+        { AlipayAccount: alipayAccount },
+        function (data, status) {
+            if (data == "OK") {
+                $("#imgAlipayAccountOK").css("display", "inline");
+            } else {
+                $("#msgAlipayAccount").text(data);
+            }
+        });
 
 }
 
 function CheckAlipayRealName() {
+    $("#msgAlipayRealName").text("");
+    $("#imgAlipayRealNameOK").css("display", "none");
+
+    var alipayRealName = $("#MainContent_txtAlipayRealName").val();
+    if (alipayRealName.length == 0) {
+        $("#msgAlipayRealName").text("请输入支付宝实名");
+        return;
+    }
+    var szReg = /^[\u4E00-\u9FA5\uF900-\uFA2D]/;
+    var bChk = szReg.test(alipayRealName);
+    if (!bChk) {
+        $("#msgAlipayRealName").text("请输入正确支付宝实名");
+        return;
+    }
+
+    $.post("CheckAlipayRealName",
+        { AlipayRealName: alipayRealName },
+        function (data, status) {
+            if (data == "OK") {
+                $("#imgAlipayRealNameOK").css("display", "inline");
+            } else {
+                $("#msgAlipayRealName").text(data);
+            }
+        });
 
 }
 
@@ -130,6 +188,10 @@ function CheckQQ() {
     $("#imgQQOK").css("display", "none");
 
     var qq = $("#MainContent_txtQQ").val();
+    if (qq.length == 0) {
+        $("#msgQQ").text("请输入QQ");
+        return;
+    }
     var szReg = /^([1-9][0-9]*)$/;
     if (!szReg.test(qq)) {
         $("#msgQQ").text("QQ账户只能输入数字");

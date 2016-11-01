@@ -171,7 +171,7 @@ namespace SuperMinersServerApplication.Controller.Game
             var roundInfos = DBProvider.GameRouletteDBProvider.GetAllRouletteRoundInfo();
             if (roundInfos == null || roundInfos.Length == 0 || this._currentRound == null)
             {
-                return null;
+                return new RouletteRoundInfo[] { this._currentRound };
             }
 
             var lastRound = roundInfos[roundInfos.Length - 1];
@@ -484,6 +484,13 @@ namespace SuperMinersServerApplication.Controller.Game
                 {
                     this._finishedRouletteWinnerRecord.Add(record);
                 }
+            }
+            else
+            {
+                record.IsGot = true;
+                record.GotTime = DateTime.Now;
+                record.IsPay = true;
+                record.PayTime = DateTime.Now;
             }
 
             //Save Record

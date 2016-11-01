@@ -8,3 +8,8 @@ F:\My Work\SuperMiners\SuperMinersWeb\SuperMinersWeb\bin\SuperMinersWeb.pdb
 F:\My Work\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.dll
 F:\My Work\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.pdb
+F:\GitHub\SuperMiners\SuperMinersWeb\SuperMinersWeb\bin\SuperMinersWeb.dll
+F:\GitHub\SuperMiners\SuperMinersWeb\SuperMinersWeb\bin\SuperMinersWeb.pdb
+F:\GitHub\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.dll
+F:\GitHub\SuperMiners\SuperMinersWeb\SuperMinersWeb\obj\Debug\SuperMinersWeb.pdb

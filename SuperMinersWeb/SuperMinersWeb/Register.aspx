@@ -21,13 +21,14 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <label for="txtNickName">昵称： </label>
+                                    <label for="txtNickName"><span>*</span>昵称： </label>
                                 </th>
                                 <td class="inputcol">
                                     <asp:TextBox ID="txtNickName" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入昵称！" TabIndex="2" />
                                 </td>
                                 <td>
-                                    <span></span>
+                                    <span id="msgNickName" class="message"></span>
+                                    <img id="imgNickNameOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -63,7 +64,7 @@
                                 </td>
                                 <td>
                                     <span id="msgAlipayAccount" class="message"></span>
-                                    <img id="imgAlipayAccount" src="Images/yes.png" class="message" style="display:none"/>
+                                    <img id="imgAlipayAccountOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -83,7 +84,7 @@
                                     <label for="txtEmail"><span>*</span>邮箱： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入邮箱！" TabIndex="5" />
+                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入邮箱！" TabIndex="7" />
                                 </td>
                                 <td>
                                     <span id="msgEmail" class="message"></span>
@@ -92,10 +93,10 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <label for="txtQQ">QQ： </label>
+                                    <label for="txtQQ"><span>*</span>QQ： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" CssClass="textbox" TabIndex="6" />
+                                    <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" CssClass="textbox" TabIndex="8" />
                                 </td>
                                 <td>
                                     <span id="msgQQ" class="message"></span>
@@ -107,7 +108,7 @@
                                     <label for="txtAuthCode"><span>*</span>验证码： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入验证码！" TabIndex="7" />
+                                    <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入验证码！" TabIndex="9" />
                                 </td>
                                 <td>
                                     <span id="msgAuthCode" class="message"></span>
@@ -127,6 +128,6 @@
                             </tr>
                         </tbody>
                     </table>
-              <asp:Button ID="btnRegister" CssClass="button" runat="server" Text="注  册" OnClick="btnRegister_Click" TabIndex="8" />
+              <asp:Button ID="btnRegister" CssClass="button" runat="server" Text="注  册" OnClick="btnRegister_Click" TabIndex="10" />
         </div>
 </asp:Content>

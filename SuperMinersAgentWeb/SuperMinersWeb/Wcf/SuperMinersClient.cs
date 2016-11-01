@@ -60,11 +60,11 @@ namespace SuperMinersWeb.Wcf
         /// <param name="alipayRealName"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, invitationCode);
+                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -72,11 +72,11 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string agentUserName)
+        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, agentUserName);
+                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -124,11 +124,29 @@ namespace SuperMinersWeb.Wcf
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
         /// <returns></returns>
-        public int CheckUserAlipayExist(string alipayAccount, string alipayRealName)
+        public int CheckUserAlipayAccountExist(string alipayAccount)
         {
             try
             {
-                return base.Channel.CheckUserAlipayExist(alipayAccount, alipayRealName);
+                return base.Channel.CheckUserAlipayAccountExist(alipayAccount);
+            }
+            catch (Exception)
+            {
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int CheckUserAlipayRealNameExist(string alipayRealName)
+        {
+            try
+            {
+                return base.Channel.CheckUserAlipayRealNameExist(alipayRealName);
             }
             catch (Exception)
             {

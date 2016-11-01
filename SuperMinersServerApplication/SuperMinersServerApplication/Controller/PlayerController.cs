@@ -248,6 +248,8 @@ namespace SuperMinersServerApplication.Controller
                         UserName = userName,
                         NickName = nickName,
                         Password = password,
+                         Alipay = alipayAccount,
+                          AlipayRealName = alipayRealName,
                         Email = email,
                         QQ = qq,
                         InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(userName) : GlobalData.TestInvitationCode,

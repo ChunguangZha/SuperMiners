@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>B08sgIj7SQmyuzyDFHB+1im5sA2GW6Im8ZUIif7bXO8=</dsig:DigestValue>
+        <dsig:DigestValue>OXMS77RXOPxud3OGXvdgeWZ1j0cySF+TFodSZKQh4Kc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>LK7eb/cHeLUAurwQu31wB3+571RT8Qy3SyjPgyE7+bM=</dsig:DigestValue>
+        <dsig:DigestValue>ecYE913sUbJlkQNC10hV3ixf8CwrhO6R7kcCWP5NGNY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="435712">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="436736">
       <assemblyIdentity name="SuperMinersServerApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>O1EKOFV0woT4Rj345MDPOEJB/7Kgd8NiDQPhVeh37ng=</dsig:DigestValue>
+        <dsig:DigestValue>U0Z8+O8Yl8xqLbVJ+CX+i2w0z80GlokK1ciLTAcSPwY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

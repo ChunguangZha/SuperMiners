@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -18,17 +19,53 @@ namespace SuperMinersWeb
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            if (this.txtUserName.Text == "" ||
-                this.txtPassword.Text == "" ||
-                this.txtConfirmPassword.Text == "" ||
-                this.txtEmail.Text == ""
-                )
+            string userName = this.txtUserName.Text.Trim();
+            string nickName = this.txtNickName.Text.Trim();
+            string email = this.txtEmail.Text.Trim();
+            string qq = this.txtQQ.Text.Trim();
+            string password = this.txtPassword.Text;
+            string confirmpwd = this.txtConfirmPassword.Text;
+            string alipayAccount = this.txtAlipayAccount.Text.Trim();
+            string alipayRealName = this.txtAlipayRealName.Text.Trim();
+
+            if (userName == "")
             {
+                Response.Write("<script>alert('请输入用户名!')</script>");
                 return;
             }
-
-            if (this.txtPassword.Text != this.txtConfirmPassword.Text)
+            if (nickName == "")
             {
+                Response.Write("<script>alert('请输入昵称!')</script>");
+                return;
+            }
+            if (password == "")
+            {
+                Response.Write("<script>alert('请输入密码!')</script>");
+                return;
+            }
+            if (password != confirmpwd)
+            {
+                Response.Write("<script>alert('两次密码不一致!')</script>");
+                return;
+            }
+            if (alipayAccount == "")
+            {
+                Response.Write("<script>alert('请输入支付宝账户!')</script>");
+                return;
+            }
+            if (alipayRealName == "")
+            {
+                Response.Write("<script>alert('请输入支付宝实名!')</script>");
+                return;
+            }
+            if (email == "")
+            {
+                Response.Write("<script>alert('请输入邮箱!')</script>");
+                return;
+            }
+            if (qq == "")
+            {
+                Response.Write("<script>alert('请输入QQ号!')</script>");
                 return;
             }
 
@@ -39,12 +76,6 @@ namespace SuperMinersWeb
                 return;
             }
 
-            string userName = this.txtUserName.Text.Trim();
-            string nickName = this.txtNickName.Text.Trim();
-            string email = this.txtEmail.Text.Trim();
-            string qq = this.txtQQ.Text.Trim();
-            string password = this.txtPassword.Text;
-            string confirmpwd = this.txtConfirmPassword.Text;
             if (userName.Length < 3)
             {
                 Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
@@ -139,27 +170,70 @@ namespace SuperMinersWeb
                 }
             }
 
-            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(qq))
+            bool matchValue = Regex.IsMatch(alipayAccount, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+
+            if (!matchValue)
             {
-                result = WcfClient.Instance.CheckEmailExist(email);
-                if (result == OperResult.RESULTCODE_EXCEPTION)
+                matchValue = Regex.IsMatch(alipayAccount, @"^([1-9][0-9]*)$");
+                if (!matchValue)
                 {
-                    Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
-                    return;
-                }
-                if (result == OperResult.RESULTCODE_TRUE)
-                {
-                    Response.Write("<script>alert('该邮箱已被其它用户使用，请选择其它邮箱!')</script>");
-                    return;
-                }
-                if (result != OperResult.RESULTCODE_FALSE)
-                {
-                    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+                    Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
                     return;
                 }
             }
+            result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该支付宝账户已经被使用，无法再注册')</script>");
+                return;
+            }
 
-            result = WcfClient.Instance.RegisterUserByAgent(ip, userName, nickName, this.txtPassword.Text, email, qq, agent);
+            matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
+            if (!matchValue)
+            {
+                Response.Write("<script>alert('请输入正确的支付宝实名')</script>");
+                return;
+            }
+
+            result = WcfClient.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该实名已经被使用，无法再注册')</script>");
+                return;
+            }
+
+            matchValue = Regex.IsMatch(email, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+            if (!matchValue)
+            {
+                Response.Write("<script>alert('请输入正确的邮箱')</script>");
+                return;
+            }
+
+            result = WcfClient.Instance.CheckEmailExist(email);
+            if (result == OperResult.RESULTCODE_EXCEPTION)
+            {
+                Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
+                return;
+            }
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该邮箱已被其它用户使用，请选择其它邮箱!')</script>");
+                return;
+            }
+            if (result != OperResult.RESULTCODE_FALSE)
+            {
+                Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+                return;
+            }
+
+            matchValue = Regex.IsMatch(qq, @"^([1-9][0-9]*)$");
+            if (!matchValue)
+            {
+                Response.Write("<script>alert('请输入正确的QQ号')</script>");
+                return;
+            }
+
+            result = WcfClient.Instance.RegisterUserByAgent(ip, userName, nickName, password, alipayAccount, alipayRealName, email, qq, agent);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='http://www.xlore.net/';</script>");

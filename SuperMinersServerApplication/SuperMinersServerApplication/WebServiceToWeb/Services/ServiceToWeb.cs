@@ -40,6 +40,22 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
                 }
+                if (string.IsNullOrEmpty(password))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(alipayAccount))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(alipayRealName))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(email))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
                 return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
             }
             catch (Exception exc)

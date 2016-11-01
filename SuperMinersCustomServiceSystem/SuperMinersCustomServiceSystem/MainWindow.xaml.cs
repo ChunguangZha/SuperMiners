@@ -28,8 +28,8 @@ namespace SuperMinersCustomServiceSystem
         public MainWindow()
         {
             InitializeComponent();
-            //this.Title += "   --" + GlobalData.CurrentAdmin.UserName;
-            this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
+            this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "  --" + GlobalData.CurrentAdmin.UserName;
+            //this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)

@@ -150,6 +150,7 @@
     <Content Include="Images\online_botbg.jpg" />
     <Content Include="Images\qq.png" />
     <Content Include="Images\yes.png" />
+    <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\float-contact-us.js" />
     <Content Include="Scripts\TrafficAnalysis.js" />
     <Content Include="Software\DownLoad.aspx" />
@@ -173,12 +174,14 @@
     <Content Include="Logo128.ico" />
     <Content Include="Register.aspx" />
     <Content Include="packages.config" />
-    <Content Include="Handler\CheckUserName.ashx" />
+    <Content Include="Handler\AuthCodeImageCallbackHandler.ashx" />
+    <Content Include="Handler\CheckAlipayAccount.ashx" />
+    <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckAuthCode.ashx" />
     <Content Include="Handler\CheckEmail.ashx" />
     <Content Include="Handler\CheckNickName.ashx" />
+    <Content Include="Handler\CheckUserName.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
-    <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
     <Content Include="Scripts\jquery-3.0.0.slim.js" />
@@ -245,10 +248,23 @@
       <DependentUpon>AuthCode.aspx</DependentUpon>
     </Compile>
     <Compile Include="DataBaseCode\DBOper.cs" />
+    <Compile Include="App_Code\ShopItem.cs" />
+    <Compile Include="Default.aspx.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Default.aspx.designer.cs">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\AuthCodeImageCallbackHandler.ashx.cs">
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
-    <Compile Include="App_Code\ShopItem.cs" />
+    <Compile Include="Handler\CheckAlipayAccount.ashx.cs">
+      <DependentUpon>CheckAlipayAccount.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckAlipayRealName.ashx.cs">
+      <DependentUpon>CheckAlipayRealName.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\CheckAuthCode.ashx.cs">
       <DependentUpon>CheckAuthCode.ashx</DependentUpon>
     </Compile>
@@ -260,13 +276,6 @@
     </Compile>
     <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>
-    </Compile>
-    <Compile Include="Default.aspx.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Default.aspx.designer.cs">
-      <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Software\DownLoad.aspx.cs">
       <DependentUpon>DownLoad.aspx</DependentUpon>
@@ -329,7 +338,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
-    <Content Include="Handler\AuthCodeImageCallbackHandler.ashx" />
     <Content Include="key\alipay_public_key.pem" />
     <Content Include="key\rsa_private_key.pem" />
     <Content Include="Scripts\jquery-3.0.0.slim.min.map" />
