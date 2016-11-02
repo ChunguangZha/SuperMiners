@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Utility;
+﻿using MetaData;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,29 +104,42 @@ namespace SuperMinersWPF.Views
             GlobalData.Client.ChangePlayerSimpleInfoCompleted -= Client_ChangePlayerSimpleInfoCompleted;
         }
 
-        void Client_ChangePlayerSimpleInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_ChangePlayerSimpleInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
+
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("修改失败。原因为：" + e.Error);
+                    return;
+                }
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    GlobalData.CurrentUser.ParentObject.SimpleInfo.Alipay = alipay;
+                    GlobalData.CurrentUser.ParentObject.SimpleInfo.AlipayRealName = alipayRealName;
+
+                    MyMessageBox.ShowInfo("修改成功。");
+
+                    _syn.Post(p =>
+                    {
+                        this.Close();
+                    }, null);
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("修改失败。原因为：" + OperResult.GetMsg(e.Result));
+                }
             }
-
-            if (e.Error != null || !e.Result)
+            catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("修改失败。");
-                return;
+
             }
-
-            GlobalData.CurrentUser.ParentObject.SimpleInfo.Alipay = alipay;
-            GlobalData.CurrentUser.ParentObject.SimpleInfo.AlipayRealName = alipayRealName;
-
-            MyMessageBox.ShowInfo("修改成功。");
-
-            _syn.Post(p =>
-            {
-                this.Close();
-            }, null);
         }
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)

@@ -81,6 +81,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<RouletteRoundInfo[]>(this._context, "GetAllRouletteRoundInfo", this.GetAllRouletteRoundInfoCompleted, GlobalData.Token);
         }
 
+        public event EventHandler<WebInvokeEventArgs<bool>> SaveRouletteLargeWinMultipleCompleted;
+        public void SaveRouletteLargeWinMultiple(decimal multiple)
+        {
+            this._invoker.Invoke<bool>(this._context, "SaveRouletteLargeWinMultiple", this.SaveRouletteLargeWinMultipleCompleted, GlobalData.Token, multiple);
+        }
+
         #region Callback
 
         public event Action<RouletteWinnerRecord> OnSomebodyWinRouletteAward;

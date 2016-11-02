@@ -319,5 +319,78 @@ namespace DataBaseProvider
         }
 
         #endregion
+
+        #region RouletteConfig
+
+        public RouletteConfig GetRouletteConfig()
+        {
+            RouletteConfig config = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                DataTable dt = new DataTable();
+
+                string cmdText = "SELECT * FROM rouletteconfig";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt.Rows.Count != 0)
+                {
+                    config = new RouletteConfig();
+                    config.RouletteLargeWinMultiple = Convert.ToDecimal(dt.Rows[0]["RouletteLargeWinMultiple"]);
+
+                    dt.Dispose();
+                }
+
+                mycmd.Dispose();
+
+                return config;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public bool SaveRouletteConfig(RouletteConfig config)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                mycmd = myconn.CreateCommand();
+                string cmdText = "delete from rouletteconfig; " +
+                    "insert into rouletteconfig (`RouletteLargeWinMultiple`) values  ( @RouletteLargeWinMultiple )";
+                mycmd.CommandText = cmdText;
+                mycmd.Parameters.AddWithValue("@RouletteLargeWinMultiple", config.RouletteLargeWinMultiple);
+                myconn.Open();
+                mycmd.ExecuteNonQuery();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                return false;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        #endregion
+
     }
 }

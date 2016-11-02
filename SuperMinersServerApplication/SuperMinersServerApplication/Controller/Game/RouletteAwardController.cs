@@ -345,7 +345,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 if (this._currentRound.MustWinAwardItemID > 0)
                 {
                     var mustWinAwardItem = this._dicCurrentRouletteAwardItems[this._currentRound.MustWinAwardItemID];
-                    if (CurrentRoundProfitYuan >= (decimal)mustWinAwardItem.ValueMoneyYuan * 3)
+                    if (CurrentRoundProfitYuan >= (decimal)mustWinAwardItem.ValueMoneyYuan * GlobalConfig.RouletteConfig.RouletteLargeWinMultiple)
                     {
                         //返回必中奖项，同时结束本轮，并保存到数据库
                         this._currentRound.WinAwardSumYuan += (decimal)mustWinAwardItem.ValueMoneyYuan;

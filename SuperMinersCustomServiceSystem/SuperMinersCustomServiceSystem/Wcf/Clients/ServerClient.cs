@@ -190,10 +190,10 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<PlayerInfoLoginWrap>(this._context, "GetPlayer", this.GetPlayerCompleted, GlobalData.Token, userName);
         }
 
-        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerCompleted;
+        public event EventHandler<WebInvokeEventArgs<int>> ChangePlayerCompleted;
         public void ChangePlayer(PlayerInfoLoginWrap player, string actionPassword)
         {
-            this._invoker.Invoke<bool>(this._context, "ChangePlayer", this.ChangePlayerCompleted, GlobalData.Token, actionPassword, player);
+            this._invoker.Invoke<int>(this._context, "ChangePlayer", this.ChangePlayerCompleted, GlobalData.Token, actionPassword, player);
         }
 
         public event EventHandler<WebInvokeEventArgs<DeleteResultInfo>> DeletePlayersCompleted;

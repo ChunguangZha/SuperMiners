@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Game.Roulette;
+using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Utility;
@@ -221,5 +222,35 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
+        public bool SaveRouletteLargeWinMultiple(string token, decimal multiple)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string adminUserName = "";
+                try
+                {
+                    if (multiple < 1)
+                    {
+                        return false;
+                    }
+                    adminUserName = AdminManager.GetClientUserName(token);
+
+                    GlobalConfig.RouletteConfig.RouletteLargeWinMultiple = multiple;
+                    bool isOK = DBProvider.SystemDBProvider.SaveRouletteConfig(GlobalConfig.RouletteConfig);
+                    LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "]修改了幸运大转盘中奖倍数为:" + multiple);
+
+                    return isOK;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("SaveRouletteLargeWinMultiple Exception. adminUserName:" + adminUserName , exc);
+                    return false;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

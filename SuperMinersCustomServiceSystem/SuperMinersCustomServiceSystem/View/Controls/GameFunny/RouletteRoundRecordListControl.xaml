@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600">
     <Grid Margin="5">
@@ -13,7 +15,12 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="幸运大转盘开奖信息" FontSize="18" FontWeight="Bold" Margin="10"/>
-        <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+            <TextBlock Text="当前大奖中奖倍数：" Margin="200,10,10,10"/>
+            <my:NumericTextBox x:Name="numMultiple" Width="50" DecimalPlaces="2" Minimum="1" Maximum="10" Value="2" VerticalAlignment="Center"/>
+            <Button Name="btnSaveMultiple" Content="修改" Width="50" Margin="10" VerticalAlignment="Center" Click="btnSaveMultiple_Click"/>
+        </StackPanel>
         <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="Auto" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>

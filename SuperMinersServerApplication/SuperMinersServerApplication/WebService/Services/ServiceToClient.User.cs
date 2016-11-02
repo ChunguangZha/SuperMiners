@@ -254,7 +254,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public int ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
 #if Delay
 
@@ -268,15 +268,21 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     if (string.IsNullOrEmpty(nickName) || string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
                     {
-                        return false;
+                        return OperResult.RESULTCODE_PARAM_INVALID;
                     }
                     string userName = ClientManager.GetClientUserName(token);
-                    return PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName, email, qq);
+                    int value = PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName, email, qq);
+                    if (value == OperResult.RESULTCODE_TRUE)
+                    {
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "]修改了支付宝账户，修改后支付宝账户为：" + alipayAccount + "，实名为：" + alipayRealName);
+                    }
+
+                    return value;
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("ChangePlayerSimpleInfo", exc);
-                    return false;
+                    return OperResult.RESULTCODE_FALSE;
                 }
             }
             else

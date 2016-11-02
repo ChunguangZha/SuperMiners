@@ -18,5 +18,8 @@ namespace MetaData.SystemConfig
 
         [DataMember]
         public RegisterUserConfig RegisterUserConfig;
+
+        [DataMember]
+        public RouletteConfig RouletteConfig;
     }
 }

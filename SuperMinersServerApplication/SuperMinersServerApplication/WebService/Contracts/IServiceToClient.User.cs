@@ -50,7 +50,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq);
+        int ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string email, string qq);
 
         /// <summary>
         /// -2表示参数无效，-1表示异常，0,表示不存在，1表示存在

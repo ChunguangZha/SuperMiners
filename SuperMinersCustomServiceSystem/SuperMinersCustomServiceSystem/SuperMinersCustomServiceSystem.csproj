@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -133,6 +133,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
       <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RouletteConfig.cs">
+      <Link>Wcf\Datas\RouletteConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>

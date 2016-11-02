@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.1.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -169,6 +169,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
       <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RouletteConfig.cs">
+      <Link>Wcf\Datas\RouletteConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
@@ -352,6 +355,9 @@
     <Compile Include="Views\Controls\TradeRecordControl.xaml.cs">
       <DependentUpon>TradeRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\UserSettingControl.xaml.cs">
+      <DependentUpon>UserSettingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\WithdrawRMBHistoryRecordControl.xaml.cs">
       <DependentUpon>WithdrawRMBHistoryRecordControl.xaml</DependentUpon>
     </Compile>
@@ -524,6 +530,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\TradeRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\UserSettingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

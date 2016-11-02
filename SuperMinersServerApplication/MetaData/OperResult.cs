@@ -40,11 +40,18 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_ALIPAY_EXIST = 103;
 
         /// <summary>
+        /// 注册用户时_支付宝实名已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST = 104;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
-
+        
         public const int RESULTCODE_USER_OFFLINE = 301;
+
+        public const int RESULTCODE_USER_CANNOT_UPDATEALIPAY = 302;
 
         /// <summary>
         /// 余额不足
@@ -135,7 +142,9 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_FREEZING_RMB_ERROR, "提现灵币和冻结灵币不一致");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_RECORD_STATE_ERROR, "提现状态错误");
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_ORDER_BEHANDLED, "该提现订单已经被处理，请刷新后再试");
-            _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAY_EXIST, "该支付宝信息已经被其它人使用，无法注册");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAY_EXIST, "该支付宝信息已经被其它人使用");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST, "该支付宝实名已经被其它人使用");
+            _resultCode_Msg.Add(RESULTCODE_USER_CANNOT_UPDATEALIPAY, "您已经绑定过支付宝信息，无法再修改，如想修改请联系客服");
         }
 
         public static string GetMsg(int resultCode)

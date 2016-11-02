@@ -70,12 +70,12 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region ChangePlayerSimpleInfo
 
-        public event EventHandler<WebInvokeEventArgs<bool>> ChangePlayerSimpleInfoCompleted;
+        public event EventHandler<WebInvokeEventArgs<int>> ChangePlayerSimpleInfoCompleted;
         public void ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq, object userState)
         {
             if (GlobalData.IsLogined)
             {
-                this._invoker.InvokeUserState<bool>(this._context, "ChangePlayerSimpleInfo", this.ChangePlayerSimpleInfoCompleted, userState, GlobalData.Token, nickName, alipayAccount, alipayRealName, email, qq);
+                this._invoker.InvokeUserState<int>(this._context, "ChangePlayerSimpleInfo", this.ChangePlayerSimpleInfoCompleted, userState, GlobalData.Token, nickName, alipayAccount, alipayRealName, email, qq);
             }
         }
 

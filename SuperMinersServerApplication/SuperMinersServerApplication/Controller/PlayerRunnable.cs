@@ -56,14 +56,6 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
-            if (!string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(this.BasePlayer.SimpleInfo.AlipayRealName))
-            {
-                //先做验证，如果玩家之前已经绑定过支付信息，而本次又修改了支付宝信息，则返回false.
-                if (this.BasePlayer.SimpleInfo.Alipay != alipayAccount || this.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
-                {
-                    return false;
-                }
-            }
             DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName, email, qq);
             this.BasePlayer.SimpleInfo.Alipay = alipayAccount;
             this.BasePlayer.SimpleInfo.AlipayRealName = alipayRealName;
@@ -150,7 +142,7 @@ namespace SuperMinersServerApplication.Controller
 
             }
 
-            LogHelper.Instance.AddInfoLog("玩家 [" + BasePlayer.SimpleInfo.UserName + "] 请求登录矿场, 计算离线产出=" + BasePlayer.FortuneInfo.TempOutputStones + ", startTime=" + startTime);
+            //LogHelper.Instance.AddInfoLog("玩家 [" + BasePlayer.SimpleInfo.UserName + "] 请求登录矿场, 计算离线产出=" + BasePlayer.FortuneInfo.TempOutputStones + ", startTime=" + startTime);
 
             return tempOutput;
         }

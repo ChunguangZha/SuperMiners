@@ -121,6 +121,7 @@ namespace SuperMinersServerApplication.Controller
                     DBProvider.SystemDBProvider.SaveAwardReferrerConfig(listConfig, trans);
                     GlobalConfig.AwardReferrerLevelConfig.SetListAward(listConfig);
                 }
+                GlobalConfig.RouletteConfig = DBProvider.SystemDBProvider.GetRouletteConfig();
                 trans.Commit();
             }
             catch (Exception exc)

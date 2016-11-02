@@ -357,22 +357,36 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             this.AsyncGetListPlayers();
         }
 
-        void Client_ChangePlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_ChangePlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
-            App.BusyToken.CloseBusyWindow();
-            if (e.Cancelled)
+            try
             {
-                return;
-            }
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
 
-            if (e.Error != null || !e.Result)
+                if (e.Error != null)
+                {
+                    MessageBox.Show("保存玩家信息服务器返回失败，错误信息为：" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MessageBox.Show("保存玩家信息成功。");
+                }
+                else
+                {
+                    MessageBox.Show("保存玩家信息失败。" + OperResult.GetMsg(e.Result));
+                }
+
+            }
+            catch (Exception exc)
             {
-                MessageBox.Show("保存玩家信息失败。");
-                return;
-            }
 
-            MessageBox.Show("保存玩家信息成功。");
-            //this.AsyncGetListPlayers();
+            }
         }
 
         void Client_GetPlayersCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SuperMinersServerApplication.Model.PlayerInfoLoginWrap[]> e)

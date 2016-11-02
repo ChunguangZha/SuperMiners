@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.0.1.13" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.0.2.2" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
   <description asmv2:publisher="迅灵信息" co.v1:suiteName="迅灵矿场" asmv2:product="迅灵矿场管理系统" asmv2:supportUrl="http://www.xlore.net/" co.v1:errorReportUrl="http://www.xlore.net/" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -44,24 +44,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="456704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="459776">
       <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>y6Cc7hpgrZB/nTe0Ilc3ZCLx1E/fGt/vYZhODqI/CHw=</dsig:DigestValue>
+        <dsig:DigestValue>bDO+l1pZDbj+ZML61+U7eKw0PYF15D2c+S8SZLf3QIM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="SuperMinersCustomServiceSystem.exe.config" size="519">
+  <file name="SuperMinersCustomServiceSystem.exe.config" size="518">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>HK/CqJMUluzfrkMAthoXMk809xncBViEd6DRLn2qW0Q=</dsig:DigestValue>
+      <dsig:DigestValue>35HHylLBPTsWPaxjH29p/CGjwasWCwooTBRnXZ8u5EU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

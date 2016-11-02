@@ -217,7 +217,7 @@
                                 </Grid>
                             </Grid>
                         </TabItem>
-                        <TabItem Name="tabitemGameConfig" Header="游戏规则">
+                        <TabItem Name="tabitemGameConfig" Header="矿场规则">
                             <ScrollViewer>
                                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>

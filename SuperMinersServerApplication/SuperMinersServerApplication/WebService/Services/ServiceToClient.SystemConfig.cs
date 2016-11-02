@@ -26,7 +26,8 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     GameConfig = GlobalConfig.GameConfig,
                     RegisterUserConfig = GlobalConfig.RegisterPlayerConfig,
-                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray()
+                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray(),
+                    RouletteConfig = GlobalConfig.RouletteConfig
                 };
 
                 return config;

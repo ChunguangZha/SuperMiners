@@ -77,7 +77,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool ChangePlayer(string token, string actionPassword, PlayerInfoLoginWrap player);
+        int ChangePlayer(string token, string actionPassword, PlayerInfoLoginWrap player);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/DeletePlayers",

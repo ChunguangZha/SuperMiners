@@ -91,5 +91,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         RouletteRoundInfo[] GetAllRouletteRoundInfo(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SaveRouletteLargeWinMultiple",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        bool SaveRouletteLargeWinMultiple(string token, decimal multiple);
     }
 }

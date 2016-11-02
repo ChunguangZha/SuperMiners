@@ -1,20 +1,15 @@
-Error:  [2016/10/30 18:43:51] ---- Log: 获取贡献榜异常
-Exc.Message: Authentication to host 'localhost' for user 'superminersDBA' using method 'mysql_native_password' failed with message: Reading from the stream has failed.Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetTopList(String valueType) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 962
-   在 DataBaseProvider.UserInfoDBProvider.GetExpTopList() 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 885
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetExpTopList(String token) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Game.cs:行号 221
+Error:  [2016/11/3 0:33:42] ---- Log: ChangePlayerSimpleInfo
+Exc.Message: 列“ReferrerUserName”不属于表 。Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetPlayerByAlipay(String alipayAccount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 804
+   在 SuperMinersServerApplication.Controller.PlayerController.ChangePlayerSimpleInfo(String userName, String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 483
+   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.ChangePlayerSimpleInfo(String token, String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 274
 -----------------------------------------------------
 *********+++++++++++++***********
-, Int32 second) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.Message.cs:行号 30
+erverApplication.Controller.PlayerRunnable.ChangePlayerSimpleInfo(String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerRunnable.cs:行号 67
+   在 SuperMinersServerApplication.Controller.PlayerController.ChangePlayerSimpleInfo(String userName, String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 483
+   在 SuperMinersServerApplication.WebServiceToAdmin.Services.ServiceToAdmin.ChangePlayer(String token, String actionPassword, PlayerInfoLoginWrap player) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 433
 -----------------------------------------------------
 *********+++++++++++++***********
-tte.cs:行号 52
------------------------------------------------------
-*********+++++++++++++***********
-�号 175
-   在 SuperMinersServerApplication.WebService.Services.ServiceToClient.GetAllWinAwardRecords(String token, String userName, Int32 RouletteAwardItemID, MyDateTime BeginWinTime, MyDateTime EndWinTime, Int32 IsGot, Int32 IsPay, Int32 pageItemCount, Int32 pageIndex) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.GameRoulette.cs:行号 159
------------------------------------------------------
-*********+++++++++++++***********
-state, String playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, String adminUserName, MyDateTime beginPayTime, MyDateTime endPayTime, Int32 pageItemCount, Int32 pageIndex) 位置 f:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 807
+verApplication\WebServiceToAdmin\Services\ServiceToAdmin.cs:行号 807
 -----------------------------------------------------
 *********+++++++++++++***********
  ---- Log: GetWithdrawRMBRecordList Exception. ClientIP=::1:3133

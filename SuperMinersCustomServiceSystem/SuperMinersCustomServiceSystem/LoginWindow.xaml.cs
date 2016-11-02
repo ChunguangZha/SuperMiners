@@ -94,6 +94,7 @@ namespace SuperMinersCustomServiceSystem
             GlobalData.RegisterUserConfig = e.Result.RegisterUserConfig;
             GlobalData.AwardReferrerLevelConfig = new MetaData.SystemConfig.AwardReferrerLevelConfig();
             GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
+            GlobalData.RouletteConfig = e.Result.RouletteConfig;
 
             if (!isHidden)
             {

@@ -366,7 +366,7 @@ namespace SuperMinersServerApplication.Controller
             decimal tempOutputStone = playerrun.ComputePlayerOfflineStoneOutput();
 
             this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
-            LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "] 冻结灵币为：" + player.FortuneInfo.FreezingRMB);
+            //LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "] 冻结灵币为：" + player.FortuneInfo.FreezingRMB);
 
             return true;
         }
@@ -471,7 +471,7 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.ChangePassword(newPassword);
         }
 
-        public bool ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public int ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
         {
             var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
@@ -479,8 +479,33 @@ namespace SuperMinersServerApplication.Controller
                 var player = DBProvider.UserDBProvider.GetPlayer(userName);
                 playerrun = new PlayerRunnable(player);
             }
-            
-            return playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
+
+            var playerFromDB = DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
+            if (playerFromDB != null && playerFromDB.SimpleInfo.UserName != userName)
+            {
+                return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+            }
+            playerFromDB = DBProvider.UserDBProvider.GetPlayerByAlipayRealName(alipayRealName);
+            if (playerFromDB != null && playerFromDB.SimpleInfo.UserName != userName)
+            {
+                return OperResult.RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST;
+            }
+
+            //if (!string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.AlipayRealName))
+            //{
+            //    //先做验证，如果玩家之前已经绑定过支付信息，而本次又修改了支付宝信息，则返回false.
+            //    if (playerrun.BasePlayer.SimpleInfo.Alipay != alipayAccount || playerrun.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
+            //    {
+            //        return OperResult.RESULTCODE_USER_CANNOT_UPDATEALIPAY;
+            //    }
+            //}
+            var isOK = playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
+            if (isOK)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
         }
 
         public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo)

@@ -71,6 +71,9 @@ namespace SuperMinersServerApplication
 
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
 
+        public static RouletteConfig RouletteConfig = new RouletteConfig();
+
         public static string CurrentClientVersion = "";
+
     }
 }

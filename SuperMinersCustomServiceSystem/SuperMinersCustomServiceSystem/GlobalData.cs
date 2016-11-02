@@ -49,6 +49,7 @@ namespace SuperMinersCustomServiceSystem
         public static GameConfig GameConfig;
         public static RegisterUserConfig RegisterUserConfig;
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
+        public static RouletteConfig RouletteConfig;
 
         public static readonly string LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Log");
 

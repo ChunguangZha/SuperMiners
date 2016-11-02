@@ -319,7 +319,9 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 {
                     GameConfig = GlobalConfig.GameConfig,
                     RegisterUserConfig = GlobalConfig.RegisterPlayerConfig,
-                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray()
+                    AwardReferrerConfigList = GlobalConfig.AwardReferrerLevelConfig.GetListAward().ToArray(),
+                    RouletteConfig = GlobalConfig.RouletteConfig
+                    
                 };
 
                 return config;
@@ -414,7 +416,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool ChangePlayer(string token, string actionPassword, PlayerInfoLoginWrap player)
+        public int ChangePlayer(string token, string actionPassword, PlayerInfoLoginWrap player)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -423,25 +425,29 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     var admin = AdminManager.GetClient(token);
                     if (admin == null)
                     {
-                        return false;
+                        return OperResult.RESULTCODE_FALSE;
                     }
                     if (admin.ActionPassword != actionPassword)
                     {
-                        return false;
+                        return OperResult.RESULTCODE_FALSE;
                     }
 
-                    bool isOK = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.Email, player.SimpleInfo.QQ);
-                    if (!isOK)
+                    int result = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.Email, player.SimpleInfo.QQ);
+                    if (result != OperResult.RESULTCODE_TRUE)
                     {
-                        return false;
+                        return result;
                     }
-                    isOK = PlayerController.Instance.ChangePlayerFortuneInfo(player.FortuneInfo);
-                    return isOK;
+                    var isOK = PlayerController.Instance.ChangePlayerFortuneInfo(player.FortuneInfo);
+                    if (isOK)
+                    {
+                        LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]修改了玩家[" + player .SimpleInfo.UserName + "]信息");
+                    }
+                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
-                    return false;
+                    return OperResult.RESULTCODE_FALSE;
                 }
             }
             else
