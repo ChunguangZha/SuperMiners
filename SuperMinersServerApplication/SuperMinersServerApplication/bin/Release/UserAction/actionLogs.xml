@@ -291,10 +291,54 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-10-31T23:19:18.0351076+08:00</Time>
+    <Time>2016-10-31T23:19:18</Time>
     <SystemAllPlayerCount>16</SystemAllPlayerCount>
     <SystemAllMinerCount>1244</SystemAllMinerCount>
     <SystemAllOutputStoneCount>12321.1455688477</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/10/31 23:19:18</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-03T09:16:23</Time>
+    <SystemAllPlayerCount>327</SystemAllPlayerCount>
+    <SystemAllMinerCount>24411</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/3 9:16:23</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-03T09:54:05.9010875+08:00</Time>
+    <SystemAllPlayerCount>327</SystemAllPlayerCount>
+    <SystemAllMinerCount>24411</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/3 9:54:05</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-03T10:02:47.4444793+08:00</Time>
+    <SystemAllPlayerCount>327</SystemAllPlayerCount>
+    <SystemAllMinerCount>24411</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/3 10:02:47</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-03T10:09:27.4291295+08:00</Time>
+    <SystemAllPlayerCount>327</SystemAllPlayerCount>
+    <SystemAllMinerCount>24411</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/3 10:09:27</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

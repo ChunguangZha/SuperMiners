@@ -238,10 +238,11 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\A
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\AgentInvitationWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\AgentInvitationWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\AgentInvitationWindow.g.cs
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\RouletteMyWinnedRecordsWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\RouletteMyWinnedRecordsWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\RouletteMyWinnedRecordsWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\RouletteMyWinnedRecordsWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\UserSettingControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\UserSettingControl.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\UserSettingControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\UserSettingControl.g.cs

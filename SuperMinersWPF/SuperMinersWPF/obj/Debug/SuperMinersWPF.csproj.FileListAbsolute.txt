@@ -231,3 +231,5 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\Roul
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.g.cs
