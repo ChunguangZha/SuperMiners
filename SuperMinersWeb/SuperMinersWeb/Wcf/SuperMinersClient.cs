@@ -60,11 +60,11 @@ namespace SuperMinersWeb.Wcf
         /// <param name="alipayRealName"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
+                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -72,11 +72,11 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
+        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
+                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -147,6 +147,18 @@ namespace SuperMinersWeb.Wcf
             try
             {
                 return base.Channel.CheckUserAlipayRealNameExist(alipayRealName);
+            }
+            catch (Exception)
+            {
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public int CheckUserIDCardNoExist(string IDCardNo)
+        {
+            try
+            {
+                return base.Channel.CheckUserIDCardNoExist(IDCardNo);
             }
             catch (Exception)
             {

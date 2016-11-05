@@ -107,7 +107,23 @@ namespace SuperMinersServerApplication.Controller
 
             return OperResult.RESULTCODE_TRUE;
         }
-        
+
+        public int CheckUserIDCardNoExist(string IDCardNo)
+        {
+            if (string.IsNullOrEmpty(IDCardNo))
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            int count = DBProvider.UserDBProvider.GetPlayerCountByIDCardNo(IDCardNo);
+            if (count == 0)
+            {
+                //不存在
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
         /// </summary>
@@ -118,7 +134,8 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password, 
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
@@ -130,9 +147,13 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
             }
-            if (this.CheckUserAlipayRealNameExist(alipayRealName) == OperResult.RESULTCODE_TRUE)
+            //if (this.CheckUserAlipayRealNameExist(alipayRealName) == OperResult.RESULTCODE_TRUE)
+            //{
+            //    return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+            //}
+            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
             {
-                return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
             }
 
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
@@ -471,7 +492,7 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.ChangePassword(newPassword);
         }
 
-        public int ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public int ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
@@ -499,7 +520,7 @@ namespace SuperMinersServerApplication.Controller
             //        return OperResult.RESULTCODE_USER_CANNOT_UPDATEALIPAY;
             //    }
             //}
-            var isOK = playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq);
+            var isOK = playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
             if (isOK)
             {
                 return OperResult.RESULTCODE_TRUE;

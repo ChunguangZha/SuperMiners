@@ -81,6 +81,18 @@
                             </tr>
                             <tr>
                                 <th>
+                                    <label for="txtIDCardNo"><span>*</span>身份证号： </label>
+                                </th>
+                                <td>
+                                    <asp:TextBox ID="txtIDCardNo" runat="server" MaxLength="18" CssClass="textbox" TabIndex="6" />
+                                </td>
+                                <td>
+                                    <span id="msgIDCardNo" class="message"></span>
+                                    <img id="imgIDCardNoOK" src="Images/yes.png" class="message" style="display:none"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     <label for="txtEmail"><span>*</span>邮箱： </label>
                                 </th>
                                 <td>

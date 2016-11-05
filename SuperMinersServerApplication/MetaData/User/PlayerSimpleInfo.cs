@@ -58,6 +58,12 @@ namespace MetaData.User
         [DataMember]
         public string AlipayRealName { get; set; }
 
+        /// <summary>
+        /// 身份证号
+        /// </summary>
+        [DataMember]
+        public string IDCardNo { get; set; }
+
         [DataMember]
         public string Email { get; set; }
 

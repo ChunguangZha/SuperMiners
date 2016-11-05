@@ -57,6 +57,7 @@ $().ready(function () {
     $("#MainContent_txtAuthCode").blur(CheckAuthCode);
     $("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
     $("#MainContent_txtAlipayRealName").blur(CheckAlipayRealName);
+    $("#MainContent_txtIDCardNo").blur(CheckIDCardNo);
 });
 
 function CheckUserName() {
@@ -136,7 +137,7 @@ function CheckAlipayAccount() {
     var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     var bChk = szReg.test(alipayAccount);
     if (!bChk) {
-        szReg = /^([1-9][0-9]*)$/;
+        szReg = /^([1-9][0-9]10)$/;
         if (!szReg.test(alipayAccount)) {
             $("#msgAlipayAccount").text("请输入正确支付宝账户");
             return;
@@ -171,16 +172,48 @@ function CheckAlipayRealName() {
         return;
     }
 
-    $.post("CheckAlipayRealName",
-        { AlipayRealName: alipayRealName },
+    $("#imgAlipayRealNameOK").css("display", "inline");
+    //$.post("CheckAlipayRealName",
+    //    { AlipayRealName: alipayRealName },
+    //    function (data, status) {
+    //        if (data == "OK") {
+    //            $("#imgAlipayRealNameOK").css("display", "inline");
+    //        } else {
+    //            $("#msgAlipayRealName").text(data);
+    //        }
+    //    });
+
+}
+
+function CheckIDCardNo() {
+    $("#msgIDCardNo").text("");
+    $("#imgIDCardNoOK").css("display", "none");
+
+    var IDCardNo = $("#MainContent_txtIDCardNo").val();
+    if (IDCardNo.length == 0) {
+        $("#msgIDCardNo").text("请输入身份证号");
+        return;
+    }
+    var szReg = /^([1-9][0-9]*)$/;
+    if (!szReg.test(IDCardNo)) {
+        $("#msgIDCardNo").text("身份证号只能输入数字");
+        return;
+    }
+    if (IDCardNo.length != 18) {
+        $("#msgIDCardNo").text("请输入18位身份证号");
+        return;
+    }
+    $.post("CheckIDCardNo",
+        { IDCardNo: IDCardNo },
         function (data, status) {
             if (data == "OK") {
-                $("#imgAlipayRealNameOK").css("display", "inline");
+                $("#imgIDCardNoOK").css("display", "inline");
             } else {
-                $("#msgAlipayRealName").text(data);
+                $("#msgIDCardNo").text(data);
             }
         });
 
+    $("#imgIDCardNoOK").css("display", "inline");
 }
 
 function CheckQQ() {

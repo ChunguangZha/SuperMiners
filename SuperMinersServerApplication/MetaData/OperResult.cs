@@ -40,6 +40,11 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_ALIPAY_EXIST = 103;
 
         /// <summary>
+        /// 注册用户时_身份证号已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_IDCARDNO_EXIST = 104;
+
+        /// <summary>
         /// 注册用户时_支付宝实名已存在
         /// </summary>
         public const int RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST = 104;

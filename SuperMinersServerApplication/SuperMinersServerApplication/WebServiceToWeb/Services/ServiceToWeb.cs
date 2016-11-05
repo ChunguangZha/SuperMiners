@@ -32,7 +32,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode)
+        public int RegisterUser(string clientIP, string userName, string nickName, string password,
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
@@ -52,16 +53,20 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
+                if (string.IsNullOrEmpty(IDCardNo))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
                 if (string.IsNullOrEmpty(email))
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
-                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, invitationCode);
+                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
-                                    + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",email: " + email + ",qq: " + qq, exc);
+                                    + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",IDCardNo:" + IDCardNo + ",email: " + email + ",qq: " + qq, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }
@@ -77,13 +82,34 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="qq"></param>
         /// <param name="agentUserName"></param>
         /// <returns></returns>
-        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string agentUserName)
+        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password,
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string agentUserName)
         {
             try
             {
                 if (string.IsNullOrEmpty(userName) || userName.Length < 3)
                 {
                     return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
+                }
+                if (string.IsNullOrEmpty(password))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(alipayAccount))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(alipayRealName))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(IDCardNo))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(email))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
                 }
 
                 var agent = PlayerController.Instance.GetPlayerInfo(agentUserName);
@@ -92,12 +118,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, email, qq, agent.SimpleInfo.InvitationCode);
+                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, agent.SimpleInfo.InvitationCode);
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
-                                    + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",email: " + email + ",qq: " + qq, exc);
+                                    + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",IDCardNo:" + IDCardNo + ",email: " + email + ",qq: " + qq, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }
@@ -198,6 +224,20 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("CheckUserAlipayRealNameExist Exception. alipayRealName: " + alipayRealName, exc);
+
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public int CheckUserIDCardNoExist(string IDCardNo)
+        {
+            try
+            {
+                return PlayerController.Instance.CheckUserIDCardNoExist(IDCardNo);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("CheckUserIDCardNoExist Exception. IDCardNo: " + IDCardNo, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }

@@ -167,6 +167,7 @@ namespace DataBaseProvider
                 player.SimpleInfo.AgentUserID = Convert.ToInt32(dt.Rows[i]["AgentUserID"]);
                 player.SimpleInfo.Alipay = DESEncrypt.DecryptDES(encryptedAlipay);
                 player.SimpleInfo.AlipayRealName = DESEncrypt.DecryptDES(encryptedAlipayRealName);
+                player.SimpleInfo.IDCardNo = dt.Rows[i]["IDCardNo"] == DBNull.Value ? "" : dt.Rows[i]["IDCardNo"].ToString();
                 player.SimpleInfo.Email = DESEncrypt.DecryptDES(encryptedEmail);
                 player.SimpleInfo.QQ = DESEncrypt.DecryptDES(encryptedQQ);
                 player.SimpleInfo.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();

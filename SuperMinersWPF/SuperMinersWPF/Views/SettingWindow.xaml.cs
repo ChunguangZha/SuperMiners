@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -169,12 +170,26 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("请填写邮箱。");
                 return;
             }
+            bool matchValue = Regex.IsMatch(email, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+            if (!matchValue)
+            {
+                MyMessageBox.ShowInfo("请输入正确的邮箱");
+                return;
+            }
+
             qq = this.txtQQ.Text;
             if (string.IsNullOrEmpty(qq))
             {
                 MyMessageBox.ShowInfo("请填写QQ。");
                 return;
             }
+            matchValue = Regex.IsMatch(qq, @"^([1-9][0-9]*)$");
+            if (!matchValue)
+            {
+                MyMessageBox.ShowInfo("请输入正确的QQ号");
+                return;
+            }
+
 
             alipay = this.txtAlipayAccount.Text;
             if (string.IsNullOrEmpty(alipay))
@@ -182,11 +197,27 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("请填写支付宝账户。");
                 return;
             }
+            matchValue = Regex.IsMatch(alipay, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+            if (!matchValue)
+            {
+                matchValue = Regex.IsMatch(alipay, @"^([1-9][0-9]*)$");
+                if (!matchValue)
+                {
+                    MyMessageBox.ShowInfo("请输入正确的支付宝账户");
+                    return;
+                }
+            }
 
             alipayRealName = this.txtAlipayRealName.Text;
             if (string.IsNullOrEmpty(alipayRealName))
             {
                 MyMessageBox.ShowInfo("请填写支付宝实名认证的真实姓名。");
+                return;
+            }
+            matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
+            if (!matchValue)
+            {
+                MyMessageBox.ShowInfo("请输入正确的支付宝实名");
                 return;
             }
 

@@ -432,7 +432,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         return OperResult.RESULTCODE_FALSE;
                     }
 
-                    int result = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.Email, player.SimpleInfo.QQ);
+                    int result = PlayerController.Instance.ChangePlayerSimpleInfo(player.SimpleInfo.UserName, player.SimpleInfo.NickName, player.SimpleInfo.Alipay, player.SimpleInfo.AlipayRealName, player.SimpleInfo.IDCardNo, player.SimpleInfo.Email, player.SimpleInfo.QQ);
                     if (result != OperResult.RESULTCODE_TRUE)
                     {
                         return result;

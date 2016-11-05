@@ -23,14 +23,14 @@ namespace DataBaseProvider
                 if (string.IsNullOrEmpty(player.SimpleInfo.ReferrerUserName))
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `NickName`, `Password`, `GroupType`,`IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`,`Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
-                        " (@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime); ";
+                        "(`UserName`, `NickName`, `Password`, `GroupType`,`IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`,`IDCardNo`,`Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`) values " +
+                        " (@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime); ";
                 }
                 else
                 {
                     cmdTextA = "insert into playersimpleinfo " +
-                        "(`UserName`, `NickName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
-                        " (@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
+                        "(`UserName`, `NickName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `ReferrerUserID`) values " +
+                        " (@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, (select b.id from playersimpleinfo b where b.UserName = @ReferrerUserName)); ";
                     mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(player.SimpleInfo.ReferrerUserName));
                 }
                 mycmd.CommandText = cmdTextA;
@@ -43,6 +43,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@AgentUserID", player.SimpleInfo.AgentUserID);
                 mycmd.Parameters.AddWithValue("@Alipay", string.IsNullOrEmpty(player.SimpleInfo.Alipay) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.Alipay));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", string.IsNullOrEmpty(player.SimpleInfo.AlipayRealName) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.AlipayRealName));
+                mycmd.Parameters.AddWithValue("@IDCardNo", string.IsNullOrEmpty(player.SimpleInfo.IDCardNo)? DBNull.Value : (object)player.SimpleInfo.IDCardNo);
                 mycmd.Parameters.AddWithValue("@Email", string.IsNullOrEmpty(player.SimpleInfo.AlipayRealName) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.Email));
                 mycmd.Parameters.AddWithValue("@QQ", string.IsNullOrEmpty(player.SimpleInfo.QQ) ? null : DESEncrypt.EncryptDES(player.SimpleInfo.QQ));
                 mycmd.Parameters.AddWithValue("@RegisterIP", player.SimpleInfo.RegisterIP);
@@ -357,7 +358,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool UpdatePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public bool UpdatePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -365,12 +366,13 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string textCmd = "update playersimpleinfo set `NickName`=@NickName, `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName, `Email`=@Email, `QQ`=@QQ where `UserName` = @UserName;";
+                string textCmd = "update playersimpleinfo set `NickName`=@NickName, `Alipay` = @Alipay, `AlipayRealName` = @AlipayRealName, `IDCardNo` = @IDCardNo, `Email`=@Email, `QQ`=@QQ where `UserName` = @UserName;";
                 mycmd = new MySqlCommand(textCmd, myconn);
                 mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
                 mycmd.Parameters.AddWithValue("@Alipay", string.IsNullOrEmpty(alipayAccount) ? DBNull.Value : (object)DESEncrypt.EncryptDES(alipayAccount));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", string.IsNullOrEmpty(alipayAccount) ? DBNull.Value : (object)DESEncrypt.EncryptDES(alipayRealName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+                mycmd.Parameters.AddWithValue("@IDCardNo", string.IsNullOrEmpty(IDCardNo) ? DBNull.Value : (object)IDCardNo);
                 mycmd.Parameters.AddWithValue("@Email", DESEncrypt.EncryptDES(email));
                 mycmd.Parameters.AddWithValue("@QQ", DESEncrypt.EncryptDES(qq));
 
@@ -756,6 +758,36 @@ namespace DataBaseProvider
                 string cmdText = "select count(id) from playersimpleinfo where AlipayRealName = @AlipayRealName";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
+                object objResult = mycmd.ExecuteScalar();
+                mycmd.Dispose();
+
+                if (objResult == DBNull.Value)
+                {
+                    return 0;
+                }
+                return Convert.ToInt32(objResult);
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public int GetPlayerCountByIDCardNo(string IDCardNo)
+        {
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
+                myconn.Open();
+
+                string cmdText = "select count(id) from playersimpleinfo where IDCardNo = @IDCardNo";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@IDCardNo", IDCardNo);
                 object objResult = mycmd.ExecuteScalar();
                 mycmd.Dispose();
 

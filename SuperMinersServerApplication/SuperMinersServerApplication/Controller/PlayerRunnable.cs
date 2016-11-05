@@ -54,9 +54,9 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
-        public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public bool ChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
-            DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName, email, qq);
+            DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
             this.BasePlayer.SimpleInfo.Alipay = alipayAccount;
             this.BasePlayer.SimpleInfo.AlipayRealName = alipayRealName;
             return true;

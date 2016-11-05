@@ -178,6 +178,7 @@
     <Content Include="Handler\CheckEmail.ashx" />
     <Content Include="Handler\CheckAlipayAccount.ashx" />
     <Content Include="Handler\CheckAlipayRealName.ashx" />
+    <Content Include="Handler\CheckIDCardNo.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -261,6 +262,9 @@
     </Compile>
     <Compile Include="Handler\CheckEmail.ashx.cs">
       <DependentUpon>CheckEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckIDCardNo.ashx.cs">
+      <DependentUpon>CheckIDCardNo.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>

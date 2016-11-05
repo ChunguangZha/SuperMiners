@@ -25,7 +25,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="invitationCode"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string invitationCode);
+        int RegisterUser(string clientIP, string userName, string nickName, string password,
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode);
 
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
@@ -38,7 +39,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <param name="agentUserName"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string email, string qq, string agentUserName);
+        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password,
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string agentUserName);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
@@ -56,17 +58,24 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         [OperationContract]
         int CheckNickNameExist(string nickName);
 
+        /// <summary>
+        /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="alipayAccount"></param>
+        /// <returns></returns>
         [OperationContract]
         int CheckUserAlipayAccountExist(string alipayAccount);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
-        /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
         /// <returns></returns>
         [OperationContract]
         int CheckUserAlipayRealNameExist(string alipayRealName);
+
+        [OperationContract]
+        int CheckUserIDCardNoExist(string IDCardNo);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
