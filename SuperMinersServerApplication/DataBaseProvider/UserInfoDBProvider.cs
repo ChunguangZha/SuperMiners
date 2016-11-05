@@ -382,8 +382,15 @@ namespace DataBaseProvider
             }
             finally
             {
-                mycmd.Dispose();
-                myconn.Close();
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
             }
         }
 

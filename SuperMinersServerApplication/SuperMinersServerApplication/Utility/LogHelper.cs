@@ -101,7 +101,7 @@ namespace SuperMinersServerApplication.Utility
                     stream = File.OpenWrite(this.LogErrorFilePath);
                     if (stream != null)
                     {
-                        using (StreamWriter writer = new StreamWriter(stream))
+                        using (StreamWriter writer = new StreamWriter(stream, UnicodeEncoding.Unicode))
                         {
                             foreach (var log in this.ListErrorLogs)
                             {
@@ -139,7 +139,7 @@ namespace SuperMinersServerApplication.Utility
                     stream = File.OpenWrite(this.LogInfoFilePath);
                     if (stream != null)
                     {
-                        using (StreamWriter writer = new StreamWriter(stream))
+                        using (StreamWriter writer = new StreamWriter(stream, UnicodeEncoding.Unicode))
                         {
                             foreach (var log in this.ListInfoLogs)
                             {

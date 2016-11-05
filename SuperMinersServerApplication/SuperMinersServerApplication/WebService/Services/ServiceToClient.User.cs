@@ -274,7 +274,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     int value = PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
-                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "]修改了支付宝账户，修改后支付宝账户为：" + alipayAccount + "，实名为：" + alipayRealName);
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "]修改了用户信息，修改后昵称为：" + nickName + "，支付宝账户为：" + alipayAccount + "，实名为：" + alipayRealName + "，邮箱为：" + email + "， QQ为：" + qq);
                     }
 
                     return value;

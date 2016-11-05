@@ -1,4 +1,4 @@
-Error:  [2016/11/3 0:33:42] ---- Log: ChangePlayerSimpleInfo
+��ror:  [2016/11/3 0:33:42] ---- Log: ChangePlayerSimpleInfo
 Exc.Message: 列“ReferrerUserName”不属于表 。Exc.Stack:    在 DataBaseProvider.UserInfoDBProvider.GetPlayerByAlipay(String alipayAccount) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\DataBaseProvider\UserInfoDBProvider.cs:行号 804
    在 SuperMinersServerApplication.Controller.PlayerController.ChangePlayerSimpleInfo(String userName, String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\Controller\PlayerController.cs:行号 483
    在 SuperMinersServerApplication.WebService.Services.ServiceToClient.ChangePlayerSimpleInfo(String token, String nickName, String alipayAccount, String alipayRealName, String email, String qq) 位置 f:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Services\ServiceToClient.User.cs:行号 274

@@ -97,6 +97,16 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.AlipayRealName; }
         }
 
+        public string Email
+        {
+            get { return this._parentObject.SimpleInfo.Email; }
+        }
+
+        public string QQ
+        {
+            get { return this._parentObject.SimpleInfo.QQ; }
+        }
+
         public DateTime? RegisterTime
         {
             get { return this._parentObject.SimpleInfo.RegisterTime; }

@@ -59,6 +59,9 @@ namespace SuperMinersServerApplication.Controller
             DBProvider.UserDBProvider.UpdatePlayerSimpleInfo(BasePlayer.SimpleInfo.UserName, nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
             this.BasePlayer.SimpleInfo.Alipay = alipayAccount;
             this.BasePlayer.SimpleInfo.AlipayRealName = alipayRealName;
+            this.BasePlayer.SimpleInfo.NickName = nickName;
+            this.BasePlayer.SimpleInfo.Email = email;
+            this.BasePlayer.SimpleInfo.QQ = qq;
             return true;
         }
 
