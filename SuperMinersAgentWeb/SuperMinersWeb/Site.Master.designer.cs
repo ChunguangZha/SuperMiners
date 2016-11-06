@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeb {
+namespace SuperMinersAgentWeb {
     
     
     public partial class Site {

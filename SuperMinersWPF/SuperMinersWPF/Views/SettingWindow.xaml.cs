@@ -40,6 +40,7 @@ namespace SuperMinersWPF.Views
             this.txtAlipayRealName.Text = GlobalData.CurrentUser.AlipayRealName;
             this.txtEmail.Text = GlobalData.CurrentUser.Email;
             this.txtQQ.Text = GlobalData.CurrentUser.QQ;
+            this.txtIDCardNo.Text = GlobalData.CurrentUser.IDCardNo;
             
             if (string.IsNullOrEmpty(GlobalData.CurrentUser.Alipay))
             {
@@ -156,19 +157,20 @@ namespace SuperMinersWPF.Views
         string nickName = "";
         string alipay = "";
         string alipayRealName = "";
+        string IDCardNo = "";
         string email = "";
         string qq = "";
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            nickName = this.txtNickName.Text;
+            nickName = this.txtNickName.Text.Trim();
             if (string.IsNullOrEmpty(nickName))
             {
                 MyMessageBox.ShowInfo("请填写昵称。");
                 return;
             }
 
-            email = this.txtEmail.Text;
+            email = this.txtEmail.Text.Trim();
             if (string.IsNullOrEmpty(email))
             {
                 MyMessageBox.ShowInfo("请填写邮箱。");
@@ -181,7 +183,7 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            qq = this.txtQQ.Text;
+            qq = this.txtQQ.Text.Trim();
             if (string.IsNullOrEmpty(qq))
             {
                 MyMessageBox.ShowInfo("请填写QQ。");
@@ -195,7 +197,7 @@ namespace SuperMinersWPF.Views
             }
 
 
-            alipay = this.txtAlipayAccount.Text;
+            alipay = this.txtAlipayAccount.Text.Trim();
             if (string.IsNullOrEmpty(alipay))
             {
                 MyMessageBox.ShowInfo("请填写支付宝账户。");
@@ -207,12 +209,20 @@ namespace SuperMinersWPF.Views
                 matchValue = Regex.IsMatch(alipay, @"^([1-9][0-9]*)$");
                 if (!matchValue)
                 {
-                    MyMessageBox.ShowInfo("请输入正确的支付宝账户");
+                    MyMessageBox.ShowInfo("支付宝账户只能为电子邮箱或者手机号");
                     return;
+                }
+                else
+                {
+                    if (alipay.Length != 11)
+                    {
+                        MyMessageBox.ShowInfo("支付宝账户只能为电子邮箱或者手机号");
+                        return;
+                    }
                 }
             }
 
-            alipayRealName = this.txtAlipayRealName.Text;
+            alipayRealName = this.txtAlipayRealName.Text.Trim();
             if (string.IsNullOrEmpty(alipayRealName))
             {
                 MyMessageBox.ShowInfo("请填写支付宝实名认证的真实姓名。");
@@ -221,11 +231,32 @@ namespace SuperMinersWPF.Views
             matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
             if (!matchValue)
             {
-                MyMessageBox.ShowInfo("请输入正确的支付宝实名");
+                MyMessageBox.ShowInfo("支付宝实名只能为汉字");
                 return;
             }
 
-            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, email, qq);
+            IDCardNo = this.txtIDCardNo.Text.Trim();
+            if (string.IsNullOrEmpty(IDCardNo))
+            {
+                MyMessageBox.ShowInfo("请填写身份证号。");
+                return;
+            }
+            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*)$");
+            if (!matchValue)
+            {
+                MyMessageBox.ShowInfo("身份证号必须为18位数字");
+                return;
+            }
+            else
+            {
+                if (IDCardNo.Length != 18)
+                {
+                    MyMessageBox.ShowInfo("身份证号必须为18位数字");
+                    return;
+                }
+            }
+
+            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, IDCardNo, email, qq);
             //App.BusyToken.ShowBusyWindow("正在验证...");
             //GlobalData.Client.CheckUserAlipayExist(alipay, alipayRealName, null);
         }
@@ -235,10 +266,10 @@ namespace SuperMinersWPF.Views
             this.DialogResult = false;
         }
 
-        public void AsyncChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string email, string qq)
+        public void AsyncChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
-            GlobalData.Client.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, email, qq, new string[] { alipayAccount, alipayRealName });
+            GlobalData.Client.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, IDCardNo, email, qq, new string[] { alipayAccount, alipayRealName });
         }
 
     }

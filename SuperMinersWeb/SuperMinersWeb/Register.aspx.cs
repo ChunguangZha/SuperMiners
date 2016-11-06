@@ -84,8 +84,6 @@ namespace SuperMinersWeb
                 return;
             }
 
-            invitationCode = Session["ic"] as string;
-
             if (userName.Length < 3)
             {
                 Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
@@ -189,6 +187,14 @@ namespace SuperMinersWeb
                     Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
                     return;
                 }
+                else
+                {
+                    if (alipayAccount.Length != 11)
+                    {
+                        Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
+                        return;
+                    }
+                }
             }
             result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
             if (result == OperResult.RESULTCODE_TRUE)
@@ -210,11 +216,19 @@ namespace SuperMinersWeb
             //    return;
             //}
 
-            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]17)$");
+            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*)$");
             if (!matchValue)
             {
                 Response.Write("<script>alert('身份证号必须为18位数字')</script>");
                 return;
+            }
+            else
+            {
+                if (IDCardNo.Length != 18)
+                {
+                    Response.Write("<script>alert('身份证号必须为18位数字')</script>");
+                    return;
+                }
             }
             result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
             if (result == OperResult.RESULTCODE_TRUE)
@@ -254,14 +268,23 @@ namespace SuperMinersWeb
                 return;
             }
 
-            result = WcfClient.Instance.RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+        }
+
+        private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        {
+
+            invitationCode = Session["ic"] as string;
+
+            int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='Default.aspx';</script>");
             }
-
-            Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+            else
+            {
+                Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+            }
         }
-        
     }
 }

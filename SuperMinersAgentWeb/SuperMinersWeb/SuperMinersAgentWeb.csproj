@@ -11,7 +11,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SuperMinersWeb</RootNamespace>
+    <RootNamespace>SuperMinersAgentWeb</RootNamespace>
     <AssemblyName>SuperMinersWeb</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
@@ -181,6 +181,7 @@
     <Content Include="Handler\CheckEmail.ashx" />
     <Content Include="Handler\CheckNickName.ashx" />
     <Content Include="Handler\CheckUserName.ashx" />
+    <Content Include="Handler\CheckIDCardNo.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -270,6 +271,9 @@
     </Compile>
     <Compile Include="Handler\CheckEmail.ashx.cs">
       <DependentUpon>CheckEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckIDCardNo.ashx.cs">
+      <DependentUpon>CheckIDCardNo.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\CheckNickName.ashx.cs">
       <DependentUpon>CheckNickName.ashx</DependentUpon>

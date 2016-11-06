@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AuthCode.aspx.cs" Inherits="SuperMinersWeb.AuthCode" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AuthCode.aspx.cs" Inherits="SuperMinersAgentWeb.AuthCode" %>
 
 <!DOCTYPE html>
 

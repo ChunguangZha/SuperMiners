@@ -386,7 +386,7 @@ namespace DataBaseProvider
                     sqlInsertText = "update rouletteroundinfo " +
                         " set `AwardPoolSumStone` = @AwardPoolSumStone, `WinAwardSumYuan` = @WinAwardSumYuan, `StartTime` = @StartTime, `MustWinAwardItemID` = @MustWinAwardItemID, `Finished` = @Finished " +
                         " where id = @id ;";
-                    mycmd.Parameters.AddWithValue("@id", info.ID);
+                    mycmd.Parameters.AddWithValue("@id", lastInfo.ID);
                 }
                 mycmd.CommandText = sqlInsertText;
                 mycmd.Parameters.AddWithValue("@AwardPoolSumStone", info.AwardPoolSumStone);

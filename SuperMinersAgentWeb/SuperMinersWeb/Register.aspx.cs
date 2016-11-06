@@ -1,5 +1,5 @@
 ﻿using MetaData;
-using SuperMinersWeb.Wcf;
+using SuperMinersAgentWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeb
+namespace SuperMinersAgentWeb
 {
     public partial class Register : System.Web.UI.Page
     {
@@ -27,6 +27,7 @@ namespace SuperMinersWeb
             string confirmpwd = this.txtConfirmPassword.Text;
             string alipayAccount = this.txtAlipayAccount.Text.Trim();
             string alipayRealName = this.txtAlipayRealName.Text.Trim();
+            string IDCardNo = this.txtIDCardNo.Text.Trim();
 
             if (userName == "")
             {
@@ -58,6 +59,11 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('请输入支付宝实名!')</script>");
                 return;
             }
+            if (IDCardNo == "")
+            {
+                Response.Write("<script>alert('请输入身份证号!')</script>");
+                return;
+            }
             if (email == "")
             {
                 Response.Write("<script>alert('请输入邮箱!')</script>");
@@ -66,13 +72,6 @@ namespace SuperMinersWeb
             if (qq == "")
             {
                 Response.Write("<script>alert('请输入QQ号!')</script>");
-                return;
-            }
-
-            string agent = ConfigurationManager.AppSettings["Agent"];
-            if (string.IsNullOrEmpty(agent))
-            {
-                Response.Write("<script>alert('没有推荐人信息，无法注册!')</script>");
                 return;
             }
 
@@ -130,9 +129,9 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
                 return;
             }
-            
+
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-            
+
             result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
@@ -171,7 +170,6 @@ namespace SuperMinersWeb
             }
 
             bool matchValue = Regex.IsMatch(alipayAccount, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
-
             if (!matchValue)
             {
                 matchValue = Regex.IsMatch(alipayAccount, @"^([1-9][0-9]*)$");
@@ -179,6 +177,14 @@ namespace SuperMinersWeb
                 {
                     Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
                     return;
+                }
+                else
+                {
+                    if (alipayAccount.Length != 11)
+                    {
+                        Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
+                        return;
+                    }
                 }
             }
             result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
@@ -194,11 +200,31 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('请输入正确的支付宝实名')</script>");
                 return;
             }
+            //result = WcfClient.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+            //if (result == OperResult.RESULTCODE_TRUE)
+            //{
+            //    Response.Write("<script>alert('该实名已经被使用，无法再注册')</script>");
+            //    return;
+            //}
 
-            result = WcfClient.Instance.CheckUserAlipayRealNameExist(alipayRealName);
+            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*)$");
+            if (!matchValue)
+            {
+                Response.Write("<script>alert('身份证号必须为18位数字')</script>");
+                return;
+            }
+            else
+            {
+                if (IDCardNo.Length != 18)
+                {
+                    Response.Write("<script>alert('身份证号必须为18位数字')</script>");
+                    return;
+                }
+            }
+            result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                Response.Write("<script>alert('该实名已经被使用，无法再注册')</script>");
+                Response.Write("<script>alert('身份证号已经被使用，无法再注册')</script>");
                 return;
             }
 
@@ -233,15 +259,28 @@ namespace SuperMinersWeb
                 return;
             }
 
-            result = WcfClient.Instance.RegisterUserByAgent(ip, userName, nickName, password, alipayAccount, alipayRealName, email, qq, agent);
+            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+        }
+
+        private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        {
+            string agent = ConfigurationManager.AppSettings["Agent"];
+            if (string.IsNullOrEmpty(agent))
+            {
+                Response.Write("<script>alert('没有推荐人信息，无法注册!')</script>");
+                return;
+            }
+
+            int result = WcfClient.Instance.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, agent);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='http://www.xlore.net/';</script>");
                 //Response.Write("<script>alert('恭喜您成功加入灵币矿场!');</script>");
             }
-
-            Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+            else
+            {
+                Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+            }
         }
-        
     }
 }

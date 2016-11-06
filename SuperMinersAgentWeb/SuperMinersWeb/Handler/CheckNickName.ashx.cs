@@ -1,11 +1,11 @@
 ﻿using MetaData;
-using SuperMinersWeb.Wcf;
+using SuperMinersAgentWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SuperMinersWeb.Handler
+namespace SuperMinersAgentWeb.Handler
 {
     /// <summary>
     /// Summary description for CheckNickName

@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SuperMinersWeb.Global" Language="C#" %>
+﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SuperMinersAgentWeb.Global" Language="C#" %>

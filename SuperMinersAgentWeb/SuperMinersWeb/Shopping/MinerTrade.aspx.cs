@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeb.Shopping
+namespace SuperMinersAgentWeb.Shopping
 {
     public partial class MinerTrade : System.Web.UI.Page
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using System.Xml;
 
-namespace SuperMinersWeb.AlipayCode
+namespace SuperMinersAgentWeb.AlipayCode
 {
     public class Submit
     {

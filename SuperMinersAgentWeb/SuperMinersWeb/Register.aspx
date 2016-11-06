@@ -1,4 +1,4 @@
-﻿<%@ Page Title="玩家注册" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="SuperMinersWeb.Register" %>
+﻿<%@ Page Title="玩家注册" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Register.aspx.cs" Inherits="SuperMinersAgentWeb.Register" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <script src="Scripts/jquery.validate.min.js"></script>
     <script src="Scripts/Default.js"></script>
@@ -76,6 +76,18 @@
                                 <td>
                                     <span id="msgAlipayRealName" class="message"></span>
                                     <img id="imgAlipayRealNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <label for="txtIDCardNo"><span>*</span>身份证号： </label>
+                                </th>
+                                <td>
+                                    <asp:TextBox ID="txtIDCardNo" runat="server" MaxLength="18" CssClass="textbox" TabIndex="6" />
+                                </td>
+                                <td>
+                                    <span id="msgIDCardNo" class="message"></span>
+                                    <img id="imgIDCardNoOK" src="Images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>

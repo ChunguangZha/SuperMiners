@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeb.Alipay {
+namespace SuperMinersAgentWeb.Alipay {
     
     
     public partial class AlipayDefault {

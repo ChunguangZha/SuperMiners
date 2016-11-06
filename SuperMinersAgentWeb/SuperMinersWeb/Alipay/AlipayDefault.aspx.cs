@@ -1,6 +1,6 @@
 ﻿using SuperMinersServerApplication.Encoder;
-using SuperMinersWeb.AlipayCode;
-using SuperMinersWeb.Wcf;
+using SuperMinersAgentWeb.AlipayCode;
+using SuperMinersAgentWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeb.Alipay
+namespace SuperMinersAgentWeb.Alipay
 {
     /// <summary>
     /// 功能：即时到账交易接口接入页

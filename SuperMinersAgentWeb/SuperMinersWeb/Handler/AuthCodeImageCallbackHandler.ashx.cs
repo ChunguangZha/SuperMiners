@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Web;
 
-namespace SuperMinersWeb
+namespace SuperMinersAgentWeb
 {
     /// <summary>
     /// Summary description for AuthCodeImageCallbackHandler1

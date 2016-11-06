@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeb {
+namespace SuperMinersAgentWeb {
     
     
     public partial class Register {
@@ -65,6 +65,15 @@ namespace SuperMinersWeb {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtAlipayRealName;
+        
+        /// <summary>
+        /// txtIDCardNo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtIDCardNo;
         
         /// <summary>
         /// txtEmail control.

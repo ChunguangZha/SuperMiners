@@ -4,7 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Web;
 
-namespace SuperMinersWeb.Wcf
+namespace SuperMinersAgentWeb.Wcf
 {
     public static class WcfClient
     {

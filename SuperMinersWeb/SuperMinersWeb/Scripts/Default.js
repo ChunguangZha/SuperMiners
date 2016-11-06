@@ -137,10 +137,15 @@ function CheckAlipayAccount() {
     var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     var bChk = szReg.test(alipayAccount);
     if (!bChk) {
-        szReg = /^([1-9][0-9]10)$/;
+        szReg = /^([1-9][0-9]*)$/;
         if (!szReg.test(alipayAccount)) {
-            $("#msgAlipayAccount").text("请输入正确支付宝账户");
+            $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
             return;
+        } else {
+            if (alipayAccount.length != 11) {
+                $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
+                return;
+            }
         }
     }
 
@@ -209,11 +214,12 @@ function CheckIDCardNo() {
             if (data == "OK") {
                 $("#imgIDCardNoOK").css("display", "inline");
             } else {
+                $("#imgIDCardNoOK").css("display", "none");
                 $("#msgIDCardNo").text(data);
             }
         });
 
-    $("#imgIDCardNoOK").css("display", "inline");
+    //$("#imgIDCardNoOK").css("display", "inline");
 }
 
 function CheckQQ() {

@@ -10,8 +10,8 @@ using System.Web.UI.WebControls.WebParts;
 using System.Web.UI.HtmlControls;
 using System.Collections.Specialized;
 using System.Collections.Generic;
-using SuperMinersWeb.AlipayCode;
-using SuperMinersWeb.Wcf;
+using SuperMinersAgentWeb.AlipayCode;
+using SuperMinersAgentWeb.Wcf;
 using MetaData;
 
 /// <summary>
@@ -43,7 +43,7 @@ public partial class notify_url : System.Web.UI.Page
 
                 string userName = sPara["extra_common_param"];
 
-                SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
+                SuperMinersAgentWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
 
                 if (verifyResult)//验证成功
                 {
@@ -93,7 +93,7 @@ public partial class notify_url : System.Web.UI.Page
                         decimal total_fee;
                         if (!decimal.TryParse(sPara["total_fee"], out total_fee))
                         {
-                            SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2 Failed, 充值金额错误.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+                            SuperMinersAgentWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2 Failed, 充值金额错误.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
 
                             //打印页面
                             Response.Write("充值金额错误<br />");
@@ -101,7 +101,7 @@ public partial class notify_url : System.Web.UI.Page
                         }
 
                         int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
+                        SuperMinersAgentWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
                         if (result == OperResult.RESULTCODE_EXCEPTION)
                         {
                             result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
@@ -119,12 +119,12 @@ public partial class notify_url : System.Web.UI.Page
                             result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                         }
 
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+                        SuperMinersAgentWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
 
                     }
                     else
                     {
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
+                        SuperMinersAgentWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
 
                     }
 
@@ -146,7 +146,7 @@ public partial class notify_url : System.Web.UI.Page
         }
         catch (Exception exc)
         {
-            SuperMinersWeb.AlipayCode.Core.LogResult("", "Notify Exception. msg: " + exc.Message);
+            SuperMinersAgentWeb.AlipayCode.Core.LogResult("", "Notify Exception. msg: " + exc.Message);
         }
     }
 

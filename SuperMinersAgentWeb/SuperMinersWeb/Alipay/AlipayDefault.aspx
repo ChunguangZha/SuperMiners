@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AlipayDefault.aspx.cs" Inherits="SuperMinersWeb.Alipay.AlipayDefault" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="AlipayDefault.aspx.cs" Inherits="SuperMinersAgentWeb.Alipay.AlipayDefault" %>
 
 <!DOCTYPE html>
 

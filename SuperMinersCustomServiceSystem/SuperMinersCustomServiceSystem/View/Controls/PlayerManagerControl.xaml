@@ -76,6 +76,7 @@
                     <DataGridTextColumn Binding="{Binding AgentUserID}" Header="代理用户ID"/>
                     <DataGridTextColumn Binding="{Binding Alipay}" ClipboardContentBinding="{x:Null}" Header="支付宝账户"/>
                     <DataGridTextColumn Binding="{Binding AlipayRealName}" ClipboardContentBinding="{x:Null}" Header="支付宝真实姓名"/>
+                    <DataGridTextColumn Binding="{Binding IDCardNo}" Header="身份证号"/>
                     <DataGridTextColumn Binding="{Binding RegisterTime}" ClipboardContentBinding="{x:Null}" Header="注册时间"/>
                     <DataGridTextColumn Binding="{Binding RegisterIP}" ClipboardContentBinding="{x:Null}" Header="注册IP"/>
                     <DataGridTextColumn Binding="{Binding ReferrerUserName}" ClipboardContentBinding="{x:Null}" Header="推荐人"/>

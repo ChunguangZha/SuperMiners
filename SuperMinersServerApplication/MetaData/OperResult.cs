@@ -40,14 +40,14 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_ALIPAY_EXIST = 103;
 
         /// <summary>
-        /// 注册用户时_身份证号已存在
-        /// </summary>
-        public const int RESULTCODE_REGISTER_IDCARDNO_EXIST = 104;
-
-        /// <summary>
         /// 注册用户时_支付宝实名已存在
         /// </summary>
         public const int RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST = 104;
+
+        /// <summary>
+        /// 注册用户时_身份证号已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_IDCARDNO_EXIST = 105;
 
         /// <summary>
         /// 用户不存在
@@ -150,6 +150,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAY_EXIST, "该支付宝信息已经被其它人使用");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST, "该支付宝实名已经被其它人使用");
             _resultCode_Msg.Add(RESULTCODE_USER_CANNOT_UPDATEALIPAY, "您已经绑定过支付宝信息，无法再修改，如想修改请联系客服");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARDNO_EXIST, "该身份证号已经被其它人使用");
         }
 
         public static string GetMsg(int resultCode)

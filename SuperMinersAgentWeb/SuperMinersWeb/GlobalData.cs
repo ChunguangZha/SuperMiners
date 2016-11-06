@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SuperMinersWeb
+namespace SuperMinersAgentWeb
 {
     public class GlobalData
     {

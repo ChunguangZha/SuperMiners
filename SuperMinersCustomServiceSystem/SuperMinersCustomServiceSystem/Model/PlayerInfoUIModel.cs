@@ -35,6 +35,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("AgentUserID");
                 NotifyPropertyChange("Alipay");
                 NotifyPropertyChange("AlipayRealName");
+                NotifyPropertyChange("IDCardNo");
                 NotifyPropertyChange("RegisterTime");
                 NotifyPropertyChange("ReferrerUserName");
                 NotifyPropertyChange("InvitationCode");
@@ -157,6 +158,16 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 this._parentObject.SimpleInfo.AlipayRealName = value;
                 NotifyPropertyChange("AlipayRealName");
+            }
+        }
+
+        public string IDCardNo
+        {
+            get { return this._parentObject.SimpleInfo.IDCardNo; }
+            set
+            {
+                this._parentObject.SimpleInfo.IDCardNo = value;
+                NotifyPropertyChange("IDCardNo");
             }
         }
 

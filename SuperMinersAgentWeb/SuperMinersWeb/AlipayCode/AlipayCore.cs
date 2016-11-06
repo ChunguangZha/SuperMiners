@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace SuperMinersWeb.AlipayCode
+namespace SuperMinersAgentWeb.AlipayCode
 {
     public class Core
     {

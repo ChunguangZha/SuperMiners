@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.0.2.2" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.0.2.4" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
   <description asmv2:publisher="迅灵信息" co.v1:suiteName="迅灵矿场" asmv2:product="迅灵矿场管理系统" asmv2:supportUrl="http://www.xlore.net/" co.v1:errorReportUrl="http://www.xlore.net/" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -44,14 +44,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="459776">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="461824">
       <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bDO+l1pZDbj+ZML61+U7eKw0PYF15D2c+S8SZLf3QIM=</dsig:DigestValue>
+        <dsig:DigestValue>1KKU3YDItsJa5ePv5kZs5IyThbc6oY1G0ZksDDLYzmc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>35HHylLBPTsWPaxjH29p/CGjwasWCwooTBRnXZ8u5EU=</dsig:DigestValue>
+      <dsig:DigestValue>ZLEytCzGJjLef8sAz4jxuq9N6TMIz+4dqPbqh5fkYLs=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

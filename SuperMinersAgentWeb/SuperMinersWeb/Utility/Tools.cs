@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace SuperMinersWeb.Utility
+namespace SuperMinersAgentWeb.Utility
 {
     public class Tools
     {

@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Web;
 
-namespace SuperMinersWeb.AlipayCode
+namespace SuperMinersAgentWeb.AlipayCode
 {
     public class Notify
     {

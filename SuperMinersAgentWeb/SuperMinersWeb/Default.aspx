@@ -1,4 +1,4 @@
-﻿<%@ Page Title="主页" Language="C#" MasterPageFile="/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SuperMinersWeb.Default" %>
+﻿<%@ Page Title="主页" Language="C#" MasterPageFile="/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="SuperMinersAgentWeb.Default" %>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="MainContent" runat="server">
     <div class="homepage">

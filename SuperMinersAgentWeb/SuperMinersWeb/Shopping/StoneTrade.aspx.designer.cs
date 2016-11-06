@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeb.Shopping {
+namespace SuperMinersAgentWeb.Shopping {
     
     
     public partial class StoneTrade {

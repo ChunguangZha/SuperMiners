@@ -1,4 +1,4 @@
-﻿using SuperMinersWeb.App_Code;
+﻿using SuperMinersAgentWeb.App_Code;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeb
+namespace SuperMinersAgentWeb
 {
     public partial class ShopList : System.Web.UI.Page
     {

@@ -97,6 +97,11 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.AlipayRealName; }
         }
 
+        public string IDCardNo
+        {
+            get { return this._parentObject.SimpleInfo.IDCardNo; }
+        }
+
         public string Email
         {
             get { return this._parentObject.SimpleInfo.Email; }

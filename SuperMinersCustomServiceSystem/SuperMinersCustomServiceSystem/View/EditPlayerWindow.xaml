@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -37,27 +38,24 @@
         <Button Grid.Row="2" Grid.Column="2" Name="btnEditAlipay" Content="修改" Width="70" Margin="5" Click="btnEditAlipay_Click"/>
         <TextBlock Grid.Row="3" Text="支付宝真实姓名：" Margin="5" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding AlipayRealName, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="4" Text="注册时间：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding RegisterTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="5" Text="推荐人：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ReferrerUserName, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="6" Text="邀请码：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding InvitationCode, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="7" Text="上一次登录时间：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding LastLoginTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="8" Text="是否被锁定：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding IsLocked, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="9" Text="锁定时间：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding LockedTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="10" Text="是否在线：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding Online, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="11" Text="登录IP：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding LoginIP, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="11" Grid.Column="3" Text="上一次收取矿石时间：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="11" Grid.Column="4" Text="{Binding LastGatherStoneTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <Button Grid.Row="11" Grid.Column="5" Name="btnEditLastGahterStoneTime" Content="修改" Margin="5" Click="btnEditLastGahterStoneTime_Click"/>
-        <TextBlock Grid.Row="12" Grid.Column="0" Text="冻结灵币：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding FreezingRMB, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="身份证号：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding IDCardNo, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="5" Text="注册时间：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding RegisterTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="6" Text="推荐人：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding ReferrerUserName, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="7" Text="邀请码：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding InvitationCode, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="8" Text="上一次登录时间：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding LastLoginTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="9" Text="是否被锁定：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding IsLocked, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="10" Text="锁定时间：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="10" Grid.Column="1" Text="{Binding LockedTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="11" Text="是否在线：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding Online, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="12" Text="登录IP：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="12" Grid.Column="1" Text="{Binding LoginIP, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
 
 
         <TextBlock Grid.Row="0" Grid.Column="3" Text="贡献值：" Margin="5" HorizontalAlignment="Right"/>
@@ -66,30 +64,35 @@
         <TextBlock Grid.Row="1" Grid.Column="3" Text="灵币：" Margin="5" HorizontalAlignment="Right"/>
         <TextBox Grid.Row="1" Grid.Column="4" Text="{Binding RMB, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
         <Button Grid.Row="1" Grid.Column="5" Name="btnEditRMB" Content="修改" Width="70" Margin="5" Click="btnEditRMB_Click"/>
-        <TextBlock Grid.Row="2" Grid.Column="3" Text="金币：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding GoldCoin, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <Button Grid.Row="2" Grid.Column="5" Name="btnEditGoldCoin" Content="修改" Width="70" Margin="5" Click="btnEditGoldCoin_Click"/>
-        <TextBlock Grid.Row="3" Grid.Column="3" Text="矿工：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="3" Grid.Column="4" Text="{Binding MinersCount, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <Button Grid.Row="3" Grid.Column="5" Name="btnEditMiners" Content="修改" Width="70" Margin="5" Click="btnEditMiners_Click"/>
-        <TextBlock Grid.Row="4" Grid.Column="3" Text="总矿石储量：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding StonesReserves, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <Button Grid.Row="4" Grid.Column="5" Name="btnEditStone" Content="修改" Width="70" Margin="5" Click="btnEditStone_Click"/>
-        <TextBlock Grid.Row="5" Grid.Column="3" Text="可开采矿石储量：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="5" Grid.Column="4" Text="{Binding WorkableStonesReservers, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="6" Grid.Column="3" Text="累计生产矿石量：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="6" Grid.Column="4" Text="{Binding TotalProducedStonesCount, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="7" Grid.Column="3" Text="库存矿石：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="7" Grid.Column="4" Text="{Binding StockOfStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="8" Grid.Column="3" Text="冻结矿石：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="8" Grid.Column="4" Text="{Binding FreezingStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="9" Grid.Column="3" Text="可出售矿石：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="9" Grid.Column="4" Text="{Binding SellableStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
-        <TextBlock Grid.Row="10" Grid.Column="3" Text="库存钻石：" Margin="5" HorizontalAlignment="Right"/>
-        <TextBox Grid.Row="10" Grid.Column="4" Text="{Binding StockOfDiamonds, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Text="冻结灵币：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="2" Grid.Column="4" Text="{Binding FreezingRMB, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="3" Grid.Column="3" Text="金币：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="3" Grid.Column="4" Text="{Binding GoldCoin, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <Button Grid.Row="3" Grid.Column="5" Name="btnEditGoldCoin" Content="修改" Width="70" Margin="5" Click="btnEditGoldCoin_Click"/>
+        <TextBlock Grid.Row="4" Grid.Column="3" Text="矿工：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="4" Grid.Column="4" Text="{Binding MinersCount, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <Button Grid.Row="4" Grid.Column="5" Name="btnEditMiners" Content="修改" Width="70" Margin="5" Click="btnEditMiners_Click"/>
+        <TextBlock Grid.Row="5" Grid.Column="3" Text="总矿石储量：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="5" Grid.Column="4" Text="{Binding StonesReserves, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <Button Grid.Row="5" Grid.Column="5" Name="btnEditStone" Content="修改" Width="70" Margin="5" Click="btnEditStone_Click"/>
+        <TextBlock Grid.Row="6" Grid.Column="3" Text="可开采矿石储量：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="6" Grid.Column="4" Text="{Binding WorkableStonesReservers, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="7" Grid.Column="3" Text="累计生产矿石量：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="7" Grid.Column="4" Text="{Binding TotalProducedStonesCount, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="8" Grid.Column="3" Text="库存矿石：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="8" Grid.Column="4" Text="{Binding StockOfStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="9" Grid.Column="3" Text="冻结矿石：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="9" Grid.Column="4" Text="{Binding FreezingStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="10" Grid.Column="3" Text="可出售矿石：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="10" Grid.Column="4" Text="{Binding SellableStones, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="11" Grid.Column="3" Text="库存钻石：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="11" Grid.Column="4" Text="{Binding StockOfDiamonds, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="12" Grid.Column="3" Text="上一次收取矿石时间：" Margin="5" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="12" Grid.Column="4" Text="{Binding LastGatherStoneTime, Mode=OneWay}" IsReadOnly="True" Margin="5"/>
+        <Button Grid.Row="12" Grid.Column="5" Name="btnEditLastGahterStoneTime" Content="修改" Margin="5" Click="btnEditLastGahterStoneTime_Click"/>
 
-        <Button Grid.Row="14" Grid.ColumnSpan="6" Name="btnChangePassword" Content="修改密码" Width="100" Margin="10,10,250,10" HorizontalAlignment="Right" Click="btnChangePassword_Click"/>
-        <Button Grid.Row="14" Grid.ColumnSpan="6" Name="btnOK" Content="保存" Width="100" Margin="10,10,130,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
-        <Button Grid.Row="14" Grid.ColumnSpan="6" Name="btnCancel" Content="取消" Width="100" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
+        <Button Grid.Row="15" Grid.ColumnSpan="6" Name="btnChangePassword" Content="修改密码" Width="100" Margin="10,10,250,10" HorizontalAlignment="Right" Click="btnChangePassword_Click"/>
+        <Button Grid.Row="15" Grid.ColumnSpan="6" Name="btnOK" Content="保存" Width="100" Margin="10,10,130,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
+        <Button Grid.Row="15" Grid.ColumnSpan="6" Name="btnCancel" Content="取消" Width="100" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
     </Grid>
 </Window>

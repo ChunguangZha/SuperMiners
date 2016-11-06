@@ -313,7 +313,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-11-03T09:54:05.9010875+08:00</Time>
+    <Time>2016-11-03T09:54:05</Time>
     <SystemAllPlayerCount>327</SystemAllPlayerCount>
     <SystemAllMinerCount>24411</SystemAllMinerCount>
     <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
@@ -324,7 +324,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-11-03T10:02:47.4444793+08:00</Time>
+    <Time>2016-11-03T10:02:47</Time>
     <SystemAllPlayerCount>327</SystemAllPlayerCount>
     <SystemAllMinerCount>24411</SystemAllMinerCount>
     <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
@@ -335,10 +335,32 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-11-03T10:09:27.4291295+08:00</Time>
+    <Time>2016-11-03T10:09:27</Time>
     <SystemAllPlayerCount>327</SystemAllPlayerCount>
     <SystemAllMinerCount>24411</SystemAllMinerCount>
     <SystemAllOutputStoneCount>179779.277625531</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/11/3 10:09:27</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-06T18:08:31</Time>
+    <SystemAllPlayerCount>19</SystemAllPlayerCount>
+    <SystemAllMinerCount>1454</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12971.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/6 18:08:31</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-06T18:18:57.6503664+08:00</Time>
+    <SystemAllPlayerCount>19</SystemAllPlayerCount>
+    <SystemAllMinerCount>1454</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12971.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/6 18:18:57</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

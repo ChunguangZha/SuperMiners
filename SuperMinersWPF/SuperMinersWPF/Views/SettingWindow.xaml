@@ -23,6 +23,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="87*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
@@ -43,8 +44,10 @@
                     <TextBox Grid.Row="5" Grid.Column="1" Name="txtAlipayAccount" Margin="5" MaxLength="30"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="支付宝真实姓名" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
                     <TextBox Grid.Row="6" Grid.Column="1" Name="txtAlipayRealName" Margin="5" MaxLength="15"/>
-                    <TextBlock Grid.Row="7" Text="提示" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" Name="txtMessage" TextWrapping="Wrap" Margin="5" Foreground="Red"/>
+                    <TextBlock Grid.Row="7" Grid.Column="0" Text="身份证号" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Name="txtIDCardNo" Margin="5" MaxLength="18"/>
+                    <TextBlock Grid.Row="8" Text="提示" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" Name="txtMessage" TextWrapping="Wrap" Margin="5" Foreground="Red"/>
                 </Grid>
             </TabItem>
             <TabItem Header="系统" Visibility="Collapsed">

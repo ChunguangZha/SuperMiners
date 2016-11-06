@@ -34,11 +34,12 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditAlipay_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerAlipayWindow win = new EditPlayerAlipayWindow(this._player.UserName, this._player.Alipay, this._player.AlipayRealName);
+            EditPlayerAlipayWindow win = new EditPlayerAlipayWindow(this._player.UserName, this._player.Alipay, this._player.AlipayRealName, this._player.IDCardNo);
             if (win.ShowDialog() == true)
             {
                 this._player.Alipay = win.AlipayAccount;
                 this._player.AlipayRealName = win.AlipayRealName;
+                this._player.IDCardNo = win.NewIDCardNo;
             }
         }
 

@@ -1,5 +1,5 @@
-﻿using SuperMinersWeb.Utility;
-using SuperMinersWeb.Wcf;
+﻿using SuperMinersAgentWeb.Utility;
+using SuperMinersAgentWeb.Wcf;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
 
-namespace SuperMinersWeb
+namespace SuperMinersAgentWeb
 {
     public class Global : System.Web.HttpApplication
     {
