@@ -420,9 +420,10 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
+                AdminLoginnedInfo admin = null;
                 try
                 {
-                    var admin = AdminManager.GetClient(token);
+                    admin = AdminManager.GetClient(token);
                     if (admin == null)
                     {
                         return OperResult.RESULTCODE_FALSE;
@@ -446,7 +447,14 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
+                    if (admin != null)
+                    {
+                        LogHelper.Instance.AddErrorLog("管理员["+admin.UserName+"]修改玩家信息异常", exc);
+                    }
+                    else
+                    {
+                        LogHelper.Instance.AddErrorLog("ServiceToAdmin.ChangePlayer Exception", exc);
+                    }
                     return OperResult.RESULTCODE_FALSE;
                 }
             }

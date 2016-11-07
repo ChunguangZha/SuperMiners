@@ -216,17 +216,17 @@ namespace SuperMinersWeb
             //    return;
             //}
 
-            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*)$");
+            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
             if (!matchValue)
             {
-                Response.Write("<script>alert('身份证号必须为18位数字')</script>");
+                Response.Write("<script>alert('请输入正确的身份证号')</script>");
                 return;
             }
             else
             {
                 if (IDCardNo.Length != 18)
                 {
-                    Response.Write("<script>alert('身份证号必须为18位数字')</script>");
+                    Response.Write("<script>alert('身份证号必须为18位')</script>");
                     return;
                 }
             }

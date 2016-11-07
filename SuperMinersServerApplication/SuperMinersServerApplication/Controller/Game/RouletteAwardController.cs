@@ -210,6 +210,11 @@ namespace SuperMinersServerApplication.Controller.Game
             }
 
             int index = r.Next(0, this._listLargeAwardID.Count);
+            int randomCount = DateTime.Now.DayOfYear;
+            for (int i = 0; i < randomCount; i++)
+            {
+                index = r.Next(0, this._listLargeAwardID.Count);
+            }
             return this._listLargeAwardID[index];
         }
 
@@ -382,7 +387,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 _tempRouletteWinnerRecord.Add(userName, winAwardItem.ID);
             }
 
-            LogHelper.Instance.AddInfoLog("玩家["+ userName +"]，开始幸运大转盘抽奖。");
+            LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，开始幸运大转盘抽奖。第" + this._currentRound .ID + "轮奖池累计：" + this._currentRound.AwardPoolSumStone + "；盈利累计：" + this._currentRound.WinAwardSumYuan);
 
             return result;
         }

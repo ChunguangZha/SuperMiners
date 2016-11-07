@@ -199,13 +199,13 @@ function CheckIDCardNo() {
         $("#msgIDCardNo").text("请输入身份证号");
         return;
     }
-    var szReg = /^([1-9][0-9]*)$/;
+    var szReg = /^([1-9][0-9]*X{0,1})$/;
     if (!szReg.test(IDCardNo)) {
-        $("#msgIDCardNo").text("身份证号只能输入数字");
+        $("#msgIDCardNo").text("请输入正确的身份证号");
         return;
     }
     if (IDCardNo.length != 18) {
-        $("#msgIDCardNo").text("请输入18位身份证号");
+        $("#msgIDCardNo").text("身份证号必须为18位");
         return;
     }
     $.post("CheckIDCardNo",

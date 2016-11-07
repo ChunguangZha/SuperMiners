@@ -357,10 +357,21 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2016-11-06T18:18:57.6503664+08:00</Time>
+    <Time>2016-11-06T18:18:57</Time>
     <SystemAllPlayerCount>19</SystemAllPlayerCount>
     <SystemAllMinerCount>1454</SystemAllMinerCount>
     <SystemAllOutputStoneCount>12971.1455688477</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/11/6 18:18:57</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-11-07T23:09:17.0002382+08:00</Time>
+    <SystemAllPlayerCount>19</SystemAllPlayerCount>
+    <SystemAllMinerCount>1454</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>12971.1455688477</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/11/7 23:09:17</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

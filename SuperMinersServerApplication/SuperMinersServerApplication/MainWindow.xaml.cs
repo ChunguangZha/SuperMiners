@@ -1,4 +1,5 @@
 ﻿using MetaData.SystemConfig;
+using Microsoft.Win32;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Game;
 using SuperMinersServerApplication.UIModel;
@@ -31,7 +32,7 @@ namespace SuperMinersServerApplication
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int MAXLISTERRORLOGSCOUNT = 1000;
+        private int MAXLISTERRORLOGSCOUNT = 2000;
         private object _lockListLogs = new object();
         ObservableCollection<string> ListErrorLogsOutput = new ObservableCollection<string>();
         private System.Threading.SynchronizationContext _syn = SynchronizationContext.Current;
@@ -403,6 +404,31 @@ namespace SuperMinersServerApplication
             else
             {
                 MessageBox.Show("客户端版本号保存失败");
+            }
+        }
+
+        private void btnLogsOutput_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveDig = new SaveFileDialog();
+            saveDig.Filter = "txt文件(*.txt)|*.txt";
+            if (saveDig.ShowDialog() == true)
+            {
+                lock (_lockListLogs)
+                {
+                    using (Stream stream = saveDig.OpenFile())
+                    {
+                        StreamWriter writer = new StreamWriter(stream, Encoding.UTF8);
+                        foreach (var item in this.ListErrorLogsOutput)
+                        {
+                            writer.WriteLine(item);
+                        }
+                        writer.Close();
+                        //stream.Flush();
+                        
+                    }
+                }
+
+                MessageBox.Show("输出完成");
             }
         }
 

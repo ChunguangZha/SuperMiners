@@ -95,7 +95,7 @@ namespace SuperMinersWPF.Views
                 this.txtNeedMoney.Text = money.ToString();
                 if (money > GlobalData.CurrentUser.GoldCoin)
                 {
-                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    //MyMessageBox.ShowInfo("账户余额不足，请充值。");
                     return;
                 }
                 GlobalData.Client.BuyMiner(count, count);

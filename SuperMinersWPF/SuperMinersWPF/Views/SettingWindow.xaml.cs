@@ -241,17 +241,17 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("请填写身份证号。");
                 return;
             }
-            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*)$");
+            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
             if (!matchValue)
             {
-                MyMessageBox.ShowInfo("身份证号必须为18位数字");
+                MyMessageBox.ShowInfo("请输入正确的身份证号");
                 return;
             }
             else
             {
                 if (IDCardNo.Length != 18)
                 {
-                    MyMessageBox.ShowInfo("身份证号必须为18位数字");
+                    MyMessageBox.ShowInfo("请输入正确的身份证号");
                     return;
                 }
             }
