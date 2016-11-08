@@ -179,6 +179,8 @@
     <Content Include="Handler\CheckAlipayAccount.ashx" />
     <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
+    <Content Include="WeiXin\Index.aspx" />
+    <Content Include="WeiXin\WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -334,6 +336,20 @@
     <Compile Include="Utility\Tools.cs" />
     <Compile Include="Wcf\SuperMinersClient.cs" />
     <Compile Include="Wcf\WcfClient.cs" />
+    <Compile Include="WeiXin\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinResponse.aspx.cs">
+      <DependentUpon>WeiXinResponse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinResponse.aspx.designer.cs">
+      <DependentUpon>WeiXinResponse.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

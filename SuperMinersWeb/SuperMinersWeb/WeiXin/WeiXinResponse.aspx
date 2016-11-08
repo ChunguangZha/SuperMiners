@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="SuperMinersWeb.WeiXin.Index" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WeiXinResponse.aspx.cs" Inherits="SuperMinersWeb.WeiXin.WeiXinResponse" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <asp:HyperLink ID="link" runat="server">微信登录</asp:HyperLink>
+        微信授权成功
     </div>
     </form>
 </body>
