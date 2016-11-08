@@ -59,7 +59,7 @@
                                     <label for="txtAlipayAccount"><span>*</span>支付宝账户： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtAlipayAccount" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入支付宝账户！" TabIndex="5" />
+                                    <asp:TextBox ID="txtAlipayAccount" runat="server" MaxLength="30" CssClass="textbox" ToolTip="请输入支付宝账户！" TabIndex="5" />
                                 </td>
                                 <td>
                                     <span id="msgAlipayAccount" class="message"></span>
@@ -95,7 +95,7 @@
                                     <label for="txtEmail"><span>*</span>邮箱： </label>
                                 </th>
                                 <td>
-                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="20" CssClass="textbox" ToolTip="请输入邮箱！" TabIndex="7" />
+                                    <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" CssClass="textbox" ToolTip="请输入邮箱！" TabIndex="7" />
                                 </td>
                                 <td>
                                     <span id="msgEmail" class="message"></span>

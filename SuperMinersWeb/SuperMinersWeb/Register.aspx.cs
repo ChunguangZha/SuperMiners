@@ -38,144 +38,162 @@ namespace SuperMinersWeb
             string alipayRealName = this.txtAlipayRealName.Text.Trim();
             string IDCardNo = this.txtIDCardNo.Text.Trim();
 
-            if (userName == "")
-            {
-                Response.Write("<script>alert('请输入用户名!')</script>");
-                return;
-            }
-            if (nickName == "")
-            {
-                Response.Write("<script>alert('请输入昵称!')</script>");
-                return;
-            }
-            if (password == "")
-            {
-                Response.Write("<script>alert('请输入密码!')</script>");
-                return;
-            }
-            if (password != confirmpwd)
-            {
-                Response.Write("<script>alert('两次密码不一致!')</script>");
-                return;
-            }
-            if (alipayAccount == "")
-            {
-                Response.Write("<script>alert('请输入支付宝账户!')</script>");
-                return;
-            }
-            if (alipayRealName == "")
-            {
-                Response.Write("<script>alert('请输入支付宝实名!')</script>");
-                return;
-            }
-            if (IDCardNo == "")
-            {
-                Response.Write("<script>alert('请输入身份证号!')</script>");
-                return;
-            }
-            if (email == "")
-            {
-                Response.Write("<script>alert('请输入邮箱!')</script>");
-                return;
-            }
-            if (qq == "")
-            {
-                Response.Write("<script>alert('请输入QQ号!')</script>");
-                return;
-            }
 
-            if (userName.Length < 3)
-            {
-                Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
-                return;
-            }
-            if (userName.Length > 15)
-            {
-                Response.Write("<script>alert('用户名长度不能超过15个字符!')</script>");
-                return;
-            }
-            if (nickName.Length > 15)
-            {
-                Response.Write("<script>alert('昵称长度不能超过15个字符!')</script>");
-                return;
-            }
-            if (email.Length > 20)
-            {
-                Response.Write("<script>alert('电子邮箱长度不能超过20个字符!')</script>");
-                return;
-            }
-            if (qq.Length > 15)
-            {
-                Response.Write("<script>alert('QQ长度不能超过15个字符!')</script>");
-                return;
-            }
-            if (password.Length < 6)
-            {
-                Response.Write("<script>alert('密码长度不能小于6位!')</script>");
-                return;
-            }
-            if (password.Length > 15)
-            {
-                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
-                return;
-            }
-            if (confirmpwd.Length > 15)
-            {
-                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
-                return;
-            }
-
-            HttpCookie cookie = Request.Cookies["CheckCode"];
-            if (cookie.Value.ToLower() != this.txtAuthCode.Text.Trim().ToLower())
-            {
-                Response.Write("<script>alert('验证码错误！')</script>");
-                return;
-            }
-
-            int result;
             if (!WcfClient.IsReady)
             {
                 Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
                 return;
             }
             
+            if (!CheckAuthCode())
+            {
+                return;
+            }
+            if (!CheckUserName(userName))
+            {
+                return;
+            }
+            if (!CheckNickName(nickName))
+            {
+                return;
+            }
+            if (!CheckPassword(password, confirmpwd))
+            {
+                return;
+            }
+            if (!CheckAlipayAccount(alipayAccount))
+            {
+                return;
+            }
+            if (!CheckAlipayRealName(alipayRealName))
+            {
+                return;
+            }
+            if (!CheckIDCardNo(IDCardNo))
+            {
+                return;
+            }
+            if (!CheckEmail(email))
+            {
+                return;
+            }
+            if (!CheckQQ(qq))
+            {
+                return;
+            }
+
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-            
-            result = WcfClient.Instance.CheckUserNameExist(userName);
+
+            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+        }
+
+        private bool CheckUserName(string userName)
+        {
+            if (userName == "")
+            {
+                Response.Write("<script>alert('请输入用户名!')</script>");
+                return false;
+            }
+            if (userName.Length < 3)
+            {
+                Response.Write("<script>alert('用户名长度不能少于3个字符!')</script>");
+                return false;
+            }
+            if (userName.Length > 15)
+            {
+                Response.Write("<script>alert('用户名长度不能超过15个字符!')</script>");
+                return false;
+            }
+            int result = WcfClient.Instance.CheckUserNameExist(userName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
                 Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
-                return;
+                return false;
             }
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('该用户名已经存在，请选择其它用户名!')</script>");
-                return;
+                return false;
             }
             if (result != OperResult.RESULTCODE_FALSE)
             {
                 Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
-                return;
+                return false;
             }
 
-            if (nickName != "")
+            return true;
+        }
+
+        private bool CheckNickName(string nickName)
+        {
+            if (nickName == "")
             {
-                result = WcfClient.Instance.CheckNickNameExist(nickName);
-                if (result == OperResult.RESULTCODE_PARAM_INVALID)
-                {
-                    Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
-                    return;
-                }
-                if (result == OperResult.RESULTCODE_TRUE)
-                {
-                    Response.Write("<script>alert('该昵称已经存在，请选择其它昵称!')</script>");
-                    return;
-                }
-                if (result != OperResult.RESULTCODE_FALSE)
-                {
-                    Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
-                    return;
-                }
+                Response.Write("<script>alert('请输入昵称!')</script>");
+                return false;
+            }
+            if (nickName.Length > 15)
+            {
+                Response.Write("<script>alert('昵称长度不能超过15个字符!')</script>");
+                return false;
+            }
+
+            int result = WcfClient.Instance.CheckNickNameExist(nickName);
+            if (result == OperResult.RESULTCODE_PARAM_INVALID)
+            {
+                Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
+                return false;
+            }
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('该昵称已经存在，请选择其它昵称!')</script>");
+                return false;
+            }
+            if (result != OperResult.RESULTCODE_FALSE)
+            {
+                Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckPassword(string password, string confirmpwd)
+        {
+            if (password == "")
+            {
+                Response.Write("<script>alert('请输入密码!')</script>");
+                return false; ;
+            }
+            if (password != confirmpwd)
+            {
+                Response.Write("<script>alert('两次密码不一致!')</script>");
+                return false; ;
+            }
+            if (password.Length < 6)
+            {
+                Response.Write("<script>alert('密码长度不能小于6位!')</script>");
+                return false; ;
+            }
+            if (password.Length > 15)
+            {
+                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
+                return false; ;
+            }
+            if (confirmpwd.Length > 15)
+            {
+                Response.Write("<script>alert('密码长度不能超过15位!')</script>");
+                return false; ;
+            }
+
+            return true;
+        }
+
+        private bool CheckAlipayAccount(string alipayAccount)
+        {
+            if (alipayAccount == "")
+            {
+                Response.Write("<script>alert('请输入支付宝账户!')</script>");
+                return false;
             }
 
             bool matchValue = Regex.IsMatch(alipayAccount, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
@@ -185,29 +203,40 @@ namespace SuperMinersWeb
                 if (!matchValue)
                 {
                     Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
-                    return;
+                    return false;
                 }
                 else
                 {
                     if (alipayAccount.Length != 11)
                     {
                         Response.Write("<script>alert('请输入正确的支付宝账户')</script>");
-                        return;
+                        return false;
                     }
                 }
             }
-            result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
+            int result = WcfClient.Instance.CheckUserAlipayAccountExist(alipayAccount);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('该支付宝账户已经被使用，无法再注册')</script>");
-                return;
+                return false;
             }
 
-            matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
+            return true;
+        }
+
+        private bool CheckAlipayRealName(string alipayRealName)
+        {
+            if (alipayRealName == "")
+            {
+                Response.Write("<script>alert('请输入支付宝实名!')</script>");
+                return false;
+            }
+
+            bool matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
             if (!matchValue)
             {
                 Response.Write("<script>alert('请输入正确的支付宝实名')</script>");
-                return;
+                return false;
             }
             //result = WcfClient.Instance.CheckUserAlipayRealNameExist(alipayRealName);
             //if (result == OperResult.RESULTCODE_TRUE)
@@ -216,59 +245,115 @@ namespace SuperMinersWeb
             //    return;
             //}
 
-            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
+            return true;
+        }
+
+        private bool CheckIDCardNo(string IDCardNo)
+        {
+            if (IDCardNo == "")
+            {
+                Response.Write("<script>alert('请输入身份证号!')</script>");
+                return false;
+            }
+
+            bool matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
             if (!matchValue)
             {
                 Response.Write("<script>alert('请输入正确的身份证号')</script>");
-                return;
+                return false;
             }
             else
             {
                 if (IDCardNo.Length != 18)
                 {
                     Response.Write("<script>alert('身份证号必须为18位')</script>");
-                    return;
+                    return false;
                 }
             }
-            result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
+            int result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('身份证号已经被使用，无法再注册')</script>");
-                return;
+                return false;
             }
 
-            matchValue = Regex.IsMatch(email, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
+            return true;
+        }
+
+        private bool CheckEmail(string email)
+        {
+            if (email == "")
+            {
+                Response.Write("<script>alert('请输入邮箱!')</script>");
+                return false;
+            }
+            if (email.Length > 30)
+            {
+                Response.Write("<script>alert('电子邮箱长度不能超过30个字符!')</script>");
+                return false;
+            }
+
+            bool matchValue = Regex.IsMatch(email, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
             if (!matchValue)
             {
                 Response.Write("<script>alert('请输入正确的邮箱')</script>");
-                return;
+                return false;
             }
 
-            result = WcfClient.Instance.CheckEmailExist(email);
+            int result = WcfClient.Instance.CheckEmailExist(email);
             if (result == OperResult.RESULTCODE_EXCEPTION)
             {
                 Response.Write("<script>alert('服务器连接失败, 请刷新页面重试!')</script>");
-                return;
+                return false;
             }
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('该邮箱已被其它用户使用，请选择其它邮箱!')</script>");
-                return;
+                return false;
             }
             if (result != OperResult.RESULTCODE_FALSE)
             {
                 Response.Write("<script>alert('注册失败, 请刷新页面重试!')</script>");
-                return;
+                return false;
             }
 
-            matchValue = Regex.IsMatch(qq, @"^([1-9][0-9]*)$");
+            return true;
+        }
+
+        private bool CheckQQ(string qq)
+        {
+            if (qq == "")
+            {
+                Response.Write("<script>alert('请输入QQ号!')</script>");
+                return false;
+            }
+
+            if (qq.Length > 15)
+            {
+                Response.Write("<script>alert('QQ长度不能超过15个字符!')</script>");
+                return false;
+            }
+
+            bool matchValue = Regex.IsMatch(qq, @"^([1-9][0-9]*)$");
             if (!matchValue)
             {
                 Response.Write("<script>alert('请输入正确的QQ号')</script>");
-                return;
+                return false;
             }
 
-            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+            return true;
+        }
+
+        private bool CheckAuthCode()
+        {
+            HttpCookie cookie = Request.Cookies["CheckCode"];
+            if (cookie.Value.ToLower() != this.txtAuthCode.Text.Trim().ToLower())
+            {
+                Response.Write("<script>alert('验证码错误！')</script>");
+                return false;
+            }
+
+            return true;
         }
 
         private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)

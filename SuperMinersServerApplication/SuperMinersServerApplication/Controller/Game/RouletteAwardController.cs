@@ -126,6 +126,8 @@ namespace SuperMinersServerApplication.Controller.Game
             if (this._currentRound != null && this._currentRound.MustWinAwardItemID > 0)
             {
                 DBProvider.GameRouletteDBProvider.SaveRouletteRoundInfo(this._currentRound);
+
+                LogHelper.Instance.AddInfoLog("幸运大转盘第" + this._currentRound.ID +"轮开奖信息保存到数据库");
             }
         }
 

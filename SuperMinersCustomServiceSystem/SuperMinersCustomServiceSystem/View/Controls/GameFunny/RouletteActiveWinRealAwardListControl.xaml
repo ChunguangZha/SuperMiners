@@ -20,8 +20,8 @@
                 <DataGridTextColumn Header="中奖信息" Width="*" Binding="{Binding AwardItemName, StringFormat='f2', Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="中奖时间" Width="*" Binding="{Binding WinTime, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="是否领取" Width="*" Binding="{Binding IsGot, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="领取信息1" Width="*" Binding="{Binding GotInfo1, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="领取信息2" Width="*" Binding="{Binding GotInfo1, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="领取QQ号" Width="*" Binding="{Binding GotInfo1, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="领取手机号" Width="*" Binding="{Binding GotInfo2, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Width="*" >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
