@@ -127,6 +127,15 @@ namespace SuperMinersServerApplication.WebService.Services
                         LogHelper.Instance.AddErrorLog("Test User [" + userName + "] Add Exception.", exc);
                     }
                 }
+
+                PlayerLoginInfo loginInfo = new PlayerLoginInfo()
+                {
+                    UserID = player.SimpleInfo.UserID,
+                    LoginIP = ip,
+                    LoginMac = mac,
+                     LoginTime = DateTime.Now
+                };
+                DBProvider.PlayerLoginInfoDBProvider.AddPlayerLoginInfo(loginInfo);
                 PlayerController.Instance.LoginPlayer(player);
 
                 RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();

@@ -116,6 +116,7 @@ namespace SuperMinersWPF.Views
         {
             try
             {
+                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
                 int count = (int)this.numMinersCount.Value;
                 decimal money = count * GlobalData.GameConfig.GoldCoin_Miner;
                 this.txtNeedMoney.Text = money.ToString();
@@ -125,10 +126,6 @@ namespace SuperMinersWPF.Views
                     if (money > allGoldcoin)
                     {
                         this.txtError.Visibility = System.Windows.Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
                     }
                 }
             }

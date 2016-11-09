@@ -43,8 +43,8 @@
         <TextBlock Grid.Row="6" Text="需要" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <TextBox Grid.Row="6" Grid.Column="1" Name="txtNeedMoney" IsReadOnly="True" Margin="5" VerticalAlignment="Center"/>
         <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="7" Text="提示" Margin="5" HorizontalAlignment="Right"/>
-        <TextBlock Grid.Row="7" Grid.Column="1" Margin="5" TextWrapping="Wrap">
+        <TextBlock Grid.Row="7" Text="提示" Margin="5" HorizontalAlignment="Right" Visibility="Collapsed"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Margin="5" Visibility="Collapsed" TextWrapping="Wrap">
             <Run Text="当账户中没有足够"/>
             <Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/>
             <Run Text="时，系统自动将"/>

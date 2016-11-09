@@ -39,6 +39,12 @@ namespace SuperMinersWPF.Views
             App.StoneOrderVMObject.BuyGoldCoinAlipayPaySucceed += StoneOrderVMObject_BuyGoldCoinAlipayPaySucceed;
             this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();
             this.txtRMB_GoldCoin.Text = GlobalData.GameConfig.RMB_GoldCoin.ToString();
+
+            if (GlobalData.CurrentUser.RMB <= 0)
+            {
+                this.chkPayType.IsChecked = true;
+                this.chkPayType.IsEnabled = false;
+            }
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -182,12 +188,20 @@ namespace SuperMinersWPF.Views
 
         private void chkPayType_Checked(object sender, RoutedEventArgs e)
         {
+            if (this.txtError == null)
+            {
+                return;
+            }
             this.chkPayType.Content = "支付宝支付";
             this.txtError.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void chkPayType_Unchecked(object sender, RoutedEventArgs e)
         {
+            if (this.txtError == null)
+            {
+                return;
+            }
             this.chkPayType.Content = "灵币支付";
 
             int spendRMB = (int)this.numRechargeRMB.Value;

@@ -19,7 +19,8 @@ namespace SuperMinersWPF.Views
     /// </summary>
     public partial class GatherStonesWindow : Window
     {
-        int gatherableStoneOutput;
+        int gatherableStoneOutputInt;
+        float gatherableStoneOutputFloat;
 
         public GatherStonesWindow()
         {
@@ -28,14 +29,17 @@ namespace SuperMinersWPF.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            this.txtAllOutputStones.Text = GlobalData.CurrentUser.TempOutputStones.ToString("0.00");
-            gatherableStoneOutput = (int)GlobalData.CurrentUser.TempOutputStones;
-            this.txtGatherableStones.Text = gatherableStoneOutput.ToString();
+            decimal a = GlobalData.CurrentUser.TempOutputStones * 100;
+            gatherableStoneOutputFloat = ((int)a) / 100f;
+
+            this.txtAllOutputStones.Text = gatherableStoneOutputFloat.ToString("0.00");
+            gatherableStoneOutputInt = (int)GlobalData.CurrentUser.TempOutputStones;
+            this.txtGatherableStones.Text = gatherableStoneOutputInt.ToString();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            App.UserVMObject.AsyncGatherStones(gatherableStoneOutput);
+            App.UserVMObject.AsyncGatherStones(gatherableStoneOutputInt);
             this.DialogResult = true;
         }
 

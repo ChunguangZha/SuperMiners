@@ -191,7 +191,12 @@ namespace SuperMinersServerApplication.Controller
                         tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
 
-                    decimal computeTempOutput = stones < tempOutput ? stones : tempOutput;
+                    decimal computeTempOutput = tempOutput;
+                    if (Math.Abs(stones - tempOutput) <= 1)
+                    {
+                        computeTempOutput = stones;
+                    }
+                    //decimal computeTempOutput = stones < tempOutput ? stones : tempOutput;
                     IntTempOutput = (int)computeTempOutput;
 
                     BasePlayer.FortuneInfo.TempOutputStones = 0;

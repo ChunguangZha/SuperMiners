@@ -40,5 +40,7 @@ namespace SuperMinersServerApplication.Controller
         public static AgentUserInfoDBProvider AgentUserInfoDBProvider = new AgentUserInfoDBProvider();
 
         public static AgentAwardRecordDBProvider AgentAwardRecordDBProvider = new AgentAwardRecordDBProvider();
+
+        public static PlayerLoginInfoDBProvider PlayerLoginInfoDBProvider = new PlayerLoginInfoDBProvider();
     }
 }
