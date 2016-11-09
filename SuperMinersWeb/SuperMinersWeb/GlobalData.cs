@@ -40,7 +40,7 @@ namespace SuperMinersWeb
             {
                 if (GameConfig != null)
                 {
-                    return (float)Math.Round((1 * 100) / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2);
+                    return (float)Math.Round(1M / GlobalData.GameConfig.Stones_RMB / GlobalData.GameConfig.Yuan_RMB, 2);
                 }
 
                 return 100000;

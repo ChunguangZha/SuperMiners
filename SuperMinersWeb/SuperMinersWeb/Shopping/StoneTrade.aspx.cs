@@ -17,7 +17,14 @@ namespace SuperMinersWeb.Shopping
 
         protected void btnPay_Click(object sender, EventArgs e)
         {
-            string subUrl = Tools.CreateAlipayLink("201608131111111111", "矿石", 1, "");
+            if (this.txtCount.Text == "")
+            {
+                Response.Write("<script>alert('请输入购买数量')</script>");
+                return;
+            }
+            int count = Convert.ToInt32(this.txtCount.Text);
+            decimal valueRMB = count / GlobalData.GameConfig.Stones_RMB;
+            string subUrl = Tools.CreateAlipayLink("WEB", MetaData.Trade.AlipayTradeInType.BuyStone, "WEB矿石", valueRMB, "");
             Response.Redirect(subUrl);
         }
     }

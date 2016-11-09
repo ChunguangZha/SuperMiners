@@ -1,5 +1,6 @@
 ﻿using SuperMinersServerApplication.Encoder;
 using SuperMinersWeb.AlipayCode;
+using SuperMinersWeb.Utility;
 using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;

@@ -207,6 +207,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>App_Code\GameConfig.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
+      <Link>Wcf\TradeType.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\DESEncrypt.cs">
       <Link>AlipayCode\DESEncrypt.cs</Link>
     </Compile>

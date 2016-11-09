@@ -29,7 +29,9 @@
                          MinimumValue="1" MaximumValue="99999999" ErrorMessage="数量需大于0"></asp:RangeValidator>
                 </li>
             </ul>
+            <p>
             <asp:Button ID="btnPay" runat="server" Text="购买" OnClick="btnPay_Click"/>
+            </p>
             <dl>
                 <dt></dt>
             </dl>

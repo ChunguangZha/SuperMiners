@@ -339,6 +339,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     user_name = userName
                 };
 
+                if (userName == "WEB" && out_trade_no.StartsWith("0000"))
+                {
+                    LogHelper.Instance.AddInfoLog("WEB端直接充值 ---- alipay_trade_no: " + alipay_trade_no + "; out_trade_no:" + out_trade_no + "; fee: " + total_fee);
+                    return OperResult.RESULTCODE_TRUE;
+                }
+
                 LogHelper.Instance.AddInfoLog("玩家[" + userName + "] ---- alipay_trade_no: " + alipay_trade_no + "; out_trade_no:" + out_trade_no + "; fee: " + total_fee);
                 if (record.value_rmb <= 0)
                 {
