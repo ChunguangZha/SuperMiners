@@ -11,7 +11,7 @@ namespace SuperMinersWeb.WeiXin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string baseUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+            string baseUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?";
             string appidValue = "wx5e9997a820875035";
             string redirectUriValue = "https://www.xlore.net/";
             string responseTypeValue = "code";
