@@ -34008,3 +34008,285 @@ Error:  [2016/11/10 0:22:41] ---- Log: RestClient ReceiveCallback 1. http://loca
 Error:  [2016/11/10 0:25:21] ---- Log: 客户端小开心已退出.
 -----------------------------------------------------
 
+Error:  [2016/11/12 22:00:58] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:00:58] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:00:58] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:00:58] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:01:01] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:03] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:03] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:03] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:03] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:03] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:03:30] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:25] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:25] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:25] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:25] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:26] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:04:42] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:41] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:42] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:42] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:42] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:42] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:42] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:06:55] ---- Log: 客户端小开心2已退出.
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:23] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:23] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:23] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:23] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:07:24] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:17:24] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:17:24] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:17:24] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:17:24] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:17:24] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:27:46] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:27:46] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:27:46] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:27:47] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:27:47] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:04] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:04] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:04] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:04] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:04] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:28:39] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:51] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:51] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:51] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:51] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:31:52] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:41:52] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:41:52] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:41:52] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:41:52] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:41:52] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:51:52] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:51:52] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:51:52] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:51:52] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 22:51:52] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/11/12 23:01:52] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/11/12 23:01:52] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/11/12 23:01:52] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/11/12 23:01:52] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/11/12 23:01:52] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+

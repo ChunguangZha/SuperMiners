@@ -143,6 +143,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\WeiXinStyle.css" />
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
     <Content Include="Images\alipay_logo.png" />
@@ -180,6 +181,7 @@
     <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
     <Content Include="WeiXin\Index.aspx" />
+    <Content Include="WeiXin\MyMineField.aspx" />
     <Content Include="WeiXin\WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
@@ -199,6 +201,7 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WeiXin\WeiXinCore\VerifyToken.ashx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
@@ -339,12 +342,23 @@
     <Compile Include="Utility\Tools.cs" />
     <Compile Include="Wcf\SuperMinersClient.cs" />
     <Compile Include="Wcf\WcfClient.cs" />
+    <Compile Include="WeiXin\Config.cs" />
     <Compile Include="WeiXin\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="WeiXin\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\MyMineField.aspx.cs">
+      <DependentUpon>MyMineField.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\MyMineField.aspx.designer.cs">
+      <DependentUpon>MyMineField.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinCore\VerifyToken.ashx.cs">
+      <DependentUpon>VerifyToken.ashx</DependentUpon>
     </Compile>
     <Compile Include="WeiXin\WeiXinResponse.aspx.cs">
       <DependentUpon>WeiXinResponse.aspx</DependentUpon>
@@ -368,7 +382,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="WeiXin\Controller\" />
+    <Folder Include="WeiXin\Model\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

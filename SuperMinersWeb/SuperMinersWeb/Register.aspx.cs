@@ -38,6 +38,19 @@ namespace SuperMinersWeb
             string alipayRealName = this.txtAlipayRealName.Text.Trim();
             string IDCardNo = this.txtIDCardNo.Text.Trim();
 
+            foreach (var item in GlobalData.InvalidName)
+            {
+                if (userName.Contains(item))
+                {
+                    Response.Write("<script>alert('用户名无效，无法注册!')</script>");
+                    return;
+                }
+                if (nickName.Contains(item))
+                {
+                    Response.Write("<script>alert('昵称无效，无法注册!')</script>");
+                    return;
+                }
+            }
 
             if (!WcfClient.IsReady)
             {

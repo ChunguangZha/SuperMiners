@@ -46,5 +46,18 @@ namespace SuperMinersWeb
                 return 100000;
             }
         }
+
+        public static string[] InvalidName = new string[]{
+            "傻逼",
+            "骗子",
+            "上当",
+            "封号",
+            "操你妈",
+            "管理员",
+            "骗",
+            "shabi",
+            "caonima",
+            "pianzi"
+        };
     }
 }

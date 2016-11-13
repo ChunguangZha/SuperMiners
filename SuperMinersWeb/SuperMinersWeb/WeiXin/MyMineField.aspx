@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="WeiXinResponse.aspx.cs" Inherits="SuperMinersWeb.WeiXin.WeiXinResponse" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MyMineField.aspx.cs" Inherits="SuperMinersWeb.WeiXin.MyMineField" %>
 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        请等待...
+    
     </div>
     </form>
 </body>

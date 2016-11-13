@@ -4,7 +4,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>迅灵矿场</title>
+    <link type="text/css" rel="stylesheet" href="../Content/WeiXinStyle.css" />
 </head>
 <body>
     <form id="form1" runat="server">

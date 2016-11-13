@@ -106,11 +106,14 @@ namespace SuperMinersWeb.Utility
                     builder.Append("Log: " + log);
                     builder.AppendLine("-----------------------------------------------------");
 
-                    stream = File.OpenWrite(this.LogFilePath);
+                    stream = File.Open(this.LogFilePath, FileMode.Append, FileAccess.Write);
                     if (stream != null)
                     {
-                        StreamWriter writer = new StreamWriter(stream);
+                        StreamWriter writer = new StreamWriter(stream, Encoding.Unicode);
                         writer.WriteLine(builder.ToString());
+                        writer.Flush();
+                        writer.Close();
+                        writer.Dispose();
                     }
                 }
                 catch (Exception exc)
