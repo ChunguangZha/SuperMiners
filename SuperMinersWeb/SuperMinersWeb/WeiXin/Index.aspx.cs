@@ -12,7 +12,7 @@ namespace SuperMinersWeb.WeiXin
         protected void Page_Load(object sender, EventArgs e)
         {
             CreateNavigateUrl();
-
+            
         }
 
         private void CreateNavigateUrl()
@@ -22,7 +22,7 @@ namespace SuperMinersWeb.WeiXin
             string responseTypeValue = "code";
             string scopeValue = "snsapi_userinfo";
             string stateValue = "xunlin";
-            this.link.NavigateUrl = baseUrl + "appid=" + Config.appid + "&redirect_uri=" + System.Web.HttpUtility.HtmlEncode(redirectUriValue) + "&response_type=" + responseTypeValue + "&scope=" + scopeValue + "&state=" + stateValue + "#wechat_redirect";
+            this.link.NavigateUrl = baseUrl + "appid=" + Config.appid + "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUriValue) + "&response_type=" + responseTypeValue + "&scope=" + scopeValue + "&state=" + stateValue + "#wechat_redirect";
             
         }
     }

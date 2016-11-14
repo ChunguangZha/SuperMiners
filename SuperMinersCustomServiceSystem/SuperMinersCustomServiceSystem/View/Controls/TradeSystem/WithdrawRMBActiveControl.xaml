@@ -10,9 +10,11 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="提现交易实时管理" FontSize="18" FontWeight="Bold" Margin="10"/>
         <Button Grid.Row="1" Name="btnRefresh" Content="刷新" Width="100" Margin="10" HorizontalAlignment="Left" Click="btnRefresh_Click"/>
+        <Button Grid.Row="1" Name="btnCSV" Content="保存CSV" Width="100" Margin="10" HorizontalAlignment="Right" Click="btnCSV_Click"/>
         <DataGrid Name="dgRecords" Grid.Row="2" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Width="*" Binding="{Binding ID, Mode=OneWay}" IsReadOnly="True"/>
@@ -37,6 +39,14 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text="总计" Margin="10,5"/>
+            <TextBlock Text="提现数：" Margin="10,5"/>
+            <TextBox Name="txtCount" Width="100" Margin="10,5" IsReadOnly="True"/>
+            <TextBlock Text="提现灵币：" Margin="10,5"/>
+            <TextBox Name="txtSumRMB" Width="100" Margin="10,5" IsReadOnly="True"/>
+            <TextBlock Text="人民币：" Margin="10,5"/>
+            <TextBox Name="txtSumYuan" Width="100" Margin="10,5" IsReadOnly="True"/>
+        </StackPanel>
     </Grid>
 </UserControl>

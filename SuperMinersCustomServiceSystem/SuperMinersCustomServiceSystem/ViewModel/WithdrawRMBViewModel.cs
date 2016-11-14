@@ -64,6 +64,11 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                                 this.ListActiveWithdrawRecords.Add(new WithdrawRMBRecordUIModel(item));
                             }
                         }
+
+                        if (GetWithdrawRMBActiveCompleted != null)
+                        {
+                            GetWithdrawRMBActiveCompleted();
+                        }
                     }
                     else if (userState == "HISTORY")
                     {
@@ -133,5 +138,6 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
+        public event Action GetWithdrawRMBActiveCompleted;
     }
 }
