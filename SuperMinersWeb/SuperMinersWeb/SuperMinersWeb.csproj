@@ -181,6 +181,7 @@
     <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
     <Content Include="WeiXin\Index.aspx" />
+    <Content Include="WeiXin\Login.aspx" />
     <Content Include="WeiXin\MyMineField.aspx" />
     <Content Include="WeiXin\WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
@@ -349,6 +350,13 @@
     </Compile>
     <Compile Include="WeiXin\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="WeiXin\MyMineField.aspx.cs">
       <DependentUpon>MyMineField.aspx</DependentUpon>
