@@ -1,9 +1,13 @@
 ﻿using SuperMinersWeb.Utility;
+using SuperMinersWeb.WeiXin.Controller;
+using SuperMinersWeb.WeiXin.Model;
+using SuperMinersWeb.WeiXin.WeiXinCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -23,36 +27,34 @@ namespace SuperMinersWeb.WeiXin
 
                 LogHelper.Instance.AddInfoLog("code:" + code + "; state: " + state );
 
-                string baseurl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
-                string url = baseurl + "appid=" + Config.appid + "&secret=" + Config.appSecret + "&code=" + code + "&grant_type=authorization_code";
-                //Response.Redirect(url);
-
-                HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
-                myReq.ContentType = "get";
-                myReq.BeginGetResponse(o =>
+                if (state == Config.state)
                 {
-                    if (o.IsCompleted)
-                    {
-                        var response = (HttpWebResponse)myReq.EndGetResponse(o);
-                        var stream = response.GetResponseStream();
-                        //var encoding = Encoding.GetEncoding(response.ContentEncoding);
-                        //if (encoding == null)
-                        //{
-                        //    encoding = Encoding.ASCII;
-                        //}
+                    WeiXinHandler.GetUserInfoSucceed += WeiXinHandler_GetUserInfoSucceed;
+                    WeiXinHandler.AccessWeiXinServerException += WeiXinHandler_AccessWeiXinServerException;
+                    WeiXinHandler.AccessWeiXinServerReturnError += WeiXinHandler_AccessWeiXinServerReturnError;
+                    WeiXinHandler.AsynGetUserAccessToken(code);
+                }
+                else
+                {
 
-                        StreamReader reader = new StreamReader(stream);
-                        string getString = reader.ReadToEnd();
-
-                        LogHelper.Instance.AddInfoLog("getString:" + getString);
-
-                        reader.Close();
-                        reader.Dispose();
-                        stream.Close();
-                        stream.Dispose();
-                    }
-                }, null);
+                }
             }
         }
+
+        void WeiXinHandler_AccessWeiXinServerReturnError(string arg1, ErrorModel arg2)
+        {
+            Response.Write("在调用接口" + arg1 + "时，微信服务器返回错误。信息为：" + arg2);
+        }
+
+        void WeiXinHandler_AccessWeiXinServerException(string obj)
+        {
+            Response.Write("调用信息服务器异常。" + obj);
+        }
+
+        void WeiXinHandler_GetUserInfoSucceed()
+        {
+            Response.Write("欢迎 " + TokenController.WeiXinUserObj.nickname + " 进入矿场，OpenID : " + TokenController.WeiXinUserObj.openid);
+        }
+
     }
 }

@@ -7,14 +7,9 @@ using System.Web.UI.WebControls;
 
 namespace SuperMinersWeb.WeiXin
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class WeiXinSite : System.Web.UI.MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnLogin_Click(object sender, EventArgs e)
         {
 
         }

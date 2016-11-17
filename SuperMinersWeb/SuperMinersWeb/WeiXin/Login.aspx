@@ -5,10 +5,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link type="text/css" rel="stylesheet" href="../Content/WeiXinStyle.css" />
 </head>
 <body>
     <form id="form1" runat="server">
-        <div class="registerpage">
+        <div class="login">
                     <table>
                         <tbody>
                             <tr>
@@ -29,9 +30,9 @@
                             </tr>
                         </tbody>
                     </table>
-        </div>
         <div>
-            <asp:Button runat="server" ID="btnLogin" Text="登录" />
+            <asp:Button runat="server" ID="btnLogin" Text="登录" OnClick="btnLogin_Click"/>
+        </div>
         </div>
     </form>
 </body>

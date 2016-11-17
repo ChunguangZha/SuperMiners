@@ -203,6 +203,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WeiXin\WeiXinCore\VerifyToken.ashx" />
+    <Content Include="WeiXin\Web.config" />
+    <Content Include="WeiXin\WeiXinSite.Master" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
@@ -344,6 +346,9 @@
     <Compile Include="Wcf\SuperMinersClient.cs" />
     <Compile Include="Wcf\WcfClient.cs" />
     <Compile Include="WeiXin\Config.cs" />
+    <Compile Include="WeiXin\Controller\MainController.cs" />
+    <Compile Include="WeiXin\Controller\TokenController.cs" />
+    <Compile Include="WeiXin\Controller\WeiXinHandler.cs" />
     <Compile Include="WeiXin\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -358,6 +363,10 @@
     <Compile Include="WeiXin\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WeiXin\Model\AuthorizeResponseModel.cs" />
+    <Compile Include="WeiXin\Model\ErrorModel.cs" />
+    <Compile Include="WeiXin\Model\HttpGetReturnModel.cs" />
+    <Compile Include="WeiXin\Model\WeiXinUserInfoModel.cs" />
     <Compile Include="WeiXin\MyMineField.aspx.cs">
       <DependentUpon>MyMineField.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -365,6 +374,7 @@
     <Compile Include="WeiXin\MyMineField.aspx.designer.cs">
       <DependentUpon>MyMineField.aspx</DependentUpon>
     </Compile>
+    <Compile Include="WeiXin\WeiXinCore\HttpHandler.cs" />
     <Compile Include="WeiXin\WeiXinCore\VerifyToken.ashx.cs">
       <DependentUpon>VerifyToken.ashx</DependentUpon>
     </Compile>
@@ -374,6 +384,13 @@
     </Compile>
     <Compile Include="WeiXin\WeiXinResponse.aspx.designer.cs">
       <DependentUpon>WeiXinResponse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinSite.Master.cs">
+      <DependentUpon>WeiXinSite.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinSite.Master.designer.cs">
+      <DependentUpon>WeiXinSite.Master</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -390,10 +407,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WeiXin\Controller\" />
-    <Folder Include="WeiXin\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -24,6 +24,11 @@
                     <asp:RangeValidator ID="RangeValidator1" runat="server" ControlToValidate="txtCount"
                          MinimumValue="1" MaximumValue="99999999" ErrorMessage="数量需大于0"></asp:RangeValidator>
                 </li>
+                <li>
+                </li>
+                <li>
+                    <span>此页面仅作展示使用，如需要请下载客户端软件购买。此处购买无效。</span>
+                </li>
             </ul>
             <asp:Button ID="btnPay" runat="server" Text="购买" OnClick="btnPay_Click"/>
             <dl>

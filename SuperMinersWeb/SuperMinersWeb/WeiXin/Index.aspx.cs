@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWeb.WeiXin.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,12 +18,7 @@ namespace SuperMinersWeb.WeiXin
 
         private void CreateNavigateUrl()
         {
-            string baseUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-            string redirectUriValue = "https://www.xlore.net/WeiXin/WeiXinResponse.aspx";
-            string responseTypeValue = "code";
-            string scopeValue = "snsapi_userinfo";
-            string stateValue = "xunlin";
-            this.link.NavigateUrl = baseUrl + "appid=" + Config.appid + "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUriValue) + "&response_type=" + responseTypeValue + "&scope=" + scopeValue + "&state=" + stateValue + "#wechat_redirect";
+            this.link.NavigateUrl = WeiXinHandler.CreateGetCodeUrl();
             
         }
     }
