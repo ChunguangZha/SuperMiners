@@ -244,6 +244,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "SetPlayerAsAgent", this.SetPlayerAsAgentCompleted, GlobalData.Token, userID, userName, agentReferURL);
         }
 
+        //public event EventHandler<WebInvokeEventArgs<PlayerLoginInfo[]>> GetUserLoginLogCompleted;
+        //public void GetUserLoginLog(int userID)
+        //{
+        //    this._invoker.Invoke<PlayerLoginInfo[]>(this._context, "GetUserLoginLog", this.GetUserLoginLogCompleted, GlobalData.Token, userID);
+        //}
+
         #endregion
     }
 }

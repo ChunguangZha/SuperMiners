@@ -142,6 +142,12 @@ namespace MetaData.User
             }
         }
 
+        [DataMember]
+        public string LastLoginIP { get; set; }
+
+        [DataMember]
+        public string LastLoginMac { get; set; }
+
         /// <summary>
         /// 上一次登出时间，用20150101表示无效日期
         /// </summary>

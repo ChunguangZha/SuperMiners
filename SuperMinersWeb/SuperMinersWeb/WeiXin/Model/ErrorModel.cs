@@ -6,6 +6,9 @@ using System.Web;
 
 namespace SuperMinersWeb.WeiXin.Model
 {
+    /// <summary>
+    /// "errcode":40125,"errmsg":"invalid appsecret, view more at http:\/\/t.cn\/RAEkdVq, hints: [ req_id: JRk49a0882ns82 ]"}
+    /// </summary>
     [DataContract]
     public class ErrorModel
     {

@@ -11,5 +11,7 @@ namespace SuperMinersWeb.WeiXin.Controller
         public static AuthorizeResponseModel AuthorizeObj = null;
 
         public static WeiXinUserInfoModel WeiXinUserObj = null;
+
+        public static ErrorModel ErrorObj = null;
     }
 }

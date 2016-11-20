@@ -227,14 +227,14 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
-        public string LoginIP
+        public string LastLoginIP
         {
-            get { return this.ParentObject.LoginIP; }
-            set
-            {
-                this.ParentObject.LoginIP = value;
-                NotifyPropertyChange("LoginIP");
-            }
+            get { return this.ParentObject.SimpleInfo.LastLoginIP; }
+        }
+
+        public string LastLoginMac
+        {
+            get { return this.ParentObject.SimpleInfo.LastLoginMac; }
         }
 
         public decimal Exp

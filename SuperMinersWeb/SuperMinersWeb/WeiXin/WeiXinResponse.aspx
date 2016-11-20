@@ -9,8 +9,12 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        请等待...
+        <asp:Label ID="lblMsg" runat="server" Text="请稍等..." />
     </div>
+        <div></div>
+        <div>
+            <asp:Button ID="btnRedirect" runat="server" Text="Redirect" OnClick="btnRedirect_Click"/>
+        </div>
     </form>
 </body>
 </html>

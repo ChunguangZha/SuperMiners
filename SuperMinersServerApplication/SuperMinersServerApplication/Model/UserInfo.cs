@@ -18,12 +18,12 @@ namespace SuperMinersServerApplication.Model
             set;
         }
 
-        [DataMember]
-        public string LoginIP
-        {
-            get;
-            set;
-        }
+        //[DataMember]
+        //public string LoginIP
+        //{
+        //    get;
+        //    set;
+        //}
 
         [DataMember]
         public PlayerSimpleInfo SimpleInfo = new PlayerSimpleInfo();

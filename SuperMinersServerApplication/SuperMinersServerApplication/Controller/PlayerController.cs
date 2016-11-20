@@ -896,6 +896,11 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        //public PlayerLoginInfo[] GetUserLoginLog(int userID)
+        //{
+        //    return DBProvider.PlayerLoginInfoDBProvider.GetUserLoginLogs(userID);
+        //}
+
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;
     }
 }

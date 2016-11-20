@@ -353,10 +353,10 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     user.SimpleInfo = player.SimpleInfo;
                     user.FortuneInfo = player.FortuneInfo;
                     user.isOnline = ClientManager.IsExistUserName(player.SimpleInfo.UserName);
-                    if (user.isOnline)
-                    {
-                        user.LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(player.SimpleInfo.UserName));
-                    }
+                    //if (user.isOnline)
+                    //{
+                    //    user.LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(player.SimpleInfo.UserName));
+                    //}
 
                     return user;
                 }
@@ -396,10 +396,10 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         users[i].SimpleInfo = players[i].SimpleInfo;
                         users[i].FortuneInfo = players[i].FortuneInfo;
                         users[i].isOnline = ClientManager.IsExistUserName(players[i].SimpleInfo.UserName);
-                        if (users[i].isOnline)
-                        {
-                            users[i].LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(players[i].SimpleInfo.UserName));
-                        }
+                        //if (users[i].isOnline)
+                        //{
+                        //    users[i].LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(players[i].SimpleInfo.UserName));
+                        //}
                     }
 
                     return users;
@@ -989,6 +989,18 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 throw new Exception();
             }
         }
+
+        //public PlayerLoginInfo[] GetUserLoginLog(string token, int userID)
+        //{
+        //    if (RSAProvider.LoadRSA(token))
+        //    {
+        //        return PlayerController.Instance.GetUserLoginLog(userID);
+        //    }
+        //    else
+        //    {
+        //        throw new Exception();
+        //    }
+        //}
 
         #region IDisposable Members
 

@@ -29,6 +29,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return this._listFilteredPlayers; }
         }
 
+        //private ObservableCollection<PlayerLoginInfoUIModel> _listPlayerLoginInfo = new ObservableCollection<PlayerLoginInfoUIModel>();
+
+        //public ObservableCollection<PlayerLoginInfoUIModel> ListPlayerLoginInfo
+        //{
+        //    get { return _listPlayerLoginInfo; }
+        //}
+
+
         public int PlayersCount
         {
             get
@@ -36,6 +44,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 return this.ListFilteredPlayers.Count;
             }
         }
+
+        //public void AsyncGetUserLoginLog(int userID)
+        //{
+        //    if (GlobalData.Client != null && GlobalData.Client.IsConnected)
+        //    {
+        //        App.BusyToken.ShowBusyWindow("正在加载玩家登录日志");
+        //        GlobalData.Client.GetUserLoginLog(userID);
+        //    }
+        //}
 
         public void AsyncGetListPlayers()
         {
@@ -99,7 +116,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         /// <param name="referrerUserName"></param>
         /// <param name="isLocked">0表示全部，1表示已锁定，2表示非锁定</param>
         /// <param name="isOnline">0表示全部，1表示在线，2表示离线</param>
-        public void SearchPlayers(string userName, int groupType, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline)
+        public void SearchPlayers(string userName, int groupType, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline, string loginIP, string loginMac)
         {
             bool checkUserNameOK = false;
             bool checkGroupType = false;
@@ -108,11 +125,13 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             bool checkInvitationCodeOK = false;
             bool checkLockedStateOK = false;
             bool checkOnlineStateOK = false;
+            bool checkLoginIPOK = false;
+            bool checkLoginMacOK = false;
 
             ListFilteredPlayers.Clear();
             foreach (var item in this.ListAllPlayers)
             {
-                checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = false;
+                checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = checkLoginIPOK = checkLoginMacOK = false;
 
                 if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
                 {
@@ -176,8 +195,18 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                         }
                     }
                 }
+                if (string.IsNullOrEmpty(loginIP) || item.LastLoginIP == loginIP)
+                {
+                    checkLoginIPOK = true;
+                }
+                if (string.IsNullOrEmpty(loginMac) || item.LastLoginMac == loginMac)
+                {
+                    checkLoginMacOK = true;
+                }
 
-                if (checkUserNameOK && checkGroupType && checkUserAlipayOK && checkUserReferrerOK && checkInvitationCodeOK && checkLockedStateOK && checkOnlineStateOK)
+                if (checkUserNameOK && checkGroupType && checkUserAlipayOK && checkUserReferrerOK 
+                    && checkInvitationCodeOK && checkLockedStateOK && checkOnlineStateOK
+                    && checkLoginIPOK && checkLoginMacOK)
                 {
                     ListFilteredPlayers.Add(item);
                 }
@@ -224,7 +253,38 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.LockPlayerCompleted += Client_LockPlayerCompleted;
             GlobalData.Client.UnlockPlayerCompleted += Client_UnlockPlayerCompleted;
             GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
+            //GlobalData.Client.GetUserLoginLogCompleted += Client_GetUserLoginLogCompleted;
         }
+
+        //void Client_GetUserLoginLogCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PlayerLoginInfo[]> e)
+        //{
+        //    try
+        //    {
+        //        App.BusyToken.CloseBusyWindow();
+
+        //        ListPlayerLoginInfo.Clear();
+
+        //        if (e.Error != null)
+        //        {
+        //            MessageBox.Show("获取玩家登录日志失败。");
+        //            return;
+        //        }
+
+        //        if (e.Result != null)
+        //        {
+        //            foreach (var item in e.Result)
+        //            {
+        //                var player = this.ListAllPlayers.FirstOrDefault(p => p.UserID == item.UserID);
+        //                string userName = player == null ? "" : player.UserName;
+        //                this.ListPlayerLoginInfo.Add(new PlayerLoginInfoUIModel(item, userName));
+        //            }
+        //        }        
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        MyMessageBox.ShowInfo("获取玩家信息,服务器回调异常。信息为：" + exc.Message);
+        //    }
+        //}
 
         void Client_GetPlayerCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<SuperMinersServerApplication.Model.PlayerInfoLoginWrap> e)
         {

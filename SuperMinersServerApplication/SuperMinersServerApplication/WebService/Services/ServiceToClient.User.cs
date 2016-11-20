@@ -128,14 +128,17 @@ namespace SuperMinersServerApplication.WebService.Services
                     }
                 }
 
-                PlayerLoginInfo loginInfo = new PlayerLoginInfo()
-                {
-                    UserID = player.SimpleInfo.UserID,
-                    LoginIP = ip,
-                    LoginMac = mac,
-                     LoginTime = DateTime.Now
-                };
-                DBProvider.PlayerLoginInfoDBProvider.AddPlayerLoginInfo(loginInfo);
+                //PlayerLoginInfo loginInfo = new PlayerLoginInfo()
+                //{
+                //    UserID = player.SimpleInfo.UserID,
+                //    LoginIP = ip,
+                //    LoginMac = mac,
+                //     LoginTime = DateTime.Now
+                //};
+                //DBProvider.PlayerLoginInfoDBProvider.AddPlayerLoginInfo(loginInfo);
+
+                player.SimpleInfo.LastLoginIP = ip;
+                player.SimpleInfo.LastLoginMac = mac;
                 PlayerController.Instance.LoginPlayer(player);
 
                 RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();

@@ -203,6 +203,14 @@ namespace DataBaseProvider
                     string encryptedReferrerUserName = dt.Rows[i]["ReferrerUserName"].ToString();
                     player.SimpleInfo.ReferrerUserName = DESEncrypt.DecryptDES(encryptedReferrerUserName);
                 }
+                if (dt.Rows[i]["LastLoginIP"] != DBNull.Value)
+                {
+                    player.SimpleInfo.LastLoginIP = dt.Rows[i]["LastLoginIP"].ToString();
+                }
+                if (dt.Rows[i]["LastLoginMac"] != DBNull.Value)
+                {
+                    player.SimpleInfo.LastLoginMac = dt.Rows[i]["LastLoginMac"].ToString();
+                }
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
                 player.FortuneInfo.Exp = Convert.ToDecimal(dt.Rows[i]["Exp"]);
@@ -623,5 +631,21 @@ namespace DataBaseProvider
             return records;
         }
 
+        //internal static PlayerLoginInfo[] GetPlayerLoginInfoListFromDataTable(DataTable dt)
+        //{
+        //    PlayerLoginInfo[] records = new PlayerLoginInfo[dt.Rows.Count];
+        //    for (int i = 0; i < dt.Rows.Count; i++)
+        //    {
+        //        PlayerLoginInfo record = new PlayerLoginInfo();
+        //        record.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+        //        record.LoginIP = dt.Rows[i]["LoginIP"].ToString();
+        //        record.LoginMac = dt.Rows[i]["LoginMac"].ToString();
+        //        record.LoginTime = Convert.ToDateTime(dt.Rows[i]["LoginTime"]);
+        //        record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+        //        records[i] = record;
+        //    }
+
+        //    return records;
+        //}
     }
 }

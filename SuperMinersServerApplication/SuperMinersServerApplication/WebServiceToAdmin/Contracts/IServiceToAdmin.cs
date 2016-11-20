@@ -262,5 +262,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int SetPlayerAsAgent(string token, int userID, string userName, string agentReferURL);
+
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/GetUserLoginLog",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //PlayerLoginInfo[] GetUserLoginLog(string token, int userID);
     }
 }

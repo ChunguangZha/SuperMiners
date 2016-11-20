@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="玩家管理" FontSize="18" FontWeight="Bold" Margin="10"/>
         <Grid Grid.Row="1">
@@ -31,18 +32,22 @@
                 </ComboBox>
                 <TextBlock Text="支付宝账户：" HorizontalAlignment="Right" Margin="5"/>
                 <TextBox Name="txtAlipayAccount" Margin="5" Width="150" VerticalAlignment="Center"/>
-            </StackPanel>
-            <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Text="推荐人：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                <TextBox Name="txtReferrerUserName" VerticalAlignment="Center" Margin="5" Width="100"/>
-                <TextBlock Text="邀请码：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                <TextBox Name="txtInvitationCode" VerticalAlignment="Center" Margin="5" Width="100"/>
                 <TextBlock Text="锁定状态：" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
                 <ComboBox Name="cmbLocked" Width="100" Margin="5" SelectedIndex="0" HorizontalAlignment="Left" HorizontalContentAlignment="Center">
                     <ComboBoxItem Content="全部"/>
                     <ComboBoxItem Content="已锁定"/>
                     <ComboBoxItem Content="未锁定"/>
                 </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="推荐人：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Name="txtReferrerUserName" VerticalAlignment="Center" Margin="5" Width="100"/>
+                <TextBlock Text="邀请码：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Name="txtInvitationCode" VerticalAlignment="Center" Margin="5" Width="100"/>
+                <TextBlock Text="登录IP：" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Name="txtLoginIP" VerticalAlignment="Center" Margin="5" Width="150"/>
+                <TextBlock Text="登录MAC：" VerticalAlignment="Center" Margin="5"/>
+                <TextBox Name="txtLoginMac" VerticalAlignment="Center" Margin="5" Width="150"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <TextBlock Text="在线状态：" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
@@ -86,7 +91,8 @@
                     <DataGridTextColumn Binding="{Binding IsLocked}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
                     <DataGridTextColumn Binding="{Binding LockedTime}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
                     <DataGridTextColumn Binding="{Binding Online}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>
-                    <DataGridTextColumn Binding="{Binding LoginIP}" ClipboardContentBinding="{x:Null}" Header="当前登录IP"/>
+                    <DataGridTextColumn Binding="{Binding LastLoginIP}" ClipboardContentBinding="{x:Null}" Header="最近一次登录IP"/>
+                    <DataGridTextColumn Binding="{Binding LastLoginMac}" ClipboardContentBinding="{x:Null}" Header="最近一次登录MAC"/>
                     <DataGridTextColumn Binding="{Binding Exp}" ClipboardContentBinding="{x:Null}" Header="贡献值"/>
                     <DataGridTextColumn Binding="{Binding RMB}" ClipboardContentBinding="{x:Null}" Header="灵币"/>
                     <DataGridTextColumn Binding="{Binding FreezingRMB}" ClipboardContentBinding="{x:Null}" Header="冻结灵币"/>
@@ -118,6 +124,8 @@
             <Button Name="btnLockPlayer" HorizontalAlignment="Right" Content="锁定玩家" Width="100" Margin="10" Click="btnLockPlayer_Click"/>
             <Button Name="btnUnLockPlayer" HorizontalAlignment="Right" Content="解锁玩家" Width="100" Margin="10" Click="btnUnLockPlayer_Click"/>
             <Button Name="btnSetPlayerAsAgent" HorizontalAlignment="Right" Content="设置玩家为代理" Width="100" Margin="10" Click="btnSetPlayerAsAgent_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
         </StackPanel>
     </Grid>
 </UserControl>

@@ -73,7 +73,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), cmbUserGroup.SelectedIndex - 1, this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.txtInvitationCode.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex);
+            App.PlayerVMObject.SearchPlayers(this.txtUserName.Text.Trim(), cmbUserGroup.SelectedIndex - 1, this.txtAlipayAccount.Text.Trim(), this.txtReferrerUserName.Text.Trim(), this.txtInvitationCode.Text.Trim(), this.cmbLocked.SelectedIndex, this.cmbOnline.SelectedIndex, this.txtLoginIP.Text.Trim(), this.txtLoginMac.Text.Trim());
         }
 
         private void btnEditPlayerInfo_Click(object sender, RoutedEventArgs e)
@@ -158,7 +158,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     builder.Append(",");
                     builder.Append(item.Online);
                     builder.Append(",");
-                    builder.Append(item.LoginIP);
+                    builder.Append(item.LastLoginIP);
                     builder.Append(",");
                     builder.Append(item.Exp);
                     builder.Append(",");
@@ -276,6 +276,24 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             catch (Exception exc)
             {
                 MyMessageBox.ShowInfo("解锁玩家异常。" + exc.Message);
+            }
+        }
+
+        private void btnViewPlayerLoginLogs_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+
+                    ViewPlayerLoginLogsWindow win = new ViewPlayerLoginLogsWindow(player.UserID);
+                    win.ShowDialog();
+                }
+            }
+            catch (Exception exc)
+            {
+
             }
         }
 

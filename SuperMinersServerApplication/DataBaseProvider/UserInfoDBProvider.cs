@@ -253,10 +253,12 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime where `id` = @id;";
+                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime, `LastLoginIP`= @LastLoginIP, `LastLoginMac`= @LastLoginMac where `id` = @id;";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = textCmd;
                 mycmd.Parameters.AddWithValue("@LastLoginTime", playerSimpleInfo.LastLoginTime.Value);
+                mycmd.Parameters.AddWithValue("@LastLoginIP", playerSimpleInfo.LastLoginIP);
+                mycmd.Parameters.AddWithValue("@LastLoginMac", playerSimpleInfo.LastLoginMac);
                 mycmd.Parameters.AddWithValue("@id", playerSimpleInfo.UserID);
 
                 mycmd.ExecuteNonQuery();
@@ -283,14 +285,14 @@ namespace DataBaseProvider
             try
             {
                 trans = MyDBHelper.Instance.CreateTrans();
-                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime, `LastLogOutTime` = @LastLogOutTime where `UserName` = @UserName;" +
-                                " update playerfortuneinfo a set a.`TempOutputStonesStartTime` = @TempOutputStonesStartTime where a.userId = (select b.id from playersimpleinfo b where b.UserName = @UserName); ";
+                string textCmd = "update playersimpleinfo set `LastLoginTime` = @LastLoginTime, `LastLogOutTime` = @LastLogOutTime where `id` = @UserID;" +
+                                " update playerfortuneinfo a set a.`TempOutputStonesStartTime` = @TempOutputStonesStartTime where a.userId = (select b.id from playersimpleinfo b where b.id = @UserID); ";
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = textCmd;
                 mycmd.Parameters.AddWithValue("@LastLoginTime", playerSimpleInfo.LastLoginTime.Value);
                 mycmd.Parameters.AddWithValue("@LastLogOutTime", playerSimpleInfo.LastLogOutTime.Value);
                 mycmd.Parameters.AddWithValue("@TempOutputStonesStartTime", playerFortuneInfo.TempOutputStonesStartTime.Value);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerSimpleInfo.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", playerSimpleInfo.UserID);
 
                 mycmd.ExecuteNonQuery();
 
@@ -543,7 +545,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "select count(UserName) from playersimpleinfo where UserName = @UserName";
+                string cmdText = "select count(id) from playersimpleinfo where UserName = @UserName";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 object objResult = mycmd.ExecuteScalar();
@@ -573,7 +575,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "select count(NickName) from playersimpleinfo where NickName = @NickName";
+                string cmdText = "select count(id) from playersimpleinfo where NickName = @NickName";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
                 object objResult = mycmd.ExecuteScalar();
@@ -690,7 +692,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "select count(UserName) from playersimpleinfo where Email = @Email ";
+                string cmdText = "select count(id) from playersimpleinfo where Email = @Email ";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@Email", DESEncrypt.EncryptDES(email));
                 object objResult = mycmd.ExecuteScalar();
@@ -890,7 +892,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "select count(RegisterIP) from playersimpleinfo where RegisterIP = @ip";
+                string cmdText = "select count(id) from playersimpleinfo where RegisterIP = @ip";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@ip", ip);
                 object objResult = mycmd.ExecuteScalar();

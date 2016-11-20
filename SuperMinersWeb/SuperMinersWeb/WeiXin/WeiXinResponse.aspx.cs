@@ -43,17 +43,23 @@ namespace SuperMinersWeb.WeiXin
 
         void WeiXinHandler_AccessWeiXinServerReturnError(string arg1, ErrorModel arg2)
         {
-            Response.Write("在调用接口" + arg1 + "时，微信服务器返回错误。信息为：" + arg2);
+            TokenController.ErrorObj = arg2;
+            lblMsg.Text = "在调用接口" + arg1 + "时，微信服务器返回错误。信息为：" + arg2;
         }
 
         void WeiXinHandler_AccessWeiXinServerException(string obj)
         {
-            Response.Write("调用信息服务器异常。" + obj);
+            lblMsg.Text = "调用信息服务器异常。" + obj;
         }
 
         void WeiXinHandler_GetUserInfoSucceed()
         {
-            Response.Write("欢迎 " + TokenController.WeiXinUserObj.nickname + " 进入矿场，OpenID : " + TokenController.WeiXinUserObj.openid);
+            lblMsg.Text = "欢迎 " + TokenController.WeiXinUserObj.nickname + " 进入矿场，OpenID : " + TokenController.WeiXinUserObj.openid;
+        }
+
+        protected void btnRedirect_Click(object sender, EventArgs e)
+        {
+            Server.Transfer("ErrorPage.aspx");
         }
 
     }

@@ -23,6 +23,14 @@ namespace SuperMinersWeb.WeiXin.Controller
             return url;
         }
 
+        public static void AsyncGetUserCode()
+        {
+            string url = CreateGetCodeUrl();
+            SuperMinersWeb.Utility.LogHelper.Instance.AddInfoLog("Start AsyncGetUserCode");
+            HttpHandler.AsyncGet(url);
+            //return isOK;
+        }
+
         public static bool AsynGetUserAccessToken(string code)
         {
             string baseurl = "https://api.weixin.qq.com/sns/oauth2/access_token?";

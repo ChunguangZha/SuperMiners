@@ -14,6 +14,25 @@ namespace SuperMinersWeb.WeiXin.WeiXinCore
     {
         //public static event Action<HttpGetReturnModel> AsyncGetCallback;
 
+        public static bool AsyncGet(string url)
+        {
+            try
+            {
+                HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
+                myReq.ContentType = "get";
+                myReq.BeginGetResponse(o =>
+                {
+                }, null);
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddInfoLog("HttpHandler AsyncGet Request Exception:" + exc);
+                return false;
+            }
+        }
+
         public static bool AsyncGet<T>(string url, Action<HttpGetReturnModel> callback)
         {
 
@@ -35,28 +54,42 @@ namespace SuperMinersWeb.WeiXin.WeiXinCore
                     {
                         if (o.IsCompleted)
                         {
+                            string getString = "";
                             var response = (HttpWebResponse)myReq.EndGetResponse(o);
                             using (Stream stream = response.GetResponseStream())
                             {
                                 if (stream != null)
                                 {
                                     StreamReader reader = new StreamReader(stream);
-                                    string getString = reader.ReadToEnd();
-                                    LogHelper.Instance.AddInfoLog("WeiXin Server Response: " + getString);
+                                    getString = reader.ReadToEnd();
+                                    reader.Close();
+                                    reader.Dispose();
+
+                                }
+                            }
+
+                            LogHelper.Instance.AddInfoLog("WeiXin Server Response: " + getString);
+
+                            if (!string.IsNullOrEmpty(getString))
+                            {
+                                using (MemoryStream memstream = new MemoryStream())
+                                {
+                                    StreamWriter writer = new StreamWriter(memstream);
+                                    writer.Write(getString);
+                                    writer.Flush();
+                                    memstream.Position = 0;
                                     if (getString.Contains("errcode"))
                                     {
                                         DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(ErrorModel));
-                                        ErrorModel err = (ErrorModel)deseralizer.ReadObject(stream);// //反序列化ReadObject
+                                        ErrorModel err = (ErrorModel)deseralizer.ReadObject(memstream);// //反序列化ReadObject
                                         value.ResponseError = err;
                                     }
                                     else
                                     {
                                         DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(T));
-                                        T model = (T)deseralizer.ReadObject(stream);// //反序列化ReadObject
+                                        T model = (T)deseralizer.ReadObject(memstream);// //反序列化ReadObject
                                         value.ResponseResult = model;
                                     }
-                                    reader.Close();
-                                    reader.Dispose();
                                 }
                             }
 
