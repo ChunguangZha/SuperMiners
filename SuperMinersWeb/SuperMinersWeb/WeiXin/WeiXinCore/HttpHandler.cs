@@ -33,7 +33,7 @@ namespace SuperMinersWeb.WeiXin.WeiXinCore
             }
         }
 
-        public static bool AsyncGet<T>(string url, Action<HttpGetReturnModel> callback)
+        public static HttpGetReturnModel SyncGet<T>(string url)
         {
 
             //{
@@ -43,79 +43,63 @@ namespace SuperMinersWeb.WeiXin.WeiXinCore
             //"openid":"o3_dVweaHgdE-Fl5jlMpk80E3lIY",
             //"scope":"snsapi_userinfo"}
 
+            HttpGetReturnModel value = new HttpGetReturnModel();
+
             try
             {
                 HttpWebRequest myReq = (HttpWebRequest)WebRequest.Create(url);
                 myReq.ContentType = "get";
-                myReq.BeginGetResponse(o =>
+                var response = myReq.GetResponse() as HttpWebResponse;
+                string getString = "";
+                using (Stream stream = response.GetResponseStream())
                 {
-                    HttpGetReturnModel value = new HttpGetReturnModel();
-                    try
+                    if (stream != null)
                     {
-                        if (o.IsCompleted)
+                        StreamReader reader = new StreamReader(stream);
+                        getString = reader.ReadToEnd();
+                        reader.Close();
+                        reader.Dispose();
+
+                    }
+                }
+
+                LogHelper.Instance.AddInfoLog("WeiXin Server Response: " + getString);
+
+                if (!string.IsNullOrEmpty(getString))
+                {
+                    using (MemoryStream memstream = new MemoryStream())
+                    {
+                        StreamWriter writer = new StreamWriter(memstream);
+                        writer.Write(getString);
+                        writer.Flush();
+                        memstream.Position = 0;
+                        if (getString.Contains("errcode"))
                         {
-                            string getString = "";
-                            var response = (HttpWebResponse)myReq.EndGetResponse(o);
-                            using (Stream stream = response.GetResponseStream())
-                            {
-                                if (stream != null)
-                                {
-                                    StreamReader reader = new StreamReader(stream);
-                                    getString = reader.ReadToEnd();
-                                    reader.Close();
-                                    reader.Dispose();
-
-                                }
-                            }
-
-                            LogHelper.Instance.AddInfoLog("WeiXin Server Response: " + getString);
-
-                            if (!string.IsNullOrEmpty(getString))
-                            {
-                                using (MemoryStream memstream = new MemoryStream())
-                                {
-                                    StreamWriter writer = new StreamWriter(memstream);
-                                    writer.Write(getString);
-                                    writer.Flush();
-                                    memstream.Position = 0;
-                                    if (getString.Contains("errcode"))
-                                    {
-                                        DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(ErrorModel));
-                                        ErrorModel err = (ErrorModel)deseralizer.ReadObject(memstream);// //反序列化ReadObject
-                                        value.ResponseError = err;
-                                    }
-                                    else
-                                    {
-                                        DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(T));
-                                        T model = (T)deseralizer.ReadObject(memstream);// //反序列化ReadObject
-                                        value.ResponseResult = model;
-                                    }
-                                }
-                            }
-
-                            if (callback != null)
-                            {
-                                callback(value);
-                            }
+                            DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(ErrorModel));
+                            ErrorModel err = (ErrorModel)deseralizer.ReadObject(memstream);// //反序列化ReadObject
+                            value.ResponseError = err;
+                        }
+                        else
+                        {
+                            DataContractJsonSerializer deseralizer = new DataContractJsonSerializer(typeof(T));
+                            T model = (T)deseralizer.ReadObject(memstream);// //反序列化ReadObject
+                            value.ResponseResult = model;
                         }
                     }
-                    catch (Exception exc)
-                    {
-                        LogHelper.Instance.AddInfoLog("HttpHandler AsyncGet Response Exception:" + exc);
-                        value.Exception = exc;
-                        if (callback != null)
-                        {
-                            callback(value);
-                        }
-                    }
-                }, null);
+                }
 
-                return true;
+                //if (callback != null)
+                //{
+                //    callback(value);
+                //}
+
+                return value;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddInfoLog("HttpHandler AsyncGet Request Exception:" + exc);
-                return false;
+                value.Exception = exc;
+                return value;
             }
         }
     }

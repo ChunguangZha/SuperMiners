@@ -29,10 +29,18 @@ namespace SuperMinersWeb.WeiXin
 
                 if (state == Config.state)
                 {
-                    WeiXinHandler.GetUserInfoSucceed += WeiXinHandler_GetUserInfoSucceed;
-                    WeiXinHandler.AccessWeiXinServerException += WeiXinHandler_AccessWeiXinServerException;
-                    WeiXinHandler.AccessWeiXinServerReturnError += WeiXinHandler_AccessWeiXinServerReturnError;
-                    WeiXinHandler.AsynGetUserAccessToken(code);
+                    //WeiXinHandler.GetUserInfoSucceed += WeiXinHandler_GetUserInfoSucceed;
+                    //WeiXinHandler.AccessWeiXinServerException += WeiXinHandler_AccessWeiXinServerException;
+                    //WeiXinHandler.AccessWeiXinServerReturnError += WeiXinHandler_AccessWeiXinServerReturnError;
+                    bool isOK = WeiXinHandler.SynGetUserAccessToken(code);
+                    if (!isOK)
+                    {
+                        Server.Transfer("ErrorPage.aspx");
+                    }
+                    else
+                    {
+                        this.lblMsg.Text = "欢迎进入迅灵矿场";
+                    }
                 }
                 else
                 {

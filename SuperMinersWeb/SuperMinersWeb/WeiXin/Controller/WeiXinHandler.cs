@@ -31,69 +31,67 @@ namespace SuperMinersWeb.WeiXin.Controller
             //return isOK;
         }
 
-        public static bool AsynGetUserAccessToken(string code)
+        public static bool SynGetUserAccessToken(string code)
         {
             string baseurl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
             string url = baseurl + "appid=" + Config.appid + "&secret=" + Config.appSecret + "&code=" + code + "&grant_type=authorization_code";
 
             SuperMinersWeb.Utility.LogHelper.Instance.AddInfoLog("Start AsynGetUserAccessToken");
-            bool isOK = HttpHandler.AsyncGet<AuthorizeResponseModel>(url, result =>
+            HttpGetReturnModel result = HttpHandler.SyncGet<AuthorizeResponseModel>(url);
+            if (result.Exception != null)
             {
-                if (result.Exception != null)
-                {
-                    if (AccessWeiXinServerException != null)
-                    {
-                        AccessWeiXinServerException(result.Exception.Message);
-                    }
-                    return;
-                }
+                //if (AccessWeiXinServerException != null)
+                //{
+                //    AccessWeiXinServerException(result.Exception.Message);
+                //}
+                return false;
+            }
 
-                if (result.ResponseError != null)
-                {
-                    if (AccessWeiXinServerReturnError != null)
-                    {
-                        AccessWeiXinServerReturnError("AsynGetUserAccessToken", result.ResponseError);
-                    }
-                    //Response.Write("<script>alert('微信服务器返回错误。错误码为：" + obj.ResponseError.errcode + " ; 错误信息为：" + obj.ResponseError.errmsg + "')</script>");
-                    return;
-                }
+            if (result.ResponseError != null)
+            {
+                TokenController.ErrorObj = result.ResponseError;
+                //if (AccessWeiXinServerReturnError != null)
+                //{
+                //    AccessWeiXinServerReturnError("AsynGetUserAccessToken", result.ResponseError);
+                //}
+                //Response.Write("<script>alert('微信服务器返回错误。错误码为：" + obj.ResponseError.errcode + " ; 错误信息为：" + obj.ResponseError.errmsg + "')</script>");
+                return false;
+            }
 
-                TokenController.AuthorizeObj = result.ResponseResult as AuthorizeResponseModel;
-                if (TokenController.AuthorizeObj != null)
-                {
-                    AsyncGetUserInfo(TokenController.AuthorizeObj.access_token, TokenController.AuthorizeObj.openid);
-                }
-            });
-            return isOK;
+            TokenController.AuthorizeObj = result.ResponseResult as AuthorizeResponseModel;
+            //if (TokenController.AuthorizeObj != null)
+            //{
+            //    AsyncGetUserInfo(TokenController.AuthorizeObj.access_token, TokenController.AuthorizeObj.openid);
+            //}
+            return true;
         }
 
-        public static bool AsyncRefreshUserAccessToken(string refresh_token)
+        public static bool SyncRefreshUserAccessToken(string refresh_token)
         {
             string baseurl = "https://api.weixin.qq.com/sns/oauth2/refresh_token?";
             string url = baseurl + "appid=" + Config.appid + "&grant_type=refresh_token&refresh_token=" + refresh_token;
 
             SuperMinersWeb.Utility.LogHelper.Instance.AddInfoLog("Start AsyncRefreshUserAccessToken");
-            bool isOK = HttpHandler.AsyncGet<AuthorizeResponseModel>(url, result =>
+            HttpGetReturnModel result = HttpHandler.SyncGet<AuthorizeResponseModel>(url);
+            if (result.Exception != null)
             {
-                if (result.Exception != null)
+                if (AccessWeiXinServerException != null)
                 {
-                    if (AccessWeiXinServerException != null)
-                    {
-                        AccessWeiXinServerException(result.Exception.Message);
-                    }
-                    return;
+                    AccessWeiXinServerException(result.Exception.Message);
                 }
+                return false;
+            }
 
-                if (result.ResponseError != null)
+            if (result.ResponseError != null)
+            {
+                if (AccessWeiXinServerReturnError != null)
                 {
-                    if (AccessWeiXinServerReturnError != null)
-                    {
-                        AccessWeiXinServerReturnError("AsyncRefreshUserAccessToken", result.ResponseError);
-                    }
-                    return;
+                    AccessWeiXinServerReturnError("AsyncRefreshUserAccessToken", result.ResponseError);
                 }
-            });
-            return isOK;
+                return false;
+            }
+
+            return true;
         }
 
         public static bool AsyncGetUserInfo(string access_token, string openid)
@@ -102,33 +100,32 @@ namespace SuperMinersWeb.WeiXin.Controller
             string url = baseurl + "appid=" + Config.appid + "&access_token=" + access_token + "&openid=" + openid + "&lang=zh_CN";
 
             SuperMinersWeb.Utility.LogHelper.Instance.AddInfoLog("Start AsyncGetUserInfo");
-            bool isOK = HttpHandler.AsyncGet<WeiXinUserInfoModel>(url, result =>
+            HttpGetReturnModel result = HttpHandler.SyncGet<WeiXinUserInfoModel>(url);
+            if (result.Exception != null)
             {
-                if (result.Exception != null)
+                if (AccessWeiXinServerException != null)
                 {
-                    if (AccessWeiXinServerException != null)
-                    {
-                        AccessWeiXinServerException(result.Exception.Message);
-                    }
-                    return;
+                    AccessWeiXinServerException(result.Exception.Message);
                 }
+                return false;
+            }
 
-                if (result.ResponseError != null)
+            if (result.ResponseError != null)
+            {
+                if (AccessWeiXinServerReturnError != null)
                 {
-                    if (AccessWeiXinServerReturnError != null)
-                    {
-                        AccessWeiXinServerReturnError("AsyncGetUserInfo", result.ResponseError);
-                    }
-                    return;
+                    AccessWeiXinServerReturnError("AsyncGetUserInfo", result.ResponseError);
                 }
+                return false;
+            }
 
-                TokenController.WeiXinUserObj = result.ResponseResult as WeiXinUserInfoModel;
-                if (GetUserInfoSucceed != null)
-                {
-                    GetUserInfoSucceed();
-                }
-            });
-            return isOK;
+            TokenController.WeiXinUserObj = result.ResponseResult as WeiXinUserInfoModel;
+            //if (GetUserInfoSucceed != null)
+            //{
+            //    GetUserInfoSucceed();
+            //}
+
+            return true;
         }
 
         public static bool AsyncJudgeAccessTokenValid(string access_token, string openid)
@@ -137,27 +134,25 @@ namespace SuperMinersWeb.WeiXin.Controller
             string url = baseurl + "access_token=" + access_token + "&openid=" + openid;
 
             SuperMinersWeb.Utility.LogHelper.Instance.AddInfoLog("Start AsyncJudgeAccessTokenValid");
-            bool isOK = HttpHandler.AsyncGet<ErrorModel>(url, result =>
+            HttpGetReturnModel result = HttpHandler.SyncGet<ErrorModel>(url);
+            if (result.Exception != null)
             {
-                if (result.Exception != null)
+                if (AccessWeiXinServerException != null)
                 {
-                    if (AccessWeiXinServerException != null)
-                    {
-                        AccessWeiXinServerException(result.Exception.Message);
-                    }
-                    return;
+                    AccessWeiXinServerException(result.Exception.Message);
                 }
+                return false;
+            }
 
-                if (result.ResponseError != null)
+            if (result.ResponseError != null)
+            {
+                if (AccessWeiXinServerReturnError != null)
                 {
-                    if (AccessWeiXinServerReturnError != null)
-                    {
-                        AccessWeiXinServerReturnError("AsyncJudgeAccessTokenValid", result.ResponseError);
-                    }
-                    return;
+                    AccessWeiXinServerReturnError("AsyncJudgeAccessTokenValid", result.ResponseError);
                 }
-            });
-            return isOK;
+                return false;
+            }
+            return true;
         }
     }
 }
