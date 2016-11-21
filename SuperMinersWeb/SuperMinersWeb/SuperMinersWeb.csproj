@@ -183,7 +183,6 @@
     <Content Include="WeiXin\ErrorPage.aspx" />
     <Content Include="WeiXin\Index.aspx" />
     <Content Include="WeiXin\Login.aspx" />
-    <Content Include="WeiXin\MyMineField.aspx" />
     <Content Include="WeiXin\WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
@@ -207,6 +206,7 @@
     <Content Include="WeiXin\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="WeiXin\WeiXinResponsePage.aspx" />
     <Content Include="WeiXin\WeiXinSite.Master" />
   </ItemGroup>
   <ItemGroup>
@@ -377,13 +377,6 @@
     <Compile Include="WeiXin\Model\ErrorModel.cs" />
     <Compile Include="WeiXin\Model\HttpGetReturnModel.cs" />
     <Compile Include="WeiXin\Model\WeiXinUserInfoModel.cs" />
-    <Compile Include="WeiXin\MyMineField.aspx.cs">
-      <DependentUpon>MyMineField.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="WeiXin\MyMineField.aspx.designer.cs">
-      <DependentUpon>MyMineField.aspx</DependentUpon>
-    </Compile>
     <Compile Include="WeiXin\WeiXinCore\HttpHandler.cs" />
     <Compile Include="WeiXin\WeiXinCore\VerifyToken.ashx.cs">
       <DependentUpon>VerifyToken.ashx</DependentUpon>
@@ -394,6 +387,13 @@
     </Compile>
     <Compile Include="WeiXin\WeiXinResponse.aspx.designer.cs">
       <DependentUpon>WeiXinResponse.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinResponsePage.aspx.cs">
+      <DependentUpon>WeiXinResponsePage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\WeiXinResponsePage.aspx.designer.cs">
+      <DependentUpon>WeiXinResponsePage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WeiXin\WeiXinSite.Master.cs">
       <DependentUpon>WeiXinSite.Master</DependentUpon>

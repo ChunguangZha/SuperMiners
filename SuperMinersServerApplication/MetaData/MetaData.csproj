@@ -76,6 +76,7 @@
     <Compile Include="User\AgentPlayerReferrerLinkInfo.cs" />
     <Compile Include="User\DeleteResultInfo.cs" />
     <Compile Include="User\PlayerLogInfo.cs" />
+    <Compile Include="User\PlayerWeiXinUserOpenId.cs" />
     <Compile Include="User\TopListInfo.cs" />
     <Compile Include="User\PlayerFortuneInfo.cs" />
     <Compile Include="User\PlayerInfo.cs" />

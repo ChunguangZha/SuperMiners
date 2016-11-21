@@ -11,12 +11,12 @@ namespace SuperMinersWeb.WeiXin.Controller
     {
         public static event Action<string> AccessWeiXinServerException;
         public static event Action<string, ErrorModel> AccessWeiXinServerReturnError;
-        public static event Action GetUserInfoSucceed;
+        //public static event Action GetUserInfoSucceed;
 
         public static string CreateGetCodeUrl()
         {
             string baseUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-            string redirectUriValue = "http://www.xlore.net/WeiXin/WeiXinResponse.aspx";
+            string redirectUriValue = "http://www.xlore.net/WeiXin/WeiXinResponsePage.aspx";
             string responseTypeValue = "code";
             string scopeValue = "snsapi_userinfo";
             string url = baseUrl + "appid=" + Config.appid + "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUriValue) + "&response_type=" + responseTypeValue + "&scope=" + scopeValue + "&state=" + Config.state + "#wechat_redirect";
@@ -59,10 +59,10 @@ namespace SuperMinersWeb.WeiXin.Controller
             }
 
             TokenController.AuthorizeObj = result.ResponseResult as AuthorizeResponseModel;
-            //if (TokenController.AuthorizeObj != null)
-            //{
-            //    AsyncGetUserInfo(TokenController.AuthorizeObj.access_token, TokenController.AuthorizeObj.openid);
-            //}
+            if (TokenController.AuthorizeObj != null)
+            {
+                SyncGetUserInfo(TokenController.AuthorizeObj.access_token, TokenController.AuthorizeObj.openid);
+            }
             return true;
         }
 
@@ -94,7 +94,7 @@ namespace SuperMinersWeb.WeiXin.Controller
             return true;
         }
 
-        public static bool AsyncGetUserInfo(string access_token, string openid)
+        public static bool SyncGetUserInfo(string access_token, string openid)
         {
             string baseurl = "https://api.weixin.qq.com/sns/userinfo?";
             string url = baseurl + "appid=" + Config.appid + "&access_token=" + access_token + "&openid=" + openid + "&lang=zh_CN";

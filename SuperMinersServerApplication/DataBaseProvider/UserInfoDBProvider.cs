@@ -914,6 +914,68 @@ namespace DataBaseProvider
             }
         }
 
+        public PlayerInfo GetPlayerByWeiXinOpenID(string openid)
+        {
+            PlayerInfo player = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.id = (select w.UserID from playerweixinuseropenid w where w.WeiXinOpenID = @WeiXinOpenID);";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@WeiXinOpenID", openid);
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+                }
+                mycmd.Dispose();
+
+                return player;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public bool BindWeiXinUser(int userID, string weixinopenid)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string cmdText = "insert into playerweixinuseropenid (`UserID`,`WeiXinOpenID`) values (@UserID, @WeiXinOpenID) ;";
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = cmdText;
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                mycmd.Parameters.AddWithValue("@WeiXinOpenID", weixinopenid);
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                mycmd.Dispose();
+                myconn.Close();
+                myconn.Dispose();
+            }
+        }
+
         /// <summary>
         /// 取下线
         /// </summary>
