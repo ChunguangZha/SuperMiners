@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeb.WeiXin
+namespace SuperMinersWeb.WeiXin.View
 {
     public partial class WeiXinSite : System.Web.UI.MasterPage
     {

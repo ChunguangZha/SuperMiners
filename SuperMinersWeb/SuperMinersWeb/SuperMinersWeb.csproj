@@ -207,7 +207,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="WeiXin\WeiXinResponsePage.aspx" />
-    <Content Include="WeiXin\WeiXinSite.Master" />
+    <Content Include="WeiXin\View\WeiXinSite.Master" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
@@ -395,11 +395,11 @@
     <Compile Include="WeiXin\WeiXinResponsePage.aspx.designer.cs">
       <DependentUpon>WeiXinResponsePage.aspx</DependentUpon>
     </Compile>
-    <Compile Include="WeiXin\WeiXinSite.Master.cs">
+    <Compile Include="WeiXin\View\WeiXinSite.Master.cs">
       <DependentUpon>WeiXinSite.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WeiXin\WeiXinSite.Master.designer.cs">
+    <Compile Include="WeiXin\View\WeiXinSite.Master.designer.cs">
       <DependentUpon>WeiXinSite.Master</DependentUpon>
     </Compile>
   </ItemGroup>
