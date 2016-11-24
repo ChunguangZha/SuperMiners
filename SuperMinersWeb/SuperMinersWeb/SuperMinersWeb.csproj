@@ -180,9 +180,12 @@
     <Content Include="Handler\CheckAlipayAccount.ashx" />
     <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
-    <Content Include="WeiXin\ErrorPage.aspx" />
+    <Content Include="WeiXin\View\ErrorPage.aspx" />
     <Content Include="WeiXin\Index.aspx" />
     <Content Include="WeiXin\Login.aspx" />
+    <Content Include="WeiXin\View\Index.aspx" />
+    <Content Include="WeiXin\View\Login.aspx" />
+    <Content Include="WeiXin\View\Register.aspx" />
     <Content Include="WeiXin\WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
@@ -352,11 +355,11 @@
     <Compile Include="WeiXin\Controller\MainController.cs" />
     <Compile Include="WeiXin\Controller\TokenController.cs" />
     <Compile Include="WeiXin\Controller\WeiXinHandler.cs" />
-    <Compile Include="WeiXin\ErrorPage.aspx.cs">
+    <Compile Include="WeiXin\View\ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WeiXin\ErrorPage.aspx.designer.cs">
+    <Compile Include="WeiXin\View\ErrorPage.aspx.designer.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="WeiXin\Index.aspx.cs">
@@ -377,6 +380,27 @@
     <Compile Include="WeiXin\Model\ErrorModel.cs" />
     <Compile Include="WeiXin\Model\HttpGetReturnModel.cs" />
     <Compile Include="WeiXin\Model\WeiXinUserInfoModel.cs" />
+    <Compile Include="WeiXin\View\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\View\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\View\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\View\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXin\View\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXin\View\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
     <Compile Include="WeiXin\WeiXinCore\HttpHandler.cs" />
     <Compile Include="WeiXin\WeiXinCore\VerifyToken.ashx.cs">
       <DependentUpon>VerifyToken.ashx</DependentUpon>
