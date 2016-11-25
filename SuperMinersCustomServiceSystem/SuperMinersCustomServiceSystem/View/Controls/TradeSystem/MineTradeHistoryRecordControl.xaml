@@ -19,9 +19,9 @@
             <TextBlock Text="玩家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
             <TextBox Name="txtPlayerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
             <TextBlock Text="创建时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
-            <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+            <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
             <TextBlock Text="到" VerticalAlignment="Center"/>
-            <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+            <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>

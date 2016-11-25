@@ -28,7 +28,22 @@ namespace SuperMinersCustomServiceSystem.MyControl
 
         public MyDateTime ValueTime
         {
-            get { return _valueTime; }
+            get
+            {
+                if (this.TimeTickType == MyControl.TimeTickType.StartOfDay)
+                {
+                    _valueTime.Hour = 0;
+                    _valueTime.Minute = 0;
+                    _valueTime.Second = 0;
+                }
+                else if (this.TimeTickType == MyControl.TimeTickType.EndOfDay)
+                {
+                    _valueTime.Hour = 23;
+                    _valueTime.Minute = 59;
+                    _valueTime.Second = 59;
+                }
+                return _valueTime;
+            }
             set
             {
                 _valueTime = value;
@@ -55,6 +70,13 @@ namespace SuperMinersCustomServiceSystem.MyControl
             }
         }
 
+        private TimeTickType _timetickType = TimeTickType.Normal;
+
+        public TimeTickType TimeTickType
+        {
+            get { return _timetickType; }
+            set { _timetickType = value; }
+        }
 
         internal void SetTimeValue(MyDateTime time)
         {
@@ -126,5 +148,12 @@ namespace SuperMinersCustomServiceSystem.MyControl
         {
             this._valueTime.Second = (int)this.numSecond.Value;
         }
+    }
+
+    public enum TimeTickType
+    {
+        StartOfDay,
+        EndOfDay,
+        Normal
     }
 }

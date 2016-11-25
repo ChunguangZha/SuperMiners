@@ -507,10 +507,15 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
             }
-            playerFromDB = DBProvider.UserDBProvider.GetPlayerByAlipayRealName(alipayRealName);
-            if (playerFromDB != null && playerFromDB.SimpleInfo.UserName != userName)
+            //playerFromDB = DBProvider.UserDBProvider.GetPlayerByAlipayRealName(alipayRealName);
+            //if (playerFromDB != null && playerFromDB.SimpleInfo.UserName != userName)
+            //{
+            //    return OperResult.RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST;
+            //}
+
+            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
             {
-                return OperResult.RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST;
+                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
             }
 
             //if (!string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.AlipayRealName))

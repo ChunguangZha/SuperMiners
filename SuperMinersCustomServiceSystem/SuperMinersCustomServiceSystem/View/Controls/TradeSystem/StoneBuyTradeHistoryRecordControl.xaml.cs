@@ -81,15 +81,9 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
-            endCreateTime.Hour = 23;
-            endCreateTime.Minute = 59;
-            endCreateTime.Second = 59;
 
             MyDateTime beginPayTime = this.dpStartPayTime.ValueTime;
             MyDateTime endPayTime = this.dpEndPayTime.ValueTime;
-            endPayTime.Hour = 23;
-            endPayTime.Minute = 59;
-            endPayTime.Second = 59;
 
             int pageIndex = (int)this.numPageIndex.Value;
 

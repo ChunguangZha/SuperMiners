@@ -62,9 +62,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             string orderNumber = this.txtOrderNumber.Text.Trim();
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
-            endCreateTime.Hour = 23;
-            endCreateTime.Minute = 59;
-            endCreateTime.Second = 59;
 
             int pageIndex = (int)this.numPageIndex.Value;
 

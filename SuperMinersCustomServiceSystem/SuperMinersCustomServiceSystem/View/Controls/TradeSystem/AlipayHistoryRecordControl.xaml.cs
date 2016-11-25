@@ -63,9 +63,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             string playerUserName = this.txtPlayerUserName.Text.Trim();
             MyDateTime beginPayTime = this.dpStartPayTime.ValueTime;
             MyDateTime endPayTime = this.dpEndPayTime.ValueTime;
-            endPayTime.Hour = 23;
-            endPayTime.Minute = 59;
-            endPayTime.Second = 59;
 
             int pageIndex = (int)this.numPageIndex.Value;
 

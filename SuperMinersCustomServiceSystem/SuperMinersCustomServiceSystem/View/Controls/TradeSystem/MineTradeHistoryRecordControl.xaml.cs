@@ -38,9 +38,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             string playerUserName = this.txtPlayerUserName.Text.Trim();
             MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
             MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
-            endCreateTime.Hour = 23;
-            endCreateTime.Minute = 59;
-            endCreateTime.Second = 59;
 
             int pageIndex = (int)this.numPageIndex.Value;
 

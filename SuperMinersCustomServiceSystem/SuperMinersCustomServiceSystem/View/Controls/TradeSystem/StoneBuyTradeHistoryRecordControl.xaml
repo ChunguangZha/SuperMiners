@@ -40,13 +40,13 @@
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <TextBlock Text="出售时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+                <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
                 <TextBlock Text="到" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+                <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
                 <TextBlock Text="购买时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpStartPayTime" VerticalAlignment="Center" ShowTime="False"/>
+                <myc:MyDateTimePickerControl x:Name="dpStartPayTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
                 <TextBlock Text="到" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpEndPayTime" VerticalAlignment="Center" ShowTime="False"/>
+                <myc:MyDateTimePickerControl x:Name="dpEndPayTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
             </StackPanel>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>

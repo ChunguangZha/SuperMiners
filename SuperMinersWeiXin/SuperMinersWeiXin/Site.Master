@@ -1,0 +1,34 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SuperMinersWeiXin.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="App_Themes/Theme1/Style.css" type="text/css" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+    <footer>
+        <div class="content-wrapper navmenu">
+                <nav>
+                    <ul id="menu">
+                        <li><a id="A6" runat="server" href="~/ShopList.aspx" ><span>交易市场</span></a></li>
+                        <li><div class="split"></div></li>
+                        <li><a id="A4" runat="server" href="~/Register.aspx"><span>娱乐中心</span></a></li>
+                        <li><div class="split"></div></li>
+                        <li><a id="A5" runat="server" href="~/Software/DownLoad.aspx"><span>我的矿场</span></a></li>
+                    </ul>
+                </nav>
+        </div>
+    </footer>
+</body>
+</html>

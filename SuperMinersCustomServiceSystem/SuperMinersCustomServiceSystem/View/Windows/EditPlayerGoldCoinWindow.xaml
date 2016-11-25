@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="修改玩家金币" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Grid>
+        Title="修改玩家金币" Height="300" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
