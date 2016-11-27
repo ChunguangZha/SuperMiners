@@ -343,6 +343,33 @@ namespace SuperMinersServerApplication.Controller
             return (Math.Abs(userName.GetHashCode())).ToString();
         }
 
+        public int BindWeiXinUser(string wxUserOpenID, PlayerInfo player)
+        {
+            //PlayerRunnable playerrun = new PlayerRunnable(player, wxUserOpenID);
+            //this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
+            bool isOK = DBProvider.UserDBProvider.BindWeiXinUser(player.SimpleInfo.UserID, wxUserOpenID);
+            if (isOK)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public bool WeiXinLoginPlayer(string weixinopenid,  PlayerInfo player)
+        {
+            var onlineRunner = this.GetRunnable(player.SimpleInfo.UserName);
+            if (onlineRunner == null)
+            {
+                this.LoginPlayer(player);
+                onlineRunner = this.GetRunnable(player.SimpleInfo.UserName);
+            }
+
+            onlineRunner.WeiXinOpenid = weixinopenid;
+
+            return true;
+        }
+
         public bool LoginPlayer(PlayerInfo player)
         {
             //说明是第一次登录
@@ -360,7 +387,7 @@ namespace SuperMinersServerApplication.Controller
                             var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
 
                             var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
-                            referrerPlayerRunnable.ReferAward(award, myTrans);
+                            referrerPlayerRunnable.ReferAward(award, player.SimpleInfo.UserName, myTrans);
                             LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "]，的 " + awardrecord.AwardLevel + " 级推荐人[" + awardrecord.ReferrerUserName + "]收获: " + award.ToString());
                             PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
                             DBProvider.WaitToAwardExpRecordDBProvider.DeleteWaitToAwardExpRecord(awardrecord.ID, myTrans);
@@ -403,6 +430,17 @@ namespace SuperMinersServerApplication.Controller
 
             playerrun.LogoutPlayer();
             this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
+        }
+
+        public MetaData.User.PlayerInfo GetPlayerByWeiXinOpenID(string openid)
+        {
+            var runnable = this._dicOnlinePlayerRuns.Values.FirstOrDefault(p => p.WeiXinOpenid == openid);
+            if (runnable!= null)
+            {
+                return runnable.BasePlayer;
+            }
+
+            return null;
         }
 
         public PlayerInfo GetOnlinePlayerInfo(string userName)

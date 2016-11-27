@@ -11,7 +11,7 @@
                 <span>用户名：</span>
             </div>
             <div>
-                <asp:TextBox ID="txtUserName" runat="server" />
+                <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入用户名！" TabIndex="1" />
             </div>
         </div>
         <div>
@@ -19,7 +19,7 @@
                 <span>密码：</span>
             </div>
             <div>
-                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" />
+                <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="textbox" MaxLength="15" ToolTip="请输入密码！" TabIndex="2" />
             </div>
         </div>
         <div>

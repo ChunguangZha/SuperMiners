@@ -1,4 +1,5 @@
 ﻿using MetaData.AgentUser;
+using MetaData.Trade;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -81,5 +82,6 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         AgentUserInfo GetAgentUserInfo(string token, string userName);
+
     }
 }

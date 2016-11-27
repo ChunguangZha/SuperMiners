@@ -270,5 +270,15 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         //    RequestFormat = WebMessageFormat.Json,
         //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         //PlayerLoginInfo[] GetUserLoginLog(string token, int userID);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetExpChangeRecord",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        ExpChangeRecord[] GetExpChangeRecord(string token, int userID);
+
+
     }
 }

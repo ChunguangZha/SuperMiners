@@ -279,6 +279,24 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             }
         }
 
+        private void btnViewPlayerExpRecords_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+
+                    ViewPlayerExpChangedRecordsWindow win = new ViewPlayerExpChangedRecordsWindow(player.UserID);
+                    win.ShowDialog();
+                }
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
         private void btnViewPlayerLoginLogs_Click(object sender, RoutedEventArgs e)
         {
             try

@@ -15,7 +15,7 @@ using MetaData.Trade;
 
 namespace SuperMinersServerApplication.WebServiceToWeb.Services
 {
-    class ServiceToWeb : IServiceToWeb
+    public partial class ServiceToWeb : IServiceToWeb
     {
         public bool Active()
         {

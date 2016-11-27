@@ -66,5 +66,11 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "RejectExceptionStoneOrder", this.RejectExceptionStoneOrderCompleted, GlobalData.Token, orderNumber);
         }
 
+        public event EventHandler<WebInvokeEventArgs<ExpChangeRecord[]>> GetExpChangeRecordCompleted;
+        public void GetExpChangeRecord(int userID)
+        {
+            this._invoker.Invoke<ExpChangeRecord[]>(this._context, "GetExpChangeRecord", this.GetExpChangeRecordCompleted, GlobalData.Token, userID);
+        }
+
     }
 }

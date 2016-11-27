@@ -17,17 +17,17 @@ namespace SuperMinersWeiXin.Controller
         public static string CreateGetCodeUrl()
         {
             string baseUrl = "https://open.weixin.qq.com/connect/oauth2/authorize?";
-            string redirectUriValue = "http://www.xlore.net/WeiXin/WeiXinResponsePage.aspx";
+            string redirectUriValue = "http://weixin.xlore.net/WeiXinResponse.aspx";
             string responseTypeValue = "code";
             string scopeValue = "snsapi_userinfo";
             string url = baseUrl + "appid=" + Config.appid + "&redirect_uri=" + System.Web.HttpUtility.UrlEncode(redirectUriValue) + "&response_type=" + responseTypeValue + "&scope=" + scopeValue + "&state=" + Config.state + "#wechat_redirect";
             return url;
         }
 
-        public static string CreateCreateMenuUrl()
+        public static string CreateCreateMenuUrl(string access_token)
         {
             string baseUrl = "https://api.weixin.qq.com/cgi-bin/menu/create?";
-            string url = baseUrl + "access_token=" + Config.token;
+            string url = baseUrl + "access_token=" + access_token;
             return url;
         }
 

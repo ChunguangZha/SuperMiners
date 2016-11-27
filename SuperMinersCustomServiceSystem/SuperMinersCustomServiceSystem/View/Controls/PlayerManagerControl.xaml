@@ -126,6 +126,7 @@
             <Button Name="btnSetPlayerAsAgent" HorizontalAlignment="Right" Content="设置玩家为代理" Width="100" Margin="10" Click="btnSetPlayerAsAgent_Click"/>
         </StackPanel>
         <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button Name="btnViewPlayerExpRecords" Content="查看贡献值记录" Width="100" Margin="10" Click="btnViewPlayerExpRecords_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

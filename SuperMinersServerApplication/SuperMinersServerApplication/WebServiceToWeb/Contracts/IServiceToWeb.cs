@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
 {
     [ServiceContract]
-    public interface IServiceToWeb
+    public partial interface IServiceToWeb
     {
         [OperationContract]
         bool Active();

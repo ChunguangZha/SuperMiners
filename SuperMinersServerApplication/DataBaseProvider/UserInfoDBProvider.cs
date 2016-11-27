@@ -977,6 +977,41 @@ namespace DataBaseProvider
         }
 
         /// <summary>
+        /// -1表示没有查到
+        /// </summary>
+        /// <param name="weixinopenid"></param>
+        /// <returns></returns>
+        public int GetUserIDByWeiXinOpenID(string weixinopenid)
+        {
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string cmdText = "select `UserID` from playerweixinuseropenid where WeiXinOpenID = @WeiXinOpenID";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@WeiXinOpenID", weixinopenid);
+                object objResult = mycmd.ExecuteScalar();
+                mycmd.Dispose();
+
+                if (objResult == DBNull.Value)
+                {
+                    return -1;
+                }
+                return Convert.ToInt32(objResult);
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        /// <summary>
         /// 取下线
         /// </summary>
         /// <param name="userName"></param>

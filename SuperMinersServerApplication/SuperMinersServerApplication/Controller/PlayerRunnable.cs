@@ -17,12 +17,19 @@ namespace SuperMinersServerApplication.Controller
     public class PlayerRunnable
     {
         public PlayerInfo BasePlayer { get; private set; }
+        public string WeiXinOpenid { get; set; }
         private object _lockSimpleAction = new object();
         private object _lockFortuneAction = new object();
 
         public PlayerRunnable(PlayerInfo player)
         {
             BasePlayer = player;
+        }
+
+        public PlayerRunnable(PlayerInfo player, string openid)
+        {
+            BasePlayer = player;
+            WeiXinOpenid = openid;
         }
 
         public bool SetFortuneInfo(PlayerFortuneInfo fortuneInfo)
@@ -98,41 +105,32 @@ namespace SuperMinersServerApplication.Controller
 
         public decimal ComputePlayerOfflineStoneOutput()
         {
-            //if (BasePlayer.SimpleInfo.LastLogOutTime == null ||
-            //    BasePlayer.SimpleInfo.LastLogOutTime.Value == PlayerInfo.INVALIDDATETIME)
-            //{
-            //    //表示该玩家之前没有登录过，以本次登录时间为起始。
-            //    BasePlayer.FortuneInfo.TempOutputStones = 0;
-            //    BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.LastLoginTime;
-            //    return;
-            //}
-
-            DateTime startTime;
-            if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)//如果玩家没有收取过，则以注册时间为开始。
-            {
-                BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.RegisterTime;
-                try
-                {
-                    DBProvider.UserDBProvider.SavePlayerLastGatherTime(BasePlayer.SimpleInfo.UserID, BasePlayer.FortuneInfo.TempOutputStonesStartTime);
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("玩家[" + BasePlayer.SimpleInfo.UserName + "]登录，计算离线产出，保存收取时间异常。", exc);
-                }
-            }
-
-            startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
-
-            TimeSpan span = BasePlayer.SimpleInfo.LastLoginTime.Value - startTime;
-            if (span.TotalHours < 0)
-            {
-                return 0;
-            }
-
-            decimal tempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
-
             lock (this._lockFortuneAction)
             {
+                DateTime startTime;
+                if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)//如果玩家没有收取过，则以注册时间为开始。
+                {
+                    BasePlayer.FortuneInfo.TempOutputStonesStartTime = BasePlayer.SimpleInfo.RegisterTime;
+                    try
+                    {
+                        DBProvider.UserDBProvider.SavePlayerLastGatherTime(BasePlayer.SimpleInfo.UserID, BasePlayer.FortuneInfo.TempOutputStonesStartTime);
+                    }
+                    catch (Exception exc)
+                    {
+                        LogHelper.Instance.AddErrorLog("玩家[" + BasePlayer.SimpleInfo.UserName + "]登录，计算离线产出，保存收取时间异常。", exc);
+                    }
+                }
+
+                startTime = BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
+
+                TimeSpan span = BasePlayer.SimpleInfo.LastLoginTime.Value - startTime;
+                if (span.TotalHours < 0)
+                {
+                    return 0;
+                }
+
+                decimal tempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
+
                 if (tempOutput > MaxTempStonesOutput)
                 {
                     tempOutput = MaxTempStonesOutput;
@@ -143,11 +141,11 @@ namespace SuperMinersServerApplication.Controller
                 }
                 BasePlayer.FortuneInfo.TempOutputStones = tempOutput;
 
+                return tempOutput;
             }
 
             //LogHelper.Instance.AddInfoLog("玩家 [" + BasePlayer.SimpleInfo.UserName + "] 请求登录矿场, 计算离线产出=" + BasePlayer.FortuneInfo.TempOutputStones + ", startTime=" + startTime);
 
-            return tempOutput;
         }
 
         /// <summary>
@@ -686,7 +684,7 @@ namespace SuperMinersServerApplication.Controller
         //}
         #endregion
 
-        public bool ReferAward(AwardReferrerConfig awardConfig, CustomerMySqlTransaction trans)
+        public bool ReferAward(AwardReferrerConfig awardConfig, string newUserName, CustomerMySqlTransaction trans)
         {
             bool isOK = false;
             lock (_lockFortuneAction)
@@ -716,7 +714,7 @@ namespace SuperMinersServerApplication.Controller
                 UserName = this.BasePlayer.SimpleInfo.UserName,
                 AddExp = awardConfig.AwardReferrerExp,
                 NewExp = this.BasePlayer.FortuneInfo.Exp,
-                OperContent = "邀请玩家获取" + awardConfig.ReferLevel + "级奖励",
+                OperContent = "邀请玩家[" + newUserName + "]注册，并登录成功。获取" + awardConfig.ReferLevel + "级奖励",
                 Time = DateTime.Now
             }, trans);
 

@@ -21,11 +21,11 @@
         <div class="content-wrapper navmenu">
                 <nav>
                     <ul id="menu">
-                        <li><a id="A6" runat="server" href="~/ShopList.aspx" ><span>交易市场</span></a></li>
+                        <li><a id="A6" runat="server" href="~/Index.aspx" ><span>交易市场</span></a></li>
                         <li><div class="split"></div></li>
-                        <li><a id="A4" runat="server" href="~/Register.aspx"><span>娱乐中心</span></a></li>
+                        <li><a id="A4" runat="server" href="~"><span>娱乐中心</span></a></li>
                         <li><div class="split"></div></li>
-                        <li><a id="A5" runat="server" href="~/Software/DownLoad.aspx"><span>我的矿场</span></a></li>
+                        <li><a id="A5" runat="server" href="~/MyXunLing.aspx"><span>我的矿场</span></a></li>
                     </ul>
                 </nav>
         </div>

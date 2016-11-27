@@ -1,4 +1,5 @@
 ﻿using SuperMinersWeiXin.Controller;
+using SuperMinersWeiXin.Wcf.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,15 @@ namespace SuperMinersWeiXin.WeiXinCore
                     reader.Close();
                 }
 
-                HttpHandler.SyncPost(WeiXinHandler.CreateCreateMenuUrl(), menu);
+                string access_token = WcfClient.Instance.GetAccessToken();
+                if (access_token == null)
+                {
+                    Response.Write("get access_token failed");
+                }
+                else
+                {
+                    HttpHandler.SyncPost(WeiXinHandler.CreateCreateMenuUrl(access_token), menu);
+                }
             }
             catch (Exception exc)
             {

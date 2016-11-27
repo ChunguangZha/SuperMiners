@@ -58,6 +58,13 @@ namespace MetaData
 
         public const int RESULTCODE_USER_CANNOT_UPDATEALIPAY = 302;
 
+        public const int RESULTCODE_USER_IS_LOCKED = 303;
+
+        /// <summary>
+        /// 微信绑定时，该迅灵用户已经被其它微信用户绑定
+        /// </summary>
+        public const int RESULTCODE_WEIXIN_USERBINDEDBYOTHER = 350;
+
         /// <summary>
         /// 余额不足
         /// </summary>
@@ -151,6 +158,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST, "该支付宝实名已经被其它人使用");
             _resultCode_Msg.Add(RESULTCODE_USER_CANNOT_UPDATEALIPAY, "您已经绑定过支付宝信息，无法再修改，如想修改请联系客服");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARDNO_EXIST, "该身份证号已经被其它人使用");
+            _resultCode_Msg.Add(RESULTCODE_WEIXIN_USERBINDEDBYOTHER, "该迅灵用户已经被其它微信用户绑定");
+            _resultCode_Msg.Add(RESULTCODE_USER_IS_LOCKED, "该账户已经被管理员锁定");
         }
 
         public static string GetMsg(int resultCode)

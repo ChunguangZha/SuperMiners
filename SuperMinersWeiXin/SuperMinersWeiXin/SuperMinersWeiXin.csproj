@@ -40,6 +40,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -59,17 +60,55 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Theme1\Style.css" />
+    <Content Include="ErrorPage.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Index.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="MyXunLing.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
     <Content Include="WeiXinCore\createMenu.aspx" />
     <Content Include="WeiXinCore\menu.txt" />
+    <Content Include="WeiXinResponse.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
+      <Link>Wcf\Models\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
+      <Link>Wcf\Models\OperResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
+      <Link>Wcf\Models\GameConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
+      <Link>Wcf\Models\PlayerFortuneInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerInfo.cs">
+      <Link>Wcf\Models\PlayerInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerSimpleInfo.cs">
+      <Link>Wcf\Models\PlayerSimpleInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Contracts\IServiceToWeb.cs">
+      <Link>Wcf\Contracts\IServiceToWeb.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Contracts\IServiceToWeb.WeiXin.cs">
+      <Link>Wcf\Contracts\IServiceToWeb.WeiXin.cs</Link>
+    </Compile>
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\TokenController.cs" />
     <Compile Include="Controller\WeiXinHandler.cs" />
+    <Compile Include="ErrorPage.aspx.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ErrorPage.aspx.designer.cs">
+      <DependentUpon>ErrorPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -88,6 +127,13 @@
     <Compile Include="Model\ErrorModel.cs" />
     <Compile Include="Model\HttpGetReturnModel.cs" />
     <Compile Include="Model\WeiXinUserInfoModel.cs" />
+    <Compile Include="MyXunLing.aspx.cs">
+      <DependentUpon>MyXunLing.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyXunLing.aspx.designer.cs">
+      <DependentUpon>MyXunLing.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -104,6 +150,9 @@
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
+    <Compile Include="Wcf\Services\SuperMinersClient.cs" />
+    <Compile Include="Wcf\Services\SuperMinersClient.WeiXin.cs" />
+    <Compile Include="Wcf\Services\WcfClient.cs" />
     <Compile Include="WeiXinCore\Config.cs" />
     <Compile Include="WeiXinCore\createMenu.aspx.cs">
       <DependentUpon>createMenu.aspx</DependentUpon>
@@ -115,6 +164,13 @@
     <Compile Include="WeiXinCore\HttpHandler.cs" />
     <Compile Include="WeiXinCore\VerifyToken.ashx.cs">
       <DependentUpon>VerifyToken.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WeiXinResponse.aspx.cs">
+      <DependentUpon>WeiXinResponse.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="WeiXinResponse.aspx.designer.cs">
+      <DependentUpon>WeiXinResponse.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +197,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>12493</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:60724/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

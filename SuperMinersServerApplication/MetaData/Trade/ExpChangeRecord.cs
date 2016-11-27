@@ -10,6 +10,7 @@ namespace MetaData.Trade
     [DataContract]
     public class ExpChangeRecord
     {
+        [DataMember]
         public int UserID;
 
         [DataMember]
@@ -25,7 +26,7 @@ namespace MetaData.Trade
         public DateTime Time;
 
         /// <summary>
-        /// MaxLength:45
+        /// MaxLength:100
         /// </summary>
         [DataMember]
         public string OperContent;

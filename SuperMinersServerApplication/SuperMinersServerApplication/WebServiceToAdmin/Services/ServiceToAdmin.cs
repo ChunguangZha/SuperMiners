@@ -1002,6 +1002,18 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         //    }
         //}
 
+        public ExpChangeRecord[] GetExpChangeRecord(string token, int userID)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                return DBProvider.ExpChangeRecordDBProvider.GetExpChangeRecord(userID);
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #region IDisposable Members
 
         public void Dispose()

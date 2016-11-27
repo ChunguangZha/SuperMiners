@@ -175,7 +175,9 @@
     <Compile Include="WebServiceToAdmin\AdminManager.cs" />
     <Compile Include="WebServiceToAdmin\Services\ServiceToAdmin.FunnyGame.cs" />
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.cs" />
+    <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.WeiXin.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.cs" />
+    <Compile Include="WebServiceToWeb\Services\ServiceToWeb.WeiXin.cs" />
     <Compile Include="WebService\ClientManager.cs" />
     <Compile Include="WebService\Contracts\Callbacks\CallbackAttribute.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
@@ -276,6 +278,10 @@
     <ProjectReference Include="..\MetaData\MetaData.csproj">
       <Project>{9ee709a2-4fac-42db-b98f-9aebdf2ddb42}</Project>
       <Name>MetaData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXinAccess\WeiXinAccess.csproj">
+      <Project>{b8397340-ba3f-49d3-93da-fe580f3de088}</Project>
+      <Name>WeiXinAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

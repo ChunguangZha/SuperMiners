@@ -250,3 +250,5 @@ F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSys
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\ViewPlayerLoginLogsWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\GameFunny\RouletteCurrentAwardItemListControl.baml
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\GameFunny\RouletteRoundRecordListControl.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\ViewPlayerExpChangedRecordsWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\ViewPlayerExpChangedRecordsWindow.g.cs

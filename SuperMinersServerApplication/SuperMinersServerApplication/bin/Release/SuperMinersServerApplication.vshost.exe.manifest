@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>LFtLMV7A2YWPpjIyG/YW8bugDYXGJFNUY5weayKtLas=</dsig:DigestValue>
+        <dsig:DigestValue>Ci8BC2gbnPGenWurHs14WrEzgcL9pTn1XuS/U2Ddbxo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>8UP3C5Kd+mpOhQrZZ2vElQN8U9ErrMSV6a7eXFM91jM=</dsig:DigestValue>
+        <dsig:DigestValue>CXGVWM3qGoRlkK3eQJ4tFBMLRK1R7oYwS5gIwAz2uvw=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="438784">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="440320">
       <assemblyIdentity name="SuperMinersServerApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Ahz+dwI/QHG8AQHaH22DN9l1jmX7wUz9Zn14Ieh2ew4=</dsig:DigestValue>
+        <dsig:DigestValue>i6dQe3f02q5WCxNHzXERIKzz5xWaBqSuG7aJmjDnK6c=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WeiXinAccess.dll" size="9728">
+      <assemblyIdentity name="WeiXinAccess" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>EvGUtFMG0CU67oNYpm0+VhcFvu65cPpEsBY+U/W5wsA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
