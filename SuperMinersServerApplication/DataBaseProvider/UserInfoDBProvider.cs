@@ -981,7 +981,7 @@ namespace DataBaseProvider
         /// </summary>
         /// <param name="weixinopenid"></param>
         /// <returns></returns>
-        public int GetUserIDByWeiXinOpenID(string weixinopenid)
+        public int JudgeWeiXinOpenIDorXLUserName_Binded(string weixinopenid, string xlUserName)
         {
             MySqlConnection myconn = null;
             try
@@ -989,9 +989,10 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "select `UserID` from playerweixinuseropenid where WeiXinOpenID = @WeiXinOpenID";
+                string cmdText = "select count(w.id) from playerweixinuseropenid w where w.WeiXinOpenID = @WeiXinOpenID or w.UserID = (select s.id from playersimpleinfo s where s.UserName = @UserName)";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@WeiXinOpenID", weixinopenid);
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(xlUserName));
                 object objResult = mycmd.ExecuteScalar();
                 mycmd.Dispose();
 

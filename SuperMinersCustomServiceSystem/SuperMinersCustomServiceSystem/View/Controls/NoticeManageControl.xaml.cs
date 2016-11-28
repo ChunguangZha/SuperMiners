@@ -35,12 +35,12 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
             App.NoticeVMObject.AsyncGetAllNotice();
 
-            if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)
-            {
-                this.btnclearAllNotices.IsEnabled = false;
-                this.btnCreateNotices.IsEnabled = false;
-                this.btnDeleteNotices.IsEnabled = false;
-            }
+            //if (GlobalData.CurrentAdmin.GroupType != MetaData.User.AdminGroupType.CEO)
+            //{
+            //    this.btnclearAllNotices.IsEnabled = false;
+            //    this.btnCreateNotices.IsEnabled = false;
+            //    this.btnDeleteNotices.IsEnabled = false;
+            //}
         }
 
         private void BindUI()

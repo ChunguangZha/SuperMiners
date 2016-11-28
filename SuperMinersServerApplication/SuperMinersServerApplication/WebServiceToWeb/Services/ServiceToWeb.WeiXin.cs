@@ -32,7 +32,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
-                int userID = DBProvider.UserDBProvider.GetUserIDByWeiXinOpenID(wxUserOpenID);
+                int userID = DBProvider.UserDBProvider.JudgeWeiXinOpenIDorXLUserName_Binded(wxUserOpenID, xlUserName);
                 if (userID > 0)
                 {
                     return OperResult.RESULTCODE_WEIXIN_USERBINDEDBYOTHER;

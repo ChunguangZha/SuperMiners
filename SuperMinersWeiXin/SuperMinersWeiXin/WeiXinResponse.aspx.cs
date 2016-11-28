@@ -43,7 +43,7 @@ namespace SuperMinersWeiXin
                             {
                                 var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(TokenController.WeiXinUserObj.openid);
                                 MainController.Player = player;
-                                Server.Transfer("Index.aspx");
+                                Server.Transfer("~/Index.aspx");
                             }
                             else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
                             {

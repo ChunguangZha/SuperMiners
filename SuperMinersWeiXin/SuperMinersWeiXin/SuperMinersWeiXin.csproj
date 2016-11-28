@@ -62,9 +62,9 @@
     <Content Include="App_Themes\Theme1\Style.css" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Index.aspx" />
+    <Content Include="View\Index.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="MyXunLing.aspx" />
+    <Content Include="View\MyXunLing.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Web.config" />
     <Content Include="WeiXinCore\createMenu.aspx" />
@@ -99,6 +99,8 @@
     <Compile Include="Controller\MainController.cs" />
     <Compile Include="Controller\TokenController.cs" />
     <Compile Include="Controller\WeiXinHandler.cs" />
+    <Compile Include="Core\MyFormsPrincipal.cs" />
+    <Compile Include="Core\MyUserInfo.cs" />
     <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -109,11 +111,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Index.aspx.cs">
+    <Compile Include="View\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Index.aspx.designer.cs">
+    <Compile Include="View\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
@@ -127,11 +129,11 @@
     <Compile Include="Model\ErrorModel.cs" />
     <Compile Include="Model\HttpGetReturnModel.cs" />
     <Compile Include="Model\WeiXinUserInfoModel.cs" />
-    <Compile Include="MyXunLing.aspx.cs">
+    <Compile Include="View\MyXunLing.aspx.cs">
       <DependentUpon>MyXunLing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="MyXunLing.aspx.designer.cs">
+    <Compile Include="View\MyXunLing.aspx.designer.cs">
       <DependentUpon>MyXunLing.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
