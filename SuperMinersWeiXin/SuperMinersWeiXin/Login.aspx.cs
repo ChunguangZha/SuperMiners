@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using SuperMinersWeiXin.Controller;
+using SuperMinersWeiXin.Core;
 using SuperMinersWeiXin.Model;
 using SuperMinersWeiXin.Utility;
 using SuperMinersWeiXin.Wcf.Services;
@@ -56,8 +57,15 @@ namespace SuperMinersWeiXin
                     var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(wxuserinfo.openid);
                     if (player != null)
                     {
-                        MainController.Player = player;
+                        MyUserInfo userinfo = new MyUserInfo();
+                        userinfo.xlUserID = player.SimpleInfo.UserID;
+                        userinfo.xlUserName = player.SimpleInfo.UserName;
+                        userinfo.wxOpenID = wxuserinfo.openid;
+                        // 登录状态100分钟内有效
+                        MyFormsPrincipal<MyUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+
                     }
+
                     Response.Redirect("Index.aspx");
                 }
                 else
