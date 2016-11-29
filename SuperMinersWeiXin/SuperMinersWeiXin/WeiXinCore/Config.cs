@@ -14,5 +14,13 @@ namespace SuperMinersWeiXin.WeiXinCore
         public static readonly string appSecret = "e1dc70ac20353528d71d32d07eb78f70";
 
         public static readonly string state = "XunLIN987_WEIXIN!@#";
+
+        public static readonly string SESSIONKEY_RESPONSEERROR = "responseerror";
+
+        public static readonly string SESSIONKEY_AUTHORIZEOBJ = "authorizeobj";
+
+        public static readonly string SESSIONKEY_WXUSERINFO = "wxuserinfo";
+
+        public static readonly string SESSIONKEY_XLUSERINFO = "xluserinfo";
     }
 }

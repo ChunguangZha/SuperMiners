@@ -3,6 +3,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div>
-        正在登录微信...
+        <asp:Label ID="lblMsg" runat="server" Text="正在登录微信..." />
     </div>
 </asp:Content>

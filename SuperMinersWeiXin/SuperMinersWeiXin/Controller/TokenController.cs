@@ -8,10 +8,10 @@ namespace SuperMinersWeiXin.Controller
 {
     public class TokenController
     {
-        public static AuthorizeResponseModel AuthorizeObj = null;
+        //public static AuthorizeResponseModel AuthorizeObj = null;
 
-        public static WeiXinUserInfoModel WeiXinUserObj = null;
+        //public static WeiXinUserInfoModel WeiXinUserObj = null;
 
-        public static ErrorModel ErrorObj = null;
+        //public static ErrorModel ErrorObj = null;
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SuperMinersWeiXin.Controller;
+using SuperMinersWeiXin.Model;
+using SuperMinersWeiXin.WeiXinCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +16,10 @@ namespace SuperMinersWeiXin
         {
             if (!IsPostBack)
             {
-                if (TokenController.ErrorObj != null)
+                ErrorModel errObj = Session[Config.SESSIONKEY_RESPONSEERROR] as ErrorModel;
+                if (errObj != null)
                 {
-                    this.lblMsg.Text = "ErrorCode: " + TokenController.ErrorObj.errcode + ". ErrorMsg: " + TokenController.ErrorObj.errmsg;
+                    this.lblMsg.Text = "ErrorCode: " + errObj.errcode + ". ErrorMsg: " + errObj.errmsg;
                 }
                 else
                 {

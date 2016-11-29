@@ -57,12 +57,12 @@ namespace SuperMinersWeiXin
                     var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(wxuserinfo.openid);
                     if (player != null)
                     {
-                        MyUserInfo userinfo = new MyUserInfo();
+                        WebUserInfo userinfo = new WebUserInfo();
                         userinfo.xlUserID = player.SimpleInfo.UserID;
                         userinfo.xlUserName = player.SimpleInfo.UserName;
                         userinfo.wxOpenID = wxuserinfo.openid;
                         // 登录状态100分钟内有效
-                        MyFormsPrincipal<MyUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+                        MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
 
                     }
 

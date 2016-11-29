@@ -137,6 +137,14 @@
                                 <td>
                                 </td>
                             </tr>
+                            <tr>
+                                <th>
+                                </th>
+                                <td>
+                                    <asp:Label ID="lblAlert" runat="server" CssClass="alertmsg"/>
+                                </td>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
               <asp:Button ID="btnRegister" CssClass="button" runat="server" Text="注  册" OnClick="btnRegister_Click" TabIndex="10" />

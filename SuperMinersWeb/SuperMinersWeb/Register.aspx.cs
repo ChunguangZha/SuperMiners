@@ -17,6 +17,7 @@ namespace SuperMinersWeb
         {
             if (!IsPostBack)
             {
+                this.lblAlert.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
                 invitationCode = Request["ic"];
 
                 if (!string.IsNullOrEmpty(invitationCode))

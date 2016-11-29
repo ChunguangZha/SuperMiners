@@ -1,4 +1,7 @@
-﻿using SuperMinersWeiXin.Controller;
+﻿using MetaData.User;
+using SuperMinersWeiXin.Controller;
+using SuperMinersWeiXin.Model;
+using SuperMinersWeiXin.WeiXinCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +19,17 @@ namespace SuperMinersWeiXin
             //this.txtUserName.Text = encode;
             if (!this.IsPostBack)
             {
-                if (MainController.Player != null)
+                PlayerInfo player = Session[Config.SESSIONKEY_XLUSERINFO] as PlayerInfo;
+                if (player != null)
                 {
-                    this.txtUserName.Text = MainController.Player.SimpleInfo.UserName;
-                    this.txtExp.Text = MainController.Player.FortuneInfo.Exp.ToString("0.00");
-                    this.txtGoldCoin.Text = MainController.Player.FortuneInfo.GoldCoin.ToString("0.00");
-                    this.txtMiners.Text = MainController.Player.FortuneInfo.MinersCount.ToString("f2");
-                    this.txtRMB.Text = MainController.Player.FortuneInfo.RMB.ToString("f2");
-                    this.txtStones.Text = MainController.Player.FortuneInfo.StockOfStones.ToString("f2");
-                    this.txtTempOutputStones.Text = MainController.Player.FortuneInfo.TempOutputStones.ToString("f2");
-                    this.txtWorkStonesReservers.Text = (MainController.Player.FortuneInfo.StonesReserves - MainController.Player.FortuneInfo.FreezingStones).ToString("f2");
+                    this.txtUserName.Text = player.SimpleInfo.UserName;
+                    this.txtExp.Text = player.FortuneInfo.Exp.ToString("0.00");
+                    this.txtGoldCoin.Text = player.FortuneInfo.GoldCoin.ToString("0.00");
+                    this.txtMiners.Text = player.FortuneInfo.MinersCount.ToString("f2");
+                    this.txtRMB.Text = player.FortuneInfo.RMB.ToString("f2");
+                    this.txtStones.Text = player.FortuneInfo.StockOfStones.ToString("f2");
+                    this.txtTempOutputStones.Text = player.FortuneInfo.TempOutputStones.ToString("f2");
+                    this.txtWorkStonesReservers.Text = (player.FortuneInfo.StonesReserves - player.FortuneInfo.FreezingStones).ToString("f2");
 
                 }
             }

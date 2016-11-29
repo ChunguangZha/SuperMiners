@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWeiXin.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -8,7 +9,7 @@ using System.Web.Security;
 
 namespace SuperMinersWeiXin.Core
 {
-    public class MyFormsPrincipal<TUserData>// : IPrincipal
+    public class MyFormsPrincipal<TUserData> : IPrincipal
        where TUserData : class, new()
     {
         private IIdentity _identity;
@@ -80,16 +81,50 @@ namespace SuperMinersWeiXin.Core
             context.Response.Cookies.Remove(cookie.Name);
             context.Response.Cookies.Add(cookie);
         }
+        
+        /// <summary>
+        /// 根据HttpContext对象设置用户标识对象
+        /// </summary>
+        /// <param name="context"></param>
+        public static void TrySetUserInfo(HttpContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
 
-        //public bool IsInRole(string role)
-        //{
-        //    // 把判断用户组的操作留给UserData去实现。
+            // 1. 读登录Cookie
+            HttpCookie cookie = context.Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (cookie == null || string.IsNullOrEmpty(cookie.Value))
+                return;
 
-        //    IPrincipal principal = _userData as IPrincipal;
-        //    if (principal == null)
-        //        throw new NotImplementedException();
-        //    else
-        //        return principal.IsInRole(role);
-        //}
+            try
+            {
+                TUserData userData = null;
+                // 2. 解密Cookie值，获取FormsAuthenticationTicket对象
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie.Value);
+
+                if (ticket != null && string.IsNullOrEmpty(ticket.UserData) == false)
+                    // 3. 还原用户数据
+                    userData = (new JavaScriptSerializer()).Deserialize<TUserData>(ticket.UserData);
+
+                if (ticket != null && userData != null)
+                    // 4. 构造我们的MyFormsPrincipal实例，重新给context.User赋值。
+                    context.User = new MyFormsPrincipal<TUserData>(ticket, userData);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("MyFormsPrincipal.TrySetUserInfo Exception", exc);
+            }
+        }
+
+        public bool IsInRole(string role)
+        {
+            // 把判断用户组的操作留给UserData去实现。
+
+            IPrincipal principal = _userData as IPrincipal;
+            if (principal == null)
+                throw new NotImplementedException();
+            else
+                return principal.IsInRole(role);
+        }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using MetaData;
 using SuperMinersWeiXin.Controller;
+using SuperMinersWeiXin.Core;
+using SuperMinersWeiXin.Model;
 using SuperMinersWeiXin.Utility;
 using SuperMinersWeiXin.Wcf.Services;
 using SuperMinersWeiXin.WeiXinCore;
@@ -24,35 +26,77 @@ namespace SuperMinersWeiXin
                     string code = Request["code"];
                     string state = Request["state"];
 
+                    this.lblMsg.Text = "code:" + code + "; state: " + state;
+
                     LogHelper.Instance.AddInfoLog("code:" + code + "; state: " + state);
 
                     if (state == Config.state)
                     {
-                        bool isOK = WeiXinHandler.SynGetUserAccessToken(code);
-                        if (!isOK)
+                        HttpGetReturnModel resultValue = WeiXinHandler.SynGetUserAccessToken(code);
+                        if (resultValue.Exception != null)
                         {
+                            this.lblMsg.Text = "登录异常，请联系迅灵矿场管理员";
+                            return;
+                        }
+
+                        if (resultValue.ResponseError != null)
+                        {
+                            Session[Config.SESSIONKEY_RESPONSEERROR] = resultValue.ResponseError;
                             Server.Transfer("ErrorPage.aspx");
+                            return;
+                        }
+
+                        AuthorizeResponseModel authObj = resultValue.ResponseResult as AuthorizeResponseModel;
+                        if (authObj != null)
+                        {
+                            this.lblMsg.Text = "authObj OK";
+                            Session[Config.SESSIONKEY_AUTHORIZEOBJ] = authObj;
+                            resultValue = WeiXinHandler.SyncGetUserInfo(authObj.access_token, authObj.openid);
+                        }
+                        if (resultValue.Exception != null)
+                        {
+                            this.lblMsg.Text = "登录异常，请联系迅灵矿场管理员";
+                            return;
+                        }
+
+                        if (resultValue.ResponseError != null)
+                        {
+                            Session[Config.SESSIONKEY_RESPONSEERROR] = resultValue.ResponseError;
+                            Server.Transfer("ErrorPage.aspx");
+                            return;
+                        }
+
+                        WeiXinUserInfoModel userObj = resultValue.ResponseResult as WeiXinUserInfoModel;
+                        Session[Config.SESSIONKEY_WXUSERINFO] = userObj;
+                        string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
+                        this.lblMsg.Text = "欢迎  " + userObj.nickname + "  进入迅灵矿场";
+
+                        int result = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
+
+                        this.lblMsg.Text = "登录迅灵矿场，结果为：" + OperResult.GetMsg(result); 
+                        if (result == OperResult.RESULTCODE_TRUE)
+                        {
+                            this.lblMsg.Text = "WeiXinLogin OK";
+                            var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(userObj.openid);
+                            Session[Config.SESSIONKEY_XLUSERINFO] = player;
+
+                            this.lblMsg.Text = "player OK";
+                            WebUserInfo userinfo = new WebUserInfo();
+                            userinfo.xlUserID = player.SimpleInfo.UserID;
+                            userinfo.xlUserName = player.SimpleInfo.UserName;
+                            userinfo.wxOpenID = userObj.openid;
+                            // 登录状态100分钟内有效
+                            MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+
+                            Server.Transfer("View/Index.aspx");
+                        }
+                        else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
+                        {
+                            Server.Transfer("Login.aspx");
                         }
                         else
                         {
-                            Session["wxuserinfo"] = TokenController.WeiXinUserObj;
-                            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-                            int result = WcfClient.Instance.WeiXinLogin(TokenController.WeiXinUserObj.openid, TokenController.WeiXinUserObj.nickname, ip);
-                            if (result == OperResult.RESULTCODE_TRUE)
-                            {
-                                var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(TokenController.WeiXinUserObj.openid);
-                                MainController.Player = player;
-                                Server.Transfer("~/Index.aspx");
-                            }
-                            else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
-                            {
-                                Server.Transfer("Login.aspx");
-                            }
-                            else
-                            {
-                                Response.Write("<script>alert('登录迅灵矿场失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
-                            }
+                            Response.Write("<script>alert('登录迅灵矿场失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
                         }
                     }
                     else
@@ -63,6 +107,7 @@ namespace SuperMinersWeiXin
             }
             catch (Exception exc)
             {
+                this.lblMsg.Text = "WeiXinResponse Exception. " + exc.Message; 
                 LogHelper.Instance.AddErrorLog("WeiXinResponse Exception", exc);
             }
         }

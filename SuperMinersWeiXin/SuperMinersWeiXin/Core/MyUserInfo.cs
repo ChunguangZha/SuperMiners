@@ -7,7 +7,7 @@ using System.Web.Script.Serialization;
 
 namespace SuperMinersWeiXin.Core
 {
-    public class MyUserInfo// : IPrincipal
+    public class WebUserInfo// : IPrincipal
     {
         public int xlUserID;
         public string xlUserName;

@@ -14,6 +14,11 @@ body {
     
 }
 
+.alertmsg {
+    color:red;
+    font-weight:700;
+}
+
 a {
     color: #333;
     outline: none;

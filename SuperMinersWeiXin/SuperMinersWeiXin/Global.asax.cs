@@ -1,4 +1,5 @@
-﻿using SuperMinersWeiXin.Utility;
+﻿using SuperMinersWeiXin.Core;
+using SuperMinersWeiXin.Utility;
 using SuperMinersWeiXin.Wcf.Services;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,8 @@ namespace SuperMinersWeiXin
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-
+            HttpApplication app = (HttpApplication)sender;
+            MyFormsPrincipal<WebUserInfo>.TrySetUserInfo(app.Context);
         }
 
         protected void Application_Error(object sender, EventArgs e)
