@@ -1,5 +1,4 @@
-﻿using SuperMinersWeiXin.Controller;
-using SuperMinersWeiXin.Model;
+﻿using SuperMinersWeiXin.Model;
 using SuperMinersWeiXin.WeiXinCore;
 using System;
 using System.Collections.Generic;
@@ -14,17 +13,14 @@ namespace SuperMinersWeiXin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            ErrorModel errObj = Session[Config.SESSIONKEY_RESPONSEERROR] as ErrorModel;
+            if (errObj != null)
             {
-                ErrorModel errObj = Session[Config.SESSIONKEY_RESPONSEERROR] as ErrorModel;
-                if (errObj != null)
-                {
-                    this.lblMsg.Text = "ErrorCode: " + errObj.errcode + ". ErrorMsg: " + errObj.errmsg;
-                }
-                else
-                {
-                    this.lblMsg.Text = "微信登录失败";
-                }
+                this.lblMsg.Text = "ErrorCode: " + errObj.errcode + ". ErrorMsg: " + errObj.errmsg;
+            }
+            else
+            {
+                this.lblMsg.Text = "微信登录失败";
             }
         }
     }

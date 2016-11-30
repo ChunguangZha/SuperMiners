@@ -62,14 +62,82 @@
     <Content Include="App_Themes\Theme1\Style.css" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="images\icon_tabbar.png" />
+    <Content Include="LoginPage.aspx" />
+    <Content Include="packages.config" />
+    <Content Include="App_Themes\Theme1\base\fn.less" />
+    <Content Include="App_Themes\Theme1\base\mixin\mobile.less" />
+    <Content Include="App_Themes\Theme1\base\mixin\setArrow.less" />
+    <Content Include="App_Themes\Theme1\base\mixin\setOnepx.less" />
+    <Content Include="App_Themes\Theme1\base\mixin\text.less" />
+    <Content Include="App_Themes\Theme1\base\reset.less" />
+    <Content Include="App_Themes\Theme1\base\variable\color.less" />
+    <Content Include="App_Themes\Theme1\base\variable\global.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-button.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-cell.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-dialog.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-grid.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-msg.less" />
+    <Content Include="App_Themes\Theme1\base\variable\weui-progress.less" />
+    <Content Include="App_Themes\Theme1\icon\weui-font.less" />
+    <Content Include="App_Themes\Theme1\icon\weui-icon_font.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-agree\weui-agree.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-animate\weui-animate.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_default.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_disabled.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_global.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_plain.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_primary.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_warn.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-button\weui-button.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-access.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-cell_global.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-checkbox.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-check_common.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-radio.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-form-preview.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-form_common.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-select.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-vcode.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-gallery.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-switch.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-uploader.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-flex\weui-flex.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-footer\weui-footer.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-grid\weui-grid.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-loading\weui-loading.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-media-box\weui-media-box.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-page\weui-article.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-page\weui-msg.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-panel\weui-panel.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-picker\weui-picker.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-progress\weui-progress.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-searchbar\weui-searchbar.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-navbar.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-tab.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-tabbar.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-actionsheet.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-dialog.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-loadmore.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-mask.less" />
+    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-toast.less" />
+    <Content Include="WeiXinResponse.aspx" />
+    <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="RegisterPage.aspx" />
+    <Content Include="Scripts\index.js" />
+    <Content Include="Scripts\jquery-3.1.1.js" />
+    <Content Include="Scripts\jquery-3.1.1.min.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.js" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="View\Help.aspx" />
     <Content Include="View\Index.aspx" />
-    <Content Include="Login.aspx" />
     <Content Include="View\MyXunLing.aspx" />
-    <Content Include="Register.aspx" />
+    <Content Include="View\StoneMarket.aspx" />
     <Content Include="Web.config" />
     <Content Include="WeiXinCore\createMenu.aspx" />
     <Content Include="WeiXinCore\menu.txt" />
-    <Content Include="WeiXinResponse.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
@@ -111,19 +179,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LoginPage.aspx.cs">
+      <DependentUpon>LoginPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="LoginPage.aspx.designer.cs">
+      <DependentUpon>LoginPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RegisterPage.aspx.cs">
+      <DependentUpon>RegisterPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RegisterPage.aspx.designer.cs">
+      <DependentUpon>RegisterPage.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\Help.aspx.cs">
+      <DependentUpon>Help.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Help.aspx.designer.cs">
+      <DependentUpon>Help.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\Index.aspx.cs">
       <DependentUpon>Index.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="View\Index.aspx.designer.cs">
       <DependentUpon>Index.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Login.aspx.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Login.aspx.designer.cs">
-      <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
     <Compile Include="Model\AuthorizeResponseModel.cs" />
     <Compile Include="Model\ErrorModel.cs" />
@@ -137,21 +219,21 @@
       <DependentUpon>MyXunLing.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Register.aspx.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Register.aspx.designer.cs">
-      <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Site.Master.cs">
+    <Compile Include="View\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Site.Master.designer.cs">
+    <Compile Include="View\Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
+    <Compile Include="View\StoneMarket.aspx.cs">
+      <DependentUpon>StoneMarket.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\StoneMarket.aspx.designer.cs">
+      <DependentUpon>StoneMarket.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Wcf\Services\SuperMinersClient.cs" />
     <Compile Include="Wcf\Services\SuperMinersClient.WeiXin.cs" />
     <Compile Include="Wcf\Services\WcfClient.cs" />
@@ -176,7 +258,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Site.Master" />
+    <Content Include="View\Site.Master" />
+    <Content Include="App_Themes\Theme1\example.less" />
+    <Content Include="App_Themes\Theme1\weui.less" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

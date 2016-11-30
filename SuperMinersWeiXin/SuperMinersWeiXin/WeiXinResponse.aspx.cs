@@ -73,7 +73,7 @@ namespace SuperMinersWeiXin
 
                         int result = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
 
-                        this.lblMsg.Text = "登录迅灵矿场，结果为：" + OperResult.GetMsg(result); 
+                        this.lblMsg.Text = "登录迅灵矿场，结果为：" + OperResult.GetMsg(result);
                         if (result == OperResult.RESULTCODE_TRUE)
                         {
                             this.lblMsg.Text = "WeiXinLogin OK";
@@ -92,7 +92,7 @@ namespace SuperMinersWeiXin
                         }
                         else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
                         {
-                            Server.Transfer("Login.aspx");
+                            Server.Transfer("LoginPage.aspx");
                         }
                         else
                         {
@@ -107,7 +107,7 @@ namespace SuperMinersWeiXin
             }
             catch (Exception exc)
             {
-                this.lblMsg.Text = "WeiXinResponse Exception. " + exc.Message; 
+                this.lblMsg.Text = "WeiXinResponse Exception. " + exc.Message;
                 LogHelper.Instance.AddErrorLog("WeiXinResponse Exception", exc);
             }
         }
