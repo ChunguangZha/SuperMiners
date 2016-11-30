@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SuperMinersWeiXin {
+namespace SuperMinersWeiXin.View {
     
     
     public partial class Site {

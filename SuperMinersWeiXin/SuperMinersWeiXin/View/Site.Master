@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SuperMinersWeiXin.Site" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="SuperMinersWeiXin.View.Site" %>
 
 <!DOCTYPE html>
 
@@ -7,16 +7,17 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
     <title>迅灵矿场</title>
-    <link rel="stylesheet" href="App_Themes/Theme1/weui.css" type="text/css" />
-    <link rel="stylesheet" href="App_Themes/Theme1/example.less" type="text/css" />
-    <script src="Scripts/jquery-3.1.1.min.js"></script>
-    <script src="Scripts/index.js"></script>
+    <link rel="stylesheet" href="../App_Themes/Theme1/example.css" type="text/css" />
+    <link rel="stylesheet" href="../App_Themes/Theme1/weui-tabbar.css" type="text/css" />
+    <link rel="stylesheet" href="../App_Themes/Theme1/Style.css" type="text/css" />
+    <script src="../Scripts/jquery-3.1.1.js"></script>
+    <script src="../Scripts/index.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <div class="page">
-    <div class="page__bd" style="height: 100%;">
+        <div class="page__bd" style="height: 100%;">
         <div class="weui-tab">
             <div class="weui-tab__panel">
                 <form id="form1" runat="server" method="get">
@@ -26,47 +27,46 @@
                 </form>
             </div>
             <div class="weui-tabbar">
-                <a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
-                    <img src="~/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                <a data-id="index" href="/View/Index.aspx" class="weui-tabbar__item weui-bar__item_on">
+                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                     <p class="weui-tabbar__label">我的矿场</p>
                 </a>
-                <a href="javascript:;" class="weui-tabbar__item">
-                    <img src="~/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                <a data-id="stonesmarket" href="/View/StoneMarket.aspx" class="weui-tabbar__item">
+                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                     <p class="weui-tabbar__label">矿石市场</p>
                 </a>
-                <a href="javascript:;" class="weui-tabbar__item">
-                    <img src="~/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                <a data-id="records" href="/View/Records.aspx" class="weui-tabbar__item">
+                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                     <p class="weui-tabbar__label">交易记录</p>
                 </a>
-                <a href="javascript:;" class="weui-tabbar__item">
-                    <img src="~/images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                <a data-id="help" href="/View/Help.aspx" class="weui-tabbar__item">
+                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                     <p class="weui-tabbar__label">游戏帮助</p>
                 </a>
             </div>
         </div>
     </div>
-</div>
-   <%-- <header>
-        <div class="content-wrapper navmenu">
-                <nav>
-                    <ul id="menu">
-                        <li><a id="A6" runat="server" href="View/Index.aspx" ><span>我的矿场</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A4" runat="server" href="View/StoneMarket.aspx"><span>矿石市场</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A5" runat="server" href="View/MyXunLing.aspx"><span>交易记录</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A1" runat="server" href="View/Help.aspx"><span>游戏帮助</span></a></li>
-                    </ul>
-                </nav>
-        </div>
-    </header>--%>
-<%--<script type="text/javascript">
-    $(function () {
-        $('.weui-tabbar__item').on('click', function () {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-        });
-    });
-</script>--%>
+    </div>
+<script type="text/javascript">
+    //$(document).ready(function () {
+    //    $(function () {
+    //        $('.weui-tabbar__item').on('click', function () {
+    //            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+    //        });
+    //    });
+
+    //    $('#message').css("background-color", "yellow");
+    //    $('#message').text = "设置为黄色";
+    //    var $pagediv = $(this).find('.root_subpage');
+    //    var $pageid = $pagediv.data("id");
+
+    //    $('#message').text = $pagediv;
+        
+    //    var $currenta = $(this).find('a[target=' + $pageid + ']');
+    //    if ($currenta != null) {
+    //        $currenta.addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+    //    }
+    //});
+</script>
 </body>
 </html>

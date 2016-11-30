@@ -59,70 +59,15 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Themes\Theme1\example.css" />
     <Content Include="App_Themes\Theme1\Style.css" />
+    <Content Include="App_Themes\Theme1\weui-tabbar.css" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
-    <Content Include="App_Themes\Theme1\base\fn.less" />
-    <Content Include="App_Themes\Theme1\base\mixin\mobile.less" />
-    <Content Include="App_Themes\Theme1\base\mixin\setArrow.less" />
-    <Content Include="App_Themes\Theme1\base\mixin\setOnepx.less" />
-    <Content Include="App_Themes\Theme1\base\mixin\text.less" />
-    <Content Include="App_Themes\Theme1\base\reset.less" />
-    <Content Include="App_Themes\Theme1\base\variable\color.less" />
-    <Content Include="App_Themes\Theme1\base\variable\global.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-button.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-cell.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-dialog.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-grid.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-msg.less" />
-    <Content Include="App_Themes\Theme1\base\variable\weui-progress.less" />
-    <Content Include="App_Themes\Theme1\icon\weui-font.less" />
-    <Content Include="App_Themes\Theme1\icon\weui-icon_font.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-agree\weui-agree.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-animate\weui-animate.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_default.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_disabled.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_global.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_plain.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_primary.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-btn_warn.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-button\weui-button.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-access.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-cell_global.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-checkbox.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-check_common.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-check\weui-radio.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-form-preview.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-form_common.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-select.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-form\weui-vcode.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-gallery.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-switch.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-cell\weui-uploader.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-flex\weui-flex.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-footer\weui-footer.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-grid\weui-grid.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-loading\weui-loading.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-media-box\weui-media-box.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-page\weui-article.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-page\weui-msg.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-panel\weui-panel.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-picker\weui-picker.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-progress\weui-progress.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-searchbar\weui-searchbar.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-navbar.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-tab.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tab\weui-tabbar.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-actionsheet.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-dialog.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-loadmore.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-mask.less" />
-    <Content Include="App_Themes\Theme1\widget\weui-tips\weui-toast.less" />
+    <Content Include="View\Records.aspx" />
     <Content Include="WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="RegisterPage.aspx" />
@@ -219,6 +164,13 @@
       <DependentUpon>MyXunLing.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\Records.aspx.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\Records.aspx.designer.cs">
+      <DependentUpon>Records.aspx</DependentUpon>
+    </Compile>
     <Compile Include="View\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -259,8 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="View\Site.Master" />
-    <Content Include="App_Themes\Theme1\example.less" />
-    <Content Include="App_Themes\Theme1\weui.less" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
     <None Include="Web.Debug.config">

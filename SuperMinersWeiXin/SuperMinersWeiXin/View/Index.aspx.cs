@@ -9,7 +9,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace SuperMinersWeiXin
+namespace SuperMinersWeiXin.View
 {
     public partial class Index : System.Web.UI.Page
     {
