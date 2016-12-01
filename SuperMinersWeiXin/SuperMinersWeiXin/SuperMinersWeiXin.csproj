@@ -67,6 +67,7 @@
     <Content Include="images\icon_tabbar.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\registeruser.js" />
     <Content Include="View\Records.aspx" />
     <Content Include="WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -124,6 +125,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalData.cs" />
     <Compile Include="LoginPage.aspx.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -221,7 +223,9 @@
     </None>
     <Content Include="WeiXinCore\VerifyToken.ashx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Handler\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

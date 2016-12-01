@@ -178,19 +178,19 @@ namespace SuperMinersServerApplication.Controller
             {
                 lock (this._lockFortuneAction)
                 {
-                    decimal tempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
+                    decimal serverComputeTempOutput = (decimal)span.TotalHours * BasePlayer.FortuneInfo.MinersCount * GlobalConfig.GameConfig.OutputStonesPerHour;
 
-                    if (tempOutput > MaxTempStonesOutput)
+                    if (serverComputeTempOutput > MaxTempStonesOutput)
                     {
-                        tempOutput = MaxTempStonesOutput;
+                        serverComputeTempOutput = MaxTempStonesOutput;
                     }
-                    if (tempOutput > BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount)
+                    if (serverComputeTempOutput > BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount)
                     {
-                        tempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
+                        serverComputeTempOutput = BasePlayer.FortuneInfo.StonesReserves - BasePlayer.FortuneInfo.TotalProducedStonesCount;
                     }
 
-                    decimal computeTempOutput = tempOutput;
-                    if (Math.Abs(stones - tempOutput) <= 1)
+                    decimal computeTempOutput = serverComputeTempOutput;
+                    if (Math.Abs(stones - serverComputeTempOutput) <= 1)
                     {
                         computeTempOutput = stones;
                     }

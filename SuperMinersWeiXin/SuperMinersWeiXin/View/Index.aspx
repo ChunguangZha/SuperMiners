@@ -20,11 +20,17 @@
             <span>
                 <asp:TextBox ID="txtRMB" runat="server" ReadOnly="true" />
             </span>
+            <span>
+                <a>充值</a>
+            </span>
         </div>
         <div>
             <span>金币：</span>
             <span>
                 <asp:TextBox ID="txtGoldCoin" runat="server" ReadOnly="true" />
+            </span>
+            <span>
+                <a>充值</a>
             </span>
         </div>
         <div>
@@ -32,11 +38,17 @@
             <span>
                 <asp:TextBox ID="txtWorkStonesReservers" runat="server" ReadOnly="true" />
             </span>
+            <span>
+                <a>勘探</a>
+            </span>
         </div>
         <div>
             <span>矿工：</span>
             <span>
                 <asp:TextBox ID="txtMiners" runat="server" ReadOnly="true" />
+            </span>
+            <span>
+                <a>购买</a>
             </span>
         </div>
         <div>
@@ -44,12 +56,18 @@
             <span>
                 <asp:TextBox ID="txtStones" runat="server" ReadOnly="true" />
             </span>
+            <span>
+                <a>出售</a>
+            </span>
         </div>
         <div>
             <div>可收取矿石：</div>
             <div>
                 <asp:TextBox ID="txtTempOutputStones" runat="server" ReadOnly="true" />
             </div>
+            <span>
+                <a>收取</a>
+            </span>
         </div>
     </div>
 </asp:Content>
