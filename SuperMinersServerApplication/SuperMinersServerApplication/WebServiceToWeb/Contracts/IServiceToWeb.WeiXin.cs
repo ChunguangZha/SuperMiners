@@ -30,10 +30,10 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int BuyMiner(string userName, int minersCount);
 
         [OperationContract]
-        TradeOperResult BuyMine(string userName, int minesCount, int payType);
+        TradeOperResult BuyMine(string userName, int minesCount, PayType payType);
 
         [OperationContract]
-        TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, int payType);
+        TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, PayType payType);
 
         [OperationContract]
         int WithdrawRMB(string userName, int getRMBCount);

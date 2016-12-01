@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using System;
@@ -59,5 +60,71 @@ namespace SuperMinersWeiXin.Wcf.Services
                 return null;
             }
         }
+
+        public int GatherStones(string userName, decimal stones)
+        {
+            try
+            {
+                return base.Channel.GatherStones(userName, stones);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public int BuyMiner(string userName, int minersCount)
+        {
+            try
+            {
+                return base.Channel.BuyMiner(userName, minersCount);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public TradeOperResult BuyMine(string userName, int minesCount, PayType payType)
+        {
+            try
+            {
+                return base.Channel.BuyMine(userName, minesCount, payType);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+        }
+
+        public TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, PayType payType)
+        {
+            try
+            {
+                return base.Channel.RechargeGoldCoin(userName, goldCoinCount, payType);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+        }
+
+        public int WithdrawRMB(string userName, int getRMBCount)
+        {
+            try
+            {
+                return base.Channel.WithdrawRMB(userName, getRMBCount);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
     }
 }

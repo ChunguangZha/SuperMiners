@@ -18,34 +18,88 @@
 <body>
     <div class="page">
         <div class="page__bd" style="height: 100%;">
-        <div class="weui-tab">
-            <div class="weui-tab__panel">
-                <form id="form1" runat="server" method="get">
-                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-                    
-                    </asp:ContentPlaceHolder>
-                </form>
-            </div>
-            <div class="weui-tabbar">
-                <a data-id="index" href="/View/Index.aspx" class="weui-tabbar__item weui-bar__item_on">
-                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
-                    <p class="weui-tabbar__label">我的矿场</p>
-                </a>
-                <a data-id="stonesmarket" href="/View/StoneMarket.aspx" class="weui-tabbar__item">
-                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
-                    <p class="weui-tabbar__label">矿石市场</p>
-                </a>
-                <a data-id="records" href="/View/Records.aspx" class="weui-tabbar__item">
-                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
-                    <p class="weui-tabbar__label">交易记录</p>
-                </a>
-                <a data-id="help" href="/View/Help.aspx" class="weui-tabbar__item">
-                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
-                    <p class="weui-tabbar__label">游戏帮助</p>
-                </a>
+            <div class="weui-tab">
+                <div class="weui-tab__panel">
+                    <form id="form1" runat="server" method="get">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        
+                        </asp:ContentPlaceHolder>
+                    </form>
+                </div>
+                <div class="weui-tabbar">
+                    <a data-id="index" href="/View/Index.aspx" class="weui-tabbar__item weui-bar__item_on">
+                        <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
+                        <p class="weui-tabbar__label">我的矿场</p>
+                    </a>
+                    <a data-id="stonesmarket" href="/View/StoneMarket.aspx" class="weui-tabbar__item">
+                        <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
+                        <p class="weui-tabbar__label">矿石市场</p>
+                    </a>
+                    <a id="menu_records" data-id="records" href="/View/Records.aspx" class="weui-tabbar__item">
+                        <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
+                        <p class="weui-tabbar__label">交易记录</p>
+                    </a>
+                    <a data-id="help" href="/View/Help.aspx" class="weui-tabbar__item">
+                        <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
+                        <p class="weui-tabbar__label">游戏帮助</p>
+                    </a>
+                </div>
+                <div>
+                    <div class="weui-mask" id="iosMask">
+
+                    </div>
+                    <div class="weui-actionsheet weui-actionsheet_toggle" id="iosActionsheet">
+                        <div class="weui-actionsheet__menu">
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="goldcoinrecords" href="/View/ViewGoldCoinRechargeRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">金币充值记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="minerecords" href="/View/ViewMineBuyRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">矿山勘探记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="minerrecords" href="/View/ViewMinerBuyRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">矿工购买记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="rmbrechargerecords" href="/View/ViewRMBRechargeRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">灵币充值记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="rmbwithdrawrecords" href="/View/ViewRMBWithdrawRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">灵币提现记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="stonebuyrecords" href="/View/ViewStoneBuyRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">矿石买入记录</span>
+                                </a>
+                            </div>
+                            <div class="weui-actionsheet__cell">
+                                <a data-id="stonesellrecords" href="/View/ViewStoneSellRecords.aspx" class="weui-tabbar__item">
+                                    <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon vcenter"/>
+                                    <span class="weui-tabbar__label">矿石出售记录</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="weui-actionsheet__action">
+                            <div class="weui-actionsheet__cell" id="iosActionsheetCancel"> </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </body>
 </html>

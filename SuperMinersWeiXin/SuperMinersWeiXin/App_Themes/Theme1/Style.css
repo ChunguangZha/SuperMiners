@@ -125,3 +125,9 @@ div.login {
         margin:auto 10px;
         
     }
+
+
+.vcenter {
+    text-align:center;
+    vertical-align:middle;
+}

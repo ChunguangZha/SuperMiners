@@ -61,7 +61,22 @@
   <ItemGroup>
     <Content Include="App_Themes\Theme1\example.css" />
     <Content Include="App_Themes\Theme1\Style.css" />
+    <Content Include="App_Themes\Theme1\weui-access.css" />
+    <Content Include="App_Themes\Theme1\weui-actionsheet.css" />
+    <Content Include="App_Themes\Theme1\weui-btn_default.css" />
+    <Content Include="App_Themes\Theme1\weui-btn_disabled.css" />
+    <Content Include="App_Themes\Theme1\weui-btn_global.css" />
+    <Content Include="App_Themes\Theme1\weui-btn_primary.css" />
+    <Content Include="App_Themes\Theme1\weui-button.css" />
+    <Content Include="App_Themes\Theme1\weui-cell_global.css" />
+    <Content Include="App_Themes\Theme1\weui-check.css" />
+    <Content Include="App_Themes\Theme1\weui-dialog.css" />
+    <Content Include="App_Themes\Theme1\weui-form.css" />
+    <Content Include="App_Themes\Theme1\weui-loading.css" />
+    <Content Include="App_Themes\Theme1\weui-loadmore.css" />
+    <Content Include="App_Themes\Theme1\weui-mask.css" />
     <Content Include="App_Themes\Theme1\weui-tabbar.css" />
+    <Content Include="App_Themes\Theme1\weui-toast.css" />
     <Content Include="ErrorPage.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
@@ -69,6 +84,13 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\registeruser.js" />
     <Content Include="View\Records.aspx" />
+    <Content Include="View\ViewGoldCoinRechargeRecords.aspx" />
+    <Content Include="View\ViewMineBuyRecords.aspx" />
+    <Content Include="View\ViewMinerBuyRecords.aspx" />
+    <Content Include="View\ViewRMBRechargeRecords.aspx" />
+    <Content Include="View\ViewRMBWithdrawRecords.aspx" />
+    <Content Include="View\ViewStoneBuyRecords.aspx" />
+    <Content Include="View\ViewStoneSellRecords.aspx" />
     <Content Include="WeiXinResponse.aspx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="RegisterPage.aspx" />
@@ -94,6 +116,12 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Models\GameConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeOperResult.cs">
+      <Link>Wcf\Models\TradeOperResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
+      <Link>Wcf\Models\TradeType.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Models\PlayerFortuneInfo.cs</Link>
@@ -187,6 +215,55 @@
     </Compile>
     <Compile Include="View\StoneMarket.aspx.designer.cs">
       <DependentUpon>StoneMarket.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewGoldCoinRechargeRecords.aspx.cs">
+      <DependentUpon>ViewGoldCoinRechargeRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewGoldCoinRechargeRecords.aspx.designer.cs">
+      <DependentUpon>ViewGoldCoinRechargeRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewMineBuyRecords.aspx.cs">
+      <DependentUpon>ViewMineBuyRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewMineBuyRecords.aspx.designer.cs">
+      <DependentUpon>ViewMineBuyRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewMinerBuyRecords.aspx.cs">
+      <DependentUpon>ViewMinerBuyRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewMinerBuyRecords.aspx.designer.cs">
+      <DependentUpon>ViewMinerBuyRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewRMBRechargeRecords.aspx.cs">
+      <DependentUpon>ViewRMBRechargeRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewRMBRechargeRecords.aspx.designer.cs">
+      <DependentUpon>ViewRMBRechargeRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewRMBWithdrawRecords.aspx.cs">
+      <DependentUpon>ViewRMBWithdrawRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewRMBWithdrawRecords.aspx.designer.cs">
+      <DependentUpon>ViewRMBWithdrawRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewStoneBuyRecords.aspx.cs">
+      <DependentUpon>ViewStoneBuyRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewStoneBuyRecords.aspx.designer.cs">
+      <DependentUpon>ViewStoneBuyRecords.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ViewStoneSellRecords.aspx.cs">
+      <DependentUpon>ViewStoneSellRecords.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\ViewStoneSellRecords.aspx.designer.cs">
+      <DependentUpon>ViewStoneSellRecords.aspx</DependentUpon>
     </Compile>
     <Compile Include="Wcf\Services\SuperMinersClient.cs" />
     <Compile Include="Wcf\Services\SuperMinersClient.WeiXin.cs" />

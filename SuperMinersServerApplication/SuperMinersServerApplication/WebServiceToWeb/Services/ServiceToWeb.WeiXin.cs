@@ -169,7 +169,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public TradeOperResult BuyMine(string userName, int minesCount, int payType)
+        public TradeOperResult BuyMine(string userName, int minesCount, PayType payType)
         {
             TradeOperResult result = new TradeOperResult();
             try
@@ -191,20 +191,20 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, int payType)
+        public TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, PayType payType)
         {
             try
             {
                 TradeOperResult result = new TradeOperResult();
-                result.PayType = payType;
+                result.PayType = (int)payType;
                 result.TradeType = (int)AlipayTradeInType.BuyGoldCoin;
 
                 int valueRMB = (int)Math.Ceiling(goldCoinCount / GlobalConfig.GameConfig.RMB_GoldCoin);
-                return OrderController.Instance.GoldCoinOrderController.RechargeGoldCoin(userName, valueRMB, goldCoinCount, payType);
+                return OrderController.Instance.GoldCoinOrderController.RechargeGoldCoin(userName, valueRMB, goldCoinCount, (int)payType);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("微信端。玩家[" + userName + "] 金币充值异常，充值金币数为:" + goldCoinCount + ",支付类型为:" + ((PayType)payType).ToString(), exc);
+                LogHelper.Instance.AddErrorLog("微信端。玩家[" + userName + "] 金币充值异常，充值金币数为:" + goldCoinCount + ",支付类型为:" + (payType).ToString(), exc);
                 return null;
             }
         }
