@@ -73,10 +73,29 @@
 .weui-cell_primary {
   align-items: flex-start;
 }
+.weui-cell__hd{
+  width: 105px;
+}
 .weui-cell__bd {
   flex: 1;
 }
 .weui-cell__ft {
   text-align: right;
   color: #999999;
+}
+.weui-label {
+  display: block;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.weui-input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  -webkit-appearance: none;
+  background-color: transparent;
+  /*font-size: inherit;
+  color: inherit;*/
+  height: 1.41176471em;
+  line-height: 1.41176471;
 }

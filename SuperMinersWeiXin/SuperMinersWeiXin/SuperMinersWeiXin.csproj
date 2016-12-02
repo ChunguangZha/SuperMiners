@@ -71,6 +71,7 @@
     <Content Include="App_Themes\Theme1\weui-cell_global.css" />
     <Content Include="App_Themes\Theme1\weui-check.css" />
     <Content Include="App_Themes\Theme1\weui-dialog.css" />
+    <Content Include="App_Themes\Theme1\weui-flex.css" />
     <Content Include="App_Themes\Theme1\weui-form.css" />
     <Content Include="App_Themes\Theme1\weui-loading.css" />
     <Content Include="App_Themes\Theme1\weui-loadmore.css" />

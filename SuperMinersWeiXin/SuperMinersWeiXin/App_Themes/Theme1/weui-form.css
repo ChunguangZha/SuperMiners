@@ -59,7 +59,7 @@
   font-size: 0;
 }
 .weui-cells_form .weui-icon-warn {
-  display: none;
+  display: inline-block;
 }
 .weui-cells_form input,
 .weui-cells_form textarea,
