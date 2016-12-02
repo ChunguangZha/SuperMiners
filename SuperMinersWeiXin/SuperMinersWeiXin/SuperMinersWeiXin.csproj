@@ -63,6 +63,7 @@
     <Content Include="App_Themes\Theme1\Style.css" />
     <Content Include="App_Themes\Theme1\weui-access.css" />
     <Content Include="App_Themes\Theme1\weui-actionsheet.css" />
+    <Content Include="App_Themes\Theme1\weui-agree.css" />
     <Content Include="App_Themes\Theme1\weui-btn_default.css" />
     <Content Include="App_Themes\Theme1\weui-btn_disabled.css" />
     <Content Include="App_Themes\Theme1\weui-btn_global.css" />
@@ -73,6 +74,7 @@
     <Content Include="App_Themes\Theme1\weui-dialog.css" />
     <Content Include="App_Themes\Theme1\weui-flex.css" />
     <Content Include="App_Themes\Theme1\weui-form.css" />
+    <Content Include="App_Themes\Theme1\weui-icon.css" />
     <Content Include="App_Themes\Theme1\weui-loading.css" />
     <Content Include="App_Themes\Theme1\weui-loadmore.css" />
     <Content Include="App_Themes\Theme1\weui-mask.css" />
@@ -81,6 +83,8 @@
     <Content Include="ErrorPage.aspx" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
+    <Content Include="images\wxerror.png" />
+    <Content Include="images\wxok.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
     <Content Include="Scripts\registeruser.js" />

@@ -1,136 +1,103 @@
 ﻿
+var errorimgpath = "images/wxerror.png";
+var okimgpath = "images/wxok.png";
+
 $().ready(function () {
-    try {
-        $("#form1").validate({
-            rules: {
-                MainContent_txtUserName: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 15
-                },
-                MainContent_txtNickName: {
-                    maxlength: 15
-                },
-                MainContent_txtEmail: {
-                    required: true,
-                    maxlength: 20
-                }
 
-            },
-            messages: {
-                MainContent_txtUserName: {
-                    required: "请输入用户名",
-                    minlength: "用户名最少3个字符",
-                    maxlength: "用户名最多15个字符"
-                },
-                MainContent_txtNickName: {
-                    maxlength: "昵称最多15个字符"
-                },
-                //MainContent_txtPassword: {
-                //    required: "请输入密码",
-                //    minlength: "密码最少6位",
-                //    maxlength: "密码最多15位"
-                //},
-                //MainContent_txtConfirmPassword: {
-                //    required: "请再次输入密码",
-                //    minlength: "密码最少6位",
-                //    maxlength: "密码最多15位",
-                //    equalTo: "两次密码不一至，请重新输入"
-                //},
-                MainContent_txtEmail: {
-                    required: "请输入电子邮箱",
-                    maxlength: "您输入的电子邮箱过长"
-                }
-            }
-        })
-    } catch (err) {
-        //alert(err);
-    }
+    $("#txtUserName").blur(CheckUserName);
+    $("#txtNickName").blur(CheckNickName);
+    $("#txtPassword").blur(CheckPassword);
+    $("#txtConfirmPassword").blur(CheckConfirmPassword);
+    $("#txtEmail").blur(CheckEmail);
+    $("#txtQQ").blur(CheckQQ);
+    $("#txtAuthCode").blur(CheckAuthCode);
+    $("#txtAlipayAccount").blur(CheckAlipayAccount);
+    $("#txtAlipayRealName").blur(CheckAlipayRealName);
+    $("#txtIDCardNo").blur(CheckIDCardNo);
 
-    //123
-    $("#MainContent_txtUserName").blur(CheckUserName);
-    $("#MainContent_txtNickName").blur(CheckNickName);
-    $("#MainContent_txtPassword").blur(CheckPassword);
-    $("#MainContent_txtConfirmPassword").blur(CheckConfirmPassword);
-    $("#MainContent_txtEmail").blur(CheckEmail);
-    $("#MainContent_txtQQ").blur(CheckQQ);
-    $("#MainContent_txtAuthCode").blur(CheckAuthCode);
-    $("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
-    $("#MainContent_txtAlipayRealName").blur(CheckAlipayRealName);
-    $("#MainContent_txtIDCardNo").blur(CheckIDCardNo);
+    $("#imgAuthCode").on('click', function () {
+        $(this).attr("src", "http://www.xlore.net/AuthCode?Num=" + Math.random());
+        $("#txtAuthCode").text("");
+        $("#imgAuthCodeOK").css("display", "none");
+
+    });
 });
 
 function CheckUserName() {
-    $("#msgUserName").text("");
-    $("#imgUserNameOK").css("display", "none");
+    var $imgOK = $("#imgUserNameOK");
+    $imgOK.css("display", "none");
 
-    var username = $("#MainContent_txtUserName").val();
+    var username = $("#txtUserName").val();
     if (username.length == 0) {
-        $("#msgUserName").text("请输入用户名");
         return;
     }
     if (username.length < 3) {
-        $("#msgUserName").text("用户名最少3个字符");
-        return;
-    }
-    if (username.length > 15) {
-        $("#msgUserName").text("用户名最多15个字符");
+        $imgOK.attr("src", errorimgpath);
+        $imgOK.css("display", "inline");
+        showAlertMessage("用户名最少3个字符");
         return;
     }
 
     $.post("http://www.xlore.net/CheckUserName",
-        { UserName: $("#MainContent_txtUserName").val() },
+        { UserName: username },
         function (data, status) {
             if (data == "OK") {
-                $("#imgUserNameOK").css("display", "inline");
+                $imgOK.attr("src", okimgpath);
             }
             else {
-                $("#msgUserName").text(data);
+                $imgOK.attr("src", errorimgpath);
+                showAlertMessage(data);
             }
+            $imgOK.css("display", "inline");
         });
 }
 function CheckNickName() {
-    $("#msgPassword").text("");
-    var nickname = $("#MainContent_txtNickName").val();
-    if (nickname.length == 0) {
-        $("#msgNickName").text("请输入昵称");
-        return;
-    }
+    //$("#msgPassword").text("");
+    //var nickname = $("#MainContent_txtNickName").val();
+    //if (nickname.length == 0) {
+    //    $("#msgNickName").text("请输入昵称");
+    //    return;
+    //}
 
 }
-function CheckPassword() {
-    $("#msgPassword").text("");
-    $("#imgPasswordOK").css("display", "none");
 
-    var pwd = $("#MainContent_txtPassword").val();
+function CheckPassword() {
+    var $imgOK = $("#imgPasswordOK");
+    $imgOK.css("display", "none");
+
+    var pwd = $("#txtPassword").val();
     if (pwd.length < 6) {
-        $("#msgPassword").text("密码至少6个字符");
-        return;
+        $imgOK.attr("src", errorimgpath);
+        showAlertMessage("密码至少6个字符");
+    } else {
+        $imgOK.attr("src", okimgpath);
     }
 
-    $("#imgPasswordOK").css("display", "inline");
+    $imgOK.css("display", "inline");
+
 }
 function CheckConfirmPassword() {
-    $("#msgConfirmPassword").text("");
-    $("#imgConfirmPasswordOK").css("display", "none");
+    var $imgOK = $("#imgCpasswordOK");
+    $imgOK.css("display", "none");
 
-    var pwd = $("#MainContent_txtPassword").val();
-    var confirmpwd = $("#MainContent_txtConfirmPassword").val();
+    var pwd = $("#txtPassword").val();
+    var confirmpwd = $("#txtConfirmPassword").val();
     if (pwd != confirmpwd) {
-        $("#msgConfirmPassword").text("两次密码不一至，请重新输入");
-        return;
+        $imgOK.attr("src", errorimgpath);
+        showAlertMessage("两次密码不一至，请重新输入");
+    } else {
+        $imgOK.attr("src", okimgpath);
     }
 
-    $("#imgConfirmPasswordOK").css("display", "inline");
+    $imgOK.css("display", "inline");
 }
 
 function CheckAlipayAccount() {
-    $("#msgAlipayAccount").text("");
-    $("#imgAlipayAccountOK").css("display", "none");
+    var $imgOK = $("#imgAlipayAccountOK");
+    $imgOK.css("display", "none");
 
-    var alipayAccount = $("#MainContent_txtAlipayAccount").val();
+    var alipayAccount = $("#txtAlipayAccount").val();
     if (alipayAccount.length == 0) {
-        $("#msgAlipayAccount").text("请输入支付宝账户");
         return;
     }
 
@@ -138,14 +105,10 @@ function CheckAlipayAccount() {
     var bChk = szReg.test(alipayAccount);
     if (!bChk) {
         szReg = /^([1-9][0-9]*)$/;
-        if (!szReg.test(alipayAccount)) {
-            $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
-            return;
-        } else {
-            if (alipayAccount.length != 11) {
-                $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
-                return;
-            }
+        if (!szReg.test(alipayAccount) || alipayAccount.length != 11) {
+            $imgOK.attr("src", errorimgpath);
+            $imgOK.css("display", "inline");
+            showAlertMessage("支付宝账户格式错误");
         }
     }
 
@@ -153,31 +116,36 @@ function CheckAlipayAccount() {
         { AlipayAccount: alipayAccount },
         function (data, status) {
             if (data == "OK") {
-                $("#imgAlipayAccountOK").css("display", "inline");
+                $imgOK.attr("src", okimgpath);
             } else {
-                $("#msgAlipayAccount").text(data);
+                $imgOK.attr("src", errorimgpath);
+                showAlertMessage(data);
             }
+            $imgOK.css("display", "inline");
         });
 
 }
 
 function CheckAlipayRealName() {
-    $("#msgAlipayRealName").text("");
-    $("#imgAlipayRealNameOK").css("display", "none");
+    var imgOK = $("#imgAlipayRealNameOK");
+    imgOK.css("display", "none");
 
-    var alipayRealName = $("#MainContent_txtAlipayRealName").val();
+    var alipayRealName = $("#txtAlipayRealName").val();
     if (alipayRealName.length == 0) {
-        $("#msgAlipayRealName").text("请输入支付宝实名");
         return;
     }
     var szReg = /^[\u4E00-\u9FA5\uF900-\uFA2D]/;
     var bChk = szReg.test(alipayRealName);
     if (!bChk) {
-        $("#msgAlipayRealName").text("请输入正确支付宝实名");
-        return;
+        $imgOK.attr("src", errorimgpath);
+        showAlertMessage("支付宝实名错误");
+    }
+    else {
+        $imgOK.attr("src", okimgpath);
     }
 
-    $("#imgAlipayRealNameOK").css("display", "inline");
+    $imgOK.css("display", "inline");
+
     //$.post("CheckAlipayRealName",
     //    { AlipayRealName: alipayRealName },
     //    function (data, status) {
@@ -191,68 +159,68 @@ function CheckAlipayRealName() {
 }
 
 function CheckIDCardNo() {
-    $("#msgIDCardNo").text("");
-    $("#imgIDCardNoOK").css("display", "none");
+    var $imgOK = $("#imgIDCardNoOK");
+    $imgOK.css("display", "none");
 
-    var IDCardNo = $("#MainContent_txtIDCardNo").val();
+    var IDCardNo = $("#txtIDCardNo").val();
     if (IDCardNo.length == 0) {
-        $("#msgIDCardNo").text("请输入身份证号");
         return;
     }
     var szReg = /^([1-9][0-9]*X{0,1})$/;
-    if (!szReg.test(IDCardNo)) {
-        $("#msgIDCardNo").text("请输入正确的身份证号");
-        return;
-    }
-    if (IDCardNo.length != 18) {
-        $("#msgIDCardNo").text("身份证号必须为18位");
+    if (!szReg.test(IDCardNo) || IDCardNo.length != 18) {
+        $imgOK.attr("src", errorimgpath);
+        $imgOK.css("display", "inline");
+        showAlertMessage("身份证号格式错误");
         return;
     }
     $.post("http://www.xlore.net/CheckIDCardNo",
         { IDCardNo: IDCardNo },
         function (data, status) {
             if (data == "OK") {
-                $("#imgIDCardNoOK").css("display", "inline");
+                $imgOK.attr("src", okimgpath);
             } else {
-                $("#imgIDCardNoOK").css("display", "none");
-                $("#msgIDCardNo").text(data);
+                $imgOK.attr("src", errorimgpath);
+                showAlertMessage(data);
             }
+            $imgOK.css("display", "inline");
         });
 
-    //$("#imgIDCardNoOK").css("display", "inline");
 }
 
 function CheckQQ() {
-    $("#msgQQ").text("");
-    $("#imgQQOK").css("display", "none");
+    var $imgOK = $("#imgQQOK");
+    $imgOK.css("display", "none");
 
-    var qq = $("#MainContent_txtQQ").val();
+    var qq = $("#txtQQ").val();
     if (qq.length == 0) {
-        $("#msgQQ").text("请输入QQ");
         return;
     }
     var szReg = /^([1-9][0-9]*)$/;
     if (!szReg.test(qq)) {
-        $("#msgQQ").text("QQ账户只能输入数字");
-        return;
+        $imgOK.attr("src", errorimgpath);
+        showAlertMessage("QQ号格式错误");
     }
-
-    $("#imgQQOK").css("display", "inline");
+    else {
+        $imgOK.attr("src", okimgpath);
+    }
+    $imgOK.css("display", "inline");
 }
-function CheckEmail() {
-    $("#msgEmail").text("");
-    $("#imgEmailOK").css("display", "none");
 
-    var email = $("#MainContent_txtEmail").val();
+function CheckEmail() {
+    var $imgOK = $("#imgEmailOK");
+    $imgOK.css("display", "none");
+
+    var email = $("#txtEmail").val();
     if (email.length == 0) {
-        $("#msgEmail").text("请输入邮箱");
         return;
     }
 
     var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     var bChk = szReg.test(email);
     if (!bChk) {
-        $("#msgEmail").text("请输入正确邮箱地址");
+        $imgOK.attr("src", errorimgpath);
+        $imgOK.css("display", "inline");
+        showAlertMessage("邮箱格式错误");
         return;
     }
 
@@ -260,33 +228,47 @@ function CheckEmail() {
         { Email: email },
         function (data, status) {
             if (data == "OK") {
-                $("#imgEmailOK").css("display", "inline");
+                $imgOK.attr("src", okimgpath);
             } else {
-                $("#msgEmail").text(data);
+                $imgOK.attr("src", errorimgpath);
+                showAlertMessage(data);
             }
+            $imgOK.css("display", "inline");
         });
 }
-function CheckAuthCode() {
-    $("#msgAuthCode").text("");
-    $("#imgAuthCodeOK").css("display", "none");
 
-    var authcode = $("#MainContent_txtAuthCode").val();
+function CheckAuthCode() {
+    var $imgOK = $("#imgAuthCodeOK");
+    $imgOK.css("display", "none");
+
+    var authcode = $("#txtAuthCode").val();
 
     $.post("http://www.xlore.net/CheckAuthCode",
         { AuthCode: authcode },
         function (data, status) {
             if (data == "OK") {
-                $("#imgAuthCodeOK").css("display", "inline");
+                $imgOK.attr("src", okimgpath);
             } else {
-                $("#msgAuthCode").text(data);
+                $imgOK.attr("src", errorimgpath);
+                showAlertMessage(data);
             }
+            $imgOK.css("display", "inline");
         });
 }
 
-function CallServerForUpdate() {
-    //document.getElementById("imgAuthCode").src = "AuthCode?Num=" + Math.random();
-    $("#imgAuthCode").attr("src", "AuthCode?Num=" + Math.random());
-    $("#msgAuthCode").text("");
-    $("#imgAuthCodeOK").css("display", "none");
 
+function showAlertMessage(message){
+    var $tooltips = $('.js_tooltips');
+    $tooltips.text(message);
+
+    if ($tooltips.css('display') != 'none') return;
+
+    // toptips的fixed, 如果有`animation`, `position: fixed`不生效
+    $('.page.cell').removeClass('slideIn');
+
+    $tooltips.css('display', 'block');
+    setTimeout(function () {
+        $tooltips.css('display', 'none');
+    }, 2000);
 }
+

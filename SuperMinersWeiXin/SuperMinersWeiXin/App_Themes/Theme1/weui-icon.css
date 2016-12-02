@@ -1,0 +1,27 @@
+﻿
+/* '' */
+[class^="weui-icon_"]:before,
+[class*=" weui-icon_"]:before {
+  margin: 0;
+}
+.weui-icon-success {
+  font-size: 23px;
+  color: #09BB07;
+}
+/* '' */
+.weui-icon-success:before {
+  content: "\EA06";
+}
+.weui-icon-warn {
+  display:inline-block;
+  font-size: 23px;
+  color: #F43530;
+}
+/* '' */
+.weui-icon-warn:before {
+  content: "\EA0B";
+}
+
+.weiui-icon {
+    background-color:transparent;
+}

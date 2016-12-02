@@ -27,6 +27,7 @@
                 </div>
             </div>
         </div>
+        <div style="height:50px;"></div>
         <div class="weui-cells__tips">账户绑定后不可更改</div>
         <div style="height:50px;"></div>
         <div class="weui-flex">
