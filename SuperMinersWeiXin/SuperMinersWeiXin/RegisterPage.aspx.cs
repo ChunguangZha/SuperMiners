@@ -1,4 +1,6 @@
 ﻿using MetaData;
+using SuperMinersWeiXin.Core;
+using SuperMinersWeiXin.Model;
 using SuperMinersWeiXin.Wcf.Services;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,20 @@ namespace SuperMinersWeiXin
 
         }
 
+        private void ShowAlartMessage(string message)
+        {
+            Response.Write("<script>CheckUserName();</script>");
+        }
+
         protected void btnRegister_Click(object sender, EventArgs e)
         {
+            WeiXinUserInfoModel wxuserinfo = Session["wxuserinfo"] as WeiXinUserInfoModel;
+            if (wxuserinfo == null)
+            {
+                Response.Write("<script>alert('只能从微信客户端打开')</script>");
+                return;
+            }
+
             string userName = this.txtUserName.Text.Trim();
             string nickName = this.txtNickName.Text.Trim();
             string email = this.txtEmail.Text.Trim();
@@ -69,7 +83,7 @@ namespace SuperMinersWeiXin
             {
                 return;
             }
-            if (!CheckAlipayRealName(alipayRealName))
+            if (!CheckAlipayRealName(alipayRealName, alipayAccount))
             {
                 return;
             }
@@ -88,7 +102,7 @@ namespace SuperMinersWeiXin
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+            RegisterUser(wxuserinfo.openid, wxuserinfo.nickname, ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
         }
 
         private bool CheckUserName(string userName)
@@ -196,8 +210,8 @@ namespace SuperMinersWeiXin
         {
             if (alipayAccount == "")
             {
-                Response.Write("<script>alert('请输入支付宝账户!')</script>");
-                return false;
+                //Response.Write("<script>alert('请输入支付宝账户!')</script>");
+                return true;
             }
 
             bool matchValue = Regex.IsMatch(alipayAccount, @"^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+");
@@ -228,12 +242,19 @@ namespace SuperMinersWeiXin
             return true;
         }
 
-        private bool CheckAlipayRealName(string alipayRealName)
+        private bool CheckAlipayRealName(string alipayRealName, string alipayAccount)
         {
             if (alipayRealName == "")
             {
-                Response.Write("<script>alert('请输入支付宝实名!')</script>");
-                return false;
+                if (alipayAccount != "")
+                {
+                    Response.Write("<script>alert('请输入支付宝实名!')</script>");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
             }
 
             bool matchValue = Regex.IsMatch(alipayRealName, @"^[\u4E00-\u9FA5\uF900-\uFA2D]");
@@ -360,16 +381,29 @@ namespace SuperMinersWeiXin
             return true;
         }
 
-        private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        private void RegisterUser(string wxopenid, string wxNickName, string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
 
             //invitationCode = Session["ic"] as string;
             string invitationCode = "";
 
-            int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+            int result = WcfClient.Instance.RegisterUserFromWeiXin(wxopenid, wxNickName, clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='Default.aspx';</script>");
+                var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(wxopenid);
+                if (player != null)
+                {
+                    WebUserInfo userinfo = new WebUserInfo();
+                    userinfo.xlUserID = player.SimpleInfo.UserID;
+                    userinfo.xlUserName = player.SimpleInfo.UserName;
+                    userinfo.wxOpenID = wxopenid;
+                    // 登录状态100分钟内有效
+                    MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+                    Session[userinfo.xlUserName] = player;
+                }
+
+                Response.Redirect("View/Index.aspx");
+                //Response.Write("<script>alert('恭喜您成功加入灵币矿场!');this.location.href='View/Index.aspx';</script>");
             }
             else
             {

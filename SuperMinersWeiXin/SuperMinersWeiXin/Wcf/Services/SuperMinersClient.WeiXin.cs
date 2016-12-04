@@ -37,6 +37,28 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
+        /// <summary>
+        /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FAILED; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="alipayAccount"></param>
+        /// <param name="alipayRealName"></param>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        public int RegisterUserFromWeiXin(string wxUserOpenID, string wxUserName, string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
+        {
+            try
+            {
+                return base.Channel.RegisterUserFromWeiXin(wxUserOpenID, wxUserName, clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+            }
+            catch (Exception)
+            {
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
         public int WeiXinLogin(string wxUserOpenID, string wxUserName, string ip)
         {
             try

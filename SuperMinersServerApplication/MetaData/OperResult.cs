@@ -50,6 +50,11 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_IDCARDNO_EXIST = 105;
 
         /// <summary>
+        /// 微信注册时，当前openid已经注册过迅灵账户。
+        /// </summary>
+        public const int RESULTCODE_WEXIN_REGISTER_OPENID_EXIST = 106;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
@@ -160,6 +165,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARDNO_EXIST, "该身份证号已经被其它人使用");
             _resultCode_Msg.Add(RESULTCODE_WEIXIN_USERBINDEDBYOTHER, "该迅灵用户已经被其它微信用户绑定");
             _resultCode_Msg.Add(RESULTCODE_USER_IS_LOCKED, "该账户已经被管理员锁定");
+            _resultCode_Msg.Add(RESULTCODE_WEXIN_REGISTER_OPENID_EXIST, "当前微信号已经注册过迅灵账户，无法再注册");
         }
 
         public static string GetMsg(int resultCode)

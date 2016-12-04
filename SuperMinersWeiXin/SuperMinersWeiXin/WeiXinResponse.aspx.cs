@@ -78,15 +78,16 @@ namespace SuperMinersWeiXin
                         {
                             this.lblMsg.Text = "WeiXinLogin OK";
                             var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(userObj.openid);
-                            Session[Config.SESSIONKEY_XLUSERINFO] = player;
 
                             this.lblMsg.Text = "player OK";
                             WebUserInfo userinfo = new WebUserInfo();
                             userinfo.xlUserID = player.SimpleInfo.UserID;
                             userinfo.xlUserName = player.SimpleInfo.UserName;
                             userinfo.wxOpenID = userObj.openid;
+
                             // 登录状态100分钟内有效
                             MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+                            Session[userinfo.xlUserName] = player;
 
                             Server.Transfer("View/Index.aspx");
                         }

@@ -7,15 +7,24 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
     <title>迅灵矿场</title>
-    <link rel="stylesheet" href="../App_Themes/Theme1/example.css" type="text/css" />
-    <link rel="stylesheet" href="../App_Themes/Theme1/weui-tabbar.css" type="text/css" />
-    <link rel="stylesheet" href="../App_Themes/Theme1/Style.css" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-tabbar.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-cell_global.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-flex.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-button.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-agree.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-icon.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/myglobal.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-access.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-loadmore.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-loading.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-toast.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-dialog.css" />
     <script src="../Scripts/jquery-3.1.1.js"></script>
     <script src="../Scripts/index.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
-<body>
+<body onscroll="">
     <div class="page">
         <div class="page__bd" style="height: 100%;">
             <div class="weui-tab">
@@ -44,7 +53,7 @@
                         <p class="weui-tabbar__label">游戏帮助</p>
                     </a>
                 </div>
-                <div>
+                <%--<div>
                     <div class="weui-mask" id="iosMask">
 
                     </div>
@@ -97,7 +106,7 @@
                             <div class="weui-actionsheet__cell" id="iosActionsheetCancel"> </div>
                         </div>
                     </div>
-                </div>
+                </div>--%>
             </div>
         </div>
     </div>

@@ -143,17 +143,23 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
             }
 
-            if (this.CheckUserAlipayAccountExist(alipayAccount) == OperResult.RESULTCODE_TRUE)
+            if (!string.IsNullOrEmpty(alipayAccount))
             {
-                return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+                if (this.CheckUserAlipayAccountExist(alipayAccount) == OperResult.RESULTCODE_TRUE)
+                {
+                    return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
+                }
             }
             //if (this.CheckUserAlipayRealNameExist(alipayRealName) == OperResult.RESULTCODE_TRUE)
             //{
             //    return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
             //}
-            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+            if (!string.IsNullOrEmpty(IDCardNo))
             {
-                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
+                if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+                {
+                    return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
+                }
             }
 
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
@@ -551,9 +557,12 @@ namespace SuperMinersServerApplication.Controller
             //    return OperResult.RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST;
             //}
 
-            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+            if (IDCardNo != playerrun.BasePlayer.SimpleInfo.IDCardNo)
             {
-                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
+                if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+                {
+                    return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
+                }
             }
 
             //if (!string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.Alipay) && !string.IsNullOrEmpty(playerrun.BasePlayer.SimpleInfo.AlipayRealName))

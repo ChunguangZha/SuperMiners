@@ -3,6 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="root_subpage" data-id="myxunling">
-        我的矿场
     </div>
 </asp:Content>

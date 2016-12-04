@@ -22,6 +22,12 @@
   content: "\EA0B";
 }
 
-.weiui-icon {
+.weui-icon {
+    background-color:transparent;
+}
+
+.weui-icon_24_24 {
+    width:24px;
+    height:24px;
     background-color:transparent;
 }

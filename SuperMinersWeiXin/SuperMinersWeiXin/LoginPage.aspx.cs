@@ -26,7 +26,7 @@ namespace SuperMinersWeiXin
                 WeiXinUserInfoModel wxuserinfo = Session["wxuserinfo"] as WeiXinUserInfoModel;
                 if (wxuserinfo == null)
                 {
-                    Response.Write("<script>alert('微信登录失败，无法绑定')</script>");
+                    Response.Write("<script>alert('只能从微信客户端打开')</script>");
                     return;
                 }
 
@@ -62,10 +62,14 @@ namespace SuperMinersWeiXin
                         userinfo.wxOpenID = wxuserinfo.openid;
                         // 登录状态100分钟内有效
                         MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+                        Session[userinfo.xlUserName] = player;
 
+                        Response.Redirect("View/Index.aspx");
                     }
-
-                    Response.Redirect("View/Index.aspx");
+                    else
+                    {
+                        Response.Write("<script>alert('绑定失败, 原因为：没有找到迅灵账户')</script>");
+                    }
                 }
                 else
                 {

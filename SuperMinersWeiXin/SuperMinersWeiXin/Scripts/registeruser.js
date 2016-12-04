@@ -16,10 +16,22 @@ $().ready(function () {
     $("#txtIDCardNo").blur(CheckIDCardNo);
 
     $("#imgAuthCode").on('click', function () {
-        $(this).attr("src", "http://www.xlore.net/AuthCode?Num=" + Math.random());
+        $(this).attr("src", "AuthCode?Num=" + Math.random());
         $("#txtAuthCode").text("");
         $("#imgAuthCodeOK").css("display", "none");
 
+    });
+    $("#weuiAgree").click(function () {
+        var $checked = $(this).is(':checked');
+        showAlertMessage($checked);
+        var $btn = $("#btnRegister");
+        if ($checked == true) {
+            $btn.removeAttr("disabled");
+            $btn.removeClass("weui-btn_disabled");
+        } else {
+            $btn.attr("disabled", 'disabled');
+            $btn.addClass("weui-btn_disabled");
+        }
     });
 });
 
@@ -38,7 +50,7 @@ function CheckUserName() {
         return;
     }
 
-    $.post("http://www.xlore.net/CheckUserName",
+    $.post("CheckUserName",
         { UserName: username },
         function (data, status) {
             if (data == "OK") {
@@ -66,6 +78,9 @@ function CheckPassword() {
     $imgOK.css("display", "none");
 
     var pwd = $("#txtPassword").val();
+    if (pwd.length == 0) {
+        return;
+    }
     if (pwd.length < 6) {
         $imgOK.attr("src", errorimgpath);
         showAlertMessage("密码至少6个字符");
@@ -82,6 +97,9 @@ function CheckConfirmPassword() {
 
     var pwd = $("#txtPassword").val();
     var confirmpwd = $("#txtConfirmPassword").val();
+    if (confirmpwd.length == 0) {
+        return;
+    }
     if (pwd != confirmpwd) {
         $imgOK.attr("src", errorimgpath);
         showAlertMessage("两次密码不一至，请重新输入");
@@ -109,10 +127,11 @@ function CheckAlipayAccount() {
             $imgOK.attr("src", errorimgpath);
             $imgOK.css("display", "inline");
             showAlertMessage("支付宝账户格式错误");
+            return;
         }
     }
 
-    $.post("http://www.xlore.net/CheckAlipayAccount",
+    $.post("CheckAlipayAccount",
         { AlipayAccount: alipayAccount },
         function (data, status) {
             if (data == "OK") {
@@ -173,7 +192,7 @@ function CheckIDCardNo() {
         showAlertMessage("身份证号格式错误");
         return;
     }
-    $.post("http://www.xlore.net/CheckIDCardNo",
+    $.post("CheckIDCardNo",
         { IDCardNo: IDCardNo },
         function (data, status) {
             if (data == "OK") {
@@ -224,7 +243,7 @@ function CheckEmail() {
         return;
     }
 
-    $.post("http://www.xlore.net/CheckEmail",
+    $.post("CheckEmail",
         { Email: email },
         function (data, status) {
             if (data == "OK") {
@@ -243,7 +262,7 @@ function CheckAuthCode() {
 
     var authcode = $("#txtAuthCode").val();
 
-    $.post("http://www.xlore.net/CheckAuthCode",
+    $.post("CheckAuthCode",
         { AuthCode: authcode },
         function (data, status) {
             if (data == "OK") {

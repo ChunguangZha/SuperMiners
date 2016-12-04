@@ -8,8 +8,8 @@
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-cell_global.css" />
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-flex.css" />
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-button.css" />
-    <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-icon.css" />
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-agree.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-icon.css" />
     <script type="text/javascript" src="Scripts/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="Scripts/registeruser.js"></script>
 </head>
@@ -27,7 +27,7 @@
                     <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="weui-input" placeholder="请输入用户名" TabIndex="1"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgUserNameOK" class="weiui-icon"/>
+                    <img id="imgUserNameOK" class="weui-icon_24_24" width="24" height="24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -46,7 +46,7 @@
                     <asp:TextBox ID="txtPassword" runat="server" MaxLength="15" CssClass="weui-input" TextMode="Password" placeholder="请输入密码" TabIndex="3"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgPasswordOK" class="weiui-icon"/>
+                    <img id="imgPasswordOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -57,7 +57,7 @@
                     <asp:TextBox ID="txtConfirmPassword" runat="server" MaxLength="15" CssClass="weui-input" TextMode="Password" placeholder="请确认密码" TabIndex="4"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgCpasswordOK" class="weiui-icon"/>
+                    <img id="imgCpasswordOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -68,7 +68,7 @@
                     <asp:TextBox ID="txtAlipayAccount" runat="server" MaxLength="30" CssClass="weui-input" placeholder="请输入支付宝账户" TabIndex="5"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgAlipayAccountOK" class="weiui-icon"/>
+                    <img id="imgAlipayAccountOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -79,7 +79,7 @@
                     <asp:TextBox ID="txtAlipayRealName" runat="server" MaxLength="15" CssClass="weui-input" placeholder="请输入支付宝实名" TabIndex="6"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgAlipayRealNameOK" class="weiui-icon"/>
+                    <img id="imgAlipayRealNameOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -90,7 +90,7 @@
                     <asp:TextBox ID="txtIDCardNo" runat="server" MaxLength="18" CssClass="weui-input" placeholder="请输入身份证号" TabIndex="7"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgIDCardNoOK" class="weiui-icon"/>
+                    <img id="imgIDCardNoOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -101,7 +101,7 @@
                     <asp:TextBox ID="txtEmail" runat="server" MaxLength="30" CssClass="weui-input" type="email" placeholder="请输入邮箱" TabIndex="8"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgEmailOK" class="weiui-icon"/>
+                    <img id="imgEmailOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -112,7 +112,7 @@
                     <asp:TextBox ID="txtQQ" runat="server" MaxLength="15" CssClass="weui-input" type="number" pattern="[0-9]*" placeholder="请输入QQ号" TabIndex="9"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgQQOK" class="weiui-icon"/>
+                    <img id="imgQQOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
@@ -121,13 +121,13 @@
                     <asp:TextBox ID="txtAuthCode" runat="server" MaxLength="15" CssClass="weui-input" placeholder="请输入验证码" TabIndex="10"/>
                 </div>
                 <div class="weui-cell__ft">
-                    <img id="imgAuthCodeOK" class="weiui-icon"/>
+                    <img id="imgAuthCodeOK" class="weui-icon_24_24"/>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"></div>
                 <div class="weui-cell__bd">
-                    <img id="imgAuthCode" src="http://www.xlore.net/AuthCode" class="checkimg weui-vcode-img" />
+                    <img id="imgAuthCode" src="AuthCode" class="checkimg weui-vcode-img" />
                 </div>
             </div>
         </div>
@@ -140,26 +140,9 @@
         </label>
 
         <div class="weui-btn-area">
-            <asp:Button ID="btnRegister" CssClass="weui-btn weui-btn_primary" runat="server" Text="注册" OnClick="btnRegister_Click" TabIndex="11" />
+            <asp:Button ID="btnRegister" CssClass="weui-btn weui-btn_disabled weui-btn_primary" Enabled="false" runat="server" Text="注册" OnClick="btnRegister_Click" TabIndex="11" />
         </div>
 
     </form>
-<script type="text/javascript">
-    //$(function () {
-    //    var $tooltips = $('.js_tooltips');
-
-    //    $('#showTooltips').on('click', function () {
-    //        if ($tooltips.css('display') != 'none') return;
-
-    //        // toptips的fixed, 如果有`animation`, `position: fixed`不生效
-    //        $('.page.cell').removeClass('slideIn');
-
-    //        $tooltips.css('display', 'block');
-    //        setTimeout(function () {
-    //            $tooltips.css('display', 'none');
-    //        }, 2000);
-    //    });
-    //});
-</script>
 </body>
 </html>

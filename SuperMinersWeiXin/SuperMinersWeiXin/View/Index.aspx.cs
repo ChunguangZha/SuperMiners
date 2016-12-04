@@ -19,7 +19,11 @@ namespace SuperMinersWeiXin.View
             //this.txtUserName.Text = encode;
             if (!this.IsPostBack)
             {
-                PlayerInfo player = Session[Config.SESSIONKEY_XLUSERINFO] as PlayerInfo;
+                //if (!Request.IsAuthenticated)
+                //{
+                //    Response.Redirect("../LoginPage.aspx");
+                //}
+                PlayerInfo player = Session[Context.User.Identity.Name] as PlayerInfo;
                 if (player != null)
                 {
                     this.txtUserName.Text = player.SimpleInfo.UserName;
@@ -31,6 +35,10 @@ namespace SuperMinersWeiXin.View
                     this.txtTempOutputStones.Text = player.FortuneInfo.TempOutputStones.ToString("f2");
                     this.txtWorkStonesReservers.Text = (player.FortuneInfo.StonesReserves - player.FortuneInfo.FreezingStones).ToString("f2");
 
+                }
+                else
+                {
+                    //Response.Redirect("../LoginPage.aspx");
                 }
             }
         }

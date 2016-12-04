@@ -30,6 +30,15 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
+        /// <summary>
+        /// 绑定加登录
+        /// </summary>
+        /// <param name="wxUserOpenID"></param>
+        /// <param name="wxUserName"></param>
+        /// <param name="xlUserName"></param>
+        /// <param name="xlUserPassword"></param>
+        /// <param name="ip"></param>
+        /// <returns></returns>
         public int BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
         {
             try
@@ -40,38 +49,114 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_WEIXIN_USERBINDEDBYOTHER;
                 }
 
-                PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(xlUserName);
-                if (player == null)
+                return InnerBindWeixinUser(wxUserOpenID, wxUserName, xlUserName, xlUserPassword, ip);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端。绑定玩家信息异常。 wxUserOpenID: " + wxUserOpenID + "，绑定用户：[" + xlUserName + "]失败.", exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        private int InnerBindWeixinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        {
+            PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(xlUserName);
+            if (player == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            if (xlUserPassword != player.SimpleInfo.Password)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            int result = PlayerController.Instance.BindWeiXinUser(wxUserOpenID, player);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + xlUserName);
+                if (player.SimpleInfo.LockedLogin)
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
-                if (xlUserPassword != player.SimpleInfo.Password)
-                {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    return OperResult.RESULTCODE_USER_IS_LOCKED;
                 }
 
-                int result = PlayerController.Instance.BindWeiXinUser(wxUserOpenID, player);
+                string mac = "weixin";
+                player.SimpleInfo.LastLoginIP = ip;
+                player.SimpleInfo.LastLoginMac = mac;
+                PlayerController.Instance.WeiXinLoginPlayer(wxUserOpenID, player);
+                LogHelper.Instance.AddInfoLog("微信玩家 [" + wxUserName + "] 登录用户[" + player.SimpleInfo.UserName + "]成功, IP=" + ip + ", Mac=" + mac);
+                result = OperResult.RESULTCODE_TRUE;
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 注册加绑定  RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
+        /// </summary>
+        /// <param name="clientIP"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <param name="email"></param>
+        /// <param name="qq"></param>
+        /// <param name="invitationCode"></param>
+        /// <returns></returns>
+        public int RegisterUserFromWeiXin(string wxUserOpenID, string wxUserName, string clientIP, string userName, string nickName, string password,
+            string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(wxUserOpenID))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                if (string.IsNullOrEmpty(wxUserName))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+
+                var player = DBProvider.UserDBProvider.GetPlayerByWeiXinOpenID(wxUserOpenID);
+                if (player != null)
+                {
+                    return OperResult.RESULTCODE_WEXIN_REGISTER_OPENID_EXIST;
+                }
+
+                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                {
+                    return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
+                }
+                if (string.IsNullOrEmpty(password))
+                {
+                    return OperResult.RESULTCODE_PARAM_INVALID;
+                }
+                //if (string.IsNullOrEmpty(alipayAccount))
+                //{
+                //    return OperResult.RESULTCODE_PARAM_INVALID;
+                //}
+                //if (string.IsNullOrEmpty(alipayRealName))
+                //{
+                //    return OperResult.RESULTCODE_PARAM_INVALID;
+                //}
+                //if (string.IsNullOrEmpty(IDCardNo))
+                //{
+                //    return OperResult.RESULTCODE_PARAM_INVALID;
+                //}
+                //if (string.IsNullOrEmpty(email))
+                //{
+                //    return OperResult.RESULTCODE_PARAM_INVALID;
+                //}
+                int result = PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + xlUserName);
-                    if (player.SimpleInfo.LockedLogin)
-                    {
-                        return OperResult.RESULTCODE_USER_IS_LOCKED;
-                    }
-
-                    string mac = "weixin";
-                    player.SimpleInfo.LastLoginIP = ip;
-                    player.SimpleInfo.LastLoginMac = mac;
-                    PlayerController.Instance.WeiXinLoginPlayer(wxUserOpenID, player);
-                    LogHelper.Instance.AddInfoLog("微信玩家 [" + wxUserName + "] 登录用户[" + player.SimpleInfo.UserName + "]成功, IP=" + ip + ", Mac=" + mac);
-
+                    result = InnerBindWeixinUser(wxUserOpenID, wxUserName, userName, password, clientIP);
                 }
 
                 return result;
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("微信端。绑定玩家信息异常。 wxUserOpenID: " + wxUserOpenID + "，绑定用户：[" + xlUserName + "]失败.", exc);
+                LogHelper.Instance.AddErrorLog("WeiXinRegisterUser Exception. wxUserOpenID: " + wxUserOpenID + ";wxUserName:"+ wxUserName + ";clientIP:" + clientIP + ";userName: " + userName + ";password: " + password
+                                    + "alipayAccount:" + alipayAccount + ";alipayRealName:" + alipayRealName + ";IDCardNo:" + IDCardNo + ";email: " + email + ";qq: " + qq, exc);
+
                 return OperResult.RESULTCODE_EXCEPTION;
             }
         }

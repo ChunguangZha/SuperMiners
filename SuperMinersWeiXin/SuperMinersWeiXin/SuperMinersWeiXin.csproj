@@ -60,33 +60,34 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Themes\Theme1\example.css" />
+    <Content Include="App_Themes\Theme1\myglobal.css" />
     <Content Include="App_Themes\Theme1\Style.css" />
     <Content Include="App_Themes\Theme1\weui-access.css" />
     <Content Include="App_Themes\Theme1\weui-actionsheet.css" />
     <Content Include="App_Themes\Theme1\weui-agree.css" />
-    <Content Include="App_Themes\Theme1\weui-btn_default.css" />
-    <Content Include="App_Themes\Theme1\weui-btn_disabled.css" />
-    <Content Include="App_Themes\Theme1\weui-btn_global.css" />
-    <Content Include="App_Themes\Theme1\weui-btn_primary.css" />
     <Content Include="App_Themes\Theme1\weui-button.css" />
     <Content Include="App_Themes\Theme1\weui-cell_global.css" />
     <Content Include="App_Themes\Theme1\weui-check.css" />
     <Content Include="App_Themes\Theme1\weui-dialog.css" />
     <Content Include="App_Themes\Theme1\weui-flex.css" />
+    <Content Include="App_Themes\Theme1\weui-form-preview.css" />
     <Content Include="App_Themes\Theme1\weui-form.css" />
     <Content Include="App_Themes\Theme1\weui-icon.css" />
     <Content Include="App_Themes\Theme1\weui-loading.css" />
     <Content Include="App_Themes\Theme1\weui-loadmore.css" />
     <Content Include="App_Themes\Theme1\weui-mask.css" />
+    <Content Include="App_Themes\Theme1\weui-navbar.css" />
     <Content Include="App_Themes\Theme1\weui-tabbar.css" />
     <Content Include="App_Themes\Theme1\weui-toast.css" />
     <Content Include="ErrorPage.aspx" />
+    <Content Include="Fragment\dialog.html" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
     <Content Include="images\wxerror.png" />
     <Content Include="images\wxok.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\registeruser.js" />
     <Content Include="View\Records.aspx" />
     <Content Include="View\ViewGoldCoinRechargeRecords.aspx" />
@@ -97,6 +98,13 @@
     <Content Include="View\ViewStoneBuyRecords.aspx" />
     <Content Include="View\ViewStoneSellRecords.aspx" />
     <Content Include="WeiXinResponse.aspx" />
+    <Content Include="Handler\AuthCodeImageCallbackHandler.ashx" />
+    <Content Include="Handler\CheckAlipayAccount.ashx" />
+    <Content Include="Handler\CheckAlipayRealName.ashx" />
+    <Content Include="Handler\CheckAuthCode.ashx" />
+    <Content Include="Handler\CheckEmail.ashx" />
+    <Content Include="Handler\CheckIDCardNo.ashx" />
+    <Content Include="Handler\CheckUserName.ashx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="RegisterPage.aspx" />
     <Content Include="Scripts\index.js" />
@@ -159,6 +167,27 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalData.cs" />
+    <Compile Include="Handler\AuthCodeImageCallbackHandler.ashx.cs">
+      <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckAlipayAccount.ashx.cs">
+      <DependentUpon>CheckAlipayAccount.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckAlipayRealName.ashx.cs">
+      <DependentUpon>CheckAlipayRealName.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckAuthCode.ashx.cs">
+      <DependentUpon>CheckAuthCode.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckEmail.ashx.cs">
+      <DependentUpon>CheckEmail.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckIDCardNo.ashx.cs">
+      <DependentUpon>CheckIDCardNo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckUserName.ashx.cs">
+      <DependentUpon>CheckUserName.ashx</DependentUpon>
+    </Compile>
     <Compile Include="LoginPage.aspx.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -297,6 +326,7 @@
     <Content Include="View\Site.Master" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="View\Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -305,9 +335,7 @@
     </None>
     <Content Include="WeiXinCore\VerifyToken.ashx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Handler\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
