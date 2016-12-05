@@ -120,23 +120,14 @@
         </div>
     </div>
 <script type="text/javascript">
-
     $(function () {
-        var $iosDialog1 = $('#iosDialog1'),
-            $iosDialog2 = $('#iosDialog2');
-
-        $('#dialogs').on('click', '.weui-dialog__btn', function () {
-            $(this).parents('.js_dialog').fadeOut(200);
+        $("#abtnGetTempStone").on('click', function () {
+            showConfirmDialog("正在收取矿石", "当前可收取150矿石", "收取", "取消", function () {
+                $("#txtTempOutputStones").text("矿石收取成功。");
+            });
         });
 
-        $('#showIOSDialog1').on('click', function () {
-            $iosDialog1.fadeIn(200);
-        });
-        $('#showIOSDialog2').on('click', function () {
-            $iosDialog2.fadeIn(200);
-        });
     });
-
 
     // toast
     $(function () {
