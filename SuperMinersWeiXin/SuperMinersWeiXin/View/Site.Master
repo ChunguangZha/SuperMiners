@@ -20,8 +20,11 @@
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-toast.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-dialog.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-mask.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-form.css" />
     <script src="../Scripts/jquery-3.1.1.js"></script>
-    <script src="../Scripts/index.js"></script>
+    <script src="../Scripts/tabbaroper.js"></script>
+    <script src="../Scripts/toastoper.js"></script>
+    <script src="../Scripts/dialogoper.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -62,11 +65,11 @@
     <div class="js_dialog" id="iosDialog1" style="display: none;">
         <div class="weui-mask"></div>
         <div class="weui-dialog">
-            <div class="weui-dialog__hd"><strong id="title1" class="weui-dialog__title">弹窗标题</strong></div>
-            <div id="msg1" class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+            <div class="weui-dialog__hd"><strong id="dig1_title" class="weui-dialog__title">弹窗标题</strong></div>
+            <div id="dig1_msg" class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
             <div class="weui-dialog__ft">
-                <a href="javascript:;" id="secondAction1" class="weui-dialog__btn weui-dialog__btn_default">辅助操作</a>
-                <a href="javascript:;" id="primaryAction1" class="weui-dialog__btn weui-dialog__btn_primary">主操作</a>
+                <a href="javascript:;" id="dig1_secondAction" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                <a href="javascript:;" id="dig1_primaryAction" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
             </div>
         </div>
     </div>
@@ -75,54 +78,49 @@
     <div class="js_dialog" id="iosDialog2" style="display: none;">
         <div class="weui-mask"></div>
         <div class="weui-dialog">
-            <div class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
+            <div id="dig2_msg" class="weui-dialog__bd">弹窗内容，告知当前状态、信息和解决方法，描述文字尽量控制在三行内</div>
             <div class="weui-dialog__ft">
-                <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">知道了</a>
+                <a href="javascript:;" id="dig2_primaryAction" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
             </div>
         </div>
     </div>
     <!--END dialog2-->
+    <!--BEGIN dialog3-->
+    <div class="js_dialog" id="iosDialog3" style="display:none;">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+            <div class="weui-dialog__hd"><strong id="dig3_title" class="weui-dialog__title">弹窗标题</strong></div>
+            <div id="dig3_msg" class="weui-dialog__bd">
+                <input id="dig3_inputValue" class="weui-input" type="number" value="0" />
+            </div>
+            <div class="weui-dialog__ft">
+                <a href="javascript:;" id="dig3_secondAction" data-id="dig3" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
+                <a href="javascript:;" id="dig3_primaryAction" data-id="dig3" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+            </div>
+        </div>
+    </div>
+    <!--END dialog3-->
 </div>
 
-<script type="text/javascript">
-    $(function () {
-        var $iosDialog1 = $('#iosDialog1'),
-            $iosDialog2 = $('#iosDialog2');
+        
+        <!--BEGIN toast-->
+        <div id="toast" style="display: none;">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
+                <p class="weui-toast__content">已完成</p>
+            </div>
+        </div>
+        <!--end toast-->
 
-        $('#dialogs').on('click', '.weui-dialog__btn', function () {
-            $(this).parents('.js_dialog').fadeOut(200);
-        });
-
-        $('#showIOSDialog1').on('click', function () {
-            $iosDialog1.fadeIn(200);
-
-            if ($handler != 'undefined' && typeof $handler == 'function') {
-                $handler();
-            }
-        });
-        $('#showIOSDialog2').on('click', function () {
-            $iosDialog2.fadeIn(200);
-        });
-    });
-
-    function showConfirmDialog(title, message, primaryAction, secondAction, handler) {
-        var $title = $("#title1");
-        $title.text(title);
-        var $msg = $("#msg1");
-        $msg.text(message);
-        var $primaryAction = $("#primaryAction1");
-        $primaryAction.text(primaryAction);
-        var $secondaryAction = $("#secondAction1");
-        $secondaryAction.text(secondAction);
-
-        var $iosDialog1 = $('#iosDialog1')
-        $iosDialog1.fadeIn(200);
-
-        $handler = handler;
-    }
-
-    var $handler;
-</script>
+        <!-- loading toast -->
+        <div id="loadingToast" style="display:none;">
+            <div class="weui-mask_transparent"></div>
+            <div class="weui-toast">
+                <i class="weui-loading weui-icon_toast"></i>
+                <p class="weui-toast__content">数据加载中</p>
+            </div>
+        </div>
 
     </div>
 </body>

@@ -364,11 +364,15 @@ namespace SuperMinersServerApplication.Controller
 
         public bool WeiXinLoginPlayer(string weixinopenid,  PlayerInfo player)
         {
-            var onlineRunner = this.GetRunnable(player.SimpleInfo.UserName);
+            bool isOK = this.LoginPlayer(player);
+            if (!isOK)
+            {
+                return false;
+            }
+            var onlineRunner = this.GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
             if (onlineRunner == null)
             {
-                this.LoginPlayer(player);
-                onlineRunner = this.GetRunnable(player.SimpleInfo.UserName);
+                return false;
             }
 
             onlineRunner.WeiXinOpenid = weixinopenid;
@@ -415,12 +419,21 @@ namespace SuperMinersServerApplication.Controller
             player.SimpleInfo.LastLoginTime = DateTime.Now;
 
             DBProvider.UserDBProvider.SavePlayerLoginTime(player.SimpleInfo);
-            PlayerRunnable playerrun = new PlayerRunnable(player);
+            PlayerRunnable playerrun = null;
+            if (this._dicOnlinePlayerRuns.ContainsKey(player.SimpleInfo.UserName))
+            {
+                this._dicOnlinePlayerRuns.TryGetValue(player.SimpleInfo.UserName, out playerrun);
+                playerrun.BasePlayer = player;
+            }
+            else
+            {
+                playerrun = new PlayerRunnable(player);
+                this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
+            }
 
             //计算玩家上一次退出，到本次登录时，累计矿工产量。
             decimal tempOutputStone = playerrun.ComputePlayerOfflineStoneOutput();
 
-            this._dicOnlinePlayerRuns[player.SimpleInfo.UserName] = playerrun;
             //LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "] 冻结灵币为：" + player.FortuneInfo.FreezingRMB);
 
             return true;
@@ -435,7 +448,8 @@ namespace SuperMinersServerApplication.Controller
             }
 
             playerrun.LogoutPlayer();
-            this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
+            //为了兼容微信端，退出时不再移除
+            //this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
         }
 
         public MetaData.User.PlayerInfo GetPlayerByWeiXinOpenID(string openid)
@@ -492,6 +506,7 @@ namespace SuperMinersServerApplication.Controller
                 if (seller != null)
                 {
                     playerSellerRun = new PlayerRunnable(seller);
+                    this._dicOnlinePlayerRuns.TryAdd(userName, playerSellerRun);
                 }
             }
 

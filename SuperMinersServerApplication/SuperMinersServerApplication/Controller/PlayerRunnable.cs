@@ -16,7 +16,19 @@ namespace SuperMinersServerApplication.Controller
 {
     public class PlayerRunnable
     {
-        public PlayerInfo BasePlayer { get; private set; }
+        private PlayerInfo _basePlayer = null;
+        public PlayerInfo BasePlayer
+        {
+            get { return _basePlayer; }
+            set
+            {
+                lock (this._lockFortuneAction)
+                {
+                    this._basePlayer = value;
+                }
+            }
+        }
+
         public string WeiXinOpenid { get; set; }
         private object _lockSimpleAction = new object();
         private object _lockFortuneAction = new object();

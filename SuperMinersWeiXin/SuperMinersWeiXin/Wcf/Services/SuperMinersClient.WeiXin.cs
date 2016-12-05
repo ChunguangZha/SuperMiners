@@ -83,6 +83,18 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
+        public PlayerInfo GetPlayerByXLUserName(string xlUserName)
+        {
+            try
+            {
+                return base.Channel.GetPlayerByXLUserName(xlUserName);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public int GatherStones(string userName, decimal stones)
         {
             try

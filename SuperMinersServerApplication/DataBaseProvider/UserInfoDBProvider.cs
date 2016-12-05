@@ -954,12 +954,13 @@ namespace DataBaseProvider
             try
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
-                string cmdText = "insert into playerweixinuseropenid (`UserID`,`WeiXinOpenID`) values (@UserID, @WeiXinOpenID) ;";
+                string cmdText = "insert into playerweixinuseropenid (`UserID`,`WeiXinOpenID`, `BindTime`) values (@UserID, @WeiXinOpenID, @BindTime) ;";
                 myconn.Open();
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = cmdText;
                 mycmd.Parameters.AddWithValue("@UserID", userID);
                 mycmd.Parameters.AddWithValue("@WeiXinOpenID", weixinopenid);
+                mycmd.Parameters.AddWithValue("@BindTime", DateTime.Now);
                 mycmd.ExecuteNonQuery();
 
                 return true;

@@ -228,6 +228,19 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
+        public MetaData.User.PlayerInfo GetPlayerByXLUserName(string xlUserName)
+        {
+            try
+            {
+                return PlayerController.Instance.GetPlayerInfo(xlUserName);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端。ServiceToWeb.WeiXin.GetPlayerByXLUserName Exception xlUserName=" + xlUserName, exc);
+                return null;
+            }
+        }
+
         public int GatherStones(string userName, decimal stones)
         {
             try

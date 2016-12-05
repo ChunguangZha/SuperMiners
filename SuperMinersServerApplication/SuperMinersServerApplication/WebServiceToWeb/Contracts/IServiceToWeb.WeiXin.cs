@@ -38,6 +38,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         PlayerInfo GetPlayerByWeiXinOpenID(string openid);
 
         [OperationContract]
+        PlayerInfo GetPlayerByXLUserName(string xlUserName);
+
+        [OperationContract]
         int GatherStones(string userName, decimal stones);
 
         [OperationContract]

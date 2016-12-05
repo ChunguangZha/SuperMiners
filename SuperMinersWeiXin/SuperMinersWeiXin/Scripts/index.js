@@ -1,36 +1,51 @@
-﻿$(document).ready(function () {
-    $(function () {
-        $('.weui-tabbar__item').on('click', function () {
-            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-            //hideActionSheet();
+﻿
+$(function () {
+
+    //充值金币
+    $("#abtnRechargeGoldCoin").on('click', function () {
+        showInputNumberDialog("请输入充值金币数额", function (inputValue) {
+            //var $xlUserName = $("#ContentPlaceHolder1_txtUserName").val();
+
+            showLoadingToast();
+            $.post("RechargeGoldCoin",
+                { number: inputValue },
+                function (data, status) {
+                    closeLoadingToast();
+                    if (data == "OK") {
+
+                        //$.getJSON("RefreshXLUserInfo", function (result) {
+                        $.get("RefreshXLUserInfo", function (data, status) {
+                            if (data != "") {
+                                var obj = eval("(" + data + ")");
+                                if (obj != 'undefine') {
+                                    $("#ContentPlaceHolder1_txtExp").val(obj.exp);
+                                    $("#ContentPlaceHolder1_txtGoldCoin").val(obj.goldcoin);
+                                    $("#ContentPlaceHolder1_txtMiners").val(obj.minerscount);
+                                    $("#ContentPlaceHolder1_txtRMB").val(obj.rmb);
+                                    $("#ContentPlaceHolder1_txtStones").val(obj.stockofstones);
+                                    $("#ContentPlaceHolder1_txtWorkStonesReservers").val(obj.workstonesreservers);
+                                    $("#ContentPlaceHolder1_txtLastGatherTime").val(obj.lastgathertime);
+
+                                }
+                            }
+                        });
+                        showOKToast();
+                    }
+                    else {
+                        showMessageDialog(data);
+                    }
+                });
         });
     });
 
-    var $pagediv = $(this).find('.root_subpage');
-    var $pageid = $pagediv.data("id");
 
-    var $currenta = $(this).find('a[data-id=' + $pageid + ']');
-    if ($currenta != null) {
-        $currenta.addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
-    }
 
-    //$('#menu_records').on('click', showrecords_submenus);
-    //var $iosMask = $('#iosMask');
-    //$iosMask.on('click', hideActionSheet);
+    $("#abtnGetTempStone").on('click', function () {
+        showInputNumberDialog("正在收取矿石", function (inputValue) {
+            var $txt = $("#ContentPlaceHolder1_txtLastGatherTime");
+
+            $txt.val(inputValue);
+        });
+    });
+
 });
-
-// ios
-function showrecords_submenus() {
-    var $iosActionsheet = $('#iosActionsheet');
-    var $iosMask = $('#iosMask');
-    $iosActionsheet.addClass('weui-actionsheet_toggle');
-    $iosMask.fadeIn(200);
-
-}
-
-function hideActionSheet() {
-    var $iosActionsheet = $('#iosActionsheet');
-    var $iosMask = $('#iosMask');
-    $iosActionsheet.removeClass('weui-actionsheet_toggle');
-    $iosMask.fadeOut(200);
-}

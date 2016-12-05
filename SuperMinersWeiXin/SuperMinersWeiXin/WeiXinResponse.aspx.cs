@@ -87,7 +87,7 @@ namespace SuperMinersWeiXin
 
                             // 登录状态100分钟内有效
                             MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
-                            Session[userinfo.xlUserName] = player;
+                            //Session[userinfo.xlUserName] = player;
 
                             Server.Transfer("View/Index.aspx");
                         }

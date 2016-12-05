@@ -11,5 +11,7 @@ namespace MetaData.User
         public int UserID { get; set; }
 
         public string WeiXinOpenID { get; set; }
+
+        public DateTime BindTime { get; set; }
     }
 }

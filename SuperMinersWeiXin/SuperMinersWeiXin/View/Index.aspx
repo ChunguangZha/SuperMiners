@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="Site.Master" AutoEventWireup="true" CodeBehind="Index.aspx.cs" Inherits="SuperMinersWeiXin.View.Index" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script src="../Scripts/index.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="root_subpage" data-id="index">
@@ -87,10 +88,10 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
-                    <label for="txtTempOutputStones" class="weui-label">可收取矿石</label>
+                    <label for="txtLastGatherTime" class="weui-label">上次收取矿石时间</label>
                 </div>
                 <div class="weui-cell__bd">
-                    <asp:TextBox ID="txtTempOutputStones" runat="server" CssClass="weui-input" ReadOnly="true" TabIndex="8"/>
+                    <asp:TextBox ID="txtLastGatherTime" runat="server" CssClass="weui-input" ReadOnly="true" TabIndex="8"/>
                 </div>
                 <div class="weui-cell__ft">
                     <div>
@@ -100,59 +101,5 @@
             </div>
         </div>
         
-        <!--BEGIN toast-->
-        <div id="toast" style="display: none;">
-            <div class="weui-mask_transparent"></div>
-            <div class="weui-toast">
-                <i class="weui-icon-success-no-circle weui-icon_toast"></i>
-                <p class="weui-toast__content">已完成</p>
-            </div>
-        </div>
-        <!--end toast-->
-
-        <!-- loading toast -->
-        <div id="loadingToast" style="display:none;">
-            <div class="weui-mask_transparent"></div>
-            <div class="weui-toast">
-                <i class="weui-loading weui-icon_toast"></i>
-                <p class="weui-toast__content">数据加载中</p>
-            </div>
-        </div>
     </div>
-<script type="text/javascript">
-    $(function () {
-        $("#abtnGetTempStone").on('click', function () {
-            showConfirmDialog("正在收取矿石", "当前可收取150矿石", "收取", "取消", function () {
-                $("#txtTempOutputStones").text("矿石收取成功。");
-            });
-        });
-
-    });
-
-    // toast
-    $(function () {
-        var $toast = $('#toast');
-        $('#showToast').on('click', function () {
-            if ($toast.css('display') != 'none') return;
-
-            $toast.fadeIn(100);
-            setTimeout(function () {
-                $toast.fadeOut(100);
-            }, 2000);
-        });
-    });
-
-    // loading
-    $(function () {
-        var $loadingToast = $('#loadingToast');
-        $('#showLoadingToast').on('click', function () {
-            if ($loadingToast.css('display') != 'none') return;
-
-            $loadingToast.fadeIn(100);
-            setTimeout(function () {
-                $loadingToast.fadeOut(100);
-            }, 2000);
-        });
-    });
-</script>
 </asp:Content>

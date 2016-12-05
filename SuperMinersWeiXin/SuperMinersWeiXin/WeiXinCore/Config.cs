@@ -22,5 +22,7 @@ namespace SuperMinersWeiXin.WeiXinCore
         public static readonly string SESSIONKEY_WXUSERINFO = "wxuserinfo";
 
         public static readonly string SESSIONKEY_XLUSERINFO = "xluserinfo";
+
+        public static readonly string TestUserOperId = "o3_dVweaHgdE-Fl5jlMpk80E3lIY";
     }
 }

@@ -76,12 +76,12 @@ namespace SuperMinersWeiXin.View {
         protected global::System.Web.UI.WebControls.TextBox txtStones;
         
         /// <summary>
-        /// txtTempOutputStones control.
+        /// txtLastGatherTime control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtTempOutputStones;
+        protected global::System.Web.UI.WebControls.TextBox txtLastGatherTime;
     }
 }

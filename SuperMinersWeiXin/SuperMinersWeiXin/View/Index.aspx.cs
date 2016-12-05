@@ -1,6 +1,7 @@
 ﻿using MetaData.User;
 using SuperMinersWeiXin.Controller;
 using SuperMinersWeiXin.Model;
+using SuperMinersWeiXin.Wcf.Services;
 using SuperMinersWeiXin.WeiXinCore;
 using System;
 using System.Collections.Generic;
@@ -19,26 +20,27 @@ namespace SuperMinersWeiXin.View
             //this.txtUserName.Text = encode;
             if (!this.IsPostBack)
             {
-                //if (!Request.IsAuthenticated)
-                //{
-                //    Response.Redirect("../LoginPage.aspx");
-                //}
-                PlayerInfo player = Session[Context.User.Identity.Name] as PlayerInfo;
+                if (!Request.IsAuthenticated)
+                {
+                    Response.Redirect("LoginPage.aspx");
+                }
+                string username = Context.User.Identity.Name;
+                PlayerInfo player = WcfClient.Instance.GetPlayerByXLUserName(username);
                 if (player != null)
                 {
                     this.txtUserName.Text = player.SimpleInfo.UserName;
-                    this.txtExp.Text = player.FortuneInfo.Exp.ToString("0.00");
-                    this.txtGoldCoin.Text = player.FortuneInfo.GoldCoin.ToString("0.00");
+                    this.txtExp.Text = player.FortuneInfo.Exp.ToString("f2");
+                    this.txtGoldCoin.Text = player.FortuneInfo.GoldCoin.ToString("f2");
                     this.txtMiners.Text = player.FortuneInfo.MinersCount.ToString("f2");
                     this.txtRMB.Text = player.FortuneInfo.RMB.ToString("f2");
                     this.txtStones.Text = player.FortuneInfo.StockOfStones.ToString("f2");
-                    this.txtTempOutputStones.Text = player.FortuneInfo.TempOutputStones.ToString("f2");
+                    this.txtLastGatherTime.Text = player.FortuneInfo.TempOutputStonesStartTime.ToString();
                     this.txtWorkStonesReservers.Text = (player.FortuneInfo.StonesReserves - player.FortuneInfo.FreezingStones).ToString("f2");
 
                 }
                 else
                 {
-                    //Response.Redirect("../LoginPage.aspx");
+                    Response.Redirect("../LoginPage.aspx");
                 }
             }
         }

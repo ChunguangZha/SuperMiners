@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;Test</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -87,8 +87,12 @@
     <Content Include="images\wxok.png" />
     <Content Include="LoginPage.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Scripts\actionsheetoper.js" />
+    <Content Include="Scripts\dialogoper.js" />
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\registeruser.js" />
+    <Content Include="Scripts\tabbaroper.js" />
+    <Content Include="Scripts\toastoper.js" />
     <Content Include="View\Records.aspx" />
     <Content Include="View\ViewGoldCoinRechargeRecords.aspx" />
     <Content Include="View\ViewMineBuyRecords.aspx" />
@@ -105,6 +109,8 @@
     <Content Include="Handler\CheckEmail.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
     <Content Include="Handler\CheckUserName.ashx" />
+    <Content Include="Handler\RechargeGoldCoin.ashx" />
+    <Content Include="Handler\RefreshXLUserInfo.ashx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="RegisterPage.aspx" />
     <Content Include="Scripts\index.js" />
@@ -187,6 +193,12 @@
     </Compile>
     <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\RechargeGoldCoin.ashx.cs">
+      <DependentUpon>RechargeGoldCoin.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\RefreshXLUserInfo.ashx.cs">
+      <DependentUpon>RefreshXLUserInfo.ashx</DependentUpon>
     </Compile>
     <Compile Include="LoginPage.aspx.cs">
       <DependentUpon>LoginPage.aspx</DependentUpon>
@@ -326,7 +338,9 @@
     <Content Include="View\Site.Master" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <Content Include="View\Web.config" />
+    <Content Include="View\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
