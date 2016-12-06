@@ -11,6 +11,14 @@
   border-radius: 3px;
   overflow: hidden;
 }
+.weui-dialog_tips {
+  display: block;
+  position:relative;
+  font-size: 13px;
+  color:red;
+  padding: 0 1.6em 0.4em;
+  top:-0.8em;
+}
 .weui-dialog__hd {
   padding: 1.3em 1.6em 0.5em;
 }

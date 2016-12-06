@@ -95,7 +95,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
-        public int GatherStones(string userName, decimal stones)
+        public GatherTempOutputStoneResult GatherStones(string userName, decimal stones)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
-                return OperResult.RESULTCODE_EXCEPTION;
+                return null;
             }
         }
 
@@ -160,5 +160,17 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
+        public int SellStones(string userName, int stoneCount)
+        {
+            try
+            {
+                return base.Channel.SellStones(userName, stoneCount);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace SuperMinersWeiXin.Handler
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
+            context.Response.Cache.SetNoStore();
             var xlUserName = context.User.Identity.Name;
             if (string.IsNullOrEmpty(xlUserName))
             {
@@ -38,8 +39,8 @@ namespace SuperMinersWeiXin.Handler
             builder.Append("\"goldcoin\":" + player.FortuneInfo.GoldCoin.ToString("f2") + ",");
             builder.Append("\"minerscount\":" + player.FortuneInfo.MinersCount.ToString("f2") + ",");
             builder.Append("\"rmb\":" + player.FortuneInfo.RMB.ToString("f2") + ",");
-            builder.Append("\"stockofstones\":" + player.FortuneInfo.StockOfStones.ToString("f2") + ",");
-            builder.Append("\"workstonesreservers\":" + (player.FortuneInfo.StonesReserves - player.FortuneInfo.FreezingStones).ToString("f2") + ",");
+            builder.Append("\"stockofstones\":" + (player.FortuneInfo.StockOfStones - player.FortuneInfo.FreezingStones).ToString("f2") + ",");
+            builder.Append("\"workstonesreservers\":" + (player.FortuneInfo.StonesReserves - player.FortuneInfo.TotalProducedStonesCount).ToString("f2") + ",");
             builder.Append("\"lastgathertime\":\"" + player.FortuneInfo.TempOutputStonesStartTime.ToString() + "\",");
             builder.Append("}");
             context.Response.Write(builder.ToString());

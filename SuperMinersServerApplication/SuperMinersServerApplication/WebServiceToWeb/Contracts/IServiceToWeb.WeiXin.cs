@@ -41,7 +41,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         PlayerInfo GetPlayerByXLUserName(string xlUserName);
 
         [OperationContract]
-        int GatherStones(string userName, decimal stones);
+        GatherTempOutputStoneResult GatherStones(string userName, decimal stones);
 
         [OperationContract]
         int BuyMiner(string userName, int minersCount);
@@ -54,5 +54,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
 
         [OperationContract]
         int WithdrawRMB(string userName, int getRMBCount);
+
+        [OperationContract]
+        int SellStones(string userName, int stoneCount);
     }
 }

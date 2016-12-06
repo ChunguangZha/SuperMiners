@@ -1,18 +1,16 @@
 ﻿using MetaData;
-using MetaData.User;
 using SuperMinersWeiXin.Wcf.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.SessionState;
 
 namespace SuperMinersWeiXin.Handler
 {
     /// <summary>
-    /// Summary description for RechargeGoldCoin
+    /// Summary description for BuyMinerHandler
     /// </summary>
-    public class RechargeGoldCoin : IHttpHandler, IRequiresSessionState
+    public class BuyMinerHandler : IHttpHandler
     {
 
         public void ProcessRequest(HttpContext context)
@@ -33,21 +31,15 @@ namespace SuperMinersWeiXin.Handler
                 context.Response.Write("登录失败");
                 return;
             }
-            //PlayerInfo player = context.Session[xlUserName] as PlayerInfo;
-            //if (player == null)
-            //{
-            //    context.Response.Write("登录失败");
-            //    return;
-            //}
 
-            var result = WcfClient.Instance.RechargeGoldCoin(xlUserName, number, MetaData.Trade.PayType.RMB);
-            if (result.ResultCode == OperResult.RESULTCODE_TRUE)
+            var result = WcfClient.Instance.BuyMiner(xlUserName, number);
+            if (result == OperResult.RESULTCODE_TRUE)
             {
                 context.Response.Write("OK");
             }
             else
             {
-                context.Response.Write(OperResult.GetMsg(result.ResultCode));
+                context.Response.Write(OperResult.GetMsg(result));
             }
         }
 

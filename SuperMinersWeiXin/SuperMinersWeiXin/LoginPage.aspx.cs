@@ -37,13 +37,25 @@ namespace SuperMinersWeiXin
                     return;
                 }
 #if Test
+                WeiXinUserInfoModel userObj = null;
 
-                WeiXinUserInfoModel userObj = new WeiXinUserInfoModel()
+                if (userName == "小开心")
                 {
-                    openid = Config.TestUserOperId,
-                     nickname = "小查",
-                     
-                };
+                    userObj = new WeiXinUserInfoModel()
+                    {
+                        openid = Config.TestUserOpenId,
+                        nickname = "小查",
+                    };
+                }
+                else if (userName == "nero")
+                {
+                    userObj = new WeiXinUserInfoModel()
+                    {
+                        openid = Config.TestLVSU_UserOpenID,
+                        nickname = "wgflicker",
+                    };
+                }
+
                 Session[Config.SESSIONKEY_WXUSERINFO] = userObj;
                 string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
@@ -63,6 +75,10 @@ namespace SuperMinersWeiXin
                     Session[userinfo.xlUserName] = player;
 
                     Server.Transfer("View/Index.aspx");
+                }
+                else if (result == OperResult.RESULTCODE_EXCEPTION)
+                {
+                    Response.Write("<script>alert('服务器连接失败，请稍候再试')</script>");
                 }
                 else
                 {

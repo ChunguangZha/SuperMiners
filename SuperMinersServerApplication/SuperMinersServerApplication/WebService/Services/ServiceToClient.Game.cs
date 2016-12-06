@@ -192,7 +192,8 @@ namespace SuperMinersServerApplication.WebService.Services
                     {
                         return OperResult.RESULTCODE_LACK_OF_BALANCE;
                     }
-                    return PlayerController.Instance.GatherStones(userName, stones);
+                    GatherTempOutputStoneResult result = PlayerController.Instance.GatherStones(userName, stones);
+                    return result.OperResult;
                 }
                 catch (Exception exc)
                 {

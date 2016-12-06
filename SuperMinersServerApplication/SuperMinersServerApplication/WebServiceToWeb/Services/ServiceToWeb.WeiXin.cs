@@ -1,4 +1,5 @@
-﻿using MetaData;
+﻿using DataBaseProvider;
+using MetaData;
 using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
@@ -241,7 +242,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int GatherStones(string userName, decimal stones)
+        public GatherTempOutputStoneResult GatherStones(string userName, decimal stones)
         {
             try
             {
@@ -250,7 +251,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("微信端。玩家[" + userName + "] 收取矿石异常，矿石数为:" + stones, exc);
-                return 0;
+                return null;
             }
         }
 
@@ -322,6 +323,70 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             {
                 LogHelper.Instance.AddErrorLog("微信端。玩家[" + userName + "] 灵币提现异常，提现灵币为:" + getRMBCount, exc);
                 return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        public int SellStones(string userName, int stoneCount)
+        {
+            if (stoneCount <= 0)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            SellStonesOrder order = null;
+            CustomerMySqlTransaction trans = null;
+            try
+            {
+                trans = MyDBHelper.Instance.CreateTrans();
+                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, stoneCount);
+                if (order.ValueRMB <= 0)
+                {
+                    return OperResult.RESULTCODE_USER_OFFLINE;
+                }
+
+                int result = PlayerController.Instance.SellStones(order, trans);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    trans.Rollback();
+                    return result;
+                }
+                OrderController.Instance.StoneOrderController.AddSellOrder(order, trans);
+                trans.Commit();
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, stoneCount);
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                string errMessage = "微信端。玩家[" + userName + "] 出售矿石异常。";
+                if (order != null)
+                {
+                    errMessage += " 订单信息:" + order.ToString();
+                }
+
+                try
+                {
+                    trans.Rollback();
+                    PlayerController.Instance.RollbackUserFromDB(userName);
+                    if (order != null)
+                    {
+                        OrderController.Instance.StoneOrderController.ClearSellStonesOrder(order);
+                    }
+                    LogHelper.Instance.AddErrorLog(errMessage, exc);
+                }
+                catch (Exception ee)
+                {
+                    LogHelper.Instance.AddErrorLog("A玩家提交矿石销量订单异常。 回滚异常: " + errMessage, ee);
+                }
+
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+            finally
+            {
+                if (trans != null)
+                {
+                    trans.Dispose();
+                }
             }
         }
     }

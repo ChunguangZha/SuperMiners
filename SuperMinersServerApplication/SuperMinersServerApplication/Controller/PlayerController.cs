@@ -711,12 +711,14 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stonesCount">-1表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(string userName, decimal stones)
+        public GatherTempOutputStoneResult GatherStones(string userName, decimal stones)
         {
             PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_USER_OFFLINE;
+                GatherTempOutputStoneResult result = new GatherTempOutputStoneResult();
+                result.OperResult = OperResult.RESULTCODE_USER_OFFLINE;
+                return result;
             }
 
             return playerrun.GatherStones(stones);

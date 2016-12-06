@@ -93,6 +93,9 @@
             <div id="dig3_msg" class="weui-dialog__bd">
                 <input id="dig3_inputValue" class="weui-input" type="number" value="0" />
             </div>
+            <div class="weui-dialog_tips">
+                <span id="dig3_tips"></span>
+            </div>
             <div class="weui-dialog__ft">
                 <a href="javascript:;" id="dig3_secondAction" data-id="dig3" class="weui-dialog__btn weui-dialog__btn_default">取消</a>
                 <a href="javascript:;" id="dig3_primaryAction" data-id="dig3" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>

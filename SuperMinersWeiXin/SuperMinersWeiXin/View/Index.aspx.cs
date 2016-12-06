@@ -29,13 +29,13 @@ namespace SuperMinersWeiXin.View
                 if (player != null)
                 {
                     this.txtUserName.Text = player.SimpleInfo.UserName;
-                    this.txtExp.Text = player.FortuneInfo.Exp.ToString("f2");
+                    this.txtExp.Text = player.FortuneInfo.Exp.ToString("f0");
                     this.txtGoldCoin.Text = player.FortuneInfo.GoldCoin.ToString("f2");
                     this.txtMiners.Text = player.FortuneInfo.MinersCount.ToString("f2");
                     this.txtRMB.Text = player.FortuneInfo.RMB.ToString("f2");
-                    this.txtStones.Text = player.FortuneInfo.StockOfStones.ToString("f2");
+                    this.txtStones.Text = (player.FortuneInfo.StockOfStones - player.FortuneInfo.FreezingStones).ToString("f2");
                     this.txtLastGatherTime.Text = player.FortuneInfo.TempOutputStonesStartTime.ToString();
-                    this.txtWorkStonesReservers.Text = (player.FortuneInfo.StonesReserves - player.FortuneInfo.FreezingStones).ToString("f2");
+                    this.txtWorkStonesReservers.Text = ((player.FortuneInfo.StonesReserves - player.FortuneInfo.TotalProducedStonesCount)).ToString("f2");
 
                 }
                 else

@@ -1,5 +1,6 @@
 ﻿
 var $handler;
+var $inputValueVerfy;
 
 $(function () {
     var $iosDialog1 = $('#iosDialog1'),
@@ -21,12 +22,22 @@ $(function () {
             var szReg = /^([1-9][0-9]*)$/;
             $inputvalue = $ctrInput.val();
             if ($inputvalue == 'undefined' || $inputvalue == '' || !szReg.test($inputvalue)) {
-                $ctrInput.addClass('weui-input_error');
 
+                $ctrInput.addClass('weui-input_error');
                 setTimeout(function () {
                     $ctrInput.removeClass('weui-input_error');
                 }, 1000);
                 return;
+            }
+            if ($inputValueVerfy != 'undefined' && typeof $inputValueVerfy == 'function') {
+                if (!$inputValueVerfy($inputvalue)) {
+
+                    $ctrInput.addClass('weui-input_error');
+                    setTimeout(function () {
+                        $ctrInput.removeClass('weui-input_error');
+                    }, 1000);
+                    return;
+                }
             }
         }
 
@@ -69,12 +80,14 @@ function showMessageDialog(message, handler) {
     $handler = handler;
 }
 
-function showInputNumberDialog(title, handler) {
+function showInputNumberDialog(title, placeholder, handler, inputValueVerfy) {
     var $title = $("#dig3_title");
     $title.text(title);
+    $("#dig3_tips").text(placeholder);
 
     var $iosDialog = $('#iosDialog3')
     $iosDialog.fadeIn(200);
 
     $handler = handler;
+    $inputValueVerfy = inputValueVerfy;
 }

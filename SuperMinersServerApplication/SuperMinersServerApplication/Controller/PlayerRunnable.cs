@@ -166,8 +166,9 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userName"></param>
         /// <param name="stones">-1表示清空临时产出</param>
         /// <returns></returns>
-        public int GatherStones(decimal stones)
+        public GatherTempOutputStoneResult GatherStones(decimal stones)
         {
+            GatherTempOutputStoneResult result = new GatherTempOutputStoneResult();
             int IntTempOutput;
             DateTime stopTime = DateTime.Now;
             if (stones <= 0)
@@ -175,14 +176,16 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
-                return OperResult.RESULTCODE_TRUE;
+                result.OperResult = OperResult.RESULTCODE_TRUE;
+                return result;
             }
 
             if (BasePlayer.FortuneInfo.TempOutputStonesStartTime == null)
             {
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
-                return OperResult.RESULTCODE_FALSE;
+                result.OperResult = OperResult.RESULTCODE_FALSE;
+                return result;
             }
 
             TimeSpan span = stopTime - BasePlayer.FortuneInfo.TempOutputStonesStartTime.Value;
@@ -216,13 +219,19 @@ namespace SuperMinersServerApplication.Controller
                     //将零头从矿石储量中减去！
                     BasePlayer.FortuneInfo.TotalProducedStonesCount += computeTempOutput;
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
+
+                    result.GatherStoneCount = IntTempOutput;
                 }
 
                 PlayerActionController.Instance.AddLog(this.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.GatherStone, IntTempOutput);
-                return OperResult.RESULTCODE_TRUE;
+                result.OperResult = OperResult.RESULTCODE_TRUE;
+
+                return result;
             }
 
-            return OperResult.RESULTCODE_FALSE;
+            result.OperResult = OperResult.RESULTCODE_FALSE;
+            return result;
+
         }
 
         /// <summary>
