@@ -17,13 +17,13 @@
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="txtUserName" class="weui-label">用户名</label></div>
                 <div class="weui-cell__bd">
-                    <asp:TextBox id="txtUserName" runat="server" class="weui-input" MaxLength="15" type="text" placeholder="请输入用户名"/>
+                    <asp:TextBox id="txtUserName" runat="server" CssClass="weui-input" MaxLength="15" TextMode="SingleLine" placeholder="请输入用户名"/>
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label for="txtpassword" class="weui-label">密码</label></div>
                 <div class="weui-cell__bd">
-                    <asp:TextBox id="txtPassword" runat="server" class="weui-input" MaxLength="15" type="password" placeholder="请输入密码"/>
+                    <asp:TextBox id="txtPassword" runat="server" CssClass="weui-input" MaxLength="15" TextMode="password" placeholder="请输入密码"/>
                 </div>
             </div>
         </div>

@@ -26,7 +26,7 @@ namespace SuperMinersWeiXin
                     string code = Request["code"];
                     string state = Request["state"];
 
-                    this.lblMsg.Text = "code:" + code + "; state: " + state;
+                    this.lblMsg.Text = "欢迎进入迅灵矿场";
 
                     LogHelper.Instance.AddInfoLog("code:" + code + "; state: " + state);
 
@@ -89,11 +89,11 @@ namespace SuperMinersWeiXin
                             MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
                             //Session[userinfo.xlUserName] = player;
 
-                            Server.Transfer("View/Index.aspx");
+                            Response.Redirect("View/Index.aspx", false);
                         }
                         else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
                         {
-                            Server.Transfer("LoginPage.aspx");
+                            Response.Redirect("LoginPage.aspx", false);
                         }
                         else
                         {

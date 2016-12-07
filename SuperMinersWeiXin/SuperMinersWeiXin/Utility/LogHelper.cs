@@ -29,6 +29,7 @@ namespace SuperMinersWeiXin.Utility
 
         string LogFilePath = "";
         bool InitSuceed = false;
+        object _lockWrite = new object();
 
         public void Init()
         {
@@ -57,38 +58,54 @@ namespace SuperMinersWeiXin.Utility
             }
         }
 
+        public FileStream OpenLogFileStream()
+        {
+            DateTime timenow = DateTime.Now;
+            string fileName = timenow.ToString("yyyMMdd");
+            FileStream stream = null;
+            string path = HttpRuntime.AppDomainAppPath + "Logs" + "\\LogFile_" + fileName + ".txt";
+            stream = File.Open(path, FileMode.Append, FileAccess.Write);
+            return stream;
+        }
+
         public void AddErrorLog(string log, Exception exception)
         {
             if (InitSuceed)
             {
-                FileStream stream = null;
-                try
+                lock (_lockWrite)
                 {
-                    StringBuilder builder = new StringBuilder();
-                    builder.Append("Error:  [" + DateTime.Now.ToString() + "] ---- ");
-                    builder.Append("Log: " + log);
-                    builder.AppendLine();
-                    builder.Append("Exc.Message: " + exception.Message);
-                    builder.AppendLine("Exc.Stack: " + exception.StackTrace);
-                    builder.AppendLine("-----------------------------------------------------");
+                    FileStream stream = null;
+                    try
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append("Error:  [" + DateTime.Now.ToString() + "] ---- ");
+                        builder.Append("Log: " + log);
+                        builder.AppendLine();
+                        builder.Append("Exc.Message: " + exception.Message);
+                        builder.AppendLine("Exc.Stack: " + exception.StackTrace);
+                        builder.AppendLine("-----------------------------------------------------");
 
-                    stream = File.OpenWrite(this.LogFilePath);
-                    if (stream != null)
-                    {
-                        StreamWriter writer = new StreamWriter(stream);
-                        writer.WriteLine(builder.ToString());
+                        stream = OpenLogFileStream();
+                        if (stream != null)
+                        {
+                            stream.Position = stream.Length;
+                            StreamWriter writer = new StreamWriter(stream, Encoding.Unicode);
+                            
+                            writer.WriteLine(builder.ToString());
+                            writer.Flush();
+                        }
                     }
-                }
-                catch (Exception exc)
-                {
-                    Console.WriteLine(exc);
-                }
-                finally
-                {
-                    if (stream != null)
+                    catch (Exception exc)
                     {
-                        stream.Close();
-                        stream.Dispose();
+                        Console.WriteLine(exc);
+                    }
+                    finally
+                    {
+                        if (stream != null)
+                        {
+                            stream.Close();
+                            stream.Dispose();
+                        }
                     }
                 }
             }
@@ -98,34 +115,37 @@ namespace SuperMinersWeiXin.Utility
         {
             if (InitSuceed)
             {
-                FileStream stream = null;
-                try
+                lock (_lockWrite)
                 {
-                    StringBuilder builder = new StringBuilder();
-                    builder.Append("Info:  [" + DateTime.Now.ToString() + "] ---- ");
-                    builder.Append("Log: " + log);
-                    builder.AppendLine("-----------------------------------------------------");
+                    FileStream stream = null;
+                    try
+                    {
+                        StringBuilder builder = new StringBuilder();
+                        builder.Append("Info:  [" + DateTime.Now.ToString() + "] ---- ");
+                        builder.Append("Log: " + log);
+                        builder.AppendLine("-----------------------------------------------------");
 
-                    stream = File.Open(this.LogFilePath, FileMode.Append, FileAccess.Write);
-                    if (stream != null)
-                    {
-                        StreamWriter writer = new StreamWriter(stream, Encoding.Unicode);
-                        writer.WriteLine(builder.ToString());
-                        writer.Flush();
-                        writer.Close();
-                        writer.Dispose();
+                        stream = OpenLogFileStream();
+                        if (stream != null)
+                        {
+                            StreamWriter writer = new StreamWriter(stream, Encoding.Unicode);
+                            writer.WriteLine(builder.ToString());
+                            writer.Flush();
+                            writer.Close();
+                            writer.Dispose();
+                        }
                     }
-                }
-                catch (Exception exc)
-                {
-                    Console.WriteLine(exc);
-                }
-                finally
-                {
-                    if (stream != null)
+                    catch (Exception exc)
                     {
-                        stream.Close();
-                        stream.Dispose();
+                        Console.WriteLine(exc);
+                    }
+                    finally
+                    {
+                        if (stream != null)
+                        {
+                            stream.Close();
+                            stream.Dispose();
+                        }
                     }
                 }
             }

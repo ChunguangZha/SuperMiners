@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;Test</DefineConstants>
+    <DefineConstants>TRACE;-Test</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -129,8 +129,9 @@
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="WeiXinCore\createMenu.aspx" />
+    <Content Include="createMenu.aspx" />
     <Content Include="WeiXinCore\menu.txt" />
+    <Content Include="WeiXinCore\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
@@ -336,11 +337,11 @@
     <Compile Include="Wcf\Services\SuperMinersClient.WeiXin.cs" />
     <Compile Include="Wcf\Services\WcfClient.cs" />
     <Compile Include="WeiXinCore\Config.cs" />
-    <Compile Include="WeiXinCore\createMenu.aspx.cs">
+    <Compile Include="createMenu.aspx.cs">
       <DependentUpon>createMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="WeiXinCore\createMenu.aspx.designer.cs">
+    <Compile Include="createMenu.aspx.designer.cs">
       <DependentUpon>createMenu.aspx</DependentUpon>
     </Compile>
     <Compile Include="WeiXinCore\HttpHandler.cs" />

@@ -44,7 +44,7 @@ namespace SuperMinersWeiXin.Controller
             string baseurl = "https://api.weixin.qq.com/sns/oauth2/access_token?";
             string url = baseurl + "appid=" + Config.appid + "&secret=" + Config.appSecret + "&code=" + code + "&grant_type=authorization_code";
 
-            LogHelper.Instance.AddInfoLog("Start AsynGetUserAccessToken");
+            LogHelper.Instance.AddInfoLog("Start AsynGetUserAccessToken code: " + code);
             return HttpHandler.SyncGet<AuthorizeResponseModel>(url);
             //if (result.Exception != null)
             //{

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="createMenu.aspx.cs" Inherits="SuperMinersWeiXin.WeiXinCore.createMenu" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="createMenu.aspx.cs" Inherits="SuperMinersWeiXin.createMenu" %>
 
 <!DOCTYPE html>
 

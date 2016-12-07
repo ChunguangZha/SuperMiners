@@ -55,22 +55,22 @@ $(function () {
     $("#abtnGetTempStone").on('click', function () {
         showLoadingToast();
         $.post("GatherStoneHandler", {}, function (data, status) {
-            //closeLoadingToast();
+            closeLoadingToast();
 
-            //if (data.length < 3) {
-            //    showMessageDialog(data);
-            //    return;
-            //}
+            if (data.length < 3) {
+                showMessageDialog(data);
+                return;
+            }
             
-            //var dataHeader = data.substring(0, 2);
-            //if (dataHeader == "OK") {
-            //    var dataContent = data.substring(3, data.length);
-            //    refreshUserInfo();
-            //    showMessageDialog('成功收取' + dataContent + '块矿石');
-            //}
-            //else {
-            //    showMessageDialog(data);
-            //}
+            var dataHeader = data.substring(0, 2);
+            if (dataHeader == "OK") {
+                var dataContent = data.substring(3, data.length);
+                refreshUserInfo();
+                showMessageDialog('成功收取' + dataContent + '块矿石');
+            }
+            else {
+                showMessageDialog(data);
+            }
         });
     });
 

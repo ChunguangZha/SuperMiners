@@ -17,7 +17,8 @@ namespace SuperMinersWeiXin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string test = SuperMinersWeiXin.Controller.WeiXinHandler.CreateGetCodeUrl();
+            Console.WriteLine(test);
         }
 
         protected void btnBind_Click(object sender, EventArgs e)
@@ -74,7 +75,8 @@ namespace SuperMinersWeiXin
                     MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
                     Session[userinfo.xlUserName] = player;
 
-                    Server.Transfer("View/Index.aspx");
+                    Response.Redirect("View/Index.aspx", false);
+                    //Server.Execute("View/Index.aspx");
                 }
                 else if (result == OperResult.RESULTCODE_EXCEPTION)
                 {
@@ -117,7 +119,7 @@ namespace SuperMinersWeiXin
                         MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
                         Session[userinfo.xlUserName] = player;
 
-                        Response.Redirect("View/Index.aspx");
+                        Response.Redirect("View/Index.aspx", false);
                     }
                     else
                     {
