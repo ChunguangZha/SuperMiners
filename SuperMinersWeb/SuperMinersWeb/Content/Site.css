@@ -326,6 +326,36 @@ ul#menu {
             color:red;
             background:none;
         }
+        
+#rightArrowWeiXinImg {
+    width: 50px;
+    height: 45px;
+    background: url(../images/online_arrow.jpg) no-repeat;
+    background-position:-50px 0;
+    position: fixed;
+    top: 100px;
+    left: 256px;
+    z-index: 999;
+}
+    #rightArrowWeiXinImg a {
+        display: block;
+        height: 45px;
+        color:blue;
+    }
+        #rightArrowWeiXinImg a:hover {
+            color:red;
+            background:none;
+        }
+
+        
+#floatLeftDiv {
+    width: 256px;
+    background: #fff;
+    position: fixed;
+    top: 100px;
+    left: 0;
+    z-index: 999;
+}
 /* Home Page
 ----------------------------------------------------------*/
 

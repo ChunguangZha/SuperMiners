@@ -242,16 +242,28 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public SellStonesOrder[] GetSellOrders()
+        /// <summary>
+        /// -1表示 全部
+        /// </summary>
+        /// <param name="orderState"></param>
+        /// <returns></returns>
+        public SellStonesOrder[] GetSellOrders(int orderState)
         {
             List<SellStonesOrder> orders = new List<SellStonesOrder>();
             lock (_lockListSellOrders)
             {
                 foreach (var item in dicSellOrders.Values)
                 {
-                    //if (item.OrderState != SellOrderState.Finish)
+                    if (orderState <= 0)
                     {
                         orders.Add(item.GetSellOrder());
+                    }
+                    else
+                    {
+                        if (item.OrderState != (SellOrderState)orderState)
+                        {
+                            orders.Add(item.GetSellOrder());
+                        }
                     }
                 }
             }

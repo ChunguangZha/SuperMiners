@@ -194,7 +194,7 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    return OrderController.Instance.StoneOrderController.GetSellOrders();
+                    return OrderController.Instance.StoneOrderController.GetSellOrders(-1);
                 }
                 catch (Exception exc)
                 {

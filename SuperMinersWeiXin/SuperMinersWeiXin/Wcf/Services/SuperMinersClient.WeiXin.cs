@@ -172,5 +172,18 @@ namespace SuperMinersWeiXin.Wcf.Services
                 return OperResult.RESULTCODE_EXCEPTION;
             }
         }
+
+        public SellStonesOrder[] GetAllNotFinishedSellOrders(string userName)
+        {
+            try
+            {
+                return base.Channel.GetAllNotFinishedSellOrders(userName);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+        }
     }
 }

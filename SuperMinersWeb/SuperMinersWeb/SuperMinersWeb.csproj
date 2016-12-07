@@ -149,6 +149,7 @@
     <Content Include="Images\online_arrow.jpg" />
     <Content Include="Images\online_botbg.jpg" />
     <Content Include="Images\qq.png" />
+    <Content Include="Images\weixin.jpg" />
     <Content Include="Images\yes.png" />
     <Content Include="Scripts\float-contact-us.js" />
     <Content Include="Scripts\TrafficAnalysis.js" />

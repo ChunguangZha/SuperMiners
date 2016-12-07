@@ -48,6 +48,10 @@
                 </div>
                 <div class="floatDbg"></div>
             </div>
+            <div id="rightArrowWeiXinImg"><a href="javascript:;" title="微信版二维码"></a></div>            
+            <div id="floatLeftDiv">
+                <img src="Images/weixin.jpg" width="256" height="256"/>
+            </div>
             <div class="content-paper">
             </div>
             <div class="main-content clear-fix">

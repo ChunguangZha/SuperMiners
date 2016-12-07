@@ -57,5 +57,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
 
         [OperationContract]
         int SellStones(string userName, int stoneCount);
+
+        [OperationContract]
+        SellStonesOrder[] GetAllNotFinishedSellOrders(string userName);
     }
 }

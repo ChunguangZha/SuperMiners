@@ -389,5 +389,19 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 }
             }
         }
+
+        public SellStonesOrder[] GetAllNotFinishedSellOrders(string userName)
+        {
+            try
+            {
+                return OrderController.Instance.StoneOrderController.GetSellOrders((int)SellOrderState.Wait);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有未完成的矿石订单异常", exc);
+                return null;
+            }
+        }
+
     }
 }
