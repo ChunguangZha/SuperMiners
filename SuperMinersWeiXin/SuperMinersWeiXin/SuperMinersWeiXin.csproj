@@ -91,6 +91,7 @@
     <Content Include="Scripts\dialogoper.js" />
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\registeruser.js" />
+    <Content Include="Scripts\stonemarket.js" />
     <Content Include="Scripts\tabbaroper.js" />
     <Content Include="Scripts\toastoper.js" />
     <Content Include="View\Records.aspx" />

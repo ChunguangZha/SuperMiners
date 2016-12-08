@@ -17,6 +17,7 @@ namespace SuperMinersWeiXin.View
             {
                 this.SellStoneOrderListSource.SelectParameters.Add(new Parameter("userName", System.Data.DbType.String, Context.User.Identity.Name));
             }
+
         }
 
     }

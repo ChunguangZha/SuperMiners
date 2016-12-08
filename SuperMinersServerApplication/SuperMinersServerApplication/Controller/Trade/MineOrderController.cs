@@ -98,11 +98,11 @@ namespace SuperMinersServerApplication.Controller
                 {
                     record.PayTime = DateTime.Now;
                     DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record, myTrans);
+                    PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.BuyMine, (int)record.GainMinesCount,
+                        "增加了 " + record.GainStonesReserves.ToString() + " 的矿石储量");
                 }
 
                 myTrans.Commit();
-                PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.BuyMine, (int)record.GainMinesCount,
-                    "增加了 " + record.GainStonesReserves.ToString() + " 的矿石储量");
             }
             catch (Exception exc)
             {

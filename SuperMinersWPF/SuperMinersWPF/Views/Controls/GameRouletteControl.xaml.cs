@@ -1,4 +1,5 @@
-﻿using MetaData.Game.Roulette;
+﻿using MetaData;
+using MetaData.Game.Roulette;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views.Windows;
@@ -25,6 +26,8 @@ namespace SuperMinersWPF.Views.Controls
     /// </summary>
     public partial class GameRouletteControl : UserControl
     {
+        private const int NoneAwardItemIndex = 10;
+
         private SynchronizationContext _syn;
 
         Thread _thrRoulette = null;
@@ -108,7 +111,7 @@ namespace SuperMinersWPF.Views.Controls
 
         private int FindAwardIDIndex(int awardItemID)
         {
-            int index = 11;
+            int index = NoneAwardItemIndex;
             for (int i = 0; i < App.GameRouletteVMObject.ListAwardItems.Count; i++)
             {
                 if (App.GameRouletteVMObject.ListAwardItems[i].ID == awardItemID)
@@ -128,6 +131,11 @@ namespace SuperMinersWPF.Views.Controls
                 if (e.Error != null || e.Result == null)
                 {
                     MyMessageBox.ShowInfo("连接服务器失败。");
+                    return;
+                }
+                if (e.Result.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo(OperResult.GetMsg(e.Result.OperResultCode) + ", 无法抽奖。");
                     return;
                 }
 

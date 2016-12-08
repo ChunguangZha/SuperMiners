@@ -25,9 +25,11 @@ namespace SuperMinersWeiXin.Controller
                 return null;
             }
 
+            DateTime time = DateTime.Now;
             SellStoneOrderUIModel[] uiOrdersList = new SellStoneOrderUIModel[ordersList.Length];
             for (int i = 0; i < ordersList.Length; i++)
             {
+                ordersList[i].SellerUserName += time.ToString("HHmmss");
                 uiOrdersList[i] = new SellStoneOrderUIModel(ordersList[i]);
             }
 

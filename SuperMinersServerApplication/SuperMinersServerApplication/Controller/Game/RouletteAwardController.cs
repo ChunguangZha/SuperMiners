@@ -375,7 +375,7 @@ namespace SuperMinersServerApplication.Controller.Game
                         return result;
                     }
                 }
-                
+
                 var winAwardItem = ComputeWinAwardItem();
 
                 this._currentRound.WinAwardSumYuan += (decimal)winAwardItem.ValueMoneyYuan;
@@ -389,7 +389,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 _tempRouletteWinnerRecord.Add(userName, winAwardItem.ID);
             }
 
-            LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，开始幸运大转盘抽奖。第" + this._currentRound .ID + "轮奖池累计：" + this._currentRound.AwardPoolSumStone + "；盈利累计：" + this._currentRound.WinAwardSumYuan);
+            LogHelper.Instance.AddInfoLog("玩家[" + userName + "]，开始幸运大转盘抽奖" + result.WinAwardItemID + "。第" + this._currentRound.ID + "轮奖池累计：" + this._currentRound.AwardPoolSumStone + "；盈利累计：" + this._currentRound.WinAwardSumYuan);
 
             return result;
         }

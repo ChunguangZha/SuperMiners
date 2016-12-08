@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="Site.Master" AutoEventWireup="true" CodeBehind="StoneMarket.aspx.cs" Inherits="SuperMinersWeiXin.View.StoneMarket" %>
+<%@ OutputCache NoStore="true" Duration="1" VaryByParam="None" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-form-preview.css" />
+    <script src="../Scripts/stonemarket.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="root_subpage" data-id="stonesmarket">
@@ -33,7 +35,8 @@
                         </div>
                     </div>
                     <div class="weui-form-preview__ft">
-                        <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="javascript:">购买</a>
+                        <a class="btn_buystone weui-form-preview__btn weui-form-preview__btn_primary"
+                             data-orderid="<%# Eval("OrderNumber") %>" data-rmb="<%# Eval("ValueRMB") %>">购买</a>
                     </div>
                 </div>
             </ItemTemplate>
