@@ -1,7 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/View/Site.Master" AutoEventWireup="true" CodeBehind="Records.aspx.cs" Inherits="SuperMinersWeiXin.View.Records" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-navbar.css" />
-    <script src="../Scripts/iscroll.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="root_subpage" data-id="records">

@@ -15,28 +15,9 @@ namespace SuperMinersWeiXin.View
         {
             if (!IsPostBack)
             {
+                this.SellStoneOrderListSource.SelectParameters.Add(new Parameter("userName", System.Data.DbType.String, Context.User.Identity.Name));
             }
         }
 
-        public static MetaData.Trade.SellStonesOrder[] GetNotFinishedSellorders()
-        {
-            if (!WcfClient.IsReady)
-            {
-                return null;
-            }
-
-            string userName = Context.User.Identity.Name;
-            return WcfClient.Instance.GetAllNotFinishedSellOrders(userName);
-        }
-
-        public void Insert(MetaData.Trade.SellStonesOrder order)
-        {
-
-        }
-
-        public SuperMinersWeiXin.App_Code.TestModel[] GetModels()
-        {
-            return new App_Code.TestModel[] { };
-        }
     }
 }

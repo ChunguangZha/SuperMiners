@@ -21,6 +21,8 @@
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-dialog.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-mask.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-form.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-navbar.css" />
+    <script src="../Scripts/iscroll.js"></script>
     <script src="../Scripts/jquery-3.1.1.js"></script>
     <script src="../Scripts/tabbaroper.js"></script>
     <script src="../Scripts/toastoper.js"></script>

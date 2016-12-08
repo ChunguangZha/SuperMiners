@@ -1,4 +1,21 @@
 ﻿body {
     overflow:hidden;
-    
+}
+
+.page .page__bd
+{
+	margin:0;
+	top:0;
+	left:0;
+}
+
+.listview
+{
+	overflow-y:auto;
+	position:fixed;
+	width:100%;
+	top:0;
+	left:0;
+	bottom:80px;
+	background-color:red;
 }

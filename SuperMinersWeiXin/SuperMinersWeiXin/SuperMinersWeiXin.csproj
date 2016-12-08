@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="App_Code\TestModel.cs" />
     <Compile Include="Controller\MainController.cs" />
+    <Compile Include="Controller\SellStoneOrderController.cs" />
     <Compile Include="Controller\TokenController.cs" />
     <Compile Include="Controller\WeiXinHandler.cs" />
     <Compile Include="Core\MyFormsPrincipal.cs" />

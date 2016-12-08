@@ -37,7 +37,7 @@ namespace SuperMinersWeiXin.Model
         /// </summary>
         public string SellerUserName
         {
-            get { return this.ParentObject.OrderNumber; }
+            get { return this.ParentObject.SellerUserName; }
         }
 
         /// <summary>
