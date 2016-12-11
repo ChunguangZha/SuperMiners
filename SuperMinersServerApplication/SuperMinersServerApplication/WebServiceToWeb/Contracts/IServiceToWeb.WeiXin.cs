@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -59,6 +60,27 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         int SellStones(string userName, int stoneCount);
 
         [OperationContract]
+        MinesBuyRecord[] GetBuyMineFinishedRecordList(string userName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        MinersBuyRecord[] GetBuyMinerFinishedRecordList(string userName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string userName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        WithdrawRMBRecord[] GetWithdrawRMBRecordList(string userName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        SellStonesOrder[] GetUserSellStoneOrders(string sellerUserName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        BuyStonesOrder[] GetUserBuyStoneOrders(string buyUserName, int pageItemCount, int pageIndex);
+
+        [OperationContract]
         SellStonesOrder[] GetAllNotFinishedSellOrders(string userName);
+
+        [OperationContract]
+        int BuyStone(string userName, string stoneOrderNumber);
     }
 }

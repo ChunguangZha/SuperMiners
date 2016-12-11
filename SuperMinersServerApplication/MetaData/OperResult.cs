@@ -125,6 +125,11 @@ namespace MetaData
         public const int RESULTCODE_ORDER_ISNOT_EXCEPTION = 605;
 
         /// <summary>
+        /// 矿石订单已经被其它玩家锁定
+        /// </summary>
+        public const int RESULTCODE_ORDER_BE_LOCKED_BY_OTHER = 606;
+
+        /// <summary>
         /// 可销售的矿石不足
         /// </summary>
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
@@ -166,6 +171,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WEIXIN_USERBINDEDBYOTHER, "该迅灵用户已经被其它微信用户绑定");
             _resultCode_Msg.Add(RESULTCODE_USER_IS_LOCKED, "该账户已经被管理员锁定");
             _resultCode_Msg.Add(RESULTCODE_WEXIN_REGISTER_OPENID_EXIST, "当前微信号已经注册过迅灵账户，无法再注册");
+            _resultCode_Msg.Add(RESULTCODE_ORDER_BE_LOCKED_BY_OTHER, "该订单已经被其它玩家抢走");
         }
 
         public static string GetMsg(int resultCode)

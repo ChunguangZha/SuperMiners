@@ -22,6 +22,8 @@
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-mask.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-form.css" />
     <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/weui-navbar.css" />
+    <link type="text/css" rel="stylesheet" href="../App_Themes/Theme1/myui-toprefresh.css" />
+    <script src="../Scripts/stringformat.js"></script>
     <script src="../Scripts/iscroll.js"></script>
     <script src="../Scripts/jquery-3.1.1.js"></script>
     <script src="../Scripts/tabbaroper.js"></script>
@@ -50,7 +52,7 @@
                         <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                         <p class="weui-tabbar__label">矿石市场</p>
                     </a>
-                    <a id="menu_records" data-id="records" href="/View/Records.aspx" class="weui-tabbar__item">
+                    <a id="menu_records" data-id="records" href="Records.aspx" class="weui-tabbar__item">
                         <img src="../images/icon_tabbar.png" alt="" class="weui-tabbar__icon"/>
                         <p class="weui-tabbar__label">交易记录</p>
                     </a>

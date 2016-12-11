@@ -188,7 +188,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public LockSellStonesOrder LockSellStone(string userName, string orderNumber)
+        public LockSellStonesOrder LockSellStone(string buyerUserName, string orderNumber)
         {
             lock (_lockListSellOrders)
             {
@@ -199,7 +199,11 @@ namespace SuperMinersServerApplication.Controller
                     {
                         return null;
                     }
-                    return runnable.Lock(userName);
+                    if (runnable.GetSellOrder().SellerUserName == buyerUserName)
+                    {
+                        return null;
+                    }
+                    return runnable.Lock(buyerUserName);
                 }
 
                 return null;
@@ -260,7 +264,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     else
                     {
-                        if (item.OrderState != (SellOrderState)orderState)
+                        if (item.OrderState == (SellOrderState)orderState)
                         {
                             orders.Add(item.GetSellOrder());
                         }
@@ -268,11 +272,14 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
 
-            lock (_lockListFinishedOrders)
+            if (orderState <= 0 || orderState == (int)SellOrderState.Finish)
             {
-                foreach (var item in _listFinishedOrders)
+                lock (_lockListFinishedOrders)
                 {
-                    orders.Add(item);
+                    foreach (var item in _listFinishedOrders)
+                    {
+                        orders.Add(item);
+                    }
                 }
             }
             return orders.ToArray();
@@ -424,39 +431,18 @@ namespace SuperMinersServerApplication.Controller
             return isOK;
         }
 
-        /// <summary>
-        /// 此方法只是订单处理，不关心支付方式
-        /// </summary>
-        /// <param name="orderNumber"></param>
-        /// <param name="buyerUserName"></param>
-        /// <param name="rmb"></param>
-        /// <param name="trans"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
-        public BuyStonesOrder Pay(string orderNumber, string buyerUserName, decimal rmb, CustomerMySqlTransaction trans, ref int result)
-        {
-            StoneOrderRunnable runnable = FindOrderByOrderName(orderNumber);
-            if (runnable == null)
-            {
-                result = OperResult.RESULTCODE_ORDER_NOT_EXIST;
-                LogHelper.Instance.AddInfoLog("支付订单时错误，没有找到订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
-            if (!runnable.CheckBuyerName(buyerUserName))
-            {
-                result = OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
-                LogHelper.Instance.AddInfoLog("支付订单时错误，此订单不是被当前玩家锁定。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
-            if (rmb < runnable.ValueRMB)
-            {
-                result = OperResult.RESULTCODE_PARAM_INVALID;
-                LogHelper.Instance.AddInfoLog("支付订单时错误，玩家支付的灵币不足，无法完成订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
-                return null;
-            }
-
-            return runnable.Pay(trans);
-        }
+        ///// <summary>
+        ///// 此方法只是订单处理，不关心支付方式
+        ///// </summary>
+        ///// <param name="orderNumber"></param>
+        ///// <param name="buyerUserName"></param>
+        ///// <param name="rmb"></param>
+        ///// <param name="trans"></param>
+        ///// <param name="result"></param>
+        ///// <returns></returns>
+        //public BuyStonesOrder Pay(string orderNumber, string buyerUserName, decimal rmb, CustomerMySqlTransaction trans, ref int result)
+        //{
+        //}
 
         private StoneOrderRunnable FindOrderByOrderName(string orderNumber)
         {
@@ -502,16 +488,36 @@ namespace SuperMinersServerApplication.Controller
             try
             {
                 //订单处理
-                var buyOrder = this.Pay(orderNumber, buyerUserName, rmb, trans, ref result);
-                if (buyOrder == null)
+                StoneOrderRunnable runnable = FindOrderByOrderName(orderNumber);
+                if (runnable == null)
                 {
-                    trans.Rollback();
+                    result = OperResult.RESULTCODE_ORDER_NOT_EXIST;
+                    LogHelper.Instance.AddInfoLog("支付订单时错误，没有找到订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
                     return result;
                 }
 
+                result = runnable.CheckStoneOrder_BeforeBuy(orderNumber, buyerUserName, rmb);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
+
+                result = PlayerController.Instance.CheckSellStone_BeforeBuy(buyerUserName, orderNumber, rmb);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
+
+                var buyOrder = runnable.Pay(trans);
+                if (buyOrder == null)
+                {
+                    trans.Rollback();
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
                 //更新用户信息
-                bool isOK = PlayerController.Instance.PayStoneOrder(false, buyerUserName, buyOrder, trans);
-                if (!isOK)
+                result = PlayerController.Instance.PayStoneOrder(false, buyerUserName, buyOrder, trans);
+                if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
                     result = OperResult.RESULTCODE_FALSE;
@@ -644,37 +650,30 @@ namespace SuperMinersServerApplication.Controller
                 LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调找不到订单。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
-            if (alipayRecord.value_rmb < runnable.ValueRMB)
+            int result = runnable.CheckStoneOrder_BeforeBuy(alipayRecord.out_trade_no, alipayRecord.user_name, runnable.ValueRMB);
+            if (result != OperResult.RESULTCODE_TRUE)
             {
-                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
                 return false;
             }
-
-            if (alipayRecord.user_name != runnable.GetLockedOrder().LockedByUserName)
-            {
-                LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石失败，回调支付宝回传玩家用户名和锁定订单的用户名[" + runnable.ValueRMB + "] 不匹配。支付宝信息：" + alipayRecord.ToString());
-                return false;
-            }
-
-            var lockOrder = runnable.GetLockedOrder();
-
-            int result = OperResult.RESULTCODE_FALSE;
+            
+            result = OperResult.RESULTCODE_FALSE;
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
                 DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, trans);
 
-                //订单处理
-                var buyOrder = this.Pay(runnable.OrderNumber, lockOrder.LockedByUserName, lockOrder.StonesOrder.ValueRMB, trans, ref result);
+                var buyOrder = runnable.Pay(trans);
                 if (buyOrder == null)
                 {
                     trans.Rollback();
                     return false;
                 }
 
+                var lockOrder = runnable.GetLockedOrder();
+
                 //更新用户信息
-                bool isOK = PlayerController.Instance.PayStoneOrder(true, lockOrder.LockedByUserName, buyOrder, trans);
-                if (!isOK)
+                result = PlayerController.Instance.PayStoneOrder(true, lockOrder.LockedByUserName, buyOrder, trans);
+                if (runnable.ValueRMB != null)
                 {
                     trans.Rollback();
                     result = OperResult.RESULTCODE_FALSE;

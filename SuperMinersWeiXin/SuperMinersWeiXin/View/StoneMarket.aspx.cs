@@ -13,10 +13,10 @@ namespace SuperMinersWeiXin.View
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                this.SellStoneOrderListSource.SelectParameters.Add(new Parameter("userName", System.Data.DbType.String, Context.User.Identity.Name));
-            }
+            //if (!IsPostBack)
+            //{
+            //    this.SellStoneOrderListSource.SelectParameters.Add(new Parameter("userName", System.Data.DbType.String, Context.User.Identity.Name));
+            //}
 
         }
 

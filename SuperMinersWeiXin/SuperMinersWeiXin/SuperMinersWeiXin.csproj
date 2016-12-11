@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;Test</DefineConstants>
+    <DefineConstants>TRACE;-Test</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -61,6 +61,7 @@
   <ItemGroup>
     <Content Include="App_Themes\Theme1\example.css" />
     <Content Include="App_Themes\Theme1\myglobal.css" />
+    <Content Include="App_Themes\Theme1\myui-toprefresh.css" />
     <Content Include="App_Themes\Theme1\Style.css" />
     <Content Include="App_Themes\Theme1\weui-access.css" />
     <Content Include="App_Themes\Theme1\weui-actionsheet.css" />
@@ -92,8 +93,12 @@
     <Content Include="Scripts\iscroll.js" />
     <Content Include="Scripts\registeruser.js" />
     <Content Include="Scripts\stonemarket.js" />
+    <Content Include="Scripts\stringformat.js" />
     <Content Include="Scripts\tabbaroper.js" />
     <Content Include="Scripts\toastoper.js" />
+    <Content Include="Scripts\viewminebuyrecords.js" />
+    <Content Include="Scripts\viewminerbuyrecords.js" />
+    <Content Include="Scripts\viewrecords.js" />
     <Content Include="View\Records.aspx" />
     <Content Include="View\ViewGoldCoinRechargeRecords.aspx" />
     <Content Include="View\ViewMineBuyRecords.aspx" />
@@ -116,6 +121,15 @@
     <Content Include="Handler\BuyMinerHandler.ashx" />
     <Content Include="Handler\SellStoneHandler.ashx" />
     <Content Include="Handler\GatherStoneHandler.ashx" />
+    <Content Include="Handler\AsyncGetSellStoneOrderHandler.ashx" />
+    <Content Include="Handler\BuyStoneHandler.ashx" />
+    <Content Include="Handler\AsyncGetMinerBuyRecordHandler.ashx" />
+    <Content Include="Handler\AsyncGetMineBuyRecordHandler.ashx" />
+    <Content Include="Handler\AsyncGetGoldCoinBuyRecordHandler.ashx" />
+    <Content Include="Handler\AsyncGetRMBWithdrawRecordHandler.ashx" />
+    <Content Include="Handler\AsyncGetWithdrawRMBRecordListHandler.ashx" />
+    <Content Include="Handler\AsyncGetUserSellStoneRecordHandler.ashx" />
+    <Content Include="Handler\AsyncGetBuyStoneRecordHandler.ashx" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="RegisterPage.aspx" />
     <Content Include="Scripts\index.js" />
@@ -144,8 +158,23 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Models\GameConfig.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\BuyStonesOrder.cs">
+      <Link>Wcf\Models\BuyStonesOrder.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\GatherTempOutputStoneResult.cs">
       <Link>Wcf\Models\GatherTempOutputStoneResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\GoldCoinRechargeRecord.cs">
+      <Link>Wcf\Models\GoldCoinRechargeRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinersBuyRecord.cs">
+      <Link>Wcf\Models\MinersBuyRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\MinesBuyRecord.cs">
+      <Link>Wcf\Models\MinesBuyRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\RMBRechargeRecord.cs">
+      <Link>Wcf\Models\RMBRechargeRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\SellStonesOrder.cs">
       <Link>Wcf\Models\SellStonesOrder.cs</Link>
@@ -155,6 +184,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
       <Link>Wcf\Models\TradeType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\WithdrawRMBRecord.cs">
+      <Link>Wcf\Models\WithdrawRMBRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Models\PlayerFortuneInfo.cs</Link>
@@ -177,6 +209,7 @@
     <Compile Include="Controller\TokenController.cs" />
     <Compile Include="Controller\WeiXinHandler.cs" />
     <Compile Include="Core\MyFormsPrincipal.cs" />
+    <Compile Include="Core\MyHttpClient.cs" />
     <Compile Include="Core\MyUserInfo.cs" />
     <Compile Include="ErrorPage.aspx.cs">
       <DependentUpon>ErrorPage.aspx</DependentUpon>
@@ -189,6 +222,30 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="GlobalData.cs" />
+    <Compile Include="Handler\AsyncGetBuyStoneRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetBuyStoneRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetGoldCoinBuyRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetGoldCoinBuyRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetMineBuyRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetMineBuyRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetMinerBuyRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetMinerBuyRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetRMBWithdrawRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetRMBWithdrawRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetSellStoneOrderHandler.ashx.cs">
+      <DependentUpon>AsyncGetSellStoneOrderHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetUserSellStoneRecordHandler.ashx.cs">
+      <DependentUpon>AsyncGetUserSellStoneRecordHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\AsyncGetWithdrawRMBRecordListHandler.ashx.cs">
+      <DependentUpon>AsyncGetWithdrawRMBRecordListHandler.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Handler\AuthCodeImageCallbackHandler.ashx.cs">
       <DependentUpon>AuthCodeImageCallbackHandler.ashx</DependentUpon>
     </Compile>
@@ -197,6 +254,9 @@
     </Compile>
     <Compile Include="Handler\BuyMinerHandler.ashx.cs">
       <DependentUpon>BuyMinerHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\BuyStoneHandler.ashx.cs">
+      <DependentUpon>BuyStoneHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\CheckAlipayAccount.ashx.cs">
       <DependentUpon>CheckAlipayAccount.ashx</DependentUpon>
@@ -261,6 +321,13 @@
     <Compile Include="Model\ErrorModel.cs" />
     <Compile Include="Model\HttpGetReturnModel.cs" />
     <Compile Include="Model\WeiXinUserInfoModel.cs" />
+    <Compile Include="View\MyRecords.master.cs">
+      <DependentUpon>MyRecords.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="View\MyRecords.master.designer.cs">
+      <DependentUpon>MyRecords.master</DependentUpon>
+    </Compile>
     <Compile Include="View\MyXunLing.aspx.cs">
       <DependentUpon>MyXunLing.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -340,6 +407,7 @@
     <Compile Include="View\ViewStoneSellRecords.aspx.designer.cs">
       <DependentUpon>ViewStoneSellRecords.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Wcf\Services\ISuperMinersAsyncClient.cs" />
     <Compile Include="Wcf\Services\SuperMinersClient.cs" />
     <Compile Include="Wcf\Services\SuperMinersClient.WeiXin.cs" />
     <Compile Include="Wcf\Services\WcfClient.cs" />
@@ -370,6 +438,7 @@
     <Content Include="View\Web.config">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="View\MyRecords.master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -88,6 +88,25 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
         }
+
+        public int CheckStoneOrder_BeforeBuy(string orderNumber, string buyerUserName, decimal rmb)
+        {
+            int result = OperResult.RESULTCODE_TRUE;
+            if (!this.CheckBuyerName(buyerUserName))
+            {
+                result = OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
+                LogHelper.Instance.AddInfoLog("支付订单时错误，此订单不是被当前玩家锁定。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return result;
+            }
+            if (rmb < this.ValueRMB)
+            {
+                result = OperResult.RESULTCODE_PARAM_INVALID;
+                LogHelper.Instance.AddInfoLog("支付订单时错误，玩家支付的灵币不足，无法完成订单。 orderNumber: " + orderNumber + "。 buyerUserName: " + buyerUserName + "。 rmb: " + rmb.ToString());
+                return result;
+            }
+
+            return result;
+        }
         
         public BuyStonesOrder Pay(CustomerMySqlTransaction trans)
         {

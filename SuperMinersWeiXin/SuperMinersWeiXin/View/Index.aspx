@@ -88,7 +88,7 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
-                    <label for="txtLastGatherTime" class="weui-label">上次收取矿石时间</label>
+                    <label for="txtLastGatherTime" class="weui-label">上次收取<br/>矿石时间</label>
                 </div>
                 <div class="weui-cell__bd">
                     <asp:TextBox ID="txtLastGatherTime" runat="server" CssClass="weui-input" ReadOnly="true" TabIndex="8"/>
