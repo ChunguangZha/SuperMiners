@@ -257,6 +257,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 string sqlText = "delete from alipayrecharge_exception_record where alipay_trade_no = @alipay_trade_no and out_trade_no = @out_trade_no;";
 
+                myconn.Open();
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@alipay_trade_no", alipayTradeNumber);
@@ -264,10 +265,6 @@ namespace DataBaseProvider
                 mycmd.ExecuteNonQuery();
 
                 return true;
-            }
-            catch (Exception exc)
-            {
-                return false;
             }
             finally
             {

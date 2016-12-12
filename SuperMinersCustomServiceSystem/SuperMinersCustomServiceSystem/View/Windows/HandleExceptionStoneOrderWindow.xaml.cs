@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,10 +96,17 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                 {
                     _syn.Post(o =>
                     {
-                        HandleExceptionAlipayRecordWindow win = new HandleExceptionAlipayRecordWindow(new AlipayRechargeRecordUIModel(e.Result));
-                        if (win.ShowDialog() == true)
+                        try
                         {
-                            this.DialogResult = true;
+                            HandleExceptionAlipayRecordWindow win = new HandleExceptionAlipayRecordWindow(new AlipayRechargeRecordUIModel(e.Result));
+                            if (win.ShowDialog() == true)
+                            {
+                                this.DialogResult = true;
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            MyMessageBox.ShowInfo(exc.Message);
                         }
                     }, null);
                 }

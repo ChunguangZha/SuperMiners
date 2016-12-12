@@ -16,12 +16,6 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<AlipayRechargeRecord[]>(this._context, "GetAllExceptionAlipayRechargeRecords", this.GetAllExceptionAlipayRechargeRecordsCompleted, GlobalData.Token);
         }
 
-        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionAlipayRechargeRecordCompleted;
-        public void HandleExceptionAlipayRechargeRecord(AlipayRechargeRecord exceptionRecord, object userState)
-        {
-            this._invoker.InvokeUserState<int>(this._context, "HandleExceptionAlipayRechargeRecord", this.HandleExceptionAlipayRechargeRecordCompleted, userState, GlobalData.Token, exceptionRecord);
-        }
-
         public event EventHandler<WebInvokeEventArgs<AlipayRechargeRecord[]>> GetAllAlipayRechargeRecordsCompleted;
         public void GetAllAlipayRechargeRecords(string orderNumber, string alipayOrderNumber, string payEmail, string playerUserName, MyDateTime beginPayTime, MyDateTime endPayTime, int pageItemCount, int pageIndex)
         {

@@ -53,7 +53,7 @@ public partial class return_url : System.Web.UI.Page
 
                 string userName = Request.QueryString["extra_common_param"];
 
-                SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 1.  verifyResult：" + verifyResult);
+                //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 1.  verifyResult：" + verifyResult);
 
 
                 if (verifyResult)//验证成功
@@ -91,36 +91,39 @@ public partial class return_url : System.Web.UI.Page
                             Response.Write("充值金额错误<br />");
                             return;
                         }
-                        int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
+                        //int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
 
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
-                        if (result == OperResult.RESULTCODE_TRUE)
-                        {
-                            //表示该订单已经被处理过
-                            //打印页面
-                            Response.Write("操作成功<br />本页面将在3秒后关闭");
-                            Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
+                        //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
+                        //if (result == OperResult.RESULTCODE_TRUE)
+                        //{
+                        //    //表示该订单已经被处理过
+                        //    //打印页面
+                        //    Response.Write("操作成功<br />本页面将在3秒后关闭");
+                        //    Response.Write("<script>setTimeout(' window.opener = null;window.close();',3000);</script>");
 
-                            return;
-                        }
+                        //    return;
+                        //}
 
-                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
+                        int result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
                         if (result == OperResult.RESULTCODE_EXCEPTION)
                         {
                             result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
                         }
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
+                        //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 3 Result: " + result + ".  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_no=" + trade_no + ";trade_status=" + trade_status + ";total_fee=" + total_fee);
 
-                        if (result != OperResult.RESULTCODE_TRUE)
+                        if (result != OperResult.RESULTCODE_TRUE && result != OperResult.RESULTCODE_ORDER_BUY_SUCCEED)
                         {
+                            string message = "支付成功，但是服务器操作失败，请联系客服，并将以下信息发送给客服。\r\n商品订单号：" + out_trade_no + "，支付宝订单号：" + trade_no + "，付款账户：" + buyer_email;
                             DBOper.AddExceptionAlipayRechargeRecord(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
-                            Response.Write("支付成功，但是服务器操作失败，请联系客服，并将以下信息发送给客服。\r\n商品订单号：" + out_trade_no + "，支付宝订单号：" + trade_no + "，付款账户：" + buyer_email);
+                            SuperMinersWeb.AlipayCode.Core.LogResult(userName, message);
+
+                            Response.Write(message);
                             return;
                         }
                     }
                     else
                     {
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
+                        //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Return End Pay 4 Failed.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";trade_status=" + trade_status);
 
                         Response.Write("trade_status=" + trade_status);
                     }

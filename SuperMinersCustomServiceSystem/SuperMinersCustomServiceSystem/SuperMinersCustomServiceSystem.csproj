@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>12</ApplicationRevision>
+    <ApplicationRevision>13</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -329,30 +329,6 @@
     <Compile Include="View\InputActionPasswordWindow.xaml.cs">
       <DependentUpon>InputActionPasswordWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\StoneOrderResolveExceptionWindow.xaml.cs">
-      <DependentUpon>StoneOrderResolveExceptionWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerAlipayPayRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerAlipayPayRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerBuyMineRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerBuyMineRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerBuyMinerRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerBuyMinerRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerBuyStoneRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerBuyStoneRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerGoldCoinRechargeRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerGoldCoinRechargeRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerLockStoneRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerLockStoneRecordWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewPlayerSellStoneRecordWindow.xaml.cs">
-      <DependentUpon>ViewPlayerSellStoneRecordWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Windows\EditAgentInfoWindow.xaml.cs">
       <DependentUpon>EditAgentInfoWindow.xaml</DependentUpon>
     </Compile>
@@ -564,38 +540,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\InputActionPasswordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\StoneOrderResolveExceptionWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerAlipayPayRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerBuyMineRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerBuyMinerRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerBuyStoneRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerGoldCoinRechargeRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerLockStoneRecordWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewPlayerSellStoneRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

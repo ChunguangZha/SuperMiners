@@ -43,7 +43,7 @@ public partial class notify_url : System.Web.UI.Page
 
                 string userName = sPara["extra_common_param"];
 
-                SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
+                //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 1.  verifyResult：" + verifyResult);
 
                 if (verifyResult)//验证成功
                 {
@@ -100,20 +100,20 @@ public partial class notify_url : System.Web.UI.Page
                             return;
                         }
 
-                        int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                        SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
-                        if (result == OperResult.RESULTCODE_EXCEPTION)
-                        {
-                            result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
-                        }
-                        if (result == OperResult.RESULTCODE_TRUE)
-                        {
-                            Response.Write("success");  //请不要修改或删除
-                            //表示该订单已经被处理过
-                            return;
-                        }
+                        //int result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        //SuperMinersWeb.AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Notify End Pay 2.1.  CheckAlipayOrderBeHandled：" + result);
+                        //if (result == OperResult.RESULTCODE_EXCEPTION)
+                        //{
+                        //    result = WcfClient.Instance.CheckAlipayOrderBeHandled(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        //}
+                        //if (result == OperResult.RESULTCODE_TRUE)
+                        //{
+                        //    Response.Write("success");  //请不要修改或删除
+                        //    //表示该订单已经被处理过
+                        //    return;
+                        //}
 
-                        result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
+                        int result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());
                         if (result == OperResult.RESULTCODE_EXCEPTION)
                         {
                             result = WcfClient.Instance.AlipayCallback(userName, out_trade_no, trade_no, total_fee, buyer_email, DateTime.Now.ToString());

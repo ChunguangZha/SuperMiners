@@ -82,7 +82,6 @@
     <Compile Include="User\PlayerFortuneInfo.cs" />
     <Compile Include="User\PlayerInfo.cs" />
     <Compile Include="User\PlayerSimpleInfo.cs" />
-    <Compile Include="User\PlayerTempOutputStoneInfo.cs" />
     <Compile Include="User\UserLogState.cs" />
     <Compile Include="User\UserReferrerTreeItem.cs" />
   </ItemGroup>

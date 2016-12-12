@@ -22,7 +22,6 @@
                 <DataGridTextColumn Header="付款账户" Width="*" Binding="{Binding buyer_email, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="玩家用户名" Width="*" Binding="{Binding user_name, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="付款金额" Width="*" Binding="{Binding total_fee, Mode=OneWay, StringFormat='F2'}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="等值灵币" Width="*" Binding="{Binding value_rmb, Mode=OneWay, StringFormat='F2'}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="付款时间" Width="*" Binding="{Binding pay_time, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Width="*" >
                     <DataGridTemplateColumn.CellTemplate>

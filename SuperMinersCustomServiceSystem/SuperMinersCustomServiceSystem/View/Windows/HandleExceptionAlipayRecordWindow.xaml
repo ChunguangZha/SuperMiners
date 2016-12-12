@@ -34,7 +34,7 @@
         <TextBlock Grid.Row="5" Text="充值人民币：" Margin="5" HorizontalAlignment="Right"/>
         <MyControl1:NumericTextBox Grid.Row="5" Grid.Column="1" x:Name="numTotalFee" Minimum="0" Maximum="100000" Margin="5" ValueChanged="numTotalFee_ValueChanged" DecimalPlaces="2"/>
         <TextBlock Grid.Row="6" Text="价值灵币：" Margin="5" HorizontalAlignment="Right"/>
-        <MyControl1:NumericTextBox Grid.Row="6" Grid.Column="1" x:Name="numValueRMB" IsReadOnly="True" Margin="5"/>
+        <MyControl1:NumericTextBox Grid.Row="6" Grid.Column="1" x:Name="numValueRMB" IsReadOnly="True" Margin="5" Maximum="10000000" Minimum="0" DecimalPlaces="2"/>
         <TextBlock Grid.Row="7" Text="付款时间：" Margin="5" HorizontalAlignment="Right"/>
         <MyControl:MyDateTimePickerControl Grid.Row="7" Grid.Column="1" x:Name="mydpPayTime" Margin="5"/>
         <Button Grid.Row="9" Grid.ColumnSpan="2" Name="btnCancel" Content="取消处理" Width="100" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnCancel_Click"/>

@@ -17,6 +17,22 @@ namespace SuperMinersServerApplication.Controller
         private object _lock = new object();
         private LockSellStonesOrder _lockOrderObject;
 
+        public SellStonesOrder SellOrder
+        {
+            get
+            {
+                return _sellOrder;
+            }
+        }
+
+        public LockSellStonesOrder LockedOrder
+        {
+            get
+            {
+                return this._lockOrderObject;
+            }
+        }
+
         public string OrderNumber
         {
             get
@@ -60,14 +76,10 @@ namespace SuperMinersServerApplication.Controller
             this._sellOrder = lockInfo.StonesOrder;
         }
 
-        public SellStonesOrder GetSellOrder()
+        public void UpdateLockedOrder(LockSellStonesOrder lockInfo)
         {
-            return _sellOrder;
-        }
-
-        public LockSellStonesOrder GetLockedOrder()
-        {
-            return this._lockOrderObject;
+            _lockOrderObject = lockInfo;
+            this._sellOrder = lockInfo.StonesOrder;
         }
 
         public string GetLockedByUserName()

@@ -752,17 +752,23 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord)
+        public int HandleExceptionAlipayRechargeRecord(string token, AlipayRechargeRecord exceptionRecord)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return OrderController.Instance.StoneOrderController.AgreeExceptionStoneOrder(alipayRecord);
+                    int result = OrderController.Instance.AlipayCallback(exceptionRecord);
+                    if (result == OperResult.RESULTCODE_TRUE || result == OperResult.RESULTCODE_ORDER_BUY_SUCCEED)
+                    {
+                        bool isOK = DBProvider.AlipayRecordDBProvider.DeleteExceptionAlipayRecord(exceptionRecord.alipay_trade_no, exceptionRecord.out_trade_no);
+                    }
+
+                    return result;
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("AgreeExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    LogHelper.Instance.AddErrorLog("HandleExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return OperResult.RESULTCODE_EXCEPTION;
                 }
             }
@@ -771,6 +777,27 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 throw new Exception();
             }
         }
+
+        // 被 HandleExceptionAlipayRechargeRecord 替代
+        //public int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord)
+        //{
+        //    if (RSAProvider.LoadRSA(token))
+        //    {
+        //        try
+        //        {
+        //            return OrderController.Instance.StoneOrderController.AgreeExceptionStoneOrder(alipayRecord);
+        //        }
+        //        catch (Exception exc)
+        //        {
+        //            LogHelper.Instance.AddErrorLog("AgreeExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+        //            return OperResult.RESULTCODE_EXCEPTION;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new Exception();
+        //    }
+        //}
 
         public int RejectExceptionStoneOrder(string token, string orderNumber)
         {
@@ -884,32 +911,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 {
                     LogHelper.Instance.AddErrorLog("SearchExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
-                }
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
-
-        public int HandleExceptionAlipayRechargeRecord(string token, AlipayRechargeRecord exceptionRecord)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                try
-                {
-                    bool isOK = OrderController.Instance.AlipayCallback(exceptionRecord);
-                    if (isOK)
-                    {
-                        isOK = DBProvider.AlipayRecordDBProvider.DeleteExceptionAlipayRecord(exceptionRecord.alipay_trade_no, exceptionRecord.out_trade_no);
-                    }
-
-                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("HandleExceptionAlipayRechargeRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
-                    return OperResult.RESULTCODE_EXCEPTION;
                 }
             }
             else

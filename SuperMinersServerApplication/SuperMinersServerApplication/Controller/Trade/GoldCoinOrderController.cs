@@ -126,19 +126,24 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        public int AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
-            bool isOK = false;
-
             GoldCoinRechargeRecord rechargeRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
             if (rechargeRecord == null)
             {
+                rechargeRecord = DBProvider.GoldCoinRecordDBProvider.GetGoldCoinRechargeRecord(alipayRecord.user_name, alipayRecord.out_trade_no);
+                if (rechargeRecord != null)
+                {
+                    return OperResult.RESULTCODE_ORDER_BUY_SUCCEED;
+                }
+
                 LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买金币回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
-                return false;
+                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
             }
             CustomerMySqlTransaction myTrans = null;
             try
             {
+                int value = OperResult.RESULTCODE_FALSE;
                 myTrans = MyDBHelper.Instance.CreateTrans();
 
                 alipayRecord.user_name = rechargeRecord.UserName;
@@ -146,7 +151,7 @@ namespace SuperMinersServerApplication.Controller
                     alipayRecord.value_rmb >= rechargeRecord.SpendRMB)
                 {
                     rechargeRecord.PayTime = DateTime.Now;
-                    int value = PlayerController.Instance.RechargeGoldCoinByAlipay(rechargeRecord.UserName, alipayRecord.total_fee, (int)rechargeRecord.SpendRMB, (int)(rechargeRecord.SpendRMB * GlobalConfig.GameConfig.RMB_GoldCoin), myTrans);
+                    value = PlayerController.Instance.RechargeGoldCoinByAlipay(rechargeRecord.UserName, alipayRecord.total_fee, (int)rechargeRecord.SpendRMB, (int)(rechargeRecord.SpendRMB * GlobalConfig.GameConfig.RMB_GoldCoin), myTrans);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
                         DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(rechargeRecord, myTrans);
@@ -158,7 +163,7 @@ namespace SuperMinersServerApplication.Controller
                         {
                             GoldCoinOrderPaySucceedNotify(tokenBuyer, rechargeRecord.OrderNumber);
                         }
-                        isOK = true;
+
                         LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 成功充值" + rechargeRecord.GainGoldCoin + "金币。ano: " + alipayRecord.alipay_trade_no);
                     }
                     else
@@ -170,7 +175,7 @@ namespace SuperMinersServerApplication.Controller
                 DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, myTrans);
 
                 myTrans.Commit();
-                return isOK;
+                return value;
             }
             catch (Exception exc)
             {
@@ -178,7 +183,7 @@ namespace SuperMinersServerApplication.Controller
                 PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
 
                 LogHelper.Instance.AddErrorLog("玩家[" + alipayRecord.user_name + "] 支付宝金币充值，回调异常。AlipayInfo : " + alipayRecord.ToString(), exc);
-                return false;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
             finally
             {

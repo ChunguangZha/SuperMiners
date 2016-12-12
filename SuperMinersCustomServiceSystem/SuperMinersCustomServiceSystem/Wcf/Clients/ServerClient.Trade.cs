@@ -54,11 +54,17 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<BuyStonesOrder[]>(this._context, "GetBuyStonesOrderList", this.GetBuyStonesOrderListCompleted, GlobalData.Token, sellerUserName, orderNumber, buyUserName, orderState, myBeginCreateTime, myEndCreateTime, myBeginBuyTime, myEndBuyTime, pageItemCount, pageIndex);
         }
 
-        public event EventHandler<WebInvokeEventArgs<int>> AgreeExceptionStoneOrderCompleted;
-        public void AgreeExceptionStoneOrder(AlipayRechargeRecord alipayRecord)
+        public event EventHandler<WebInvokeEventArgs<int>> HandleExceptionAlipayRechargeRecordCompleted;
+        public void HandleExceptionAlipayRechargeRecord(AlipayRechargeRecord exceptionRecord, object userState)
         {
-            this._invoker.Invoke<int>(this._context, "AgreeExceptionStoneOrder", this.AgreeExceptionStoneOrderCompleted, GlobalData.Token, alipayRecord);
+            this._invoker.InvokeUserState<int>(this._context, "HandleExceptionAlipayRechargeRecord", this.HandleExceptionAlipayRechargeRecordCompleted, userState, GlobalData.Token, exceptionRecord);
         }
+
+        //public event EventHandler<WebInvokeEventArgs<int>> AgreeExceptionStoneOrderCompleted;
+        //public void AgreeExceptionStoneOrder(AlipayRechargeRecord alipayRecord)
+        //{
+        //    this._invoker.Invoke<int>(this._context, "AgreeExceptionStoneOrder", this.AgreeExceptionStoneOrderCompleted, GlobalData.Token, alipayRecord);
+        //}
 
         public event EventHandler<WebInvokeEventArgs<int>> RejectExceptionStoneOrderCompleted;
         public void RejectExceptionStoneOrder(string orderNumber)

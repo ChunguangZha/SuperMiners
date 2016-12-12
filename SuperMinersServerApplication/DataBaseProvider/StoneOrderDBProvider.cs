@@ -195,6 +195,7 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select count(id) from buystonesrecord where OrderNumber = @OrderNumber and BuyerUserName = @BuyerUserName ";
                 mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
+                mycmd.Parameters.AddWithValue("@BuyerUserName", DESEncrypt.EncryptDES(userName));
                 mycmd.CommandText = sqlTextA;
                 object objValue = mycmd.ExecuteScalar();
                 mycmd.Dispose();

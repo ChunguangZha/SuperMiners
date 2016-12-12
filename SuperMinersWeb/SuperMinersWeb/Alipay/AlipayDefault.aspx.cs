@@ -98,7 +98,7 @@ namespace SuperMinersWeb.Alipay
                 return;
             }
 
-            AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Start To Pay.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";subject=" + subject + ";total_fee=" + total_fee);
+            //AlipayCode.Core.LogResult(userName, DateTime.Now.ToString() + " ------ Start To Pay.  userName：" + userName + "; out_trade_no=" + out_trade_no + ";subject=" + subject + ";total_fee=" + total_fee);
 
 
             ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -74,6 +74,16 @@ namespace SuperMinersServerApplication.Utility
             }
         }
 
+        //public FileStream OpenLogFileStream()
+        //{
+        //    DateTime timenow = DateTime.Now;
+        //    string fileName = timenow.ToString("yyyMMdd");
+        //    FileStream stream = null;
+        //    string path = HttpRuntime.AppDomainAppPath + "Logs" + "\\LogFile_" + fileName + ".txt";
+        //    stream = File.Open(path, FileMode.Append, FileAccess.Write);
+        //    return stream;
+        //}
+
         public void Stop()
         {
             _timer.Stop();

@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using SuperMinersServerApplication.Encoder;
 using System;
 using System.Collections.Generic;
@@ -77,31 +78,31 @@ namespace SuperMinersServerApplication.Controller.Trade
             return "Alipay/AlipayDefault.aspx?p=" + p;
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        public int AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
-            bool isOK = false;
+            int result = OperResult.RESULTCODE_FALSE;
             AlipayTradeInType type = GetTradeType(alipayRecord.out_trade_no);
             switch (type)
             {
                 case AlipayTradeInType.BuyGoldCoin:
-                    isOK = this.GoldCoinOrderController.AlipayCallback(alipayRecord);
+                    result = this.GoldCoinOrderController.AlipayCallback(alipayRecord);
                     break;
                 case AlipayTradeInType.BuyMine:
-                    isOK = this.MineOrderController.AlipayCallback(alipayRecord);
+                    result = this.MineOrderController.AlipayCallback(alipayRecord);
                     break;
                 case AlipayTradeInType.BuyMiner:
                     break;
                 case AlipayTradeInType.BuyRMB:
                     break;
                 case AlipayTradeInType.BuyStone:
-                    isOK = this.StoneOrderController.AlipayCallback(alipayRecord);
+                    result = this.StoneOrderController.AlipayCallback(alipayRecord);
                     break;
 
                 default:
                     break;
             }
 
-            return isOK;
+            return result;
         }
 
         public bool CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time)

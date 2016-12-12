@@ -94,7 +94,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    TempOutputStonesStartTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        TempOutputStonesStartTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {

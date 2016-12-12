@@ -103,7 +103,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    RegisterTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        RegisterTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {
@@ -133,7 +136,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    LastLoginTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        LastLoginTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {
@@ -167,7 +173,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    LastLogOutTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        LastLogOutTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {
@@ -202,7 +211,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    LockedLoginTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        LockedLoginTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {

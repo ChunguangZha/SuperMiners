@@ -118,7 +118,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 }
                 string orderNumber = e.UserState as string;
 
-                if (e.Result == OperResult.RESULTCODE_TRUE)
+                if (e.Result == OperResult.RESULTCODE_TRUE || e.Result == OperResult.RESULTCODE_ORDER_BUY_SUCCEED)
                 {
                     MessageBox.Show("处理异常的支付宝订单成功，商品订单号为：" + orderNumber);
                     lock (lockList)

@@ -25,6 +25,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public AlipayExceptionRecordListControl()
         {
             InitializeComponent();
+            this.dgRecords.ItemsSource = App.AlipayRechargeVMObject.ListExceptionAlipayRecords;
         }
 
         private void btnHandleExceptionAlipayRecord_Click(object sender, RoutedEventArgs e)

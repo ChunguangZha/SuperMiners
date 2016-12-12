@@ -130,6 +130,11 @@ namespace MetaData
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
 
         /// <summary>
+        /// 支付订单时，支付金额不足
+        /// </summary>
+        public const int RESULTCODE_ORDER_PAYMONEY_LESS = 610;
+
+        /// <summary>
         /// 娱乐功能中，获奖信息不存在
         /// </summary>
         public const int RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST = 700;
@@ -166,6 +171,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WEIXIN_USERBINDEDBYOTHER, "该迅灵用户已经被其它微信用户绑定");
             _resultCode_Msg.Add(RESULTCODE_USER_IS_LOCKED, "该账户已经被管理员锁定");
             _resultCode_Msg.Add(RESULTCODE_WEXIN_REGISTER_OPENID_EXIST, "当前微信号已经注册过迅灵账户，无法再注册");
+            _resultCode_Msg.Add(RESULTCODE_ORDER_PAYMONEY_LESS, "支付金额不足");
         }
 
         public static string GetMsg(int resultCode)

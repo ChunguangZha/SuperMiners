@@ -167,13 +167,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         BuyStonesOrder[] GetBuyStonesOrderList(string token, string sellerUserName, string orderNumber, string buyUserName, int orderState, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, MyDateTime myBeginBuyTime, MyDateTime myEndBuyTime, int pageItemCount, int pageIndex);
 
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/AgreeExceptionStoneOrder",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord);
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/AgreeExceptionStoneOrder",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //int AgreeExceptionStoneOrder(string token, AlipayRechargeRecord alipayRecord);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/RejectExceptionStoneOrder",

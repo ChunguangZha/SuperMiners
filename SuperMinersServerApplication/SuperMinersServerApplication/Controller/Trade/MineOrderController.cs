@@ -142,27 +142,30 @@ namespace SuperMinersServerApplication.Controller
             return mineTradeRecord != null;
         }
 
-        public bool AlipayCallback(AlipayRechargeRecord alipayRecord)
+        public int AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
-            bool isOK = false;
-
             MinesBuyRecord buyRecord = FindRecordByOrderNumber(alipayRecord.out_trade_no);
             if (buyRecord == null)
             {
+                buyRecord = DBProvider.MineRecordDBProvider.GetMineTradeRecord(alipayRecord.user_name, alipayRecord.out_trade_no);
+                if (buyRecord != null)
+                {
+                    return OperResult.RESULTCODE_ORDER_BUY_SUCCEED;
+                }
                 LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿山回调，找不到订单。支付宝信息：" + alipayRecord.ToString());
-                return false;
+                return OperResult.RESULTCODE_ORDER_NOT_EXIST;
             }
             CustomerMySqlTransaction myTrans = null;
             try
             {
+                int result = OperResult.RESULTCODE_FALSE;
                 myTrans = MyDBHelper.Instance.CreateTrans();
 
-                alipayRecord.user_name = buyRecord.UserName;
-                if (alipayRecord.out_trade_no == buyRecord.OrderNumber &&
-                    alipayRecord.value_rmb >= buyRecord.SpendRMB)
+                //alipayRecord.user_name = buyRecord.UserName;
+                if (alipayRecord.value_rmb >= buyRecord.SpendRMB)
                 {
-                    int value = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount, myTrans);
-                    if (value == OperResult.RESULTCODE_TRUE)
+                    result = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount, myTrans);
+                    if (result == OperResult.RESULTCODE_TRUE)
                     {
                         buyRecord.PayTime = DateTime.Now;
                         DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(buyRecord, myTrans);
@@ -175,12 +178,11 @@ namespace SuperMinersServerApplication.Controller
                         {
                             MineOrderPaySucceedNotify(tokenBuyer, buyRecord.OrderNumber);
                         }
-                        isOK = true;
                         LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 成功购买" + buyRecord.GainMinesCount + "座矿山。ano: " + alipayRecord.alipay_trade_no);
                     }
                     else
                     {
-                        LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 购买矿山失败，原因为：" + OperResult.GetMsg(value) + "。ano: " + alipayRecord.alipay_trade_no);
+                        LogHelper.Instance.AddInfoLog("玩家[" + alipayRecord.user_name + "] 购买矿山失败，原因为：" + OperResult.GetMsg(result) + "。ano: " + alipayRecord.alipay_trade_no);
                     }
                 }
 
@@ -189,6 +191,8 @@ namespace SuperMinersServerApplication.Controller
                 myTrans.Commit();
                 PlayerActionController.Instance.AddLog(buyRecord.UserName, MetaData.ActionLog.ActionType.BuyMine, buyRecord.GainMinesCount,
                     "增加了 " + buyRecord.GainStonesReserves.ToString() + " 的矿石储量");
+
+                return result;
             }
             catch (Exception exc)
             {
@@ -196,7 +200,7 @@ namespace SuperMinersServerApplication.Controller
                 PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
 
                 LogHelper.Instance.AddErrorLog("玩家[" + alipayRecord.user_name + "] 支付宝金币充值，回调异常。AlipayInfo : " + alipayRecord.ToString(), exc);
-                return false;
+                return OperResult.RESULTCODE_EXCEPTION;
             }
             finally
             {
@@ -205,7 +209,6 @@ namespace SuperMinersServerApplication.Controller
                     myTrans.Dispose();
                 }
             }
-            return isOK;
         }
         
         /// <summary>

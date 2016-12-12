@@ -86,15 +86,22 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void btnHandleExceptionStoneOrder_Click(object sender, RoutedEventArgs e)
         {
-            Button btn = sender as Button;
-            LockSellStonesOrderUIModel lockedStoneOrder = btn.DataContext as LockSellStonesOrderUIModel;
-            if (lockedStoneOrder != null)
+            try
             {
-                HandleExceptionStoneOrderWindow win = new HandleExceptionStoneOrderWindow(lockedStoneOrder);
-                if (win.ShowDialog() == true)
+                Button btn = sender as Button;
+                LockSellStonesOrderUIModel lockedStoneOrder = btn.DataContext as LockSellStonesOrderUIModel;
+                if (lockedStoneOrder != null)
                 {
-                    Search();
+                    HandleExceptionStoneOrderWindow win = new HandleExceptionStoneOrderWindow(lockedStoneOrder);
+                    if (win.ShowDialog() == true)
+                    {
+                        Search();
+                    }
                 }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
             }
         }
     }

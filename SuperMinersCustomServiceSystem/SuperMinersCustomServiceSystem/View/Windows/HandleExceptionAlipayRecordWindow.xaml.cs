@@ -28,18 +28,25 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             InitializeComponent();
             _alipayRecord = alipayRecord;
 
-            this.txtAlipayOrderNumber.Text = alipayRecord.alipay_trade_no;
-            this.txtBuyerEmail.Text = alipayRecord.buyer_email;
-            this.txtBuyerEmail.IsReadOnly = true;
-            this.txtBuyerUserName.Text = alipayRecord.user_name;
-            this.txtBuyerUserName.IsReadOnly = true;
-            this.txtOrderNumber.Text = alipayRecord.out_trade_no;
-            this.txtOrderNumber.IsReadOnly = true;
-            this.txtOrderType.Text = alipayRecord.TradeTypeText;
-            this.numTotalFee.Value = (double)alipayRecord.total_fee;
-            this.numTotalFee.IsReadOnly = true;
-            this.numValueRMB.Value = (double)alipayRecord.value_rmb;
-            this.mydpPayTime.ValueTime = MyDateTime.FromDateTime(alipayRecord.pay_time);
+            try
+            {
+                this.txtAlipayOrderNumber.Text = alipayRecord.alipay_trade_no;
+                this.txtBuyerEmail.Text = alipayRecord.buyer_email;
+                this.txtBuyerEmail.IsReadOnly = true;
+                this.txtBuyerUserName.Text = alipayRecord.user_name;
+                this.txtBuyerUserName.IsReadOnly = true;
+                this.txtOrderNumber.Text = alipayRecord.out_trade_no;
+                this.txtOrderNumber.IsReadOnly = true;
+                this.txtOrderType.Text = alipayRecord.TradeTypeText;
+                this.numTotalFee.Value = (double)alipayRecord.total_fee;
+                this.numTotalFee.IsReadOnly = true;
+                //this.numValueRMB.Value = (double)alipayRecord.value_rmb;
+                this.mydpPayTime.ValueTime = MyDateTime.FromDateTime(alipayRecord.pay_time);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         public HandleExceptionAlipayRecordWindow()
@@ -50,12 +57,24 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         private void txtOrderNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
-            this.txtOrderType.Text = AlipayRechargeRecordUIModel.GetTradeTypeText(this.txtOrderNumber.Text.Trim());
+            try
+            {
+                this.txtOrderType.Text = AlipayRechargeRecordUIModel.GetTradeTypeText(this.txtOrderNumber.Text.Trim());
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void numTotalFee_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            this.numValueRMB.Value = (this.numTotalFee.Value * (double)GlobalData.GameConfig.Yuan_RMB);
+            try
+            {
+                this.numValueRMB.Value = (this.numTotalFee.Value * (double)GlobalData.GameConfig.Yuan_RMB);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

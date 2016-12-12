@@ -351,8 +351,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                bool isOK = OrderController.Instance.AlipayCallback(record);
-                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                int result = OrderController.Instance.AlipayCallback(record);
+                return result;
             }
             catch (Exception exc)
             {
