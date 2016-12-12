@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersWPF.StringResources;
 using System;
@@ -45,6 +46,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("RegisterTime");
                 NotifyPropertyChange("InvitationCode");
                 NotifyPropertyChange("Exp");
+                NotifyPropertyChange("CreditValue");
                 NotifyPropertyChange("RMB");
                 NotifyPropertyChange("EnbleRMB");
                 NotifyPropertyChange("FreezingRMB");
@@ -127,12 +129,22 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.FortuneInfo.Exp; }
         }
 
-        private BitmapImage userIcon;
-
-        public BitmapImage UserIcon
+        public int CreditValue
         {
-            get { return userIcon; }
-            set { userIcon = value; }
+            get { return this._parentObject.FortuneInfo.CreditValue; }
+        }
+
+        public BitmapImage CreditLevelImg
+        {
+            get
+            {
+                int level = CreditLevelConfig.GetCreditLevel(this.CreditValue);
+                if (level == 0)
+                {
+                    return null;
+                }
+                return new BitmapImage(new Uri(@"Resources/l" + level + ".png", UriKind.Relative));
+            }
         }
 
         public decimal RMB

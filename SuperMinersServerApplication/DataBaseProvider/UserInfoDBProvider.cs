@@ -177,7 +177,7 @@ namespace DataBaseProvider
             try
             {
                 string cmdTextA = "UPDATE `playerfortuneinfo` SET "
-                    + " `Exp`=@Exp, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
+                    + " `Exp`=@Exp, `CreditValue`=@CreditValue, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
                     + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,";
 
                 string cmdTextB = "";
@@ -194,6 +194,7 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdTextA + cmdTextB;
 
                 mycmd.Parameters.AddWithValue("@Exp", playerFortune.Exp);
+                mycmd.Parameters.AddWithValue("@CreditValue", playerFortune.CreditValue);
                 mycmd.Parameters.AddWithValue("@RMB", playerFortune.RMB);
                 mycmd.Parameters.AddWithValue("@FreezingRMB", playerFortune.FreezingRMB);
                 mycmd.Parameters.AddWithValue("@GoldCoin", playerFortune.GoldCoin);

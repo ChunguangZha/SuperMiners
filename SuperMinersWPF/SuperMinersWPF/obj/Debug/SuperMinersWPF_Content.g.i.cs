@@ -8,16 +8,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/again.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/exp.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/goldcoin.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/iqiyi.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/letv.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/phonefees.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/start.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/starttext.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/stone.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/title.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/xunlei.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l4.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l5.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l6.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l7.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l8.png")]
 
 

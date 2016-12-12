@@ -25,6 +25,9 @@ namespace MetaData.Trade
         [DataMember]
         public string SellerUserName = "";
 
+        [DataMember]
+        public int SellerCreditValue = 0;
+
         /// <summary>
         /// 出售矿石数
         /// </summary>

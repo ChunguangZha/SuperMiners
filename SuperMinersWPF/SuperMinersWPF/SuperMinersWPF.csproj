@@ -161,6 +161,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\CreditLevelConfig.cs">
+      <Link>Wcf\Datas\CreditLevelConfig.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Datas\GameConfig.cs</Link>
     </Compile>
@@ -724,6 +727,16 @@
     <Resource Include="Resources\stone.png" />
     <Resource Include="Resources\title.png" />
     <Resource Include="Resources\xunlei.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\l1.png" />
+    <Resource Include="Resources\l2.png" />
+    <Resource Include="Resources\l3.png" />
+    <Resource Include="Resources\l4.png" />
+    <Resource Include="Resources\l5.png" />
+    <Resource Include="Resources\l6.png" />
+    <Resource Include="Resources\l7.png" />
+    <Resource Include="Resources\l8.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -34,6 +34,12 @@ namespace MetaData.User
         public decimal Exp { get; set; }
 
         /// <summary>
+        /// 信誉值(以玩家购买矿石价值的灵币计算)
+        /// </summary>
+        [DataMember]
+        public int CreditValue { get; set; }
+
+        /// <summary>
         /// 灵币，玩家提现时，从该值中减去相应灵币，加到冻结灵币中。
         /// </summary>
         [DataMember]
@@ -135,6 +141,7 @@ namespace MetaData.User
             PlayerFortuneInfo infoB = new PlayerFortuneInfo()
             {
                 Exp = this.Exp,
+                CreditValue = this.CreditValue,
                 FreezingDiamonds = this.FreezingDiamonds,
                 FreezingStones = this.FreezingStones,
                 GoldCoin = this.GoldCoin,
@@ -158,6 +165,7 @@ namespace MetaData.User
         public void CopyFrom(PlayerFortuneInfo fortuneInfo)
         {
             this.Exp = fortuneInfo.Exp;
+            this.CreditValue = fortuneInfo.CreditValue;
             this.FreezingDiamonds = fortuneInfo.FreezingDiamonds;
             this.FreezingStones = fortuneInfo.FreezingStones;
             this.GoldCoin = fortuneInfo.GoldCoin;
