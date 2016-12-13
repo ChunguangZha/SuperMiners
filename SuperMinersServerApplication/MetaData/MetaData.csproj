@@ -49,6 +49,7 @@
     <Compile Include="Game\Roulette\RouletteWinAwardResult.cs" />
     <Compile Include="Game\Roulette\RouletteWinnerRecord.cs" />
     <Compile Include="OperResult.cs" />
+    <Compile Include="SystemConfig\CreditLevelConfig.cs" />
     <Compile Include="SystemConfig\RouletteConfig.cs" />
     <Compile Include="Trade\AlipayRechargeRecord.cs" />
     <Compile Include="Trade\BuyStonesOrder.cs" />

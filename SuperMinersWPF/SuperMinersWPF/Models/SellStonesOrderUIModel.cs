@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.SystemConfig;
 using MetaData.Trade;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace SuperMinersWPF.Models
 {
@@ -26,6 +28,7 @@ namespace SuperMinersWPF.Models
                 _parentObject = value;
                 NotifyPropertyChange("OrderNumber");
                 NotifyPropertyChange("SellerUserName");
+                NotifyPropertyChange("SellerCreditLevelImg");
                 NotifyPropertyChange("SellStonesCount");
                 NotifyPropertyChange("Expense");
                 NotifyPropertyChange("ValueRMB");
@@ -49,6 +52,27 @@ namespace SuperMinersWPF.Models
             get
             {
                 return this._parentObject.SellerUserName;
+            }
+        }
+
+        public int SellerCreditValue
+        {
+            get
+            {
+                return this._parentObject.SellerCreditValue;
+            }
+        }
+
+        public BitmapImage SellerCreditLevelImg
+        {
+            get
+            {
+                int level = CreditLevelConfig.GetCreditLevel(this.SellerCreditValue);
+                if (level == 0)
+                {
+                    return null;
+                }
+                return new BitmapImage(new Uri(@"Resources/l" + level + ".png", UriKind.Relative));
             }
         }
 

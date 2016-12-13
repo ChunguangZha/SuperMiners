@@ -463,6 +463,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 BasePlayer.FortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
                 BasePlayer.FortuneInfo.GoldCoin += order.AwardGoldCoin;
+                BasePlayer.FortuneInfo.CreditValue += (int)order.StonesOrder.ValueRMB;
 
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
             }

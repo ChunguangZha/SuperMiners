@@ -214,6 +214,7 @@ namespace DataBaseProvider
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
                 player.FortuneInfo.Exp = Convert.ToDecimal(dt.Rows[i]["Exp"]);
+                player.FortuneInfo.CreditValue = Convert.ToInt32(dt.Rows[i]["CreditValue"]);
                 player.FortuneInfo.RMB = Convert.ToDecimal(dt.Rows[i]["RMB"]);
                 player.FortuneInfo.FreezingRMB = Convert.ToDecimal(dt.Rows[i]["FreezingRMB"]);
                 player.FortuneInfo.GoldCoin = Convert.ToDecimal(dt.Rows[i]["GoldCoin"]);
@@ -291,6 +292,7 @@ namespace DataBaseProvider
                 order.StonesOrder.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
+                order.StonesOrder.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
@@ -318,6 +320,7 @@ namespace DataBaseProvider
                 order.StonesOrder.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
+                order.StonesOrder.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
@@ -446,6 +449,7 @@ namespace DataBaseProvider
                 order.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
+                order.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
                 order.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
