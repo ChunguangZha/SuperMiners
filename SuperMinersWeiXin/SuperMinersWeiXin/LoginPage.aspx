@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-cell_global.css" />
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-flex.css" />
     <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/weui-button.css" />
+    <link type="text/css" rel="stylesheet" href="App_Themes/Theme1/myglobal.css" />
 </head>
 <body>
     <form id="form1" runat="server" enableviewstate="false">

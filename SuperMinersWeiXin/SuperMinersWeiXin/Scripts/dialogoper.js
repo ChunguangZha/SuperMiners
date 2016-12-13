@@ -5,11 +5,15 @@ var $inputValueVerfy;
 $(function () {
     var $iosDialog1 = $('#iosDialog1'),
         $iosDialog2 = $('#iosDialog2');
+    var $ctrInput = $("#dig3_inputValue");
+
+    $ctrInput.focus(function () {
+        $(this).select();
+    });
 
     $('#dialogs').on('click', '.weui-dialog__btn', function () {
 
         var $this = $(this);
-        var $ctrInput = $("#dig3_inputValue");
         if ($this.is('.weui-dialog__btn_default')) {
             $(this).parents('.js_dialog').fadeOut(200);
             $ctrInput.val("0");

@@ -23,7 +23,7 @@ $().ready(function () {
     });
     $("#weuiAgree").click(function () {
         var $checked = $(this).is(':checked');
-        showAlertMessage($checked);
+        //showAlertMessage($checked);
         var $btn = $("#btnRegister");
         if ($checked == true) {
             $btn.removeAttr("disabled");
@@ -146,8 +146,8 @@ function CheckAlipayAccount() {
 }
 
 function CheckAlipayRealName() {
-    var imgOK = $("#imgAlipayRealNameOK");
-    imgOK.css("display", "none");
+    var $imgOK = $("#imgAlipayRealNameOK");
+    $imgOK.css("display", "none");
 
     var alipayRealName = $("#txtAlipayRealName").val();
     if (alipayRealName.length == 0) {

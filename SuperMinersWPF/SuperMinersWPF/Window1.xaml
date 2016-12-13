@@ -133,8 +133,10 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Row="0" Text="矿主：" Style="{StaticResource UserInfoTextBlockStyle}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,5" FontWeight="Bold"/>
-                <TextBlock Grid.Column="1" Text="{Binding NickName}" Foreground="White" FontSize="16" Margin="5" FontWeight="Bold"/>
-                <Image Grid.Column="2" Height="16" Stretch="Fill" Source="{Binding CreditLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
+                    <TextBlock Text="{Binding NickName}" Foreground="White" FontSize="16" Margin="5" FontWeight="Bold"/>
+                    <Image Height="16" Stretch="Uniform" Source="{Binding CreditLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                </StackPanel>
                 <TextBlock Grid.Row="1" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Exp, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="1" Grid.Column="2" x:Name="btnInvitationFriends" Content="邀请好友" Style="{StaticResource UserInfoButtonStyle}" Click="btnInvitationFriends_Click"/>

@@ -72,7 +72,7 @@ namespace SuperMinersWPF.Models
                 {
                     return null;
                 }
-                return new BitmapImage(new Uri(@"Resources/l" + level + ".png", UriKind.Relative));
+                return new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/l" + level + ".png", UriKind.Relative));
             }
         }
 

@@ -19,6 +19,9 @@
   color: #FFFFFF;
   font-size: 55px;
 }
+.weui-icon-success-no-circle:before {
+  content: "\EA08";
+}
 .weui-icon_toast.weui-loading {
   margin: 30px auto 0;
   width: 38px;
