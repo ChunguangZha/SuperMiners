@@ -273,7 +273,7 @@ namespace DataBaseProvider
                 record.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 record.AddExp = Convert.ToDecimal(dt.Rows[i]["AddExp"]);
                 record.NewExp = Convert.ToDecimal(dt.Rows[i]["NewExp"]);
-                record.Time = Convert.ToDateTime(dt.Rows[i]["Time"]);
+                record.Time = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
                 record.OperContent = dt.Rows[i]["OperContent"].ToString();
 
                 records[i] = record;
@@ -414,16 +414,16 @@ namespace DataBaseProvider
                     record.UserNickName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserNickName"]));
                 }
                 record.RouletteAwardItemID = Convert.ToInt32(dt.Rows[i]["AwardItemID"]);
-                record.WinTime = Convert.ToDateTime(dt.Rows[i]["WinTime"]);
+                record.WinTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["WinTime"]));
                 record.IsGot = Convert.ToBoolean(dt.Rows[i]["IsGot"]);
                 if (dt.Rows[i]["GotTime"] != DBNull.Value)
                 {
-                    record.GotTime = Convert.ToDateTime(dt.Rows[i]["GotTime"]);
+                    record.GotTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["GotTime"]));
                 }
                 record.IsPay = Convert.ToBoolean(dt.Rows[i]["IsPay"]);
                 if (dt.Rows[i]["PayTime"] != DBNull.Value)
                 {
-                    record.PayTime = Convert.ToDateTime(dt.Rows[i]["PayTime"]);
+                    record.PayTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["PayTime"]));
                 }
                 if (dt.Rows[i]["GotInfo1"] != DBNull.Value)
                 {

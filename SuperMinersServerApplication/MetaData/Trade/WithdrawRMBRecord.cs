@@ -31,7 +31,7 @@ namespace MetaData.Trade
         [DataMember]
         public int ValueYuan = 0;
 
-        public DateTime CreateTime;
+        public DateTime CreateTime = Common.INVALIDTIME;
         [DataMember]
         public string CreateTimeString
         {
@@ -43,7 +43,13 @@ namespace MetaData.Trade
             {
                 try
                 {
-                    CreateTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out CreateTime))
+                        {
+                            CreateTime = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

@@ -31,7 +31,7 @@ namespace MetaData.Game.Roulette
         public RouletteAwardItem AwardItem;
 
         [DataMember]
-        public DateTime WinTime;
+        public MyDateTime WinTime;
 
         /// <summary>
         /// 是否已领取
@@ -43,7 +43,7 @@ namespace MetaData.Game.Roulette
         /// 允许为null
         /// </summary>
         [DataMember]
-        public DateTime? GotTime;
+        public MyDateTime GotTime;
 
         /// <summary>
         /// 是否已支付
@@ -55,7 +55,7 @@ namespace MetaData.Game.Roulette
         /// 允许为null
         /// </summary>
         [DataMember]
-        public DateTime? PayTime;
+        public MyDateTime PayTime;
 
         [DataMember]
         public string GotInfo1;

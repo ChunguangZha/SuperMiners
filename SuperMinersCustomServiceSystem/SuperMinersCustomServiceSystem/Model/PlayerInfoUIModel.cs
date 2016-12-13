@@ -43,6 +43,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("IsLocked");
                 NotifyPropertyChange("LockedTime");
                 NotifyPropertyChange("Exp");
+                NotifyPropertyChange("CreditValue");
                 NotifyPropertyChange("RMB");
                 NotifyPropertyChange("FreezingRMB");
                 NotifyPropertyChange("GoldCoin");
@@ -240,6 +241,11 @@ namespace SuperMinersCustomServiceSystem.Model
         public decimal Exp
         {
             get { return this._parentObject.FortuneInfo.Exp; }
+        }
+
+        public int CreditValue
+        {
+            get { return this._parentObject.FortuneInfo.CreditValue; }
         }
 
         public decimal RMB

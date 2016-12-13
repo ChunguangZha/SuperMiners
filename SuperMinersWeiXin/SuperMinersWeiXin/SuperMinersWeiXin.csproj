@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;Test</DefineConstants>
+    <DefineConstants>TRACE;-Test</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -84,6 +84,23 @@
     <Content Include="Fragment\dialog.html" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
+    <Content Include="images\l1.png" />
+    <Content Include="images\l10.png" />
+    <Content Include="images\l11.png" />
+    <Content Include="images\l12.png" />
+    <Content Include="images\l13.png" />
+    <Content Include="images\l14.png" />
+    <Content Include="images\l15.png" />
+    <Content Include="images\l16.png" />
+    <Content Include="images\l17.png" />
+    <Content Include="images\l2.png" />
+    <Content Include="images\l3.png" />
+    <Content Include="images\l4.png" />
+    <Content Include="images\l5.png" />
+    <Content Include="images\l6.png" />
+    <Content Include="images\l7.png" />
+    <Content Include="images\l8.png" />
+    <Content Include="images\l9.png" />
     <Content Include="images\wxerror.png" />
     <Content Include="images\wxok.png" />
     <Content Include="LoginPage.aspx" />
@@ -154,6 +171,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
       <Link>Wcf\Models\OperResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\CreditLevelConfig.cs">
+      <Link>Wcf\Models\CreditLevelConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Models\GameConfig.cs</Link>

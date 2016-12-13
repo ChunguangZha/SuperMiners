@@ -430,7 +430,7 @@ namespace DataBaseProvider
                 mycmd.CommandText = sqlInsertText;
                 mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@AwardItemID", record.AwardItem.ID);
-                mycmd.Parameters.AddWithValue("@WinTime", record.WinTime);
+                mycmd.Parameters.AddWithValue("@WinTime", record.WinTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@IsGot", record.IsGot);
                 if (record.GotTime == null)
                 {
@@ -438,7 +438,7 @@ namespace DataBaseProvider
                 }
                 else
                 {
-                    mycmd.Parameters.AddWithValue("@GotTime", record.GotTime);
+                    mycmd.Parameters.AddWithValue("@GotTime", record.GotTime.ToDateTime());
                 }
                 mycmd.Parameters.AddWithValue("@IsPay", record.IsPay);
                 if (record.PayTime == null)
@@ -447,7 +447,7 @@ namespace DataBaseProvider
                 }
                 else
                 {
-                    mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                    mycmd.Parameters.AddWithValue("@PayTime", record.PayTime.ToDateTime());
                 }
                 mycmd.Parameters.AddWithValue("@GotInfo1", DESEncrypt.EncryptDES(record.GotInfo1));
                 mycmd.Parameters.AddWithValue("@GotInfo2", DESEncrypt.EncryptDES(record.GotInfo2));
@@ -535,7 +535,7 @@ namespace DataBaseProvider
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlInsertText;
                 mycmd.Parameters.AddWithValue("@IsGot", record.IsGot);
-                mycmd.Parameters.AddWithValue("@GotTime", record.GotTime);
+                mycmd.Parameters.AddWithValue("@GotTime", record.GotTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@GotInfo1", DESEncrypt.EncryptDES(record.GotInfo1));
                 mycmd.Parameters.AddWithValue("@GotInfo2", DESEncrypt.EncryptDES(record.GotInfo2));
                 mycmd.Parameters.AddWithValue("@ID", record.RecordID);
@@ -573,7 +573,7 @@ namespace DataBaseProvider
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlInsertText;
                 mycmd.Parameters.AddWithValue("@IsPay", record.IsPay);
-                mycmd.Parameters.AddWithValue("@PayTime", record.PayTime);
+                mycmd.Parameters.AddWithValue("@PayTime", record.PayTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@ID", record.RecordID);
 
                 mycmd.ExecuteNonQuery();

@@ -464,7 +464,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 UserID = userID,
                 UserName = userName,
                 UserNickName = userNickName,
-                WinTime = DateTime.Now,
+                WinTime = MyDateTime.FromDateTime(DateTime.Now),
                 IsGot = false,
                 IsPay = false
             };
@@ -478,9 +478,9 @@ namespace SuperMinersServerApplication.Controller.Game
                     if (isOK)
                     {
                         record.IsGot = true;
-                        record.GotTime = DateTime.Now;
+                        record.GotTime = MyDateTime.FromDateTime(DateTime.Now);
                         record.IsPay = true;
-                        record.PayTime = DateTime.Now;
+                        record.PayTime = MyDateTime.FromDateTime(DateTime.Now);
                     }
                 }
 
@@ -495,14 +495,14 @@ namespace SuperMinersServerApplication.Controller.Game
             else
             {
                 record.IsGot = true;
-                record.GotTime = DateTime.Now;
+                record.GotTime = MyDateTime.FromDateTime(DateTime.Now);
                 record.IsPay = true;
-                record.PayTime = DateTime.Now;
+                record.PayTime = MyDateTime.FromDateTime(DateTime.Now);
             }
 
             //Save Record
             DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
-            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserID, record.UserName, winAwardID, record.WinTime);
+            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserID, record.UserName, winAwardID, record.WinTime.ToDateTime());
             if (dbRecord != null)
             {
                 record.RecordID = dbRecord.RecordID;
@@ -530,7 +530,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 return OperResult.RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST;
             }
             record.IsGot = true;
-            record.GotTime = DateTime.Now;
+            record.GotTime = MyDateTime.FromDateTime(DateTime.Now);
             record.GotInfo1 = info1;
             record.GotInfo2 = info2;
             //Save to DB
@@ -556,7 +556,7 @@ namespace SuperMinersServerApplication.Controller.Game
             }
 
             record.IsPay = true;
-            record.PayTime = DateTime.Now;
+            record.PayTime = MyDateTime.FromDateTime(DateTime.Now);
 
             //save To DB
             DBProvider.GameRouletteDBProvider.SetWinnerRecordPay(record);

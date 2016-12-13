@@ -18,7 +18,7 @@ namespace MetaData.Trade
         [DataMember]
         public string BuyerUserName = "";
 
-        public DateTime BuyTime;
+        public DateTime BuyTime = Common.INVALIDTIME;
         [DataMember]
         public string BuyTimeString
         {
@@ -30,7 +30,13 @@ namespace MetaData.Trade
             {
                 try
                 {
-                    BuyTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out BuyTime))
+                        {
+                            BuyTime = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

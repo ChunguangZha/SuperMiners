@@ -27,6 +27,7 @@ $(function () {
                                 OrderNumber: this.OrderNumber,
                                 SellStonesCount: this.SellStonesCount,
                                 SellerUserName: this.SellerUserName,
+                                CreditLevelImg: this.SellerCreditLevel
                             });
                             html += rowhtml;
                         });
@@ -78,7 +79,7 @@ $(function () {
                 "        </div>"+
                 "        <div class='weui-form-preview__item'>"+
                 "            <label class='weui-form-preview__label'>卖家</label>"+
-                "            <span class='weui-form-preview__value'>{SellerUserName}</span>"+
+                "            <span class='weui-form-preview__value'>{SellerUserName}<img align='middle' src='../images/l{CreditLevelImg}.png' /></span>" +
                 "        </div>"+
                 "    </div>"+
                 "    <div class='weui-form-preview__ft'>"+

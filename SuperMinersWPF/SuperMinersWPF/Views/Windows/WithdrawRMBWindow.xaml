@@ -42,7 +42,6 @@
         <my:NumericTextBox Grid.Row="6" Grid.Column="1" x:Name="numGainYuan" IsReadOnly="True" Margin="5" VerticalAlignment="Center" Maximum="1000000" DecimalPlaces="2"/>
         <TextBlock Grid.Row="6" Grid.Column="2" Text="元 人民币" Margin="5" VerticalAlignment="Center"/>
 
-        <TextBlock Grid.Row="7" Grid.Column="1"  Name="txtMessage" Text="提现将在两个小时内到达您绑定的支付宝账户。" TextWrapping="Wrap" Margin="5" Foreground="Red" VerticalAlignment="Center"/>
         <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnOK" Content="确定" Width="75" Margin="5,5,110,5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>
         <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnCancel" Content="取消" Width="75" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnCancel_Click"/>
     </Grid>

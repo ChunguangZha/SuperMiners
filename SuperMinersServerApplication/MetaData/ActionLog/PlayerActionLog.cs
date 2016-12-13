@@ -22,7 +22,7 @@ namespace MetaData.ActionLog
         [DataMember]
         public string Remark;
 
-        public DateTime Time;
+        public DateTime Time = Common.INVALIDTIME;
         [DataMember]
         public string LastLoginTimeString
         {
@@ -34,7 +34,13 @@ namespace MetaData.ActionLog
             {
                 try
                 {
-                    Time = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out Time))
+                        {
+                            Time = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

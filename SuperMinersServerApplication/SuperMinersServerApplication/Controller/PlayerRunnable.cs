@@ -351,7 +351,7 @@ namespace SuperMinersServerApplication.Controller
                     UserName = this.BasePlayer.SimpleInfo.UserName,
                     AddExp = (int)moneyYuan,
                     NewExp = BasePlayer.FortuneInfo.Exp,
-                    Time = DateTime.Now,
+                    Time = MyDateTime.FromDateTime(DateTime.Now),
                     OperContent = "玩家支付宝充值金币奖励"
                 };
 
@@ -424,7 +424,7 @@ namespace SuperMinersServerApplication.Controller
                     UserName = this.BasePlayer.SimpleInfo.UserName,
                     AddExp = (int)moneyYuan,
                     NewExp = BasePlayer.FortuneInfo.Exp,
-                    Time = DateTime.Now,
+                    Time = MyDateTime.FromDateTime( DateTime.Now),
                     OperContent = "玩家支付宝充值金币奖励"
                 };
 
@@ -737,7 +737,7 @@ namespace SuperMinersServerApplication.Controller
                 AddExp = awardConfig.AwardReferrerExp,
                 NewExp = this.BasePlayer.FortuneInfo.Exp,
                 OperContent = "邀请玩家[" + newUserName + "]注册，并登录成功。获取" + awardConfig.ReferLevel + "级奖励",
-                Time = DateTime.Now
+                Time = MyDateTime.FromDateTime(DateTime.Now)
             }, trans);
 
             if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardConfig.AwardReferrerExp < 50))
@@ -796,7 +796,7 @@ namespace SuperMinersServerApplication.Controller
                                 AddExp = awardItem.AwardNumber,
                                 NewExp = newFortuneInfo.Exp,
                                 OperContent = "幸运大转盘中奖",
-                                Time = DateTime.Now
+                                Time = MyDateTime.FromDateTime( DateTime.Now)
                             }, trans);
 
                             if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardItem.AwardNumber < 50))

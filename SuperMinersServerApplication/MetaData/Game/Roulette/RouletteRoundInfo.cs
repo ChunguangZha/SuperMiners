@@ -28,7 +28,7 @@ namespace MetaData.Game.Roulette
         [DataMember]
         public decimal WinAwardSumYuan;
 
-        public DateTime StartTime;
+        public DateTime StartTime = Common.INVALIDTIME;
 
         [DataMember]
         public string StartTimeString
@@ -45,7 +45,13 @@ namespace MetaData.Game.Roulette
             {
                 try
                 {
-                    StartTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out StartTime))
+                        {
+                            StartTime = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

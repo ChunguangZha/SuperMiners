@@ -38,7 +38,13 @@ namespace MetaData.Trade
             {
                 try
                 {
-                    LockedTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out LockedTime))
+                        {
+                            LockedTime = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

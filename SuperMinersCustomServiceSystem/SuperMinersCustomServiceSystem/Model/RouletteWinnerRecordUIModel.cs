@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using MetaData;
 
 namespace SuperMinersCustomServiceSystem.Model
 {
@@ -63,7 +64,7 @@ namespace SuperMinersCustomServiceSystem.Model
 
         public DateTime WinTime
         {
-            get { return this.ParentObject.WinTime; }
+            get { return this.ParentObject.WinTime.ToDateTime(); }
         }
 
         /// <summary>
@@ -79,7 +80,14 @@ namespace SuperMinersCustomServiceSystem.Model
         /// </summary>
         public DateTime? GotTime
         {
-            get { return this.ParentObject.GotTime; }
+            get
+            {
+                if (this.ParentObject.GotTime == null)
+                {
+                    return null;
+                }
+                return this.ParentObject.GotTime.ToDateTime();
+            }
         }
 
         /// <summary>
@@ -113,7 +121,14 @@ namespace SuperMinersCustomServiceSystem.Model
         /// </summary>
         public DateTime? PayTime
         {
-            get { return this.ParentObject.PayTime; }
+            get
+            {
+                if (this.ParentObject.PayTime == null)
+                {
+                    return null;
+                }
+                return this.ParentObject.PayTime.ToDateTime();
+            }
         }
 
         public string GotInfo1
@@ -129,7 +144,7 @@ namespace SuperMinersCustomServiceSystem.Model
         public void SetRecordPay()
         {
             this.ParentObject.IsPay = true;
-            this.ParentObject.PayTime = DateTime.Now;
+            this.ParentObject.PayTime = MyDateTime.FromDateTime(DateTime.Now);
             NotifyPropertyChange("IsPay");
             NotifyPropertyChange("PayTime");
 

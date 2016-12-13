@@ -46,7 +46,7 @@ namespace MetaData.Trade
         /// <summary>
         /// 支付时间
         /// </summary>
-        public DateTime pay_time;
+        public DateTime pay_time = Common.INVALIDTIME;
         [DataMember]
         public string pay_timeString
         {
@@ -58,7 +58,13 @@ namespace MetaData.Trade
             {
                 try
                 {
-                    pay_time = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out pay_time))
+                        {
+                            pay_time = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

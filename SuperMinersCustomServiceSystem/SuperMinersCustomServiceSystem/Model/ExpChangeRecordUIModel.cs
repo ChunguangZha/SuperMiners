@@ -58,7 +58,7 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get
             {
-                return _parentObject.Time;
+                return _parentObject.Time.ToDateTime();
             }
         }
 

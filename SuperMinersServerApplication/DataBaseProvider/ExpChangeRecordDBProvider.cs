@@ -27,7 +27,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@AddExp", record.AddExp);
                 mycmd.Parameters.AddWithValue("@NewExp", record.NewExp);
-                mycmd.Parameters.AddWithValue("@Time", record.Time);
+                mycmd.Parameters.AddWithValue("@Time", record.Time.ToDateTime());
                 mycmd.Parameters.AddWithValue("@OperContent", record.OperContent);
 
                 mycmd.ExecuteNonQuery();

@@ -46,7 +46,10 @@ namespace MetaData.User
             {
                 try
                 {
-                    RegisterTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        RegisterTime = DateTime.Parse(value);
+                    }
                 }
                 catch (Exception)
                 {

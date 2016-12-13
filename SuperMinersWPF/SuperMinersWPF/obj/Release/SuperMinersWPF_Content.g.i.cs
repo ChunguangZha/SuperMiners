@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/helper.txt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l9.png")]
 
 

@@ -94,6 +94,7 @@
                     <DataGridTextColumn Binding="{Binding LastLoginIP}" ClipboardContentBinding="{x:Null}" Header="最近一次登录IP"/>
                     <DataGridTextColumn Binding="{Binding LastLoginMac}" ClipboardContentBinding="{x:Null}" Header="最近一次登录MAC"/>
                     <DataGridTextColumn Binding="{Binding Exp}" ClipboardContentBinding="{x:Null}" Header="贡献值"/>
+                    <DataGridTextColumn Binding="{Binding CreditValue}" Header="信誉值"/>
                     <DataGridTextColumn Binding="{Binding RMB}" ClipboardContentBinding="{x:Null}" Header="灵币"/>
                     <DataGridTextColumn Binding="{Binding FreezingRMB}" ClipboardContentBinding="{x:Null}" Header="冻结灵币"/>
                     <DataGridTextColumn Binding="{Binding GoldCoin}" ClipboardContentBinding="{x:Null}" Header="金币"/>

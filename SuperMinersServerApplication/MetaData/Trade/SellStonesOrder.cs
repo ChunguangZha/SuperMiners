@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData.SystemConfig;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -26,7 +27,20 @@ namespace MetaData.Trade
         public string SellerUserName = "";
 
         [DataMember]
-        public int SellerCreditValue = 0;
+        private int _sellerCreditValue = 0;
+
+        public int SellerCreditValue
+        {
+            get { return this._sellerCreditValue; }
+            set
+            {
+                this._sellerCreditValue = value;
+                SellerCreditLevel = CreditLevelConfig.GetCreditLevel(value);
+            }
+        }
+
+        [DataMember]
+        public int SellerCreditLevel = 0;
 
         /// <summary>
         /// 出售矿石数
@@ -46,7 +60,7 @@ namespace MetaData.Trade
         [DataMember]
         public decimal ValueRMB = 0;
 
-        public DateTime SellTime;
+        public DateTime SellTime = Common.INVALIDTIME;
         [DataMember]
         public string SellTimeString
         {
@@ -58,7 +72,13 @@ namespace MetaData.Trade
             {
                 try
                 {
-                    SellTime = DateTime.Parse(value);
+                    if (!string.IsNullOrEmpty(value))
+                    {
+                        if (!DateTime.TryParse(value, out SellTime))
+                        {
+                            SellTime = Common.INVALIDTIME;
+                        }
+                    }
                 }
                 catch (Exception)
                 {

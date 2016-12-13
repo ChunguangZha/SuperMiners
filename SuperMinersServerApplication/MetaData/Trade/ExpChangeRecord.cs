@@ -23,7 +23,7 @@ namespace MetaData.Trade
         public decimal NewExp;
 
         [DataMember]
-        public DateTime Time;
+        public MyDateTime Time;
 
         /// <summary>
         /// MaxLength:100
