@@ -448,7 +448,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="order"></param>
         /// <param name="trans"></param>
         /// <returns></returns>
-        public bool PayBuyStonesUpdateBuyerInfo(bool isAlipayPay, BuyStonesOrder order, CustomerMySqlTransaction trans)
+        public int PayBuyStonesUpdateBuyerInfo(bool isAlipayPay, BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
@@ -456,7 +456,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
                     {
-                        return false;
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
                     }
 
                     BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
@@ -467,7 +467,7 @@ namespace SuperMinersServerApplication.Controller
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
             }
 
-            return true;
+            return OperResult.RESULTCODE_TRUE;
         }
 
         /// <summary>
@@ -476,13 +476,13 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="order"></param>
         /// <param name="trans"></param>
         /// <returns></returns>
-        public bool PayBuyStonesUpdateSellerInfo(BuyStonesOrder order, CustomerMySqlTransaction trans)
+        public int PayBuyStonesUpdateSellerInfo(BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
                 if (BasePlayer.FortuneInfo.FreezingStones < order.StonesOrder.SellStonesCount)
                 {
-                    return false;
+                    return OperResult.RESULTCODE_FALSE;
                 }
                 BasePlayer.FortuneInfo.RMB += (order.StonesOrder.ValueRMB - order.StonesOrder.Expense);
                 BasePlayer.FortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
@@ -491,7 +491,7 @@ namespace SuperMinersServerApplication.Controller
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
             }
 
-            return true;
+            return OperResult.RESULTCODE_TRUE;
         }
 
         /// <summary>

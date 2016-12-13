@@ -1,9 +1,12 @@
 .weui-loadmore {
+  display:block;
   width: 65%;
   margin: 1.5em auto;
   line-height: 1.6em;
   font-size: 14px;
   text-align: center;
+  color:#1aad19;
+  background-color:transparent;
 }
 .weui-loadmore__tips {
   display: inline-block;
@@ -15,10 +18,10 @@
 }
 .weui-loadmore_line .weui-loadmore__tips {
   position: relative;
-  top: -0.9em;
+  top: 0.9em;
   padding: 0 .55em;
-  background-color: #FFFFFF;
-  color: #999999;
+  background-color: transparent;
+  color: #1aad19;
 }
 .weui-loadmore_dot .weui-loadmore__tips {
   padding: 0 .16em;

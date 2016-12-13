@@ -1,0 +1,39 @@
+﻿.myui-toprefresh {
+  display:block;
+  width: 65%;
+  margin: .5em auto;
+  line-height: 1.6em;
+  font-size: 14px;
+  text-align: center;
+  color:#1aad19;
+  background-color:transparent;
+}
+.myui-toprefresh__tips {
+  display: inline-block;
+  vertical-align: middle;
+}
+.myui-toprefresh_line {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: .4em;
+}
+.myui-toprefresh_line .myui-toprefresh__tips {
+  position: relative;
+  top: 0.9em;
+  padding: 0 .55em;
+  background-color: transparent;
+  color: #1aad19;
+}
+.myui-toprefresh_dot .myui-toprefresh__tips {
+  padding: 0 .16em;
+}
+.myui-toprefresh_dot .myui-toprefresh__tips:after {
+  content: " ";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #e5e5e5;
+  display: inline-block;
+  position: relative;
+  vertical-align: 0;
+  bottom: -0.16em;
+}

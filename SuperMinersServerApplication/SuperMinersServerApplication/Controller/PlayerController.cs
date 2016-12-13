@@ -815,26 +815,42 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public bool PayStoneOrder(bool isAlipayPay, string buyerUserName, BuyStonesOrder order, CustomerMySqlTransaction trans)
+        public int CheckSellStone_BeforeBuy(string buyUserName, string orderNumber, decimal valueRMB)
+        {
+            PlayerRunnable playerBuyerRun = this.GetRunnable(buyUserName);
+            if (playerBuyerRun == null)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败（数据库中没有买方玩家信息）。 Order: " + orderNumber);
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            if (playerBuyerRun.BasePlayer.FortuneInfo.RMB < valueRMB)
+            {
+                return OperResult.RESULTCODE_LACK_OF_BALANCE;
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int PayStoneOrder(bool isAlipayPay, string buyerUserName, BuyStonesOrder order, CustomerMySqlTransaction trans)
         {
             PlayerRunnable playerBuyerRun = this.GetRunnable(buyerUserName);
             if (playerBuyerRun == null)
             {
                 LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败（数据库中没有买方玩家信息）。 Order: " + order.ToString());
-                return false;
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
-            bool isOK = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(isAlipayPay, order, trans);
-            if (!isOK)
+            int result = playerBuyerRun.PayBuyStonesUpdateBuyerInfo(isAlipayPay, order, trans);
+            if (result != OperResult.RESULTCODE_TRUE)
             {
                 LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败。 Order: " + order.ToString());
-                return false;
+                return result;
             }
 
             PlayerRunnable playerSellerRun = this.GetRunnable(order.StonesOrder.SellerUserName);
             if (playerSellerRun == null)
             {
                 LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 Order: " + order.ToString());
-                return false;
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
             return playerSellerRun.PayBuyStonesUpdateSellerInfo(order, trans);

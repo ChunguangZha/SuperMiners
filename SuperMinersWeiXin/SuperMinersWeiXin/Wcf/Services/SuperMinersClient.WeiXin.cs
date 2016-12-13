@@ -2,6 +2,8 @@
 using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
+using SuperMinersWeiXin.Core;
+using SuperMinersWeiXin.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -173,6 +175,84 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
+        public MinesBuyRecord[] GetBuyMineFinishedRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetBuyMineFinishedRecordList(userName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetBuyMineFinishedRecordList异常", exc);
+                return null;
+            }
+        }
+
+        public MinersBuyRecord[] GetBuyMinerFinishedRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetBuyMinerFinishedRecordList(userName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetBuyMinerFinishedRecordList异常", exc);
+                return null;
+            }
+        }
+
+        public GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetFinishedGoldCoinRechargeRecordList(userName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetFinishedGoldCoinRechargeRecordList异常", exc);
+                return null;
+            }
+        }
+
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetWithdrawRMBRecordList(userName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetWithdrawRMBRecordList异常", exc);
+                return null;
+            }
+        }
+
+        public SellStonesOrder[] GetUserSellStoneOrders(string sellerUserName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetUserSellStoneOrders(sellerUserName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetUserSellStoneOrders异常", exc);
+                return null;
+            }
+        }
+
+        public BuyStonesOrder[] GetUserBuyStoneOrders(string buyUserName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return base.Channel.GetUserBuyStoneOrders(buyUserName, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GetUserBuyStoneOrders异常", exc);
+                return null;
+            }
+        }
+
         public SellStonesOrder[] GetAllNotFinishedSellOrders(string userName)
         {
             try
@@ -181,9 +261,48 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
             catch (Exception exc)
             {
-                Console.WriteLine(exc);
+                LogHelper.Instance.AddErrorLog("GetAllNotFinishedSellOrders异常", exc);
                 return null;
             }
         }
+
+        public int BuyStone(string userName, string stoneOrderNumber)
+        {
+            try
+            {
+                return base.Channel.BuyStone(userName, stoneOrderNumber);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("BuyStone异常", exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
+
+        //public void AsyncGetAllNotFinishedSellOrders(object userState, params object[] inputValues)
+        //{
+        //    base.InvokeAsync(new BeginOperationDelegate(BeginGetAllNotFinishedSellOrders),
+        //        inputValues,
+        //        new EndOperationDelegate(EndGetAllNotFinishedSellOrders),
+        //        new System.Threading.SendOrPostCallback(GetAllNotFinishedSellOrdersCallback),
+        //        userState);
+        //}
+
+        //private IAsyncResult BeginGetAllNotFinishedSellOrders(object[] inValues, AsyncCallback asyncCallback, object state)
+        //{
+        //    this.Channel
+        //    MyHttpAsyncResult result = new MyHttpAsyncResult(asyncCallback, state);
+        //    return result;
+        //}
+
+        //private object[] EndGetAllNotFinishedSellOrders(IAsyncResult result)
+        //{
+            
+        //}
+
+        //private void GetAllNotFinishedSellOrdersCallback(object state)
+        //{
+
+        //}
     }
 }

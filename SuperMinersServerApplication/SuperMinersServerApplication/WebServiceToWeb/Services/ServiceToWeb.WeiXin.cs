@@ -390,6 +390,84 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
+        public MinesBuyRecord[] GetBuyMineFinishedRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.MineRecordDBProvider.GetAllMineTradeRecords(userName, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有矿山勘探记录异常", exc);
+                return null;
+            }
+        }
+
+        public MinersBuyRecord[] GetBuyMinerFinishedRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.BuyMinerRecordDBProvider.GetFinishedBuyMinerRecordList(userName, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有矿工购买记录异常", exc);
+                return null;
+            }
+        }
+
+        public GoldCoinRechargeRecord[] GetFinishedGoldCoinRechargeRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.GoldCoinRecordDBProvider.GetFinishedGoldCoinRechargeRecordList(userName, null, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有金币充值记录异常", exc);
+                return null;
+            }
+        }
+
+        public WithdrawRMBRecord[] GetWithdrawRMBRecordList(string userName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.WithdrawRMBRecordDBProvider.GetWithdrawRMBRecordList(-1, userName, null, null, null, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有灵币提现记录异常", exc);
+                return null;
+            }
+        }
+
+        public SellStonesOrder[] GetUserSellStoneOrders(string sellerUserName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.StoneOrderDBProvider.GetSellOrderList(sellerUserName, null, -1, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + sellerUserName + "] 查询矿石出售历史订单异常", exc);
+                return null;
+            }
+        }
+
+        public BuyStonesOrder[] GetUserBuyStoneOrders(string buyUserName, int pageItemCount, int pageIndex)
+        {
+            try
+            {
+                return DBProvider.StoneOrderDBProvider.GetBuyStonesOrderList("", "", buyUserName, -1, null, null, null, null, pageItemCount, pageIndex);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + buyUserName + "] 查询矿石购买历史订单异常", exc);
+                return null;
+            }
+        }
+
         public SellStonesOrder[] GetAllNotFinishedSellOrders(string userName)
         {
             try
@@ -403,5 +481,29 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
+        public int BuyStone(string userName, string stoneOrderNumber)
+        {
+            try
+            {
+                var lockedOrder = OrderController.Instance.StoneOrderController.LockSellStone(userName, stoneOrderNumber);
+                if (lockedOrder == null)
+                {
+                    return OperResult.RESULTCODE_ORDER_BE_LOCKED_BY_OTHER;
+                }
+
+                int result = OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(userName, stoneOrderNumber, lockedOrder.StonesOrder.ValueRMB);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    OrderController.Instance.StoneOrderController.ReleaseLockSellOrder(stoneOrderNumber);
+                }
+
+                return result;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("微信端，玩家[" + userName + "] 获取所有未完成的矿石订单异常", exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
     }
 }

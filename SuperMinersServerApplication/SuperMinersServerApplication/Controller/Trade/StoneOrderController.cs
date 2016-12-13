@@ -188,7 +188,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public LockSellStonesOrder LockSellStone(string userName, string orderNumber)
+        public LockSellStonesOrder LockSellStone(string buyerUserName, string orderNumber)
         {
             lock (_lockListSellOrders)
             {
@@ -199,7 +199,11 @@ namespace SuperMinersServerApplication.Controller
                     {
                         return null;
                     }
-                    return runnable.Lock(userName);
+                    if (runnable.SellOrder.SellerUserName == buyerUserName)
+                    {
+                        return null;
+                    }
+                    return runnable.Lock(buyerUserName);
                 }
 
                 return null;
@@ -260,7 +264,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     else
                     {
-                        if (item.OrderState != (SellOrderState)orderState)
+                        if (item.OrderState == (SellOrderState)orderState)
                         {
                             orders.Add(item.SellOrder);
                         }
@@ -268,11 +272,14 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
 
-            lock (_lockListFinishedOrders)
+            if (orderState <= 0 || orderState == (int)SellOrderState.Finish)
             {
-                foreach (var item in _listFinishedOrders)
+                lock (_lockListFinishedOrders)
                 {
-                    orders.Add(item);
+                    foreach (var item in _listFinishedOrders)
+                    {
+                        orders.Add(item);
+                    }
                 }
             }
             return orders.ToArray();
@@ -512,18 +519,23 @@ namespace SuperMinersServerApplication.Controller
                     LogHelper.Instance.AddInfoLog("玩家[" + buyerUserName + "] 灵币购买矿石失败。原因为：" + OperResult.GetMsg(result) + "。" + (runnable == null ? "" : "LockedByUserName：" + runnable.LockedOrder.LockedByUserName));
                     return result;
                 }
+                
+                result = PlayerController.Instance.CheckSellStone_BeforeBuy(buyerUserName, orderNumber, rmb);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
 
-                //订单处理
                 var buyOrder = runnable.Pay(trans);
                 if (buyOrder == null)
                 {
                     trans.Rollback();
-                    return result;
+                    return OperResult.RESULTCODE_FALSE;
                 }
 
                 //更新用户信息
-                bool isOK = PlayerController.Instance.PayStoneOrder(false, buyerUserName, buyOrder, trans);
-                if (!isOK)
+                result = PlayerController.Instance.PayStoneOrder(false, buyerUserName, buyOrder, trans);
+                if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
                     result = OperResult.RESULTCODE_FALSE;
@@ -659,6 +671,7 @@ namespace SuperMinersServerApplication.Controller
                 //LogHelper.Instance.AddInfoLog("玩家[" + user_name + "] 支付宝购买矿石失败，回调找不到订单。支付宝信息：" + alipayRecord.ToString());
                 return OperResult.RESULTCODE_ORDER_NOT_EXIST;
             }
+
             if (value_rmb < runnable.ValueRMB)
             {
                 //LogHelper.Instance.AddInfoLog("玩家[" + user_name + "] 支付宝购买矿石失败，回调支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
@@ -712,8 +725,8 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 //更新用户信息
-                bool isOK = PlayerController.Instance.PayStoneOrder(true, alipayRecord.user_name, buyOrder, trans);
-                if (!isOK)
+                result = PlayerController.Instance.PayStoneOrder(true, alipayRecord.user_name, buyOrder, trans);
+                if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
                     result = OperResult.RESULTCODE_FALSE;
