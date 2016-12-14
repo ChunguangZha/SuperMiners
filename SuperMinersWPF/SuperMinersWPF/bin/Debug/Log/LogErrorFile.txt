@@ -35790,3 +35790,39 @@ Error:  [2016/12/14 17:09:44] ---- Log: RestClient ReceiveCallback 10
 Error:  [2016/12/14 17:09:44] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 
+Error:  [2016/12/14 23:38:16] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:16] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:16] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:16] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:18] ---- Log: RestClient ReceiveCallback 10
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:19] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2016/12/14 23:38:30] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+

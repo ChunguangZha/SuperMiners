@@ -472,7 +472,7 @@ namespace SuperMinersWPF.ViewModels
                     {
                         this._allNotFinishStoneOrder.Clear();
                         this._mySellNotFinishedStonesOrders.Clear();
-                        var listOrderTimeASC = e.Result.OrderByDescending(s => s.SellTime).OrderBy(s=>s.OrderStateInt);
+                        var listOrderTimeASC = e.Result.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue).OrderBy(s => s.OrderStateInt);
                         foreach (var item in listOrderTimeASC)
                         {
                             var uiobj = new SellStonesOrderUIModel(item);
