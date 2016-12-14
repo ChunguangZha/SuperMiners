@@ -26,7 +26,7 @@ namespace SuperMinersServerApplication.Controller
 
         private object _lockListFinishedOrders = new object();
         private List<SellStonesOrder> _listFinishedOrders = new List<SellStonesOrder>();
-        private const int MAXLISTFINISHEDORDERCOUNT = 50;
+        private const int MAXLISTFINISHEDORDERCOUNT = 200;
 
         //private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
 
@@ -311,7 +311,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="sellStonesCount"></param>
         /// <param name="myTrans"></param>
         /// <returns></returns>
-        public SellStonesOrder CreateSellOrder(string userName, int sellStonesCount)
+        public SellStonesOrder CreateSellOrder(string userName, int creditValue, int sellStonesCount)
         {
             decimal valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
             DateTime time = DateTime.Now;
@@ -321,6 +321,7 @@ namespace SuperMinersServerApplication.Controller
                 SellStonesCount = sellStonesCount,
                 OrderState = SellOrderState.Wait,
                 SellerUserName = userName,
+                SellerCreditValue = creditValue,                  
                 ValueRMB = valueRMB,
                 Expense = GetExpense(valueRMB),
                 SellTime = time,
@@ -506,6 +507,8 @@ namespace SuperMinersServerApplication.Controller
         {
             int result = OperResult.RESULTCODE_FALSE;
             var trans = MyDBHelper.Instance.CreateTrans();
+            string sellerUserName = "";
+
             try
             {
                 StoneOrderRunnable runnable = FindOrderByOrderName(orderNumber);
@@ -530,15 +533,20 @@ namespace SuperMinersServerApplication.Controller
                 if (buyOrder == null)
                 {
                     trans.Rollback();
+                    LogHelper.Instance.AddInfoLog("灵币支付矿石订单失败1。原因为：" + OperResult.GetMsg(result) + "。OrderNumber: " + orderNumber + "; buyerUserName:" + buyerUserName);
                     return OperResult.RESULTCODE_FALSE;
                 }
+
+                sellerUserName = buyOrder.StonesOrder.SellerUserName;
 
                 //更新用户信息
                 result = PlayerController.Instance.PayStoneOrder(false, buyerUserName, buyOrder, trans);
                 if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
-                    result = OperResult.RESULTCODE_FALSE;
+                    PlayerController.Instance.RefreshFortune(buyerUserName);
+                    PlayerController.Instance.RefreshFortune(sellerUserName);
+                    LogHelper.Instance.AddInfoLog("灵币支付矿石订单失败2。原因为：" + OperResult.GetMsg(result) + "。OrderNumber: " + orderNumber + "; buyerUserName:" + buyerUserName);
                     return result;
                 }
                 this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
@@ -554,6 +562,11 @@ namespace SuperMinersServerApplication.Controller
             {
                 result = OperResult.RESULTCODE_EXCEPTION;
                 trans.Rollback();
+                PlayerController.Instance.RefreshFortune(buyerUserName);
+                if (!string.IsNullOrEmpty(sellerUserName))
+                {
+                    PlayerController.Instance.RefreshFortune(sellerUserName);
+                }
                 LogHelper.Instance.AddErrorLog("PayStoneTrade Exception. OrderNumber: " + orderNumber, exc);
                 return result;
             }
@@ -671,7 +684,15 @@ namespace SuperMinersServerApplication.Controller
                 //LogHelper.Instance.AddInfoLog("玩家[" + user_name + "] 支付宝购买矿石失败，回调找不到订单。支付宝信息：" + alipayRecord.ToString());
                 return OperResult.RESULTCODE_ORDER_NOT_EXIST;
             }
+                        
+            if(runnable.SellOrder.OrderState == SellOrderState.Wait || runnable.SellOrder.OrderState == SellOrderState.Finish)
+            {
+                return OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER;
+            }
+            //if (runnable.LockedOrder == null)
+            //{
 
+            //}
             if (value_rmb < runnable.ValueRMB)
             {
                 //LogHelper.Instance.AddInfoLog("玩家[" + user_name + "] 支付宝购买矿石失败，回调支付宝收款金额小于需要支付金额" + runnable.ValueRMB + "。支付宝信息：" + alipayRecord.ToString());
@@ -710,7 +731,8 @@ namespace SuperMinersServerApplication.Controller
 
                 return result;
             }
-            
+
+            string sellerUserName = "";
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
@@ -721,15 +743,27 @@ namespace SuperMinersServerApplication.Controller
                 if (buyOrder == null)
                 {
                     trans.Rollback();
+
+                    LogHelper.Instance.AddInfoLog("支付宝支付矿石订单失败1。原因为：订单支付失败。alipayRecord: " + alipayRecord.ToString());
+                    //如果支付失败，先将订单设为异常。
+                    this.SetStoneOrderPayException(alipayRecord.user_name, alipayRecord.out_trade_no);
                     return OperResult.RESULTCODE_FALSE;
                 }
+
+                sellerUserName = buyOrder.StonesOrder.SellerUserName;
 
                 //更新用户信息
                 result = PlayerController.Instance.PayStoneOrder(true, alipayRecord.user_name, buyOrder, trans);
                 if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
-                    result = OperResult.RESULTCODE_FALSE;
+
+                    PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
+                    PlayerController.Instance.RefreshFortune(sellerUserName);
+                    LogHelper.Instance.AddInfoLog("支付宝支付矿石订单失败2。原因为：" + OperResult.GetMsg(result) + "。alipayRecord: " + alipayRecord.ToString());
+
+                    //如果支付失败，先将订单设为异常。
+                    this.SetStoneOrderPayException(alipayRecord.user_name, alipayRecord.out_trade_no);
                     return result;
                 }
                 this.RemoveRecord(buyOrder.StonesOrder.OrderNumber);
@@ -745,8 +779,16 @@ namespace SuperMinersServerApplication.Controller
             {
                 result = OperResult.RESULTCODE_EXCEPTION;
                 trans.Rollback();
+
+                PlayerController.Instance.RefreshFortune(alipayRecord.user_name);
+                if (!string.IsNullOrEmpty(sellerUserName))
+                {
+                    PlayerController.Instance.RefreshFortune(sellerUserName);
+                }
+                //如果支付失败，先将订单设为异常。
+                this.SetStoneOrderPayException(alipayRecord.user_name, alipayRecord.out_trade_no);
                 LogHelper.Instance.AddErrorLog("玩家[" + alipayRecord.user_name + "] 支付宝购买矿石回调异常. 支付宝信息: " + alipayRecord.ToString(), exc);
-                return OperResult.RESULTCODE_FALSE;
+                return result;
             }
             finally
             {

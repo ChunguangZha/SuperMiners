@@ -50,16 +50,23 @@ namespace SuperMinersServerApplication.WebService.Services
                 CustomerMySqlTransaction trans = MyDBHelper.Instance.CreateTrans();
                 try
                 {
-                    order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, sellStonesCount);
-                    if (order.ValueRMB <= 0)
+                    PlayerRunnable playerrun = PlayerController.Instance.GetRunnable(userName);
+                    if (playerrun == null)
                     {
-                        return OperResult.RESULTCODE_USER_OFFLINE;
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
-                    int result = PlayerController.Instance.SellStones(order, trans);
+                    order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, playerrun.BasePlayer.FortuneInfo.CreditValue, sellStonesCount);
+                    if (order.ValueRMB <= 0)
+                    {
+                        return OperResult.RESULTCODE_PARAM_INVALID;
+                    }
+
+                    int result = playerrun.SellStones(order, trans);
                     if (result != OperResult.RESULTCODE_TRUE)
                     {
                         trans.Rollback();
+                        PlayerController.Instance.RefreshFortune(userName);
                         return result;
                     }
                     OrderController.Instance.StoneOrderController.AddSellOrder(order, trans);
@@ -89,6 +96,7 @@ namespace SuperMinersServerApplication.WebService.Services
                             OrderController.Instance.StoneOrderController.ClearSellStonesOrder(order);
                         }
                         LogHelper.Instance.AddErrorLog(errMessage, exc);
+                        PlayerController.Instance.RefreshFortune(userName);
                     }
                     catch (Exception ee)
                     {

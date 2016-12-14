@@ -65,6 +65,11 @@ namespace MetaData
         public const int RESULTCODE_USER_IS_LOCKED = 303;
 
         /// <summary>
+        /// 玩家矿工数超限
+        /// </summary>
+        public const int RESULTCODE_USER_MINERSCOUNT_OUT = 304;
+
+        /// <summary>
         /// 微信绑定时，该迅灵用户已经被其它微信用户绑定
         /// </summary>
         public const int RESULTCODE_WEIXIN_USERBINDEDBYOTHER = 350;
@@ -131,6 +136,11 @@ namespace MetaData
         public const int RESULTCODE_ORDER_SELLABLE_STONE_LACK = 610;
 
         /// <summary>
+        /// 矿石订单卖家冻结矿石数不对
+        /// </summary>
+        public const int RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR = 611;
+
+        /// <summary>
         /// 支付订单时，支付金额不足
         /// </summary>
         public const int RESULTCODE_ORDER_PAYMONEY_LESS = 660;
@@ -174,6 +184,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WEXIN_REGISTER_OPENID_EXIST, "当前微信号已经注册过迅灵账户，无法再注册");
             _resultCode_Msg.Add(RESULTCODE_ORDER_PAYMONEY_LESS, "支付金额不足");
             _resultCode_Msg.Add(RESULTCODE_ORDER_BE_LOCKED_BY_OTHER, "订单被抢了");
+            _resultCode_Msg.Add(RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR, "卖家冻结矿石数错误");
+            _resultCode_Msg.Add(RESULTCODE_USER_MINERSCOUNT_OUT, "矿工数不能超过5000");
         }
 
         public static string GetMsg(int resultCode)

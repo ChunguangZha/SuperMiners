@@ -79,7 +79,7 @@ namespace MetaData.User
         public decimal MinersCount { get; set; }
 
         /// <summary>
-        /// 库存矿石数
+        /// 库存矿石数（可出售矿石：StockOfStones-FreezingStones），挂单出售矿石时，不从该值减，而是添加到冻结矿石中。如交易成功，再从该值减。
         /// </summary>
         [DataMember]
         public decimal StockOfStones { get; set; }

@@ -33,6 +33,9 @@ $(function () {
             function (inputValue) {
                 showLoadingToast();
                 $.post("BuyMinerHandler", { number: inputValue }, callHandlerCallback);
+            },
+            function (inputValue) {
+                return inputValue < 5000;
             });
     });
 

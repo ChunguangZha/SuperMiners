@@ -243,6 +243,11 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
+                if (this.BasePlayer.FortuneInfo.MinersCount + minersCount > GlobalConfig.GameConfig.UserMaxHaveMinersCount)
+                {
+                    return OperResult.RESULTCODE_USER_MINERSCOUNT_OUT;
+                }
+
                 decimal allNeedGoldCoin = minersCount * GlobalConfig.GameConfig.GoldCoin_Miner;
                 if (allNeedGoldCoin > BasePlayer.FortuneInfo.GoldCoin)
                 {
@@ -452,20 +457,22 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                 if (!isAlipayPay)
                 {
-                    if (BasePlayer.FortuneInfo.RMB < order.StonesOrder.ValueRMB)
+                    if (fortuneInfo.RMB < order.StonesOrder.ValueRMB)
                     {
                         return OperResult.RESULTCODE_LACK_OF_BALANCE;
                     }
 
-                    BasePlayer.FortuneInfo.RMB -= order.StonesOrder.ValueRMB;
+                    fortuneInfo.RMB -= order.StonesOrder.ValueRMB;
                 }
-                BasePlayer.FortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
-                BasePlayer.FortuneInfo.GoldCoin += order.AwardGoldCoin;
-                BasePlayer.FortuneInfo.CreditValue += (int)order.StonesOrder.ValueRMB;
+                fortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
+                fortuneInfo.GoldCoin += order.AwardGoldCoin;
+                fortuneInfo.CreditValue += (int)order.StonesOrder.ValueRMB;
 
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -481,15 +488,18 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if (BasePlayer.FortuneInfo.FreezingStones < order.StonesOrder.SellStonesCount)
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                if (fortuneInfo.FreezingStones < order.StonesOrder.SellStonesCount)
                 {
-                    return OperResult.RESULTCODE_FALSE;
+                    return OperResult.RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR;
                 }
-                BasePlayer.FortuneInfo.RMB += (order.StonesOrder.ValueRMB - order.StonesOrder.Expense);
-                BasePlayer.FortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
-                BasePlayer.FortuneInfo.FreezingStones -= order.StonesOrder.SellStonesCount;
+                fortuneInfo.RMB += (order.StonesOrder.ValueRMB - order.StonesOrder.Expense);
+                fortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
+                fortuneInfo.FreezingStones -= order.StonesOrder.SellStonesCount;
 
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -510,9 +520,11 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK;
                 }
 
-                BasePlayer.FortuneInfo.FreezingStones += order.SellStonesCount;
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                fortuneInfo.FreezingStones += order.SellStonesCount;
 
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -522,9 +534,11 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                BasePlayer.FortuneInfo.FreezingStones -= order.SellStonesCount;
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                fortuneInfo.FreezingStones -= order.SellStonesCount;
 
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
             return OperResult.RESULTCODE_TRUE;

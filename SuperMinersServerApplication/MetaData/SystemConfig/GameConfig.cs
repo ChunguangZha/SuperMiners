@@ -86,7 +86,7 @@ namespace MetaData.SystemConfig
         /// 玩家可以拥有最大矿工数
         /// </summary>
         [DataMember]
-        public int UserMaxHaveMinersCount = 50;
+        public int UserMaxHaveMinersCount = 5000;
 
         /// <summary>
         /// 买家锁定订单时间（分钟）

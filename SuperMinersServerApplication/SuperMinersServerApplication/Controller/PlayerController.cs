@@ -856,22 +856,15 @@ namespace SuperMinersServerApplication.Controller
             return playerSellerRun.PayBuyStonesUpdateSellerInfo(order, trans);
         }
 
-        /// <summary>
-        /// 0表示成功；RESULTCODE_USER_OFFLINE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
-        /// 如果事务提交失败，则调用RollbackUserFromDB恢复状态
-        /// </summary>
-        /// <param name="SellStonesCount"></param>
-        /// <returns></returns>
-        public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
-        {
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(order.SellerUserName);
-            if (playerrun == null)
-            {
-                return OperResult.RESULTCODE_USER_OFFLINE;
-            }
-
-            return playerrun.SellStones(order, trans);
-        }
+        ///// <summary>
+        ///// 0表示成功；RESULTCODE_USER_OFFLINE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        ///// 如果事务提交失败，则调用RollbackUserFromDB恢复状态
+        ///// </summary>
+        ///// <param name="SellStonesCount"></param>
+        ///// <returns></returns>
+        //public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
+        //{
+        //}
 
         public int CancelSellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
         {

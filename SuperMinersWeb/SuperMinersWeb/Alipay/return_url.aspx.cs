@@ -113,7 +113,7 @@ public partial class return_url : System.Web.UI.Page
 
                         if (result != OperResult.RESULTCODE_TRUE && result != OperResult.RESULTCODE_ORDER_BUY_SUCCEED)
                         {
-                            string message = "支付成功，但是服务器操作失败，请联系客服，并将以下信息发送给客服。\r\n商品订单号：" + out_trade_no + "，支付宝订单号：" + trade_no + "，付款账户：" + buyer_email;
+                            string message = "支付成功，但是服务器操作失败，原因为：" + OperResult.GetMsg(result) + "。请联系客服，并将以下信息发送给客服。\r\n商品订单号：" + out_trade_no + "，支付宝订单号：" + trade_no + "，付款账户：" + buyer_email;
                             DBOper.AddExceptionAlipayRechargeRecord(userName, out_trade_no, trade_no, total_fee, buyer_email, timeNow.ToString());
                             SuperMinersWeb.AlipayCode.Core.LogResult(userName, message);
 

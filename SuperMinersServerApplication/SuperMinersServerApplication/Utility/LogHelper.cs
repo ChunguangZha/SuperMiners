@@ -33,8 +33,8 @@ namespace SuperMinersServerApplication.Utility
 
         public event LogAddedEventHandler LogAdded;
 
-        private List<string> ListErrorLogs = new List<string>();
-        private List<string> ListInfoLogs = new List<string>();
+        private Queue<string> QueErrorLogs = new Queue<string>();
+        private Queue<string> QueInfoLogs = new Queue<string>();
 
         private object _lockError = new object();
         private object _lockInfo = new object();
@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.Utility
         string LogErrorFilePath = "";
         bool InitSuceed = false;
 
-        Timer _timer = new Timer(1000 * 60);
+        Timer _timer = new Timer(1000 * 60 * 10);
 
         public void Init()
         {
@@ -100,28 +100,48 @@ namespace SuperMinersServerApplication.Utility
             SaveLogToDisk();
         }
 
+        public FileStream OpenErrorLogFileStream()
+        {
+            DateTime timenow = DateTime.Now;
+            string fileName = timenow.ToString("yyyMMdd");
+            FileStream stream = null;
+            string path = GlobalData.LogFolder + "\\LogErrorFile_" + fileName + ".txt";
+            stream = File.Open(path, FileMode.Append, FileAccess.Write);
+            return stream;
+        }
+
+        public FileStream OpenInfoLogFileStream()
+        {
+            DateTime timenow = DateTime.Now;
+            string fileName = timenow.ToString("yyyMMdd");
+            FileStream stream = null;
+            string path = GlobalData.LogFolder + "\\LogInfoFile_" + fileName + ".txt";
+            stream = File.Open(path, FileMode.Append, FileAccess.Write);
+            return stream;
+        }
+
         private void SaveLogToDisk()
         {
 
-            lock (_lockError)
+            if (QueErrorLogs.Count > 0)
             {
                 FileStream stream = null;
                 try
                 {
-                    stream = File.OpenWrite(this.LogErrorFilePath);
+                    stream = OpenErrorLogFileStream();
                     if (stream != null)
                     {
+                        stream.Position = stream.Length;
                         using (StreamWriter writer = new StreamWriter(stream, UnicodeEncoding.Unicode))
                         {
-                            foreach (var log in this.ListErrorLogs)
+                            while (QueErrorLogs.Count > 0)
                             {
+                                var log = QueErrorLogs.Dequeue();
                                 writer.Write(log);
                                 writer.WriteLine("*********+++++++++++++***********");
                             }
                             writer.Flush();
                         }
-
-                        this.ListErrorLogs.Clear();
                     }
                 }
                 catch (Exception exc)
@@ -141,24 +161,25 @@ namespace SuperMinersServerApplication.Utility
                 }
             }
 
-            lock (_lockInfo)
+            if(QueInfoLogs.Count > 0)
             {
                 FileStream stream = null;
                 try
                 {
-                    stream = File.OpenWrite(this.LogInfoFilePath);
+                    stream = OpenInfoLogFileStream();
                     if (stream != null)
                     {
+                        stream.Position = stream.Length;
                         using (StreamWriter writer = new StreamWriter(stream, UnicodeEncoding.Unicode))
                         {
-                            foreach (var log in this.ListInfoLogs)
+                            while(QueInfoLogs.Count > 0)
                             {
+                                var log = QueInfoLogs.Dequeue();
                                 writer.Write(log);
                                 writer.WriteLine("*********+++++++++++++***********");
                             }
                             writer.Flush();
                         }
-                        this.ListInfoLogs.Clear();
                     }
                 }
                 catch (Exception exc)
@@ -187,10 +208,7 @@ namespace SuperMinersServerApplication.Utility
                 {
                     string logFinished = BuildErrorLog(log, exception);
 
-                    lock (_lockError)
-                    {
-                        this.ListErrorLogs.Add(logFinished);
-                    }
+                    this.QueErrorLogs.Enqueue(logFinished);
                     if (LogAdded != null)
                     {
                         LogAdded(true, logFinished);
@@ -238,10 +256,7 @@ namespace SuperMinersServerApplication.Utility
                 try
                 {
                     string logFinished = BuildInfoLog(log);
-                    lock (_lockInfo)
-                    {
-                        this.ListInfoLogs.Add(logFinished);
-                    }
+                    this.QueInfoLogs.Enqueue(logFinished);
                     if (LogAdded != null)
                     {
                         LogAdded(true, logFinished);

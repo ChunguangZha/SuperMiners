@@ -338,13 +338,19 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             try
             {
                 trans = MyDBHelper.Instance.CreateTrans();
-                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, stoneCount);
+                PlayerRunnable playerrun = PlayerController.Instance.GetRunnable(userName);
+                if (playerrun == null)
+                {
+                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                }
+
+                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
                 if (order.ValueRMB <= 0)
                 {
                     return OperResult.RESULTCODE_USER_OFFLINE;
                 }
 
-                int result = PlayerController.Instance.SellStones(order, trans);
+                int result = playerrun.SellStones(order, trans);
                 if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();

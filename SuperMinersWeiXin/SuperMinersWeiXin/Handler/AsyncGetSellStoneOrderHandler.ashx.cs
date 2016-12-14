@@ -70,7 +70,8 @@ namespace SuperMinersWeiXin.Handler
                 if (myresult.Result != null)
                 {
                     SellStonesOrder[] orders = myresult.Result as SellStonesOrder[];
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(orders.GetType());
+                    var ordersDESC = orders.OrderByDescending(s => s.SellTime);
+                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(ordersDESC.GetType());
                     MemoryStream ms = new MemoryStream();
                     serializer.WriteObject(ms, orders);
                     jsonString = Encoding.UTF8.GetString(ms.ToArray());
