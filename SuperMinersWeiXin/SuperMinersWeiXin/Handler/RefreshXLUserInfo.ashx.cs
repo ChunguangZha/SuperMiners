@@ -41,6 +41,7 @@ namespace SuperMinersWeiXin.Handler
             builder.Append("\"rmb\":" + player.FortuneInfo.RMB.ToString("f2") + ",");
             builder.Append("\"stockofstones\":" + (player.FortuneInfo.StockOfStones - player.FortuneInfo.FreezingStones).ToString("f2") + ",");
             builder.Append("\"workstonesreservers\":" + (player.FortuneInfo.StonesReserves - player.FortuneInfo.TotalProducedStonesCount).ToString("f2") + ",");
+            builder.Append("\"StoneSellQuan\":" + player.FortuneInfo.StoneSellQuan + ",");
             builder.Append("\"lastgathertime\":\"" + player.FortuneInfo.TempOutputStonesStartTime.ToString() + "\",");
             builder.Append("}");
             context.Response.Write(builder.ToString());

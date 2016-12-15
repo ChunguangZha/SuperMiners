@@ -64,6 +64,7 @@
     <Compile Include="Trade\LockSellStonesOrder.cs" />
     <Compile Include="Trade\MinersBuyRecord.cs" />
     <Compile Include="Trade\MinesBuyRecord.cs" />
+    <Compile Include="Trade\PlayerLastSellStoneRecord.cs" />
     <Compile Include="Trade\RMBRechargeRecord.cs" />
     <Compile Include="Trade\SellStonesOrder.cs" />
     <Compile Include="SystemConfig\GameConfig.cs" />

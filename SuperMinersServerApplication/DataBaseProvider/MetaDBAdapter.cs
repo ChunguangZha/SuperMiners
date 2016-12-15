@@ -236,6 +236,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.StockOfDiamonds = Convert.ToDecimal(dt.Rows[i]["StockOfDiamonds"]);
                 player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
                 player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
+                player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 players[i] = player;
             }
@@ -260,6 +261,22 @@ namespace DataBaseProvider
             }
 
             return admins;
+        }
+
+        internal static PlayerLastSellStoneRecord[] GetPlayerLastSellStoneRecord(DataTable dt)
+        {
+            PlayerLastSellStoneRecord[] records = new PlayerLastSellStoneRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                PlayerLastSellStoneRecord record = new PlayerLastSellStoneRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.SellStoneOrderNumber = dt.Rows[i]["SellStoneOrderNumber"].ToString();
+                record.SellTime = Convert.ToDateTime(dt.Rows[i]["SellTime"]);
+
+                records[i] = record;
+            }
+
+            return records;
         }
 
         internal static ExpChangeRecord[] GetExpChangeRecordListFromDataTable(DataTable dt)

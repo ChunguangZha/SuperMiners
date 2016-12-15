@@ -12,7 +12,40 @@ namespace DataBaseProvider
 {
     public class StoneOrderDBProvider
     {
-        public bool AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction trans)
+        public PlayerLastSellStoneRecord GetPlayerLastSellStoneRecord(int userID)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlText = "select * from playerlastsellstonerecord where `UserID` = @UserID;";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                myconn.Open();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                var records = MetaDBAdapter<PlayerLastSellStoneRecord>.GetPlayerLastSellStoneRecord(table);
+                if (records.Length == 0)
+                {
+                    return null;
+                }
+
+                return records[0];
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public bool AddSellOrder(SellStonesOrder order, int userID, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
             try
@@ -32,6 +65,23 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@ValueRMB", order.ValueRMB);
                 mycmd.Parameters.AddWithValue("@SellTime", order.SellTime);
                 mycmd.Parameters.AddWithValue("@OrderState", order.OrderState);
+
+                mycmd.ExecuteNonQuery();
+
+                PlayerLastSellStoneRecord lastrecord = new PlayerLastSellStoneRecord()
+                {
+                    UserID = userID,
+                    SellStoneOrderNumber = order.OrderNumber,
+                    SellTime = order.SellTime
+                };
+                string cmdTextB = "delete from playerlastsellstonerecord where `UserID` = @UserID ;" +
+                    "insert into playerlastsellstonerecord " +
+                    "(`UserID`, `SellStoneOrderNumber`, `SellTime` ) " +
+                    " values " +
+                    "(@UserID, @OrderNumber, @SellTime ); ";
+
+                mycmd.CommandText = cmdTextB;
+                mycmd.Parameters.AddWithValue("@UserID", lastrecord.UserID);
 
                 mycmd.ExecuteNonQuery();
 

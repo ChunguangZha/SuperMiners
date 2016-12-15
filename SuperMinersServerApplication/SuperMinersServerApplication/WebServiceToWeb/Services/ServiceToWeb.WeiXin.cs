@@ -344,19 +344,33 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
+                bool needUseQuan = false;
+                PlayerLastSellStoneRecord lastSellOrder = DBProvider.StoneOrderDBProvider.GetPlayerLastSellStoneRecord(playerrun.BasePlayer.SimpleInfo.UserID);
+                if (lastSellOrder != null)
+                {
+                    //今天已经出售过矿石，则再出售就需要用券。
+                    DateTime timenow = DateTime.Now;
+                    if (lastSellOrder.SellTime.Year == timenow.Year &&
+                        lastSellOrder.SellTime.Month == timenow.Month &&
+                        lastSellOrder.SellTime.Day == timenow.Day)
+                    {
+                        needUseQuan = true;
+                    }
+                }
+
                 order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
                 if (order.ValueRMB <= 0)
                 {
                     return OperResult.RESULTCODE_USER_OFFLINE;
                 }
 
-                int result = playerrun.SellStones(order, trans);
+                int result = playerrun.SellStones(order, needUseQuan, trans);
                 if (result != OperResult.RESULTCODE_TRUE)
                 {
                     trans.Rollback();
                     return result;
                 }
-                OrderController.Instance.StoneOrderController.AddSellOrder(order, trans);
+                OrderController.Instance.StoneOrderController.AddSellOrder(order, playerrun.BasePlayer.SimpleInfo.UserID, trans);
                 trans.Commit();
                 PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, stoneCount);
 

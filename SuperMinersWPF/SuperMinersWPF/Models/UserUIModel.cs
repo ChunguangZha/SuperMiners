@@ -66,6 +66,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("StockOfDiamonds");
                 NotifyPropertyChange("FreezingDiamonds");
                 NotifyPropertyChange("SellableDiamonds");
+                NotifyPropertyChange("StoneSellQuan");
             }
         }
 
@@ -334,6 +335,11 @@ namespace SuperMinersWPF.Models
         public decimal SellableDiamonds
         {
             get { return StockOfDiamonds - FreezingDiamonds; }
+        }
+
+        public int StoneSellQuan
+        {
+            get { return this._parentObject.FortuneInfo.StoneSellQuan; }
         }
     }
 }

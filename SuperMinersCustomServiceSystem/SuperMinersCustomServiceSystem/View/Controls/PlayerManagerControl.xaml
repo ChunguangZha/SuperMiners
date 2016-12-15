@@ -103,6 +103,7 @@
                     <DataGridTextColumn Binding="{Binding StockOfStones}" ClipboardContentBinding="{x:Null}" Header="矿石量"/>
                     <DataGridTextColumn Binding="{Binding MinersCount}" ClipboardContentBinding="{x:Null}" Header="矿工数"/>
                     <DataGridTextColumn Binding="{Binding StockOfDiamonds}" ClipboardContentBinding="{x:Null}" Header="钻石量"/>
+                    <DataGridTextColumn Binding="{Binding StoneSellQuan}" Header="矿石出售券"/>
                 </DataGrid.Columns>
                 <DataGrid.ContextMenu>
                     <ContextMenu Name="cmenuDataGridPlayer" StaysOpen="True">

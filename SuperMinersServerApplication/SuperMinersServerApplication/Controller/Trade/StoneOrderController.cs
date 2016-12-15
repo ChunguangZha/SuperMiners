@@ -26,7 +26,7 @@ namespace SuperMinersServerApplication.Controller
 
         private object _lockListFinishedOrders = new object();
         private List<SellStonesOrder> _listFinishedOrders = new List<SellStonesOrder>();
-        private const int MAXLISTFINISHEDORDERCOUNT = 200;
+        private const int MAXLISTFINISHEDORDERCOUNT = 300;
 
         //private List<BuyStonesOrder> listBuyStonesOrderLast20 = new List<BuyStonesOrder>();
 
@@ -384,11 +384,11 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public void AddSellOrder(SellStonesOrder order, CustomerMySqlTransaction myTrans)
+        public void AddSellOrder(SellStonesOrder order, int userID, CustomerMySqlTransaction myTrans)
         {
             lock (this._lockListSellOrders)
             {
-                DBProvider.StoneOrderDBProvider.AddSellOrder(order, myTrans);
+                DBProvider.StoneOrderDBProvider.AddSellOrder(order, userID, myTrans);
                 dicSellOrders[order.OrderNumber] = new StoneOrderRunnable(order);
             }
         }

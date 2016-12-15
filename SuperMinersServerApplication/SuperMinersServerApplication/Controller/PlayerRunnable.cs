@@ -470,6 +470,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
                 fortuneInfo.GoldCoin += order.AwardGoldCoin;
                 fortuneInfo.CreditValue += (int)order.StonesOrder.ValueRMB;
+                fortuneInfo.StoneSellQuan++;
 
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
@@ -510,10 +511,14 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="SellStonesCount"></param>
         /// <returns></returns>
-        public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
+        public int SellStones(SellStonesOrder order, bool needUseQuan, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
+                if (BasePlayer.FortuneInfo.StoneSellQuan < 1)
+                {
+                    return OperResult.RESULTCODE_ORDER_SELLSTONEQUAN_LACK;
+                }
                 decimal sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
                 if (order.SellStonesCount > sellableStones)
                 {
@@ -522,6 +527,7 @@ namespace SuperMinersServerApplication.Controller
 
                 var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                 fortuneInfo.FreezingStones += order.SellStonesCount;
+                fortuneInfo.StoneSellQuan--;
 
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);

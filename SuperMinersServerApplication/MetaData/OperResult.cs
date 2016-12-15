@@ -141,6 +141,11 @@ namespace MetaData
         public const int RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR = 611;
 
         /// <summary>
+        /// 矿石出售券不足
+        /// </summary>
+        public const int RESULTCODE_ORDER_SELLSTONEQUAN_LACK = 612;
+
+        /// <summary>
         /// 支付订单时，支付金额不足
         /// </summary>
         public const int RESULTCODE_ORDER_PAYMONEY_LESS = 660;
@@ -186,6 +191,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_ORDER_BE_LOCKED_BY_OTHER, "订单被抢了");
             _resultCode_Msg.Add(RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR, "卖家冻结矿石数错误");
             _resultCode_Msg.Add(RESULTCODE_USER_MINERSCOUNT_OUT, "矿工数不能超过5000");
+            _resultCode_Msg.Add(RESULTCODE_ORDER_SELLSTONEQUAN_LACK, "矿石出售券不足");
         }
 
         public static string GetMsg(int resultCode)

@@ -134,6 +134,12 @@ namespace MetaData.User
         public decimal FreezingDiamonds { get; set; }
 
         /// <summary>
+        /// 矿石出售券
+        /// </summary>
+        [DataMember]
+        public int StoneSellQuan { get; set; }
+
+        /// <summary>
         /// 默认为false
         /// </summary>
         [DataMember]
@@ -159,7 +165,8 @@ namespace MetaData.User
                 TempOutputStones = this.TempOutputStones,
                 TotalProducedStonesCount = this.TotalProducedStonesCount,
                 UserName = this.UserName,
-                FirstRechargeGoldCoinAward = this.FirstRechargeGoldCoinAward
+                FirstRechargeGoldCoinAward = this.FirstRechargeGoldCoinAward,
+                StoneSellQuan = this.StoneSellQuan
             };
 
             return infoB;
@@ -184,6 +191,7 @@ namespace MetaData.User
             this.TotalProducedStonesCount = fortuneInfo.TotalProducedStonesCount;
             this.UserName = fortuneInfo.UserName;
             this.FirstRechargeGoldCoinAward = fortuneInfo.FirstRechargeGoldCoinAward;
+            this.StoneSellQuan = fortuneInfo.StoneSellQuan;
         }
     }
 }

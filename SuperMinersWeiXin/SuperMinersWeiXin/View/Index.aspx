@@ -88,6 +88,14 @@
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd">
+                    <label for="txtSellStoneQuan" class="weui-label">矿石出售券</label>
+                </div>
+                <div class="weui-cell__bd">
+                    <asp:TextBox ID="txtSellStoneQuan" runat="server" CssClass="weui-input" ReadOnly="true" TabIndex="7"/>
+                </div>
+            </div>
+            <div class="weui-cell">
+                <div class="weui-cell__hd">
                     <label for="txtLastGatherTime" class="weui-label">上次收取<br/>矿石时间</label>
                 </div>
                 <div class="weui-cell__bd">

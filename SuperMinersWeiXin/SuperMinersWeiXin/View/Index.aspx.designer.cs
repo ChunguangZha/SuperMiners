@@ -76,6 +76,15 @@ namespace SuperMinersWeiXin.View {
         protected global::System.Web.UI.WebControls.TextBox txtStones;
         
         /// <summary>
+        /// txtSellStoneQuan control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtSellStoneQuan;
+        
+        /// <summary>
         /// txtLastGatherTime control.
         /// </summary>
         /// <remarks>

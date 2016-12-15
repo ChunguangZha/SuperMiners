@@ -374,4 +374,81 @@
     <SystemAllOutputStoneCount>12971.1455688477</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/11/7 23:09:17</LastLoginTimeString>
   </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:32:09.8341127+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9386833.89147534</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:32:09</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>209</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:32:16.9846889+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387042.89147534</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:32:16</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>BuyStone</ActionType>
+    <OperNumber>1200</OperNumber>
+    <Remark>1200</Remark>
+    <Time>2016-12-16T00:38:55.6684513+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387042.89147534</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:38:55</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>SellStone</ActionType>
+    <OperNumber>1000</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:39:22.3476838+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387042.89147534</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:39:22</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:39:41.2346895+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387043.89147534</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:39:41</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:50:51.9746057+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387045.51891674</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:50:51</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>0</OperNumber>
+    <Remark />
+    <Time>2016-12-16T00:51:37.6050842+08:00</Time>
+    <SystemAllPlayerCount>5400</SystemAllPlayerCount>
+    <SystemAllMinerCount>452706</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>9387045.62975658</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2016/12/16 0:51:37</LastLoginTimeString>
+  </PlayerActionLog>
 </ArrayOfPlayerActionLog>

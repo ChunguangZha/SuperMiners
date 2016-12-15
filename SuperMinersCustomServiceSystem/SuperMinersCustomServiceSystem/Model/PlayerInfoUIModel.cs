@@ -60,6 +60,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("SellableDiamonds");
                 NotifyPropertyChange("LastGatherStoneTime");
                 NotifyPropertyChange("LastGatherStoneTime");
+                NotifyPropertyChange("StoneSellQuan");
             }
         }
 
@@ -394,6 +395,11 @@ namespace SuperMinersCustomServiceSystem.Model
         public decimal SellableDiamonds
         {
             get { return StockOfDiamonds - FreezingDiamonds; }
+        }
+
+        public int StoneSellQuan
+        {
+            get { return this._parentObject.FortuneInfo.StoneSellQuan; }
         }
     }
 }

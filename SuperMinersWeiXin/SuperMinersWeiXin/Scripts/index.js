@@ -102,6 +102,7 @@ function refreshUserInfo() {
                 $("#ContentPlaceHolder1_txtRMB").val(obj.rmb);
                 $("#ContentPlaceHolder1_txtStones").val(obj.stockofstones);
                 $("#ContentPlaceHolder1_txtWorkStonesReservers").val(obj.workstonesreservers);
+                $("#ContentPlaceHolder1_txtSellStoneQuan").val(obj.StoneSellQuan);
                 $("#ContentPlaceHolder1_txtLastGatherTime").val(obj.lastgathertime);
 
             }
