@@ -127,10 +127,10 @@ $(function () {
                 var $status = '';
                 if(this.State == 0){
                     $status = '处理中';
-                }else if(this.State == 1){
-                    $status = '被拒绝';
-                }else if(this.State == 2){
+                } else if (this.State == 1) {
                     $status = '成功';
+                } else if (this.State == 2) {
+                    $status = '被拒绝';
                 }
                 var rowhtml = $itemHtmlRecord.format({
                     pageindex: $pageindex_rmbwithdrawrecords,
