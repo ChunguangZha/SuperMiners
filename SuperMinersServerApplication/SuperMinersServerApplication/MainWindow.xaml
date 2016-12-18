@@ -222,9 +222,9 @@
                             <ScrollViewer>
                                 <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="100"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
@@ -285,9 +285,31 @@
                                     </TextBlock>
                                     <my:NumericTextBox Grid.Row="5" Grid.Column="1" Value="{Binding Diamonds_RMB, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
                                     <TextBlock Grid.Row="5" Grid.Column="2" Text="{Binding Strings.Diamond, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="6" Grid.Column="0" Text="每座矿山储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <my:NumericTextBox Grid.Row="6" Grid.Column="1" Value="{Binding StonesReservesPerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
-                                    <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                    <GroupBox Grid.Row="6" Header="矿山储量" Grid.ColumnSpan="3">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="200"/>
+                                                <ColumnDefinition Width="100"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <CheckBox Grid.Row="0" Name="chkMineReserversRandom" Content="开采矿山为随机储量" IsChecked="{Binding MineReservesIsRandom}" Margin="10" HorizontalAlignment="Right"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="0" Text="矿山固定储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                            <my:NumericTextBox Grid.Row="1" Grid.Column="1" Value="{Binding StonesReservesPerMines, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="0" Text="矿山最小随机储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                            <my:NumericTextBox Grid.Row="2" Grid.Column="1" Value="{Binding MinStonesReservesPerMine, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="0" Text="矿山最大随机储量为：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
+                                            <my:NumericTextBox Grid.Row="3" Grid.Column="1" Value="{Binding MaxStonesReservesPerMine, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Maximum="1000000" DecimalPlaces="2"/>
+                                            <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
+                                        </Grid>
+                                    </GroupBox>
                                     <TextBlock Grid.Row="7" Grid.Column="0" Text="每个矿工每小时生产：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
                                     <my:NumericTextBox Grid.Row="7" Grid.Column="1" Value="{Binding OutputStonesPerHour, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" DecimalPlaces="3"/>
                                     <TextBlock Grid.Row="7" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
@@ -448,6 +470,25 @@
                     <TextBlock Text="最新客户端版本" Margin="10"/>
                     <TextBox Grid.Column="1" Name="txtClientVersion" Margin="10" Width="200"/>
                     <Button Grid.Row="1" Grid.Column="1" Name="btnSaveClientVersion" Content="保存" Width="100" Margin="10" Click="btnSaveClientVersion_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="修复功能" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <GroupBox Header="" HorizontalAlignment="Left">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Button Name="btnDeletePlayers" Content="按规则删除无效玩家" Width="200" Margin="10" Click="btnDeletePlayers_Click"/>
+                            <CheckBox Grid.Column="1" Name="chkPerDayAutoDelete" Content="每日12时自动删除" VerticalAlignment="Center" Margin="10" Checked="chkPerDayAutoDelete_Checked" Unchecked="chkPerDayAutoDelete_Unchecked"/>
+                        </Grid>
+                    </GroupBox>
+                    <Button Name="btnRejectAllSellStoneOrders" Content="驳回所有矿石出售订单" Visibility="Collapsed" Margin="10" Padding="10" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnRejectAllSellStoneOrders_Click"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -34,10 +34,10 @@ namespace MetaData.User
         public decimal Exp { get; set; }
 
         /// <summary>
-        /// 信誉值(以玩家购买矿石价值的灵币计算)
+        /// 信誉值(以玩家购买矿石量计算)
         /// </summary>
         [DataMember]
-        public int CreditValue { get; set; }
+        public long CreditValue { get; set; }
 
         /// <summary>
         /// 灵币，玩家提现时，从该值中减去相应灵币，加到冻结灵币中。

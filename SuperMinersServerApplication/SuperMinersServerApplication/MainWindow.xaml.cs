@@ -1,7 +1,10 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
+using MetaData.Trade;
 using Microsoft.Win32;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Controller.Game;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.UIModel;
 using SuperMinersServerApplication.Utility;
 using SuperMinersServerApplication.Views;
@@ -430,6 +433,50 @@ namespace SuperMinersServerApplication
 
                 MessageBox.Show("输出完成");
             }
+        }
+
+        private void btnRejectAllSellStoneOrders_Click(object sender, RoutedEventArgs e)
+        {
+            var waitOrderDBObjects = DBProvider.StoneOrderDBProvider.GetSellOrderList("", "", (int)SellOrderState.Wait, null, null, 0, 0);
+
+            int errorCount = 0;
+
+            if (waitOrderDBObjects != null)
+            {
+                foreach (var item in waitOrderDBObjects)
+                {
+                    int result = OrderController.Instance.StoneOrderController.CancelSellOrder(item.SellerUserName, item.OrderNumber);
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        MessageBox.Show(OperResult.GetMsg(result));
+                    }
+                }
+
+                MessageBox.Show("成功拒绝矿石出售订单：" + waitOrderDBObjects.Length.ToString());
+            }
+        }
+
+        private void btnDeletePlayers_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PlayerController.Instance.AutoDeletePlayer();
+                PlayerController.Instance.Init();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void chkPerDayAutoDelete_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void chkPerDayAutoDelete_Unchecked(object sender, RoutedEventArgs e)
+        {
+
         }
 
 

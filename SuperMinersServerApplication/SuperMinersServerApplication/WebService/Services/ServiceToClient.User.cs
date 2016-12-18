@@ -96,10 +96,12 @@ namespace SuperMinersServerApplication.WebService.Services
                 {
                     return "";
                 }
-                if (player.SimpleInfo.LockedLogin)
+
+                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
                 {
                     return "LOCKED";
                 }
+
                 if (player.SimpleInfo.InvitationCode == GlobalData.TestInvitationCode)
                 {
                     try

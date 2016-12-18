@@ -40,8 +40,9 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("ReferrerUserName");
                 NotifyPropertyChange("InvitationCode");
                 NotifyPropertyChange("LastLoginTime");
-                NotifyPropertyChange("IsLocked");
-                NotifyPropertyChange("LockedTime");
+                NotifyPropertyChange("IsLockedString");
+                NotifyPropertyChange("LockedTimeString");
+                NotifyPropertyChange("LockedExpireDays");
                 NotifyPropertyChange("Exp");
                 NotifyPropertyChange("CreditValue");
                 NotifyPropertyChange("RMB");
@@ -211,12 +212,51 @@ namespace SuperMinersCustomServiceSystem.Model
 
         public bool IsLocked
         {
-            get { return this._parentObject.SimpleInfo.LockedLogin; }
+            get
+            {
+                if (this._parentObject.LockedInfo == null)
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
-        public DateTime? LockedTime
+        public string IsLockedString
         {
-            get { return this._parentObject.SimpleInfo.LockedLoginTime; }
+            get
+            {
+                if (this._parentObject.LockedInfo == null)
+                {
+                    return "";
+                }
+                return "被锁定";
+            }
+        }
+
+        public string LockedTimeString
+        {
+            get
+            {
+                if (this._parentObject.LockedInfo == null)
+                {
+                    return "";
+                }
+                return this._parentObject.LockedInfo.LockedLoginTime.ToDateTime().ToString();
+            }
+        }
+
+        public int LockedExpireDays
+        {
+            get
+            {
+                if (this._parentObject.LockedInfo == null)
+                {
+                    return 0;
+                }
+                return this._parentObject.LockedInfo.ExpireDays;
+            }
         }
 
         public bool Online
@@ -244,7 +284,7 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.FortuneInfo.Exp; }
         }
 
-        public int CreditValue
+        public long CreditValue
         {
             get { return this._parentObject.FortuneInfo.CreditValue; }
         }

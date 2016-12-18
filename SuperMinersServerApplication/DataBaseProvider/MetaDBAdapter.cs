@@ -174,14 +174,14 @@ namespace DataBaseProvider
                 player.SimpleInfo.InvitationCode = DESEncrypt.DecryptDES(encryptedInvitationCode);
                 player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
 
-                if (dt.Rows[i]["LockedLogin"] != DBNull.Value)
-                {
-                    player.SimpleInfo.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
-                }
-                if (dt.Rows[i]["LockedLoginTime"] != DBNull.Value)
-                {
-                    player.SimpleInfo.LockedLoginTime = Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]);
-                }
+                //if (dt.Rows[i]["LockedLogin"] != DBNull.Value)
+                //{
+                //    player.SimpleInfo.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
+                //}
+                //if (dt.Rows[i]["LockedLoginTime"] != DBNull.Value)
+                //{
+                //    player.SimpleInfo.LockedLoginTime = Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]);
+                //}
                 if (dt.Rows[i]["LastLoginTime"] == DBNull.Value)
                 {
                     player.SimpleInfo.LastLoginTime = null;
@@ -214,7 +214,7 @@ namespace DataBaseProvider
 
                 player.FortuneInfo.UserName = player.SimpleInfo.UserName;
                 player.FortuneInfo.Exp = Convert.ToDecimal(dt.Rows[i]["Exp"]);
-                player.FortuneInfo.CreditValue = Convert.ToInt32(dt.Rows[i]["CreditValue"]);
+                player.FortuneInfo.CreditValue = Convert.ToInt64(dt.Rows[i]["CreditValue"]);
                 player.FortuneInfo.RMB = Convert.ToDecimal(dt.Rows[i]["RMB"]);
                 player.FortuneInfo.FreezingRMB = Convert.ToDecimal(dt.Rows[i]["FreezingRMB"]);
                 player.FortuneInfo.GoldCoin = Convert.ToDecimal(dt.Rows[i]["GoldCoin"]);
@@ -309,7 +309,8 @@ namespace DataBaseProvider
                 order.StonesOrder.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
-                order.StonesOrder.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
+                order.StonesOrder.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
+                order.StonesOrder.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
@@ -337,7 +338,8 @@ namespace DataBaseProvider
                 order.StonesOrder.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.StonesOrder.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
-                order.StonesOrder.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
+                order.StonesOrder.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
+                order.StonesOrder.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
@@ -466,7 +468,8 @@ namespace DataBaseProvider
                 order.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
-                order.SellerCreditValue = Convert.ToInt32(dt.Rows[i]["SellerCreditValue"]);
+                order.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
+                order.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
                 order.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
@@ -650,6 +653,28 @@ namespace DataBaseProvider
             }
 
             return records;
+        }
+
+        internal static PlayerLockedInfo[] GetPlayerLockedInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            PlayerLockedInfo[] items = new PlayerLockedInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                PlayerLockedInfo item = new PlayerLockedInfo();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
+                item.LockedLoginTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]));
+                item.ExpireDays = Convert.ToInt32(dt.Rows[i]["ExpireDays"]);
+
+                items[i] = item;
+            }
+
+            return items;
         }
 
         //internal static PlayerLoginInfo[] GetPlayerLoginInfoListFromDataTable(DataTable dt)

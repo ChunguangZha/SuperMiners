@@ -19,11 +19,12 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into alipayrechargerecord " +
-                    "(`out_trade_no`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`value_rmb`,`pay_time`) " +
+                    "(`out_trade_no`, `trade_type`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`value_rmb`,`pay_time`) " +
                     " values (@out_trade_no, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@value_rmb,@pay_time)";
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@out_trade_no", alipayRecord.out_trade_no);
+                mycmd.Parameters.AddWithValue("@trade_type", (int)alipayRecord.trade_type);
                 mycmd.Parameters.AddWithValue("@alipay_trade_no", alipayRecord.alipay_trade_no);
                 mycmd.Parameters.AddWithValue("@user_name", DESEncrypt.EncryptDES(alipayRecord.user_name));
                 mycmd.Parameters.AddWithValue("@buyer_email", alipayRecord.buyer_email);
@@ -38,6 +39,69 @@ namespace DataBaseProvider
                 if (mycmd != null)
                 {
                     mycmd.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 返回-1，表示失败
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public decimal GetPlayerAlipayRechargeMoneyYuan(string userName, AlipayTradeInType[] types)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlText = "select sum(`total_fee`) as total_fee from alipayrechargerecord where user_name = @userName ";
+                if (types != null && types.Length > 0)
+                {
+                    string subsql = " and  `trade_type` in ( ";
+                    for (int i = 0; i < types.Length; i++)
+                    {
+                        subsql += " @trade_type" + i;
+                        if (i != types.Length - 1)
+                        {
+                            subsql +=  ",";
+                        }
+                    }
+                    subsql += ")";
+
+                    sqlText += subsql;
+                }
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@userName", DESEncrypt.EncryptDES(userName));
+                if (types != null && types.Length > 0)
+                {
+                    for (int i = 0; i < types.Length; i++)
+                    {
+                        mycmd.Parameters.AddWithValue("@trade_type" + i.ToString(), (int)types[i]);
+                    }
+                }
+
+                myconn.Open();
+                object objResult = mycmd.ExecuteScalar();
+                if (objResult == DBNull.Value)
+                {
+                    return 0;
+                }
+
+                return Convert.ToDecimal(objResult);
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
                 }
             }
         }

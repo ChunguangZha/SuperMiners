@@ -81,7 +81,7 @@ namespace SuperMinersServerApplication.Controller.Trade
         public int AlipayCallback(AlipayRechargeRecord alipayRecord)
         {
             int result = OperResult.RESULTCODE_FALSE;
-            AlipayTradeInType type = GetTradeType(alipayRecord.out_trade_no);
+            AlipayTradeInType type = alipayRecord.trade_type;
             switch (type)
             {
                 case AlipayTradeInType.BuyGoldCoin:

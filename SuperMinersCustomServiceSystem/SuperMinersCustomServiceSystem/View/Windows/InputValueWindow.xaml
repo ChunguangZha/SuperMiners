@@ -1,0 +1,17 @@
+﻿<Window x:Class="SuperMinersCustomServiceSystem.View.Windows.InputValueWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="InputValueWindow" Height="200" Width="300" WindowStartupLocation="CenterScreen">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="73*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="lblMsg" Margin="5" TextWrapping="Wrap"/>
+        <my:NumericTextBox Grid.Row="1" x:Name="numValue" Value="0" Margin="5"/>
+        <Button Grid.Row="2" Name="btnCancel" Content="取消" Width="100" HorizontalAlignment="Right" Margin="5" Click="btnCancel_Click" IsCancel="True"/>
+        <Button Grid.Row="2" Name="btnOK" Content="确定" Width="100" HorizontalAlignment="Right" Margin="5,5,110,5" Click="btnOK_Click" IsDefault="True"/>
+    </Grid>
+</Window>

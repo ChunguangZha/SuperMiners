@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>16</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.1.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -750,6 +750,17 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\l9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\vip1.png" />
+    <Resource Include="Resources\vip2.png" />
+    <Resource Include="Resources\vip3.png" />
+    <Resource Include="Resources\vip4.png" />
+    <Resource Include="Resources\vip5.png" />
+    <Resource Include="Resources\vip6.png" />
+    <Resource Include="Resources\vip7.png" />
+    <Resource Include="Resources\vip8.png" />
+    <Resource Include="Resources\vip9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -130,7 +130,7 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.FortuneInfo.Exp; }
         }
 
-        public int CreditValue
+        public long CreditValue
         {
             get { return this._parentObject.FortuneInfo.CreditValue; }
         }

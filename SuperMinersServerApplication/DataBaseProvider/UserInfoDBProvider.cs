@@ -105,8 +105,58 @@ namespace DataBaseProvider
             }
             finally
             {
-                mycmd.Dispose();
-                myconn.Close();
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool DeletePlayers(int[] userIDs)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+
+                StringBuilder builder = new StringBuilder();
+                builder.Append("delete from playersimpleinfo where `id` in ( ");
+
+                for (int i = 0; i < userIDs.Length; i++)
+                {
+                    builder.Append(userIDs[i].ToString());
+                    if (i != userIDs.Length - 1)
+                    {
+                        builder.Append(" , ");
+                    }
+                }
+                builder.Append(")");
+
+                mycmd.CommandText = builder.ToString();
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
             }
         }
 

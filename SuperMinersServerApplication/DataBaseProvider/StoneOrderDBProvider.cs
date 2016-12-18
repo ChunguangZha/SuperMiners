@@ -290,7 +290,7 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select b.*, s.*, f.CreditValue as SellerCreditValue " +
+                string sqlTextA = "select b.*, s.*, f.CreditValue as SellerCreditValue, f.Exp as SellerExpValue " +
                                     "from buystonesrecord b " +
                                     "left join sellstonesorder s on s.OrderNumber = b.OrderNumber " +
                                 "left join playerfortuneinfo f on f.userId = (select u.id from playersimpleinfo u where u.UserName = s.SellerUserName)";
@@ -413,7 +413,7 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select s.*, f.CreditValue as SellerCreditValue from sellstonesorder s " +
+                string sqlTextA = "select s.*, f.CreditValue as SellerCreditValue, f.Exp as SellerExpValue from sellstonesorder s " +
                                 "left join playerfortuneinfo f on f.userId = (select u.id from playersimpleinfo u where u.UserName = s.SellerUserName)";
 
                 StringBuilder builder = new StringBuilder();
@@ -510,7 +510,7 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select l.*, s.*, f.CreditValue as SellerCreditValue " +
+                string sqlTextA = "select l.*, s.*, f.CreditValue as SellerCreditValue, f.Exp as SellerExpValue " +
                                 "from locksellstonesorder l " +
                                 "left join sellstonesorder s on s.OrderNumber = l.OrderNumber " +
                                 "left join playerfortuneinfo f on f.userId = (select u.id from playersimpleinfo u where u.UserName = s.SellerUserName)";
@@ -584,7 +584,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select s.*, f.CreditValue as SellerCreditValue " +
+                string cmdText = "select s.*, f.CreditValue as SellerCreditValue, f.Exp as SellerExpValue " +
                                 " from sellstonesorder s  left join playerfortuneinfo f on f.userId = (select u.id from playersimpleinfo u where u.UserName = s.SellerUserName)" + 
                                 " where s.OrderNumber = @OrderNumber";
 

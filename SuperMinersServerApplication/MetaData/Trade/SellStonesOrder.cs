@@ -26,10 +26,16 @@ namespace MetaData.Trade
         [DataMember]
         public string SellerUserName = "";
 
-        [DataMember]
-        private int _sellerCreditValue = 0;
+        /// <summary>
+        /// 非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
+        private long _sellerCreditValue = 0;
 
-        public int SellerCreditValue
+        /// <summary>
+        /// 非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
+        [DataMember]
+        public long SellerCreditValue
         {
             get { return this._sellerCreditValue; }
             set
@@ -39,8 +45,36 @@ namespace MetaData.Trade
             }
         }
 
+        /// <summary>
+        /// 只读字段，只能从SellerCreditValue中赋值，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
         [DataMember]
         public int SellerCreditLevel = 0;
+
+        /// <summary>
+        /// 非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
+        private int _sellerExpValue;
+
+        /// <summary>
+        /// 非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
+        [DataMember]
+        public int SellerExpValue
+        {
+            get { return _sellerExpValue; }
+            set
+            {
+                _sellerExpValue = value;
+                SellerExpLevel = value / CreditLevelConfig.UserExpLevelValue;
+            }
+        }
+
+        /// <summary>
+        /// 只读字段，只能从SellerExpValue中赋值，从数据库加载时，从PlayerFortuneInfo表中获取
+        /// </summary>
+        [DataMember]
+        public int SellerExpLevel = 0;
 
         /// <summary>
         /// 出售矿石数

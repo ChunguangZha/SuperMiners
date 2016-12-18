@@ -304,6 +304,25 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public bool CheckNeedStoneSellQuan(int userID)
+        {
+            bool needUseQuan = false;
+            PlayerLastSellStoneRecord lastSellOrder = DBProvider.StoneOrderDBProvider.GetPlayerLastSellStoneRecord(userID);
+            if (lastSellOrder != null)
+            {
+                //今天已经出售过矿石，则再出售就需要用券。
+                DateTime timenow = DateTime.Now;
+                if (lastSellOrder.SellTime.Year == timenow.Year &&
+                    lastSellOrder.SellTime.Month == timenow.Month &&
+                    lastSellOrder.SellTime.Day == timenow.Day)
+                {
+                    needUseQuan = true;
+                }
+            }
+
+            return needUseQuan;
+        }
+
         /// <summary>
         /// 如果事务提交失败，则需调用ClearSellStonesOrder方法从集合中清除该方法返回的订单
         /// </summary>
@@ -311,7 +330,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="sellStonesCount"></param>
         /// <param name="myTrans"></param>
         /// <returns></returns>
-        public SellStonesOrder CreateSellOrder(string userName, int creditValue, int sellStonesCount)
+        public SellStonesOrder CreateSellOrder(string userName, int userExpValue, long creditValue, int sellStonesCount)
         {
             decimal valueRMB = sellStonesCount / GlobalConfig.GameConfig.Stones_RMB;
             DateTime time = DateTime.Now;
@@ -321,7 +340,8 @@ namespace SuperMinersServerApplication.Controller
                 SellStonesCount = sellStonesCount,
                 OrderState = SellOrderState.Wait,
                 SellerUserName = userName,
-                SellerCreditValue = creditValue,                  
+                SellerCreditValue = creditValue,  
+                SellerExpValue = userExpValue,
                 ValueRMB = valueRMB,
                 Expense = GetExpense(valueRMB),
                 SellTime = time,

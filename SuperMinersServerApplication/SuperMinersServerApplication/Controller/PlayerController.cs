@@ -59,6 +59,88 @@ namespace SuperMinersServerApplication.Controller
             this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
         }
 
+        public void AutoDeletePlayer()
+        {
+            var players = DBProvider.UserDBProvider.GetAllPlayers();
+            List<PlayerInfo> listUserID_toDelete = new List<PlayerInfo>();
+
+            //1.	只要充过值（不含购买矿石）的玩家，不删除；
+            //2.	登录过的玩家，30天没再登录的，删除；
+            //3.	没登录过的玩家，7天没再登录的，删除；
+            //4.	锁定期限超过7天的玩家，删除。
+
+
+            // 代理玩家暂时不删除。
+            foreach (var player in players)
+            {
+                if (player.SimpleInfo.GroupType == PlayerGroupType.AgentPlayer)
+                {
+                    continue;
+                }
+
+                decimal rechargeYuan = DBProvider.AlipayRecordDBProvider.GetPlayerAlipayRechargeMoneyYuan(player.SimpleInfo.UserName, new AlipayTradeInType[] { AlipayTradeInType.BuyGoldCoin, AlipayTradeInType.BuyMine });
+                if(rechargeYuan==0)
+                {
+                    if (player.SimpleInfo.LastLoginTime == null)
+                    {
+                        if ((DateTime.Now - player.SimpleInfo.RegisterTime).TotalDays > 7)
+                        {
+                            listUserID_toDelete.Add(player);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        if ((DateTime.Now - player.SimpleInfo.LastLoginTime.Value).TotalDays > 30)
+                        {
+                            listUserID_toDelete.Add(player);
+                            continue;
+                        }
+                    }
+
+                    PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(player.SimpleInfo.UserID);
+                    if (lockedInfo != null && lockedInfo.ExpireDays> 7)
+                    {
+                        listUserID_toDelete.Add(player);
+                    }
+                }
+            }
+
+            if (listUserID_toDelete.Count > 0)
+            {
+                int[] userids = new int[listUserID_toDelete.Count];
+                for (int i = 0; i < listUserID_toDelete.Count; i++)
+                {
+                    userids[i] = listUserID_toDelete[i].SimpleInfo.UserID;
+                }
+
+                CustomerMySqlTransaction trans = MyDBHelper.Instance.CreateTrans();
+                try
+                {
+                    DateTime time = DateTime.Now;
+                    foreach (var item in listUserID_toDelete)
+                    {
+                        DBProvider.DeletedPlayerInfoDBProvider.AddDeletedPlayer(item, time, trans);
+                    }
+
+                    trans.Commit();
+                }
+                catch (Exception excd)
+                {
+                    trans.Rollback();
+                    throw excd;
+                }
+                finally
+                {
+                    trans.Dispose();
+                }
+
+                DBProvider.UserDBProvider.DeletePlayers(userids);
+
+            }
+        }
+
+
         public bool RouletteWinVirtualAwardPayUpdatePlayer(string userName, RouletteAwardItem awardItem)
         {
             var runnable = this.GetOnlinePlayerRunnable(userName);
@@ -380,6 +462,31 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
+        public bool CheckPlayerIsLocked(int userID, string UserName)
+        {
+            try
+            {
+                PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(userID);
+                if (lockedInfo == null)
+                {
+                    return false;
+                }
+
+                if ((DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > lockedInfo.ExpireDays)
+                {
+                    DBProvider.PlayerLockedInfoDBProvider.DeletePlayerLockedInfo(userID);
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("玩家[" + UserName + "]登录时，检查锁定状态异常。", exc);
+                return true;
+            }
+        }
+
         public bool LoginPlayer(PlayerInfo player)
         {
             //说明是第一次登录
@@ -622,7 +729,7 @@ namespace SuperMinersServerApplication.Controller
             return DBProvider.UserDBProvider.DeletePlayer(userName);
         }
 
-        public bool LockPlayer(string userName)
+        public bool LockPlayer(string userName, int expireDays)
         {
             var playerrun = this.GetRunnable(userName);
             if (playerrun != null)
@@ -633,7 +740,7 @@ namespace SuperMinersServerApplication.Controller
                     this.KickOutPlayer(token);
                 }
 
-                return playerrun.LockPlayer();
+                return playerrun.LockPlayer(expireDays);
             }
 
             return false;
@@ -741,20 +848,20 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMiner(minersCount);
         }
 
-        public int BuyMineByRMB(string userName, int minesCount, CustomerMySqlTransaction myTrans)
+        public int BuyMineByRMB(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
             }
 
-            return playerrun.BuyMineByRMB(minesCount, myTrans);
+            return playerrun.BuyMineByRMB(buyRecord, myTrans);
         }
 
-        public int BuyMineByAlipay(string userName, decimal moneyYuan, decimal minesCount, CustomerMySqlTransaction myTrans)
+        public int BuyMineByAlipay(MinesBuyRecord buyRecord, decimal moneyYuan, CustomerMySqlTransaction myTrans)
         {
-            PlayerRunnable playerrun = this.GetRunnable(userName);
+            PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
             if (playerrun == null)
             {
                 return OperResult.RESULTCODE_FALSE;
@@ -763,7 +870,7 @@ namespace SuperMinersServerApplication.Controller
             //先给代理计收益，后计算玩家
             AgentAwardController.Instance.PlayerRechargeRMB(playerrun.BasePlayer, AgentAwardType.PlayerInchargeMine, moneyYuan * GlobalConfig.GameConfig.Yuan_RMB, myTrans);
 
-            int value = playerrun.BuyMineByAlipay(moneyYuan, minesCount, myTrans);
+            int value = playerrun.BuyMineByAlipay(buyRecord, moneyYuan, myTrans);
             if (value == OperResult.RESULTCODE_TRUE)
             {
                 NotifyPlayerClient(playerrun.BasePlayer);

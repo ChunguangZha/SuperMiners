@@ -75,11 +75,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + xlUserName);
-                if (player.SimpleInfo.LockedLogin)
+                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
                 {
                     return OperResult.RESULTCODE_USER_IS_LOCKED;
                 }
-
+                
                 string mac = "weixin";
                 player.SimpleInfo.LastLoginIP = ip;
                 player.SimpleInfo.LastLoginMac = mac;
@@ -172,7 +172,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
-                if (player.SimpleInfo.LockedLogin)
+                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
                 {
                     return OperResult.RESULTCODE_USER_IS_LOCKED;
                 }
@@ -344,21 +344,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
                 }
 
-                bool needUseQuan = false;
-                PlayerLastSellStoneRecord lastSellOrder = DBProvider.StoneOrderDBProvider.GetPlayerLastSellStoneRecord(playerrun.BasePlayer.SimpleInfo.UserID);
-                if (lastSellOrder != null)
-                {
-                    //今天已经出售过矿石，则再出售就需要用券。
-                    DateTime timenow = DateTime.Now;
-                    if (lastSellOrder.SellTime.Year == timenow.Year &&
-                        lastSellOrder.SellTime.Month == timenow.Month &&
-                        lastSellOrder.SellTime.Day == timenow.Day)
-                    {
-                        needUseQuan = true;
-                    }
-                }
+                bool needUseQuan = OrderController.Instance.StoneOrderController.CheckNeedStoneSellQuan(playerrun.BasePlayer.SimpleInfo.UserID);
 
-                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
+                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, (int)playerrun.BasePlayer.FortuneInfo.Exp, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
                 if (order.ValueRMB <= 0)
                 {
                     return OperResult.RESULTCODE_USER_OFFLINE;

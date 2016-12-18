@@ -1,0 +1,13 @@
+﻿<Window x:Class="ChangPlayerLockedInfoTableFixPackage.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="190*"/>
+            <RowDefinition Height="129*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="lblMsg"/>
+        <Button Grid.Row="1" Content="开始执行" Name="btnOK" Width="100" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnOK_Click"/>
+    </Grid>
+</Window>

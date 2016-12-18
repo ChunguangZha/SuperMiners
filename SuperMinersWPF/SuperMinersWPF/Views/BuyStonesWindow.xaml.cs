@@ -63,7 +63,7 @@ namespace SuperMinersWPF.Views
             }
             else
             {
-                this.chkPayType.IsChecked = true;
+                this.chkPayType.IsChecked = false;
                 this.chkPayType.IsEnabled = true;
             }
         }

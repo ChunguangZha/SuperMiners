@@ -34,6 +34,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                             <TextBlock Text="{Binding SellerUserName}" Foreground="DarkBlue" FontStyle="Italic" Margin="5" HorizontalAlignment="Left"/>
+                            <Image Source="{Binding SellerExpLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Right" Height="16" Stretch="Uniform"/>
                             <Image Source="{Binding SellerCreditLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Right" Height="16" Stretch="Uniform"/>
                         </StackPanel>
                         <TextBlock Grid.Column="2" Text="挂单出售" Margin="5"/>

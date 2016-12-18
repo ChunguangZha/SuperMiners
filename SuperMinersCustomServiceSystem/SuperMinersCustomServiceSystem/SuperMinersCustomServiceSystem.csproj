@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -175,6 +175,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
       <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerLockedInfo.cs">
+      <Link>Wcf\Datas\PlayerLockedInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerLogInfo.cs">
       <Link>Wcf\Datas\PlayerLogInfo.cs</Link>
@@ -364,6 +367,9 @@
     </Compile>
     <Compile Include="View\Windows\HandleExceptionStoneOrderWindow.xaml.cs">
       <DependentUpon>HandleExceptionStoneOrderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\InputValueWindow.xaml.cs">
+      <DependentUpon>InputValueWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\RejectPlayerWithdrawRMBWindow.xaml.cs">
       <DependentUpon>RejectPlayerWithdrawRMBWindow.xaml</DependentUpon>
@@ -587,6 +593,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\HandleExceptionStoneOrderWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\InputValueWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,6 +49,21 @@ namespace SuperMinersServerApplication.Controller
             return listRecords.ToArray();
         }
 
+        private Random _ran = new Random();
+
+        public decimal GetStoneCount_BuyMine(int minesCount)
+        {
+            if (GlobalConfig.GameConfig.MineReservesIsRandom)
+            {
+                int value = _ran.Next((int)GlobalConfig.GameConfig.MinStonesReservesPerMine, (int)GlobalConfig.GameConfig.MaxStonesReservesPerMine);
+                return minesCount * value;
+            }
+            else
+            {
+                return minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
+            }
+        }
+
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)
         {
             TradeOperResult result = new TradeOperResult();
@@ -56,13 +71,14 @@ namespace SuperMinersServerApplication.Controller
             DateTime timenow = DateTime.Now;
                 
             string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
+            result.OperNumber = GetStoneCount_BuyMine(minesCount);
             MinesBuyRecord record = new MinesBuyRecord()
             {
                 OrderNumber = orderNumber,
                 CreateTime = timenow,
                 UserName = userName,
                 GainMinesCount = minesCount,
-                GainStonesReserves = minesCount * (int)GlobalConfig.GameConfig.StonesReservesPerMines,
+                GainStonesReserves = (int)result.OperNumber,
                 SpendRMB = (int)Math.Ceiling(minesCount * GlobalConfig.GameConfig.RMB_Mine)
             };
 
@@ -79,7 +95,7 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.MineRecordDBProvider.SaveTempMineTradeRecord(record);
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
-                result.AlipayLink = OrderController.Instance.CreateAlipayLink(userName, record.OrderNumber, "迅灵矿山", record.SpendRMB, "勘探一座矿山，可增加" + GlobalConfig.GameConfig.StonesReservesPerMines + "矿石储量");
+                result.AlipayLink = OrderController.Instance.CreateAlipayLink(userName, record.OrderNumber, "迅灵矿山", record.SpendRMB, "勘探一座矿山，可增加" + result.OperNumber + "矿石储量");
             }
 
             return result;
@@ -92,7 +108,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 myTrans = MyDBHelper.Instance.CreateTrans();
 
-                int value = PlayerController.Instance.BuyMineByRMB(record.UserName, (int)record.GainMinesCount, myTrans);
+                int value = PlayerController.Instance.BuyMineByRMB(record, myTrans);
                 result.ResultCode = value;
                 if (value == OperResult.RESULTCODE_TRUE)
                 {
@@ -164,7 +180,7 @@ namespace SuperMinersServerApplication.Controller
                 //alipayRecord.user_name = buyRecord.UserName;
                 if (alipayRecord.value_rmb >= buyRecord.SpendRMB)
                 {
-                    result = PlayerController.Instance.BuyMineByAlipay(buyRecord.UserName, alipayRecord.total_fee, buyRecord.GainMinesCount, myTrans);
+                    result = PlayerController.Instance.BuyMineByAlipay(buyRecord, alipayRecord.total_fee, myTrans);
                     if (result == OperResult.RESULTCODE_TRUE)
                     {
                         buyRecord.PayTime = DateTime.Now;

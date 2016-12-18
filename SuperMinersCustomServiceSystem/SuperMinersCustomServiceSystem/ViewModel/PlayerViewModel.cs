@@ -90,12 +90,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        public void AsyncLockPlayerInfos(string playerUserName, string actionPassword)
+        public void AsyncLockPlayerInfos(string playerUserName, string actionPassword, int expireDays)
         {
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在锁定玩家...");
-                GlobalData.Client.LockPlayer(playerUserName, actionPassword);
+                GlobalData.Client.LockPlayer(playerUserName, actionPassword, expireDays);
             }
         }
 

@@ -95,7 +95,6 @@ namespace SuperMinersWPF
                     MyMessageBox.ShowInfo("退出失败. " + e.Error);
                 }
 
-                MyMessageBox.ShowInfo(e.Result.ToString());
             }
             catch (Exception exc)
             {

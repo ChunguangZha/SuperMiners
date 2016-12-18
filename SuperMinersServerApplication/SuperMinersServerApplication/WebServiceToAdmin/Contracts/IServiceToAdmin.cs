@@ -101,7 +101,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool LockPlayer(string token, string actionPassword, string playerUserName);
+        bool LockPlayer(string token, string actionPassword, string playerUserName, int expireDays);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/UnlockPlayer",

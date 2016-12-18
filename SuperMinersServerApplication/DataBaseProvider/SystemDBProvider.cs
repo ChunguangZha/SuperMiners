@@ -40,7 +40,10 @@ namespace DataBaseProvider
                     config.StoneBuyerAwardGoldCoinMultiple = Convert.ToDecimal(dt.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
                     config.OutputStonesPerHour = Convert.ToDecimal(dt.Rows[0]["OutputStonesPerHour"]);
                     config.TempStoneOutputValidHour = Convert.ToInt32(dt.Rows[0]["TempStoneOutputValidHour"]);
+                    config.MineReservesIsRandom = Convert.ToBoolean(dt.Rows[0]["MineReservesIsRandom"]);
                     config.StonesReservesPerMines = Convert.ToDecimal(dt.Rows[0]["StonesReservesPerMines"]);
+                    config.MinStonesReservesPerMine = Convert.ToDecimal(dt.Rows[0]["MinStonesReservesPerMine"]);
+                    config.MaxStonesReservesPerMine = Convert.ToDecimal(dt.Rows[0]["MaxStonesReservesPerMine"]);
                     config.ExchangeExpensePercent = Convert.ToDecimal(dt.Rows[0]["ExchangeExpensePercent"]);
                     config.ExchangeExpenseMinNumber = Convert.ToDecimal(dt.Rows[0]["ExchangeExpenseMinNumber"]);
                     config.UserMaxHaveMinersCount = Convert.ToInt32(dt.Rows[0]["UserMaxHaveMinersCount"]);
@@ -70,8 +73,8 @@ namespace DataBaseProvider
         {
             MySqlCommand mycmd = trans.CreateCommand();
             string cmdText = "delete from gameconfig; " +
-                "insert into gameconfig (`Yuan_RMB`, `RMB_GoldCoin`, `RMB_Mine`, `GoldCoin_Miner`, `Stones_RMB`, `Diamonds_RMB`, `StoneBuyerAwardGoldCoinMultiple`, `OutputStonesPerHour`, `TempStoneOutputValidHour`, `StonesReservesPerMines`,  `ExchangeExpensePercent`, `ExchangeExpenseMinNumber`, `UserMaxHaveMinersCount`, `BuyOrderLockTimeMinutes`, `CanExchangeMinExp`, `CanDiscountMinExp`, `Discount`) values " +
-                                    " (@Yuan_RMB, @RMB_GoldCoin, @RMB_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @TempStoneOutputValidHour, @StonesReservesPerMines, @ExchangeExpensePercent, @ExchangeExpenseMinNumber, @UserMaxHaveMinersCount, @BuyOrderLockTimeMinutes, @CanExchangeMinExp, @CanDiscountMinExp, @Discount)";
+                "insert into gameconfig (`Yuan_RMB`, `RMB_GoldCoin`, `RMB_Mine`, `GoldCoin_Miner`, `Stones_RMB`, `Diamonds_RMB`, `StoneBuyerAwardGoldCoinMultiple`, `OutputStonesPerHour`, `TempStoneOutputValidHour`, `MineReservesIsRandom`, `StonesReservesPerMines`, `MinStonesReservesPerMine`, `MaxStonesReservesPerMine`,  `ExchangeExpensePercent`, `ExchangeExpenseMinNumber`, `UserMaxHaveMinersCount`, `BuyOrderLockTimeMinutes`, `CanExchangeMinExp`, `CanDiscountMinExp`, `Discount`) values " +
+                                    " (@Yuan_RMB, @RMB_GoldCoin, @RMB_Mine, @GoldCoin_Miner, @Stones_RMB, @Diamonds_RMB, @StoneBuyerAwardGoldCoinMultiple, @OutputStonesPerHour, @TempStoneOutputValidHour, @MineReservesIsRandom, @StonesReservesPerMines, @MinStonesReservesPerMine, @MaxStonesReservesPerMine, @ExchangeExpensePercent, @ExchangeExpenseMinNumber, @UserMaxHaveMinersCount, @BuyOrderLockTimeMinutes, @CanExchangeMinExp, @CanDiscountMinExp, @Discount)";
             mycmd.CommandText = cmdText;
             mycmd.Parameters.AddWithValue("@Yuan_RMB", config.Yuan_RMB);
             mycmd.Parameters.AddWithValue("@RMB_GoldCoin", config.RMB_GoldCoin);
@@ -82,7 +85,10 @@ namespace DataBaseProvider
             mycmd.Parameters.AddWithValue("@StoneBuyerAwardGoldCoinMultiple", config.StoneBuyerAwardGoldCoinMultiple);
             mycmd.Parameters.AddWithValue("@OutputStonesPerHour", config.OutputStonesPerHour);
             mycmd.Parameters.AddWithValue("@TempStoneOutputValidHour", config.TempStoneOutputValidHour);
+            mycmd.Parameters.AddWithValue("@MineReservesIsRandom", config.MineReservesIsRandom);
             mycmd.Parameters.AddWithValue("@StonesReservesPerMines", config.StonesReservesPerMines);
+            mycmd.Parameters.AddWithValue("@MinStonesReservesPerMine", config.MinStonesReservesPerMine);
+            mycmd.Parameters.AddWithValue("@MaxStonesReservesPerMine", config.MaxStonesReservesPerMine);
             mycmd.Parameters.AddWithValue("@ExchangeExpensePercent", config.ExchangeExpensePercent);
             mycmd.Parameters.AddWithValue("@ExchangeExpenseMinNumber", config.ExchangeExpenseMinNumber);
             mycmd.Parameters.AddWithValue("@UserMaxHaveMinersCount", config.UserMaxHaveMinersCount);

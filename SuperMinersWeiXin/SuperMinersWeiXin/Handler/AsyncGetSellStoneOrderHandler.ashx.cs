@@ -70,10 +70,42 @@ namespace SuperMinersWeiXin.Handler
                 if (myresult.Result != null)
                 {
                     SellStonesOrder[] orders = myresult.Result as SellStonesOrder[];
-                    var ordersDESC = orders.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue);
-                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(ordersDESC.GetType());
+
+                    Dictionary<string, SellStonesOrder> dicOrders_VipPlayer = new Dictionary<string, SellStonesOrder>();
+                    List<SellStonesOrder> listOrders_NormalPlayer = new List<SellStonesOrder>();
+                    foreach (var item in orders)
+                    {
+                        if (item.OrderState == SellOrderState.Wait && item.SellerExpLevel > 0)
+                        {
+                            if (!dicOrders_VipPlayer.ContainsKey(item.SellerUserName))
+                            {
+                                dicOrders_VipPlayer.Add(item.SellerUserName, item);
+                                continue;
+                            }
+                        }
+
+                        listOrders_NormalPlayer.Add(item);
+                    }
+
+                    var listASC_VipOrders = dicOrders_VipPlayer.Values.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue);
+                    var listASC_NormalOrders = listOrders_NormalPlayer.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue).OrderBy(s => s.OrderStateInt);
+                    SellStonesOrder[] listAll = new SellStonesOrder[orders.Length];
+
+                    int i = 0;
+                    foreach (var item in listASC_VipOrders)
+                    {
+                        listAll[i] = item;
+                        i++;
+                    }
+                    foreach (var item in listASC_NormalOrders)
+                    {
+                        listAll[i] = item;
+                        i++;
+                    }
+
+                    DataContractJsonSerializer serializer = new DataContractJsonSerializer(typeof(SellStonesOrder[]));
                     MemoryStream ms = new MemoryStream();
-                    serializer.WriteObject(ms, orders);
+                    serializer.WriteObject(ms, listAll);
                     jsonString = Encoding.UTF8.GetString(ms.ToArray());
                     ms.Close();
                 }

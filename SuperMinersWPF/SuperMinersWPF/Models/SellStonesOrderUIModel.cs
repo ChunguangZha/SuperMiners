@@ -29,6 +29,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("OrderNumber");
                 NotifyPropertyChange("SellerUserName");
                 NotifyPropertyChange("SellerCreditLevelImg");
+                NotifyPropertyChange("SellerExpLevelImg");
                 NotifyPropertyChange("SellStonesCount");
                 NotifyPropertyChange("Expense");
                 NotifyPropertyChange("ValueRMB");
@@ -55,7 +56,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public int SellerCreditValue
+        public long SellerCreditValue
         {
             get
             {
@@ -73,6 +74,26 @@ namespace SuperMinersWPF.Models
                     return null;
                 }
                 return new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/l" + level + ".png", UriKind.Relative));
+            }
+        }
+
+        public int SellerExpLevel
+        {
+            get
+            {
+                return this._parentObject.SellerExpLevel;
+            }
+        }
+
+        public BitmapImage SellerExpLevelImg
+        {
+            get
+            {
+                if (SellerExpLevel == 0)
+                {
+                    return null;
+                }
+                return new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/vip" + SellerExpLevel + ".png", UriKind.Relative));
             }
         }
 

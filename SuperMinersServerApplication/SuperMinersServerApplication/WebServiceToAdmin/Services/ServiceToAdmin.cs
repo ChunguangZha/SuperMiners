@@ -353,10 +353,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     user.SimpleInfo = player.SimpleInfo;
                     user.FortuneInfo = player.FortuneInfo;
                     user.isOnline = ClientManager.IsExistUserName(player.SimpleInfo.UserName);
-                    //if (user.isOnline)
-                    //{
-                    //    user.LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(player.SimpleInfo.UserName));
-                    //}
+                    user.LockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(player.SimpleInfo.UserID);
 
                     return user;
                 }
@@ -389,17 +386,20 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     {
                         return null;
                     }
+                    PlayerLockedInfo[] playerLockedInfos = DBProvider.PlayerLockedInfoDBProvider.GetAllPlayerLockedInfo();
                     PlayerInfoLoginWrap[] users = new PlayerInfoLoginWrap[players.Length];
                     for (int i = 0; i < players.Length; i++)
                     {
-                        users[i] = new PlayerInfoLoginWrap();
-                        users[i].SimpleInfo = players[i].SimpleInfo;
-                        users[i].FortuneInfo = players[i].FortuneInfo;
-                        users[i].isOnline = ClientManager.IsExistUserName(players[i].SimpleInfo.UserName);
-                        //if (users[i].isOnline)
-                        //{
-                        //    users[i].LoginIP = ClientManager.GetClientIP(ClientManager.GetToken(players[i].SimpleInfo.UserName));
-                        //}
+                        PlayerInfoLoginWrap userWrap = new PlayerInfoLoginWrap();
+                        userWrap.SimpleInfo = players[i].SimpleInfo;
+                        userWrap.FortuneInfo = players[i].FortuneInfo;
+                        userWrap.isOnline = ClientManager.IsExistUserName(userWrap.SimpleInfo.UserName);
+                        if (playerLockedInfos != null)
+                        {
+                            userWrap.LockedInfo = playerLockedInfos.FirstOrDefault(p => p.UserID == userWrap.SimpleInfo.UserID);
+                        }
+
+                        users[i] = userWrap;
                     }
 
                     return users;
@@ -523,7 +523,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool LockPlayer(string token, string actionPassword, string playerUserName)
+        public bool LockPlayer(string token, string actionPassword, string playerUserName, int expireDays)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -539,7 +539,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         return false;
                     }
 
-                    return PlayerController.Instance.LockPlayer(playerUserName);
+                    return PlayerController.Instance.LockPlayer(playerUserName, expireDays);
                 }
                 catch (Exception exc)
                 {

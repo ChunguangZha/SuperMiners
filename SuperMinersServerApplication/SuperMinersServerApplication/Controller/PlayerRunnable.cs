@@ -84,23 +84,30 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
-        public bool LockPlayer()
+        public bool LockPlayer(int expireDays)
         {
-            this.BasePlayer.SimpleInfo.LockedLogin = true;
-            this.BasePlayer.SimpleInfo.LockedLoginTime = DateTime.Now;
-            //this.BasePlayer.SimpleInfo.LastLogOutTime = null;
-            //this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = null;
-            bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, this.BasePlayer.SimpleInfo.LockedLoginTime);
-            return isOK;
+            DBProvider.PlayerLockedInfoDBProvider.AddPlayerLockedInfo(this.BasePlayer.SimpleInfo.UserID, expireDays);
+            return true;
+
+
+            //this.BasePlayer.SimpleInfo.LockedLogin = true;
+            //this.BasePlayer.SimpleInfo.LockedLoginTime = DateTime.Now;
+            ////this.BasePlayer.SimpleInfo.LastLogOutTime = null;
+            ////this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = null;
+            //bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, this.BasePlayer.SimpleInfo.LockedLoginTime);
+            //return isOK;
         }
 
         public bool UnlockPlayer()
         {
-            this.BasePlayer.SimpleInfo.LockedLogin = false;
-            this.BasePlayer.SimpleInfo.LockedLoginTime = null;
-            this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = DateTime.Now;
-            bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, null);
-            return isOK;
+            DBProvider.PlayerLockedInfoDBProvider.DeletePlayerLockedInfo(this.BasePlayer.SimpleInfo.UserID);
+            return true;
+
+            //this.BasePlayer.SimpleInfo.LockedLogin = false;
+            //this.BasePlayer.SimpleInfo.LockedLoginTime = null;
+            //this.BasePlayer.FortuneInfo.TempOutputStonesStartTime = DateTime.Now;
+            //bool isOK = DBProvider.UserDBProvider.UpdatePlayerLockedState(this.BasePlayer.SimpleInfo.UserName, this.BasePlayer.SimpleInfo.LockedLogin, null);
+            //return isOK;
         }
 
         public bool LogoutPlayer()
@@ -302,25 +309,18 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByRMB(int minesCount, CustomerMySqlTransaction myTrans)
+        public int BuyMineByRMB(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
         {
-            if (minesCount <= 0)
-            {
-                return OperResult.RESULTCODE_FALSE;
-            }
-
             lock (_lockFortuneAction)
             {
-                decimal needRMB = minesCount * GlobalConfig.GameConfig.RMB_Mine;
-                if (needRMB > BasePlayer.FortuneInfo.RMB)
+                if (buyRecord.SpendRMB > BasePlayer.FortuneInfo.RMB)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                decimal newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
-                BasePlayer.FortuneInfo.RMB -= needRMB;
-                BasePlayer.FortuneInfo.MinesCount += minesCount;
-                BasePlayer.FortuneInfo.StonesReserves += newReservers;
+                BasePlayer.FortuneInfo.RMB -= buyRecord.SpendRMB;
+                BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
+                BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
                 if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
                 {
                     RefreshFortune();
@@ -336,18 +336,12 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
-        public int BuyMineByAlipay(decimal moneyYuan, decimal minesCount, CustomerMySqlTransaction myTrans)
+        public int BuyMineByAlipay(MinesBuyRecord buyRecord, decimal moneyYuan, CustomerMySqlTransaction myTrans)
         {
-            if (minesCount <= 0)
-            {
-                return OperResult.RESULTCODE_FALSE;
-            }
-
             lock (_lockFortuneAction)
             {
-                decimal newReservers = minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
-                BasePlayer.FortuneInfo.MinesCount += minesCount;
-                BasePlayer.FortuneInfo.StonesReserves += newReservers;
+                BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
+                BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
 
                 BasePlayer.FortuneInfo.Exp += (int)moneyYuan;
                 ExpChangeRecord expRecord = new ExpChangeRecord()
@@ -469,7 +463,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 fortuneInfo.StockOfStones += order.StonesOrder.SellStonesCount;
                 fortuneInfo.GoldCoin += order.AwardGoldCoin;
-                fortuneInfo.CreditValue += (int)order.StonesOrder.ValueRMB;
+                fortuneInfo.CreditValue += order.StonesOrder.SellStonesCount;
                 fortuneInfo.StoneSellQuan++;
 
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
@@ -515,7 +509,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if (BasePlayer.FortuneInfo.StoneSellQuan < 1)
+                if (needUseQuan && BasePlayer.FortuneInfo.StoneSellQuan < 1)
                 {
                     return OperResult.RESULTCODE_ORDER_SELLSTONEQUAN_LACK;
                 }
@@ -527,8 +521,10 @@ namespace SuperMinersServerApplication.Controller
 
                 var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                 fortuneInfo.FreezingStones += order.SellStonesCount;
-                fortuneInfo.StoneSellQuan--;
-
+                if (needUseQuan)
+                {
+                    fortuneInfo.StoneSellQuan--;
+                }
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }

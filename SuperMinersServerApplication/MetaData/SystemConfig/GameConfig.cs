@@ -53,10 +53,28 @@ namespace MetaData.SystemConfig
         public decimal OutputStonesPerHour = 0.138m;
 
         /// <summary>
+        /// 矿山储量随机
+        /// </summary>
+        [DataMember]
+        public bool MineReservesIsRandom = false;
+
+        /// <summary>
         /// 每座矿山的矿石储量
         /// </summary>
         [DataMember]
         public decimal StonesReservesPerMines = 100000;
+
+        /// <summary>
+        /// 每座矿山的最小矿石储量
+        /// </summary>
+        [DataMember]
+        public decimal MinStonesReservesPerMine = 50000;
+
+        /// <summary>
+        /// 每座矿山的最大矿石储量
+        /// </summary>
+        [DataMember]
+        public decimal MaxStonesReservesPerMine = 100000;
 
         /// <summary>
         /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。

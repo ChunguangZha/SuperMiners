@@ -88,8 +88,9 @@
                     <DataGridTextColumn Binding="{Binding InvitationCode}" ClipboardContentBinding="{x:Null}" Header="邀请码"/>
                     <DataGridTextColumn Binding="{Binding LastLoginTime}" ClipboardContentBinding="{x:Null}" Header="上一次登录时间"/>
                     <DataGridTextColumn Binding="{Binding LastGatherStoneTime}" Header="上一次收取矿石时间"/>
-                    <DataGridTextColumn Binding="{Binding IsLocked}" ClipboardContentBinding="{x:Null}" Header="是否被锁定"/>
-                    <DataGridTextColumn Binding="{Binding LockedTime}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
+                    <DataGridTextColumn Binding="{Binding IsLockedString}" ClipboardContentBinding="{x:Null}" Header="被锁定"/>
+                    <DataGridTextColumn Binding="{Binding LockedTimeString}" ClipboardContentBinding="{x:Null}" Header="锁定时间"/>
+                    <DataGridTextColumn Binding="{Binding LockedExpireDays}" Header="锁定天数"/>
                     <DataGridTextColumn Binding="{Binding Online}" ClipboardContentBinding="{x:Null}" Header="是否在线"/>
                     <DataGridTextColumn Binding="{Binding LastLoginIP}" ClipboardContentBinding="{x:Null}" Header="最近一次登录IP"/>
                     <DataGridTextColumn Binding="{Binding LastLoginMac}" ClipboardContentBinding="{x:Null}" Header="最近一次登录MAC"/>
@@ -101,6 +102,7 @@
                     <DataGridTextColumn Binding="{Binding StonesReserves}" ClipboardContentBinding="{x:Null}" Header="矿石储量"/>
                     <DataGridTextColumn Binding="{Binding TotalProducedStonesCount}" ClipboardContentBinding="{x:Null}" Header="累计总产出"/>
                     <DataGridTextColumn Binding="{Binding StockOfStones}" ClipboardContentBinding="{x:Null}" Header="矿石量"/>
+                    <DataGridTextColumn Binding="{Binding FreezingStones}" Header="冻结矿石"/>
                     <DataGridTextColumn Binding="{Binding MinersCount}" ClipboardContentBinding="{x:Null}" Header="矿工数"/>
                     <DataGridTextColumn Binding="{Binding StockOfDiamonds}" ClipboardContentBinding="{x:Null}" Header="钻石量"/>
                     <DataGridTextColumn Binding="{Binding StoneSellQuan}" Header="矿石出售券"/>

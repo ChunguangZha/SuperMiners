@@ -168,6 +168,23 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
+        private bool _MineReservesIsRandom;
+
+        public bool MineReservesIsRandom
+        {
+            get { return _MineReservesIsRandom; }
+            set
+            {
+                if (value != this._MineReservesIsRandom)
+                {
+                    _MineReservesIsRandom = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("MineReservesIsRandom");
+                }
+            }
+        }
+
+
         private decimal _StonesReservesPerMines = 1000;
 
         /// <summary>
@@ -186,6 +203,40 @@ namespace SuperMinersServerApplication.UIModel
                 }
             }
         }
+
+        private decimal _MaxStonesReservesPerMine;
+
+        public decimal MaxStonesReservesPerMine
+        {
+            get { return _MaxStonesReservesPerMine; }
+            set
+            {
+                if (value != this._MaxStonesReservesPerMine)
+                {
+                    _MaxStonesReservesPerMine = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("MaxStonesReservesPerMine");
+                }
+            }
+        }
+
+
+        private decimal _MinStonesReservesPerMine;
+
+        public decimal MinStonesReservesPerMine
+        {
+            get { return _MinStonesReservesPerMine; }
+            set
+            {
+                if (value != this._MinStonesReservesPerMine)
+                {
+                    this._MinStonesReservesPerMine = value;
+                    IsChanged = true;
+                    NotifyPropertyChanged("MinStonesReservesPerMine");
+                }
+            }
+        }
+
 
         private decimal _ExchangeExpensePercent = 5;
 
@@ -347,7 +398,10 @@ namespace SuperMinersServerApplication.UIModel
                 RMB_GoldCoin = parent.RMB_GoldCoin,
                 StoneBuyerAwardGoldCoinMultiple = parent.StoneBuyerAwardGoldCoinMultiple,
                 Stones_RMB = parent.Stones_RMB,
+                MineReservesIsRandom = parent.MineReservesIsRandom,
                 StonesReservesPerMines = parent.StonesReservesPerMines,
+                MinStonesReservesPerMine = parent.MinStonesReservesPerMine,
+                MaxStonesReservesPerMine = parent.MaxStonesReservesPerMine,
                 Yuan_RMB = parent.Yuan_RMB,
                 UserMaxHaveMinersCount = parent.UserMaxHaveMinersCount,
                 BuyOrderLockTimeMinutes = parent.BuyOrderLockTimeMinutes,
@@ -373,7 +427,10 @@ namespace SuperMinersServerApplication.UIModel
                 RMB_GoldCoin = this.RMB_GoldCoin,
                 StoneBuyerAwardGoldCoinMultiple = this.StoneBuyerAwardGoldCoinMultiple,
                 Stones_RMB = this.Stones_RMB,
+                MineReservesIsRandom = this.MineReservesIsRandom,
                 StonesReservesPerMines = this.StonesReservesPerMines,
+                MinStonesReservesPerMine = this.MinStonesReservesPerMine,
+                MaxStonesReservesPerMine = this.MaxStonesReservesPerMine,
                 Yuan_RMB = this.Yuan_RMB,
                 UserMaxHaveMinersCount = this.UserMaxHaveMinersCount,
                 BuyOrderLockTimeMinutes = this.BuyOrderLockTimeMinutes,

@@ -4,7 +4,7 @@
         xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
         Loaded="Window_Loaded"
         Closed="Window_Closed"
-        Title="购买矿山" Height="300" Width="300" 
+        Title="勘探新矿山" Height="300" Width="300" 
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{DynamicResource PlayerInfoBackground}" Foreground="White" WindowStyle="ToolWindow">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
@@ -27,21 +27,11 @@
         <TextBox Grid.Column="1" Name="txtRMB" Background="Transparent" Foreground="White" IsReadOnly="True" Margin="5" VerticalAlignment="Center" FontSize="18"/>
         <TextBlock Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" VerticalAlignment="Center" Margin="5" FontSize="18"/>
         <Line Grid.Row="1" Grid.ColumnSpan="3" Height="3" Stroke="#FFC1C4FD" X1="0" Y1="0" X2="300" Y2="0" StrokeThickness="3"/>
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Run Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}"/>
-                <Run Text="价值"/>
-        </TextBlock>
-        <TextBlock Grid.Row="2" Grid.Column="1" Name="txtRMB_Mine" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
-        <Line Grid.Row="3" Grid.ColumnSpan="3" Height="3" Stroke="#FFC1C4FD" X1="0" Y1="0" X2="300" Y2="0" StrokeThickness="3"/>
-        <TextBlock Grid.Row="4" Grid.Column="0" Text="购买" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <my:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numMinesCount" VerticalAlignment="Center" Margin="5" ValueChanged="numMinesCount_ValueChanged"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Strings.Mine, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="需要支付" FontSize="18" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Name="txtRMB_Mine" FontSize="18" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" FontSize="18" Margin="5"/>
         <TextBlock Grid.Row="5" Grid.Column="0" Text="支付方式" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Right"/>
         <CheckBox Grid.Row="5" Grid.Column="1" Content="灵币支付" Name="chkPayType" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Top" Foreground="White" Margin="5" Checked="chkPayType_Checked" Unchecked="chkPayType_Unchecked"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="需要" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <TextBox Grid.Row="6" Grid.Column="1" Name="txtNeedMoney" IsReadOnly="True" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
         
         <TextBlock Grid.Row="7" Grid.Column="1"  Name="txtError" Text="账户余额不足，请先充值。" Margin="5" Foreground="Red" VerticalAlignment="Center" Visibility="Collapsed"/>
         <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnOK" Content="确定" Width="75" Margin="5,5,110,5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>

@@ -203,9 +203,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> LockPlayerCompleted;
-        public void LockPlayer(string playerUserName, string actionPassword)
+        public void LockPlayer(string playerUserName, string actionPassword, int expireDays)
         {
-            this._invoker.Invoke<bool>(this._context, "LockPlayer", this.LockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName);
+            this._invoker.Invoke<bool>(this._context, "LockPlayer", this.LockPlayerCompleted, GlobalData.Token, actionPassword, playerUserName, expireDays);
         }
 
         public event EventHandler<WebInvokeEventArgs<bool>> UnlockPlayerCompleted;

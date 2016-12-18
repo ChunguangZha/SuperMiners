@@ -1,9 +1,9 @@
 drop table  if exists tmp_table;
-CREATE TEMPORARY TABLE tmp_table  select b.*, s.ValueRMB from superminers.buystonesrecord b 
+CREATE TEMPORARY TABLE tmp_table  select b.*, s.SellStonesCount from superminers.buystonesrecord b 
 left join superminers.sellstonesorder s on b.OrderNumber = s.OrderNumber ;
 
 drop table  if exists tmp_table2;
-CREATE TEMPORARY TABLE tmp_table2 select BuyerUserName, sum(ValueRMB) as ValueRMB 
+CREATE TEMPORARY TABLE tmp_table2 select BuyerUserName, sum(SellStonesCount) as SellStonesCount 
 from tmp_table
 group by BuyerUserName;
 
@@ -15,7 +15,7 @@ from tmp_table2 t2 left join superminers.playersimpleinfo s on s.UserName = t2.B
 
 update  superminers.playerfortuneinfo f set f.CreditValue = 
 (
-	select t.ValueRMB from tmp_table2 t where t.BuyerUserName =(
+	select t.SellStonesCount from tmp_table2 t where t.BuyerUserName =(
 		select u.UserName from superminers.playersimpleinfo u 
         where u.id = f.userId
     )

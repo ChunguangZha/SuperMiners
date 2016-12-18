@@ -31,6 +31,8 @@ namespace SuperMinersServerApplication.Model
         [DataMember]
         public PlayerFortuneInfo FortuneInfo = new PlayerFortuneInfo();
 
+        [DataMember]
+        public PlayerLockedInfo LockedInfo = null;
     }
 
 }

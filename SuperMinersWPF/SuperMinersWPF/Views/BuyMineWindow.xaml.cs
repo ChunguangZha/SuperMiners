@@ -83,7 +83,11 @@ namespace SuperMinersWPF.Views
                         var payResult = MyMessageBox.ShowAlipayPayQuestion();
                         if (payResult == MessageBoxAlipayPayQuestionResult.Succeed)
                         {
-                            if (!AlipayPaySucceed)
+                            if (AlipayPaySucceed)
+                            {
+                                MyMessageBox.ShowInfo("成功收获" + e.Result.OperNumber + "的矿石储量");
+                            }
+                            else
                             {
                                 MyMessageBox.ShowInfo("没有接收到支付宝付款信息。如确实付款，请稍后查看购买记录，或联系客服。");
                             }
@@ -95,6 +99,14 @@ namespace SuperMinersWPF.Views
                             return;
                         }
                     }
+                    else
+                    {
+                        MyMessageBox.ShowInfo("成功收获" + e.Result.OperNumber + "的矿石储量");
+                    }
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("成功收获" + e.Result.OperNumber + "的矿石储量");
                 }
 
                 App.UserVMObject.AsyncGetPlayerInfo();
@@ -114,19 +126,12 @@ namespace SuperMinersWPF.Views
         {
             try
             {
-                int count = (int)this.numMinesCount.Value;
-                if (count == 0)
-                {
-                    MyMessageBox.ShowInfo("请输入有效" + Strings.Mine + "数");
-                    return;
-                }
-
+                int count = 1;
                 int payType = (int)PayType.Alipay;
                 if (this.chkPayType.IsChecked == false)
                 {
                     payType = (int)PayType.RMB;
                     decimal money = count * GlobalData.GameConfig.RMB_Mine;
-                    this.txtNeedMoney.Text = money.ToString();
                     if (money > GlobalData.CurrentUser.RMB)
                     {
                         MyMessageBox.ShowInfo("账户余额不足，请充值。");
@@ -147,36 +152,6 @@ namespace SuperMinersWPF.Views
             this.DialogResult = false;
         }
 
-        private void numMinesCount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            try
-            {
-                int count = (int)this.numMinesCount.Value;
-                decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
-                this.txtNeedMoney.Text = spendRMB.ToString();
-
-                if (chkPayType.IsChecked == true)
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    if (spendRMB > GlobalData.CurrentUser.RMB)
-                    {
-                        this.txtError.Visibility = System.Windows.Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MyMessageBox.ShowInfo("购买矿山，输入矿山数时异常。" + exc.Message);
-            }
-        }
-
         private void chkPayType_Checked(object sender, RoutedEventArgs e)
         {
             this.chkPayType.Content = "支付宝支付";
@@ -187,7 +162,7 @@ namespace SuperMinersWPF.Views
         {
             this.chkPayType.Content = "灵币支付";
 
-            int count = (int)this.numMinesCount.Value;
+            int count = 1;
             decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
             if (spendRMB > GlobalData.CurrentUser.RMB)
             {

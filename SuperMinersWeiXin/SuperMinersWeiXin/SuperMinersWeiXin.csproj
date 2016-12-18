@@ -81,7 +81,6 @@
     <Content Include="App_Themes\Theme1\weui-tabbar.css" />
     <Content Include="App_Themes\Theme1\weui-toast.css" />
     <Content Include="ErrorPage.aspx" />
-    <Content Include="Fragment\dialog.html" />
     <Content Include="Global.asax" />
     <Content Include="images\icon_tabbar.png" />
     <Content Include="images\l1.png" />
@@ -101,6 +100,15 @@
     <Content Include="images\l7.png" />
     <Content Include="images\l8.png" />
     <Content Include="images\l9.png" />
+    <Content Include="images\vip1.png" />
+    <Content Include="images\vip2.png" />
+    <Content Include="images\vip3.png" />
+    <Content Include="images\vip4.png" />
+    <Content Include="images\vip5.png" />
+    <Content Include="images\vip6.png" />
+    <Content Include="images\vip7.png" />
+    <Content Include="images\vip8.png" />
+    <Content Include="images\vip9.png" />
     <Content Include="images\wxerror.png" />
     <Content Include="images\wxok.png" />
     <Content Include="LoginPage.aspx" />
@@ -117,13 +125,6 @@
     <Content Include="Scripts\viewminerbuyrecords.js" />
     <Content Include="Scripts\viewrecords.js" />
     <Content Include="View\Records.aspx" />
-    <Content Include="View\ViewGoldCoinRechargeRecords.aspx" />
-    <Content Include="View\ViewMineBuyRecords.aspx" />
-    <Content Include="View\ViewMinerBuyRecords.aspx" />
-    <Content Include="View\ViewRMBRechargeRecords.aspx" />
-    <Content Include="View\ViewRMBWithdrawRecords.aspx" />
-    <Content Include="View\ViewStoneBuyRecords.aspx" />
-    <Content Include="View\ViewStoneSellRecords.aspx" />
     <Content Include="WeiXinResponse.aspx" />
     <Content Include="Handler\AuthCodeImageCallbackHandler.ashx" />
     <Content Include="Handler\CheckAlipayAccount.ashx" />
@@ -156,7 +157,6 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="View\Help.aspx" />
     <Content Include="View\Index.aspx" />
-    <Content Include="View\MyXunLing.aspx" />
     <Content Include="View\StoneMarket.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -341,20 +341,6 @@
     <Compile Include="Model\ErrorModel.cs" />
     <Compile Include="Model\HttpGetReturnModel.cs" />
     <Compile Include="Model\WeiXinUserInfoModel.cs" />
-    <Compile Include="View\MyRecords.master.cs">
-      <DependentUpon>MyRecords.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\MyRecords.master.designer.cs">
-      <DependentUpon>MyRecords.master</DependentUpon>
-    </Compile>
-    <Compile Include="View\MyXunLing.aspx.cs">
-      <DependentUpon>MyXunLing.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\MyXunLing.aspx.designer.cs">
-      <DependentUpon>MyXunLing.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\Records.aspx.cs">
       <DependentUpon>Records.aspx</DependentUpon>
@@ -377,55 +363,6 @@
     </Compile>
     <Compile Include="View\StoneMarket.aspx.designer.cs">
       <DependentUpon>StoneMarket.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewGoldCoinRechargeRecords.aspx.cs">
-      <DependentUpon>ViewGoldCoinRechargeRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewGoldCoinRechargeRecords.aspx.designer.cs">
-      <DependentUpon>ViewGoldCoinRechargeRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewMineBuyRecords.aspx.cs">
-      <DependentUpon>ViewMineBuyRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewMineBuyRecords.aspx.designer.cs">
-      <DependentUpon>ViewMineBuyRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewMinerBuyRecords.aspx.cs">
-      <DependentUpon>ViewMinerBuyRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewMinerBuyRecords.aspx.designer.cs">
-      <DependentUpon>ViewMinerBuyRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewRMBRechargeRecords.aspx.cs">
-      <DependentUpon>ViewRMBRechargeRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewRMBRechargeRecords.aspx.designer.cs">
-      <DependentUpon>ViewRMBRechargeRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewRMBWithdrawRecords.aspx.cs">
-      <DependentUpon>ViewRMBWithdrawRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewRMBWithdrawRecords.aspx.designer.cs">
-      <DependentUpon>ViewRMBWithdrawRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewStoneBuyRecords.aspx.cs">
-      <DependentUpon>ViewStoneBuyRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewStoneBuyRecords.aspx.designer.cs">
-      <DependentUpon>ViewStoneBuyRecords.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewStoneSellRecords.aspx.cs">
-      <DependentUpon>ViewStoneSellRecords.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="View\ViewStoneSellRecords.aspx.designer.cs">
-      <DependentUpon>ViewStoneSellRecords.aspx</DependentUpon>
     </Compile>
     <Compile Include="Wcf\Services\ISuperMinersAsyncClient.cs" />
     <Compile Include="Wcf\Services\SuperMinersClient.cs" />
@@ -458,7 +395,6 @@
     <Content Include="View\Web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="View\MyRecords.master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -467,7 +403,9 @@
     </None>
     <Content Include="WeiXinCore\VerifyToken.ashx" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Fragment\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

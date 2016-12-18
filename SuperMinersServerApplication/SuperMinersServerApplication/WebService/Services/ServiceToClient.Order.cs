@@ -56,21 +56,9 @@ namespace SuperMinersServerApplication.WebService.Services
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
-                    bool needUseQuan = false;
-                    PlayerLastSellStoneRecord lastSellOrder = DBProvider.StoneOrderDBProvider.GetPlayerLastSellStoneRecord(playerrun.BasePlayer.SimpleInfo.UserID);
-                    if (lastSellOrder != null)
-                    {
-                        //今天已经出售过矿石，则再出售就需要用券。
-                        DateTime timenow = DateTime.Now;
-                        if (lastSellOrder.SellTime.Year == timenow.Year &&
-                            lastSellOrder.SellTime.Month == timenow.Month &&
-                            lastSellOrder.SellTime.Day == timenow.Day)
-                        {
-                            needUseQuan = true;
-                        }
-                    }
+                    bool needUseQuan = OrderController.Instance.StoneOrderController.CheckNeedStoneSellQuan(playerrun.BasePlayer.SimpleInfo.UserID);
 
-                    order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, playerrun.BasePlayer.FortuneInfo.CreditValue, sellStonesCount);
+                    order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, (int)playerrun.BasePlayer.FortuneInfo.Exp, playerrun.BasePlayer.FortuneInfo.CreditValue, sellStonesCount);
                     if (order.ValueRMB <= 0)
                     {
                         return OperResult.RESULTCODE_PARAM_INVALID;
@@ -86,6 +74,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     OrderController.Instance.StoneOrderController.AddSellOrder(order, playerrun.BasePlayer.SimpleInfo.UserID, trans);
                     trans.Commit();
                     PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, sellStonesCount);
+                    LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单出售了 " + sellStonesCount.ToString() + " 矿石, needUseQuan:" + needUseQuan.ToString());
 
                     return result;
                 }

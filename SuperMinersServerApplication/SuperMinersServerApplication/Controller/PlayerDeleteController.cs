@@ -9,10 +9,5 @@ namespace SuperMinersServerApplication.Controller
     public class PlayerDeleteController
     {
 
-        public void AutoDeletePlayer()
-        {
-
-        }
-
     }
 }

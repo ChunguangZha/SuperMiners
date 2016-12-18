@@ -54,7 +54,10 @@ namespace SuperMinersWPF.Views.Controls
             var lockedOrder = App.StoneOrderVMObject.GetFirstLockedStoneOrder();
             if (lockedOrder != null)
             {
-                MyWebPage.ShowMyWebPage(lockedOrder.PayUrl);
+                //MyWebPage.ShowMyWebPage(lockedOrder.PayUrl);
+
+                BuyStonesWindow win = new BuyStonesWindow(lockedOrder);
+                win.ShowDialog();
             }
         }
 

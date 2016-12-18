@@ -8,13 +8,14 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l1.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l2.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l3.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l4.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l5.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l6.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l7.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/l8.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip4.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip5.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip6.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip7.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip8.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip9.png")]
 
 

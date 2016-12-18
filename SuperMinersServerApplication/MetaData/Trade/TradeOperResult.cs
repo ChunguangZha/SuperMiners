@@ -25,6 +25,12 @@ namespace MetaData.Trade
         [DataMember]
         public int PayType = (int)MetaData.Trade.PayType.RMB;
 
+        /// <summary>
+        /// 备用操作数
+        /// </summary>
+        [DataMember]
+        public decimal OperNumber;
+
     }
 
 }

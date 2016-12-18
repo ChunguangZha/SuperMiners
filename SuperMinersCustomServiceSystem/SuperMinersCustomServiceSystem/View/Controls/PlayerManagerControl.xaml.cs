@@ -152,9 +152,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     builder.Append(",");
                     builder.Append(item.LastGatherStoneTime);
                     builder.Append(",");
-                    builder.Append(item.IsLocked);
+                    builder.Append(item.IsLockedString);
                     builder.Append(",");
-                    builder.Append(item.LockedTime);
+                    builder.Append(item.LockedTimeString);
+                    builder.Append(",");
+                    builder.Append(item.LockedExpireDays);
                     builder.Append(",");
                     builder.Append(item.Online);
                     builder.Append(",");
@@ -206,9 +208,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     if (win.ShowDialog() == true)
                     {
                         string ActionPassword = win.ActionPassword;
-                        if (MessageBox.Show("请确认要锁定玩家【" + player.UserName + "】", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        InputValueWindow winInputValue = new InputValueWindow("请确认", "请输入要锁定玩家登录天数", 100, 1);
+                        if (winInputValue.ShowDialog() == true)
                         {
-                            App.PlayerVMObject.AsyncLockPlayerInfos(player.UserName, ActionPassword);
+                            App.PlayerVMObject.AsyncLockPlayerInfos(player.UserName, ActionPassword, (int)winInputValue.Value);
                         }
                     }
                 }

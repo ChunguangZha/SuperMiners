@@ -472,8 +472,35 @@ namespace SuperMinersWPF.ViewModels
                     {
                         this._allNotFinishStoneOrder.Clear();
                         this._mySellNotFinishedStonesOrders.Clear();
-                        var listOrderTimeASC = e.Result.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue).OrderBy(s => s.OrderStateInt);
-                        foreach (var item in listOrderTimeASC)
+
+                        Dictionary<string, SellStonesOrder> dicOrders_VipPlayer = new Dictionary<string, SellStonesOrder>();
+                        List<SellStonesOrder> listOrders_NormalPlayer = new List<SellStonesOrder>();
+                        foreach (var item in e.Result)
+                        {
+                            if (item.OrderState == SellOrderState.Wait && item.SellerExpLevel > 0)
+                            {
+                                if (!dicOrders_VipPlayer.ContainsKey(item.SellerUserName))
+                                {
+                                    dicOrders_VipPlayer.Add(item.SellerUserName, item);
+                                    continue;
+                                }
+                            }
+
+                            listOrders_NormalPlayer.Add(item);
+                        }
+
+                        var listASC_VipOrders = dicOrders_VipPlayer.Values.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue);
+                        var listASC_NormalOrders = listOrders_NormalPlayer.OrderByDescending(s => s.SellTime).OrderByDescending(s => s.SellerCreditValue).OrderBy(s => s.OrderStateInt);
+                        foreach (var item in listASC_VipOrders)
+                        {
+                            var uiobj = new SellStonesOrderUIModel(item);
+                            this._allNotFinishStoneOrder.Add(uiobj);
+                            if (uiobj.SellerUserName == GlobalData.CurrentUser.UserName && uiobj.OrderState != SellOrderState.Finish)
+                            {
+                                this._mySellNotFinishedStonesOrders.Add(uiobj);
+                            }
+                        }
+                        foreach (var item in listASC_NormalOrders)
                         {
                             var uiobj = new SellStonesOrderUIModel(item);
                             this._allNotFinishStoneOrder.Add(uiobj);

@@ -19,4 +19,6 @@ namespace MetaData.User
         public PlayerFortuneInfo FortuneInfo = new PlayerFortuneInfo();
 
     }
+
+
 }

@@ -49,6 +49,7 @@
     <Compile Include="AgentUserInfoDBProvider.cs" />
     <Compile Include="AlipayRecordDBProvider.cs" />
     <Compile Include="BuyMinerRecordDBProvider.cs" />
+    <Compile Include="DeletedPlayerInfoDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />
     <Compile Include="ExpChangeRecordDBProvider.cs" />
     <Compile Include="GoldCoinRecordDBProvider.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="MineRecordDBProvider.cs" />
     <Compile Include="MyDBHelper.cs" />
     <Compile Include="GameRouletteDBProvider.cs" />
+    <Compile Include="PlayerLockedInfoDBProvider.cs" />
     <Compile Include="PlayerLoginInfoDBProvider.cs" />
     <Compile Include="StoneOrderDBProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,11 +10,29 @@ namespace MetaData.Trade
     [DataContract]
     public class AlipayRechargeRecord
     {
+        private string _orderNumber;
+
         /// <summary>
         /// 商品订单号
         /// </summary>
         [DataMember]
-        public string out_trade_no;
+        public string out_trade_no
+        {
+            get { return this._orderNumber; }
+            set
+            {
+                this._orderNumber = value;
+                string strType = _orderNumber.Substring(18, 2);
+                int valueType = Convert.ToInt32(strType);
+                this.trade_type = (AlipayTradeInType)valueType;
+            }
+        }
+
+        /// <summary>
+        /// 将支付类型单独保存到数据库，以便查询，该值不直接付值，只在out_trade_no属性中赋值
+        /// </summary>
+        [DataMember]
+        public AlipayTradeInType trade_type { get; private set; }
 
         /// <summary>
         /// 支付宝订单号
