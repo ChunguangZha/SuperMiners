@@ -322,6 +322,24 @@ namespace SuperMinersServerApplication
             win.ShowDialog();
         }
 
+        private void btnUpdateNotices_Click(object sender, RoutedEventArgs e)
+        {
+            NoticeInfo notice = this.datagridNotices.SelectedItem as NoticeInfo;
+            //var notices = NoticeController.Instance.GetCheckedNotices();
+            if (notice == null)
+            {
+                MessageBox.Show("请选择公告");
+                return;
+            }
+            //if (notices.Count == 1)
+            //{
+            //    MessageBox.Show("只能选择一个公告");
+            //    return;
+            //}
+            AddNoticeWindow win = new AddNoticeWindow(notice);
+            win.ShowDialog();
+        }
+
         private void btnDeleteNotices_Click(object sender, RoutedEventArgs e)
         {
 
@@ -460,7 +478,8 @@ namespace SuperMinersServerApplication
         {
             try
             {
-                PlayerController.Instance.AutoDeletePlayer();
+                int count = PlayerController.Instance.AutoDeletePlayer();
+                MessageBox.Show("成功删除" + count + "玩家");
                 PlayerController.Instance.Init();
             }
             catch (Exception exc)

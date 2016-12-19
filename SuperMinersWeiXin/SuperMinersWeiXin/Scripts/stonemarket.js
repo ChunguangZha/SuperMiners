@@ -28,7 +28,7 @@ $(function () {
                                 SellStonesCount: this.SellStonesCount,
                                 SellerUserName: this.SellerUserName,
                                 CreditLevelImg: this.SellerCreditLevel,
-                                ExpLevelImg: this.SellerExpValue,
+                                ExpLevelImg: this.SellerExpLevel,
                             });
                             html += rowhtml;
                         });

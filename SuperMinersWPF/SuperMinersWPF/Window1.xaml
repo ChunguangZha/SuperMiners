@@ -136,6 +136,7 @@
                 <TextBlock Grid.Row="0" Text="矿主：" Style="{StaticResource UserInfoTextBlockStyle}" FontSize="16" HorizontalAlignment="Right" Margin="0,5,5,5" FontWeight="Bold"/>
                 <StackPanel Grid.Column="1" Grid.ColumnSpan="2" Orientation="Horizontal">
                     <TextBlock Text="{Binding NickName}" Foreground="White" FontSize="16" Margin="5" FontWeight="Bold"/>
+                    <Image Height="16" Stretch="Uniform" Source="{Binding ExpLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                     <Image Height="16" Stretch="Uniform" Source="{Binding CreditLevelImg}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 </StackPanel>
                 <TextBlock Grid.Row="1" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>

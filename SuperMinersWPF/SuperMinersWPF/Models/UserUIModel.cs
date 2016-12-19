@@ -41,6 +41,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("NickName");
                 NotifyPropertyChange("Password");
+                NotifyPropertyChange("ExpLevelImg");
                 NotifyPropertyChange("Alipay");
                 NotifyPropertyChange("AlipayRealName");
                 NotifyPropertyChange("RegisterTime");
@@ -128,6 +129,19 @@ namespace SuperMinersWPF.Models
         public decimal Exp
         {
             get { return this._parentObject.FortuneInfo.Exp; }
+        }
+
+        public BitmapImage ExpLevelImg
+        {
+            get
+            {
+                int level = (int)Exp / 2000;
+                if (level == 0)
+                {
+                    return null;
+                }
+                return new BitmapImage(new Uri(@"Resources/vip" + level + ".png", UriKind.Relative));
+            }
         }
 
         public long CreditValue

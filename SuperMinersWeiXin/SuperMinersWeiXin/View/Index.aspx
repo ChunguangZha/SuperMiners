@@ -3,7 +3,7 @@
     <script src="../Scripts/index.js" ></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="root_subpage" data-id="index">
+    <div class="root_subpage index_page" data-id="index">
         <div class="weui-cells weui-cells_form">
             <div class="weui-cell">
                 <div class="weui-cell__hd">

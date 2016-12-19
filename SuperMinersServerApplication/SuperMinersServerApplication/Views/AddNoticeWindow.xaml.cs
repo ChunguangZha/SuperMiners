@@ -21,9 +21,23 @@ namespace SuperMinersServerApplication.Views
     /// </summary>
     public partial class AddNoticeWindow : Window
     {
+        private NoticeInfo _notice;
+        bool isAdd = false;
+
         public AddNoticeWindow()
         {
             InitializeComponent();
+            isAdd = true;
+        }
+
+        public AddNoticeWindow(NoticeInfo notice)
+        {
+            InitializeComponent();
+            _notice = notice;
+            this.txtNoticeTitle.Text = notice.Title;
+            this.txtNoticeContent.Text = notice.Content;
+            isAdd = false;
+            this.txtNoticeTitle.IsReadOnly = true;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -39,20 +53,30 @@ namespace SuperMinersServerApplication.Views
                 return;
             }
 
-            NoticeInfo notice = new NoticeInfo()
+            bool isOK = false;
+            if (_notice == null)
             {
-                Title = this.txtNoticeTitle.Text,
-                Content = this.txtNoticeContent.Text
-            };
-            bool isOK = NoticeController.Instance.CreateNotice(notice);
+                _notice = new NoticeInfo()
+                {
+                    Title = this.txtNoticeTitle.Text,
+                    Content = this.txtNoticeContent.Text,
+                    Time = DateTime.Now
+                };
+            }
+            else
+            {
+                _notice.Content = this.txtNoticeContent.Text;
+            }
+
+            isOK = NoticeController.Instance.SaveNotice(_notice, isAdd);
             if (isOK)
             {
-                MessageBox.Show("新通知添加成功！");
+                MessageBox.Show("保存通知成功！");
                 this.DialogResult = true;
             }
             else
             {
-                MessageBox.Show("新通知添加失败！");
+                MessageBox.Show("保存通知失败！");
             }
         }
 

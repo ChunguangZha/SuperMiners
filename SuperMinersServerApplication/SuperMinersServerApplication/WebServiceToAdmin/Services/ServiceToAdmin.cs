@@ -669,7 +669,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             {
                 try
                 {
-                    return NoticeController.Instance.CreateNotice(notice);
+                    return NoticeController.Instance.SaveNotice(notice, true);
                 }
                 catch (Exception exc)
                 {

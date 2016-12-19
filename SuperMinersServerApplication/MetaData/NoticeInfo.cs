@@ -11,9 +11,14 @@ namespace MetaData
     [DataContract]
     public class NoticeInfo : INotifyPropertyChanged
     {
+        public NoticeInfo()
+        {
+            CreateNewFileName();
+        }
+
         private bool _isChecked;
 
-        public bool IsChecked
+        public bool Checked
         {
             get { return _isChecked; }
             set
@@ -21,7 +26,7 @@ namespace MetaData
                 _isChecked = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("IsChecked"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Checked"));
                 }
             }
         }
@@ -32,13 +37,22 @@ namespace MetaData
 
         public DateTime Time { get; set; }
 
+        private string _fileName;
         public string FileName
         {
             get
             {
-                string fileName = Time.ToLongDateString() + Time.Hour.ToString() +  Time.Minute.ToString() + Time.Second.ToString() + " "  + Title + (new Random().Next(999)).ToString();
-                return fileName;
+                return _fileName;
             }
+            set
+            {
+                _fileName = value;
+            }
+        }
+
+        public void CreateNewFileName()
+        {
+            _fileName = Time.ToLongDateString() + Time.Hour.ToString() + Time.Minute.ToString() + Time.Second.ToString() + " " + Title + (new Random().Next(999)).ToString();
         }
 
         [DataMember]

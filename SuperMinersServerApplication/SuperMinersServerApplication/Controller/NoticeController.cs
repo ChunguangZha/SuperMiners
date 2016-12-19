@@ -50,6 +50,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 _listNotices.Clear();
 
+                List<NoticeInfo> list = new List<NoticeInfo>();
                 string[] noticeFiles = Directory.GetFiles(GlobalData.NoticeFolder);
                 if (noticeFiles != null)
                 {
@@ -58,13 +59,18 @@ namespace SuperMinersServerApplication.Controller
                         try
                         {
                             NoticeInfo notice = this.ReadFromXml(item);
-                            _listNotices.Insert(0, notice);
+                            list.Add(notice);
                         }
                         catch (Exception excsub)
                         {
                             LogHelper.Instance.AddErrorLog("Read Notice file " + item + " Error!", excsub);
                         }
                     }
+                }
+
+                foreach (var item in list.OrderByDescending(n => n.Time))
+                {
+                    _listNotices.Add(item);
                 }
             }
             catch (Exception exc)
@@ -73,27 +79,27 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool CreateNotice(NoticeInfo notice)
+        public bool SaveNotice(NoticeInfo notice, bool isAdd)
         {
             try
             {
-                notice.Time = DateTime.Now;
+                //notice.Time = DateTime.Now;
                 SaveToXml(Path.Combine(GlobalData.NoticeFolder, notice.FileName), notice);
 
                 if (this._syn == System.Threading.SynchronizationContext.Current)
                 {
-                    this.ListNotices.Insert(0, notice);
+                    Init();
                 }
                 else
                 {
                     this._syn.Post(o =>
                     {
-                        this.ListNotices.Insert(0, notice);
+                        Init();
                     }, null);
                 }
-                if (NoticeAdded != null)
+                if (NoticeChanged != null)
                 {
-                    NoticeAdded(notice.Title);
+                    NoticeChanged(notice.Title);
                 }
                 return true;
             }
@@ -103,6 +109,37 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
         }
+
+        //public bool CreateNotice(NoticeInfo notice)
+        //{
+        //    try
+        //    {
+        //        notice.Time = DateTime.Now;
+        //        SaveToXml(Path.Combine(GlobalData.NoticeFolder, notice.FileName), notice);
+
+        //        if (this._syn == System.Threading.SynchronizationContext.Current)
+        //        {
+        //            this.ListNotices.Insert(0, notice);
+        //        }
+        //        else
+        //        {
+        //            this._syn.Post(o =>
+        //            {
+        //                this.ListNotices.Insert(0, notice);
+        //            }, null);
+        //        }
+        //        if (NoticeAdded != null)
+        //        {
+        //            NoticeAdded(notice.Title);
+        //        }
+        //        return true;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        LogHelper.Instance.AddErrorLog("Create Notice " + notice.Title + " Error.", exc);
+        //        return false;
+        //    }
+        //}
 
         public bool DeleteNotice(NoticeInfo notice)
         {
@@ -124,13 +161,27 @@ namespace SuperMinersServerApplication.Controller
         {
             foreach (var item in ListNotices)
             {
-                item.IsChecked = isChecked;
+                item.Checked = isChecked;
             }
         }
 
         public NoticeInfo[] GetAllNotices()
         {
             return this.ListNotices.ToArray();
+        }
+
+        public List<NoticeInfo> GetCheckedNotices()
+        {
+            List<NoticeInfo> list = new List<NoticeInfo>();
+            foreach (var item in ListNotices)
+            {
+                if (item.Checked)
+                {
+                    list.Add(item);
+                }
+            }
+
+            return list;
         }
 
         private void SaveToXml(string path, NoticeInfo notice)
@@ -175,10 +226,11 @@ namespace SuperMinersServerApplication.Controller
             notice.Title = nodeTitle.InnerText;
             notice.TimeString = nodeTime.InnerText;
             notice.Content = nodeContent.InnerText;
+            notice.FileName = Path.GetFileNameWithoutExtension(path);
 
             return notice;
         }
 
-        public event Action<string> NoticeAdded;
+        public event Action<string> NoticeChanged;
     }
 }

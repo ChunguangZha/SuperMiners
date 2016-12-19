@@ -13,6 +13,14 @@
     background-color:#EDEDED;
 }
 
+.index_page {
+    overflow-y:auto;
+    position:fixed;
+    width:100%;
+    top:0px;
+    bottom:80px
+}
+
 .listview
 {
 	overflow-y:auto;

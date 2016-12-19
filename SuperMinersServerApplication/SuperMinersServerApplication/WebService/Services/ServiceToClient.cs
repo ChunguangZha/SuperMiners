@@ -35,7 +35,7 @@ namespace SuperMinersServerApplication.WebService.Services
             PlayerController.Instance.KickOutPlayer += Instance_KickOutPlayer;
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
-            NoticeController.Instance.NoticeAdded += Instance_NoticeAdded;
+            NoticeController.Instance.NoticeChanged += Instance_NoticeChanged;
             OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
             OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
             OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
@@ -100,7 +100,7 @@ namespace SuperMinersServerApplication.WebService.Services
             })).Start();
         }
 
-        void Instance_NoticeAdded(string obj)
+        void Instance_NoticeChanged(string obj)
         {
             var allClients = ClientManager.AllClients;
             foreach (var client in allClients)

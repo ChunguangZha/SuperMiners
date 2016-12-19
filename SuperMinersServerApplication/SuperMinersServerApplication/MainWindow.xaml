@@ -376,12 +376,12 @@
                         <RowDefinition Height="174*"/>
                         <RowDefinition Height="24*"/>
                     </Grid.RowDefinitions>
-                    <DataGrid x:Name="datagridNotices" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" HeadersVisibility="Column" SelectionMode="Single" CanUserResizeRows="False" HorizontalScrollBarVisibility="Disabled" EnableRowVirtualization="False" AlternatingRowBackground="#FFE4E2E2" FontSize="14" RowDetailsVisibilityMode="Collapsed">
+                    <DataGrid x:Name="datagridNotices" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" HeadersVisibility="Column" SelectionMode="Single" CanUserResizeRows="False" HorizontalScrollBarVisibility="Disabled" EnableRowVirtualization="False" AlternatingRowBackground="#FFE4E2E2" FontSize="14" RowDetailsVisibilityMode="Collapsed">
                         <DataGrid.Columns>
                             <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="100">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                                        <!--<CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding Checked, Mode=TwoWay}"/>-->
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
@@ -412,6 +412,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" Orientation="Horizontal"  FlowDirection="RightToLeft">
                             <Button Name="btnDeleteNotices" Margin="5" Content="删除通知" VerticalAlignment="Center" Width="100" Click="btnDeleteNotices_Click"/>
+                            <Button Name="btnUpdateNotices" Margin="5" Content="修改通知" VerticalAlignment="Center" Width="100" Click="btnUpdateNotices_Click"/>
                             <Button Name="btnCreateNotices" Margin="5" Content="新建通知" VerticalAlignment="Center" Width="100" Click="btnCreateNotices_Click"/>
                         </StackPanel>
                     </Grid>

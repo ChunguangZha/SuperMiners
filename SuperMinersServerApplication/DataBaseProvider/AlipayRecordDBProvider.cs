@@ -20,7 +20,7 @@ namespace DataBaseProvider
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into alipayrechargerecord " +
                     "(`out_trade_no`, `trade_type`,`alipay_trade_no`,`user_name`,`buyer_email`,`total_fee`,`value_rmb`,`pay_time`) " +
-                    " values (@out_trade_no, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@value_rmb,@pay_time)";
+                    " values (@out_trade_no, @trade_type, @alipay_trade_no,@user_name,@buyer_email,@total_fee,@value_rmb,@pay_time)";
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@out_trade_no", alipayRecord.out_trade_no);

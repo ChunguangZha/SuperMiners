@@ -59,7 +59,7 @@ namespace SuperMinersServerApplication.Controller
             this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
         }
 
-        public void AutoDeletePlayer()
+        public int AutoDeletePlayer()
         {
             var players = DBProvider.UserDBProvider.GetAllPlayers();
             List<PlayerInfo> listUserID_toDelete = new List<PlayerInfo>();
@@ -67,10 +67,9 @@ namespace SuperMinersServerApplication.Controller
             //1.	只要充过值（不含购买矿石）的玩家，不删除；
             //2.	登录过的玩家，30天没再登录的，删除；
             //3.	没登录过的玩家，7天没再登录的，删除；
-            //4.	锁定期限超过7天的玩家，删除。
+            //4.	锁定期限超过7天的玩家，第7天后，删除。
+            // 代理玩家不删除。
 
-
-            // 代理玩家暂时不删除。
             foreach (var player in players)
             {
                 if (player.SimpleInfo.GroupType == PlayerGroupType.AgentPlayer)
@@ -99,7 +98,7 @@ namespace SuperMinersServerApplication.Controller
                     }
 
                     PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(player.SimpleInfo.UserID);
-                    if (lockedInfo != null && lockedInfo.ExpireDays> 7)
+                    if (lockedInfo != null && lockedInfo.ExpireDays > 7 && (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > 7)
                     {
                         listUserID_toDelete.Add(player);
                     }
@@ -138,6 +137,8 @@ namespace SuperMinersServerApplication.Controller
                 DBProvider.UserDBProvider.DeletePlayers(userids);
 
             }
+
+            return listUserID_toDelete.Count;
         }
 
 

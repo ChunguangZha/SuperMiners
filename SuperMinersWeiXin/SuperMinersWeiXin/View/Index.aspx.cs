@@ -36,6 +36,7 @@ namespace SuperMinersWeiXin.View
                     this.txtStones.Text = (player.FortuneInfo.StockOfStones - player.FortuneInfo.FreezingStones).ToString("f2");
                     this.txtLastGatherTime.Text = player.FortuneInfo.TempOutputStonesStartTime.ToString();
                     this.txtWorkStonesReservers.Text = ((player.FortuneInfo.StonesReserves - player.FortuneInfo.TotalProducedStonesCount)).ToString("f2");
+                    this.txtSellStoneQuan.Text = player.FortuneInfo.StoneSellQuan.ToString();
 
                 }
                 else
