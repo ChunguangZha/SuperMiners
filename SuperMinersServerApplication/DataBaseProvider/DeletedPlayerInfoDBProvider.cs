@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +107,37 @@ namespace DataBaseProvider
 
                 mycmd.ExecuteNonQuery();
 
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public PlayerInfo[] GetDeletedPlayers()
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                mycmd = myconn.CreateCommand();
+
+                string sqlText = "select * from deletedplayerinfo ";
+                mycmd.CommandText = sqlText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                return MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(table);
             }
             finally
             {

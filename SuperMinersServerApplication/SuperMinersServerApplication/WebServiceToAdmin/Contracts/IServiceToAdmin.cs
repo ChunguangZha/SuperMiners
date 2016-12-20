@@ -279,6 +279,12 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         ExpChangeRecord[] GetExpChangeRecord(string token, int userID);
 
-
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetDeletedPlayers",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PlayerInfo[] GetDeletedPlayers(string token);
     }
 }

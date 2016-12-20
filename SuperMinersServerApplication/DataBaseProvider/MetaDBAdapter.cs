@@ -244,7 +244,7 @@ namespace DataBaseProvider
 
             return players;
         }
-
+        
         internal static AdminInfo[] GetAdminInfoListFromDataTable(DataTable dt)
         {
             AdminInfo[] admins = new AdminInfo[dt.Rows.Count];

@@ -185,6 +185,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
       <Link>Wcf\Datas\CallbackInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\PlayerInfoLoginWrap.cs">
+      <Link>Wcf\Datas\PlayerInfoLoginWrap.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Contracts\Callbacks\IServiceToAdmin.Callback.cs">
       <Link>Wcf\Contracts\Callbacks\IServiceToAdmin.Callback.cs</Link>
     </Compile>
@@ -227,6 +230,9 @@
     <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />
+    <Compile Include="View\Controls\DeletedPlayerInfoControl.xaml.cs">
+      <DependentUpon>DeletedPlayerInfoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\GameFunny\RouletteActiveWinRealAwardListControl.xaml.cs">
       <DependentUpon>RouletteActiveWinRealAwardListControl.xaml</DependentUpon>
     </Compile>
@@ -395,6 +401,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Controls\DeletedPlayerInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\GameFunny\RouletteActiveWinRealAwardListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -453,9 +463,6 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\AESEncrypt.cs">
       <Link>Wcf\Channel\AESEncrypt.cs</Link>
-    </Compile>
-    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\UserInfo.cs">
-      <Link>Wcf\Datas\UserInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToAdmin\Contracts\IServiceToAdmin.cs">
       <Link>Wcf\Contracts\IServiceToAdmin.cs</Link>

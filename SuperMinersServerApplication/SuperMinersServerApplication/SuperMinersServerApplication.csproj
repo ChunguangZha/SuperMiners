@@ -132,7 +132,7 @@
     <Compile Include="GlobalConfig.cs" />
     <Compile Include="GlobalData.cs" />
     <Compile Include="Model\CallbackInfo.cs" />
-    <Compile Include="Model\UserInfo.cs" />
+    <Compile Include="Model\PlayerInfoLoginWrap.cs" />
     <Compile Include="MyControl\NumericTextBox.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

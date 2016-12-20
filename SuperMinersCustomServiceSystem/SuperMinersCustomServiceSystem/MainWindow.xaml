@@ -57,9 +57,9 @@
         </GroupBox>
         <TreeView Grid.Row="1" Name="TreeMenu">
             <TreeViewItem Name="tvL1WithdrawManager" Header="实时提现" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL1WithdrawManager_MouseDoubleClick"/>
-            <TreeViewItem Name="tvL1PlayerManager" Header="玩家管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL1PlayerManager_MouseDoubleClick">
-                
+            <TreeViewItem Name="tvL1PlayerManager" Header="玩家管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL1PlayerManager_MouseDoubleClick">                
             </TreeViewItem>
+            <TreeViewItem Name="tvL1DeletedPlayerManager" Header="已删除玩家管理" Style="{StaticResource TVItemL1Style}" MouseDoubleClick="tvL1DeletedPlayerManager_MouseDoubleClick"/>
             <TreeViewItem Name="tvL1TradeSystem" Header="交易系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Name="tvL2_TS_Miner" Header="矿工交易" Style="{StaticResource TVItemL2Style}">
                     <TreeViewItem Name="tvL2_TS_Miner_History" Header="交易记录" MouseDoubleClick="tvL2_TS_Miner_History_MouseDoubleClick"/>
@@ -121,6 +121,7 @@
             <gameControl:RouletteCurrentAwardItemListControl x:Name="controlRouletteCurrentAwardItem" Visibility="Collapsed"/>
             <gameControl:RouletteRoundRecordListControl x:Name="controlRouletteRoundList" Visibility="Collapsed"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
+            <Controls:DeletedPlayerInfoControl x:Name="controlDeletedPlayerManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

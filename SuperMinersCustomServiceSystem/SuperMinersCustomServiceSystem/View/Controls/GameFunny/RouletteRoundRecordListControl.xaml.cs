@@ -31,7 +31,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls.GameFunny
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            this.numMultiple.Value = (double)GlobalData.RouletteConfig.RouletteLargeWinMultiple;
+            if (GlobalData.RouletteConfig != null)
+            {
+                this.numMultiple.Value = (double)GlobalData.RouletteConfig.RouletteLargeWinMultiple;
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)

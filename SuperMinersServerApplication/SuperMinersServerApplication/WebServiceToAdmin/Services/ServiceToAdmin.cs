@@ -983,7 +983,15 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                return PlayerController.Instance.SetPlayerAsAgent(userID, userName, agentReferURL);
+                try
+                {
+                    return PlayerController.Instance.SetPlayerAsAgent(userID, userName, agentReferURL);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 SetPlayerAsAgent 异常", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
             }
             else
             {
@@ -1007,7 +1015,35 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                return DBProvider.ExpChangeRecordDBProvider.GetExpChangeRecord(userID);
+                try
+                {
+                    return DBProvider.ExpChangeRecordDBProvider.GetExpChangeRecord(userID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 GetExpChangeRecord 异常", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public PlayerInfo[] GetDeletedPlayers(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayers();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 GetDeletedPlayers 异常", exc);
+                    return null;
+                }
             }
             else
             {

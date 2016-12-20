@@ -18,13 +18,6 @@ namespace SuperMinersServerApplication.Model
             set;
         }
 
-        //[DataMember]
-        //public string LoginIP
-        //{
-        //    get;
-        //    set;
-        //}
-
         [DataMember]
         public PlayerSimpleInfo SimpleInfo = new PlayerSimpleInfo();
 
@@ -34,5 +27,4 @@ namespace SuperMinersServerApplication.Model
         [DataMember]
         public PlayerLockedInfo LockedInfo = null;
     }
-
 }

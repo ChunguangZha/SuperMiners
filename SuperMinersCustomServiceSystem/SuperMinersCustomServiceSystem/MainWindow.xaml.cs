@@ -170,6 +170,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlRouletteRouletteAwardItemListControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlRouletteCurrentAwardItem.Visibility = System.Windows.Visibility.Collapsed;
             this.controlRouletteRoundList.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlDeletedPlayerManage.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -310,6 +311,12 @@ namespace SuperMinersCustomServiceSystem
             App.GameRouletteVMObject.AsyncGetAllRouletteRoundInfo();
             HideAllControls();
             this.controlRouletteRoundList.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL1DeletedPlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlDeletedPlayerManage.Visibility = System.Windows.Visibility.Visible;
         }
 
     }
