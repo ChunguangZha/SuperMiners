@@ -317,6 +317,7 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlDeletedPlayerManage.Visibility = System.Windows.Visibility.Visible;
+            this.controlDeletedPlayerManage.RefreshDB();
         }
 
     }

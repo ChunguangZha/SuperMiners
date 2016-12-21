@@ -79,7 +79,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             this.txtReferrerUserName.Text = "";
             this.cmbLocked.SelectedIndex = 0;
             this.cmbOnline.SelectedIndex = 0;
+            RefreshDB();
+        }
 
+        public void RefreshDB()
+        {
             App.BusyToken.ShowBusyWindow("正在加载...");
             GlobalData.Client.GetDeletedPlayers();
             this.datagridPlayerInfos.ItemsSource = ListAllDeletedPlayers;
