@@ -27,7 +27,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
-        public int BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        public OperResultObject BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
         {
             try
             {
@@ -35,7 +35,9 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
             catch (Exception)
             {
-                return OperResult.RESULTCODE_EXCEPTION;
+                OperResultObject resultObj = new OperResultObject();
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return resultObj;
             }
         }
 
@@ -61,7 +63,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
-        public int WeiXinLogin(string wxUserOpenID, string wxUserName, string ip)
+        public OperResultObject WeiXinLogin(string wxUserOpenID, string wxUserName, string ip)
         {
             try
             {
@@ -69,7 +71,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
             catch (Exception)
             {
-                return OperResult.RESULTCODE_EXCEPTION;
+                return new OperResultObject() { OperResultCode = OperResult.RESULTCODE_EXCEPTION };
             }
         }
 
@@ -149,7 +151,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             }
         }
 
-        public int WithdrawRMB(string userName, int getRMBCount)
+        public OperResultObject WithdrawRMB(string userName, int getRMBCount)
         {
             try
             {
@@ -158,7 +160,7 @@ namespace SuperMinersWeiXin.Wcf.Services
             catch (Exception exc)
             {
                 Console.WriteLine(exc);
-                return OperResult.RESULTCODE_EXCEPTION;
+                return new OperResultObject() { OperResultCode = OperResult.RESULTCODE_EXCEPTION };
             }
         }
 

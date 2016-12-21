@@ -40,14 +40,16 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="xlUserPassword"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public int BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        public OperResultObject BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
         {
+            OperResultObject resultObj = new OperResultObject();
             try
             {
                 int userID = DBProvider.UserDBProvider.JudgeWeiXinOpenIDorXLUserName_Binded(wxUserOpenID, xlUserName);
                 if (userID > 0)
                 {
-                    return OperResult.RESULTCODE_WEIXIN_USERBINDEDBYOTHER;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_WEIXIN_USERBINDEDBYOTHER;
+                    return resultObj;
                 }
 
                 return InnerBindWeixinUser(wxUserOpenID, wxUserName, xlUserName, xlUserPassword, ip);
@@ -55,29 +57,36 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("微信端。绑定玩家信息异常。 wxUserOpenID: " + wxUserOpenID + "，绑定用户：[" + xlUserName + "]失败.", exc);
-                return OperResult.RESULTCODE_EXCEPTION;
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return resultObj;
             }
         }
 
-        private int InnerBindWeixinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        private OperResultObject InnerBindWeixinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
         {
+            OperResultObject resultObj = new OperResultObject();
+
             PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(xlUserName);
             if (player == null)
             {
-                return OperResult.RESULTCODE_USER_NOT_EXIST;
+                resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                return resultObj;
             }
             if (xlUserPassword != player.SimpleInfo.Password)
             {
-                return OperResult.RESULTCODE_USER_NOT_EXIST;
+                resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                return resultObj;
             }
+
 
             int result = PlayerController.Instance.BindWeiXinUser(wxUserOpenID, player);
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + xlUserName);
-                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
+                resultObj = PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName);
+                if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
                 {
-                    return OperResult.RESULTCODE_USER_IS_LOCKED;
+                    return resultObj;
                 }
                 
                 string mac = "weixin";
@@ -88,7 +97,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 result = OperResult.RESULTCODE_TRUE;
             }
 
-            return result;
+            resultObj.OperResultCode = result;
+            return resultObj;
         }
 
         /// <summary>
@@ -148,7 +158,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 int result = PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    result = InnerBindWeixinUser(wxUserOpenID, wxUserName, userName, password, clientIP);
+                    OperResultObject resultObj = InnerBindWeixinUser(wxUserOpenID, wxUserName, userName, password, clientIP);
+                    result = resultObj.OperResultCode;
                 }
 
                 return result;
@@ -162,57 +173,39 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int WeiXinLogin(string wxUserOpenID, string wxUserName, string ip)
+        public OperResultObject WeiXinLogin(string wxUserOpenID, string wxUserName, string ip)
         {
+            OperResultObject resultObj = new OperResultObject();
             string mac = "weixin";
             try
             {
                 PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByWeiXinOpenID(wxUserOpenID);
                 if (player == null)
                 {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
+                    return resultObj;
                 }
-                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
+                resultObj = PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName);
+                if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
                 {
-                    return OperResult.RESULTCODE_USER_IS_LOCKED;
+                    return resultObj;
                 }
                 
                 player.SimpleInfo.LastLoginIP = ip;
                 player.SimpleInfo.LastLoginMac = mac;
                 PlayerController.Instance.WeiXinLoginPlayer(wxUserOpenID, player);
 
-                //RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-                //rsa.FromXmlString(key);
-
-                //token = Guid.NewGuid().ToString();
-                //RSAProvider.SetRSA(token, rsa);
-                //RSAProvider.LoadRSA(token);
-
-                //ClientManager.AddClient(userName, token);
-                //lock (this._callbackDicLocker)
-                //{
-                //    this._callbackDic[token] = new Queue<CallbackInfo>();
-                //}
-
                 LogHelper.Instance.AddInfoLog("微信玩家 [" + wxUserName + "] 登录用户[" + player .SimpleInfo.UserName+ "]成功, IP=" + ip + ", Mac=" + mac);
 
-                return OperResult.RESULTCODE_TRUE;
+                resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
+                return resultObj;
             }
             catch (Exception ex)
             {
                 LogHelper.Instance.AddErrorLog("微信玩家 [" + wxUserName + "] 登录失败, IP=" + ip + ", Mac=" + mac, ex);
-                return OperResult.RESULTCODE_EXCEPTION;
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return resultObj;
             }
-            //if (!string.IsNullOrEmpty(token))
-            //{
-            //    PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Login, 1);
-            //    new Thread(new ParameterizedThreadStart(o =>
-            //    {
-            //        this.LogedIn(o.ToString());
-            //    })).Start(token);
-            //}
-
-            //return token;
         }
 
 
@@ -308,22 +301,25 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int WithdrawRMB(string userName, int getRMBCount)
+        public OperResultObject WithdrawRMB(string userName, int getRMBCount)
         {
+            OperResultObject resultObj = new OperResultObject();
             try
             {
                 if (getRMBCount <= 0)
                 {
-                    return OperResult.RESULTCODE_FALSE;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_FALSE;
                 }
 
-                return PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
+                resultObj = PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("微信端。玩家[" + userName + "] 灵币提现异常，提现灵币为:" + getRMBCount, exc);
-                return OperResult.RESULTCODE_EXCEPTION;
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
             }
+
+            return resultObj;
         }
 
         public int SellStones(string userName, int stoneCount)

@@ -22,13 +22,24 @@ $(function () {
                     } else {
                         var html = '';
                         $(orders).each(function () {
+
+                            var imgCreditLevelHtml = "";
+                            if (this.SellerCreditLevel > 0) {
+                                imgCreditLevelHtml = "<img align='middle' src='../images/l" + this.SellerCreditLevel + ".png' />";
+                            }
+
+                            var imgExpLevelHtml = "";
+                            if (this.SellerExpLevel > 0) {
+                                imgExpLevelHtml = "<img align='middle' src='../images/vip" + this.SellerExpLevel + ".png' />";
+                            }
+
                             var rowhtml = $itemHtmlSellStoneOrder.format({
                                 ValueRMB: this.ValueRMB,
                                 OrderNumber: this.OrderNumber,
                                 SellStonesCount: this.SellStonesCount,
                                 SellerUserName: this.SellerUserName,
-                                CreditLevelImg: this.SellerCreditLevel,
-                                ExpLevelImg: this.SellerExpLevel,
+                                CreditLevelImg: imgCreditLevelHtml,
+                                ExpLevelImg: imgExpLevelHtml,
                             });
                             html += rowhtml;
                         });
@@ -80,7 +91,7 @@ $(function () {
                 "        </div>"+
                 "        <div class='weui-form-preview__item'>"+
                 "            <label class='weui-form-preview__label'>卖家</label>"+
-                "            <span class='weui-form-preview__value'>{SellerUserName}<img align='middle' src='../images/vip{ExpLevelImg}.png' /><img align='middle' src='../images/l{CreditLevelImg}.png' /></span>" +
+                "            <span class='weui-form-preview__value'>{SellerUserName}{ExpLevelImg}{CreditLevelImg}</span>" +
                 "        </div>"+
                 "    </div>"+
                 "    <div class='weui-form-preview__ft'>"+

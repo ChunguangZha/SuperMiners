@@ -17,7 +17,7 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
-        public int WithdrawRMB(string token, string userName, int getRMBCount)
+        public OperResultObject WithdrawRMB(string token, string userName, int getRMBCount)
         {
 #if Delay
 
@@ -27,25 +27,28 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (RSAProvider.LoadRSA(token))
             {
+                OperResultObject resultObj = new OperResultObject();
                 try
                 {
                     if (getRMBCount <= 0)
                     {
-                        return OperResult.RESULTCODE_FALSE;
+                        resultObj.OperResultCode = OperResult.RESULTCODE_FALSE;
                     }
 
                     if (ClientManager.GetClientUserName(token) != userName)
                     {
-                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                        resultObj.OperResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
-                    return PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
+                    resultObj = PlayerController.Instance.CreateWithdrawRMB(userName, getRMBCount);
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 灵币提现异常，提现灵币为:" + getRMBCount, exc);
-                    return OperResult.RESULTCODE_EXCEPTION;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
                 }
+
+                return resultObj;
             }
             else
             {

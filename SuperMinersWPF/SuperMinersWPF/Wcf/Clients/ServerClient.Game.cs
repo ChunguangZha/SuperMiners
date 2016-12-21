@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,10 @@ namespace SuperMinersWPF.Wcf.Clients
     {
         #region WithdrawRMB
 
-        public event EventHandler<WebInvokeEventArgs<int>> WithdrawRMBCompleted;
+        public event EventHandler<WebInvokeEventArgs<OperResultObject>> WithdrawRMBCompleted;
         public void WithdrawRMB(int getRMBCount, object userState)
         {
-            this._invoker.InvokeUserState<int>(this._context, "WithdrawRMB", this.WithdrawRMBCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, getRMBCount);
+            this._invoker.InvokeUserState<OperResultObject>(this._context, "WithdrawRMB", this.WithdrawRMBCompleted, userState, GlobalData.Token, GlobalData.CurrentUser.UserName, getRMBCount);
         }
 
         #endregion

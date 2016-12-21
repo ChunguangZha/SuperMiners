@@ -1,4 +1,5 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
 using MetaData.User;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.StringResources;
@@ -94,7 +95,7 @@ namespace SuperMinersWPF
             }
         }
 
-        void Client_LoginCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<string> e)
+        void Client_LoginCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<OperResultObject> e)
         {
             if (e.Cancelled)
             {
@@ -102,7 +103,7 @@ namespace SuperMinersWPF
                 return;
             }
 
-            if (e.Error != null)
+            if (e.Error != null || e.Result == null)
             {
                 App.BusyToken.CloseBusyWindow();
                 LogHelper.Instance.AddErrorLog("服务器连接失败。", e.Error);
@@ -110,50 +111,37 @@ namespace SuperMinersWPF
                 return;
             }
 
-            if (string.IsNullOrEmpty(e.Result))
+            if (e.Result.OperResultCode == OperResult.RESULTCODE_TRUE)
+            {
+                this._syn.Post(o =>
+                {
+                    this.txtUserName.Text = "";
+                    this.txtPassword.Password = "";
+                }, null);
+
+                GlobalData.InitToken(e.Result.Message);
+                App.MessageVMObject.AsyncGetSystemConfig();
+            }
+            else
             {
                 App.BusyToken.CloseBusyWindow();
-                MyMessageBox.ShowInfo("用户名不存在，或密码不正确。");
-                return;
+                if (string.IsNullOrEmpty(e.Result.Message))
+                {
+                    MyMessageBox.ShowInfo(OperResult.GetMsg(e.Result.OperResultCode));
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo(e.Result.Message);
+                }
             }
 
-            if (e.Result == "VERSIONERROR")
-            {
-                App.BusyToken.CloseBusyWindow();
-                MyWebPage.ShowMyWebPage("");
-                MyMessageBox.ShowInfo("请在打开的迅灵矿场官方网站中更新到最新版本。");
-                return;
-            }
-            if (e.Result == "LOCKED")
-            {
-                App.BusyToken.CloseBusyWindow();
-                MyMessageBox.ShowInfo("您的账户已经被管理员禁用，请联系管理员。");
-                return;
-            }
-            if (e.Result == "ISLOGGED")
-            {
-                App.BusyToken.CloseBusyWindow();
-                MyMessageBox.ShowInfo("您的账户正在其它客户端登录，我们已将对方退出，请重新登录。");
-                return;
-            }
-            if (e.Result == "TESTUSERLOGFAILED")
-            {
-                App.BusyToken.CloseBusyWindow();
-                MyMessageBox.ShowInfo("您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户。");
-                return;
-            }
+            //if (e.Result == "ISLOGGED")
+            //{
+            //    App.BusyToken.CloseBusyWindow();
+            //    MyMessageBox.ShowInfo("您的账户正在其它客户端登录，我们已将对方退出，请重新登录。");
+            //    return;
+            //}
 
-            this._syn.Post(o =>
-            {
-                this.txtUserName.Text = "";
-                this.txtPassword.Password = "";
-            }, null);
-
-            GlobalData.InitToken(e.Result);
-
-            //e.Continue = true;
-
-            App.MessageVMObject.AsyncGetSystemConfig();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)

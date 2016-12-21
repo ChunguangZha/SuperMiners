@@ -136,5 +136,17 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int RouletteSpendStone = 100;
 
+        /// <summary>
+        /// 限制玩家提现间隔（小时）
+        /// </summary>
+        [DataMember]
+        public int LimitWithdrawIntervalHours = 6;
+
+        /// <summary>
+        /// 当玩家被锁定时间超过此值天数时，会被删除
+        /// </summary>
+        [DataMember]
+        public int DeleteUser_WhenLockedExpireDays = 7;
+
     }
 }

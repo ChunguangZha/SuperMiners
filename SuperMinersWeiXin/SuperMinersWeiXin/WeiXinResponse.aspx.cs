@@ -71,10 +71,10 @@ namespace SuperMinersWeiXin
                         string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
                         this.lblMsg.Text = "欢迎  " + userObj.nickname + "  进入迅灵矿场";
 
-                        int result = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
+                        OperResultObject resultobj = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
 
-                        this.lblMsg.Text = "登录迅灵矿场，结果为：" + OperResult.GetMsg(result);
-                        if (result == OperResult.RESULTCODE_TRUE)
+                        this.lblMsg.Text = "登录迅灵矿场，结果为：" + OperResult.GetMsg(resultobj.OperResultCode);
+                        if (resultobj.OperResultCode == OperResult.RESULTCODE_TRUE)
                         {
                             this.lblMsg.Text = "WeiXinLogin OK";
                             var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(userObj.openid);
@@ -91,13 +91,14 @@ namespace SuperMinersWeiXin
 
                             Response.Redirect("View/Index.aspx", false);
                         }
-                        else if (result == OperResult.RESULTCODE_USER_NOT_EXIST)
+                        else if (resultobj.OperResultCode == OperResult.RESULTCODE_USER_NOT_EXIST || resultobj.OperResultCode == OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR)
                         {
                             Response.Redirect("LoginPage.aspx", false);
                         }
                         else
                         {
-                            Response.Write("<script>alert('登录迅灵矿场失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                            string message = string.IsNullOrEmpty(resultobj.Message) ? OperResult.GetMsg(resultobj.OperResultCode) : resultobj.Message;
+                            Response.Write("<script>alert('登录迅灵矿场失败, 原因为：" + message + "')</script>");
                         }
                     }
                     else

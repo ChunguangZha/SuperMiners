@@ -16,7 +16,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         string GetAccessToken();
 
         [OperationContract]
-        int BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip);
+        OperResultObject BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip);
 
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
@@ -33,7 +33,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode);
 
         [OperationContract]
-        int WeiXinLogin(string wxUserOpenID, string wxUserName, string ip);
+        OperResultObject WeiXinLogin(string wxUserOpenID, string wxUserName, string ip);
 
         [OperationContract]
         PlayerInfo GetPlayerByWeiXinOpenID(string openid);
@@ -54,7 +54,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         TradeOperResult RechargeGoldCoin(string userName, int goldCoinCount, PayType payType);
 
         [OperationContract]
-        int WithdrawRMB(string userName, int getRMBCount);
+        OperResultObject WithdrawRMB(string userName, int getRMBCount);
 
         [OperationContract]
         int SellStones(string userName, int stoneCount);

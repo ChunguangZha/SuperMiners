@@ -1,4 +1,5 @@
-﻿using MetaData.Trade;
+﻿using MetaData;
+using MetaData.Trade;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int WithdrawRMB(string token, string userName, int getRMBCount);
+        OperResultObject WithdrawRMB(string token, string userName, int getRMBCount);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/BuyMiner",

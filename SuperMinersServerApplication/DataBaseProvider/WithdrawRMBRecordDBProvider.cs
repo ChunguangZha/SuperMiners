@@ -128,6 +128,46 @@ namespace DataBaseProvider
             }
         }
 
+        public WithdrawRMBRecord GetLastWithdrawRMBRecord(string playerUserName)
+        {
+            WithdrawRMBRecord record = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select * " +
+                                    "from withdrawrmbrecord " +
+                                    "where PlayerUserName = @PlayerUserName  order by CreateTime desc limit 1;";
+                string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
+
+                mycmd.CommandText = sqlTextA;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null)
+                {
+                    var records = MetaDBAdapter<WithdrawRMBRecord>.GetWithdrawRMBRecordListFromDataTable(dt);
+                    if (records != null && records.Length != 0)
+                    {
+                        record = records[0];
+                    }
+                }
+                mycmd.Dispose();
+
+                return record;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         public WithdrawRMBRecord GetWithdrawRMBRecord(int state, string playerUserName, int withdrawRMB, DateTime createTime)
         {
             WithdrawRMBRecord record = null;

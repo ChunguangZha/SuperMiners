@@ -1,10 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MetaData
 {
+    [DataContract]
+    public class OperResultObject
+    {
+        [DataMember]
+        public int OperResultCode = OperResult.RESULTCODE_FALSE;
+
+        [DataMember]
+        public string Message;
+    }
+
     public class OperResult
     {
         public const int RESULTCODE_EXCEPTION = -1;
@@ -17,6 +28,11 @@ namespace MetaData
         /// 参数无效
         /// </summary>
         public const int RESULTCODE_PARAM_INVALID = 2;
+
+        /// <summary>
+        /// 客户端软件版本过时
+        /// </summary>
+        public const int RESULTCODE_CLIENT_VERSION_OLD = 3;
 
         /// <summary>
         /// 注册用户时_用户名已存在
@@ -70,6 +86,16 @@ namespace MetaData
         public const int RESULTCODE_USER_MINERSCOUNT_OUT = 304;
 
         /// <summary>
+        /// 登录时，用户名或密码不正确
+        /// </summary>
+        public const int RESULTCODE_USERNAME_PASSWORD_ERROR = 305;
+
+        /// <summary>
+        /// 您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户
+        /// </summary>
+        public const int RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT = 306;
+
+        /// <summary>
         /// 微信绑定时，该迅灵用户已经被其它微信用户绑定
         /// </summary>
         public const int RESULTCODE_WEIXIN_USERBINDEDBYOTHER = 350;
@@ -97,6 +123,11 @@ namespace MetaData
         /// 为玩家支付灵币提现时，该订单已经被处理
         /// </summary>
         public const int RESULTCODE_WITHDRAW_ORDER_BEHANDLED = 504;
+
+        /// <summary>
+        /// 玩家两次提现时间间隔不足
+        /// </summary>
+        public const int RESULTCODE_WITHDRAW_INTERVAL_LESS = 505;
 
         /// <summary>
         /// 订单不存在
@@ -162,6 +193,7 @@ namespace MetaData
         {
             _resultCode_Msg.Add(OperResult.RESULTCODE_EXCEPTION, "操作异常");
             _resultCode_Msg.Add(OperResult.RESULTCODE_FALSE, "操作失败");
+            _resultCode_Msg.Add(RESULTCODE_CLIENT_VERSION_OLD, "客户端软件版本过时，请更新");
             _resultCode_Msg.Add(OperResult.RESULTCODE_LACK_OF_BALANCE, "余额不足");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_BE_LOCKED, "订单已经被锁定");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_BE_LOCKED, "订单没有被锁定");
@@ -192,6 +224,9 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR, "卖家冻结矿石数错误");
             _resultCode_Msg.Add(RESULTCODE_USER_MINERSCOUNT_OUT, "矿工数不能超过5000");
             _resultCode_Msg.Add(RESULTCODE_ORDER_SELLSTONEQUAN_LACK, "矿石出售券不足");
+            _resultCode_Msg.Add(RESULTCODE_WITHDRAW_INTERVAL_LESS, "跟上次提现时间间隔不足");
+            _resultCode_Msg.Add(RESULTCODE_USERNAME_PASSWORD_ERROR, "用户名或密码错误");
+            _resultCode_Msg.Add(RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT, "您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户");
         }
 
         public static string GetMsg(int resultCode)

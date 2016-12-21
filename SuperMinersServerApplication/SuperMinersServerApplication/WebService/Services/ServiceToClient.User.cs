@@ -56,7 +56,7 @@ namespace SuperMinersServerApplication.WebService.Services
         //    }
         //}
 
-        public string Login(string userName, string password, string key, string mac, string clientVersion)
+        public OperResultObject Login(string userName, string password, string key, string mac, string clientVersion)
         {
 #if Delay
 
@@ -64,13 +64,18 @@ namespace SuperMinersServerApplication.WebService.Services
 
 #endif
 
+            OperResultObject resultObj = new OperResultObject();
+
             if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
             {
-                return String.Empty;
+                resultObj.OperResultCode = OperResult.RESULTCODE_PARAM_INVALID;
+                return resultObj;
             }
             if (!string.IsNullOrEmpty(GlobalConfig.CurrentClientVersion) && GlobalConfig.CurrentClientVersion != clientVersion)
             {
-                return "VERSIONERROR";
+                resultObj.OperResultCode = OperResult.RESULTCODE_CLIENT_VERSION_OLD;
+                //resultObj.Message = "VERSIONERROR";
+                return resultObj;
             }
 
             string token = ClientManager.GetToken(userName);
@@ -90,16 +95,19 @@ namespace SuperMinersServerApplication.WebService.Services
                 PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(userName);
                 if (player == null)
                 {
-                    return "";
+                    resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                    return resultObj;
                 }
                 if (password != player.SimpleInfo.Password)
                 {
-                    return "";
+                    resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                    return resultObj;
                 }
 
-                if (PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName))
+                resultObj = PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName);
+                if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
                 {
-                    return "LOCKED";
+                    return resultObj;
                 }
 
                 if (player.SimpleInfo.InvitationCode == GlobalData.TestInvitationCode)
@@ -112,7 +120,8 @@ namespace SuperMinersServerApplication.WebService.Services
                             logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByUserName(userName);
                             if (logState != null)
                             {
-                                return "TESTUSERLOGFAILED";
+                                resultObj.OperResultCode = OperResult.RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT;
+                                return resultObj;
                             }
                             DBProvider.TestUserLogStateDBProvider.AddTestUserLogState(userName, mac, ip);
                         }
@@ -120,7 +129,8 @@ namespace SuperMinersServerApplication.WebService.Services
                         {
                             if (logState.UserName != userName)
                             {
-                                return "TESTUSERLOGFAILED";
+                                resultObj.OperResultCode = OperResult.RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT;
+                                return resultObj;
                             }
                         }
                     }
@@ -129,15 +139,6 @@ namespace SuperMinersServerApplication.WebService.Services
                         LogHelper.Instance.AddErrorLog("Test User [" + userName + "] Add Exception.", exc);
                     }
                 }
-
-                //PlayerLoginInfo loginInfo = new PlayerLoginInfo()
-                //{
-                //    UserID = player.SimpleInfo.UserID,
-                //    LoginIP = ip,
-                //    LoginMac = mac,
-                //     LoginTime = DateTime.Now
-                //};
-                //DBProvider.PlayerLoginInfoDBProvider.AddPlayerLoginInfo(loginInfo);
 
                 player.SimpleInfo.LastLoginIP = ip;
                 player.SimpleInfo.LastLoginMac = mac;
@@ -172,7 +173,9 @@ namespace SuperMinersServerApplication.WebService.Services
                 })).Start(token);
             }
 
-            return token;
+            resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
+            resultObj.Message = token;
+            return resultObj;
         }
 
         public bool Logout(string token)

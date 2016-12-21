@@ -777,7 +777,7 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
+                myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
                 string cmdText = "select count(id) from playersimpleinfo where Alipay = @Alipay";

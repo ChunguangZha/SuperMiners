@@ -19,10 +19,10 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region Login
 
-        public event EventHandler<WebInvokeEventArgs<string>> LoginCompleted;
+        public event EventHandler<WebInvokeEventArgs<OperResultObject>> LoginCompleted;
         public void Login(string userName, string password, string key, string mac, string clientVersion)
         {
-            this._invoker.Invoke<string>(this._context, "Login", this.LoginCompleted, userName, password, key, mac, clientVersion);
+            this._invoker.Invoke<OperResultObject>(this._context, "Login", this.LoginCompleted, userName, password, key, mac, clientVersion);
         }
 
         #endregion

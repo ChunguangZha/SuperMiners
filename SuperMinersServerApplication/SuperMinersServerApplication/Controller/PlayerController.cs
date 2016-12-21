@@ -98,7 +98,8 @@ namespace SuperMinersServerApplication.Controller
                     }
 
                     PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(player.SimpleInfo.UserID);
-                    if (lockedInfo != null && lockedInfo.ExpireDays > 7 && (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > 7)
+                    if (lockedInfo != null && lockedInfo.ExpireDays > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays 
+                        && (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays)
                     {
                         listUserID_toDelete.Add(player);
                     }
@@ -168,8 +169,12 @@ namespace SuperMinersServerApplication.Controller
             int count = DBProvider.UserDBProvider.GetPlayerCountByAlipayAccount(alipayAccount);
             if (count == 0)
             {
-                //不存在
-                return OperResult.RESULTCODE_FALSE;
+                count = DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayerCountByAlipayAccount(alipayAccount);
+                if (count == 0)
+                {
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
+                }
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -463,28 +468,59 @@ namespace SuperMinersServerApplication.Controller
             return true;
         }
 
-        public bool CheckPlayerIsLocked(int userID, string UserName)
+        /// <summary>
+        /// RESULTCODE_TRUE表示，没有被锁定；RESULTCODE_USER_IS_LOCKED表示，被锁定；RESULTCODE_EXCEPTION表示，异常
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public OperResultObject CheckPlayerIsLocked(int userID, string UserName)
         {
+            OperResultObject resultObj = new OperResultObject();
+
             try
             {
+                int surplusDays = 0;
                 PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(userID);
                 if (lockedInfo == null)
                 {
-                    return false;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
+                    return resultObj;
                 }
 
-                if ((DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > lockedInfo.ExpireDays)
+                double lockedDays = (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays;
+                if (lockedDays > lockedInfo.ExpireDays)
                 {
                     DBProvider.PlayerLockedInfoDBProvider.DeletePlayerLockedInfo(userID);
-                    return false;
+                    resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
+                    return resultObj;
                 }
 
-                return true;
+                surplusDays = lockedInfo.ExpireDays - (int)lockedDays;
+
+                int surplusDays_ToDelete = GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays - (int)lockedDays;
+                if (surplusDays_ToDelete <= 0)
+                {
+                    surplusDays_ToDelete = 1;
+                }
+
+                resultObj.OperResultCode = OperResult.RESULTCODE_USER_IS_LOCKED;
+                if (lockedInfo.ExpireDays > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays)
+                {
+                    resultObj.Message = "账户已经被锁定，请在" + surplusDays_ToDelete + "天内联系管理员解除，否则到期账户将被删除";
+                }
+                else
+                {
+                    resultObj.Message = "账户已经被锁定，" + surplusDays + "天后将会自动解除";
+                }
+
+                return resultObj;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("玩家[" + UserName + "]登录时，检查锁定状态异常。", exc);
-                return true;
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return resultObj;
             }
         }
 
@@ -1007,12 +1043,30 @@ namespace SuperMinersServerApplication.Controller
             return DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
         }
 
-        public int CreateWithdrawRMB(string userName, int getRMBCount)
+
+
+        public OperResultObject CreateWithdrawRMB(string userName, int getRMBCount)
         {
+            OperResultObject resultObj = new OperResultObject();
+
+            WithdrawRMBRecord lastRecord = DBProvider.WithdrawRMBRecordDBProvider.GetLastWithdrawRMBRecord(userName);
+
+            if (lastRecord != null)
+            {
+                double intervalHours = (DateTime.Now - lastRecord.CreateTime).TotalHours;
+                if (lastRecord != null && intervalHours < GlobalConfig.GameConfig.LimitWithdrawIntervalHours)
+                {
+                    resultObj.OperResultCode = OperResult.RESULTCODE_WITHDRAW_INTERVAL_LESS;
+                    resultObj.Message = "请" + (GlobalConfig.GameConfig.LimitWithdrawIntervalHours - (int)intervalHours).ToString() + "小时后再提现";
+                    return resultObj;
+                }
+            }
+
             PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
             if (playerrun == null)
             {
-                return OperResult.RESULTCODE_USER_OFFLINE;
+                resultObj.OperResultCode = OperResult.RESULTCODE_USER_OFFLINE;
+
             }
 
             DateTime createTime = DateTime.Now;
@@ -1026,7 +1080,8 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
 
-            return result;
+            resultObj.OperResultCode = result;
+            return resultObj;
         }
 
         public int RejectPlayerWithdrawRMB(WithdrawRMBRecord record)

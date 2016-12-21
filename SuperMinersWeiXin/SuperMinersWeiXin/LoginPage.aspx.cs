@@ -60,9 +60,9 @@ namespace SuperMinersWeiXin
                 Session[Config.SESSIONKEY_WXUSERINFO] = userObj;
                 string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-                int result = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
+                OperResultObject resultObj = WcfClient.Instance.WeiXinLogin(userObj.openid, userObj.nickname, ip);
 
-                if (result == OperResult.RESULTCODE_TRUE)
+                if (resultObj.OperResultCode == OperResult.RESULTCODE_TRUE)
                 {
                     var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(userObj.openid);
 
@@ -78,13 +78,14 @@ namespace SuperMinersWeiXin
                     Response.Redirect("View/Index.aspx", false);
                     //Server.Execute("View/Index.aspx");
                 }
-                else if (result == OperResult.RESULTCODE_EXCEPTION)
+                else if (resultObj.OperResultCode == OperResult.RESULTCODE_EXCEPTION)
                 {
                     Response.Write("<script>alert('服务器连接失败，请稍候再试')</script>");
                 }
                 else
                 {
-                    Response.Write("<script>alert('测试登录失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                    string message = string.IsNullOrEmpty(resultObj.Message) ? OperResult.GetMsg(resultObj.OperResultCode) : resultObj.Message;
+                    Response.Write("<script>alert('测试登录失败, 原因为：" + message + "')</script>");
                 }
 
 #else
@@ -105,8 +106,8 @@ namespace SuperMinersWeiXin
 
                 string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-                int result = WcfClient.Instance.BindWeiXinUser(wxuserinfo.openid, wxuserinfo.nickname, userName, password, ip);
-                if (result == OperResult.RESULTCODE_TRUE)
+                OperResultObject resultObj = WcfClient.Instance.BindWeiXinUser(wxuserinfo.openid, wxuserinfo.nickname, userName, password, ip);
+                if (resultObj.OperResultCode == OperResult.RESULTCODE_TRUE)
                 {
                     var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(wxuserinfo.openid);
                     if (player != null)
@@ -128,7 +129,8 @@ namespace SuperMinersWeiXin
                 }
                 else
                 {
-                    Response.Write("<script>alert('绑定失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                    string message = string.IsNullOrEmpty(resultObj.Message) ? OperResult.GetMsg(resultObj.OperResultCode) : resultObj.Message;
+                    Response.Write("<script>alert('绑定失败, 原因为：" + message + "')</script>");
                 }
 
 #endif

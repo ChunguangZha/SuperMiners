@@ -45,7 +45,7 @@ namespace SuperMinersWPF.Views.Windows
             GlobalData.Client.WithdrawRMBCompleted -= Client_WithdrawRMBCompleted;
         }
 
-        void Client_WithdrawRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        void Client_WithdrawRMBCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<OperResultObject> e)
         {
             try
             {
@@ -56,7 +56,13 @@ namespace SuperMinersWPF.Views.Windows
                     return;
                 }
 
-                if (e.Result == OperResult.RESULTCODE_TRUE)
+                if (e.Result == null)
+                {
+                    MyMessageBox.ShowInfo("提交提现申请失败。");
+                    return;
+                }
+
+                if (e.Result.OperResultCode == OperResult.RESULTCODE_TRUE)
                 {
                     MyMessageBox.ShowInfo("提交提现申请成功！");
                     App.UserVMObject.AsyncGetPlayerInfo();
@@ -67,7 +73,14 @@ namespace SuperMinersWPF.Views.Windows
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("提交提现申请失败。原因为：" + OperResult.GetMsg(e.Result));
+                    if (string.IsNullOrEmpty(e.Result.Message))
+                    {
+                        MyMessageBox.ShowInfo("提交提现申请失败。原因为：" + OperResult.GetMsg(e.Result.OperResultCode));
+                    }
+                    else
+                    {
+                        MyMessageBox.ShowInfo(e.Result.Message);
+                    }
                 }
             }
             catch (Exception exc)
