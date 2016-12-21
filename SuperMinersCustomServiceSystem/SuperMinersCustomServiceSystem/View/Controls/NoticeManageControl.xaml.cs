@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -71,6 +72,18 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         private void btnSelectAllNotices_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btnUpdateNotices_Click(object sender, RoutedEventArgs e)
+        {
+            NoticeInfo notice = this.datagridNotices.SelectedItem as NoticeInfo;
+            if (notice == null)
+            {
+                MessageBox.Show("请选择公告");
+                return;
+            }
+            AddNoticeWindow win = new AddNoticeWindow(notice);
+            win.ShowDialog();
         }
 
     }

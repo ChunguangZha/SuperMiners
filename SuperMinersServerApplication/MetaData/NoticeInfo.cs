@@ -13,7 +13,7 @@ namespace MetaData
     {
         public NoticeInfo()
         {
-            CreateNewFileName();
+            //CreateNewFileName();
         }
 
         private bool _isChecked;
@@ -37,11 +37,16 @@ namespace MetaData
 
         public DateTime Time { get; set; }
 
+        [DataMember]
         private string _fileName;
         public string FileName
         {
             get
             {
+                if (string.IsNullOrEmpty(_fileName))
+                {
+                    CreateNewFileName();
+                }
                 return _fileName;
             }
             set

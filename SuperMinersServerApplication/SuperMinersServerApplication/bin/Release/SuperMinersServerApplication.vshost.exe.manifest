@@ -50,19 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Tc/RiiV/QlfUXNWgMTi88DeCYCd/ANVmp0pNNGRDgsM=</dsig:DigestValue>
+        <dsig:DigestValue>AJ3stmxCmwDutY1sCHbeA6NDLoa1M9onUx7NDC9lT7U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="41984">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="42496">
       <assemblyIdentity name="MetaData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>C07tf3nWeF/50fkBMu0Om6Imwl68EUeXU3iDcCY/p/g=</dsig:DigestValue>
+        <dsig:DigestValue>Tmpo1JgMkV4zh/astE1LTaUoBjG1Ild/ZZLKesH0v2w=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>6zBkkXqoDojY5FPNj/j4pCPJEgIW7OiuC/ZiUwaUFDc=</dsig:DigestValue>
+        <dsig:DigestValue>Z2rkqtAkdSyUvBX0iNQKx8jKfIBVpK0bYdTD7ZyFMGc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>a1Uvrzo38T0v7dGqaH/kXxVth4UZqYoppHhUEa2/B+M=</dsig:DigestValue>
+        <dsig:DigestValue>IJCfFykBFH5UYiqCc9RSFN/RCQmV98yu5Ik4JpHAz/U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -19,12 +19,12 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return this._listAllNotices; }
         }
 
-        public void AsyncCreateNotice(NoticeInfo notice)
+        public void AsyncSaveNotice(NoticeInfo notice, bool isAdd)
         {
             if (GlobalData.Client.IsConnected)
             {
-                App.BusyToken.ShowBusyWindow("正在向服务器提交新的系统消息...");
-                GlobalData.Client.CreateNotice(notice);
+                App.BusyToken.ShowBusyWindow("正在提交数据...");
+                GlobalData.Client.SaveNotice(notice, isAdd);
             }
         }
 
@@ -32,14 +32,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         {
             if (GlobalData.Client.IsConnected)
             {
-                App.BusyToken.ShowBusyWindow("正在加载历史系统消息...");
+                App.BusyToken.ShowBusyWindow("正在加载数据...");
                 GlobalData.Client.GetNotices();
             }
         }
         
         public void RegisterEvents()
         {
-            GlobalData.Client.CreateNoticeCompleted += Client_CreateNoticeCompleted;
+            GlobalData.Client.SaveNoticeCompleted += Client_SaveNoticeCompleted;
             GlobalData.Client.GetNoticesCompleted += Client_GetNoticesCompleted;
         }
 
@@ -55,7 +55,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
                 if (e.Error != null)
                 {
-                    MessageBox.Show("获取系统消息失败。");
+                    MessageBox.Show("获取系统公告失败。");
                     return;
                 }
 
@@ -77,7 +77,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        void Client_CreateNoticeCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
+        void Client_SaveNoticeCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
         {
             App.BusyToken.CloseBusyWindow();
             if (e.Cancelled)
@@ -87,20 +87,20 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
             if (e.Error != null || !e.Result)
             {
-                MessageBox.Show("创建系统消息失败。");
+                MessageBox.Show("保存系统公告失败。");
                 return;
             }
 
-            MessageBox.Show("创建系统消息成功。");
+            MessageBox.Show("保存系统公告成功。");
 
-            if (CreateNoticeCompleted != null)
+            if (SaveNoticeCompleted != null)
             {
-                CreateNoticeCompleted(e.Result);
+                SaveNoticeCompleted(e.Result);
             }
             this.AsyncGetAllNotice();
         }
 
-        public event Action<bool> CreateNoticeCompleted;
+        public event Action<bool> SaveNoticeCompleted;
 
         #region INotifyPropertyChanged Members
 

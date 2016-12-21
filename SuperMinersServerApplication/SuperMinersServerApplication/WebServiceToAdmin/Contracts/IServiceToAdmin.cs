@@ -136,12 +136,12 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         NoticeInfo[] GetNotices(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/CreateNotice",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/SaveNotice",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        bool CreateNotice(string token, NoticeInfo notice);
+        bool SaveNotice(string token, NoticeInfo notice, bool isAdd);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetSellStonesOrderList",

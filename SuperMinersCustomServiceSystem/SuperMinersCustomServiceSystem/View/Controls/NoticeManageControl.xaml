@@ -14,15 +14,8 @@
         </Grid.RowDefinitions>
         <TextBlock Text="公告管理" FontSize="18" FontWeight="Bold" Margin="10"/>
 
-        <DataGrid x:Name="datagridNotices" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" HeadersVisibility="Column" SelectionMode="Single" CanUserResizeRows="False" HorizontalScrollBarVisibility="Disabled" EnableRowVirtualization="False" AlternatingRowBackground="#FFE4E2E2" FontSize="14" RowDetailsVisibilityMode="Collapsed">
+        <DataGrid x:Name="datagridNotices" Grid.Row="1" IsReadOnly="True" AutoGenerateColumns="False" HeadersVisibility="Column" SelectionMode="Single" HorizontalScrollBarVisibility="Disabled" EnableRowVirtualization="False" AlternatingRowBackground="#FFE4E2E2" FontSize="14" RowDetailsVisibilityMode="Collapsed">
             <DataGrid.Columns>
-                <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="100">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <CheckBox HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsChecked}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
                 <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="*" Header="标题">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -42,14 +35,15 @@
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal" Margin="10">
+            <StackPanel Orientation="Horizontal" Margin="10" Visibility="Collapsed">
                 <Button Name="btnSelectAllNotices" Margin="5" Content="全选" VerticalAlignment="Center" Visibility="Collapsed" Width="100" Click="btnSelectAllNotices_Click"/>
                 <Button Name="btnclearAllNotices" Margin="5" Content="全取消" VerticalAlignment="Center" Visibility="Collapsed" Width="100" Click="btnclearAllNotices_Click"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal"  FlowDirection="RightToLeft" Margin="10">
                 <Button Name="btnDeleteNotices" Margin="5" Content="删除通知" VerticalAlignment="Center" Width="100" Click="btnDeleteNotices_Click"/>
+                <Button Name="btnUpdateNotices" Margin="5" Content="修改通知" VerticalAlignment="Center" Width="100" Click="btnUpdateNotices_Click"/>
                 <Button Name="btnCreateNotices" Margin="5" Content="新建通知" VerticalAlignment="Center" Width="100" Click="btnCreateNotices_Click"/>
             </StackPanel>
         </Grid>

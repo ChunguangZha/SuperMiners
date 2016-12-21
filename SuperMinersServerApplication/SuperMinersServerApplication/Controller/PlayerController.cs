@@ -1057,7 +1057,7 @@ namespace SuperMinersServerApplication.Controller
                 if (lastRecord != null && intervalHours < GlobalConfig.GameConfig.LimitWithdrawIntervalHours)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_WITHDRAW_INTERVAL_LESS;
-                    resultObj.Message = "请" + (GlobalConfig.GameConfig.LimitWithdrawIntervalHours - (int)intervalHours).ToString() + "小时后再提现";
+                    resultObj.Message = "距离下一次提现申请，还有" + (GlobalConfig.GameConfig.LimitWithdrawIntervalHours - (int)intervalHours).ToString() + "小时";
                     return resultObj;
                 }
             }

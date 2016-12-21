@@ -20,13 +20,28 @@ namespace SuperMinersCustomServiceSystem.View
     /// </summary>
     public partial class AddNoticeWindow : Window
     {
+        private NoticeInfo _notice;
+        bool isAdd = false;
+
         public AddNoticeWindow()
         {
             InitializeComponent();
-            App.NoticeVMObject.CreateNoticeCompleted += NoticeVMObject_CreateNoticeCompleted;
+            isAdd = true;
+            App.NoticeVMObject.SaveNoticeCompleted += NoticeVMObject_SaveNoticeCompleted;
         }
 
-        void NoticeVMObject_CreateNoticeCompleted(bool obj)
+        public AddNoticeWindow(NoticeInfo notice)
+        {
+            InitializeComponent();
+            _notice = notice;
+            this.txtNoticeTitle.Text = notice.Title;
+            this.txtNoticeContent.Text = notice.Content;
+            isAdd = false;
+            this.txtNoticeTitle.IsReadOnly = true;
+            App.NoticeVMObject.SaveNoticeCompleted += NoticeVMObject_SaveNoticeCompleted;
+        }
+
+        void NoticeVMObject_SaveNoticeCompleted(bool obj)
         {
             this.Close();
         }
@@ -44,13 +59,20 @@ namespace SuperMinersCustomServiceSystem.View
                 return;
             }
 
-            NoticeInfo notice = new NoticeInfo()
+            if (isAdd)
             {
-                Title = this.txtNoticeTitle.Text,
-                Content = this.txtNoticeContent.Text
-            };
+                _notice = new NoticeInfo()
+                {
+                    Title = this.txtNoticeTitle.Text,
+                    Content = this.txtNoticeContent.Text
+                };
+            }
+            else
+            {
+                _notice.Content = this.txtNoticeContent.Text;
+            }
 
-            App.NoticeVMObject.AsyncCreateNotice(notice);
+            App.NoticeVMObject.AsyncSaveNotice(_notice, isAdd);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

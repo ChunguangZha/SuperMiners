@@ -663,13 +663,17 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public bool CreateNotice(string token, MetaData.NoticeInfo notice)
+        public bool SaveNotice(string token, MetaData.NoticeInfo notice, bool isAdd)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return NoticeController.Instance.SaveNotice(notice, true);
+                    if (isAdd)
+                    {
+                        notice.Time = DateTime.Now;
+                    }
+                    return NoticeController.Instance.SaveNotice(notice, isAdd);
                 }
                 catch (Exception exc)
                 {

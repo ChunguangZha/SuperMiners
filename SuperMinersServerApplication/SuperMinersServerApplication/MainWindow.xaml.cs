@@ -259,6 +259,7 @@ namespace SuperMinersServerApplication
 
         private void btnStopService_Click(object sender, RoutedEventArgs e)
         {
+            LogHelper.Instance.AddInfoLog("正在停止服务...");
             PlayerActionController.Instance.SaveActionLogs();
             RouletteAwardController.Instance.SaveRouletteRoundInfoToData();
             App.ServiceToRun.Stop();

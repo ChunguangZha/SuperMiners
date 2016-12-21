@@ -14,7 +14,7 @@ namespace MetaData
     }
 
     [DataContract]
-    public class MyDateTime
+    public class MyDateTime : IComparable, IComparer<MyDateTime>
     {
         [DataMember]
         public bool IsNull = true;
@@ -37,15 +37,17 @@ namespace MetaData
         [DataMember]
         public int Second;
 
+        public DateTime dTime = DateTime.Now;
+
         public MyDateTime()
         {
-            DateTime timenow = DateTime.Now;
-            Year = timenow.Year;
-            Month = timenow.Month;
-            Day = timenow.Day;
-            Hour = timenow.Hour;
-            Minute = timenow.Minute;
-            Second = timenow.Second;
+            dTime = DateTime.Now;
+            Year = dTime.Year;
+            Month = dTime.Month;
+            Day = dTime.Day;
+            Hour = dTime.Hour;
+            Minute = dTime.Minute;
+            Second = dTime.Second;
         }
 
         public DateTime ToDateTime()
@@ -65,6 +67,50 @@ namespace MetaData
                 Minute = time.Minute,
                 Second = time.Second
             };
+        }
+
+        public static MyDateTime FromString(string timeString)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(timeString))
+                {
+                    return new MyDateTime();
+                }
+
+                DateTime dtime = DateTime.Now;
+                DateTime.TryParse(timeString, out dtime);
+                return FromDateTime(dtime);
+            }
+            catch
+            {
+                return new MyDateTime();
+            }
+        }
+
+        public override string ToString()
+        {
+            return this.ToDateTime().ToString();
+        }
+
+        public int CompareTo(object obj)
+        {
+            MyDateTime other = obj as MyDateTime;
+            if (other == null)
+            {
+                return -1;
+            }
+
+            DateTime thisTime = this.ToDateTime();
+            DateTime otherTime = other.ToDateTime();
+            return thisTime.CompareTo(otherTime);
+        }
+
+        public int Compare(MyDateTime x, MyDateTime y)
+        {
+            DateTime xTime = x.ToDateTime();
+            DateTime yTime = y.ToDateTime();
+            return xTime.CompareTo(yTime);
         }
     }
 }

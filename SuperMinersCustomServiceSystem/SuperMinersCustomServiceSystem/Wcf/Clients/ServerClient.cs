@@ -232,10 +232,10 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<NoticeInfo[]>(this._context, "GetNotices", this.GetNoticesCompleted, GlobalData.Token);
         }
 
-        public event EventHandler<WebInvokeEventArgs<bool>> CreateNoticeCompleted;
-        public void CreateNotice(NoticeInfo notice)
+        public event EventHandler<WebInvokeEventArgs<bool>> SaveNoticeCompleted;
+        public void SaveNotice(NoticeInfo notice, bool isAdd)
         {
-            this._invoker.Invoke<bool>(this._context, "CreateNotice", this.CreateNoticeCompleted, GlobalData.Token, notice);
+            this._invoker.Invoke<bool>(this._context, "SaveNotice", this.SaveNoticeCompleted, GlobalData.Token, notice, isAdd);
         }
 
         public event EventHandler<WebInvokeEventArgs<int>> SetPlayerAsAgentCompleted;
