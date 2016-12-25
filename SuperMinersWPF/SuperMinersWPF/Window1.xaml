@@ -251,6 +251,16 @@
                         <TextBlock Grid.Column="1" Text="娱乐" FontSize="16"/>
                     </Grid>
                 </RadioButton>
+                <RadioButton x:Name="btnMall" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Click="btnMall_Click">
+                    <Grid Margin="10,10,15,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="Resources/e1.png" Stretch="None" Margin="5"/>
+                        <TextBlock Grid.Column="1" Text="商城" FontSize="16"/>
+                    </Grid>
+                </RadioButton>
                 <RadioButton x:Name="btnShowMySuperMiners" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowMySuperMiners_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
@@ -267,10 +277,9 @@
         <Grid Grid.Row="1" Grid.Column="1" x:Name="panelMainPage" Margin="10">
             <Views:DigStoneAreaUserControl x:Name="controlDigStoneArea" Visibility="Visible"/>
             <Views:StonesMarketUserControl x:Name="controlStonesMarket" Visibility="Collapsed"/>
-            <Views:TopListUserControl x:Name="controlTopList" Visibility="Collapsed"/>
             <Views:MySuperMinersControl x:Name="controlMySuperMiners" Visibility="Collapsed"/>
-            <Views:ChatUserControl x:Name="controlChat" Visibility="Collapsed"/>
             <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
+            <Views:MallControl x:Name="controlMall" Visibility="Collapsed"/>
         </Grid>
 
     </Grid>

@@ -146,14 +146,41 @@
     <Content Include="Data\ShopItemData.xml" />
     <Content Include="Default.aspx" />
     <Content Include="Images\alipay_logo.png" />
+    <Content Include="Images\background_01.png" />
+    <Content Include="Images\background_02.png" />
+    <Content Include="Images\background_03.png" />
+    <Content Include="Images\border_left_top.png" />
+    <Content Include="Images\border_right_top.png" />
+    <Content Include="Images\contactUs_a.png" />
+    <Content Include="Images\contactUs_b.png" />
+    <Content Include="Images\contents_1_bg.png" />
+    <Content Include="Images\contents_2_header.png" />
+    <Content Include="Images\flybackground_bottom.png" />
+    <Content Include="Images\flybackground_left.png" />
+    <Content Include="Images\flybackground_right.png" />
+    <Content Include="Images\flybackground_top.png" />
+    <Content Include="Images\home_a.png" />
+    <Content Include="Images\home_b.png" />
+    <Content Include="Images\logo2.png" />
+    <Content Include="Images\mall_a.png" />
+    <Content Include="Images\mall_b.png" />
+    <Content Include="Images\menu-background_03.png" />
+    <Content Include="Images\menu-background_04.png" />
+    <Content Include="Images\menu-background_05.png" />
+    <Content Include="Images\menu-background_06.png" />
+    <Content Include="Images\menu-background_07.png" />
+    <Content Include="Images\menu-download_03.png" />
     <Content Include="Images\online_arrow.jpg" />
     <Content Include="Images\online_botbg.jpg" />
     <Content Include="Images\qq.png" />
+    <Content Include="Images\register_a.png" />
+    <Content Include="Images\register_b.png" />
+    <Content Include="Images\weixin.jpg" />
     <Content Include="Images\yes.png" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\float-contact-us.js" />
     <Content Include="Scripts\TrafficAnalysis.js" />
-    <Content Include="Software\DownLoad.aspx" />
+    <Content Include="DownLoad.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Images\1_3.png" />
     <Content Include="Images\1_1.png" />
@@ -281,11 +308,11 @@
     <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>
     </Compile>
-    <Compile Include="Software\DownLoad.aspx.cs">
+    <Compile Include="DownLoad.aspx.cs">
       <DependentUpon>DownLoad.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Software\DownLoad.aspx.designer.cs">
+    <Compile Include="DownLoad.aspx.designer.cs">
       <DependentUpon>DownLoad.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -353,7 +380,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Software\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -372,7 +401,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>13159</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:8509/</IISUrl>
+          <IISUrl>http://localhost:8588/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

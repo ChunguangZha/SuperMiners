@@ -183,7 +183,7 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo);
-                result.OperResult = OperResult.RESULTCODE_TRUE;
+                result.OperResult = OperResult.RESULTCODE_GATHERSTONE_NOSTONES;
                 return result;
             }
 
@@ -219,6 +219,11 @@ namespace SuperMinersServerApplication.Controller
                     //decimal computeTempOutput = stones < tempOutput ? stones : tempOutput;
                     IntTempOutput = (int)computeTempOutput;
 
+                    if (IntTempOutput <= 0)
+                    {
+                        result.OperResult = OperResult.RESULTCODE_GATHERSTONE_NOSTONES;
+                        return result;
+                    }
                     BasePlayer.FortuneInfo.TempOutputStones = 0;
                     BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
                     BasePlayer.FortuneInfo.StockOfStones += IntTempOutput;

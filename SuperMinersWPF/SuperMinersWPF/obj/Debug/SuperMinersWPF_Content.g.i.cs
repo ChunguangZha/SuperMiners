@@ -8,14 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip1.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip2.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip3.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip4.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip5.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip6.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip7.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip8.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip9.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/vip10.png")]
 
 

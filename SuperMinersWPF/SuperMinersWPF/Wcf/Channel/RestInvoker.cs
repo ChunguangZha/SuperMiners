@@ -376,6 +376,11 @@ namespace SuperMinersWPF.Wcf.Channel
                         {
                             if (ex is WebException)
                             {
+                                if (((WebException)ex).Status == WebExceptionStatus.RequestCanceled)
+                                {
+                                    this.InvokeCallback();
+                                    return;
+                                }
                                 if (null != this.Error)
                                 {
                                     this.Error(this, EventArgs.Empty);

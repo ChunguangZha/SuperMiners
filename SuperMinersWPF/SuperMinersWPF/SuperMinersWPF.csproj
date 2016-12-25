@@ -337,11 +337,17 @@
     <Compile Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml.cs">
       <DependentUpon>GoldCoinRechargeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MallControl.xaml.cs">
+      <DependentUpon>MallControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\MinerTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>MinerTradeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\MineTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>MineTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\RaidersoftheLostArkControl.xaml.cs">
+      <DependentUpon>RaidersoftheLostArkControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\StoneActiveOrderListControl.xaml.cs">
       <DependentUpon>StoneActiveOrderListControl.xaml</DependentUpon>
@@ -431,6 +437,7 @@
     <Compile Include="Wcf\Channel\BusyToken.cs" />
     <Compile Include="Wcf\Channel\CryptEncoder.cs" />
     <Compile Include="Wcf\Channel\MyWebRequest.cs" />
+    <Compile Include="Wcf\Channel\RequestState.cs" />
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Game.cs" />
@@ -508,11 +515,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\MallControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Controls\MinerTradeHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\MineTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\RaidersoftheLostArkControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -761,6 +776,9 @@
     <Resource Include="Resources\vip7.png" />
     <Resource Include="Resources\vip8.png" />
     <Resource Include="Resources\vip9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\vip10.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

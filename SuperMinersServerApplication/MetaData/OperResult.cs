@@ -130,6 +130,11 @@ namespace MetaData
         public const int RESULTCODE_WITHDRAW_INTERVAL_LESS = 505;
 
         /// <summary>
+        /// 收取矿石时，没有可收取的矿石
+        /// </summary>
+        public const int RESULTCODE_GATHERSTONE_NOSTONES = 605;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -227,6 +232,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_WITHDRAW_INTERVAL_LESS, "跟上次提现时间间隔不足");
             _resultCode_Msg.Add(RESULTCODE_USERNAME_PASSWORD_ERROR, "用户名或密码错误");
             _resultCode_Msg.Add(RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT, "您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户");
+            _resultCode_Msg.Add(RESULTCODE_GATHERSTONE_NOSTONES, "没有可收取的矿石");
         }
 
         public static string GetMsg(int resultCode)

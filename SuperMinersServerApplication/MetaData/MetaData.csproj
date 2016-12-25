@@ -44,6 +44,7 @@
     <Compile Include="AgentUser\AgentAwardRecord.cs" />
     <Compile Include="AgentUser\AgentUserInfo.cs" />
     <Compile Include="Common.cs" />
+    <Compile Include="Game\RaideroftheLostArk\RaiderRoundInfo.cs" />
     <Compile Include="Game\Roulette\RouletteAwardItem.cs" />
     <Compile Include="Game\Roulette\RouletteRoundInfo.cs" />
     <Compile Include="Game\Roulette\RouletteWinAwardResult.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="User\UserLogState.cs" />
     <Compile Include="User\UserReferrerTreeItem.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

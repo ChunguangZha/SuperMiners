@@ -14,6 +14,7 @@ namespace SuperMinersWPF.Wcf.Channel
         public MyWebRequest(WebRequest req) 
         {
             this._req = req;
+            this._req.Timeout = 5000;
             this.IsCancel = false;
         }
 

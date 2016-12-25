@@ -15,4 +15,19 @@ $().ready(function () {
             flag = 1;
         }
     });
+
+    var flag2 = 1;
+    $('#rightArrowWeiXinImg').on("click", function () {
+        if (flag2 == 1) {
+            $("#floatLeftDiv").animate({ left: '-256px' }, 300);
+            $(this).animate({ left: '-5px' }, 300);
+            $(this).css('background-position', '0px 0');
+            flag2 = 0;
+        } else {
+            $("#floatLeftDiv").animate({ left: '0' }, 300);
+            $(this).animate({ left: '256px' }, 300);
+            $(this).css('background-position', '-50px 0');
+            flag2 = 1;
+        }
+    });
 });

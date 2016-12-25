@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
+<head id="Head1" runat="server">
     <meta charset="utf-8" />
     <meta name="keywords" content="迅灵矿场，灵币，挖矿" />
     <meta name="application-name" content="迅灵矿场" />
@@ -19,47 +19,132 @@
 </head>
 <body>
     <header>
-        <div class="content-wrapper navmenu">
-                <nav>
-                    <ul id="menu">
-                        <%--<li><a id="A3" runat="server" href="~/"><span>主页</span></a></li>
-                        <li><div class="split"></div></li>--%>
-                        <li><a id="A6" runat="server" href="~/ShopList.aspx" ><span>网上商城</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A4" runat="server" href="~/Register.aspx"><span>矿主注册</span></a></li>
-                        <li><div class="split"></div></li>
-                        <li><a id="A5" runat="server" href="~/Software/DownLoad.aspx"><span>下载矿场</span></a></li>
-                    </ul>
-                </nav>
+        <div class="logo">
+
+        </div>
+        <div class="content-wrapper headmenu">
+            <div class="border-top">
+
+            </div>
+            <div class="menurow">
+                <div class="menuleft">
+
+                </div>
+                <div class="menucenter menubar">
+                        <div class="menuitem" style="background-image: url('../Images/menu-background_03.png');">
+                            <a id="A3" runat="server" href="~/Default.aspx">
+                                <div class="linkcontent">
+                                    <div>
+                                        首页
+                                    </div>
+                                    <div class="link_subline">
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="menusplit"><div class="split"></div></div>
+                        <div class="menuitem" style="background-image: url('../Images/menu-background_04.png');">
+                            <a id="A6" runat="server" href="~/ShopList.aspx">
+                                <div class="linkcontent">
+                                    <div>
+                                        商城
+                                    </div>
+                                    <div class="link_subline">
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="menusplit"><div class="split"></div></div>
+                        <div class="menuitem" style="background-image: url('../Images/menu-background_05.png');">
+                            <a id="A4" runat="server" href="~/Register.aspx">
+                                <div class="linkcontent">
+                                    <div>
+                                        注册
+                                    </div>
+                                    <div class="link_subline">
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="menusplit"><div class="split"></div></div>
+                        <div class="menuitem" style="background-image: url('../Images/menu-background_06.png');">
+                            <a id="A1" runat="server" href="~/Default.aspx">
+                                <div class="linkcontent">
+                                    <div>
+                                        联系我们
+                                    </div>
+                                    <div class="link_subline">
+
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="menusplit"><div class="split"></div></div>
+                        <div class="menuitem" style="background-image: url('../Images/menu-background_07.png');flex:2">
+                            <a id="A5" runat="server" href="http://www.xlore.net/DownLoad.aspx" title="下载">
+                                <img src="Images/menu-download_03.png" width="100%" height="100%" />
+                            </a>
+                        </div>
+                </div>
+                <div class="menuright">
+
+                </div>
+            </div>
         </div>
     </header>
-    <form id="form1" runat="server" method="get">
-        <div class="body">
-            <div id="rightArrow"><a href="javascript:;" title="在线客户"></a></div>
-            <div id="floatDivBoxs">
-                <div class="floatDtt">联系我们</div>
-                <div class="floatShadow">
-                    <ul class="floatDqq">
-                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服1</a></div></li>
-                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921155&Site=Service&menu=yes">在线客服2</a></div></li>
-                        <li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>
-                        <li><div class="imgQQ"><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=5a09aacc408d4cdf0c7209a7eef3a1ee027596e3c0b6f2ffe49c465dbe432a4f">官方QQ群</a></div></li>
-                    </ul>
-                </div>
-                <div class="floatDbg"></div>
+    <div class="body">
+        <div id="rightArrow"><a href="javascript:;" title="在线客户"></a></div>
+        <div id="floatDivBoxs">
+            <div class="floatDtt">联系我们</div>
+            <div class="floatShadow">
+                <ul class="floatDqq">
+                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服1</a></div></li>
+                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921155&Site=Service&menu=yes">在线客服2</a></div></li>
+                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>
+                    <li><div class="imgQQ"><a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=5a09aacc408d4cdf0c7209a7eef3a1ee027596e3c0b6f2ffe49c465dbe432a4f">官方QQ群</a></div></li>
+                </ul>
+            </div>
+            <div class="floatDbg"></div>
+        </div>
+        <div id="rightArrowWeiXinImg"><a href="javascript:;" title="微信版二维码"></a></div>            
+        <div id="floatLeftDiv">
+            <img id="imgWeiXin" src="Images/weixin.jpg" width="256" height="256"/>
+        </div>
+        <div class="content-wrapper content-border">
+            <div class="content-border-left">
+
             </div>
             <div class="content-paper">
+                <form id="form1" runat="server" method="get">
+                    <div class="main-content clear-fix">
+                        <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+                    </div>
+                </form>
             </div>
-            <div class="main-content clear-fix">
-                <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+            <div class="content-border-right">
+
             </div>
         </div>
-    </form>
+    </div>
     <footer>
         <div class="content-wrapper">
             <div>
-                <p>&copy; <%: DateTime.Now.Year %> - 盐山迅灵信息服务有限公司  |  <a href="http://www.miit.gov.cn/">冀ICP备16016823号-1</a></p>
+                <div>
+
+                </div>   
+                <div>
+
+                </div>             
             </div>
+            <div class="border-bottom">
+
+            </div>
+                <div>
+                    <p>&copy; <%: DateTime.Now.Year %> - 盐山迅灵信息服务有限公司  |  <a href="http://www.miit.gov.cn/">冀ICP备16016823号-1</a></p>
+                </div>
         </div>
     </footer>
 </body>

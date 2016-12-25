@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="SuperMinersWPF.Views.Controls.RaidersoftheLostArkControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="900">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="261*"/>
+            <ColumnDefinition Width="439*"/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="39*"/>
+                <RowDefinition Height="211*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="夺宝奇兵" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <ListView Grid.Row="1" Margin="10">
+                <ListViewItem>
+                    <Grid>
+                        
+                    </Grid>
+                </ListViewItem>
+            </ListView>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="47*"/>
+                <RowDefinition Height="74*"/>
+                <RowDefinition Height="228*"/>
+            </Grid.RowDefinitions>            
+            <TextBlock Text="第200期" FontSize="26" VerticalAlignment="Center" Margin="10"/>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="距开奖倒计时：" FontSize="20" Margin="10" VerticalAlignment="Center"/>
+                <TextBlock Text="4 分 32 秒" FontSize="38" Margin="10"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <TextBlock Text="奖池累计：" FontSize="20" Margin="10" VerticalAlignment="Center"/>
+                <TextBlock Text="80000 矿石" FontSize="24" FontStyle="Italic" Margin="10" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
+                <Button Name="btnSubtract" Content="-" Margin="20,10,5,10" Width="20" VerticalAlignment="Center"/>
+                <TextBox Name="num" Width="100" Height="24" Margin="10" VerticalAlignment="Center"/>
+                <Button Name="btnAdd" Content="+" Margin="5,10,20,10" Width="20" VerticalAlignment="Center"/>
+                <Button Name="btnJoin" Content="下注" Width="150" Height="40" FontSize="24" VerticalAlignment="Center"/>
+            </StackPanel>
+            <ListView Grid.Row="4" Margin="10" HorizontalContentAlignment="Stretch">
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Tony"/>
+                        <TextBlock Grid.Column="1" Text="下注300矿石"/>
+                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Tony"/>
+                        <TextBlock Grid.Column="1" Text="下注300矿石"/>
+                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="小开心"/>
+                        <TextBlock Grid.Column="1" Text="下注8000矿石"/>
+                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
+                    </Grid>
+                </ListViewItem>
+            </ListView>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -12,6 +12,11 @@ namespace SuperMinersWPF.Wcf.Channel
 {
     public static class RestClient
     {
+        /// <summary>
+        /// 2分钟超时
+        /// </summary>
+        private static int DefaultTimeout = 2 * 60 * 1000;
+
         #region Public Methods
 
         public static void Do(SynchronizationContext context, string url, string method, byte[] data, object userState, Func<Exception, byte[], bool, object, bool> resultHandler)
@@ -280,7 +285,7 @@ namespace SuperMinersWPF.Wcf.Channel
             {
                 LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1. " + req.Request.RequestUri.ToString(), null);
 
-                req.Request.BeginGetResponse(new AsyncCallback(result =>
+                IAsyncResult asyncResponseResult = req.Request.BeginGetResponse(new AsyncCallback(result =>
                 {
                     WebResponse resp = null;
                     try
@@ -291,7 +296,7 @@ namespace SuperMinersWPF.Wcf.Channel
                     }
                     catch (Exception ex)
                     {
-                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 3", null);
+                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 3", ex);
 
                         if (null != resultHandler)
                         {
@@ -336,12 +341,52 @@ namespace SuperMinersWPF.Wcf.Channel
                     {
                         context.Post(_ =>
                         {
-                            LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 10", null);
+                            //LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 10", null);
 
                             resultHandler(null, resultData);
                         }, null);
                     }
                 }), null);
+
+
+                ThreadPool.RegisterWaitForSingleObject(
+                    asyncResponseResult.AsyncWaitHandle,
+                    new WaitOrTimerCallback((state, timedOut) =>
+                    {
+                        try
+                        {
+                            if (timedOut)
+                            {
+                                LogHelper.Instance.AddErrorLog("time out : " + timedOut, null);
+
+                                //if (null != resultHandler)
+                                //{
+                                //    context.Post(_ =>
+                                //    {
+                                //        resultHandler(new TimeoutException("AA AsyncGetWebResponse Exception"), null);
+                                //    }, null);
+                                //}
+                                MyWebRequest request = state as MyWebRequest;
+                                if (request != null && request.Request != null)
+                                {
+                                    request.Request.Abort();
+                                }
+                            }
+                        }
+                        catch (Exception exc)
+                        {
+                            if (null != resultHandler)
+                            {
+                                context.Post(_ =>
+                                {
+                                    resultHandler(exc, null);
+                                }, null);
+                            }
+                        }
+                        }),
+                    req,
+                    DefaultTimeout,
+                    true);
             }
             catch (Exception ex)
             {
