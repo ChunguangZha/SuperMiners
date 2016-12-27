@@ -37,7 +37,8 @@ namespace SuperMinersWeiXin.Handler
             }
             else
             {
-                context.Response.Write(OperResult.GetMsg(result.OperResult));
+                string messag = OperResult.GetMsg(result.OperResult);
+                context.Response.Write(messag);
             }
         }
 

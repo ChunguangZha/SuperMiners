@@ -132,7 +132,7 @@ namespace MetaData
         /// <summary>
         /// 收取矿石时，没有可收取的矿石
         /// </summary>
-        public const int RESULTCODE_GATHERSTONE_NOSTONES = 605;
+        public const int RESULTCODE_GATHERSTONE_NOSTONES = 506;
 
         /// <summary>
         /// 订单不存在

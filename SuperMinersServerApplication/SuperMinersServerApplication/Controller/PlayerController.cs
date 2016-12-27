@@ -205,8 +205,12 @@ namespace SuperMinersServerApplication.Controller
             int count = DBProvider.UserDBProvider.GetPlayerCountByIDCardNo(IDCardNo);
             if (count == 0)
             {
-                //不存在
-                return OperResult.RESULTCODE_FALSE;
+                count = DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayerCountByPlayerIDCardNo(IDCardNo);
+                if (count == 0)
+                {
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
+                }
             }
 
             return OperResult.RESULTCODE_TRUE;

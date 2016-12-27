@@ -189,5 +189,41 @@ namespace DataBaseProvider
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDCardNo"></param>
+        /// <param name="alipayRealName"></param>
+        /// <returns></returns>
+        public int GetDeletedPlayerCountByPlayerIDCardNo(string IDCardNo)
+        {
+            MySqlConnection myconn = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+
+                string cmdText = "select count(id) from deletedplayerinfo where IDCardNo = @IDCardNo";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@IDCardNo", IDCardNo);
+                object objResult = mycmd.ExecuteScalar();
+                mycmd.Dispose();
+
+                if (objResult == DBNull.Value)
+                {
+                    return 0;
+                }
+                return Convert.ToInt32(objResult);
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
     }
 }
