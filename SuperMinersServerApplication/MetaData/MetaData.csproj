@@ -52,6 +52,7 @@
     <Compile Include="Game\StoneStack\StoneHandBuyInfo.cs" />
     <Compile Include="Game\StoneStack\StoneHandSellInfo.cs" />
     <Compile Include="Game\StoneStack\StoneStackDailyRecordInfo.cs" />
+    <Compile Include="Game\StoneStack\TodayStoneStackTradeRecordInfo.cs" />
     <Compile Include="OperResult.cs" />
     <Compile Include="SystemConfig\CreditLevelConfig.cs" />
     <Compile Include="SystemConfig\RouletteConfig.cs" />

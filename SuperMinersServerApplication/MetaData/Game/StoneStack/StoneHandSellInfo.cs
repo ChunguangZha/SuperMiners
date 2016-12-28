@@ -1,33 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MetaData.Game.StoneStack
 {
-    public class StoneHandSellInfo
+    /// <summary>
+    /// 矿石委托销售订单
+    /// </summary>
+    [DataContract]
+    public class StoneDelegateSellOrderInfo
     {
+        [DataMember]
         public int UserID;
 
-        public decimal SellPrice;
+        /// <summary>
+        /// 一手矿石出售的价格。注：一手为1000块矿石
+        /// </summary>
+        [DataMember]
+        public StackTradeUnit SellUnit = null;
 
-        public int SellStoneCount;
-
-        public StoneHandSellState SellState;
+        [DataMember]
+        public StoneDelegateSellState SellState;
 
         /// <summary>
         /// 挂单时间
         /// </summary>
-        public MyDateTime HandTime;
+        [DataMember]
+        public MyDateTime DelegateTime;
 
         /// <summary>
         /// 完成时间
         /// </summary>
+        [DataMember]
         public MyDateTime FinishedTime;
     }
 
-    public enum StoneHandSellState
+    public enum StoneDelegateSellState
     {
         Waiting,
         Succeed,

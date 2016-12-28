@@ -61,6 +61,7 @@
     <Compile Include="PlayerLoginInfoDBProvider.cs" />
     <Compile Include="StoneOrderDBProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StoneStackDBProvider.cs" />
     <Compile Include="SystemDBProvider.cs" />
     <Compile Include="TestUserLogStateDBProvider.cs" />
     <Compile Include="UserInfoDBProvider.cs" />

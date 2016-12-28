@@ -41,7 +41,20 @@ namespace MetaData
 
         public MyDateTime()
         {
+            IsNull = true;
             dTime = DateTime.Now;
+            Year = dTime.Year;
+            Month = dTime.Month;
+            Day = dTime.Day;
+            Hour = dTime.Hour;
+            Minute = dTime.Minute;
+            Second = dTime.Second;
+        }
+
+        public MyDateTime(DateTime systime)
+        {
+            IsNull = false;
+            dTime = systime;
             Year = dTime.Year;
             Month = dTime.Month;
             Day = dTime.Day;

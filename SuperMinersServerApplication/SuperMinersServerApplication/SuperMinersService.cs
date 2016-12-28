@@ -82,6 +82,7 @@ namespace SuperMinersServerApplication
                 OrderController.Instance.Init();
                 NoticeController.Instance.Init();
                 RouletteAwardController.Instance.Init();
+                SchedulerTaskController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

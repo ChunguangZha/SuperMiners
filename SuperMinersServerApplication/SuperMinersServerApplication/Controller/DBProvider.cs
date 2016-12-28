@@ -46,5 +46,7 @@ namespace SuperMinersServerApplication.Controller
         public static PlayerLockedInfoDBProvider PlayerLockedInfoDBProvider = new PlayerLockedInfoDBProvider();
 
         public static DeletedPlayerInfoDBProvider DeletedPlayerInfoDBProvider = new DeletedPlayerInfoDBProvider();
+
+        public static StoneStackDBProvider StoneStackDBProvider = new StoneStackDBProvider();
     }
 }
