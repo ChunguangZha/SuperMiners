@@ -36,6 +36,10 @@ namespace MetaData.Trade
         /// </summary>
         BuyGoldCoin = 22,
 
+        StackStoneBuy = 30,
+
+        StackStoneSell=31,
+
     }
 
     /// <summary>

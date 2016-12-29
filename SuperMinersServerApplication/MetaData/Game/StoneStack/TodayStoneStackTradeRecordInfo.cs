@@ -17,16 +17,41 @@ namespace MetaData.Game.StoneStack
         public StoneStackDailyRecordInfo DailyInfo = new StoneStackDailyRecordInfo();
 
         /// <summary>
-        /// 卖1到卖10的信息(价格从低到高排序)
+        /// 卖1到卖10的信息(价格从低到高排序)，服务器上保存所有，客户端去显示前10项
         /// </summary>
+        public List<StackTradeUnit> SellOrderPriceCountList = new List<StackTradeUnit>();
+
         [DataMember]
-        public StackTradeUnit[] SellOrderList = new StackTradeUnit[10];
+        public StackTradeUnit[] Top10SellOrderList
+        {
+            get
+            {
+                return SellOrderPriceCountList.ToArray();
+            }
+            set
+            {
+                this.SellOrderPriceCountList = new List<StackTradeUnit>(value);
+            }
+        }
 
         /// <summary>
-        /// 买一到买10的信息(价格从高到低排序)
+        /// 买一到买10的信息(价格从高到低排序)，服务器上保存所有，客户端去显示前10项
         /// </summary>
+        public List<StackTradeUnit> BuyOrderPriceCountList = new List<StackTradeUnit>();
+
         [DataMember]
-        public StackTradeUnit[] BuyOrderList = new StackTradeUnit[10];
+        public StackTradeUnit[] Top10BuyOrderList
+        {
+            get
+            {
+                return BuyOrderPriceCountList.ToArray();
+            }
+            set
+            {
+                this.BuyOrderPriceCountList = new List<StackTradeUnit>(value);
+            }
+        }
+
         
     }
 

@@ -272,7 +272,7 @@
                     </Grid>
                 </RadioButton>
             </StackPanel>
-            <TextBox Grid.Row="1" Text="会员交流群：374992834" Background="Transparent" IsReadOnly="True" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,5" FontSize="16" Foreground="Red" FontStyle="Italic" FontWeight="Bold"/>
+            <TextBox Grid.Row="1" Text="会员交流群：374992834" Visibility="Collapsed" Background="Transparent" IsReadOnly="True" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="20,5" FontSize="16" Foreground="Red" FontStyle="Italic" FontWeight="Bold"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1" x:Name="panelMainPage" Margin="10">
             <Views:DigStoneAreaUserControl x:Name="controlDigStoneArea" Visibility="Visible"/>

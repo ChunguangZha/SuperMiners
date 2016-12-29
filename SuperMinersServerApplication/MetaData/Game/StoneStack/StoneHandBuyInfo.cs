@@ -15,6 +15,9 @@ namespace MetaData.Game.StoneStack
     public class StoneDelegateBuyOrderInfo
     {
         [DataMember]
+        public string OrderNumber;
+
+        [DataMember]
         public int UserID;
 
         ///// <summary>
@@ -70,8 +73,13 @@ namespace MetaData.Game.StoneStack
         [DataMember]
         public StackTradeUnit BuyUnit = null;
 
+        /// <summary>
+        /// 实际完成的矿石手数。由于订单可能被拆分处理，所以该值一定小于等于委托值。
+        /// </summary>
+        public int FinishedStoneTradeHandCount = 0;
+
         [DataMember]
-        public StoneDelegateBuyState BuyState;
+        public StoneDelegateBuyState BuyState = StoneDelegateBuyState.Waiting;
 
         /// <summary>
         /// 挂单时间
@@ -84,12 +92,16 @@ namespace MetaData.Game.StoneStack
         /// </summary>
         [DataMember]
         public MyDateTime FinishedTime;
+
+        [DataMember]
+        public bool IsSubOrder = false;
     }
 
     public enum StoneDelegateBuyState
     {
         Waiting,
         Succeed,
+        Splited,
         Rejected
     }
 }

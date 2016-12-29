@@ -33,8 +33,8 @@ namespace MetaData.Game.StoneStack
                 this._openPrice = value;
                 if (value != 0)
                 {
-                    this.LimitUpPrice = value * 1.2m;
-                    this.LimitDownPrice = value * 0.8m;
+                    this.LimitUpPrice = value * 1.1m;
+                    this.LimitDownPrice = value * 0.9m;
                 }
             }
         }
@@ -43,13 +43,13 @@ namespace MetaData.Game.StoneStack
         public decimal ClosePrice;
 
         /// <summary>
-        /// 涨停价= OpenPrice * 120%
+        /// 涨停价= OpenPrice * 110%
         /// </summary>
         [DataMember]
         public decimal LimitUpPrice;
 
         /// <summary>
-        /// 跌停价= OpenPrice * 80%
+        /// 跌停价= OpenPrice * 90%
         /// </summary>
         [DataMember]
         public decimal LimitDownPrice;
