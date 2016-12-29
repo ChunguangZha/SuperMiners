@@ -55,13 +55,13 @@ namespace MetaData.Game.StoneStack
         public decimal LimitDownPrice;
 
         /// <summary>
-        /// 最低成交价
+        /// 最低成交价(计买入价)
         /// </summary>
         [DataMember]
         public decimal MinTradeSucceedPrice;
 
         /// <summary>
-        /// 最高成交价
+        /// 最高成交价(计买入价)
         /// </summary>
         [DataMember]
         public decimal MaxTradeSucceedPrice;

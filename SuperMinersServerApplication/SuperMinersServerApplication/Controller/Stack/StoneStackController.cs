@@ -11,6 +11,52 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller.Stack
 {
+    //class ListStoneDelegateSellOrderInfoCollection
+    //{
+    //    private List<StoneDelegateSellOrderInfo> listVIPOrders = new List<StoneDelegateSellOrderInfo>();
+    //    private List<StoneDelegateSellOrderInfo> listNormalOrders = new List<StoneDelegateSellOrderInfo>();
+    //    private object _lockList = new object();
+
+    //    public void Insert(StoneDelegateSellOrderInfo sellOrder)
+    //    {
+    //        lock (_lockList)
+    //        {
+    //            int index = -1;
+    //            if (sellOrder.PlayerExpLevel > 0)//VIP
+    //            {
+    //                for (int i = 0; i < listVIPOrders.Count; i++)
+    //                {
+    //                    if (listVIPOrders[i].UserID == sellOrder.UserID)
+    //                    {
+    //                        //VIP集合里，一个VIP玩家只能有一个订单
+    //                        index = -1;
+    //                        break;
+    //                    }
+
+
+    //                }
+    //            }
+
+    //            for (int i = 0; i < listNormalOrders.Count; i++)
+    //            {
+
+    //            }
+    //        }
+    //    }
+    //}
+
+
+    class ListStoneDelegateSellOrderInfoCollection
+    {
+        private ConcurrentQueue<StoneDelegateSellOrderInfo> QueueOrders = new ConcurrentQueue<StoneDelegateSellOrderInfo>();
+
+        public void Insert(StoneDelegateSellOrderInfo sellOrder)
+        {
+            QueueOrders.Enqueue(sellOrder);
+        }
+    }
+
+
     public class StoneStackController
     {
         private bool _marketIsOpened = false;
@@ -18,9 +64,9 @@ namespace SuperMinersServerApplication.Controller.Stack
         private TodayStoneStackTradeRecordInfo _todayTradeInfo = new TodayStoneStackTradeRecordInfo();
         private object _lockTodayInfo = new object();
 
-        ConcurrentDictionary<decimal, ConcurrentBag<StoneDelegateSellOrderInfo>> _dicWaitingSellInfos = new ConcurrentDictionary<decimal, ConcurrentBag<StoneDelegateSellOrderInfo>>();
+        ConcurrentDictionary<decimal, ConcurrentQueue<StoneDelegateSellOrderInfo>> _dicWaitingSellInfos = new ConcurrentDictionary<decimal, ConcurrentQueue<StoneDelegateSellOrderInfo>>();
 
-        ConcurrentDictionary<decimal, ConcurrentBag<StoneDelegateBuyOrderInfo>> _dicWaitingBuyInfos = new ConcurrentDictionary<decimal, ConcurrentBag<StoneDelegateBuyOrderInfo>>();
+        ConcurrentDictionary<decimal, ConcurrentQueue<StoneDelegateBuyOrderInfo>> _dicWaitingBuyInfos = new ConcurrentDictionary<decimal, ConcurrentQueue<StoneDelegateBuyOrderInfo>>();
 
         private Thread _thrStoneStackTrade = null;
 
@@ -175,18 +221,18 @@ namespace SuperMinersServerApplication.Controller.Stack
                 UpdateToTodayBuyList(index, isInsert, item);
             }
 
-            ConcurrentBag<StoneDelegateBuyOrderInfo> bagBuy = null;
+            ConcurrentQueue<StoneDelegateBuyOrderInfo> queueBuy = null;
             if (_dicWaitingBuyInfos.ContainsKey(item.BuyUnit.Price))
             {
-                bagBuy = _dicWaitingBuyInfos[item.BuyUnit.Price];
+                queueBuy = _dicWaitingBuyInfos[item.BuyUnit.Price];
             }
             else
             {
-                bagBuy = new ConcurrentBag<StoneDelegateBuyOrderInfo>();
-                _dicWaitingBuyInfos[item.BuyUnit.Price] = bagBuy;
+                queueBuy = new ConcurrentQueue<StoneDelegateBuyOrderInfo>();
+                _dicWaitingBuyInfos[item.BuyUnit.Price] = queueBuy;
             }
 
-            bagBuy.Add(item);
+            queueBuy.Enqueue(item);
 
             if (saveToDB)
             {
@@ -287,18 +333,18 @@ namespace SuperMinersServerApplication.Controller.Stack
                 UpdateToTodaySellList(index, isInsert, item);
             }
 
-            ConcurrentBag<StoneDelegateSellOrderInfo> bagSell = null;
+            ConcurrentQueue<StoneDelegateSellOrderInfo> queueSell = null;
             if (_dicWaitingSellInfos.ContainsKey(item.SellUnit.Price))
             {
-                bagSell = _dicWaitingSellInfos[item.SellUnit.Price];
+                queueSell = _dicWaitingSellInfos[item.SellUnit.Price];
             }
             else
             {
-                bagSell = new ConcurrentBag<StoneDelegateSellOrderInfo>();
-                _dicWaitingSellInfos[item.SellUnit.Price] = bagSell;
+                queueSell = new ConcurrentQueue<StoneDelegateSellOrderInfo>();
+                _dicWaitingSellInfos[item.SellUnit.Price] = queueSell;
             }
 
-            bagSell.Add(item);
+            queueSell.Enqueue(item);
 
             if (saveToDB)
             {
@@ -394,7 +440,11 @@ namespace SuperMinersServerApplication.Controller.Stack
 
         public OperResultObject PlayerDelegateSellStone(StoneDelegateSellOrderInfo sellOrder)
         {
-            return null;
+            InsertToSell(sellOrder, true);
+            return new OperResultObject()
+            {
+                OperResultCode = OperResult.RESULTCODE_TRUE
+            };
         }
 
         public OperResultObject PlayerWithdrawSellStone(StoneDelegateSellOrderInfo sellOrder)
@@ -402,12 +452,16 @@ namespace SuperMinersServerApplication.Controller.Stack
             return null;
         }
 
-        public OperResultObject PlayerWithdrawBuyStone(StoneDelegateBuyOrderInfo buyOrder)
+        public OperResultObject PlayerDelegateBuyStone(StoneDelegateBuyOrderInfo buyOrder)
         {
-            return null;
+            InsertToBuy(buyOrder, true);
+            return new OperResultObject()
+            {
+                 OperResultCode = OperResult.RESULTCODE_TRUE
+            };
         }
 
-        public OperResultObject PlayerDelegateBuyStone(StoneDelegateBuyOrderInfo buyOrder)
+        public OperResultObject PlayerWithdrawBuyStone(StoneDelegateBuyOrderInfo buyOrder)
         {
             return null;
         }
@@ -418,7 +472,8 @@ namespace SuperMinersServerApplication.Controller.Stack
         {
             while (true)
             {
-                Thread.Sleep(1000);
+                //10秒处理一次
+                Thread.Sleep(10 * 1000);
                 try
                 {
                     if (!this._marketIsOpened)
@@ -426,8 +481,89 @@ namespace SuperMinersServerApplication.Controller.Stack
                         continue;
                     }
 
-                    //从买1 遍历到 买10 ， 进行处理。从卖1 到 卖10 遍历取卖单。
+                    if (this._dicWaitingBuyInfos.Count == 0 || this._dicWaitingSellInfos.Count == 0)
+                    {
+                        continue;
+                    }
 
+                    //从买1 遍历到 买10 ， 进行处理。从卖1 到 卖10 遍历取卖单。
+                    lock (_lockTodayInfo)
+                    {
+                        //循环买价
+                        foreach (var buyUnit in this._todayTradeInfo.BuyOrderList)
+                        {
+                            if (buyUnit == null)
+                            {
+                                continue;
+                            }
+                            if (buyUnit.TradeStoneHandCount == 0 || !this._dicWaitingBuyInfos.ContainsKey(buyUnit.Price) || this._dicWaitingBuyInfos[buyUnit.Price] == null || this._dicWaitingBuyInfos[buyUnit.Price].Count == 0)
+                            {
+                                continue;
+                            }
+
+                            decimal buyPrice = buyUnit.Price;
+                            //循环卖价
+                            foreach (var sellUnit in this._todayTradeInfo.SellOrderList)
+                            {
+                                if (sellUnit == null)
+                                {
+                                    continue;
+                                }
+                                if (sellUnit.TradeStoneHandCount == 0 || !this._dicWaitingSellInfos.ContainsKey(sellUnit.Price) || this._dicWaitingSellInfos[sellUnit.Price] == null || this._dicWaitingSellInfos[sellUnit.Price].Count == 0)
+                                {
+                                    continue;
+                                }
+
+                                if (buyPrice >= sellUnit.Price)
+                                {
+                                    //成交，按量处理
+
+                                    List<StoneDelegateSellOrderInfo> listTradeSucceedSellOrders = new List<StoneDelegateSellOrderInfo>();
+                                    List<StoneDelegateBuyOrderInfo> listTradeSucceedBuyOrders = new List<StoneDelegateBuyOrderInfo>();
+
+                                    if (buyPrice < _todayTradeInfo.DailyInfo.MinTradeSucceedPrice)
+                                    {
+                                        _todayTradeInfo.DailyInfo.MinTradeSucceedPrice = buyPrice;
+                                    }
+                                    if (_todayTradeInfo.DailyInfo.MaxTradeSucceedPrice < buyPrice)
+                                    {
+                                        _todayTradeInfo.DailyInfo.MaxTradeSucceedPrice = buyPrice;
+                                    }
+
+                                    StoneDelegateBuyOrderInfo buyOrder = null;
+                                    do
+                                    {
+                                        this._dicWaitingBuyInfos[buyPrice].TryDequeue(out buyOrder);
+                                    }
+                                    while (buyOrder != null);
+
+                                    StoneDelegateSellOrderInfo sellOrder = null;
+                                    do
+                                    {
+                                        this._dicWaitingSellInfos[sellUnit.Price].TryDequeue(out sellOrder);
+                                    }
+                                    while (sellOrder != null);
+
+                                    //买单量大于卖单量
+                                    if (buyOrder.BuyUnit.TradeStoneHandCount >= sellOrder.SellUnit.TradeStoneHandCount)
+                                    {
+                                        int surplusStoneHandCount = buyOrder.BuyUnit.TradeStoneHandCount - sellOrder.SellUnit.TradeStoneHandCount;
+                                        listTradeSucceedSellOrders.Add(sellOrder);
+
+                                        while (surplusStoneHandCount > 0)
+                                        {
+
+                                        }
+                                    }
+                                    else//卖单量大于买单量
+                                    {
+
+                                    }
+                                }
+                            }
+                        }
+
+                    }
                 }
                 catch (Exception exc)
                 {
