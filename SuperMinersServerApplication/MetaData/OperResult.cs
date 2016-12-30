@@ -191,6 +191,22 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST = 700;
 
+        /// <summary>
+        /// 股票市场， 撤单失败，开市期间无法撤单
+        /// </summary>
+        public const int RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING = 800;
+
+        /// <summary>
+        /// 股票市场，取消订单失败，当日总手数错误
+        /// </summary>
+        public const int RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR = 801;
+
+        /// <summary>
+        /// 股票市场， 挂单失败，闭市期间无法挂单
+        /// </summary>
+        public const int RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED = 802;
+
+
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
 
@@ -233,6 +249,9 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_USERNAME_PASSWORD_ERROR, "用户名或密码错误");
             _resultCode_Msg.Add(RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT, "您当前登录账户为测试玩家，要求同一账户只能在一台电脑登录，且一台电脑只能登录一个账户");
             _resultCode_Msg.Add(RESULTCODE_GATHERSTONE_NOSTONES, "没有可收取的矿石");
+            _resultCode_Msg.Add(RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING, "开市期间无法撤单");
+            _resultCode_Msg.Add(RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR, "总手数不对");
+            _resultCode_Msg.Add(RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED, "尚未开市");
         }
 
         public static string GetMsg(int resultCode)

@@ -102,6 +102,7 @@ namespace MetaData.Game.StoneStack
         Waiting,
         Succeed,
         Splited,
-        Rejected
+        Rejected,
+        Cancel
     }
 }

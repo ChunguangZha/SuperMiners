@@ -13,13 +13,14 @@ namespace MetaData.Game.StoneStack
     [DataContract]
     public class TodayStoneStackTradeRecordInfo
     {
+        private object _lock = new object();
         [DataMember]
         public StoneStackDailyRecordInfo DailyInfo = new StoneStackDailyRecordInfo();
 
         /// <summary>
         /// 卖1到卖10的信息(价格从低到高排序)，服务器上保存所有，客户端去显示前10项
         /// </summary>
-        public List<StackTradeUnit> SellOrderPriceCountList = new List<StackTradeUnit>();
+        private List<StackTradeUnit> SellOrderPriceCountList = new List<StackTradeUnit>();
 
         [DataMember]
         public StackTradeUnit[] Top10SellOrderList
@@ -37,7 +38,7 @@ namespace MetaData.Game.StoneStack
         /// <summary>
         /// 买一到买10的信息(价格从高到低排序)，服务器上保存所有，客户端去显示前10项
         /// </summary>
-        public List<StackTradeUnit> BuyOrderPriceCountList = new List<StackTradeUnit>();
+        private List<StackTradeUnit> BuyOrderPriceCountList = new List<StackTradeUnit>();
 
         [DataMember]
         public StackTradeUnit[] Top10BuyOrderList
@@ -52,7 +53,388 @@ namespace MetaData.Game.StoneStack
             }
         }
 
+        #region DailyInfo
+
+        public void InitTodayDailyInfo(StoneStackDailyRecordInfo lastDailyInfo, decimal initPrice)
+        {
+            if (lastDailyInfo == null)
+            {
+                this.DailyInfo = new StoneStackDailyRecordInfo()
+                {
+                    Day = new MetaData.MyDateTime(DateTime.Now),
+                    //初始等于矿石原价
+                    OpenPrice = initPrice
+                };
+            }
+            else
+            {
+                DateTime nowTime = DateTime.Now;
+                if (lastDailyInfo.Day.Year != nowTime.Year || lastDailyInfo.Day.Month != nowTime.Month || lastDailyInfo.Day.Day != nowTime.Day)
+                {
+                    //又开始新一天
+                    this.DailyInfo = new StoneStackDailyRecordInfo()
+                    {
+                        Day = new MetaData.MyDateTime(nowTime),
+                        OpenPrice = lastDailyInfo.ClosePrice,
+                    };
+                }
+                else
+                {
+                    this.DailyInfo = lastDailyInfo;
+                }
+            }
+
+        }
         
+        #endregion
+
+        #region Sell List
+
+        public OperResultObject DeleteSellUnit(StackTradeUnit sellUnit)
+        {
+            OperResultObject result = new OperResultObject();
+            lock (_lock)
+            {
+                for (int i = 0; i < this.SellOrderPriceCountList.Count; i++)
+                {
+                    var priceUnit = this.SellOrderPriceCountList[i];
+                    if (priceUnit != null)
+                    {
+                        if (priceUnit.Price == sellUnit.Price)
+                        {
+                            if (priceUnit.TradeStoneHandCount < sellUnit.TradeStoneHandCount)
+                            {
+                                result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR;
+                            }
+                            else
+                            {
+                                priceUnit.TradeStoneHandCount -= sellUnit.TradeStoneHandCount;
+                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
+                            }
+
+                            if (priceUnit.TradeStoneHandCount == 0)
+                            {
+                                this.SellOrderPriceCountList.RemoveAt(i);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public int InsertSellUnit(StackTradeUnit sellUnit)
+        {
+            bool isInsert = false;
+            int index = CheckinSellListIndex(sellUnit.Price, out isInsert);
+            if (index >= 0)
+            {
+                UpdateToTodaySellList(index, isInsert, sellUnit);
+            }
+
+            return index;
+        }
+
+        private bool UpdateToTodaySellList(int index, bool IsInsert, StackTradeUnit sellUnit)
+        {
+            lock (_lock)
+            {
+                this.DailyInfo.DelegateSellStoneSum += sellUnit.TradeStoneHandCount;
+
+                if (IsInsert)
+                {
+                    SellOrderPriceCountList.Insert(index, new StackTradeUnit()
+                    {
+                        Price = sellUnit.Price,
+                        TradeStoneHandCount = sellUnit.TradeStoneHandCount
+                    });
+                }
+                else
+                {
+                    if (SellOrderPriceCountList[index] == null)
+                    {
+                        SellOrderPriceCountList[index] = new StackTradeUnit()
+                        {
+                            Price = sellUnit.Price,
+                            TradeStoneHandCount = sellUnit.TradeStoneHandCount
+                        };
+                    }
+                    else
+                    {
+                        SellOrderPriceCountList[index].TradeStoneHandCount += sellUnit.TradeStoneHandCount;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="IsInsert">false表示Update</param>
+        /// <returns></returns>
+        private int CheckinSellListIndex(decimal sellPrice, out bool IsInsert)
+        {
+            int index = -1;
+            IsInsert = true;
+
+            for (int i = 0; i < SellOrderPriceCountList.Count; i++)
+            {
+                if (SellOrderPriceCountList[i] == null)
+                {
+                    IsInsert = false;
+                    index = i;
+                    break;
+                }
+                //从低到高， 排序
+                if (sellPrice < SellOrderPriceCountList[i].Price)
+                {
+                    IsInsert = true;
+                    if (i == 0)
+                    {
+                        index = i;
+                        break;
+                    }
+                    else
+                    {
+                        index = i - 1;
+                        break;
+                    }
+                }
+                else if (sellPrice == SellOrderPriceCountList[i].Price)
+                {
+                    IsInsert = false;
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        public StackTradeUnit GetSell1Unit()
+        {
+            lock (_lock)
+            {
+                if (this.SellOrderPriceCountList.Count > 0)
+                {
+                    return SellOrderPriceCountList[0];
+                }
+
+                return null;
+            }
+        }
+
+        public OperResultObject DecreaseSellUnit(decimal price, int finishedStoneHandCount)
+        {
+            OperResultObject result = new OperResultObject();
+
+            lock (_lock)
+            {
+                for (int i = 0; i < SellOrderPriceCountList.Count; i++)
+                {
+                    var unit = SellOrderPriceCountList[i];
+                    if (unit.Price == price)
+                    {
+                        result.OperResultCode = OperResult.RESULTCODE_TRUE;
+
+                        unit.TradeStoneHandCount -= finishedStoneHandCount;
+                        if (unit.TradeStoneHandCount < 0)
+                        {
+                            result.OperResultCode = OperResult.RESULTCODE_FALSE;
+                            result.Message = "DecreasetBuyUnit unit.TradeStoneHandCount < 0. Price: " + price + ",  unit.TradeStoneHandCount: " + unit.TradeStoneHandCount;
+                            unit.TradeStoneHandCount = 0;
+                        }
+                        if (unit.TradeStoneHandCount == 0)
+                        {
+                            SellOrderPriceCountList.RemoveAt(i);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region Buy List
+
+        public OperResultObject DeleteBuyUnit(StackTradeUnit buyUnit)
+        {
+            OperResultObject result = new OperResultObject();
+            lock (_lock)
+            {
+                for (int i = 0; i < this.BuyOrderPriceCountList.Count; i++)
+                {
+                    var priceUnit = this.BuyOrderPriceCountList[i];
+                    if (priceUnit != null)
+                    {
+                        if (priceUnit.Price == buyUnit.Price)
+                        {
+                            if (priceUnit.TradeStoneHandCount < buyUnit.TradeStoneHandCount)
+                            {
+                                result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR;
+                            }
+                            else
+                            {
+                                priceUnit.TradeStoneHandCount -= buyUnit.TradeStoneHandCount;
+                                result.OperResultCode = OperResult.RESULTCODE_TRUE;
+                            }
+
+                            if (priceUnit.TradeStoneHandCount == 0)
+                            {
+                                this.BuyOrderPriceCountList.RemoveAt(i);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        public int InsertBuyUnit(StackTradeUnit buyUnit)
+        {
+            bool isInsert = false;
+            int index = CheckinBuyListIndex(buyUnit.Price, out isInsert);
+            if (index >= 0)
+            {
+                UpdateToTodayBuyList(index, isInsert, buyUnit);
+            }
+
+            return index;
+        }
+
+        private bool UpdateToTodayBuyList(int index, bool IsInsert, StackTradeUnit buyUnit)
+        {
+            lock (_lock)
+            {
+                this.DailyInfo.DelegateBuyStoneSum += buyUnit.TradeStoneHandCount;
+
+                if (IsInsert)
+                {
+                    BuyOrderPriceCountList.Insert(index, new StackTradeUnit()
+                    {
+                        Price = buyUnit.Price,
+                        TradeStoneHandCount = buyUnit.TradeStoneHandCount
+                    });
+                }
+                else
+                {
+                    if (BuyOrderPriceCountList[index] == null)
+                    {
+                        BuyOrderPriceCountList[index] = new StackTradeUnit()
+                        {
+                            Price = buyUnit.Price,
+                            TradeStoneHandCount = buyUnit.TradeStoneHandCount
+                        };
+                    }
+                    else
+                    {
+                        BuyOrderPriceCountList[index].TradeStoneHandCount += buyUnit.TradeStoneHandCount;
+                    }
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="IsInsert">false表示Update</param>
+        /// <returns></returns>
+        private int CheckinBuyListIndex(decimal buyPrice, out bool IsInsert)
+        {
+            int index = -1;
+            IsInsert = true;
+
+            for (int i = 0; i < BuyOrderPriceCountList.Count; i++)
+            {
+                if (BuyOrderPriceCountList[i] == null)
+                {
+                    IsInsert = false;
+                    index = i;
+                    break;
+                }
+                //从低到高， 排序
+                if (buyPrice < BuyOrderPriceCountList[i].Price)
+                {
+                    IsInsert = true;
+                    if (i == 0)
+                    {
+                        index = i;
+                        break;
+                    }
+                    else
+                    {
+                        index = i - 1;
+                        break;
+                    }
+                }
+                else if (buyPrice == BuyOrderPriceCountList[i].Price)
+                {
+                    IsInsert = false;
+                    index = i;
+                    break;
+                }
+            }
+
+            return index;
+        }
+
+        public StackTradeUnit GetBuy1Unit()
+        {
+            lock (_lock)
+            {
+                if (BuyOrderPriceCountList.Count > 0)
+                {
+                    return BuyOrderPriceCountList[0];
+                }
+
+                return null;
+            }
+        }
+
+        public OperResultObject DecreaseBuyUnit(decimal price, int finishedStoneHandCount)
+        {
+            OperResultObject result = new OperResultObject();
+
+            lock (_lock)
+            {
+                for (int i = 0; i < BuyOrderPriceCountList.Count; i++)
+                {
+                    var unit = BuyOrderPriceCountList[i];
+                    if (unit.Price == price)
+                    {
+                        result.OperResultCode = OperResult.RESULTCODE_TRUE;
+
+                        unit.TradeStoneHandCount -= finishedStoneHandCount;
+                        if (unit.TradeStoneHandCount < 0)
+                        {
+                            result.OperResultCode = OperResult.RESULTCODE_FALSE;
+                            result.Message = "DecreasetBuyUnit unit.TradeStoneHandCount < 0. Price: " + price + ",  unit.TradeStoneHandCount: " + unit.TradeStoneHandCount;
+                            unit.TradeStoneHandCount = 0;
+                        }
+                        if (unit.TradeStoneHandCount == 0)
+                        {
+                            BuyOrderPriceCountList.RemoveAt(i);
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
     }
 
     [DataContract]
