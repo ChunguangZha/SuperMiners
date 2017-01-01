@@ -86,6 +86,10 @@ namespace SuperMinersServerApplication.Controller
             {
                 BuyMineByRMB(record, result);
             }
+            else if (payType == (int)PayType.Diamand)
+            {
+                BuyMineByDiamond(record, result);
+            }
             else if (payType == (int)PayType.Alipay)
             {
                 lock (this._lock)
@@ -99,6 +103,39 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return result;
+        }
+
+        private void BuyMineByDiamond(MinesBuyRecord record, TradeOperResult result)
+        {
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                myTrans = MyDBHelper.Instance.CreateTrans();
+
+                int value = PlayerController.Instance.BuyMineByDiamond(record, myTrans);
+                result.ResultCode = value;
+                if (value == OperResult.RESULTCODE_TRUE)
+                {
+                    record.PayTime = DateTime.Now;
+                    DBProvider.MineRecordDBProvider.SaveFinalMineTradeRecord(record, myTrans);
+                    PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.BuyMine, (int)record.GainMinesCount,
+                        "增加了 " + record.GainStonesReserves.ToString() + " 的矿石储量");
+                }
+
+                myTrans.Commit();
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                LogHelper.Instance.AddErrorLog("玩家[" + record.UserName + "], 用灵币购买矿山异常", exc);
+            }
+            finally
+            {
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
+            }
         }
 
         private void BuyMineByRMB(MinesBuyRecord record, TradeOperResult result)

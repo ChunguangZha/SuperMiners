@@ -481,15 +481,46 @@
                     </Grid.RowDefinitions>
                     <GroupBox Header="" HorizontalAlignment="Left">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Button Name="btnDeletePlayers" Content="按规则删除无效玩家" Width="200" Margin="10" Click="btnDeletePlayers_Click"/>
-                            <CheckBox Grid.Column="1" Name="chkPerDayAutoDelete" Content="每日12时自动删除" VerticalAlignment="Center" Margin="10" Checked="chkPerDayAutoDelete_Checked" Unchecked="chkPerDayAutoDelete_Unchecked"/>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Button Name="btnDeletePlayers" Content="按规则删除无效玩家" Width="200" Margin="10" Click="btnDeletePlayers_Click"/>
+                                <CheckBox Grid.Column="1" Name="chkPerDayAutoDelete" Content="每日12时自动删除" VerticalAlignment="Center" Margin="10" Checked="chkPerDayAutoDelete_Checked" Unchecked="chkPerDayAutoDelete_Unchecked"/>
+                            </Grid>
+                            
+                            <Grid Grid.Row="1">
+                                <Button Name="btnDeleteAllSellStones" Visibility="Collapsed" Content="清理矿石订单" Margin="10" Width="150" Click="btnDeleteAllSellStones_Click"/>
+                            </Grid>
                         </Grid>
                     </GroupBox>
                     <Button Name="btnRejectAllSellStoneOrders" Content="驳回所有矿石出售订单" Visibility="Collapsed" Margin="10" Padding="10" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnRejectAllSellStoneOrders_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="股市管理">
+                <Grid>
+                    <Grid VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <Button Name="btnCheckStackMarketState" Content="检查股票状态" Width="100" Margin="10" Click="btnCheckStackMarketState_Click"/>
+                            <TextBlock Grid.Column="1" Name="txtStackMarketState" Margin="10"/>
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <Button Name="btnOpenMarket" Content="开市" Width="100" Margin="10" Click="btnOpenMarket_Click"/>
+                            <Button Name="btnSuspendMarket" Content="间休" Width="100" Margin="10" Click="btnSuspendMarket_Click"/>
+                            <Button Name="btnResumeMarket" Content="继续" Width="100" Margin="10" Click="btnResumeMarket_Click"/>
+                            <Button Name="btnCloseMarket" Content="闭市" Width="100" Margin="10" Click="btnCloseMarket_Click"/>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

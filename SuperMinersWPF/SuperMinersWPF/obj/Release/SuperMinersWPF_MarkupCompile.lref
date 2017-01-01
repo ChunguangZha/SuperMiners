@@ -5,7 +5,10 @@ FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyGoldCoinWindow.xa
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMinerWindow.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\BuyMineWindow.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\AlipayHistoryRecordControl.xaml;;
+FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\DelegateBuyStoneHistoryRecordControl.xaml;;
+FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\DelegateSellStoneHistoryRecordControl.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml;;
+FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\StackMarketControl.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\MinerTradeHistoryRecordControl.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\MineTradeHistoryRecordControl.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\StoneActiveOrderListControl.xaml;;
@@ -18,6 +21,7 @@ FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\FunnyUserControl.xam
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\MySuperMinersControl.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\SellStonesWindow.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\StonesMarketUserControl.xaml;;
+FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Windows\DelegateSellStoneWindows.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Windows\RouletteMyWinnedRecordsWindow.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Windows\WithdrawRMBWindow.xaml;;
 FF:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\WinRechargeRMB.xaml;;

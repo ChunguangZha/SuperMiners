@@ -74,6 +74,10 @@ namespace MetaData.ActionLog
         GatherStone,
         Login,
         GameFunny,
-        WithdrawRMB
+        WithdrawRMB,
+        DelegateBuyStone,
+        DelegateSellStone,
+        DelegateBuyStoneSucceed,
+        DelegateSellStoneSucceed,
     }
 }

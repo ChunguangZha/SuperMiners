@@ -168,6 +168,9 @@
     <Compile Include="Views\AddNoticeWindow.xaml.cs">
       <DependentUpon>AddNoticeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DeleteAllStoneSellOrderWindow.xaml.cs">
+      <DependentUpon>DeleteAllStoneSellOrderWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditAdminWindow.xaml.cs">
       <DependentUpon>EditAdminWindow.xaml</DependentUpon>
     </Compile>
@@ -187,24 +190,28 @@
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs" />
+    <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Stack.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Game.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.GameRoulette.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.Stack.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Trade.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Order.Callback.cs" />
+    <Compile Include="WebService\Services\Callbacks\ServiceToClient.Stack.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Services\ServiceToClient.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
     <Compile Include="WebService\Services\ServiceToClient.GameRoulette.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Message.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.Stack.cs" />
     <Compile Include="WebService\Services\ServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Trade.cs" />
     <Compile Include="WebService\Services\ServiceToClient.User.cs" />
@@ -225,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AddNoticeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeleteAllStoneSellOrderWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

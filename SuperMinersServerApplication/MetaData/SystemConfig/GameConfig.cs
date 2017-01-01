@@ -89,7 +89,7 @@ namespace MetaData.SystemConfig
         public decimal StoneBuyerAwardGoldCoinMultiple = 0.05m;
 
         /// <summary>
-        /// 提现手续费比例数
+        /// 出售矿石手续费比例数
         /// </summary>
         [DataMember]
         public decimal ExchangeExpensePercent = 0.05m;
@@ -147,6 +147,12 @@ namespace MetaData.SystemConfig
         /// </summary>
         [DataMember]
         public int DeleteUser_WhenLockedExpireDays = 7;
+
+        /// <summary>
+        /// 一手矿石数为1000
+        /// </summary>
+        [DataMember]
+        public int HandStoneCount = 1000;
 
     }
 }

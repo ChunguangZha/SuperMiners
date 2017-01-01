@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Stack;
 using SuperMinersServerApplication.Encoder;
 using System;
 using System.Collections.Generic;
@@ -30,13 +31,17 @@ namespace SuperMinersServerApplication.Controller.Trade
         public StoneOrderController StoneOrderController = new StoneOrderController();
         public GoldCoinOrderController GoldCoinOrderController = new GoldCoinOrderController();
         public MineOrderController MineOrderController = new MineOrderController();
+        public StoneStackController StoneStackController = new StoneStackController();
 
         public void Init()
         {
             StoneOrderController.Init();
             MineOrderController.Init();
             GoldCoinOrderController.Init();
+            StoneStackController.Init();
         }
+
+        private Random _ran = new Random();
 
         public string CreateOrderNumber(string userName, DateTime time, AlipayTradeInType tradeType)
         {
@@ -50,7 +55,7 @@ namespace SuperMinersServerApplication.Controller.Trade
             builder.Append(time.Millisecond.ToString("0000"));
             builder.Append((int)tradeType);//第18到20位
             builder.Append(Math.Abs(userName.GetHashCode()));
-            builder.Append((new Random()).Next(1000, 9999));
+            builder.Append(_ran.Next(1000, 9999));
             return builder.ToString();
         }
 
@@ -97,7 +102,9 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.BuyStone:
                     result = this.StoneOrderController.AlipayCallback(alipayRecord);
                     break;
-
+                case AlipayTradeInType.StackStoneBuy:
+                    result = this.StoneStackController.AlipayCallback(alipayRecord);
+                    break;
                 default:
                     break;
             }

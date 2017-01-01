@@ -40,11 +40,11 @@ namespace SuperMinersWPF.Views
             this.txtRMB.Text = GlobalData.CurrentUser.RMB.ToString();
             this.txtRMB_GoldCoin.Text = GlobalData.GameConfig.RMB_GoldCoin.ToString();
 
-            if (GlobalData.CurrentUser.RMB <= 0)
-            {
-                this.chkPayType.IsChecked = true;
-                this.chkPayType.IsEnabled = false;
-            }
+            //if (GlobalData.CurrentUser.RMB <= 0)
+            //{
+            //    this.chkPayType.IsChecked = true;
+            //    this.chkPayType.IsEnabled = false;
+            //}
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -114,35 +114,76 @@ namespace SuperMinersWPF.Views
                 MyMessageBox.ShowInfo("充值金币，服务器回调处理异常。" + exc.Message);
             }
         }
-        
+
+        private PayType GetPayType()
+        {
+            PayType payType = PayType.RMB;
+
+            if (this.cmbPayType.SelectedIndex == 0)
+            {
+                payType = PayType.RMB;
+            }
+            else if (this.cmbPayType.SelectedIndex == 1)
+            {
+                payType = PayType.Diamand;
+            }
+            else if (this.cmbPayType.SelectedIndex == 2)
+            {
+                payType = PayType.Alipay;
+            }
+
+            return payType;
+        }
+
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int spendRMB = (int)this.numRechargeRMB.Value;
-                if (spendRMB == 0)
+                PayType payType = GetPayType();
+
+                //该值可能是灵币，也可能是钻石
+                int payMoney = (int)this.numRechargeRMB.Value;
+                if (payMoney == 0)
                 {
-                    MyMessageBox.ShowInfo("请输入有效" + Strings.RMB + "值");
+                    MyMessageBox.ShowInfo("请输入有效值");
                     return;
                 }
 
-                decimal GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
-                this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
-                int payType;
-                if (chkPayType.IsChecked == false)
+                decimal GainGoldCoin = 0;
+                int spendRMB = 0;
+
+                if (payType == PayType.RMB)
                 {
-                    if (spendRMB > GlobalData.CurrentUser.RMB)
+                    spendRMB = payMoney;
+                    GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                    this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+
+                    if (payMoney > GlobalData.CurrentUser.RMB)
                     {
-                        MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                        MyMessageBox.ShowInfo("账户余额不足，请选择其它支付方式。");
                         return;
                     }
-                    payType = (int)PayType.RMB;
                 }
-                else
+                else if (payType == PayType.Diamand)
                 {
-                    payType = (int)PayType.Alipay;
+                    spendRMB = (int)Math.Ceiling(payMoney / GlobalData.GameConfig.Diamonds_RMB);
+                    GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                    this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+
+                    if (payMoney > GlobalData.CurrentUser.StockOfDiamonds)
+                    {
+                        MyMessageBox.ShowInfo("账户余额不足，请选择其它支付方式。");
+                        return;
+                    }
                 }
-                GlobalData.Client.GoldCoinRecharge((int)GainGoldCoin, payType);
+                else if (payType == PayType.Alipay)
+                {
+                    spendRMB = payMoney;
+                    GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                    this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+                }
+
+                GlobalData.Client.GoldCoinRecharge((int)GainGoldCoin, (int)payType);
             }
             catch (Exception exc)
             {
@@ -160,25 +201,7 @@ namespace SuperMinersWPF.Views
         {
             try
             {
-                int spendRMB = (int)this.numRechargeRMB.Value;
-                decimal gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
-                this.txtGainGoldCoin.Text = gainGoldCoin.ToString();
-
-                if (chkPayType.IsChecked == true)
-                {
-                    this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    if (spendRMB > GlobalData.CurrentUser.RMB)
-                    {
-                        this.txtError.Visibility = System.Windows.Visibility.Visible;
-                    }
-                    else
-                    {
-                        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                }
+                ComputeGainGoldcoin();
             }
             catch (Exception exc)
             {
@@ -186,33 +209,34 @@ namespace SuperMinersWPF.Views
             }
         }
 
-        private void chkPayType_Checked(object sender, RoutedEventArgs e)
+        private void ComputeGainGoldcoin()
         {
-            if (this.txtError == null)
-            {
-                return;
-            }
-            this.chkPayType.Content = "支付宝支付";
-            this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-        }
+            PayType payType = GetPayType();
 
-        private void chkPayType_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (this.txtError == null)
+            int payMoney = (int)this.numRechargeRMB.Value;
+            decimal gainGoldCoin;
+            if (payType == PayType.Diamand)
             {
-                return;
-            }
-            this.chkPayType.Content = "灵币支付";
-
-            int spendRMB = (int)this.numRechargeRMB.Value;
-            if (spendRMB > GlobalData.CurrentUser.RMB)
-            {
-                this.txtError.Visibility = System.Windows.Visibility.Visible;
+                int spendRMB = (int)Math.Ceiling(payMoney / GlobalData.GameConfig.Diamonds_RMB);
+                gainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
             }
             else
             {
-                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+                gainGoldCoin = payMoney * GlobalData.GameConfig.RMB_GoldCoin;
             }
+            if (this.txtGainGoldCoin != null)
+            {
+                this.txtGainGoldCoin.Text = gainGoldCoin.ToString();
+            }
+        }
+
+        private void cmbPayType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.txtGainGoldCoin == null)
+            {
+                return;
+            }
+            ComputeGainGoldcoin();
         }
     }
 }

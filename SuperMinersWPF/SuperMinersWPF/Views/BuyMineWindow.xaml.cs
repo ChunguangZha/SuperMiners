@@ -127,10 +127,23 @@ namespace SuperMinersWPF.Views
             try
             {
                 int count = 1;
-                int payType = (int)PayType.Alipay;
-                if (this.chkPayType.IsChecked == false)
+                PayType payType = PayType.Alipay;
+
+                if (this.cmbPayType.SelectedIndex == 0)
                 {
-                    payType = (int)PayType.RMB;
+                    payType = PayType.RMB; 
+                }
+                else if (this.cmbPayType.SelectedIndex == 1)
+                {
+                    payType = PayType.Diamand; 
+                }
+                else if (this.cmbPayType.SelectedIndex == 2)
+                {
+                    payType = PayType.Alipay; 
+                }
+
+                if (payType == PayType.RMB)
+                {
                     decimal money = count * GlobalData.GameConfig.RMB_Mine;
                     if (money > GlobalData.CurrentUser.RMB)
                     {
@@ -138,7 +151,16 @@ namespace SuperMinersWPF.Views
                         return;
                     }
                 }
-                GlobalData.Client.BuyMine(count, payType);
+                else if (payType == PayType.Diamand)
+                {
+                    decimal valueDiamond = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Diamonds_RMB;
+                    if (valueDiamond > GlobalData.CurrentUser.StockOfDiamonds)
+                    {
+                        MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                        return;
+                    }
+                }
+                GlobalData.Client.BuyMine(count, (int)payType);
             }
             catch (Exception exc)
             {
@@ -152,26 +174,41 @@ namespace SuperMinersWPF.Views
             this.DialogResult = false;
         }
 
-        private void chkPayType_Checked(object sender, RoutedEventArgs e)
+        private void cmbPayType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.chkPayType.Content = "支付宝支付";
-            this.txtError.Visibility = System.Windows.Visibility.Collapsed;
-        }
-
-        private void chkPayType_Unchecked(object sender, RoutedEventArgs e)
-        {
-            this.chkPayType.Content = "灵币支付";
-
-            int count = 1;
-            decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
-            if (spendRMB > GlobalData.CurrentUser.RMB)
+            if (this.cmbPayType.SelectedIndex == 1)//钻石
             {
-                this.txtError.Visibility = System.Windows.Visibility.Visible;
+                decimal valueDiamond = GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Diamonds_RMB;
+                this.txtRMB_Mine.Text = ((int)Math.Ceiling(valueDiamond)).ToString();
+                this.txtPayUnit.Text = "钻石";
             }
             else
             {
-                this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+                this.txtRMB_Mine.Text = GlobalData.GameConfig.RMB_Mine.ToString();
+                this.txtPayUnit.Text = "灵币";
             }
         }
+
+        //private void chkPayType_Checked(object sender, RoutedEventArgs e)
+        //{
+        //    this.chkPayType.Content = "支付宝支付";
+        //    this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+        //}
+
+        //private void chkPayType_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    this.chkPayType.Content = "灵币支付";
+
+        //    int count = 1;
+        //    decimal spendRMB = count * GlobalData.GameConfig.RMB_Mine;
+        //    if (spendRMB > GlobalData.CurrentUser.RMB)
+        //    {
+        //        this.txtError.Visibility = System.Windows.Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        this.txtError.Visibility = System.Windows.Visibility.Collapsed;
+        //    }
+        //}
     }
 }

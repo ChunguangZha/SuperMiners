@@ -95,7 +95,7 @@ $(function () {
                 "        </div>"+
                 "    </div>"+
                 "    <div class='weui-form-preview__ft'>"+
-                "        <a class='btn_buystone weui-form-preview__btn weui-form-preview__btn_primary' data-orderid='{OrderNumber}' data-rmb='{ValueRMB}' data-seller='{SellerUserName}'>购买</a>" +
+                "        <a class='btn_buystone weui-form-preview__btn weui-form-preview__btn_primary' style='display:none;' data-orderid='{OrderNumber}' data-rmb='{ValueRMB}' data-seller='{SellerUserName}'>购买</a>" +
                 "    </div>"+
                 "</div>";
 });

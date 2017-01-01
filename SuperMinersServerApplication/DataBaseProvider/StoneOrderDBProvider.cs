@@ -159,6 +159,29 @@ namespace DataBaseProvider
             return UpdateSellOrderState(orderNumber, SellOrderState.Finish, trans);
         }
 
+        public bool UpdateAllSellOrderState(SellOrderState oldState, SellOrderState newState, CustomerMySqlTransaction trans)
+        {
+            //1.修改订单状态；
+            //2.删除锁定信息记录。
+            MySqlCommand mycmd = null;
+            try
+            {
+                string textA = "update sellstonesorder set OrderState = @NewOrderState where OrderState = @OldOrderState;";
+
+                mycmd = trans.CreateCommand();
+                mycmd.CommandText = textA;
+                mycmd.Parameters.AddWithValue("@NewOrderState", (int)newState);
+                mycmd.Parameters.AddWithValue("@OldOrderState", (int)oldState);
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+            }
+        }
+
         private bool UpdateSellOrderState(string orderNumber, SellOrderState state, CustomerMySqlTransaction trans)
         {
             //1.修改订单状态；

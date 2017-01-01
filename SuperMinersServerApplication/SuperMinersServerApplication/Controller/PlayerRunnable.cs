@@ -1,6 +1,7 @@
 ﻿using DataBaseProvider;
 using MetaData;
 using MetaData.Game.Roulette;
+using MetaData.Game.StoneStack;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -314,6 +315,34 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="minesCount"></param>
         /// <returns></returns>
+        public int BuyMineByDiamond(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                decimal valueDiamond = buyRecord.SpendRMB * GlobalConfig.GameConfig.Diamonds_RMB;
+                if (valueDiamond > BasePlayer.FortuneInfo.StockOfDiamonds)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                BasePlayer.FortuneInfo.StockOfDiamonds -= valueDiamond;
+                BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
+                BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        /// <summary>
+        /// 矿山只能用RMB购买。0表示账户余额不足；-1表示操作失败；minesCount表示成功。
+        /// </summary>
+        /// <param name="minesCount"></param>
+        /// <returns></returns>
         public int BuyMineByRMB(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
         {
             lock (_lockFortuneAction)
@@ -376,7 +405,40 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="rmbValue"></param>
         /// <param name="goldcoinValue"></param>
         /// <returns></returns>
-        public int RechargeGoldCoineByRMB(int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
+        public int RechargeGoldCoinByDiamond(decimal rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
+        {
+            if (rmbValue <= 0)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                int valueDiamond = (int)Math.Ceiling(rmbValue * GlobalConfig.GameConfig.Diamonds_RMB);
+                if (valueDiamond > BasePlayer.FortuneInfo.StockOfDiamonds)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                BasePlayer.FortuneInfo.StockOfDiamonds -= valueDiamond;
+                BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="rmbValue"></param>
+        /// <param name="goldcoinValue"></param>
+        /// <returns></returns>
+        public int RechargeGoldCoinByRMB(int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
             if (rmbValue <= 0)
             {
@@ -499,6 +561,181 @@ namespace SuperMinersServerApplication.Controller
 
                 DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
 
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int PayDelegateBuyStonesUpdateSellerInfo(StoneDelegateSellOrderInfo order, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                //if (fortuneInfo.FreezingStones < order.SellUnit.TradeStoneHandCount * GlobalConfig.GameConfig.HandStoneCount)
+                //{
+                //    return OperResult.RESULTCODE_ORDER_SELLER_FREEZINGSTONECOUNT_ERROR;
+                //}
+                fortuneInfo.RMB += (order.FinishedStoneTradeHandCount * order.SellUnit.Price);
+
+                int allStones = order.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount;
+                fortuneInfo.StockOfStones -= allStones;
+                fortuneInfo.FreezingStones -= allStones;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int PayDelegateBuyStonesUpdateBuyerInfo(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                decimal allNeedRMB = buyOrder.FinishedStoneTradeHandCount * buyOrder.BuyUnit.Price;
+
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                if (buyOrder.PayType == PayType.Diamand)
+                {
+                    decimal allNeedDiamand = allNeedRMB * GlobalConfig.GameConfig.Diamonds_RMB;
+
+                    if (fortuneInfo.FreezingDiamonds < allNeedDiamand)
+                    {
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    }
+
+                    fortuneInfo.FreezingDiamonds -= allNeedDiamand;
+                }
+                else if (buyOrder.PayType == PayType.RMB)
+                {
+                    if (fortuneInfo.FreezingRMB < allNeedRMB)
+                    {
+                        return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                    }
+
+                    fortuneInfo.FreezingRMB -= allNeedRMB;
+                }
+                fortuneInfo.StockOfStones += buyOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount;
+                fortuneInfo.GoldCoin += buyOrder.AwardGoldCoin;
+                //fortuneInfo.CreditValue += buyOrder.StonesOrder.SellStonesCount;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public decimal SellableStonesCount
+        {
+            get
+            {
+                return BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
+            }
+        }
+
+        public int AddNewBuyStonesByDelegate(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                decimal allNeedRMB = buyOrder.BuyUnit.TradeStoneHandCount * buyOrder.BuyUnit.Price;
+                if (buyOrder.PayType == PayType.Diamand)
+                {
+                    decimal allNeedDiamand = allNeedRMB * GlobalConfig.GameConfig.Diamonds_RMB;
+
+                    var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                    fortuneInfo.StockOfDiamonds -= allNeedDiamand;
+                    fortuneInfo.FreezingDiamonds += allNeedDiamand;
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                    BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                }
+                else if (buyOrder.PayType == PayType.RMB)
+                {
+                    var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                    fortuneInfo.RMB -= allNeedRMB;
+                    fortuneInfo.FreezingRMB += allNeedRMB;
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                    BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                }
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int CancelDelegateBuyStoneOrder(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                decimal allNeedRMB = buyOrder.BuyUnit.TradeStoneHandCount * buyOrder.BuyUnit.Price;
+                if (buyOrder.PayType == PayType.Diamand)
+                {
+                    decimal allNeedDiamand = allNeedRMB * GlobalConfig.GameConfig.Diamonds_RMB;
+
+                    var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                    fortuneInfo.StockOfDiamonds += allNeedDiamand;
+                    fortuneInfo.FreezingDiamonds -= allNeedDiamand;
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                    BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                }
+                else// if (buyOrder.PayType == PayType.RMB)
+                {
+                    //否则（包括灵币支付和支付宝支付）都退回成灵币
+                    var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                    fortuneInfo.RMB += allNeedRMB;
+                    fortuneInfo.FreezingRMB -= allNeedRMB;
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                    BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                }
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        /// <summary>
+        /// 出售矿石所需的手续费（矿石）当时立减，撤消订单不再返回.
+        /// RESULTCODE_TRUE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
+        /// </summary>
+        /// <param name="sellStoneCount"></param>
+        /// <param name="feeStoneCount">出售矿石的手续费（矿石）</param>
+        /// <returns></returns>
+        public int AddNewSellStonesByDelegate(int sellStoneCount, int feeStoneCount, CustomerMySqlTransaction trans)
+        {
+            //出售矿石所需的手续费（矿石）当时立减，撤消订单不再返回
+            lock (_lockFortuneAction)
+            {
+                decimal sellableStones = BasePlayer.FortuneInfo.StockOfStones - BasePlayer.FortuneInfo.FreezingStones;
+                if (sellStoneCount + feeStoneCount > sellableStones)
+                {
+                    return OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK;
+                }
+
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                fortuneInfo.FreezingStones += sellStoneCount;
+                fortuneInfo.StockOfStones -= feeStoneCount;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int CancelDelegateSellStoneOrder(StoneDelegateSellOrderInfo sellOrder, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+
+                decimal sellStoneCount = sellOrder.SellUnit.TradeStoneHandCount * GlobalConfig.GameConfig.HandStoneCount;
+                if (sellOrder.SellState == StoneDelegateSellState.Splited)
+                {
+                    sellStoneCount = (sellOrder.SellUnit.TradeStoneHandCount - sellOrder.FinishedStoneTradeHandCount) * GlobalConfig.GameConfig.HandStoneCount;
+                }
+                fortuneInfo.FreezingStones -= sellStoneCount;
+
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -684,11 +921,11 @@ namespace SuperMinersServerApplication.Controller
 
         }
 
-        private string CreateOrderNumber(DateTime time, string userName)
-        {
-            Random r = new Random();
-            return time.ToLongDateString() + time.ToLongTimeString() + BasePlayer.SimpleInfo.UserName.GetHashCode().ToString() + r.Next(1000, 9999).ToString();
-        }
+        //private string CreateOrderNumber(DateTime time, string userName)
+        //{
+        //    Random r = new Random();
+        //    return time.ToLongDateString() + time.ToLongTimeString() + BasePlayer.SimpleInfo.UserName.GetHashCode().ToString() + r.Next(1000, 9999).ToString();
+        //}
 
         #region 取消充值功能
 

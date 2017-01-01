@@ -49,6 +49,7 @@ namespace MetaData.Trade
     {
         Alipay = 0,
         RMB = 1,
-        GoldCoin = 2
+        GoldCoin = 2,
+        Diamand = 3
     }
 }

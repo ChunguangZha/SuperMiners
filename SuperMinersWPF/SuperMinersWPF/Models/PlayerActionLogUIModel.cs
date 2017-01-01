@@ -82,6 +82,18 @@ namespace SuperMinersWPF.Models
                     case ActionType.WithdrawRMB:
                         message = this._parentObject.Remark;
                         break;
+                    case ActionType.DelegateBuyStone:
+                        message = string.Format("挂单委托收购 {0} 手矿石", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.DelegateSellStone:
+                        message = string.Format("挂单委托出售 {0} 手矿石", this._parentObject.OperNumber);
+                        break;
+                    case ActionType.DelegateBuyStoneSucceed:
+                        message = string.Format("成功购买了 {0} 矿石，并获取了 {1} 金币的奖励", this._parentObject.OperNumber, this._parentObject.Remark);
+                        break;
+                    case ActionType.DelegateSellStoneSucceed:
+                        message = string.Format("成功出售了 {0} 矿石", this._parentObject.OperNumber);
+                        break;
                     default:
                         message = this._parentObject.Remark;
                         break;

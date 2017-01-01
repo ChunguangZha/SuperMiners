@@ -1,7 +1,10 @@
 ﻿using DataBaseProvider;
 using MetaData;
 using MetaData.Game.StoneStack;
+using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.WebService;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,41 +15,6 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller.Stack
 {
-    //class ListStoneDelegateSellOrderInfoCollection
-    //{
-    //    private List<StoneDelegateSellOrderInfo> listVIPOrders = new List<StoneDelegateSellOrderInfo>();
-    //    private List<StoneDelegateSellOrderInfo> listNormalOrders = new List<StoneDelegateSellOrderInfo>();
-    //    private object _lockList = new object();
-
-    //    public void Insert(StoneDelegateSellOrderInfo sellOrder)
-    //    {
-    //        lock (_lockList)
-    //        {
-    //            int index = -1;
-    //            if (sellOrder.PlayerExpLevel > 0)//VIP
-    //            {
-    //                for (int i = 0; i < listVIPOrders.Count; i++)
-    //                {
-    //                    if (listVIPOrders[i].UserID == sellOrder.UserID)
-    //                    {
-    //                        //VIP集合里，一个VIP玩家只能有一个订单
-    //                        index = -1;
-    //                        break;
-    //                    }
-
-
-    //                }
-    //            }
-
-    //            for (int i = 0; i < listNormalOrders.Count; i++)
-    //            {
-
-    //            }
-    //        }
-    //    }
-    //}
-
-
     class StackTradeResult
     {
         public StackTradeState State = StackTradeState.Failed;
@@ -59,22 +27,6 @@ namespace SuperMinersServerApplication.Controller.Stack
         Succeed,
         Splited,
         Failed
-    }
-
-    enum StackMarketState
-    {
-        /// <summary>
-        /// 开市
-        /// </summary>
-        Opening,
-        /// <summary>
-        /// 暂停
-        /// </summary>
-        Suspend,
-        /// <summary>
-        /// 闭市
-        /// </summary>
-        Closed
     }
 
     class ListStoneDelegateSellOrderInfoCollection
@@ -102,8 +54,14 @@ namespace SuperMinersServerApplication.Controller.Stack
             {
                 if (ListOrders.Count > 0)
                 {
-                    sellOrder = ListOrders[0];
-                    ListOrders.RemoveAt(0);
+                    for (int i = 0; i < ListOrders.Count; i++)
+                    {
+                        //if (ListOrders[i].UserName != buyerUserName)
+                        //{
+                            sellOrder = ListOrders[i];
+                            ListOrders.RemoveAt(i);
+                        //}
+                    }
                 }
             }
             return sellOrder;
@@ -204,14 +162,16 @@ namespace SuperMinersServerApplication.Controller.Stack
 
     public class StoneStackController
     {
-        private StackMarketState _marketState = StackMarketState.Closed;
-
         private TodayStoneStackTradeRecordInfo _todayTradeInfo = new TodayStoneStackTradeRecordInfo();
         private object _lockTodayInfo = new object();
 
+        private object _lockUpdateDB = new object();
         ConcurrentDictionary<decimal, ListStoneDelegateSellOrderInfoCollection> _dicWaitingSellInfos = new ConcurrentDictionary<decimal, ListStoneDelegateSellOrderInfoCollection>();
 
         ConcurrentDictionary<decimal, ListStoneDelegateBuyOrderInfoCollection> _dicWaitingBuyInfos = new ConcurrentDictionary<decimal, ListStoneDelegateBuyOrderInfoCollection>();
+
+        private List<StoneDelegateBuyOrderInfo> _listTempAlipayBuyOrders = new List<StoneDelegateBuyOrderInfo>();
+        private object _lockTempAlipayList = new object();
 
         private Thread _thrStoneStackTrade = null;
 
@@ -223,31 +183,37 @@ namespace SuperMinersServerApplication.Controller.Stack
 
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(2),
                 DailyTime = new DateTime(2000, 1, 1, 9, 0, 0),
                 Task = MarketOpen
             });
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(22),
                 DailyTime = new DateTime(2000, 1, 1, 12, 0, 0),
                 Task = MarketSuspend
             });
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(32),
                 DailyTime = new DateTime(2000, 1, 1, 13, 0, 0),
                 Task = MarketResume
             });
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(42),
                 DailyTime = new DateTime(2000, 1, 1, 17, 0, 0),
                 Task = MarketSuspend
             });
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(52),
                 DailyTime = new DateTime(2000, 1, 1, 18, 0, 0),
                 Task = MarketResume
             });
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
+                //DailyTime = DateTime.Now.AddMinutes(62),
                 DailyTime = new DateTime(2000, 1, 1, 23, 0, 0),
                 Task = MarketClose
             });
@@ -258,68 +224,185 @@ namespace SuperMinersServerApplication.Controller.Stack
             this._thrStoneStackTrade.Start();
         }
 
-        private void MarketOpen()
+        public TodayStoneStackTradeRecordInfo GetTodayStackInfo()
         {
-            _marketState = StackMarketState.Opening;
+            return this._todayTradeInfo;
+        }
+
+        public void MarketOpen()
+        {
+            if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
+            {
+                return;
+            }
+
+            this._todayTradeInfo.MarketState = StackMarketState.Opening;
+
             InitTodayDailyInfo();
+
+            LogHelper.Instance.AddInfoLog("MarketOpen");
         }
 
         /// <summary>
         /// 暂停休市
         /// </summary>
-        private void MarketSuspend()
+        public void MarketSuspend()
         {
-            if (_marketState != StackMarketState.Opening)
+            if (this._todayTradeInfo.MarketState != StackMarketState.Opening)
             {
                 return;
             }
 
-            _marketState = StackMarketState.Suspend;
+            this._todayTradeInfo.MarketState = StackMarketState.Suspend;
 
+            LogHelper.Instance.AddInfoLog("MarketSuspend");
         }
 
         /// <summary>
         /// 恢复继续开市
         /// </summary>
-        private void MarketResume()
+        public void MarketResume()
         {
-            if (_marketState != StackMarketState.Suspend)
+            if (this._todayTradeInfo.MarketState != StackMarketState.Suspend)
             {
                 return;
             }
 
-            _marketState = StackMarketState.Opening;
+            this._todayTradeInfo.MarketState = StackMarketState.Opening;
 
+            LogHelper.Instance.AddInfoLog("MarketResume");
         }
 
-        private void MarketClose()
+        public void MarketClose()
         {
-            if (_marketState != StackMarketState.Closed)
+            if (this._todayTradeInfo.MarketState == StackMarketState.Closed)
             {
                 return;
             }
 
-            _marketState = StackMarketState.Closed;
+            this._todayTradeInfo.MarketState = StackMarketState.Closed;
 
+            LogHelper.Instance.AddInfoLog("MarketClose");
+
+            //清理内存
+            lock (_lockUpdateDB)
+            {
+                _dicWaitingSellInfos.Clear();
+                _dicWaitingBuyInfos.Clear();
+                //_listTempAlipayBuyOrders.Clear();
+            }
+
+            try
+            {
+                var dailyInfo = SumDailyInfo(this._todayTradeInfo.DailyInfo.Day.ToDateTime());
+                this._todayTradeInfo.DailyInfo.ClosePrice = dailyInfo.ClosePrice;
+                this._todayTradeInfo.DailyInfo.MaxTradeSucceedPrice = dailyInfo.MaxTradeSucceedPrice;
+                this._todayTradeInfo.DailyInfo.MinTradeSucceedPrice = dailyInfo.MinTradeSucceedPrice;
+                this._todayTradeInfo.DailyInfo.TradeSucceedRMBSum = dailyInfo.TradeSucceedRMBSum;
+                this._todayTradeInfo.DailyInfo.TradeSucceedStoneHandSum = dailyInfo.TradeSucceedStoneHandSum;
+
+                if (this._todayTradeInfo.DailyInfo.ClosePrice < this._todayTradeInfo.DailyInfo.MinTradeSucceedPrice || this._todayTradeInfo.DailyInfo.ClosePrice > this._todayTradeInfo.DailyInfo.MaxTradeSucceedPrice)
+                {
+                    this._todayTradeInfo.DailyInfo.ClosePrice = this._todayTradeInfo.DailyInfo.OpenPrice;
+                }
+
+                //有可能存在支付成功但服务器处理失败的情况，所以先不清除，先手动清理未支付的订单
+                //DBProvider.StoneStackDBProvider.ClearNotPayedNotFinishedStoneDelegateBuyOrder();
+                DBProvider.StoneStackDBProvider.SaveStoneStackDailyRecordInfo(this._todayTradeInfo.DailyInfo);
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("SaveStoneStackDailyRecordInfo Exception", exc);
+            }
+
+            LoadDataFromDatabase();
+        }
+
+        private StoneStackDailyRecordInfo SumDailyInfo(DateTime day)
+        {
+            StoneStackDailyRecordInfo dailyInfo = new StoneStackDailyRecordInfo();
+            dailyInfo.ClosePrice = 0;
+
+            StoneDelegateSellOrderInfo[] allFinishedSellOrder_OneDay = DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer("", new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 0, 0, 0)), new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 23, 59, 59)), 0, 0);
+            if (allFinishedSellOrder_OneDay != null && allFinishedSellOrder_OneDay.Length > 0)
+            {
+                if (allFinishedSellOrder_OneDay.Length < 3)
+                {
+                    dailyInfo.ClosePrice = this._todayTradeInfo.DailyInfo.OpenPrice;
+                }
+                else
+                {
+                    dailyInfo.TradeSucceedStoneHandSum = allFinishedSellOrder_OneDay.Sum(o => o.FinishedStoneTradeHandCount);
+                    dailyInfo.TradeSucceedRMBSum = allFinishedSellOrder_OneDay.Sum(o => o.SellUnit.Price * o.FinishedStoneTradeHandCount);
+
+                    StoneDelegateSellOrderInfo[] orders_TimeDescLimit20 = allFinishedSellOrder_OneDay.OrderByDescending(o => o.DelegateTime).Take(20).ToArray();
+
+                    decimal minPrice = decimal.MaxValue;
+                    decimal maxPrice = decimal.MinValue;
+                    decimal sumPrice = 0;
+
+                    for (int i = 0; i < orders_TimeDescLimit20.Length; i++)
+                    {
+                        decimal price = orders_TimeDescLimit20[i].SellUnit.Price;
+                        sumPrice += price;
+                        if (price < minPrice)
+                        {
+                            minPrice = price;
+                        }
+                        if (price > maxPrice)
+                        {
+                            maxPrice = price;
+                        }
+                    }
+
+                    dailyInfo.MinTradeSucceedPrice = minPrice;
+                    dailyInfo.MaxTradeSucceedPrice = maxPrice;
+                    sumPrice = sumPrice - minPrice - maxPrice;
+
+                    dailyInfo.ClosePrice = sumPrice / (orders_TimeDescLimit20.Length - 2);
+                }
+            }
+
+
+            return dailyInfo;
         }
 
         private void LoadDataFromDatabase()
         {
-            var buyOrderList = DBProvider.StoneStackDBProvider.GetAllWaitingStoneDelegateBuyOrderInfo();
-            if (buyOrderList != null)
+            var buyOrderNotFinishedList = DBProvider.StoneStackDBProvider.GetAllNotFinishedStoneDelegateBuyOrderInfo();
+            if (buyOrderNotFinishedList != null)
             {
-                foreach (var item in buyOrderList)
+                foreach (var item in buyOrderNotFinishedList)
                 {
-                    InsertToBuyQueue(item, false);
+                    //需要分别处理Waiting和Splited两种情况
+                    if (item.BuyState == StoneDelegateBuyState.Splited)
+                    {
+                        item.BuyUnit.TradeStoneHandCount = item.BuyUnit.TradeStoneHandCount - item.FinishedStoneTradeHandCount;
+                        item.FinishedStoneTradeHandCount = 0;
+                        InsertToBuyQueue(item, null);
+                    }
+                    else if (item.BuyState == StoneDelegateBuyState.Waiting)
+                    {
+                        InsertToBuyQueue(item, null);
+                    }
+                    else
+                    {
+                        this._listTempAlipayBuyOrders.Add(item);
+                    }
                 }
             }
 
-            var sellOrderList = DBProvider.StoneStackDBProvider.GetAllWaitingStoneDelegateSellOrderInfo();
-            if (sellOrderList != null)
+            var sellOrderNotFinishedList = DBProvider.StoneStackDBProvider.GetAllNotFinishedStoneDelegateSellOrderInfo();
+            if (sellOrderNotFinishedList != null)
             {
-                foreach (var item in sellOrderList)
+                foreach (var item in sellOrderNotFinishedList)
                 {
-                    InsertToSellQueue(item, false);
+                    if (item.SellState == StoneDelegateSellState.Splited)
+                    {
+                        item.SellUnit.TradeStoneHandCount = item.SellUnit.TradeStoneHandCount - item.FinishedStoneTradeHandCount;
+                        item.FinishedStoneTradeHandCount = 0;
+                    }
+                    InsertToSellQueue(item, null);
                 }
             }
         }
@@ -327,12 +410,38 @@ namespace SuperMinersServerApplication.Controller.Stack
         private void InitTodayDailyInfo()
         {
             var lastDailyInfo = DBProvider.StoneStackDBProvider.GetLastStoneStackDailyRecordInfo();
+            if (lastDailyInfo != null && lastDailyInfo.ClosePrice == 0)
+            {
+                try
+                {
+                    var sumLastDailyInfo = SumDailyInfo(lastDailyInfo.Day.ToDateTime());
+                    lastDailyInfo.TradeSucceedStoneHandSum = sumLastDailyInfo.TradeSucceedStoneHandSum;
+                    lastDailyInfo.TradeSucceedRMBSum = sumLastDailyInfo.TradeSucceedRMBSum;
+                    lastDailyInfo.MinTradeSucceedPrice = sumLastDailyInfo.MinTradeSucceedPrice;
+                    lastDailyInfo.MaxTradeSucceedPrice = sumLastDailyInfo.MaxTradeSucceedPrice;
+                    lastDailyInfo.ClosePrice = sumLastDailyInfo.ClosePrice;
+
+                    DBProvider.StoneStackDBProvider.SaveStoneStackDailyRecordInfo(lastDailyInfo);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("SaveStoneStackDailyRecordInfo Exception", exc);
+                }
+            }
+
             decimal initPrice = 1 / GlobalConfig.GameConfig.Stones_RMB * 1000;
             this._todayTradeInfo.InitTodayDailyInfo(lastDailyInfo, initPrice);
+
         }
 
-        private void InsertToBuyQueue(StoneDelegateBuyOrderInfo item, bool saveToDB)
+        private void InsertToBuyQueue(StoneDelegateBuyOrderInfo item, CustomerMySqlTransaction myTrans)
         {
+            //需要分别处理Waiting和Splited两种情况
+            if (item.BuyState != StoneDelegateBuyState.Waiting && item.BuyState != StoneDelegateBuyState.Splited)
+            {
+                return;
+            }
+            
             int index = this._todayTradeInfo.InsertBuyUnit(item.BuyUnit);
 
             ListStoneDelegateBuyOrderInfoCollection queueBuy = null;
@@ -348,92 +457,20 @@ namespace SuperMinersServerApplication.Controller.Stack
 
             queueBuy.Enqueue(item);
 
-            if (saveToDB)
+            if (myTrans != null)
             {
-                DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateBuyOrderInfo(item);
+                DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateBuyOrderInfo(item, myTrans);
             }
         }
 
-        //private bool UpdateToTodayBuyList(int index, bool IsInsert, StoneDelegateBuyOrderInfo item)
-        //{
-        //    lock (_lockTodayInfo)
-        //    {
-        //        this._todayTradeInfo.DailyInfo.DelegateBuyStoneSum += item.BuyUnit.TradeStoneHandCount;
-
-        //        if (IsInsert)
-        //        {
-        //            _todayTradeInfo.BuyOrderPriceCountList.Insert(index, new StackTradeUnit()
-        //            {
-        //                Price = item.BuyUnit.Price,
-        //                TradeStoneHandCount = item.BuyUnit.TradeStoneHandCount
-        //            });
-        //        }
-        //        else
-        //        {
-        //            if (_todayTradeInfo.BuyOrderPriceCountList[index] == null)
-        //            {
-        //                _todayTradeInfo.BuyOrderPriceCountList[index] = new StackTradeUnit()
-        //                {
-        //                    Price = item.BuyUnit.Price,
-        //                    TradeStoneHandCount = item.BuyUnit.TradeStoneHandCount
-        //                };
-        //            }
-        //            else
-        //            {
-        //                _todayTradeInfo.BuyOrderPriceCountList[index].TradeStoneHandCount += item.BuyUnit.TradeStoneHandCount;
-        //            }
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <param name="IsInsert">false表示Update</param>
-        ///// <returns></returns>
-        //private int CheckinBuyListIndex(StoneDelegateBuyOrderInfo item, out bool IsInsert)
-        //{
-        //    int index = -1;
-        //    IsInsert = true;
-
-        //    for (int i = 0; i < _todayTradeInfo.BuyOrderPriceCountList.Count; i++)
-        //    {
-        //        if (_todayTradeInfo.BuyOrderPriceCountList[i] == null)
-        //        {
-        //            IsInsert = false;
-        //            index = i;
-        //            break;
-        //        }
-        //        //从高到低， 排序
-        //        if (item.BuyUnit.Price > _todayTradeInfo.BuyOrderPriceCountList[i].Price)
-        //        {
-        //            IsInsert = true;
-        //            if (i == 0)
-        //            {
-        //                index = i;
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                index = i - 1;
-        //                break;
-        //            }
-        //        }
-        //        else if (item.BuyUnit.Price == _todayTradeInfo.BuyOrderPriceCountList[i].Price)
-        //        {
-        //            IsInsert = false;
-        //            index = i;
-        //            break;
-        //        }
-        //    }
-
-        //    return index;
-        //}
-
-        private void InsertToSellQueue(StoneDelegateSellOrderInfo item, bool saveToDB)
+        private void InsertToSellQueue(StoneDelegateSellOrderInfo item, CustomerMySqlTransaction myTrans)
         {
+            //需要分别处理Waiting和Splited两种情况
+            if (item.SellState != StoneDelegateSellState.Waiting && item.SellState != StoneDelegateSellState.Splited)
+            {
+                return;
+            }
+
             int index = this._todayTradeInfo.InsertSellUnit(item.SellUnit);
 
             ListStoneDelegateSellOrderInfoCollection queueSell = null;
@@ -449,154 +486,144 @@ namespace SuperMinersServerApplication.Controller.Stack
 
             queueSell.Enqueue(item);
 
-            if (saveToDB)
+            if (myTrans!= null)
             {
-                DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateSellOrderInfo(item);
+                DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateSellOrderInfo(item, myTrans);
             }
         }
 
-        //private bool UpdateToTodaySellList(int index, bool IsInsert, StoneDelegateSellOrderInfo item)
-        //{
-        //    lock (_lockTodayInfo)
-        //    {
-        //        this._todayTradeInfo.DailyInfo.DelegateSellStoneSum += item.SellUnit.TradeStoneHandCount;
-
-        //        if (IsInsert)
-        //        {
-        //            _todayTradeInfo.SellOrderPriceCountList.Insert(index,  new StackTradeUnit()
-        //            {
-        //                Price = item.SellUnit.Price,
-        //                TradeStoneHandCount = item.SellUnit.TradeStoneHandCount
-        //            });
-        //        }
-        //        else
-        //        {
-        //            if (_todayTradeInfo.SellOrderPriceCountList[index] == null)
-        //            {
-        //                _todayTradeInfo.SellOrderPriceCountList[index] = new StackTradeUnit()
-        //                {
-        //                    Price = item.SellUnit.Price,
-        //                    TradeStoneHandCount = item.SellUnit.TradeStoneHandCount
-        //                };
-        //            }
-        //            else
-        //            {
-        //                _todayTradeInfo.SellOrderPriceCountList[index].TradeStoneHandCount += item.SellUnit.TradeStoneHandCount;
-        //            }
-        //        }
-        //    }
-        //    return true;
-        //}
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="item"></param>
-        ///// <param name="IsInsert">false表示Update</param>
-        ///// <returns></returns>
-        //private int CheckinSellListIndex(StoneDelegateSellOrderInfo item, out bool IsInsert)
-        //{
-        //    int index = -1;
-        //    IsInsert = true;
-
-        //    for (int i = 0; i < _todayTradeInfo.SellOrderPriceCountList.Count; i++)
-        //    {
-        //        if (_todayTradeInfo.SellOrderPriceCountList[i] == null)
-        //        {
-        //            IsInsert = false;
-        //            index = i;
-        //            break;
-        //        }
-        //        //从低到高， 排序
-        //        if (item.SellUnit.Price < _todayTradeInfo.SellOrderPriceCountList[i].Price)
-        //        {
-        //            IsInsert = true;
-        //            if (i == 0)
-        //            {
-        //                index = i;
-        //                break;
-        //            }
-        //            else
-        //            {
-        //                index = i - 1;
-        //                break;
-        //            }
-        //        }
-        //        else if (item.SellUnit.Price == _todayTradeInfo.SellOrderPriceCountList[i].Price)
-        //        {
-        //            IsInsert = false;
-        //            index = i;
-        //            break;
-        //        }
-        //    }
-
-        //    return index;
-        //}
-
         #endregion
 
-        public OperResultObject PlayerDelegateSellStone(StoneDelegateSellOrderInfo sellOrder)
+        public int AlipayCallback(AlipayRechargeRecord alipayRecord)
+        {
+            int result = OperResult.RESULTCODE_FALSE;
+
+            var alipayRecordFromDB = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(alipayRecord.out_trade_no, alipayRecord.alipay_trade_no);
+            if (alipayRecordFromDB != null)
+            {
+                return OperResult.RESULTCODE_ORDER_BUY_SUCCEED;
+            }
+
+            StoneDelegateBuyOrderInfo buyOrder = null;
+            lock (_lockTempAlipayList)
+            {
+                for (int i = 0; i < _listTempAlipayBuyOrders.Count; i++)
+                {
+                    if (_listTempAlipayBuyOrders[i].OrderNumber == alipayRecord.out_trade_no)
+                    {
+                        buyOrder = _listTempAlipayBuyOrders[i];
+                        decimal valueRMB = buyOrder.BuyUnit.Price * buyOrder.BuyUnit.TradeStoneHandCount;
+                        if (alipayRecord.value_rmb < valueRMB)
+                        {
+                            buyOrder.BuyState = StoneDelegateBuyState.Exception;
+                            LogHelper.Instance.AddErrorLog(alipayRecord.ToString() + "  充值的灵币小于需要的灵币：" + valueRMB, null);
+                        }
+                        else
+                        {
+                            buyOrder.BuyState = StoneDelegateBuyState.Waiting;
+                        }
+                        
+                        this._listTempAlipayBuyOrders.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+
+            if (buyOrder == null)
+            {
+                LogHelper.Instance.AddErrorLog("委托挂单购买矿石，支付宝回调，没有找到订单。" + alipayRecord.ToString(), null);
+            }
+            CustomerMySqlTransaction myTrans = MyDBHelper.Instance.CreateTrans();
+            try
+            {
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipayRecord, myTrans);
+                if (buyOrder != null)
+                {
+                    DBProvider.StoneStackDBProvider.UpdateWaitingStoneDelegateBuyOrderState(buyOrder.OrderNumber, buyOrder.BuyState, myTrans);
+                }
+
+                myTrans.Commit();
+
+                result = OperResult.RESULTCODE_TRUE;
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                LogHelper.Instance.AddErrorLog("StoneStackControl.AlipayCallback.SaveAlipayRechargeRecord Exception. " + alipayRecord.ToString()
+                    + ". buyOrder: " + (buyOrder == null ? "NULL" : buyOrder.ToString()), exc);
+            }
+            finally
+            {
+                myTrans.Dispose();
+            }
+
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                BuyOrderAlipayPaySucceedNotify(alipayRecord.user_name, alipayRecord.out_trade_no);
+            }
+
+            return result;
+        }
+
+        private void BuyOrderAlipayPaySucceedNotify(string buyerUserName, string orderNumber)
+        {
+            string tokenBuyer = ClientManager.GetToken(buyerUserName);
+            if (!string.IsNullOrEmpty(tokenBuyer))
+            {
+                if (DelegateBuyStoneOrderAlipayPaySucceedNotify != null)
+                {
+                    DelegateBuyStoneOrderAlipayPaySucceedNotify(tokenBuyer, orderNumber);
+                    LogHelper.Instance.AddInfoLog("订单号： " + orderNumber + " 委托订单，支付宝充值成功，已经通知买家：" + buyerUserName);
+                }
+            }
+        }
+
+        public OperResultObject PlayerDelegateSellStone(StoneDelegateSellOrderInfo sellOrder, CustomerMySqlTransaction myTrans)
         {
             OperResultObject result = new OperResultObject();
 
             //只有开市期间才可挂单，间休期间暂时也不可挂单
-            if (_marketState != StackMarketState.Opening)
+            if (this._todayTradeInfo.MarketState != StackMarketState.Opening)
             {
                 result.OperResultCode = OperResult.RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED;
                 return result;
             }
+            if (sellOrder.SellUnit.Price < this._todayTradeInfo.DailyInfo.LimitDownPrice || sellOrder.SellUnit.Price > this._todayTradeInfo.DailyInfo.LimitUpPrice)
+            {
+                result.OperResultCode = OperResult.RESULTCODE_STACK_PRICE_OUTOFRANGE;
+                return result;
+            }
 
-            InsertToSellQueue(sellOrder, true);
+            InsertToSellQueue(sellOrder, myTrans);
 
             result.OperResultCode = OperResult.RESULTCODE_TRUE;
             return result;
         }
 
-        public OperResultObject PlayerCancelSellStone(StoneDelegateSellOrderInfo sellOrder)
+        public OperResultObject PlayerCancelSellStone(string orderNumber, decimal sellPrice, CustomerMySqlTransaction myTrans, out StoneDelegateSellOrderInfo canceledSellOrder)
         {
-            decimal sellPrice = sellOrder.SellUnit.Price;
+            canceledSellOrder = null;
             OperResultObject result = new OperResultObject();
 
             //开市期间不可撤单
-            if (_marketState == StackMarketState.Opening)
+            if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
             {
                 result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
                 return result;
             }
 
-            result = this._todayTradeInfo.DeleteSellUnit(sellOrder.SellUnit);
-            if (result.OperResultCode != OperResult.RESULTCODE_TRUE)
+            canceledSellOrder = this._dicWaitingSellInfos[sellPrice].DeleteOrder(orderNumber);
+            if (canceledSellOrder != null)
             {
-                return result;
-            }
+                result = this._todayTradeInfo.DeleteSellUnit(canceledSellOrder.SellUnit);
+                if (result.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
 
-            var deletedOrder = this._dicWaitingSellInfos[sellPrice].DeleteOrder(sellOrder.OrderNumber);
-            if (deletedOrder != null)
-            {
-                deletedOrder.SellState = StoneDelegateSellState.Cancel;
-                CustomerMySqlTransaction myTrans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    if (SaveStoneSellOrderHandler != null)
-                    {
-                        SaveStoneSellOrderHandler(new List<StoneDelegateSellOrderInfo>() { deletedOrder }, myTrans);
-                    }
-                    myTrans.Commit();
+                DBProvider.StoneStackDBProvider.CancelSellStoneOrder(canceledSellOrder, myTrans);
 
-                    result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("PlayerCancelSellStone Exception", exc);
-                    myTrans.Rollback();
-                    deletedOrder.SellState = StoneDelegateSellState.Waiting;
-                    this._dicWaitingSellInfos[sellPrice].Enqueue(deletedOrder);
-                    result.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
-                }
-                finally
-                {
-                    myTrans.Dispose();
-                }
+                result.OperResultCode = OperResult.RESULTCODE_TRUE;
             }
             else
             {
@@ -606,66 +633,63 @@ namespace SuperMinersServerApplication.Controller.Stack
             return result;
         }
 
-        public OperResultObject PlayerDelegateBuyStone(StoneDelegateBuyOrderInfo buyOrder)
+        /// <summary>
+        /// 付款方式为支付宝的订单，添加到临时集合中
+        /// </summary>
+        /// <param name="buyOrder"></param>
+        /// <returns></returns>
+        public OperResultObject PlayerDelegateBuyStone(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction myTrans)
         {
             OperResultObject result = new OperResultObject();
 
             //只有开市期间才可挂单，间休期间暂时也不可挂单
-            if (_marketState != StackMarketState.Opening)
+            if (this._todayTradeInfo.MarketState != StackMarketState.Opening)
             {
                 result.OperResultCode = OperResult.RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED;
                 return result;
             }
 
-            InsertToBuyQueue(buyOrder, true);
+            if (buyOrder.PayType == PayType.Alipay)
+            {
+                //也要保存到数据库里
+                buyOrder.BuyState = StoneDelegateBuyState.NotPayed;
+                DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateBuyOrderInfo(buyOrder, myTrans);
+                lock (_lockTempAlipayList)
+                {
+                    this._listTempAlipayBuyOrders.Add(buyOrder);
+                }
+            }
+            else
+            {
+                InsertToBuyQueue(buyOrder, myTrans);
+            }
             result.OperResultCode = OperResult.RESULTCODE_TRUE;
             return result;
         }
 
-        public OperResultObject PlayerCancelBuyStone(StoneDelegateBuyOrderInfo buyOrder)
+        public OperResultObject PlayerCancelBuyStone(string orderNumber, decimal sellPrice, CustomerMySqlTransaction myTrans, out StoneDelegateBuyOrderInfo canceledBuyOrder)
         {
+            canceledBuyOrder = null;
             OperResultObject result = new OperResultObject();
 
             //开市期间不可撤单
-            if (_marketState == StackMarketState.Opening)
+            if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
             {
                 result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
                 return result;
             }
 
-            result = this._todayTradeInfo.DeleteBuyUnit(buyOrder.BuyUnit);
-            if (result.OperResultCode != OperResult.RESULTCODE_TRUE)
+            canceledBuyOrder = this._dicWaitingBuyInfos[sellPrice].DeleteOrder(orderNumber);
+            if (canceledBuyOrder != null)
             {
-                return result;
-            }
+                result = this._todayTradeInfo.DeleteBuyUnit(canceledBuyOrder.BuyUnit);
+                if (result.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
 
-            var deletedOrder = this._dicWaitingBuyInfos[buyOrder.BuyUnit.Price].DeleteOrder(buyOrder.OrderNumber);
-            if (deletedOrder != null)
-            {
-                deletedOrder.BuyState = StoneDelegateBuyState.Cancel;
-                CustomerMySqlTransaction myTrans = MyDBHelper.Instance.CreateTrans();
-                try
-                {
-                    if (SaveStoneBuyOrderHandler != null)
-                    {
-                        SaveStoneBuyOrderHandler(deletedOrder, myTrans);
-                    }
-                    myTrans.Commit();
-
-                    result.OperResultCode = OperResult.RESULTCODE_TRUE;
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("PlayerCancelBuyStone Exception", exc);
-                    myTrans.Rollback();
-                    deletedOrder.BuyState = StoneDelegateBuyState.Waiting;
-                    this._dicWaitingBuyInfos[buyOrder.BuyUnit.Price].Enqueue(deletedOrder);
-                    result.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
-                }
-                finally
-                {
-                    myTrans.Dispose();
-                }
+                DBProvider.StoneStackDBProvider.CancelBuyStoneOrder(canceledBuyOrder, myTrans);
+                result.OperResultCode = OperResult.RESULTCODE_TRUE;
             }
             else
             {
@@ -685,7 +709,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                 Thread.Sleep(10 * 1000);
                 try
                 {
-                    if (this._marketState != StackMarketState.Opening)
+                    if (this._todayTradeInfo.MarketState != StackMarketState.Opening)
                     {
                         continue;
                     }
@@ -699,87 +723,13 @@ namespace SuperMinersServerApplication.Controller.Stack
                     lock (_lockTodayInfo)
                     {
                         TradeBuy1Orders();
-                        UpdateTodayInfo();
+                        //UpdateTodayInfo();
                     }
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("ThreadStoneStackTrade Exception", exc);
                 }
-            }
-        }
-
-        private void UpdateTodayInfo()
-        {
-            //List<StackTradeUnit> newSellPriceList = new List<StackTradeUnit>();
-            //List<StackTradeUnit> newBuyPriceList = new List<StackTradeUnit>();
-
-            for (int i = 0; i < this._todayTradeInfo.BuyOrderPriceCountList.Count; i++)
-            {
-                decimal buyPrice = this._todayTradeInfo.BuyOrderPriceCountList[i].Price;
-                if (!this._dicWaitingBuyInfos.ContainsKey(buyPrice))
-                {
-                    this._todayTradeInfo.BuyOrderPriceCountList.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                else
-                {
-                    if (this._dicWaitingBuyInfos[buyPrice] == null || this._dicWaitingBuyInfos[buyPrice].Count == 0)
-                    {
-                        ConcurrentQueue<StoneDelegateBuyOrderInfo> queueSellOrder = null;
-                        this._dicWaitingBuyInfos.TryRemove(buyPrice, out queueSellOrder);
-                        this._todayTradeInfo.BuyOrderPriceCountList.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
-
-                    int sumHandCount = this._dicWaitingBuyInfos[buyPrice].Sum(stonesellOrder => stonesellOrder.BuyUnit.TradeStoneHandCount);
-                    this._todayTradeInfo.BuyOrderPriceCountList[i].TradeStoneHandCount = sumHandCount;
-                    if (sumHandCount <= 0)
-                    {
-                        ConcurrentQueue<StoneDelegateBuyOrderInfo> queueSellOrder = null;
-                        this._dicWaitingBuyInfos.TryRemove(buyPrice, out queueSellOrder);
-                        this._todayTradeInfo.BuyOrderPriceCountList.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
-                }
-            }
-
-
-            for (int i = 0; i < this._todayTradeInfo.SellOrderPriceCountList.Count; i++)
-            {
-                decimal sellPrice = this._todayTradeInfo.SellOrderPriceCountList[i].Price;
-                if (!this._dicWaitingSellInfos.ContainsKey(sellPrice))
-                {
-                    this._todayTradeInfo.SellOrderPriceCountList.RemoveAt(i);
-                    i--;
-                    continue;
-                }
-                else
-                {
-                    if (this._dicWaitingSellInfos[sellPrice] == null || this._dicWaitingSellInfos[sellPrice].Count == 0)
-                    {
-                        ConcurrentQueue<StoneDelegateSellOrderInfo> queueSellOrder = null;
-                        this._dicWaitingSellInfos.TryRemove(sellPrice, out queueSellOrder);
-                        this._todayTradeInfo.SellOrderPriceCountList.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
-
-                    int sumHandCount = this._dicWaitingSellInfos[sellPrice].Sum(stonesellOrder => stonesellOrder.SellUnit.TradeStoneHandCount);
-                    this._todayTradeInfo.SellOrderPriceCountList[i].TradeStoneHandCount = sumHandCount;
-                    if (sumHandCount <= 0)
-                    {
-                        ConcurrentQueue<StoneDelegateSellOrderInfo> queueSellOrder = null;
-                        this._dicWaitingSellInfos.TryRemove(sellPrice, out queueSellOrder);
-                        this._todayTradeInfo.SellOrderPriceCountList.RemoveAt(i);
-                        i--;
-                        continue;
-                    }
-                }
-
             }
         }
 
@@ -810,6 +760,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                     {
                         //没有找到价格合适的卖单，把买单再加回集合中.
                         this._dicWaitingBuyInfos[buyPrice].Enqueue(buyOrder);
+                        break;
                     }
                     else if (result.State == StackTradeState.Succeed)
                     {
@@ -817,14 +768,18 @@ namespace SuperMinersServerApplication.Controller.Stack
                     }
                     else if (result.State == StackTradeState.Splited)
                     {
-                        //此时，卖1订单已经全部被吞掉。而当前买单没有消化完，需要将剩余部分拆分，拆分后的订单不再另存数据库，直接添加到集合中
+                        DateTime nowtime = DateTime.Now;
+                        //此时，卖1订单已经全部被吞掉。而当前买单没有消化完，需要将剩余部分拆分，拆分后的订单保存到数据库，并添加到集合中
                         StoneDelegateBuyOrderInfo newBuyOrder = new StoneDelegateBuyOrderInfo()
                         {
                             UserID = buyOrder.UserID,
                             IsSubOrder = true,
                             BuyState = StoneDelegateBuyState.Waiting,
-                            OrderNumber = buyOrder.OrderNumber,
-                            DelegateTime = buyOrder.DelegateTime,
+                            OrderNumber = OrderController.Instance.CreateOrderNumber(buyOrder.UserName, nowtime, AlipayTradeInType.StackStoneBuy),
+                            ParentOrderNumber = buyOrder.OrderNumber,
+                            UserName = buyOrder.UserName,
+                            PayType = buyOrder.PayType,
+                            DelegateTime = new MyDateTime(nowtime),
                             BuyUnit = new StackTradeUnit()
                             {
                                 Price = buyOrder.BuyUnit.Price,
@@ -832,7 +787,15 @@ namespace SuperMinersServerApplication.Controller.Stack
                             },
                         };
 
-                        this._dicWaitingBuyInfos[buyPrice].Enqueue(newBuyOrder);
+                        try
+                        {
+                            DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateBuyOrderInfo(newBuyOrder);
+                            this._dicWaitingBuyInfos[buyPrice].Enqueue(newBuyOrder);
+                        }
+                        catch (Exception exc)
+                        {
+                            LogHelper.Instance.AddErrorLog("Save Sub Buy Order Exception. UserName:" + buyOrder.UserName + ", ParentOrderNumber: " + buyOrder.OrderNumber, exc);
+                        }
                         FinishedStoneHandCount += buyOrder.FinishedStoneTradeHandCount;
                     }
                 }
@@ -840,10 +803,14 @@ namespace SuperMinersServerApplication.Controller.Stack
                 buyOrder = this._dicWaitingBuyInfos[buyPrice].Dequeue();
             }
 
-            var operResult = this._todayTradeInfo.DecreaseBuyUnit(buyPrice, FinishedStoneHandCount);
-            if (operResult.OperResultCode != OperResult.RESULTCODE_TRUE)
+            if (FinishedStoneHandCount > 0)
             {
-                LogHelper.Instance.AddErrorLog("TradeBuy1Orders DecreaseBuyUnit Error. " + operResult.Message, null);
+                var operResult = this._todayTradeInfo.DecreaseBuyUnit(buyPrice, FinishedStoneHandCount);
+                if (operResult.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    LogHelper.Instance.AddErrorLog("TradeBuy1Orders DecreaseBuyUnit Error. " + operResult.Message, null);
+                }
+                
             }
         }
 
@@ -860,22 +827,24 @@ namespace SuperMinersServerApplication.Controller.Stack
             CustomerMySqlTransaction myTrans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                if (listTradeSucceedSellOrders.Count > 0)
+                foreach (var item in listTradeSucceedSellOrders)
                 {
-                    var lastSellOrder = listTradeSucceedSellOrders[listTradeSucceedSellOrders.Count - 1];
-
-                    if (SaveStoneSellOrderHandler != null)
-                    {
-                        SaveStoneSellOrderHandler(listTradeSucceedSellOrders, myTrans);
-                    }
+                    DBProvider.StoneStackDBProvider.SaveFinishedStoneDelegateSellOrderInfo(item);
+                    PlayerController.Instance.PayDelegateBuyStonesUpdateSellerInfo(item, myTrans);
                 }
 
-                if (SaveStoneBuyOrderHandler != null)
-                {
-                    SaveStoneBuyOrderHandler(buyOrder, myTrans);
-                }
+                decimal allNeedRMB = buyOrder.BuyUnit.TradeStoneHandCount * buyOrder.BuyUnit.Price;
+                buyOrder.AwardGoldCoin = (int)((allNeedRMB * GlobalConfig.GameConfig.StoneBuyerAwardGoldCoinMultiple) * GlobalConfig.GameConfig.RMB_GoldCoin);
+                DBProvider.StoneStackDBProvider.SaveFinishedStoneDelegateBuyOrderInfo(buyOrder);
+                PlayerController.Instance.PayDelegateBuyStonesUpdateBuyerInfo(buyOrder, myTrans);
 
                 myTrans.Commit();
+
+                foreach (var item in listTradeSucceedSellOrders)
+                {
+                    AddLogNotifySeller(item);
+                }
+                AddLogNotifyBuyer(buyOrder);
             }
             catch (Exception exc)
             {
@@ -916,11 +885,8 @@ namespace SuperMinersServerApplication.Controller.Stack
             if (buyPrice >= sellUnit.Price)
             {
                 //成交，按量处理
-                buyOrderResult = TradeOneSellOrder(sellUnit.Price, this._dicWaitingSellInfos[sellUnit.Price], listTradeSucceedSellOrders, buyUnit);
-                if (buyOrderResult.State == StackTradeState.Failed)
-                {
-                    continue;
-                }
+                buyOrderResult = TradeSamePriceSellOrder(sellUnit.Price, this._dicWaitingSellInfos[sellUnit.Price], listTradeSucceedSellOrders, buyUnit, buyOrder.UserName);
+                
                 if (buyOrderResult.State == StackTradeState.Succeed)
                 {
                     //买单 被全部消化
@@ -928,14 +894,13 @@ namespace SuperMinersServerApplication.Controller.Stack
                     buyOrder.BuyState = StoneDelegateBuyState.Succeed;
                     buyOrder.FinishedStoneTradeHandCount = buyOrder.BuyUnit.TradeStoneHandCount;
                     buyOrder.FinishedTime = new MyDateTime(DateTime.Now);
-                    break;
                 }
-                if (buyOrderResult.State == StackTradeState.Splited)
+                else if (buyOrderResult.State == StackTradeState.Splited)
                 {
                     //买单没有被全部消化，需要再对比处理上一级卖价。等所有卖价都对比完时，再返回
                     buyUnit.TradeStoneHandCount -= buyOrderResult.SucceedStoneHandCount;
                     buyOrder.BuyState = StoneDelegateBuyState.Splited;
-                    buyOrder.FinishedStoneTradeHandCount = buyOrder.FinishedStoneTradeHandCount - buyUnit.TradeStoneHandCount;
+                    buyOrder.FinishedStoneTradeHandCount = buyOrder.BuyUnit.TradeStoneHandCount - buyUnit.TradeStoneHandCount;
                     buyOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 }
             }
@@ -951,8 +916,8 @@ namespace SuperMinersServerApplication.Controller.Stack
         /// <param name="listTradeSucceedSellOrders"></param>
         /// <param name="buyOrder"></param>
         /// <returns></returns>
-        private StackTradeResult TradeOneSellOrder(decimal sellPrice, ListStoneDelegateSellOrderInfoCollection queueSellOrders,
-            List<StoneDelegateSellOrderInfo> listTradeSucceedSellOrders, StackTradeUnit buyUnit)
+        private StackTradeResult TradeSamePriceSellOrder(decimal sellPrice, ListStoneDelegateSellOrderInfoCollection queueSellOrders,
+            List<StoneDelegateSellOrderInfo> listTradeSucceedSellOrders, StackTradeUnit buyUnit, string buyerUserName)
         {
             StackTradeResult buyOrderResult = new StackTradeResult();
 
@@ -973,7 +938,13 @@ namespace SuperMinersServerApplication.Controller.Stack
                 sellOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 listTradeSucceedSellOrders.Add(sellOrder);
 
-                var nextSellOrder = GetWaitingSellOrderFromQueue(queueSellOrders);
+                var operResult = this._todayTradeInfo.DecreaseSellUnit(sellOrder.SellUnit.Price, sellOrder.SellUnit.TradeStoneHandCount);
+                if (operResult.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    LogHelper.Instance.AddErrorLog("TradeBuy1Orders DecreaseSellUnit Error1. " + operResult.Message, null);
+                }
+
+                var nextSellOrder = queueSellOrders.Dequeue();
                 if (nextSellOrder == null)
                 {
                     //说明已经没有当前价格的卖单了。
@@ -997,22 +968,38 @@ namespace SuperMinersServerApplication.Controller.Stack
                 sellOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 listTradeSucceedSellOrders.Add(sellOrder);
 
+                var operResult = this._todayTradeInfo.DecreaseSellUnit(sellOrder.SellUnit.Price, sellOrder.SellUnit.TradeStoneHandCount);
+                if (operResult.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    LogHelper.Instance.AddErrorLog("TradeBuy1Orders DecreaseSellUnit Error2. " + operResult.Message, null);
+                }
+
             }
-            //卖单量大于买单量，需要将当前卖单拆分
             else
             {
-                sellOrder.SellState = StoneDelegateSellState.Splited;
+                //卖单量大于买单量，需要将当前卖单拆分。将已成功的部分拆成一新订单添加到数据库中；将老订单缩减到剩余部分，继续留在市场中。
+                sellOrder.SellState = StoneDelegateSellState.Succeed;
                 sellOrder.FinishedStoneTradeHandCount = sellOrder.SellUnit.TradeStoneHandCount + surplusStoneHandCount;
                 sellOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 listTradeSucceedSellOrders.Add(sellOrder);
 
-                //拆分后的订单，不再另存数据库，直接添加到集合中。
+                var operResult = this._todayTradeInfo.DecreaseSellUnit(sellOrder.SellUnit.Price, sellOrder.FinishedStoneTradeHandCount);
+                if (operResult.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    LogHelper.Instance.AddErrorLog("TradeBuy1Orders DecreaseSellUnit Error3. " + operResult.Message, null);
+                }
+
+
+                DateTime nowTime = DateTime.Now;
+
+                //拆分后的订单，再保存到数据库，并添加到集合中。
                 StoneDelegateSellOrderInfo newSellOrder = new StoneDelegateSellOrderInfo()
                 {
-                    OrderNumber = sellOrder.OrderNumber,
+                    OrderNumber = OrderController.Instance.CreateOrderNumber(sellOrder.UserName, nowTime, AlipayTradeInType.StackStoneSell),
                     UserID = sellOrder.UserID,
+                    UserName = sellOrder.UserName,
                     SellState = StoneDelegateSellState.Waiting,
-                    DelegateTime = new MyDateTime(DateTime.Now),
+                    DelegateTime = new MyDateTime(nowTime),
                     SellUnit = new StackTradeUnit()
                     {
                         Price = sellOrder.SellUnit.Price,
@@ -1020,7 +1007,16 @@ namespace SuperMinersServerApplication.Controller.Stack
                     },
                     IsSubOrder = true
                 };
-                queueSellOrders.Enqueue(newSellOrder);
+
+                try
+                {
+                    DBProvider.StoneStackDBProvider.SaveWaitingStoneDelegateSellOrderInfo(newSellOrder);
+                    queueSellOrders.Enqueue(newSellOrder);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("股票操作。TradeSamePriceSellOrder.SaveWaitingStoneDelegateSellOrderInfo 异常。信息为：" + newSellOrder.ToString(), exc);
+                }
             }
 
             //买单已全部被消化
@@ -1029,25 +1025,49 @@ namespace SuperMinersServerApplication.Controller.Stack
             return buyOrderResult;
         }
 
-        private StoneDelegateSellOrderInfo GetWaitingSellOrderFromQueue(ConcurrentQueue<StoneDelegateSellOrderInfo> queueSellOrders)
-        {
-            StoneDelegateSellOrderInfo sellOrder = null;
-            while (queueSellOrders.Count > 0)
-            {
-                queueSellOrders.TryDequeue(out sellOrder);
-                if (sellOrder != null && sellOrder.SellState == StoneDelegateSellState.Waiting)
-                {
-                    break;
-                }
-            }
-
-            return sellOrder;
-        }
-
         #endregion
 
-        public event SaveStoneDelegateSellOrderInvoke SaveStoneSellOrderHandler;
-        public event SaveStoneDelegateBuyOrderInvoke SaveStoneBuyOrderHandler;
+
+        private void AddLogNotifyBuyer(StoneDelegateBuyOrderInfo buyOrder)
+        {
+            PlayerActionController.Instance.AddLog(buyOrder.UserName, MetaData.ActionLog.ActionType.DelegateBuyStoneSucceed, buyOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount, buyOrder.AwardGoldCoin.ToString());
+
+            string tokenBuyer = ClientManager.GetToken(buyOrder.UserName);
+            if (!string.IsNullOrEmpty(tokenBuyer))
+            {
+                if (DelegateStoneOrderTradeSucceedNotifyPlayer != null)
+                {
+                    DelegateStoneOrderTradeSucceedNotifyPlayer(tokenBuyer, buyOrder.OrderNumber, AlipayTradeInType.StackStoneBuy);
+                    LogHelper.Instance.AddInfoLog("委托买单。订单号： " + buyOrder.OrderNumber + " 矿石交易成功，Order：" + buyOrder.ToString());
+                }
+            }
+        }
+
+        private void AddLogNotifySeller(StoneDelegateSellOrderInfo sellOrder)
+        {
+            PlayerActionController.Instance.AddLog(sellOrder.UserName, MetaData.ActionLog.ActionType.DelegateSellStoneSucceed, sellOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount);
+
+            string tokenBuyer = ClientManager.GetToken(sellOrder.UserName);
+            if (!string.IsNullOrEmpty(tokenBuyer))
+            {
+                if (DelegateStoneOrderTradeSucceedNotifyPlayer != null)
+                {
+                    DelegateStoneOrderTradeSucceedNotifyPlayer(tokenBuyer, sellOrder.OrderNumber, AlipayTradeInType.StackStoneSell);
+                    LogHelper.Instance.AddInfoLog("委托卖单。订单号： " + sellOrder.OrderNumber + " 矿石交易成功，Order：" + sellOrder.ToString());
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string, AlipayTradeInType> DelegateStoneOrderTradeSucceedNotifyPlayer;
+
+        /// <summary>
+        /// p1: token;  p2: orderNumber
+        /// </summary>
+        public event Action<string, string> DelegateBuyStoneOrderAlipayPaySucceedNotify;
 
 
     }

@@ -17,6 +17,7 @@ using SuperMinersServerApplication.Controller.Game;
 using MetaData.Game.Roulette;
 using MetaData.AgentUser;
 using SuperMinersServerApplication.Controller.Trade;
+using MetaData.Game.StoneStack;
 
 namespace SuperMinersServerApplication.Controller
 {
@@ -889,6 +890,17 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMiner(minersCount);
         }
 
+        public int BuyMineByDiamond(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return playerrun.BuyMineByDiamond(buyRecord, myTrans);
+        }
+
         public int BuyMineByRMB(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
@@ -920,6 +932,17 @@ namespace SuperMinersServerApplication.Controller
             return value;
         }
 
+        public int RechargeGoldCoinByDiamond(string userName, decimal rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return playerrun.RechargeGoldCoinByDiamond(rmbValue, goldcoinValue, myTrans);
+        }
+
         public int RechargeGoldCoinByRMB(string userName, int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(userName);
@@ -928,7 +951,7 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_FALSE;
             }
 
-            return playerrun.RechargeGoldCoineByRMB(rmbValue, goldcoinValue, myTrans);
+            return playerrun.RechargeGoldCoinByRMB(rmbValue, goldcoinValue, myTrans);
         }
 
         public int RechargeGoldCoinByAlipay(string userName, decimal moneyYuan, int rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
@@ -1002,6 +1025,30 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return playerSellerRun.PayBuyStonesUpdateSellerInfo(order, trans);
+        }
+
+        public int PayDelegateBuyStonesUpdateSellerInfo(StoneDelegateSellOrderInfo sellOrder, CustomerMySqlTransaction trans)
+        {
+            PlayerRunnable playerSellerRun = this.GetRunnable(sellOrder.UserName);
+            if (playerSellerRun == null)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时，更新卖方信息失败（数据库中没有卖方玩家信息）。 Order: " + sellOrder.ToString());
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerSellerRun.PayDelegateBuyStonesUpdateSellerInfo(sellOrder, trans);
+        }
+
+        public int PayDelegateBuyStonesUpdateBuyerInfo(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction trans)
+        {
+            PlayerRunnable playerSellerRun = this.GetRunnable(buyOrder.UserName);
+            if (playerSellerRun == null)
+            {
+                LogHelper.Instance.AddInfoLog("支付订单时，更新买方信息失败（数据库中没有买方玩家信息）。 Order: " + buyOrder.ToString());
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerSellerRun.PayDelegateBuyStonesUpdateBuyerInfo(buyOrder, trans);
         }
 
         ///// <summary>

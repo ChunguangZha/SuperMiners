@@ -14,59 +14,18 @@ namespace MetaData.Game.StoneStack
     [DataContract]
     public class StoneDelegateSellOrderInfo
     {
+        /// <summary>
+        /// 订单号唯一，拆分的子订单使用新的订单号
+        /// </summary>
         [DataMember]
         public string OrderNumber;
 
         [DataMember]
         public int UserID;
 
-        ///// <summary>
-        ///// 只服务器端使用。非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //private long _playerCreditValue = 0;
-
-        ///// <summary>
-        ///// 只服务器端使用。非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //public long PlayerCreditValue
-        //{
-        //    get { return this._playerCreditValue; }
-        //    set
-        //    {
-        //        this._playerCreditValue = value;
-        //        PlayerCreditLevel = CreditLevelConfig.GetCreditLevel(value);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 只服务器端使用。只读字段，只能从PlayerCreditValue中赋值，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //public int PlayerCreditLevel = 0;
-
-        ///// <summary>
-        ///// 只服务器端使用。非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //private int _playerExpValue;
-
-        ///// <summary>
-        ///// 只服务器端使用。非数据库字段，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //public int PlayerExpValue
-        //{
-        //    get { return _playerExpValue; }
-        //    set
-        //    {
-        //        _playerExpValue = value;
-        //        PlayerExpLevel = value / CreditLevelConfig.UserExpLevelValue;
-        //    }
-        //}
-
-        ///// <summary>
-        ///// 只服务器端使用。只读字段，只能从SellerExpValue中赋值，从数据库加载时，从PlayerFortuneInfo表中获取
-        ///// </summary>
-        //public int PlayerExpLevel = 0;
-
-        
+        [DataMember]
+        public string UserName;
+                
         /// <summary>
         /// 一手矿石出售的价格。注：一手为1000块矿石
         /// </summary>
@@ -76,6 +35,7 @@ namespace MetaData.Game.StoneStack
         /// <summary>
         /// 实际完成的矿石手数。由于订单可能被拆分处理，所以该值一定小于等于委托值。
         /// </summary>
+        [DataMember]
         public int FinishedStoneTradeHandCount = 0;
 
         [DataMember]
@@ -95,6 +55,36 @@ namespace MetaData.Game.StoneStack
 
         [DataMember]
         public bool IsSubOrder = false;
+
+        /// <summary>
+        /// 当为子订单是的父订单号
+        /// </summary>
+        [DataMember]
+        public string ParentOrderNumber = null;
+
+        public override string ToString()
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.Append("OrderNumber: " + OrderNumber + "; ");
+            builder.Append("UserID: " + UserID + "; ");
+            builder.Append("UserName: " + UserName + "; ");
+            builder.Append("Price: " + SellUnit.Price + "; ");
+            builder.Append("TradeCount: " + SellUnit.TradeStoneHandCount + "; ");
+            builder.Append("FinishedStoneTradeHandCount: " + FinishedStoneTradeHandCount + "; ");
+            builder.Append("SellState: " + SellState + "; ");
+            builder.Append("DelegateTime: " + DelegateTime.ToDateTime().ToString() + "; ");
+            if (FinishedTime != null)
+            {
+                builder.Append("FinishedTime: " + FinishedTime.ToDateTime().ToString() + "; ");
+            }
+            builder.Append("IsSubOrder: " + IsSubOrder + "; ");
+            if (ParentOrderNumber != null)
+            {
+                builder.Append("ParentOrderNumber: " + ParentOrderNumber + "; ");
+            }
+
+            return builder.ToString();
+        }
     }
 
     public enum StoneDelegateSellState

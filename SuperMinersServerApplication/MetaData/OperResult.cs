@@ -206,6 +206,11 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED = 802;
 
+        /// <summary>
+        /// 股票市场，挂单价超出涨跌停范围
+        /// </summary>
+        public const int RESULTCODE_STACK_PRICE_OUTOFRANGE = 803;
+
 
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
@@ -252,6 +257,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING, "开市期间无法撤单");
             _resultCode_Msg.Add(RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR, "总手数不对");
             _resultCode_Msg.Add(RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED, "尚未开市");
+            _resultCode_Msg.Add(RESULTCODE_STACK_PRICE_OUTOFRANGE, "挂单价不能超出涨跌停范围");
         }
 
         public static string GetMsg(int resultCode)

@@ -345,12 +345,7 @@ namespace SuperMinersWPF.Models
         {
             get { return this._parentObject.FortuneInfo.FreezingDiamonds; }
         }
-
-        public decimal SellableDiamonds
-        {
-            get { return StockOfDiamonds - FreezingDiamonds; }
-        }
-
+        
         public int StoneSellQuan
         {
             get { return this._parentObject.FortuneInfo.StoneSellQuan; }

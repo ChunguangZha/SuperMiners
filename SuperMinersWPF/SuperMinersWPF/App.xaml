@@ -9,11 +9,6 @@
                 <ResourceDictionary Source="Assets/Style.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:LocalizedStrings x:Key="Language"/>
-            <SolidColorBrush x:Key="MainPanelBackground" Color="#FFF0F0F0"/>
-            <SolidColorBrush x:Key="LogoPanelBackground" Color="#FF4CADA6"/>
-            <SolidColorBrush x:Key="NotifyPanelBackground" Color="#FF90E5DF"/>
-            <SolidColorBrush x:Key="PlayerInfoBackground" Color="#FF313443"/>
-            <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="#FFAFBCBB"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

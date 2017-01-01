@@ -23,6 +23,7 @@ namespace SuperMinersWPF
         internal static StoneOrderViewModel StoneOrderVMObject = new StoneOrderViewModel();
         internal static TradeHistoryViewModel TradeHistoryVMObject = new TradeHistoryViewModel();
         internal static GameRouletteViewModel GameRouletteVMObject = new GameRouletteViewModel();
+        internal static StackStoneViewModel StackStoneVMObject = new StackStoneViewModel();
         internal static BusyToken BusyToken = new BusyToken();
 
         protected override void OnStartup(StartupEventArgs e)
@@ -35,6 +36,7 @@ namespace SuperMinersWPF
             UserReferrerTreeVMObject.RegisterEvent();
             NoticeVMObject.RegisterEvent();
             StoneOrderVMObject.RegisterEvent();
+            StackStoneVMObject.RegisterEvent();
         }
     }
 }

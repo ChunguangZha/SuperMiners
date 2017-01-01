@@ -34,7 +34,7 @@ namespace SuperMinersServerApplication.Controller
 
         public void Init()
         {
-            _timer = new Timer(new TimerCallback(DoWork), null, 0, 1000);
+            _timer = new Timer(new TimerCallback(DoWork), null, 0, 10 * 1000);
         }
 
         public void DoWork(object state)
@@ -49,7 +49,8 @@ namespace SuperMinersServerApplication.Controller
                     {
                         ThreadPool.QueueUserWorkItem(o =>
                         {
-                            if (item.DailyTime.Hour == nowTime.Hour && item.DailyTime.Minute == nowTime.Minute && item.DailyTime.Second == nowTime.Second)
+                            //以分钟为准，以秒容易会被跳过
+                            if (item.DailyTime.Hour == nowTime.Hour && item.DailyTime.Minute == nowTime.Minute)// && item.DailyTime.Second == nowTime.Second)
                             {
                                 try
                                 {

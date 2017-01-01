@@ -73,17 +73,23 @@ namespace SuperMinersWPF
             App.GameRouletteVMObject.AsyncGetAllAwardItems();
             App.GameRouletteVMObject.AsyncGetAllAwardRecord(-1, null, null, -1, -1, 20, 1);
             App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
+
+            App.StackStoneVMObject.AsyncGetAllNotFinishedSellOrders();
+            App.StackStoneVMObject.AsyncGetAllNotFinishedBuyOrders();
+
             AddEventHandlers();
         }
 
         public void AddEventHandlers()
         {
             this.controlFunny.AddEventHandlers();
+            this.controlStack.AddEventHandlers();
         }
 
         public void RemoveEventHandlers()
         {
             this.controlFunny.RemoveEventHandlers();
+            this.controlStack.RemoveEventHandlers();
         }
 
         void Client_LogoutCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<bool> e)
@@ -232,8 +238,17 @@ namespace SuperMinersWPF
                 MyMessageBox.ShowInfo("没有可出售的" + Strings.Stone);
                 return;
             }
-            SellStonesWindow win = new SellStonesWindow();
+
+            if (App.StackStoneVMObject.TodayStackInfo.MarketState != MetaData.Game.StoneStack.StackMarketState.Opening)
+            {
+                MyMessageBox.ShowInfo("还未开市，无法出售矿石");
+                return;
+            }
+
+            DelegateSellStoneWindows win = new DelegateSellStoneWindows();
             win.ShowDialog();
+            //SellStonesWindow win = new SellStonesWindow();
+            //win.ShowDialog();
         }
 
         private void btnGetMoney_Click(object sender, RoutedEventArgs e)
@@ -279,6 +294,7 @@ namespace SuperMinersWPF
             this.controlStonesMarket.Visibility = System.Windows.Visibility.Collapsed;
             this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStack.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowDigStonesArea_Checked(object sender, RoutedEventArgs e)
@@ -299,9 +315,9 @@ namespace SuperMinersWPF
                 return;
             }
 
-            App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
+            //App.StoneOrderVMObject.AsyncGetOrderLockedBySelf();
             CloseAllControl();
-            this.controlStonesMarket.Visibility = System.Windows.Visibility.Visible;
+            this.controlStack.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void btnShowTopList_Checked(object sender, RoutedEventArgs e)

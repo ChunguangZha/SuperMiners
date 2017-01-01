@@ -1,0 +1,52 @@
+﻿<Window x:Class="SuperMinersWPF.Views.Windows.DelegateSellStoneWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
+        Loaded="Window_Loaded"
+        Closed="Window_Closed"
+        Title="委托服务器出售矿石" 
+        Height="330" Width="330" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Background="{DynamicResource PlayerInfoBackground}" Foreground="White" WindowStyle="ToolWindow">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="97*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="总库存" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Column="1" Name="txtAllStones" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
+        <TextBlock Grid.Row="1" Text="已冻结" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="txtForzenStones" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
+        <TextBlock Grid.Row="2" Text="可出售" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="txtSellableStones" IsReadOnly="True" Margin="5"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}" Margin="5"/>
+        <TextBlock Grid.Row="3" Text="本次出售" HorizontalAlignment="Right" Margin="5"/>
+        <my:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numSellStoneHandsCount" Minimum="0" Maximum="100000" Value="1" Margin="5" ValueChanged="numSellStones_ValueChanged"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Text="手矿石" Margin="5"/>
+        <TextBlock Grid.Row="4" Text="挂单价" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="4" Grid.Column="1" x:Name="numPrice" IsReadOnly="True" Foreground="Green" Margin="5"/>
+        <Slider Grid.Row="5" Grid.Column="1" Name="sliderPrice" Value="100" Minimum="90" Maximum="110" SmallChange="0.01" Margin="5" ValueChanged="sliderPrice_ValueChanged" LargeChange="0.01" />
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="灵币/手矿石" Margin="5"/>
+        <TextBlock Grid.Row="6" Text="手续费" HorizontalAlignment="Right" Margin="5"/>
+        <TextBox Grid.Row="6" Grid.Column="1" Name="txtExpense" IsReadOnly="True" Foreground="Green" Margin="5"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="矿石" Margin="5"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Text="提示" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
+        <StackPanel Grid.Row="7" Grid.Column="1" Margin="5">
+            <TextBlock Text="取消订单时，手续费不予退回" TextWrapping="Wrap" Foreground="Red"/>
+        </StackPanel>
+        <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnCancel" Content="取消" Width="75" HorizontalAlignment="Right" Margin="5" Click="btnCancel_Click"/>
+        <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnSell" Content="挂单出售" Width="75" HorizontalAlignment="Right" Margin="5,5,110,5" Click="btnSell_Click"/>
+    </Grid>
+</Window>

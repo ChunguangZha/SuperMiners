@@ -1,47 +1,249 @@
-﻿<UserControl x:Class="SuperMinersWPF.Views.Controls.StackMarketControl"
+﻿<UserControl x:Class="SuperMinersWPF.Views.StackMarketControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
+    <Control.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="{StaticResource LogoPanelBackground}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Control.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
+        <Grid Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="Collapsed">
+            <TextBlock Text="即将开放，敬请期待..." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36"/>
+        </Grid>
         <Grid Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="日线图" HorizontalAlignment="Center" Margin="5"></TextBlock>
+            <TextBlock Text="K线图" FontSize="18" HorizontalAlignment="Center" Margin="5"></TextBlock>
+            <Border Grid.Row="1" Margin="10" IsEnabled="False" Background="DarkGray" BorderThickness="1"/>
         </Grid>
-        <TabControl Grid.Column="1" Margin="10">
-            <TabItem Header="10档">
+
+        <StackPanel Grid.Column="1" Margin="10" Height="Auto" VerticalAlignment="Top">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.ColumnSpan="2" Background="LightGray" Margin="1">
+                    <TextBlock Text="每手矿石的价格" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+                <Border Grid.Column="2" Background="LightGray" Margin="1">
+                    <TextBlock Text="挂单数量（手）" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Border>
+            </Grid>
+            <ListView Name="lvSell5Price" HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="Red"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Price}" Foreground="Red"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Count}" Foreground="Red"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <ListView Name="lvBuy5Price" HorizontalContentAlignment="Stretch">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Title}" Foreground="Green"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Price}" Foreground="Green"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Count}" Foreground="Green"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <!--<TabControl Grid.Column="1" Margin="10" Height="300" VerticalAlignment="Top">
+            <TabItem Header="5档">
                 <Grid>
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Text="卖5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Name="txtSell5Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Name="txtSell5Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="1" Text="卖4" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Name="txtSell4Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Name="txtSell4Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="2" Text="卖3" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Name="txtSell3Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Name="txtSell3Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="3" Text="卖2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Name="txtSell2Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Name="txtSell2Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="4" Text="卖1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="4" Grid.Column="1" Name="txtSell1Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
+                    <TextBlock Grid.Row="4" Grid.Column="2" Name="txtSell1Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="5" Text="买1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="5" Grid.Column="1" Name="txtBuy1Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="5" Grid.Column="2" Name="txtBuy1Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="6" Text="买2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" Name="txtBuy2Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="6" Grid.Column="2" Name="txtBuy2Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="7" Text="买3" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="7" Grid.Column="1" Name="txtBuy3Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="7" Grid.Column="2" Name="txtBuy3Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="8" Text="买4" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="8" Grid.Column="1" Name="txtBuy4Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="8" Grid.Column="2" Name="txtBuy4Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
+                    <TextBlock Grid.Row="9" Text="买5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="9" Grid.Column="1" Name="txtBuy5Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
+                    <TextBlock Grid.Row="9" Grid.Column="2" Name="txtBuy5Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="明细">
+            <TabItem Header="明细" Visibility="Collapsed">
                 <Grid>
-                    
+
                 </Grid>
             </TabItem>
-        </TabControl>
+        </TabControl>-->
         <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="历史图" HorizontalAlignment="Center" Margin="5"></TextBlock>
+            <TextBlock Text="说明" FontSize="18" HorizontalAlignment="Center" Margin="5"></TextBlock>
+            <Border Grid.Row="1" Margin="10" Background="{StaticResource RedButtonBackground}">
+                <TextBlock Text="       市场以灵币作为流通货币，以矿石作为交易对象。以一千矿石为最小交易单位，称为一手。矿石的价格也以一手矿石来计算，矿石价格的最小单位是0.01灵币。" Foreground="White" FontSize="18" Margin="10" TextWrapping="Wrap"/>
+            </Border>
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-            
-        </Grid>
+        <TabControl Grid.Row="1" Grid.Column="1" Name="tabTradeOper" Margin="10" TabStripPlacement="Bottom">
+            <TabItem Header="购买矿石">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1" Text="矿石(手)" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5"/>
+                    <my:NumericTextBox Grid.Row="1" Grid.Column="2" x:Name="numStoneHandCount" Value="1" Minimum="1" Maximum="10000" Margin="10,5"/>
+                    <TextBlock Grid.Row="2" Text="价格" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="numPrice" IsReadOnly="True" Margin="10,5"/>
+                    <Slider Grid.Row="3" Grid.Column="1" Name="sliderPrice" Value="100" Minimum="90" Maximum="110" SmallChange="0.01" Margin="5" ValueChanged="sliderPrice_ValueChanged" LargeChange="0.01" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="支付方式" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5"/>
+                    <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbPayType" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,5" SelectedIndex="0">
+                        <ComboBoxItem Content="灵币"/>
+                        <ComboBoxItem Content="钻石"/>
+                        <ComboBoxItem Content="支付宝"/>
+                    </ComboBox>
+                    <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnBuyStone" Content="挂单购买" Style="{StaticResource UserInfoButtonStyle}" IsEnabled="False" Width="100" Height="30" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBuyStone_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="未完成的买单">
+                <ListView Name="lvNotFinishedBuyOrder" HorizontalContentAlignment="Stretch">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding DelegateTimeText}" Margin="5"/>
+                                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
+                                        <TextBlock Text="交易量："/>
+                                        <TextBlock Text="{Binding TradeStoneHandCount}" Foreground="Red"/>
+                                        <TextBlock Text=" 手 "/>
+                                        <TextBlock Text=" 价格："/>
+                                        <TextBlock Text="{Binding Price}" Foreground="Red"/>
+                                        <TextBlock Text=" 状态："/>
+                                        <TextBlock Text="{Binding BuyStateText}" Foreground="Red"/>
+                                    </StackPanel>
+                                    <Grid Grid.Row="2">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+                                        <Button Content="撤消" Width="100" Margin="10,5" Click="btnCancelBuyOrder_Click"/>
+                                        <Button Grid.Column="1" Content="支付" Visibility="{Binding PayButtonVisible}" Width="100" Margin="10,5" Click="btnPayOrder_Click"/>
+                                    </Grid>
+                                </Grid>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </TabItem>
+            <TabItem Header="未完成的卖单">
+                <ListView Name="lvNotFinishedSellOrder" HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <GroupBox>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Text="{Binding CreateTimeText}" Margin="5"/>
+                                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
+                                        <TextBlock Text="交易量："/>
+                                        <TextBlock Text="{Binding TradeStoneHandCount}" Foreground="Red"/>
+                                        <TextBlock Text=" 手 "/>
+                                        <TextBlock Text=" 价格："/>
+                                        <TextBlock Text="{Binding Price}" Foreground="Red"/>
+                                        <TextBlock Text=" 状态："/>
+                                        <TextBlock Text="{Binding SellStateText}" Foreground="Red"/>
+                                    </StackPanel>
+                                    <Button Grid.Row="2" Content="撤消" Width="100" Margin="10,5" Click="btnCancelSellOrder_Click"/>
+                                </Grid>
+                            </GroupBox>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListView>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

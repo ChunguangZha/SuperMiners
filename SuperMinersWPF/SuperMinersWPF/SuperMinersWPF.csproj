@@ -32,8 +32,8 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>5</ApplicationRevision>
-    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
+    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -152,6 +152,18 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\Roulette\RouletteWinnerRecord.cs">
       <Link>Wcf\Datas\RouletteWinnerRecord.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneHandBuyInfo.cs">
+      <Link>Wcf\Datas\StoneHandBuyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneHandSellInfo.cs">
+      <Link>Wcf\Datas\StoneHandSellInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneStackDailyRecordInfo.cs">
+      <Link>Wcf\Datas\StoneStackDailyRecordInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\TodayStoneStackTradeRecordInfo.cs">
+      <Link>Wcf\Datas\TodayStoneStackTradeRecordInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
       <Link>Wcf\Datas\NoticeInfo.cs</Link>
     </Compile>
@@ -242,6 +254,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.Order.Callback.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Stack.Callback.cs">
+      <Link>Wcf\Callbacks\IServiceToClient.Stack.Callback.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.User.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.User.Callback.cs</Link>
     </Compile>
@@ -260,6 +275,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Order.cs">
       <Link>Wcf\Contracts\IServiceToClient.Order.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Stack.cs">
+      <Link>Wcf\Contracts\IServiceToClient.Stack.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.SystemConfig.cs">
       <Link>Wcf\Contracts\IServiceToClient.SystemConfig.cs</Link>
     </Compile>
@@ -275,10 +293,17 @@
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\RouletteAwardItemUIModel.cs" />
     <Compile Include="Models\SellStonesOrderUIModel.cs" />
+    <Compile Include="Models\StackTradeUnitUIModel.cs" />
+    <Compile Include="Models\StoneDelegateBuyOrderInfoUIModel.cs" />
+    <Compile Include="Models\StoneDelegateSellOrderInfoUIModel.cs" />
+    <Compile Include="Models\TodayStoneStackTradeRecordInfoUIModel.cs" />
     <Compile Include="Models\TopListInfoUIModel.cs" />
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
     <Compile Include="Models\UserUIModel.cs" />
     <Compile Include="MyControl\NumericTextBox.cs" />
+    <Compile Include="MyControl\RMBPayTypeComboBox.xaml.cs">
+      <DependentUpon>RMBPayTypeComboBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -302,6 +327,7 @@
     <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
+    <Compile Include="ViewModels\StackStoneViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
     <Compile Include="ViewModels\TradeHistoryViewModel.cs" />
@@ -330,6 +356,12 @@
     </Compile>
     <Compile Include="Views\Controls\AlipayHistoryRecordControl.xaml.cs">
       <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DelegateBuyStoneHistoryRecordControl.xaml.cs">
+      <DependentUpon>DelegateBuyStoneHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml.cs">
+      <DependentUpon>DelegateSellStoneHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\GameRouletteControl.xaml.cs">
       <DependentUpon>GameRouletteControl.xaml</DependentUpon>
@@ -422,6 +454,9 @@
     <Compile Include="Views\Windows\AgentInvitationWindow.xaml.cs">
       <DependentUpon>AgentInvitationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\DelegateSellStoneWindows.xaml.cs">
+      <DependentUpon>DelegateSellStoneWindows.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\RouletteMyWinnedRecordsWindow.xaml.cs">
       <DependentUpon>RouletteMyWinnedRecordsWindow.xaml</DependentUpon>
     </Compile>
@@ -447,6 +482,7 @@
     <Compile Include="Wcf\Clients\ServerClient.GameRoulette.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Message.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Stack.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
@@ -474,6 +510,10 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Page Include="MyControl\RMBPayTypeComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utility\MessageBoxAlipayPayQuestion.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -507,6 +547,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\AlipayHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DelegateBuyStoneHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -627,6 +675,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\AgentInvitationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\DelegateSellStoneWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

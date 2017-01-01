@@ -41,7 +41,25 @@ namespace SuperMinersServerApplication.WebService.Services
             OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
             OrderController.Instance.MineOrderController.MineOrderPaySucceedNotify += MineOrderController_MineOrderPaySucceedNotify;
             OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
+            OrderController.Instance.StoneStackController.DelegateStoneOrderTradeSucceedNotifyPlayer += StoneStackController_DelegateStoneOrderTradeSucceedNotifyPlayer;
+            OrderController.Instance.StoneStackController.DelegateBuyStoneOrderAlipayPaySucceedNotify += StoneStackController_DelegateBuyStoneOrderAlipayPaySucceedNotify;
             RouletteAwardController.Instance.RouletteWinRealAwardPaySucceedNotify += Instance_RouletteWinRealAwardPaySucceedNotify;
+        }
+
+        void StoneStackController_DelegateBuyStoneOrderAlipayPaySucceedNotify(string arg1, string arg2)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.OrderAlipayPaySucceed(arg1, (int)MetaData.Trade.AlipayTradeInType.StackStoneBuy, arg2);
+            })).Start();
+        }
+
+        void StoneStackController_DelegateStoneOrderTradeSucceedNotifyPlayer(string arg1, string arg2, MetaData.Trade.AlipayTradeInType arg3)
+        {
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.DelegateStoneOrderTradeSucceed(arg1, arg2, MetaData.Trade.AlipayTradeInType.BuyMine);
+            })).Start();
         }
 
         void Instance_RouletteWinRealAwardPaySucceedNotify(string arg1, MetaData.Game.Roulette.RouletteWinnerRecord arg2)

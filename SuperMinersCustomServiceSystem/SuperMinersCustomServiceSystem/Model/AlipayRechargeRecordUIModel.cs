@@ -73,6 +73,12 @@ namespace SuperMinersCustomServiceSystem.Model
                     case AlipayTradeInType.BuyGoldCoin:
                         tradeTypeText = "充值金币";
                         break;
+                    case AlipayTradeInType.StackStoneBuy:
+                        tradeTypeText = "委托购买矿石";
+                        break;
+                    case AlipayTradeInType.StackStoneSell:
+                        tradeTypeText = "委托出售矿石";
+                        break;
                     default:
                         break;
                 }

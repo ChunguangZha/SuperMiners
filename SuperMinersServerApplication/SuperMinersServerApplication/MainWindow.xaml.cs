@@ -499,6 +499,54 @@ namespace SuperMinersServerApplication
 
         }
 
+        private void btnCheckStackMarketState_Click(object sender, RoutedEventArgs e)
+        {
+            CheckStackMarketState();
+        }
+
+        private void CheckStackMarketState()
+        {
+            var todayInfo = OrderController.Instance.StoneStackController.GetTodayStackInfo();
+            if (todayInfo == null)
+            {
+                this.txtStackMarketState.Text = "闭市";
+            }
+            else
+            {
+                this.txtStackMarketState.Text = todayInfo.MarketState.ToString();
+            }
+        }
+
+        private void btnOpenMarket_Click(object sender, RoutedEventArgs e)
+        {
+            OrderController.Instance.StoneStackController.MarketOpen();
+            CheckStackMarketState();
+        }
+
+        private void btnSuspendMarket_Click(object sender, RoutedEventArgs e)
+        {
+            OrderController.Instance.StoneStackController.MarketSuspend();
+            CheckStackMarketState();
+        }
+
+        private void btnResumeMarket_Click(object sender, RoutedEventArgs e)
+        {
+            OrderController.Instance.StoneStackController.MarketResume();
+            CheckStackMarketState();
+        }
+
+        private void btnCloseMarket_Click(object sender, RoutedEventArgs e)
+        {
+            OrderController.Instance.StoneStackController.MarketClose();
+            CheckStackMarketState();
+        }
+
+        private void btnDeleteAllSellStones_Click(object sender, RoutedEventArgs e)
+        {
+            DeleteAllStoneSellOrderWindow win = new DeleteAllStoneSellOrderWindow();
+            win.ShowDialog();
+        }
+
 
     }
 }

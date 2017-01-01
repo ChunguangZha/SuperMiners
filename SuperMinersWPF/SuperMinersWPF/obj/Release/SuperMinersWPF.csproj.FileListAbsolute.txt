@@ -251,4 +251,13 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\RaidersoftheLostArkControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MallControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MallControl.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\StackMarketControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DelegateSellStoneWindows.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\StackMarketControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DelegateSellStoneWindows.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\RMBPayTypeComboBox.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\RMBPayTypeComboBox.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateBuyStoneHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateSellStoneHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateBuyStoneHistoryRecordControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateSellStoneHistoryRecordControl.baml

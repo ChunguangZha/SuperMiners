@@ -82,7 +82,7 @@
                 </div>
                 <div class="weui-cell__ft">
                     <div>
-                        <a id="abtnSellStone" class="weui-btn weui-btn_mini weui-btn_primary" >出售</a>
+                        <a id="abtnSellStone" class="weui-btn weui-btn_mini weui-btn_primary" style="display:none;" >出售</a>
                     </div>
                 </div>
             </div>

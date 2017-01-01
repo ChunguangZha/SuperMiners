@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="SuperMinersWPF.Views.Controls.DelegateSellStoneHistoryRecordControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
+             xmlns:myc="clr-namespace:SuperMinersCustomServiceSystem.MyControl"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="已完成的矿石委托卖出历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Text="订单号：" Visibility="Collapsed" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <TextBox Name="txtOrderNumber" Visibility="Collapsed" Margin="0,10,5,10" Width="100" MaxLength="100" VerticalAlignment="Center"/>
+                <TextBlock Text="挂单时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+                <TextBlock Text="到" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>
+                <TextBlock Text="每页显示：30 行" Margin="50,10,10,10" VerticalAlignment="Center"/>
+                <Button Name="btnPreviousPage" Content="上一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnPreviousPage_Click"/>
+                <TextBlock Text="当前显示第" Margin="5,10" VerticalAlignment="Center"/>
+                <MyControl:NumericTextBox x:Name="numPageIndex" MinWidth="50" IsReadOnly="True" Margin="5,10" VerticalAlignment="Center" Minimum="1" Maximum="10000000"/>
+                <TextBlock Text="页" Margin="5,10" VerticalAlignment="Center"/>
+                <Button Name="btnNextPage" Content="下一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnNextPage_Click"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="订单号" Width="*" Binding="{Binding OrderNumber, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="挂单价" Width="*" Binding="{Binding Price, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="交易量(手)" Width="*" Binding="{Binding FinishedStoneTradeHandCount, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="订单状态" Width="*" Binding="{Binding SellStateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="出售时间" Width="*" Binding="{Binding CreateTimeText, Mode=OneWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

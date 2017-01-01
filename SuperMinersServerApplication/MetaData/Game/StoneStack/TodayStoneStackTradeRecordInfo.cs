@@ -14,6 +14,11 @@ namespace MetaData.Game.StoneStack
     public class TodayStoneStackTradeRecordInfo
     {
         private object _lock = new object();
+
+        [DataMember]
+        public StackMarketState MarketState = StackMarketState.Closed;
+
+
         [DataMember]
         public StoneStackDailyRecordInfo DailyInfo = new StoneStackDailyRecordInfo();
 
@@ -23,11 +28,23 @@ namespace MetaData.Game.StoneStack
         private List<StackTradeUnit> SellOrderPriceCountList = new List<StackTradeUnit>();
 
         [DataMember]
-        public StackTradeUnit[] Top10SellOrderList
+        public StackTradeUnit[] Top5SellOrderList
         {
             get
             {
-                return SellOrderPriceCountList.ToArray();
+                StackTradeUnit[] list = SellOrderPriceCountList.ToArray();
+                if (list.Length > 5)
+                {
+                    StackTradeUnit[] list5 = new StackTradeUnit[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        list5[i] = list[i];
+                    }
+                    return list5;
+                }
+
+
+                return list;
             }
             set
             {
@@ -41,11 +58,23 @@ namespace MetaData.Game.StoneStack
         private List<StackTradeUnit> BuyOrderPriceCountList = new List<StackTradeUnit>();
 
         [DataMember]
-        public StackTradeUnit[] Top10BuyOrderList
+        public StackTradeUnit[] Top5BuyOrderList
         {
             get
             {
-                return BuyOrderPriceCountList.ToArray();
+                StackTradeUnit[] list = BuyOrderPriceCountList.ToArray();
+                if (list.Length > 5)
+                {
+                    StackTradeUnit[] list5 = new StackTradeUnit[5];
+                    for (int i = 0; i < 5; i++)
+                    {
+                        list5[i] = list[i];
+                    }
+                    return list5;
+                }
+
+
+                return list;
             }
             set
             {
@@ -178,36 +207,25 @@ namespace MetaData.Game.StoneStack
         /// <returns></returns>
         private int CheckinSellListIndex(decimal sellPrice, out bool IsInsert)
         {
-            int index = -1;
+            int index = 0;
             IsInsert = true;
 
-            for (int i = 0; i < SellOrderPriceCountList.Count; i++)
+            for (; index < SellOrderPriceCountList.Count; index++)
             {
-                if (SellOrderPriceCountList[i] == null)
+                if (SellOrderPriceCountList[index] == null)
                 {
                     IsInsert = false;
-                    index = i;
                     break;
                 }
                 //从低到高， 排序
-                if (sellPrice < SellOrderPriceCountList[i].Price)
+                if (sellPrice < SellOrderPriceCountList[index].Price)
                 {
                     IsInsert = true;
-                    if (i == 0)
-                    {
-                        index = i;
-                        break;
-                    }
-                    else
-                    {
-                        index = i - 1;
-                        break;
-                    }
+                    break;
                 }
-                else if (sellPrice == SellOrderPriceCountList[i].Price)
+                else if (sellPrice == SellOrderPriceCountList[index].Price)
                 {
                     IsInsert = false;
-                    index = i;
                     break;
                 }
             }
@@ -219,9 +237,16 @@ namespace MetaData.Game.StoneStack
         {
             lock (_lock)
             {
-                if (this.SellOrderPriceCountList.Count > 0)
+                while (this.SellOrderPriceCountList.Count > 0)
                 {
-                    return SellOrderPriceCountList[0];
+                    if (SellOrderPriceCountList[0].TradeStoneHandCount <= 0)
+                    {
+                        this.SellOrderPriceCountList.RemoveAt(0);
+                    }
+                    else
+                    {
+                        return SellOrderPriceCountList[0];
+                    }
                 }
 
                 return null;
@@ -352,36 +377,36 @@ namespace MetaData.Game.StoneStack
         /// <returns></returns>
         private int CheckinBuyListIndex(decimal buyPrice, out bool IsInsert)
         {
-            int index = -1;
+            //买价： 从高到低
+            int index = 0;
             IsInsert = true;
 
-            for (int i = 0; i < BuyOrderPriceCountList.Count; i++)
+            for (; index < BuyOrderPriceCountList.Count; index++)
             {
-                if (BuyOrderPriceCountList[i] == null)
+                if (BuyOrderPriceCountList[index] == null)
                 {
                     IsInsert = false;
-                    index = i;
                     break;
                 }
-                //从低到高， 排序
-                if (buyPrice < BuyOrderPriceCountList[i].Price)
+
+                if (buyPrice > BuyOrderPriceCountList[index].Price)
                 {
                     IsInsert = true;
-                    if (i == 0)
-                    {
-                        index = i;
-                        break;
-                    }
-                    else
-                    {
-                        index = i - 1;
-                        break;
-                    }
+                    break;
+                    //if (i == 0)
+                    //{
+                    //    index = i;
+                    //    break;
+                    //}
+                    //else
+                    //{
+                    //    index = i - 1;
+                    //    break;
+                    //}
                 }
-                else if (buyPrice == BuyOrderPriceCountList[i].Price)
+                else if (buyPrice == BuyOrderPriceCountList[index].Price)
                 {
                     IsInsert = false;
-                    index = i;
                     break;
                 }
             }
@@ -393,11 +418,18 @@ namespace MetaData.Game.StoneStack
         {
             lock (_lock)
             {
-                if (BuyOrderPriceCountList.Count > 0)
+                while (this.BuyOrderPriceCountList.Count > 0)
                 {
-                    return BuyOrderPriceCountList[0];
+                    if (BuyOrderPriceCountList[0].TradeStoneHandCount <= 0)
+                    {
+                        this.BuyOrderPriceCountList.RemoveAt(0);
+                    }
+                    else
+                    {
+                        return BuyOrderPriceCountList[0];
+                    }
                 }
-
+                
                 return null;
             }
         }
@@ -444,13 +476,30 @@ namespace MetaData.Game.StoneStack
         /// 一手矿石的价格。注：一手为1000块矿石
         /// </summary>
         [DataMember]
-        public decimal Price;
+        public decimal Price { get; set; }
 
         /// <summary>
         /// 交易的矿石手数。注：一手为1000块矿石
         /// </summary>
         [DataMember]
-        public int TradeStoneHandCount;
+        public int TradeStoneHandCount { get; set; }
     }
+
+    public enum StackMarketState
+    {
+        /// <summary>
+        /// 开市
+        /// </summary>
+        Opening,
+        /// <summary>
+        /// 暂停
+        /// </summary>
+        Suspend,
+        /// <summary>
+        /// 闭市
+        /// </summary>
+        Closed
+    }
+
 
 }

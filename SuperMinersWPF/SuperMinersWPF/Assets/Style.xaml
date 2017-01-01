@@ -1,5 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <SolidColorBrush x:Key="MainPanelBackground" Color="#FFF0F0F0"/>
+    <SolidColorBrush x:Key="LogoPanelBackground" Color="#FF4CADA6"/>
+    <SolidColorBrush x:Key="NotifyPanelBackground" Color="#FF90E5DF"/>
+    <SolidColorBrush x:Key="PlayerInfoBackground" Color="#FF313443"/>
+    <SolidColorBrush x:Key="DataGridColumnHeaderBackground" Color="#FFAFBCBB"/>
     
     <Style x:Key="SubWindowStyle" TargetType="Window">
         <Setter Property="Height" Value="500"/>
@@ -10,7 +16,8 @@
     </Style>
 
     <Color x:Key="Color_024">#FF00AADE</Color>
-    
+    <SolidColorBrush x:Key="RedButtonBackground" Color="#FFF69068"/>
+
     <Style x:Key="SliderCheckBox" TargetType="CheckBox">
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Cursor" Value="Hand" />
@@ -78,4 +85,12 @@
         </Setter>
     </Style>
 
+    <Style x:Key="UserInfoButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="75"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LogoPanelBackground}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource LogoPanelBackground}"/>
+    </Style>
 </ResourceDictionary>

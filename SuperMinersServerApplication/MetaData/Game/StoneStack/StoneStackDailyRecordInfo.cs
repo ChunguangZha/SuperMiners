@@ -13,12 +13,6 @@ namespace MetaData.Game.StoneStack
         [DataMember]
         public MyDateTime Day;
 
-        //[DataMember]
-        //public MyDateTime OpenTime;
-
-        //[DataMember]
-        //public MyDateTime CloseTime;
-
         private decimal _openPrice;
 
         [DataMember]
@@ -33,8 +27,8 @@ namespace MetaData.Game.StoneStack
                 this._openPrice = value;
                 if (value != 0)
                 {
-                    this.LimitUpPrice = value * 1.1m;
-                    this.LimitDownPrice = value * 0.9m;
+                    this.LimitUpPrice = Math.Round(value * 1.1m, 2);
+                    this.LimitDownPrice = Math.Round(value * 0.9m, 2);
                 }
             }
         }
@@ -43,13 +37,13 @@ namespace MetaData.Game.StoneStack
         public decimal ClosePrice;
 
         /// <summary>
-        /// 涨停价= OpenPrice * 110%
+        /// 涨停价= OpenPrice * 110%(取两位小数)
         /// </summary>
         [DataMember]
         public decimal LimitUpPrice;
 
         /// <summary>
-        /// 跌停价= OpenPrice * 90%
+        /// 跌停价= OpenPrice * 90%(取两位小数)
         /// </summary>
         [DataMember]
         public decimal LimitDownPrice;
@@ -67,16 +61,16 @@ namespace MetaData.Game.StoneStack
         public decimal MaxTradeSucceedPrice;
 
         [DataMember]
-        public decimal TradeSucceedStoneHandSum;
+        public int TradeSucceedStoneHandSum;
 
         [DataMember]
         public decimal TradeSucceedRMBSum;
 
         [DataMember]
-        public decimal DelegateSellStoneSum;
+        public int DelegateSellStoneSum;
 
         [DataMember]
-        public decimal DelegateBuyStoneSum;
+        public int DelegateBuyStoneSum;
 
     }
 }

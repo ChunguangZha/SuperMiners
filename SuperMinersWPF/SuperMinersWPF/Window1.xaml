@@ -7,7 +7,6 @@
         Height="660" Width="1100" Icon="Logo128.ico" MinHeight="620" MinWidth="1000">
     <Window.Resources>
         <SolidColorBrush x:Key="RightTitleMouseOverBackground" Color="#FFC8ECE7"/>
-        <SolidColorBrush x:Key="RedButtonBackground" Color="#FFF69068"/>
         <DataTemplate x:Key="TopListInfoTemplate">
             <Grid HorizontalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
@@ -37,14 +36,6 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Width" Value="Auto"/>
             <Setter Property="Margin" Value="5"/>
-        </Style>
-        <Style x:Key="UserInfoButtonStyle" TargetType="{x:Type Button}">
-            <Setter Property="Width" Value="75"/>
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="{StaticResource LogoPanelBackground}"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="{StaticResource LogoPanelBackground}"/>
         </Style>
         <Style x:Key="UserInfoRedButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Width" Value="100"/>
@@ -156,12 +147,12 @@
                 <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinersBuy" Content="雇佣" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinersBuy_Click"/>
                 <TextBlock Grid.Row="6" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Diamond, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding StockOfDiamonds, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="6" Grid.Column="2" x:Name="btnDiamondsSell" Content="出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnDiamondsSell_Click"/>
+                <Button Grid.Row="6" Grid.Column="2" x:Name="btnDiamondsSell" Content="出售" Visibility="Collapsed" Style="{StaticResource UserInfoButtonStyle}" Click="btnDiamondsSell_Click"/>
                 <TextBlock Grid.Row="7" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding SellableStones, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="7" Grid.Column="2" x:Name="btnStonesSell" Content="挂单出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnStonesSell_Click"/>
-                <TextBlock Grid.Row="8" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="矿石出售券"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding StoneSellQuan, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <TextBlock Grid.Row="8" Visibility="Collapsed" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="矿石出售券"/><Run Text=" "/><Run Text=""/></TextBlock>
+                <TextBox Grid.Row="8" Grid.Column="1" Visibility="Collapsed" Text="{Binding StoneSellQuan, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
 
                 <TextBlock Grid.Row="9" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
                 <TextBlock Grid.Row="10" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="距离下一次收益计算： "/><Run Text=" "/><Run Text="{Binding OutputCountdownString, Mode=OneWay}"/></TextBlock>
@@ -280,6 +271,7 @@
             <Views:MySuperMinersControl x:Name="controlMySuperMiners" Visibility="Collapsed"/>
             <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
             <Views:MallControl x:Name="controlMall" Visibility="Collapsed"/>
+            <Views:StackMarketControl x:Name="controlStack" Visibility="Collapsed"/>
         </Grid>
 
     </Grid>

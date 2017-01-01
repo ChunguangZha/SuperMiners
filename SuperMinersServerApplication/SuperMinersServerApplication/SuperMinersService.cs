@@ -77,12 +77,12 @@ namespace SuperMinersServerApplication
                 }
                 LogHelper.Instance.Init();
 
+                SchedulerTaskController.Instance.Init();
                 GameSystemConfigController.Instance.Init();
                 PlayerController.Instance.Init();
                 OrderController.Instance.Init();
                 NoticeController.Instance.Init();
                 RouletteAwardController.Instance.Init();
-                SchedulerTaskController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

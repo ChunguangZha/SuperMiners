@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.AgentUser;
 using MetaData.Game.Roulette;
+using MetaData.Game.StoneStack;
 using MetaData.Trade;
 using MetaData.User;
 using MySql.Data.MySqlClient;
@@ -673,6 +674,121 @@ namespace DataBaseProvider
                 item.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
                 item.LockedLoginTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]));
                 item.ExpireDays = Convert.ToInt32(dt.Rows[i]["ExpireDays"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static StoneStackDailyRecordInfo[] GetStoneStackDailyRecordInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            StoneStackDailyRecordInfo[] items = new StoneStackDailyRecordInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneStackDailyRecordInfo item = new StoneStackDailyRecordInfo();
+                item.Day = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Day"]));
+                item.OpenPrice = Convert.ToDecimal(dt.Rows[i]["OpenPrice"]);
+                item.ClosePrice = Convert.ToDecimal(dt.Rows[i]["ClosePrice"]);
+                item.MinTradeSucceedPrice = Convert.ToDecimal(dt.Rows[i]["MinTradeSucceedPrice"]);
+                item.MaxTradeSucceedPrice = Convert.ToDecimal(dt.Rows[i]["MaxTradeSucceedPrice"]);
+                item.TradeSucceedStoneHandSum = Convert.ToInt32(dt.Rows[i]["TradeSucceedStoneHandSum"]);
+                item.TradeSucceedRMBSum = Convert.ToDecimal(dt.Rows[i]["TradeSucceedRMBSum"]);
+                item.DelegateSellStoneSum = Convert.ToInt32(dt.Rows[i]["DelegateSellStoneSum"]);
+                item.DelegateBuyStoneSum = Convert.ToInt32(dt.Rows[i]["DelegateBuyStoneSum"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            StoneDelegateSellOrderInfo[] items = new StoneDelegateSellOrderInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneDelegateSellOrderInfo item = new StoneDelegateSellOrderInfo();
+                item.OrderNumber = dt.Rows[i]["OrderNumber"] as string;
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                item.SellUnit = new StackTradeUnit()
+                {
+                    Price = Convert.ToDecimal(dt.Rows[i]["Price"]),
+                    TradeStoneHandCount = Convert.ToInt32(dt.Rows[i]["TradeStoneHandCount"])
+                };
+                item.FinishedStoneTradeHandCount = Convert.ToInt32(dt.Rows[i]["FinishedStoneTradeHandCount"]);
+                item.SellState = (StoneDelegateSellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
+                item.DelegateTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["DelegateTime"]));
+
+                if (dt.Rows[i]["FinishedTime"] != DBNull.Value)
+                {
+                    item.FinishedTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["FinishedTime"]));
+                }
+                item.IsSubOrder = Convert.ToBoolean(dt.Rows[i]["IsSubOrder"]);
+                if (dt.Rows[i]["ParentOrderNumber"] != DBNull.Value)
+                {
+                    item.ParentOrderNumber = dt.Rows[i]["ParentOrderNumber"].ToString();
+                }
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+        
+        internal static StoneDelegateBuyOrderInfo[] GetStoneDelegateBuyOrderInfoFromDataTable(DataTable dt, bool isFinishedOrder)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            StoneDelegateBuyOrderInfo[] items = new StoneDelegateBuyOrderInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneDelegateBuyOrderInfo item = new StoneDelegateBuyOrderInfo();
+                item.OrderNumber = dt.Rows[i]["OrderNumber"] as string;
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                item.PayType = (PayType)Convert.ToInt32(dt.Rows[i]["PayType"]);
+                item.BuyUnit = new StackTradeUnit()
+                {
+                    Price = Convert.ToDecimal(dt.Rows[i]["Price"]),
+                    TradeStoneHandCount = Convert.ToInt32(dt.Rows[i]["TradeStoneHandCount"])
+                };
+                item.FinishedStoneTradeHandCount = Convert.ToInt32(dt.Rows[i]["FinishedStoneTradeHandCount"]);
+                item.BuyState = (StoneDelegateBuyState)Convert.ToInt32(dt.Rows[i]["BuyState"]);
+                item.DelegateTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["DelegateTime"]));
+
+                item.IsSubOrder = Convert.ToBoolean(dt.Rows[i]["IsSubOrder"]);
+                if (dt.Rows[i]["ParentOrderNumber"] != DBNull.Value)
+                {
+                    item.ParentOrderNumber = dt.Rows[i]["ParentOrderNumber"].ToString();
+                }
+                if (dt.Rows[i]["FinishedTime"] != DBNull.Value)
+                {
+                    item.FinishedTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["FinishedTime"]));
+                }
+                if (dt.Rows[i]["AwardGoldCoin"] != DBNull.Value)
+                {
+                    item.AwardGoldCoin = Convert.ToDecimal(dt.Rows[i]["AwardGoldCoin"]);
+                }
+
+                if (!isFinishedOrder)
+                {
+                    if (dt.Rows[i]["AlipayLink"] != DBNull.Value)
+                    {
+                        item.AlipayLink = dt.Rows[i]["AlipayLink"].ToString();
+                    }
+                }
 
                 items[i] = item;
             }

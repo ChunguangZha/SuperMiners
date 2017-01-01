@@ -438,6 +438,12 @@ namespace SuperMinersWPF.ViewModels
                             BuyGoldCoinAlipayPaySucceed();
                         }
                         break;
+                    case AlipayTradeInType.StackStoneBuy:
+                        if (DelegateBuyStoneAlipayPaySucceed != null)
+                        {
+                            DelegateBuyStoneAlipayPaySucceed();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -705,6 +711,7 @@ namespace SuperMinersWPF.ViewModels
         //public event Action StoneOrderLockTimeOut;
         public event Action<bool> ReleaseLockOrderCompleted;
         public event Action<bool> SetStoneOrderExceptionFinished;
+        public event Action DelegateBuyStoneAlipayPaySucceed;
 
         public event Action BuyGoldCoinAlipayPaySucceed;
         public event Action BuyMineAlipayPaySucceed;

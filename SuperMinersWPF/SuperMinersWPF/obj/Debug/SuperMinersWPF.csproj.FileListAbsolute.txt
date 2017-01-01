@@ -232,4 +232,17 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\Us
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\UserSettingControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StackMarketControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MallControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\RaidersoftheLostArkControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StackMarketControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\MallControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\RaidersoftheLostArkControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DelegateSellStoneWindows.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DelegateSellStoneWindows.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\DelegateBuyStoneHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\DelegateSellStoneHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\DelegateBuyStoneHistoryRecordControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\DelegateSellStoneHistoryRecordControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\RMBPayTypeComboBox.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\RMBPayTypeComboBox.g.cs

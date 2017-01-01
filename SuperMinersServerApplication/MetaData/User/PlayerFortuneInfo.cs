@@ -122,7 +122,7 @@ namespace MetaData.User
         public decimal FreezingStones { get; set; }
 
         /// <summary>
-        /// 库存钻石数
+        /// 库存钻石数(锁定钻石时，直接从该值减数，加到FreezingDiamonds中)
         /// </summary>
         [DataMember]
         public decimal StockOfDiamonds { get; set; }
