@@ -48,5 +48,7 @@ namespace SuperMinersServerApplication.Controller
         public static DeletedPlayerInfoDBProvider DeletedPlayerInfoDBProvider = new DeletedPlayerInfoDBProvider();
 
         public static StoneStackDBProvider StoneStackDBProvider = new StoneStackDBProvider();
+
+        public static GameRaiderofLostArkDBProvider GameRaiderofLostArkDBProvider = new GameRaiderofLostArkDBProvider();
     }
 }

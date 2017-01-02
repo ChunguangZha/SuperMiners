@@ -434,6 +434,43 @@ namespace MetaData.Game.StoneStack
             }
         }
 
+        public decimal ComputeTradePrice(decimal buyPrice, decimal sellPrice)
+        {
+            lock (_lock)
+            {
+                decimal tradePrice = buyPrice;
+
+                bool buyPriceLargethenSell2Price = false;
+                bool sellPriceSmallthenBuy2Price = false;
+                if (this.SellOrderPriceCountList.Count > 1)
+                {
+                    //买价大于卖2价，则按卖1价计成交价。
+                    if (buyPrice >= this.SellOrderPriceCountList[1].Price)
+                    {
+                        tradePrice = sellPrice;
+                        buyPriceLargethenSell2Price = true;
+                    }
+                }
+                if (this.BuyOrderPriceCountList.Count > 1)
+                {
+                    //卖价大于买2价，则按买1价计成交价。
+                    if (sellPrice <= this.BuyOrderPriceCountList[1].Price)
+                    {
+                        tradePrice = buyPrice;
+                        sellPriceSmallthenBuy2Price = true;
+                    }
+                }
+                if (buyPriceLargethenSell2Price && sellPriceSmallthenBuy2Price)
+                {
+                    //则取买2价为成交价。
+                    tradePrice = this.BuyOrderPriceCountList[1].Price;
+                }
+
+                this.DailyInfo.ClosePrice = tradePrice;
+                return tradePrice;
+            }
+        }
+
         public OperResultObject DecreaseBuyUnit(decimal price, int finishedStoneHandCount)
         {
             OperResultObject result = new OperResultObject();

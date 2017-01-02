@@ -666,6 +666,10 @@ namespace SuperMinersServerApplication.Controller
 
         public int CancelDelegateBuyStoneOrder(StoneDelegateBuyOrderInfo buyOrder, CustomerMySqlTransaction trans)
         {
+            if (buyOrder.PayType == PayType.Alipay && buyOrder.BuyState == StoneDelegateBuyState.NotPayed)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
             lock (_lockFortuneAction)
             {
                 decimal allNeedRMB = buyOrder.BuyUnit.TradeStoneHandCount * buyOrder.BuyUnit.Price;
@@ -679,7 +683,7 @@ namespace SuperMinersServerApplication.Controller
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                 }
-                else// if (buyOrder.PayType == PayType.RMB)
+                else if (buyOrder.PayType == PayType.RMB)
                 {
                     //否则（包括灵币支付和支付宝支付）都退回成灵币
                     var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
@@ -687,6 +691,18 @@ namespace SuperMinersServerApplication.Controller
                     fortuneInfo.FreezingRMB -= allNeedRMB;
                     DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                }
+                else if (buyOrder.PayType == PayType.Alipay)
+                {
+                    var alipayPayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(buyOrder.OrderNumber, "");
+                    if (alipayPayRecord != null && alipayPayRecord.value_rmb >= allNeedRMB)
+                    {
+                        //确实已充值，将其退回到灵币账户，没有冻结项。
+                        var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+                        fortuneInfo.RMB += allNeedRMB;
+                        DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, trans);
+                        BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
+                    }
                 }
             }
 

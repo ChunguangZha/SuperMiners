@@ -192,6 +192,11 @@ namespace MetaData
         public const int RESULTCODE_GAME_WINAWARDRECORD_NOT_EXIST = 700;
 
         /// <summary>
+        /// 娱乐——夺宝奇兵，每轮游戏已结束
+        /// </summary>
+        public const int RESULTCODE_GAME_RAIDER_ROUNDFINISHED = 701;
+
+        /// <summary>
         /// 股票市场， 撤单失败，开市期间无法撤单
         /// </summary>
         public const int RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING = 800;
@@ -210,6 +215,7 @@ namespace MetaData
         /// 股票市场，挂单价超出涨跌停范围
         /// </summary>
         public const int RESULTCODE_STACK_PRICE_OUTOFRANGE = 803;
+
 
 
         
@@ -258,6 +264,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_STACK_CANCELORDER_FAILED_TOTALHANDCOUNTERROR, "总手数不对");
             _resultCode_Msg.Add(RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED, "尚未开市");
             _resultCode_Msg.Add(RESULTCODE_STACK_PRICE_OUTOFRANGE, "挂单价不能超出涨跌停范围");
+            _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_ROUNDFINISHED, "本轮游戏已结束，请参加下一轮");
         }
 
         public static string GetMsg(int resultCode)

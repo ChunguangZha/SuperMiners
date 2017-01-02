@@ -308,7 +308,7 @@ namespace SuperMinersWPF.ViewModels
 
         void _timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            if (GlobalData.Client != null && GlobalData.Client.IsEnable)
+            if (GlobalData.Client != null && GlobalData.Client.IsEnable && GlobalData.IsLogined)
             {
                 GlobalData.Client.GetTodayStoneStackInfo(null);
             }

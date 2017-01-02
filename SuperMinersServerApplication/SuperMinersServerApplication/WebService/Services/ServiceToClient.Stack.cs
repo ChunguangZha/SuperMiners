@@ -70,7 +70,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         myTrans.Commit();
 
                         PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateSellStone, sellStoneHandsCount, "");
-                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托收购 " + sellStoneHandsCount + " 手矿石");
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托出售 " + sellStoneHandsCount + " 手矿石，Price：" + price);
                         return OperResult.RESULTCODE_TRUE;
                     }
                     catch (Exception exc)
@@ -126,6 +126,8 @@ namespace SuperMinersServerApplication.WebService.Services
                         playerRunner.CancelDelegateSellStoneOrder(canceledSellOrder, myTrans);
 
                         myTrans.Commit();
+
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "], 撤消矿石委托卖单。Order: " + canceledSellOrder.ToString());
                         return OperResult.RESULTCODE_TRUE;
                     }
                     catch (Exception exc)
@@ -284,7 +286,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         myTrans.Commit();
 
                         PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateBuyStone, buyStoneHandsCount, "");
-                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托出售 " + buyStoneHandsCount + " 手矿石");
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托买入 " + buyStoneHandsCount + " 手矿石，Price：" + price);
 
                         resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
                         resultObj.Message = buyOrder.AlipayLink;
@@ -330,10 +332,10 @@ namespace SuperMinersServerApplication.WebService.Services
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
+                    StoneDelegateBuyOrderInfo canceledBuyOrder = null;
                     CustomerMySqlTransaction myTrans = MyDBHelper.Instance.CreateTrans();
                     try
                     {
-                        StoneDelegateBuyOrderInfo canceledBuyOrder = null;
                         var resultObj = OrderController.Instance.StoneStackController.PlayerCancelBuyStone(buyOrder.OrderNumber, buyOrder.BuyUnit.Price, myTrans, out canceledBuyOrder);
                         if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
                         {
@@ -346,12 +348,16 @@ namespace SuperMinersServerApplication.WebService.Services
                         playerRunner.CancelDelegateBuyStoneOrder(canceledBuyOrder, myTrans);
 
                         myTrans.Commit();
+
+                        LogHelper.Instance.AddInfoLog("玩家["+userName+"], 撤消矿石委托买单。Order: " + canceledBuyOrder.ToString());
                         return OperResult.RESULTCODE_TRUE;
                     }
                     catch (Exception exc)
                     {
                         myTrans.Rollback();
-                        LogHelper.Instance.AddErrorLog("ServiceToClient.CancelDelegateBuyStone Exception userName: " + userName, exc);
+                        string errorMsg = "ServiceToClient.CancelDelegateBuyStone Exception userName: " 
+                            + userName + ((canceledBuyOrder==null)? "" : ", canceledBuyOrder : " + canceledBuyOrder.ToString());
+                        LogHelper.Instance.AddErrorLog(errorMsg, exc);
                         return OperResult.RESULTCODE_FALSE;
                     }
                     finally

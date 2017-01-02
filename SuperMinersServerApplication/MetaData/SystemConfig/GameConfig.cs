@@ -154,5 +154,11 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int HandStoneCount = 1000;
 
+        /// <summary>
+        /// 夺宝奇兵服务费
+        /// </summary>
+        [DataMember]
+        public float RaiderExpense = 0.1f;
+
     }
 }

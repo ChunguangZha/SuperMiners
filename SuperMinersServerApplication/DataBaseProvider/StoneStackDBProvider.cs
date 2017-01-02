@@ -511,9 +511,9 @@ namespace DataBaseProvider
                 mycmd = myTrans.CreateCommand();
 
                 string cmdTextA = "insert into notfinishedstonedelegatebuyorderinfo " +
-                    "(`OrderNumber`, `UserID`, `Price`, `TradeStoneHandCount`, `PayType`, `FinishedStoneTradeHandCount`, `BuyState`, `DelegateTime`, `IsSubOrder`, `ParentOrderNumber` ) " +
+                    "(`OrderNumber`, `UserID`, `Price`, `TradeStoneHandCount`, `PayType`, `FinishedStoneTradeHandCount`, `BuyState`, `DelegateTime`, `IsSubOrder`, `ParentOrderNumber`, `AlipayLink` ) " +
                     " values " +
-                    "(@OrderNumber, @UserID, @Price, @TradeStoneHandCount, @PayType, @FinishedStoneTradeHandCount, @BuyState, @DelegateTime, @IsSubOrder, @ParentOrderNumber ); ";
+                    "(@OrderNumber, @UserID, @Price, @TradeStoneHandCount, @PayType, @FinishedStoneTradeHandCount, @BuyState, @DelegateTime, @IsSubOrder, @ParentOrderNumber, @AlipayLink ); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", buyOrder.OrderNumber);
@@ -534,6 +534,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Parameters.AddWithValue("@ParentOrderNumber", buyOrder.ParentOrderNumber);
                 }
+                mycmd.Parameters.AddWithValue("@AlipayLink", buyOrder.AlipayLink == null ? DBNull.Value : (object)buyOrder.AlipayLink);
 
                 mycmd.ExecuteNonQuery();
                 return true;

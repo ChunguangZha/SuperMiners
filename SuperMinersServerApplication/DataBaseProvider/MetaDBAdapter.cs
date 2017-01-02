@@ -343,7 +343,10 @@ namespace DataBaseProvider
                 {
                     order.StonesOrder.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
                 }
-                order.StonesOrder.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
+                if (DBNull.Value != dt.Rows[i]["SellerExpValue"])
+                {
+                    order.StonesOrder.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
+                }
                 order.StonesOrder.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.StonesOrder.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.StonesOrder.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
