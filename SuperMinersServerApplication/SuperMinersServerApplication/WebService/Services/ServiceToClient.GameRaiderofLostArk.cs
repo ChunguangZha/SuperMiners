@@ -37,6 +37,26 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public RaiderRoundMetaDataInfo[] GetHistoryRaiderRoundRecords(string token, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.GameRaiderofLostArkDBProvider.GetHistoryRaiderRoundRecords(pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetHistoryRaiderRoundRecords Exception", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public int JoinRaider(string token, int roundID, int betStoneCount)
         {
             if (RSAProvider.LoadRSA(token))
@@ -89,7 +109,9 @@ namespace SuperMinersServerApplication.WebService.Services
 
                     if (result == OperResult.RESULTCODE_TRUE)
                     {
-                        NotifyAllPlayerBetInfo(RaidersofLostArkController.Instance.CurrentRoundInfo);
+                        //NotifyAllPlayerBetInfo(RaidersofLostArkController.Instance.CurrentRoundInfo);
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 在第" + roundID + "期 夺宝奇兵，下注" + betStoneCount + "矿石");
+                        PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.GameRaiderJoinBet, roundID, betStoneCount.ToString());
                     }
                     return result;
                 }
@@ -107,26 +129,29 @@ namespace SuperMinersServerApplication.WebService.Services
 
         private void NotifyAllPlayerBetInfo(RaiderRoundMetaDataInfo roundInfo)
         {
-            var allClients = ClientManager.AllClients;
-            foreach (var client in allClients)
-            {
-                new Thread(new ParameterizedThreadStart(o =>
-                {
-                    this.PlayerJoinRaiderSucceed(o.ToString(), roundInfo);
-                })).Start(client.Token);
-            }
+            //var allClients = ClientManager.AllClients;
+            //foreach (var client in allClients)
+            //{
+            //    new Thread(new ParameterizedThreadStart(o =>
+            //    {
+            //        this.PlayerJoinRaiderSucceed(o.ToString(), roundInfo);
+            //    })).Start(client.Token);
+            //}
+
         }
 
         private void NotifyAllPlayerRaiderWinner(RaiderRoundMetaDataInfo roundInfo)
         {
-            var allClients = ClientManager.AllClients;
-            foreach (var client in allClients)
+            LogHelper.Instance.AddInfoLog("玩家[" + roundInfo.WinnerUserName + "] 赢得第" + roundInfo.ID + "期 夺宝奇兵，赢得" + roundInfo.WinStones + "矿石");
+
+            PlayerActionController.Instance.AddLog(roundInfo.WinnerUserName, MetaData.ActionLog.ActionType.GameRaiderWin, roundInfo.ID, roundInfo.WinStones.ToString());
+
+            var token = ClientManager.GetToken(roundInfo.WinnerUserName);
+            new Thread(new ParameterizedThreadStart(o =>
             {
-                new Thread(new ParameterizedThreadStart(o =>
-                {
-                    this.PlayerWinedRaiderNotify(o.ToString(), roundInfo);
-                })).Start(client.Token);
-            }
+                this.PlayerWinedRaiderNotify(o.ToString(), roundInfo);
+            })).Start(token);
+
         }
         
         public MetaData.Game.RaideroftheLostArk.PlayerBetInfo[] GetPlayerselfBetInfo(string token, int roundID, int pageItemCount, int pageIndex)

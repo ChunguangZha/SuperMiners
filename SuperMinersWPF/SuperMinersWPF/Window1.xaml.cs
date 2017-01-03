@@ -76,6 +76,8 @@ namespace SuperMinersWPF
 
             App.StackStoneVMObject.AsyncGetAllNotFinishedSellOrders();
             App.StackStoneVMObject.AsyncGetAllNotFinishedBuyOrders();
+            //App.GameRaiderofLostArkVMObject.AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
+            //App.GameRaiderofLostArkVMObject.AsyncGetCurrentRaiderRoundInfo();
 
             AddEventHandlers();
         }
@@ -122,6 +124,7 @@ namespace SuperMinersWPF
             try
             {
                 App.UserVMObject.StopListen();
+                App.StackStoneVMObject.StopListen();
                 GlobalData.Client.Logout();
                 RemoveEventHandlers();
                 LogHelper.Instance.AddErrorLog("客户端" + GlobalData.CurrentUser.UserName + "已退出.", null);

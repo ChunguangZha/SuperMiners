@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuperMinersWPF.Models
 {
@@ -33,6 +34,8 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("WinnerUserName");
                 NotifyPropertyChange("WinStones");
                 NotifyPropertyChange("EndTimeText");
+                NotifyPropertyChange("BetJoinButtonVisible");
+                NotifyPropertyChange("WinnerUserNameVisible");
             }
         }
 
@@ -106,7 +109,7 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                int seconds = 5;
+                int seconds = 0;
                 if (this._parentObject.CountDownTotalSecond != 0)
                 {
                     seconds = (int)this._parentObject.CountDownTotalSecond % 60;
@@ -157,5 +160,28 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        public Visibility BetJoinButtonVisible
+        {
+            get
+            {
+                if (this._parentObject.State != RaiderRoundState.Finished)
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Collapsed;
+            }
+        }
+
+        public Visibility WinnerUserNameVisible
+        {
+            get
+            {
+                if (this._parentObject.State == RaiderRoundState.Finished)
+                {
+                    return Visibility.Visible;
+                }
+                return Visibility.Collapsed;
+            }
+        }
     }
 }

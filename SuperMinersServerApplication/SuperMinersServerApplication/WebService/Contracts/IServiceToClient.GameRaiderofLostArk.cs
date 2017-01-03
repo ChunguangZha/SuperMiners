@@ -12,6 +12,15 @@ namespace SuperMinersServerApplication.WebService.Contracts
 {
     public partial interface IServiceToClient
     {
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetHistoryRaiderRoundRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        RaiderRoundMetaDataInfo[] GetHistoryRaiderRoundRecords(string token, int pageItemCount, int pageIndex);
+
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetCurrentRaiderRoundInfo",
             Method = "POST",

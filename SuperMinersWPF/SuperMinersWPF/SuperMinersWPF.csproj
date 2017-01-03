@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -375,6 +375,9 @@
     <Compile Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml.cs">
       <DependentUpon>DelegateSellStoneHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\GamePanelControl.xaml.cs">
+      <DependentUpon>GamePanelControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\GameRouletteControl.xaml.cs">
       <DependentUpon>GameRouletteControl.xaml</DependentUpon>
     </Compile>
@@ -568,6 +571,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GamePanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

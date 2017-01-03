@@ -853,7 +853,7 @@ namespace DataBaseProvider
                 item.RaiderRoundID = Convert.ToInt32(dt.Rows[i]["RaiderRoundID"]);
                 item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 item.BetStones = Convert.ToInt32(dt.Rows[i]["BetStones"]);
-                item.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["State"]));
+                item.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
 
                 items[i] = item;
             }

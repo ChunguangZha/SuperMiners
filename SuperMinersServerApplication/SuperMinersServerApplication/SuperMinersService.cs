@@ -83,6 +83,7 @@ namespace SuperMinersServerApplication
                 OrderController.Instance.Init();
                 NoticeController.Instance.Init();
                 RouletteAwardController.Instance.Init();
+                //RaidersofLostArkController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

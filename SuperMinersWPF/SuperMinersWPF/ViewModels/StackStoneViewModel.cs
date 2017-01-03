@@ -112,6 +112,11 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetFinishedDelegateBuyStoneOrdersCompleted += Client_GetFinishedDelegateBuyStoneOrdersCompleted;
         }
 
+        public void StopListen()
+        {
+            _timer.Close();
+        }
+
         void Client_OnDelegateStoneOrderTradeSucceed()
         {
             try

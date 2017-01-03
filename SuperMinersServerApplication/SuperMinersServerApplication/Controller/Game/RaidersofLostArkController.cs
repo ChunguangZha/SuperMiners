@@ -28,6 +28,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private RaidersofLostArkController()
         {
+            _timer = new Timer(OpenWinTimeMinutes * 60 * 1000);
             this._timer.Elapsed += FinishRound;
         }
 
@@ -39,7 +40,8 @@ namespace SuperMinersServerApplication.Controller.Game
         private object _lockRoundInfo = new object();
         private RaiderRoundMetaDataInfo _currentRoundInfo;
 
-        private Timer _timer = new Timer(5 * 60 * 1000);
+        private int OpenWinTimeMinutes = 1;
+        private Timer _timer = null;
 
         private Random _ran = new Random();
 
@@ -58,7 +60,8 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 if (this._currentRoundInfo.State == MetaData.Game.RaideroftheLostArk.RaiderRoundState.Started)
                 {
-                    this._currentRoundInfo.CountDownTotalSecond = (int)(DateTime.Now - this._currentRoundInfo.StartTime.ToDateTime()).TotalSeconds;
+
+                    this._currentRoundInfo.CountDownTotalSecond = (int)(this._currentRoundInfo.StartTime.ToDateTime().AddMinutes(OpenWinTimeMinutes) - DateTime.Now).TotalSeconds;
                 }
                 return this._currentRoundInfo;
             }

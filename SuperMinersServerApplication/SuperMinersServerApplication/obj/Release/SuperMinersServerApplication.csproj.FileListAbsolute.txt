@@ -55,6 +55,10 @@ F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.TrustInfo.xml
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.exe.manifest
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.application
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.dll
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.pdb
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\SuperMinersServerApplication.exe.config
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\SuperMinersServerApplication.exe.manifest
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\SuperMinersServerApplication.application
@@ -62,15 +66,19 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\SuperMinersServerApplication.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\DataBaseProvider.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\MetaData.dll
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.dll
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\DataBaseProvider.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\MetaData.pdb
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Utility\WinInputPassword.baml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.baml
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\EditAdminWindow.baml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\MainWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Utility\WinInputPassword.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\AddNoticeWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\EditAdminWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\App.g.cs
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\GeneratedInternalTypeHelper.g.cs
@@ -89,11 +97,3 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.application
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.exe
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\SuperMinersServerApplication.pdb
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.dll
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.pdb
-F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.dll
-F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.pdb
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
-F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs
-F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
-F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs

@@ -24,6 +24,11 @@ namespace SuperMinersServerApplication.WebService.Services
                 string userName = "";
                 try
                 {
+                    if (sellStoneHandsCount <= 0)
+                    {
+                        return OperResult.RESULTCODE_PARAM_INVALID;
+                    }
+
                     userName = ClientManager.GetClientUserName(token);
                     var playerRunner = PlayerController.Instance.GetRunnable(userName);
                     if (playerRunner == null)
@@ -222,6 +227,12 @@ namespace SuperMinersServerApplication.WebService.Services
                 string userName = "";
                 try
                 {
+                    if (buyStoneHandsCount <= 0)
+                    {
+                        resultObj.OperResultCode = OperResult.RESULTCODE_PARAM_INVALID;
+                        return resultObj;
+                    }
+
                     userName = ClientManager.GetClientUserName(token);
                     var playerRunner = PlayerController.Instance.GetRunnable(userName);
                     if (playerRunner == null)

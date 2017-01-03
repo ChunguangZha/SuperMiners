@@ -12,6 +12,50 @@ namespace DataBaseProvider
 {
     public class GameRaiderofLostArkDBProvider
     {
+        public RaiderRoundMetaDataInfo[] GetHistoryRaiderRoundRecords(int pageItemCount, int pageIndex)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                string sqlTextA = "SELECT * FROM superminers.raiderroundmetadatainfo where State = @State ";
+
+                string sqlOrderLimit = " order by id desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlOrderLimit;
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlAllText;
+                mycmd.Parameters.AddWithValue("@State", (int)RaiderRoundState.Finished);
+                myconn.Open();
+
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+
+                return MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public RaiderRoundMetaDataInfo GetLastRaiderRoundMetaDataInfo()
         {
             MySqlConnection myconn = null;
@@ -27,16 +71,16 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
-
                 adapter.Dispose();
 
-                if (roundInfos.Length == 1)
+                var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+
+                if (roundInfos == null || roundInfos.Length == 0)
                 {
-                    return roundInfos[0];
+                    return null;
                 }
 
-                return null;
+                return roundInfos[0];
             }
             finally
             {
@@ -107,16 +151,15 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
-
                 adapter.Dispose();
 
-                if (roundInfos.Length == 1)
+                var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+                if (roundInfos == null || roundInfos.Length == 0)
                 {
-                    return roundInfos[0];
+                    return null;
                 }
 
-                return null;
+                return roundInfos[0];
             }
             finally
             {

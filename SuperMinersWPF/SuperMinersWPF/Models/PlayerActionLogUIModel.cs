@@ -94,6 +94,12 @@ namespace SuperMinersWPF.Models
                     case ActionType.DelegateSellStoneSucceed:
                         message = string.Format("成功出售了 {0} 矿石", this._parentObject.OperNumber);
                         break;
+                    case ActionType.GameRaiderJoinBet:
+                        message = string.Format("第{0}期 夺宝奇兵 下注{1}矿石", this.ParentObject.OperNumber, this.ParentObject.Remark);
+                        break;
+                    case ActionType.GameRaiderWin:
+                        message = string.Format("赢得 第{0}期 夺宝奇兵 获取{1}矿石", this.ParentObject.OperNumber, this.ParentObject.Remark);
+                        break;
                     default:
                         message = this._parentObject.Remark;
                         break;

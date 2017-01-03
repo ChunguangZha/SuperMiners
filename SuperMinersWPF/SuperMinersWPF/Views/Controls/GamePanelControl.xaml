@@ -1,11 +1,10 @@
-﻿<UserControl x:Class="SuperMinersWPF.Views.FunnyUserControl"
+﻿<UserControl x:Class="SuperMinersWPF.Views.Controls.GamePanelControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:panelControl="clr-namespace:SuperMinersWPF.Views.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="700">
+             d:DesignHeight="600" d:DesignWidth="800">
     <Grid>
         <TabControl>
             <TabItem >
@@ -15,20 +14,19 @@
                     </Grid>
                 </TabItem.Header>
                 <Grid>
-                    <panelControl:GameRouletteControl x:Name="controlGameRoulette"/>
+                    
                 </Grid>
             </TabItem>
-            <TabItem Visibility="Collapsed">
+            <TabItem >
                 <TabItem.Header>
                     <Grid Width="100">
                         <TextBlock Text="夺宝奇兵" HorizontalAlignment="Center"/>
                     </Grid>
                 </TabItem.Header>
                 <Grid>
-                    <panelControl:RaidersoftheLostArkControl x:Name="controlGameRaideroftheLostArk"/>
+                    
                 </Grid>
             </TabItem>
         </TabControl>
-        <!--<TextBlock Text="该功能暂未开放，敬请期待" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
     </Grid>
 </UserControl>

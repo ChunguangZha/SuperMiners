@@ -114,6 +114,11 @@ namespace SuperMinersWPF.Views.Windows
         private void btnSell_Click(object sender, RoutedEventArgs e)
         {
             int handCount = (int)this.numSellStoneHandsCount.Value;
+            if (handCount <= 0)
+            {
+                MyMessageBox.ShowInfo("需填写出售矿石量（手）");
+                return;
+            }
             int sellStoneCount = (int)GetAllStonesCount();
 
             int expenseStonesCount = (int)GetExpense(sellStoneCount);
