@@ -434,7 +434,7 @@ namespace MetaData.Game.StoneStack
             }
         }
 
-        public decimal ComputeTradePrice(decimal buyPrice, decimal sellPrice)
+        public decimal ComputeTradePrice(decimal buyPrice, decimal sellPrice, int handCount)
         {
             lock (_lock)
             {
@@ -467,6 +467,19 @@ namespace MetaData.Game.StoneStack
                 }
 
                 this.DailyInfo.ClosePrice = tradePrice;
+                if (tradePrice < this.DailyInfo.MinTradeSucceedPrice)
+                {
+                    this.DailyInfo.MinTradeSucceedPrice = tradePrice;
+                }
+                if (tradePrice > this.DailyInfo.MaxTradeSucceedPrice)
+                {
+                    this.DailyInfo.MaxTradeSucceedPrice = tradePrice;
+                }
+
+                this.DailyInfo.TradeSucceedStoneHandSum += handCount;
+
+                //成交金额，还是按买价算，表示玩家实际支付金额。
+                this.DailyInfo.TradeSucceedRMBSum += (handCount * buyPrice);
                 return tradePrice;
             }
         }

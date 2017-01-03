@@ -288,12 +288,12 @@ namespace SuperMinersServerApplication.Controller.Stack
 
             try
             {
-                var dailyInfo = SumDailyInfo(this._todayTradeInfo.DailyInfo.Day.ToDateTime());
-                this._todayTradeInfo.DailyInfo.ClosePrice = dailyInfo.ClosePrice;
-                this._todayTradeInfo.DailyInfo.MaxTradeSucceedPrice = dailyInfo.MaxTradeSucceedPrice;
-                this._todayTradeInfo.DailyInfo.MinTradeSucceedPrice = dailyInfo.MinTradeSucceedPrice;
-                this._todayTradeInfo.DailyInfo.TradeSucceedRMBSum = dailyInfo.TradeSucceedRMBSum;
-                this._todayTradeInfo.DailyInfo.TradeSucceedStoneHandSum = dailyInfo.TradeSucceedStoneHandSum;
+                //var dailyInfo = SumDailyInfo(this._todayTradeInfo.DailyInfo.Day.ToDateTime());
+                //this._todayTradeInfo.DailyInfo.ClosePrice = dailyInfo.ClosePrice;
+                //this._todayTradeInfo.DailyInfo.MaxTradeSucceedPrice = dailyInfo.MaxTradeSucceedPrice;
+                //this._todayTradeInfo.DailyInfo.MinTradeSucceedPrice = dailyInfo.MinTradeSucceedPrice;
+                //this._todayTradeInfo.DailyInfo.TradeSucceedRMBSum = dailyInfo.TradeSucceedRMBSum;
+                //this._todayTradeInfo.DailyInfo.TradeSucceedStoneHandSum = dailyInfo.TradeSucceedStoneHandSum;
 
                 if (this._todayTradeInfo.DailyInfo.ClosePrice < this._todayTradeInfo.DailyInfo.MinTradeSucceedPrice || this._todayTradeInfo.DailyInfo.ClosePrice > this._todayTradeInfo.DailyInfo.MaxTradeSucceedPrice)
                 {
@@ -312,51 +312,51 @@ namespace SuperMinersServerApplication.Controller.Stack
             LoadDataFromDatabase();
         }
 
-        private StoneStackDailyRecordInfo SumDailyInfo(DateTime day)
-        {
-            StoneStackDailyRecordInfo dailyInfo = new StoneStackDailyRecordInfo();
-            dailyInfo.ClosePrice = this._todayTradeInfo.DailyInfo.OpenPrice;
+        //private StoneStackDailyRecordInfo SumDailyInfo(DateTime day)
+        //{
+        //    StoneStackDailyRecordInfo dailyInfo = new StoneStackDailyRecordInfo();
+        //    dailyInfo.ClosePrice = this._todayTradeInfo.DailyInfo.OpenPrice;
 
-            //以买价为成交价
-            StoneDelegateBuyOrderInfo[] allFinishedBuyOrder_OneDay = DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateBuyOrderInfoByPlayer("", new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 0, 0, 0)), new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 23, 59, 59)), 0, 0);
-            if (allFinishedBuyOrder_OneDay != null && allFinishedBuyOrder_OneDay.Length > 0)
-            {
-                if (allFinishedBuyOrder_OneDay.Length > 3)
-                {
-                    dailyInfo.TradeSucceedStoneHandSum = allFinishedBuyOrder_OneDay.Sum(o => o.FinishedStoneTradeHandCount);
-                    dailyInfo.TradeSucceedRMBSum = allFinishedBuyOrder_OneDay.Sum(o => o.BuyUnit.Price * o.FinishedStoneTradeHandCount);
+        //    //以买价为成交价
+        //    StoneDelegateBuyOrderInfo[] allFinishedBuyOrder_OneDay = DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateBuyOrderInfoByPlayer("", new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 0, 0, 0)), new MyDateTime(new DateTime(day.Year, day.Month, day.Day, 23, 59, 59)), 0, 0);
+        //    if (allFinishedBuyOrder_OneDay != null && allFinishedBuyOrder_OneDay.Length > 0)
+        //    {
+        //        if (allFinishedBuyOrder_OneDay.Length > 3)
+        //        {
+        //            dailyInfo.TradeSucceedStoneHandSum = allFinishedBuyOrder_OneDay.Sum(o => o.FinishedStoneTradeHandCount);
+        //            dailyInfo.TradeSucceedRMBSum = allFinishedBuyOrder_OneDay.Sum(o => o.BuyUnit.Price * o.FinishedStoneTradeHandCount);
 
-                    StoneDelegateBuyOrderInfo[] orders_TimeDescLimit20 = allFinishedBuyOrder_OneDay.OrderByDescending(o => o.DelegateTime).Take(20).ToArray();
+        //            StoneDelegateBuyOrderInfo[] orders_TimeDescLimit20 = allFinishedBuyOrder_OneDay.OrderByDescending(o => o.DelegateTime).Take(20).ToArray();
 
-                    decimal minPrice = decimal.MaxValue;
-                    decimal maxPrice = decimal.MinValue;
-                    decimal sumPrice = 0;
+        //            decimal minPrice = decimal.MaxValue;
+        //            decimal maxPrice = decimal.MinValue;
+        //            decimal sumPrice = 0;
 
-                    for (int i = 0; i < orders_TimeDescLimit20.Length; i++)
-                    {
-                        decimal price = orders_TimeDescLimit20[i].BuyUnit.Price;
-                        sumPrice += price;
-                        if (price < minPrice)
-                        {
-                            minPrice = price;
-                        }
-                        if (price > maxPrice)
-                        {
-                            maxPrice = price;
-                        }
-                    }
+        //            for (int i = 0; i < orders_TimeDescLimit20.Length; i++)
+        //            {
+        //                decimal price = orders_TimeDescLimit20[i].BuyUnit.Price;
+        //                sumPrice += price;
+        //                if (price < minPrice)
+        //                {
+        //                    minPrice = price;
+        //                }
+        //                if (price > maxPrice)
+        //                {
+        //                    maxPrice = price;
+        //                }
+        //            }
 
-                    dailyInfo.MinTradeSucceedPrice = minPrice;
-                    dailyInfo.MaxTradeSucceedPrice = maxPrice;
-                    sumPrice = sumPrice - minPrice - maxPrice;
+        //            dailyInfo.MinTradeSucceedPrice = minPrice;
+        //            dailyInfo.MaxTradeSucceedPrice = maxPrice;
+        //            sumPrice = sumPrice - minPrice - maxPrice;
 
-                    dailyInfo.ClosePrice = sumPrice / (orders_TimeDescLimit20.Length - 2);
-                }
-            }
+        //            dailyInfo.ClosePrice = sumPrice / (orders_TimeDescLimit20.Length - 2);
+        //        }
+        //    }
 
 
-            return dailyInfo;
-        }
+        //    return dailyInfo;
+        //}
 
         private void LoadDataFromDatabase()
         {
@@ -401,24 +401,24 @@ namespace SuperMinersServerApplication.Controller.Stack
         private void InitTodayDailyInfo()
         {
             var lastDailyInfo = DBProvider.StoneStackDBProvider.GetLastStoneStackDailyRecordInfo();
-            if (lastDailyInfo != null && lastDailyInfo.ClosePrice == 0)
-            {
-                try
-                {
-                    var sumLastDailyInfo = SumDailyInfo(lastDailyInfo.Day.ToDateTime());
-                    lastDailyInfo.TradeSucceedStoneHandSum = sumLastDailyInfo.TradeSucceedStoneHandSum;
-                    lastDailyInfo.TradeSucceedRMBSum = sumLastDailyInfo.TradeSucceedRMBSum;
-                    lastDailyInfo.MinTradeSucceedPrice = sumLastDailyInfo.MinTradeSucceedPrice;
-                    lastDailyInfo.MaxTradeSucceedPrice = sumLastDailyInfo.MaxTradeSucceedPrice;
-                    lastDailyInfo.ClosePrice = sumLastDailyInfo.ClosePrice;
+            //if (lastDailyInfo != null && lastDailyInfo.ClosePrice == 0)
+            //{
+            //    try
+            //    {
+            //        var sumLastDailyInfo = SumDailyInfo(lastDailyInfo.Day.ToDateTime());
+            //        lastDailyInfo.TradeSucceedStoneHandSum = sumLastDailyInfo.TradeSucceedStoneHandSum;
+            //        lastDailyInfo.TradeSucceedRMBSum = sumLastDailyInfo.TradeSucceedRMBSum;
+            //        lastDailyInfo.MinTradeSucceedPrice = sumLastDailyInfo.MinTradeSucceedPrice;
+            //        lastDailyInfo.MaxTradeSucceedPrice = sumLastDailyInfo.MaxTradeSucceedPrice;
+            //        lastDailyInfo.ClosePrice = sumLastDailyInfo.ClosePrice;
 
-                    DBProvider.StoneStackDBProvider.SaveStoneStackDailyRecordInfo(lastDailyInfo);
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("SaveStoneStackDailyRecordInfo Exception", exc);
-                }
-            }
+            //        DBProvider.StoneStackDBProvider.SaveStoneStackDailyRecordInfo(lastDailyInfo);
+            //    }
+            //    catch (Exception exc)
+            //    {
+            //        LogHelper.Instance.AddErrorLog("SaveStoneStackDailyRecordInfo Exception", exc);
+            //    }
+            //}
 
             decimal initPrice = 1 / GlobalConfig.GameConfig.Stones_RMB * 1000;
             this._todayTradeInfo.InitTodayDailyInfo(lastDailyInfo, initPrice);
@@ -839,14 +839,15 @@ namespace SuperMinersServerApplication.Controller.Stack
                     PlayerController.Instance.PayDelegateBuyStonesUpdateSellerInfo(item, myTrans);
                 }
 
-                decimal allNeedRMB = buyOrder.FinishedStoneTradeHandCount * buyOrder.BuyUnit.Price;
+                int selfSellHandCount = 0;
                 foreach (var item in listTradeSucceedSellOrders)
                 {
                     if (item.UserID == buyOrder.UserID)
                     {
-                        allNeedRMB -= (item.FinishedStoneTradeHandCount * item.SellUnit.Price);
+                        selfSellHandCount += item.FinishedStoneTradeHandCount;
                     }
                 }
+                decimal allNeedRMB = (buyOrder.FinishedStoneTradeHandCount - selfSellHandCount) * buyOrder.BuyUnit.Price;
                 buyOrder.AwardGoldCoin = (int)((allNeedRMB * GlobalConfig.GameConfig.StoneBuyerAwardGoldCoinMultiple) * GlobalConfig.GameConfig.RMB_GoldCoin);
                 DBProvider.StoneStackDBProvider.SaveFinishedStoneDelegateBuyOrderInfo(buyOrder);
                 PlayerController.Instance.PayDelegateBuyStonesUpdateBuyerInfo(buyOrder, myTrans);
@@ -854,7 +855,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                 myTrans.Commit();
 
                 //计算成交价
-                this._todayTradeInfo.ComputeTradePrice(buyOrder.BuyUnit.Price, listTradeSucceedSellOrders[0].SellUnit.Price);
+                this._todayTradeInfo.ComputeTradePrice(buyOrder.BuyUnit.Price, listTradeSucceedSellOrders[0].SellUnit.Price, buyOrder.FinishedStoneTradeHandCount);
                 foreach (var item in listTradeSucceedSellOrders)
                 {
                     AddLogNotifySeller(item);

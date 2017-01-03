@@ -95,3 +95,5 @@ F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\
 F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\bin\Release\WeiXinAccess.pdb
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.baml
+F:\GitHub\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\obj\Release\Views\DeleteAllStoneSellOrderWindow.g.cs

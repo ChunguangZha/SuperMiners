@@ -1110,5 +1110,37 @@ namespace SuperMinersServerApplication.Controller
                 }
             }
         }
+
+        public int JoinRaider(int betStoneCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfStones < betStoneCount)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfStones -= betStoneCount;
+                bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+            }
+        }
+
+        public int WinRaiderGetAward(int winStoneCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfStones < winStoneCount)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfStones += winStoneCount;
+                bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+            }
+        }
     }
 }

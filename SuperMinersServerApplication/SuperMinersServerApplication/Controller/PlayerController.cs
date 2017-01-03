@@ -1050,17 +1050,7 @@ namespace SuperMinersServerApplication.Controller
 
             return playerSellerRun.PayDelegateBuyStonesUpdateBuyerInfo(buyOrder, trans);
         }
-
-        ///// <summary>
-        ///// 0表示成功；RESULTCODE_USER_OFFLINE；-3表示异常；1表示本次出售的矿石数超出可出售的矿石数；2表示本次出售的矿石不足支付最低手续费；
-        ///// 如果事务提交失败，则调用RollbackUserFromDB恢复状态
-        ///// </summary>
-        ///// <param name="SellStonesCount"></param>
-        ///// <returns></returns>
-        //public int SellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
-        //{
-        //}
-
+        
         public int CancelSellStones(SellStonesOrder order, CustomerMySqlTransaction trans)
         {
             PlayerRunnable playerrun = this.GetRunnable(order.SellerUserName);
@@ -1135,11 +1125,6 @@ namespace SuperMinersServerApplication.Controller
             return resultObj;
         }
 
-        public int RejectPlayerWithdrawRMB(WithdrawRMBRecord record)
-        {
-            return 0;
-        }
-
         public int PayWithdrawRMB(WithdrawRMBRecord record)
         {
             PlayerRunnable playerrun = this.GetRunnable(record.PlayerUserName);
@@ -1178,6 +1163,28 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return result;
+        }
+
+        //public int JoinRaider(string userName, int betStoneCount)
+        //{
+        //    PlayerRunnable playerrun = this.GetRunnable(userName);
+        //    if (playerrun == null)
+        //    {
+        //        return OperResult.RESULTCODE_USER_NOT_EXIST;
+        //    }
+
+        //    return playerrun.JoinRaider(betStoneCount);
+        //}
+        
+        public int WinRaiderGetAward(string userName, int winStoneCount, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerrun.WinRaiderGetAward(winStoneCount, myTrans);
         }
 
         public void NotifyPlayerClient(PlayerInfo player)

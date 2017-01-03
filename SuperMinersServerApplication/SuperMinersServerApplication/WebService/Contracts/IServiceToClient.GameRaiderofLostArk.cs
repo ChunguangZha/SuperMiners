@@ -26,7 +26,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        OperResultObject JoinRaider(string token, string userName, int roundID, int betStoneCount);
+        int JoinRaider(string token, int roundID, int betStoneCount);
 
         /// <summary>
         /// roundID : -1表示全部

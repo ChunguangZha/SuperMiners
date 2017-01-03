@@ -43,6 +43,7 @@ namespace SuperMinersServerApplication.WebService.Services
             OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
             OrderController.Instance.StoneStackController.DelegateStoneOrderTradeSucceedNotifyPlayer += StoneStackController_DelegateStoneOrderTradeSucceedNotifyPlayer;
             OrderController.Instance.StoneStackController.DelegateBuyStoneOrderAlipayPaySucceedNotify += StoneStackController_DelegateBuyStoneOrderAlipayPaySucceedNotify;
+            RaidersofLostArkController.Instance.NotifyAllPlayerRaiderWinnerEvent += NotifyAllPlayerRaiderWinner;
             RouletteAwardController.Instance.RouletteWinRealAwardPaySucceedNotify += Instance_RouletteWinRealAwardPaySucceedNotify;
         }
 

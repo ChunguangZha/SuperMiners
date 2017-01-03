@@ -1,4 +1,5 @@
-﻿using MetaData;
+﻿using DataBaseProvider;
+using MetaData;
 using MetaData.Game.RaideroftheLostArk;
 using MetaData.User;
 using SuperMinersServerApplication.Utility;
@@ -8,13 +9,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Timers;
-//using System.Threading;
-//using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller.Game
 {
-    public class RaiderRoundLogicRunner
+    public class RaidersofLostArkController
     {
+        #region Single
+
+        private static RaidersofLostArkController _instance = new RaidersofLostArkController();
+
+        public static RaidersofLostArkController Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        private RaidersofLostArkController()
+        {
+            this._timer.Elapsed += FinishRound;
+        }
+
+        #endregion
+
+       
         private object _lockJoin = new object();
 
         private object _lockRoundInfo = new object();
@@ -33,52 +52,58 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
+        public RaiderRoundMetaDataInfo CurrentRoundInfo
+        {
+            get
+            {
+                if (this._currentRoundInfo.State == MetaData.Game.RaideroftheLostArk.RaiderRoundState.Started)
+                {
+                    this._currentRoundInfo.CountDownTotalSecond = (int)(DateTime.Now - this._currentRoundInfo.StartTime.ToDateTime()).TotalSeconds;
+                }
+                return this._currentRoundInfo;
+            }
+        }
+
         private List<PlayerBetInfo> listPlayerBetInfos = new List<PlayerBetInfo>();
 
-        private RaiderRoundLogicRunner(RaiderRoundMetaDataInfo parent)
+        public void Init()
         {
-            this._currentRoundInfo = parent;
-            this._timer.Elapsed += FinishRound;
+            ResetRoundInfo();
         }
 
-        public static RaiderRoundLogicRunner Init()
-        {
-            RaiderRoundMetaDataInfo currentRoundInfo = ResetRoundInfo();
-            return new RaiderRoundLogicRunner(currentRoundInfo);
-        }
-
-        public static RaiderRoundLogicRunner CreateNewRound()
+        public void CreateNewRound()
         {
             RaiderRoundMetaDataInfo lastRoundInfo = new RaiderRoundMetaDataInfo();
-            DBProvider.GameRaiderofLostArkDBProvider.SaveRaiderRoundMetaDataInfo(lastRoundInfo);
-            lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.GetLastRaiderRoundMetaDataInfo();
+            lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.AddNewRaiderRoundMetaDataInfo(lastRoundInfo);
 
-            return new RaiderRoundLogicRunner(lastRoundInfo);
+            this._currentRoundInfo = lastRoundInfo;
+            this.listPlayerBetInfos.Clear();
         }
 
-        private static RaiderRoundMetaDataInfo ResetRoundInfo()
+        private void ResetRoundInfo()
         {
             RaiderRoundMetaDataInfo lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.GetLastRaiderRoundMetaDataInfo();
             if (lastRoundInfo == null || lastRoundInfo.State == RaiderRoundState.Finished)
             {
                 lastRoundInfo = new RaiderRoundMetaDataInfo();
-                DBProvider.GameRaiderofLostArkDBProvider.SaveRaiderRoundMetaDataInfo(lastRoundInfo);
-                lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.GetLastRaiderRoundMetaDataInfo();
+                lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.AddNewRaiderRoundMetaDataInfo(lastRoundInfo);
             }
 
-            return lastRoundInfo;
+            this._currentRoundInfo = lastRoundInfo;
+            this.listPlayerBetInfos.Clear();
         }
 
-        public OperResultObject Join(PlayerInfo player, int stonesCount)
+        public int Join(int userID, string userName, int roundID, int stonesCount)
         {
-            OperResultObject resultObj = new OperResultObject();
-
             lock (_lockJoin)
             {
+                if (roundID != this._currentRoundInfo.ID)
+                {
+                    return OperResult.RESULTCODE_FALSE;
+                }
                 if (this._currentRoundInfo.State == RaiderRoundState.Finished)
                 {
-                    resultObj.OperResultCode = OperResult.RESULTCODE_GAME_RAIDER_ROUNDFINISHED;
-                    return resultObj;
+                    return OperResult.RESULTCODE_GAME_RAIDER_ROUNDFINISHED;
                 }
 
                 if (this._currentRoundInfo.State == RaiderRoundState.Waiting)
@@ -89,7 +114,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             var betInfo = new PlayerBetInfo()
             {
-                UserID = player.SimpleInfo.UserID,
+                UserName = userName,
                 RaiderRoundID = _currentRoundInfo.ID,
                 BetStones = stonesCount,
                 Time = MyDateTime.FromDateTime(DateTime.Now)
@@ -101,8 +126,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             this._currentRoundInfo.AwardPoolSumStones += stonesCount;
 
-            resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
-            return resultObj;
+            return OperResult.RESULTCODE_TRUE;
         }
 
         private void StartRound()
@@ -128,7 +152,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
 
                     PlayerBetInfo winnerBetInfo = FindWinner();
-                    var winnerPersonAllBetCount = this.listPlayerBetInfos.Where(b => b.UserID == winnerBetInfo.UserID).Sum(b => b.BetStones);
+                    var winnerPersonAllBetCount = this.listPlayerBetInfos.Where(b => b.UserName == winnerBetInfo.UserName).Sum(b => b.BetStones);
                     int expense = (int)Math.Ceiling(this._currentRoundInfo.AwardPoolSumStones * GlobalConfig.GameConfig.RaiderExpense);
                     int winnerGainBetCount = this._currentRoundInfo.AwardPoolSumStones - expense;
                     if (winnerGainBetCount < winnerPersonAllBetCount)
@@ -137,16 +161,47 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
 
                     this._currentRoundInfo.EndTime = new MyDateTime(DateTime.Now);
-                    this._currentRoundInfo.WinnerUserID = winnerBetInfo.UserID;
+                    this._currentRoundInfo.WinnerUserName = winnerBetInfo.UserName;
                     this._currentRoundInfo.WinStones = winnerGainBetCount;
 
-                    DBProvider.GameRaiderofLostArkDBProvider.SaveRaiderRoundMetaDataInfo(this._currentRoundInfo);
+                    bool isOK = false;
+                    CustomerMySqlTransaction myTrans = null;
+                    try
+                    {
+                        myTrans = MyDBHelper.Instance.CreateTrans();
+                        DBProvider.GameRaiderofLostArkDBProvider.UpdateRaiderRoundMetaDataInfo(this._currentRoundInfo, myTrans);
+                        PlayerController.Instance.WinRaiderGetAward(winnerBetInfo.UserName, winnerGainBetCount, myTrans);
 
+                        myTrans.Commit();
+                        isOK = true;
+                    }
+                    catch (Exception exc)
+                    {
+                        myTrans.Rollback();
+                        isOK = false;
+                        LogHelper.Instance.AddErrorLog("RaiderofLostArk Finish Round SaveTo DB Exception. Round Info: " + this._currentRoundInfo.ToString(), exc);
+                    }
+                    finally
+                    {
+                        if (myTrans != null)
+                        {
+                            myTrans.Dispose();
+                        }
+                    }
+
+                    if (isOK)
+                    {
+                        if (NotifyAllPlayerRaiderWinnerEvent != null)
+                        {
+                            NotifyAllPlayerRaiderWinnerEvent(this._currentRoundInfo);
+                        }
+                        CreateNewRound();
+                    }
                 }
             }
             catch (Exception exc)
             {
-
+                LogHelper.Instance.AddErrorLog("RaiderofLostArk Finish Round Exception. Round Info: " + this._currentRoundInfo.ToString(), exc);
             }
         }
 
@@ -180,76 +235,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             return winnerBetInfo;
         }
-    }
 
-    public class RaidersofLostArkController
-    {
-        private object _lockCurrentRoundInfo = new object();
-        private RaiderRoundMetaDataInfo _currentRoundInfo = null;
-
-        private RaiderRoundLogicRunner _currentRoundRunner;
-
-        private List<PlayerBetInfo> _listCurrentRoundPlayerBetInfos = new List<PlayerBetInfo>();
-
-        private ConcurrentQueue<RaiderRoundLogicRunner> _queueRunner = new ConcurrentQueue<RaiderRoundLogicRunner>();
-
-        //private Thread _thrRound = null;
-
-        private object _lockJoin = new object();
-
-        public RaiderRoundState RaiderRoundState
-        {
-            get
-            {
-                if (_currentRoundInfo == null)
-                {
-                    return MetaData.Game.RaideroftheLostArk.RaiderRoundState.Waiting;
-                }
-                return this._currentRoundInfo.State;
-            }
-        }
-        
-        public void Init()
-        {
-            //服务器停掉时，不好处理
-        }
-
-        public OperResultObject Join(MetaData.User.PlayerInfo player, int stones)
-        {
-            OperResultObject resultObj = new OperResultObject();
-
-            //lock (_lockJoin)
-            //{
-            //    if (this.RaiderRoundInfo.State == RaiderRoundState.Finished)
-            //    {
-            //        resultObj.OperResultCode = OperResult.RESULTCODE_GAME_RAIDER_ROUNDFINISHED;
-            //        return resultObj;
-            //    }
-
-            //    if (this.RaiderRoundInfo.State == RaiderRoundState.Waiting)
-            //    {
-            //        StartRound();
-            //    }
-
-            //}
-
-            //var betInfo = new PlayerBetInfo()
-            //{
-            //    UserID = player.SimpleInfo.UserID,
-            //    RaiderRoundID = RaiderRoundInfo.ID,
-            //    BetStones = stones,
-            //    Time = MyDateTime.FromDateTime(DateTime.Now)
-            //};
-
-            ////如果保存数据库不成功，将异常抛到外层
-            //DBProvider.GameRaiderofLostArkDBProvider.SavePlayerBetInfo(betInfo);
-            //_listCurrentRoundPlayerBetInfos.Add(betInfo);
-
-            //this.RaiderRoundInfo.AwardPoolSumStones += stones;
-
-            resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
-            return resultObj;
-        }
-
+        public event Action<RaiderRoundMetaDataInfo> NotifyAllPlayerRaiderWinnerEvent;
     }
 }

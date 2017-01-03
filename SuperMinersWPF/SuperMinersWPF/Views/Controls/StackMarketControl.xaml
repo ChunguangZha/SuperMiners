@@ -83,65 +83,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
-        <!--<TabControl Grid.Column="1" Margin="10" Height="300" VerticalAlignment="Top">
-            <TabItem Header="5档">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                        <RowDefinition Height="20"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Text="卖5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Name="txtSell5Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2" Name="txtSell5Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="1" Text="卖4" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Name="txtSell4Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="1" Grid.Column="2" Name="txtSell4Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="2" Text="卖3" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Name="txtSell3Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="2" Grid.Column="2" Name="txtSell3Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="3" Text="卖2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Name="txtSell2Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="3" Grid.Column="2" Name="txtSell2Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="4" Text="卖1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Name="txtSell1Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Red"/>
-                    <TextBlock Grid.Row="4" Grid.Column="2" Name="txtSell1Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="5" Text="买1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Name="txtBuy1Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="5" Grid.Column="2" Name="txtBuy1Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="6" Text="买2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" Name="txtBuy2Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="6" Grid.Column="2" Name="txtBuy2Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="7" Text="买3" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" Name="txtBuy3Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="7" Grid.Column="2" Name="txtBuy3Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="8" Text="买4" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="8" Grid.Column="1" Name="txtBuy4Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="8" Grid.Column="2" Name="txtBuy4Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                    <TextBlock Grid.Row="9" Text="买5" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="9" Grid.Column="1" Name="txtBuy5Price" Text="22.11" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Blue"/>
-                    <TextBlock Grid.Row="9" Grid.Column="2" Name="txtBuy5Count" Text="1" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Green"/>
-                </Grid>
-            </TabItem>
-            <TabItem Header="明细" Visibility="Collapsed">
-                <Grid>
-
-                </Grid>
-            </TabItem>
-        </TabControl>-->
         <Grid Grid.Row="1" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>

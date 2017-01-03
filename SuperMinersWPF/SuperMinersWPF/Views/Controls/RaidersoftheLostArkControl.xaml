@@ -5,6 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="900">
+    <Control.Resources>
+        <Style TargetType="Border">
+            <Setter Property="BorderBrush" Value="{StaticResource LogoPanelBackground}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+        </Style>
+    </Control.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="261*"/>
@@ -30,6 +36,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="47*"/>
                 <RowDefinition Height="74*"/>
+                <RowDefinition Height="74*"/>
                 <RowDefinition Height="228*"/>
             </Grid.RowDefinitions>            
             <TextBlock Text="第200期" FontSize="26" VerticalAlignment="Center" Margin="10"/>
@@ -47,44 +54,16 @@
                 <Button Name="btnAdd" Content="+" Margin="5,10,20,10" Width="20" VerticalAlignment="Center"/>
                 <Button Name="btnJoin" Content="下注" Width="150" Height="40" FontSize="24" VerticalAlignment="Center"/>
             </StackPanel>
-            <ListView Grid.Row="4" Margin="10" HorizontalContentAlignment="Stretch">
-                <ListViewItem>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Tony"/>
-                        <TextBlock Grid.Column="1" Text="下注300矿石"/>
-                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Tony"/>
-                        <TextBlock Grid.Column="1" Text="下注300矿石"/>
-                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
-                    </Grid>
-                </ListViewItem>
-                <ListViewItem>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="小开心"/>
-                        <TextBlock Grid.Column="1" Text="下注8000矿石"/>
-                        <TextBlock Grid.Column="2" Text="2016-12-24 12:23:56"/>
-                    </Grid>
-                </ListViewItem>
-            </ListView>
+            <Border Grid.Row="4" Grid.RowSpan="2" Margin="10">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="玩法说明" Margin="10" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Text="玩法说明" Margin="10" TextWrapping="Wrap"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>
