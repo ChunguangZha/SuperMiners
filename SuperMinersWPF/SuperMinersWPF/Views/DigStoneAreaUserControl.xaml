@@ -21,9 +21,9 @@
                     <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/player.png"/>
                     <TextBlock Margin="5,0" VerticalAlignment="Center" Foreground="White">
                                 <Run Text="共"/>
-                                <Run Text="{Binding SystemAllPlayerCount}"/>
+                                <Run Text="{Binding AllSystemState.AllPlayerCount, Mode=OneWay}"/>
                                 <Run Text="矿主"/>
-                                <Run Text="{Binding SystemAllMinerCount}"/>
+                                <Run Text="{Binding AllSystemState.AllMinersCount, Mode=OneWay}"/>
                                 <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
                     </TextBlock>
                 </StackPanel>
@@ -31,8 +31,15 @@
                     <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
                                 <Run Text="共生产： "/>
-                                <Run Text="{Binding SystemAllOutputStoneCount, StringFormat='F0'}"/>
+                                <Run Text="{Binding AllSystemState.AllProducedStonesCount, StringFormat='F0', Mode=OneWay}"/>
                                 <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
+                    <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
+                                <Run Text="距离总矿池溢出剩余： "/>
+                                <Run Text="{Binding AllSystemState.SurplusBuyableStoneCount, Mode=OneWay}"/>
                     </TextBlock>
                 </StackPanel>
             </StackPanel>

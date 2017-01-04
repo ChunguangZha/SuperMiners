@@ -141,7 +141,10 @@ namespace SuperMinersWPF.Models
                 {
                     return "";
                 }
-                return this._parentObject.WinnerUserName;
+
+                string userName = this._parentObject.WinnerUserName;
+                return userName.Substring(0, 1) + "***" + userName.Substring(userName.Length - 1, 1);
+                
             }
         }
 

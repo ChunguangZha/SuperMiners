@@ -103,9 +103,9 @@ namespace SuperMinersServerApplication.Controller
                 if (actions.Length > 0)
                 {
                     PlayerActionLog lastLog = actions[actions.Length - 1];
-                    lastLog.SystemAllPlayerCount = DBProvider.UserDBProvider.GetAllPlayerCount();
-                    lastLog.SystemAllMinerCount = (int)DBProvider.UserDBProvider.GetAllMinersCount();
-                    lastLog.SystemAllOutputStoneCount = DBProvider.UserDBProvider.GetAllOutputStonesCount();
+                    //lastLog.SystemAllPlayerCount = DBProvider.UserDBProvider.GetAllPlayerCount();
+                    //lastLog.SystemAllMinerCount = (int)DBProvider.UserDBProvider.GetAllMinersCount();
+                    //lastLog.SystemAllOutputStoneCount = DBProvider.UserDBProvider.GetAllOutputStonesCount();
                 }
 
                 return actions;

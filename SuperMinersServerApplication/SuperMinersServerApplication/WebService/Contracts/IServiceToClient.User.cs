@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.ActionLog;
 using MetaData.AgentUser;
 using MetaData.Trade;
 using MetaData.User;
@@ -84,5 +85,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         AgentUserInfo GetAgentUserInfo(string token, string userName);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetAllXunLingMineFortuneState",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        XunLingMineStateInfo GetAllXunLingMineFortuneState(string token);
     }
 }

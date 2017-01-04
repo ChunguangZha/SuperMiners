@@ -12,6 +12,54 @@ namespace DataBaseProvider
 {
     public class GameRaiderofLostArkDBProvider
     {
+        public PlayerRaiderRoundHistoryRecordInfo[] GetPlayerRaiderRoundHistoryRecordInfo(string userName, int pageItemCount, int pageIndex)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+
+                string sqlOrderLimit = " order by b.RaiderRoundID desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlTextA = "select ttt.*, r.* from " +
+                                    " (SELECT b.RaiderRoundID, b.UserName, sum(b.BetStones) as AllBetStones " + 
+                                    " FROM superminers.raiderplayerbetinfo b " +  
+                                    " where b.UserName = @UserName " +
+                                    " group by b.UserName  "+ sqlOrderLimit + " ) ttt " +
+                                    "  left join  superminers.raiderroundmetadatainfo r  on ttt.RaiderRoundID = r.id ";
+
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlTextA;
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+                myconn.Open();
+
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+
+                return MetaDBAdapter<PlayerRaiderRoundHistoryRecordInfo>.GetPlayerRaiderRoundHistoryRecordInfoFromDataTable(table);
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public RaiderRoundMetaDataInfo[] GetHistoryRaiderRoundRecords(int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = null;

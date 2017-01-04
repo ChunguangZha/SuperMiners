@@ -17,6 +17,28 @@ namespace SuperMinersServerApplication.WebService.Services
 {
     public partial class ServiceToClient : IServiceToClient
     {
+        public PlayerRaiderRoundHistoryRecordInfo[] GetPlayerRaiderRoundHistoryRecordInfo(string token, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return DBProvider.GameRaiderofLostArkDBProvider.GetPlayerRaiderRoundHistoryRecordInfo(userName, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetCurrentRaiderRoundInfo Exception UserName: " + userName, exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public MetaData.Game.RaideroftheLostArk.RaiderRoundMetaDataInfo GetCurrentRaiderRoundInfo(string token)
         {
             if (RSAProvider.LoadRSA(token))

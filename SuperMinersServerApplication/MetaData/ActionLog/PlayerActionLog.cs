@@ -49,15 +49,6 @@ namespace MetaData.ActionLog
             }
         }
 
-        [DataMember]
-        public int SystemAllPlayerCount;
-
-        [DataMember]
-        public int SystemAllMinerCount;
-
-        [DataMember]
-        public decimal SystemAllOutputStoneCount;
-
     }
 
     public enum ActionType

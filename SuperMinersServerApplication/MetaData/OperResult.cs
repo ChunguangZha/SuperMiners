@@ -135,6 +135,11 @@ namespace MetaData
         public const int RESULTCODE_GATHERSTONE_NOSTONES = 506;
 
         /// <summary>
+        /// 购买矿山时，矿山已满，无法购买。
+        /// </summary>
+        public const int RESULTCODE_BUYMINE_MINEISFULL = 507;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -271,6 +276,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_STACK_PRICE_OUTOFRANGE, "挂单价不能超出涨跌停范围");
             _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_ROUNDFINISHED, "本轮游戏已结束，请参加下一轮");
             _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART, "正在等待第二位玩家加入才能开始");
+            _resultCode_Msg.Add(RESULTCODE_BUYMINE_MINEISFULL, "已无矿脉储量，无法继续勘探");
         }
 
         public static string GetMsg(int resultCode)

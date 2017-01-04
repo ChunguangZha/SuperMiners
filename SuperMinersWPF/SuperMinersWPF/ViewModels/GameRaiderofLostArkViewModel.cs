@@ -39,6 +39,14 @@ namespace SuperMinersWPF.ViewModels
             get { return _listHistoryRaiderRoundRecords; }
         }
 
+        private ObservableCollection<PlayerRaiderRoundHistoryRecordInfoUIModel> _listPlayerHistoryBetRecords = new ObservableCollection<PlayerRaiderRoundHistoryRecordInfoUIModel>();
+
+        public ObservableCollection<PlayerRaiderRoundHistoryRecordInfoUIModel> ListPlayerHistoryBetRecords
+        {
+            get { return _listPlayerHistoryBetRecords; }
+        }
+
+
 
         public void AsyncGetCurrentRaiderRoundInfo()
         {
@@ -63,8 +71,14 @@ namespace SuperMinersWPF.ViewModels
             {
                 return;
             }
-            App.BusyToken.ShowBusyWindow("正在加载数据...");
+            //App.BusyToken.ShowBusyWindow("正在加载数据...");
             GlobalData.Client.GetPlayerselfBetInfo(this.CurrentRaiderRound.ID, -1, -1, null);
+        }
+
+        public void AsyncGetPlayerHistoryBetRecords(int pageItemCount, int pageIndex)
+        {
+            App.BusyToken.ShowBusyWindow("正在加载数据...");
+            GlobalData.Client.GetPlayerRaiderRoundHistoryRecordInfo(pageItemCount, pageIndex, pageIndex);
         }
 
         private bool isStartedListen = false;
@@ -79,7 +93,11 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 Thread.Sleep(1000);
-                AsyncGetCurrentRaiderRoundInfo();
+
+                if (GlobalData.IsLogined)
+                {
+                    AsyncGetCurrentRaiderRoundInfo();
+                }
             }
         }
 
@@ -99,6 +117,7 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.OnPlayerWinedRaiderNotify += Client_OnPlayerWinedRaiderNotify;
             GlobalData.Client.GetHistoryRaiderRoundRecordsCompleted += Client_GetHistoryRaiderRoundRecordsCompleted;
             GlobalData.Client.GetPlayerselfBetInfoCompleted += Client_GetPlayerselfBetInfoCompleted;
+            GlobalData.Client.GetPlayerRaiderRoundHistoryRecordInfoCompleted += Client_GetPlayerRaiderRoundHistoryRecordInfoCompleted;
 
             isStartedListen = true;
             this._thrRefreshCurrentRound = new Thread(RefreshCurrentRound);
@@ -107,11 +126,34 @@ namespace SuperMinersWPF.ViewModels
             this._thrRefreshCurrentRound.Start();
         }
 
-        void Client_GetPlayerselfBetInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.PlayerBetInfo[]> e)
+        void Client_GetPlayerRaiderRoundHistoryRecordInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.PlayerRaiderRoundHistoryRecordInfo[]> e)
         {
             try
             {
                 App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("Client_GetPlayerRaiderRoundHistoryRecordInfoCompleted Server Return Exception", e.Error);
+                    return;
+                }
+
+                this.ListPlayerHistoryBetRecords.Clear();
+                foreach (var item in e.Result)
+                {
+                    this.ListPlayerHistoryBetRecords.Add(new PlayerRaiderRoundHistoryRecordInfoUIModel(item));
+                }
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Client_GetPlayerRaiderRoundHistoryRecordInfoCompleted Exception", exc);
+            }
+        }
+
+        void Client_GetPlayerselfBetInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.PlayerBetInfo[]> e)
+        {
+            try
+            {
+                //App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
                     LogHelper.Instance.AddErrorLog("Client_GetPlayerselfBetInfoCompleted Server Return Exception", e.Error);

@@ -40,7 +40,7 @@ namespace SuperMinersServerApplication.Controller.Game
         private object _lockRoundInfo = new object();
         private RaiderRoundMetaDataInfo _currentRoundInfo;
 
-        private int OpenWinTimeMinutes = 1;
+        private int OpenWinTimeMinutes = 5;
         private Timer _timer = null;
 
         private Random _ran = new Random();

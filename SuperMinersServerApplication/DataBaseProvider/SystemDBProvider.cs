@@ -42,8 +42,8 @@ namespace DataBaseProvider
                     config.TempStoneOutputValidHour = Convert.ToInt32(dt.Rows[0]["TempStoneOutputValidHour"]);
                     config.MineReservesIsRandom = Convert.ToBoolean(dt.Rows[0]["MineReservesIsRandom"]);
                     config.StonesReservesPerMines = Convert.ToDecimal(dt.Rows[0]["StonesReservesPerMines"]);
-                    config.MinStonesReservesPerMine = Convert.ToDecimal(dt.Rows[0]["MinStonesReservesPerMine"]);
-                    config.MaxStonesReservesPerMine = Convert.ToDecimal(dt.Rows[0]["MaxStonesReservesPerMine"]);
+                    //config.MinStonesReservesPerMine_VIPPlayer = Convert.ToInt32(dt.Rows[0]["MinStonesReservesPerMine"]);
+                    //config.MaxStonesReservesPerMine_VIPPlayer = Convert.ToInt32(dt.Rows[0]["MaxStonesReservesPerMine"]);
                     config.ExchangeExpensePercent = Convert.ToDecimal(dt.Rows[0]["ExchangeExpensePercent"]);
                     config.ExchangeExpenseMinNumber = Convert.ToDecimal(dt.Rows[0]["ExchangeExpenseMinNumber"]);
                     config.UserMaxHaveMinersCount = Convert.ToInt32(dt.Rows[0]["UserMaxHaveMinersCount"]);
@@ -87,8 +87,8 @@ namespace DataBaseProvider
             mycmd.Parameters.AddWithValue("@TempStoneOutputValidHour", config.TempStoneOutputValidHour);
             mycmd.Parameters.AddWithValue("@MineReservesIsRandom", config.MineReservesIsRandom);
             mycmd.Parameters.AddWithValue("@StonesReservesPerMines", config.StonesReservesPerMines);
-            mycmd.Parameters.AddWithValue("@MinStonesReservesPerMine", config.MinStonesReservesPerMine);
-            mycmd.Parameters.AddWithValue("@MaxStonesReservesPerMine", config.MaxStonesReservesPerMine);
+            mycmd.Parameters.AddWithValue("@MinStonesReservesPerMine", config.MinStonesReservesPerMine_VIPPlayer);
+            mycmd.Parameters.AddWithValue("@MaxStonesReservesPerMine", config.MaxStonesReservesPerMine_VIPPlayer);
             mycmd.Parameters.AddWithValue("@ExchangeExpensePercent", config.ExchangeExpensePercent);
             mycmd.Parameters.AddWithValue("@ExchangeExpenseMinNumber", config.ExchangeExpenseMinNumber);
             mycmd.Parameters.AddWithValue("@UserMaxHaveMinersCount", config.UserMaxHaveMinersCount);

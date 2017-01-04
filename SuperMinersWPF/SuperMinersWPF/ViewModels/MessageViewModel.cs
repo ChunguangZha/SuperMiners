@@ -15,51 +15,13 @@ namespace SuperMinersWPF.ViewModels
 {
     class MessageViewModel : INotifyPropertyChanged
     {
-        //bool isStartedListen = false;
+        private XunLingMineStateInfoUIModel _AllSystemState = new XunLingMineStateInfoUIModel(new XunLingMineStateInfo());
 
-        //private Thread _threadListen;
-
-        private int _systemAllPlayerCount;
-        public int SystemAllPlayerCount
+        public XunLingMineStateInfoUIModel AllSystemState
         {
-            get { return this._systemAllPlayerCount; }
-            private set
-            {
-                this._systemAllPlayerCount = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SystemAllPlayerCount"));
-                }
-            }
+            get { return _AllSystemState; }
         }
 
-        private int _systemAllMinerCount;
-        public int SystemAllMinerCount
-        {
-            get { return this._systemAllMinerCount; }
-            private set
-            {
-                this._systemAllMinerCount = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SystemAllMinerCount"));
-                }
-            }
-        }
-
-        public decimal _systemAllOutputStoneCount;
-        public decimal SystemAllOutputStoneCount
-        {
-            get { return this._systemAllOutputStoneCount; }
-            private set
-            {
-                this._systemAllOutputStoneCount = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SystemAllOutputStoneCount"));
-                }
-            }
-        }
 
         private int LogMaxCount = 100;
         private ObservableCollection<PlayerActionLogUIModel> _listPlayerActionLog = new ObservableCollection<PlayerActionLogUIModel>();
@@ -72,6 +34,11 @@ namespace SuperMinersWPF.ViewModels
         public void AsyncGetSystemConfig()
         {
             GlobalData.Client.GetGameConfig();
+        }
+
+        public void AsyncGetAllXunLingMineFortuneState()
+        {
+            GlobalData.Client.GetAllXunLingMineFortuneState();
         }
 
         public void AsyncGetPlayerAction()
@@ -104,6 +71,27 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetGameConfigCompleted += Client_GetGameConfigCompleted;
             GlobalData.Client.OnSendPlayerActionLog += Client_OnSendPlayerActionLog;
             GlobalData.Client.OnSendGameConfig += Client_OnSendGameConfig;
+            GlobalData.Client.GetAllXunLingMineFortuneStateCompleted += Client_GetAllXunLingMineFortuneStateCompleted;
+        }
+
+        void Client_GetAllXunLingMineFortuneStateCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<XunLingMineStateInfo> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("获取矿场信息失败。");
+                    return;
+                }
+
+                this.AllSystemState.ParentObject = e.Result;
+
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取矿场信息失败。");
+                LogHelper.Instance.AddErrorLog("获取矿场信息失败。", exc);
+            }
         }
 
         void Client_GetGameConfigCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.SystemConfig.SystemConfigin1> e)
@@ -133,6 +121,8 @@ namespace SuperMinersWPF.ViewModels
                     GlobalData.AwardReferrerLevelConfig.SetListAward(new List<AwardReferrerConfig>(e.Result.AwardReferrerConfigList));
                     isOK = true;
                 }
+
+                AsyncGetAllXunLingMineFortuneState();
 
                 if (this.GetSystemConfigCompleted != null)
                 {
@@ -174,9 +164,6 @@ namespace SuperMinersWPF.ViewModels
                 //服务器返回的记录是按时间升序排列。
                 //需要将其降序显示
                 var lastLogFromServer = e.Result[e.Result.Length - 1];
-                this.SystemAllMinerCount = lastLogFromServer.SystemAllMinerCount;
-                this.SystemAllOutputStoneCount = lastLogFromServer.SystemAllOutputStoneCount;
-                this.SystemAllPlayerCount = lastLogFromServer.SystemAllPlayerCount;
 
                 if (ListPlayerActionLog.Count >= this.LogMaxCount)
                 {

@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -137,11 +137,17 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\XunLingMineStateInfo.cs">
+      <Link>Wcf\Datas\XunLingMineStateInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\AgentUser\AgentUserInfo.cs">
       <Link>Wcf\Datas\AgentUserInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
       <Link>Wcf\Datas\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\RaideroftheLostArk\PlayerRaiderRoundHistoryRecordInfo.cs">
+      <Link>Wcf\Datas\PlayerRaiderRoundHistoryRecordInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\RaideroftheLostArk\RaiderRoundInfo.cs">
       <Link>Wcf\Datas\RaiderRoundInfo.cs</Link>
@@ -301,6 +307,7 @@
     <Compile Include="Models\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\PlayerBetInfoUIModel.cs" />
+    <Compile Include="Models\PlayerRaiderRoundHistoryRecordInfoUIModel.cs" />
     <Compile Include="Models\RaiderRoundMetaDataInfoUIModel.cs" />
     <Compile Include="Models\RouletteAwardItemUIModel.cs" />
     <Compile Include="Models\SellStonesOrderUIModel.cs" />
@@ -311,6 +318,7 @@
     <Compile Include="Models\TopListInfoUIModel.cs" />
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
     <Compile Include="Models\UserUIModel.cs" />
+    <Compile Include="Models\XunLingMineStateInfoUIModel.cs" />
     <Compile Include="MyControl\NumericTextBox.cs" />
     <Compile Include="MyControl\RMBPayTypeComboBox.xaml.cs">
       <DependentUpon>RMBPayTypeComboBox.xaml</DependentUpon>
@@ -471,6 +479,9 @@
     </Compile>
     <Compile Include="Views\Windows\DelegateSellStoneWindows.xaml.cs">
       <DependentUpon>DelegateSellStoneWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\MyRaiderBetRecordsWindow.xaml.cs">
+      <DependentUpon>MyRaiderBetRecordsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\RouletteMyWinnedRecordsWindow.xaml.cs">
       <DependentUpon>RouletteMyWinnedRecordsWindow.xaml</DependentUpon>
@@ -699,6 +710,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\DelegateSellStoneWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\MyRaiderBetRecordsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

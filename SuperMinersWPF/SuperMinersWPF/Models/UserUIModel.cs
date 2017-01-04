@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace SuperMinersWPF.Models
@@ -55,6 +56,8 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("MinesCount");
                 NotifyPropertyChange("StonesReserves");
                 NotifyPropertyChange("WorkableStonesReservers");
+                NotifyPropertyChange("WorkableStonesReserversText");
+                NotifyPropertyChange("StoneReservesBuyable");
                 NotifyPropertyChange("TotalProducedStonesCount");
                 NotifyPropertyChange("MinersCount");
                 NotifyPropertyChange("AllOutputPerHour");
@@ -129,6 +132,15 @@ namespace SuperMinersWPF.Models
         public decimal Exp
         {
             get { return this._parentObject.FortuneInfo.Exp; }
+        }
+
+        public int ExpLevel
+        {
+            get
+            {
+                int level = (int)Exp / 2000;
+                return level;
+            }
         }
 
         public BitmapImage ExpLevelImg
@@ -251,17 +263,38 @@ namespace SuperMinersWPF.Models
         /// <summary>
         /// 可开采矿石储量
         /// </summary>
-        public decimal WorkableStonesReservers
+        public int WorkableStonesReservers
         {
             get
             {
                 decimal workable = this.StonesReserves - this.TotalProducedStonesCount;
                 if (workable < 0)
                 {
-                    return 0;
+                    workable = 0;
                 }
 
-                return workable;
+                return (int)workable;
+            }
+        }
+
+        public string WorkableStonesReserversText
+        {
+            get
+            {
+                if (WorkableStonesReservers >= GlobalData.GameConfig.WorkableReservesVisibleLimitDown)
+                {
+                    return "*****";
+                }
+
+                return WorkableStonesReservers.ToString();
+            }
+        }
+
+        public bool StoneReservesBuyable
+        {
+            get
+            {
+                return WorkableStonesReservers < GlobalData.GameConfig.WorkableReservesVisibleLimitDown;
             }
         }
 

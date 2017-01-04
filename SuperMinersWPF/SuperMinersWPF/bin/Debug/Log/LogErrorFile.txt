@@ -8180,3 +8180,190 @@ Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 Supe
 Error:  [2017/1/4 15:41:36] ---- Log: 客户端小开心已退出.
 -----------------------------------------------------
 
+Error:  [2017/1/5 0:58:20] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:38] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:38] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:38] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:38] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:39] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:40] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:40] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:40] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:41] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 0:59:41] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 122
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:00:03] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:00:03] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:00:03] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:00:03] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:01:15] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:55] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:55] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:55] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:55] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:56] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 160
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:56] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:56] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:56] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:56] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:51:57] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:52:09] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:03] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:03] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:03] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:03] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:04] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:04] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:04] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:05] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:05] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:06] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 160
+-----------------------------------------------------
+
+Error:  [2017/1/5 1:53:59] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:53] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:53] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:53] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:53] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:54] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 164
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:36:54] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:37:05] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:37:05] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:37:05] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:37:05] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:39:05] ---- Log: time out : True
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:39:05] ---- Log: RestClient ReceiveCallback 3
+Exc.Message: 请求被中止: 请求已被取消。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:39:05] ---- Log: RestClient ReceiveCallback 4
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:39:05] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:05] ---- Log: time out : True
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:05] ---- Log: RestClient ReceiveCallback 3
+Exc.Message: 请求被中止: 请求已被取消。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:05] ---- Log: RestClient ReceiveCallback 4
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:05] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:23] ---- Log: RestClient ReceiveCallback 3
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:23] ---- Log: RestClient ReceiveCallback 4
+-----------------------------------------------------
+
+Error:  [2017/1/5 2:41:25] ---- Log: 客户端小开心已退出.
+-----------------------------------------------------
+

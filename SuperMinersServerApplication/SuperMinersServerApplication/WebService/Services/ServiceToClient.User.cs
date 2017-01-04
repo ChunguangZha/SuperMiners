@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.ActionLog;
 using MetaData.AgentUser;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
@@ -414,6 +415,27 @@ namespace SuperMinersServerApplication.WebService.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetAgentUserInfo Exception. userName: " + userName, exc);
+
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public XunLingMineStateInfo GetAllXunLingMineFortuneState(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.UserDBProvider.GetAllXunLingMineFortuneState();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetAllXunLingMineFortuneState Exception. ", exc);
 
                     return null;
                 }

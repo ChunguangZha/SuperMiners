@@ -9,6 +9,19 @@ namespace SuperMinersWPF.Wcf.Clients
 {
     public partial class ServerClient
     {
+        #region GetPlayerRaiderRoundHistoryRecordInfo
+
+        public event EventHandler<WebInvokeEventArgs<PlayerRaiderRoundHistoryRecordInfo[]>> GetPlayerRaiderRoundHistoryRecordInfoCompleted;
+        public void GetPlayerRaiderRoundHistoryRecordInfo(int pageItemCount, int pageIndex, object userState)
+        {
+            if (this._invoker != null)
+            {
+                this._invoker.InvokeUserState<PlayerRaiderRoundHistoryRecordInfo[]>(this._context, "GetPlayerRaiderRoundHistoryRecordInfo", this.GetPlayerRaiderRoundHistoryRecordInfoCompleted, userState, GlobalData.Token, pageItemCount, pageIndex);
+            }
+        }
+
+        #endregion
+
         #region GetHistoryRaiderRoundRecords
 
         public event EventHandler<WebInvokeEventArgs<RaiderRoundMetaDataInfo[]>> GetHistoryRaiderRoundRecordsCompleted;

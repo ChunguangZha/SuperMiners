@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.ActionLog;
 using MetaData.AgentUser;
 using MetaData.User;
 using System;
@@ -115,6 +116,19 @@ namespace SuperMinersWPF.Wcf.Clients
             if (GlobalData.IsLogined)
             {
                 this._invoker.Invoke<AgentUserInfo>(this._context, "GetAgentUserInfo", this.GetAgentUserInfoCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName);
+            }
+        }
+
+        #endregion
+
+        #region GetAllXunLingMineFortuneState
+
+        public event EventHandler<WebInvokeEventArgs<XunLingMineStateInfo>> GetAllXunLingMineFortuneStateCompleted;
+        public void GetAllXunLingMineFortuneState()
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<XunLingMineStateInfo>(this._context, "GetAllXunLingMineFortuneState", this.GetAllXunLingMineFortuneStateCompleted, GlobalData.Token);
             }
         }
 

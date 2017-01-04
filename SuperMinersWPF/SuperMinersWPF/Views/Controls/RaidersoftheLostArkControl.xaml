@@ -20,56 +20,71 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="39*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="211*"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="夺宝奇兵" FontSize="34" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <ListView Grid.Row="1" Name="listRaiderHistoryRecords" Margin="10" HorizontalContentAlignment="Center">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Margin="5">
+            <TextBlock Text="夺宝show" FontSize="48" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="STCaiyun" FontWeight="Bold"/>
+            <Grid Grid.Row="1" Background="#FF1D1864">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="奖期" Margin="20,5,10,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="1" Text="得主" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Grid.Column="2" Text="奖额" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Grid>
+            <Border Grid.Row="2" Margin="10">
+                <ListView Name="listRaiderHistoryRecords" Background="Transparent" Foreground="White" HorizontalContentAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="70"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Margin="5" HorizontalAlignment="Left">
                                 <Run Text="第"/>
                                 <Run Text="{Binding ID, Mode=OneWay}"/>
                                 <Run Text="期"/>
-                            </TextBlock>
-                            <TextBlock Grid.Column="1" Margin="5">
-                                <Run Text="得主："/>
+                                </TextBlock>
+                                <TextBlock Grid.Column="1" Margin="5" HorizontalAlignment="Left" TextWrapping="NoWrap">
                                 <Run Text="{Binding WinnerUserName, Mode=OneWay}"/>
-                            </TextBlock>
-                            <TextBlock Grid.Column="2" Margin="5">
-                                <Run Text="奖额："/>
+                                </TextBlock>
+                                <TextBlock Grid.Column="2" Margin="5" HorizontalAlignment="Left">
                                 <Run Text="{Binding WinStones, Mode=OneWay}"/>
-                            </TextBlock>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Border>
+            <Grid Grid.Row="3" Background="#FF1D1864">
+                <Button Name="btnViewMyRaiderRecord" Content="查看我的夺宝记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyRaiderRecord_Click"/>
+            </Grid>
         </Grid>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="228*"/>
             </Grid.RowDefinitions>
-            <Grid>
+            <Grid Background="#FF1D1864">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5">
                 <Run Text="第"/>
                 <Run Text="{Binding ID, Mode=OneWay}"/>
                 <Run Text="期"/>
                 </TextBlock>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="距开奖倒计时：" FontSize="20" Margin="10" VerticalAlignment="Center"/>
-                    <TextBlock FontSize="38" Margin="10">
+                    <TextBlock Text="剩余夺宝时间：" FontSize="20" Margin="10,5" VerticalAlignment="Center"/>
+                    <TextBlock FontSize="38" Margin="10,5" Foreground="#ffdc15">
                     <Run Text="{Binding CountDownMinutes, Mode=OneWay}"/>
                     <Run Text="分"/>
                     <Run Text="{Binding CountDownSeconds, Mode=OneWay}"/>
@@ -77,20 +92,20 @@
                     </TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding JoinedPlayerCount}" FontSize="24" FontStyle="Italic" Margin="10" VerticalAlignment="Center"/>
-                    <TextBlock Text="位矿主已经下注" FontSize="20" Margin="0,10,10,10" VerticalAlignment="Center"/>
-                    <TextBlock Text="奖池累计：" FontSize="20" Margin="10" VerticalAlignment="Center"/>
-                    <TextBlock FontSize="24" FontStyle="Italic" Margin="10" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding JoinedPlayerCount}" Foreground="#ffdc15" FontSize="24" FontStyle="Italic" Margin="10,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="位矿主已经参与" FontSize="20" Margin="10,5" VerticalAlignment="Center"/>
+                    <TextBlock Text="宝池累计：" FontSize="20" Margin="10,5" VerticalAlignment="Center"/>
+                    <TextBlock FontSize="24" FontStyle="Italic" Margin="10,5" Foreground="#ffdc15" VerticalAlignment="Center">
                     <Run Text="{Binding AwardPoolSumStones, Mode=OneWay}"/>
                     <Run Text="矿石"/>
                     </TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Visibility="{Binding BetJoinButtonVisible}" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Name="btnSubtract" Content="-" Visibility="Collapsed" Margin="10" Width="20" VerticalAlignment="Center" Click="btnSubtract_Click"/>
-                    <my:NumericTextBox x:Name="numBetStoneCount" Width="100" Minimum="1" Value="100" Maximum="1000000" Height="24" Margin="10" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Button Name="btnSubtract" Content="-" Visibility="Collapsed" Margin="10,5" Width="20" VerticalAlignment="Center" Click="btnSubtract_Click"/>
+                    <my:NumericTextBox x:Name="numBetStoneCount" Width="100" Minimum="1" Value="1000" Maximum="1000000" Height="24" Margin="10,5" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                     <TextBlock Text="矿石" VerticalAlignment="Center"/>
                     <Button Name="btnAdd" Content="+" Visibility="Collapsed" Margin="10" Width="20" VerticalAlignment="Center" Click="btnAdd_Click"/>
-                    <Button Name="btnJoin" Content="下注" Width="150" Height="40" Margin="10" FontSize="24" Style="{StaticResource UserInfoButtonStyle}" VerticalAlignment="Center" Click="btnJoin_Click"/>
+                    <Button Name="btnJoin" Content="开始夺宝" Width="150" Height="40" Margin="10,5" FontSize="24" Style="{StaticResource UserInfoButtonStyle}" VerticalAlignment="Center" Click="btnJoin_Click"/>
                 </StackPanel>
                 <StackPanel Grid.Row="3" Visibility="{Binding WinnerUserNameVisible}" VerticalAlignment="Center" HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock Text="本轮中奖者为：" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -100,41 +115,52 @@
                     <TextBlock Text="矿石" Margin="10"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Grid>
-            <Grid Grid.Row="4" Grid.RowSpan="2" >
+            <Grid Grid.Row="4" Grid.RowSpan="2" Background="#FF1D1864" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="160"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Grid.Column="0" Background="#FF06033A">
+                <Grid Grid.Column="0" Background="#FF005793">
                     <TextBlock Grid.Column="0" Text="玩法说明" Margin="10" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Border>
-                <Border Grid.Column="1" Background="#FF06033A">
-                    <TextBlock Text="本期下注记录" Margin="10" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Border>
+                </Grid>
+                <Grid Grid.Column="1" Background="#FF005793">
+                    <TextBlock Text="本期夺宝" Margin="10" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Grid>
                 <Border Grid.Row="1" Grid.Column="0" Margin="10">
-                    <TextBlock Grid.Row="1" Text="玩法说明" Margin="10" TextWrapping="Wrap"/>
+                    <StackPanel Margin="10">
+                        <TextBlock Text="       当投注人数超过1人时开始倒计时，5分钟一期，所有投注人根据总投注数计算中奖，多人投注一人中奖，奖金为总投注额，服务器扣除10%服务费；
+当赢取奖金不足以支付服务费时，只返还投注额。" TextWrapping="Wrap" FontSize="14"/>
+                        <TextBlock Text="       例：" TextWrapping="Wrap" FontSize="12"/>
+                        <TextBlock Text="       玩家一、投注额5000" TextWrapping="Wrap" FontSize="12"/>
+                        <TextBlock Text="       玩家二、投注额300" TextWrapping="Wrap" FontSize="12"/>
+                        <TextBlock Text="       玩家三、投注额50" TextWrapping="Wrap" FontSize="12"/>
+                        <TextBlock Text="       如：中奖人为玩家一时，则获得总投注额：5350减去10%服务费：535，获得投注低于玩家一的投注额，则返还5000；" TextWrapping="Wrap" FontSize="12"/>
+                        <TextBlock Text="       如：中奖人为玩家二或玩家三时，则获得总投注额：5350减去10%服务费：535，返还4815；" TextWrapping="Wrap" FontSize="12"/>
+                    </StackPanel>
                 </Border>
-                <ListView Grid.Row="1" Grid.Column="1" Name="listSelfCurrentBetRecords" Margin="10" HorizontalContentAlignment="Stretch">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="{Binding TimeText, Mode=OneWay}" Margin="5"/>
-                                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                    <TextBlock Text="{Binding BetStones, Mode=OneWay}" Margin="5"/>
-                                    <TextBlock Text="矿石" Margin="5"/>
-                                </StackPanel>
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Border  Grid.Row="1" Grid.Column="1" Margin="10" >
+                    <ListView Name="listSelfCurrentBetRecords" Background="Transparent" Foreground="White" HorizontalContentAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding ShortTimeText, Mode=OneWay}" Margin="5"/>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                        <TextBlock Text="{Binding BetStones, Mode=OneWay}" Margin="5"/>
+                                        <TextBlock Text="矿石" Margin="5"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Border>
             </Grid>
         </Grid>
     </Grid>

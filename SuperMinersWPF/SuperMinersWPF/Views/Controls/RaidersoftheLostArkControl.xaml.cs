@@ -1,4 +1,5 @@
 ﻿using SuperMinersWPF.Utility;
+using SuperMinersWPF.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,12 @@ namespace SuperMinersWPF.Views.Controls
                 return;
             }
             App.GameRaiderofLostArkVMObject.AsyncJoinRaider(App.GameRaiderofLostArkVMObject.CurrentRaiderRound.ID, betStoneCount);
+        }
+
+        private void btnViewMyRaiderRecord_Click(object sender, RoutedEventArgs e)
+        {
+            MyRaiderBetRecordsWindow win = new MyRaiderBetRecordsWindow();
+            win.ShowDialog();
         }
     }
 }

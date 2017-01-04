@@ -45,9 +45,9 @@ namespace SuperMinersServerApplication.Controller
         public event Action<PlayerInfo> PlayerInfoChanged;
         public event Action<string> KickOutPlayer;
 
-        public int RegisteredPlayersCount { get; private set; }
-        public decimal AllMiners { get; private set; }
-        public decimal AllOutputStones { get; private set; }
+        //public int RegisteredPlayersCount { get; private set; }
+        //public decimal AllMiners { get; private set; }
+        //public decimal AllOutputStones { get; private set; }
 
         private ConcurrentDictionary<string, PlayerRunnable> _dicOnlinePlayerRuns = new ConcurrentDictionary<string, PlayerRunnable>();
 
@@ -55,9 +55,9 @@ namespace SuperMinersServerApplication.Controller
 
         public void Init()
         {
-            this.RegisteredPlayersCount = DBProvider.UserDBProvider.GetAllPlayerCount();
-            this.AllMiners = DBProvider.UserDBProvider.GetAllMinersCount();
-            this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
+            //this.RegisteredPlayersCount = DBProvider.UserDBProvider.GetAllPlayerCount();
+            //this.AllMiners = DBProvider.UserDBProvider.GetAllMinersCount();
+            //this.AllOutputStones = DBProvider.UserDBProvider.GetAllOutputStonesCount();
         }
 
         public int AutoDeletePlayer()

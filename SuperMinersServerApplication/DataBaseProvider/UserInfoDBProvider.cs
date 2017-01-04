@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.ActionLog;
 using MetaData.User;
 using MySql.Data.MySqlClient;
 using System;
@@ -12,6 +13,48 @@ namespace DataBaseProvider
 {
     public class UserInfoDBProvider
     {
+        /// <summary>
+        /// 库存量+矿石未开采量
+        /// </summary>
+        /// <returns></returns>
+        public XunLingMineStateInfo GetAllXunLingMineFortuneState()
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                mycmd = myconn.CreateCommand();
+                myconn.Open();
+                string sqlText = "SELECT count(id) as AllPlayerCount, sum(MinersCount) as AllMinersCount, sum(StonesReserves) as AllStonesReserves, sum(TotalProducedStonesCount) as AllProducedStonesCount,  sum(StockOfStones) as AllStockOfStones, sum(StonesReserves - TotalProducedStonesCount + StockOfStones) as AllStonesCount FROM superminers.playerfortuneinfo ;";
+                mycmd.CommandText = sqlText;
+
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+                XunLingMineStateInfo[] results = MetaDBAdapter<XunLingMineStateInfo>.GetXunLingMineStateInfoFromDataTable(table);
+                if (results == null || results.Length == 0)
+                {
+                    return null;
+                }
+
+                return results[0];
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public bool AddPlayer(PlayerInfo player, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
@@ -649,92 +692,92 @@ namespace DataBaseProvider
             }
         }
 
-        public int GetAllPlayerCount()
-        {
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public int GetAllPlayerCount()
+        //{
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                string cmdText = "select count(id) from playersimpleinfo;";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                object objResult = mycmd.ExecuteScalar();
-                mycmd.Dispose();
+        //        string cmdText = "select count(id) from playersimpleinfo;";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        object objResult = mycmd.ExecuteScalar();
+        //        mycmd.Dispose();
 
-                if (objResult == DBNull.Value)
-                {
-                    return 0;
-                }
-                return Convert.ToInt32(objResult);
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        if (objResult == DBNull.Value)
+        //        {
+        //            return 0;
+        //        }
+        //        return Convert.ToInt32(objResult);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
-        public decimal GetAllMinersCount()
-        {
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public decimal GetAllMinersCount()
+        //{
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                string cmdText = "SELECT sum(MinersCount) FROM playerfortuneinfo;;";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                object objResult = mycmd.ExecuteScalar();
-                mycmd.Dispose();
+        //        string cmdText = "SELECT sum(MinersCount) FROM playerfortuneinfo;;";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        object objResult = mycmd.ExecuteScalar();
+        //        mycmd.Dispose();
 
-                if (objResult == DBNull.Value)
-                {
-                    return 0;
-                }
-                return Convert.ToDecimal(objResult);
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        if (objResult == DBNull.Value)
+        //        {
+        //            return 0;
+        //        }
+        //        return Convert.ToDecimal(objResult);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
-        public decimal GetAllOutputStonesCount()
-        {
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public decimal GetAllOutputStonesCount()
+        //{
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                string cmdText = "SELECT sum(TotalProducedStonesCount) FROM playerfortuneinfo;;";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                object objResult = mycmd.ExecuteScalar();
-                mycmd.Dispose();
+        //        string cmdText = "SELECT sum(TotalProducedStonesCount) FROM playerfortuneinfo;;";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        object objResult = mycmd.ExecuteScalar();
+        //        mycmd.Dispose();
 
-                if (objResult == DBNull.Value)
-                {
-                    return 0;
-                }
-                return Convert.ToDecimal(objResult);
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        if (objResult == DBNull.Value)
+        //        {
+        //            return 0;
+        //        }
+        //        return Convert.ToDecimal(objResult);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
         public int GetPlayerCountByEmail(string email)
         {

@@ -51,27 +51,53 @@ namespace SuperMinersServerApplication.Controller
 
         private Random _ran = new Random();
 
-        public decimal GetStoneCount_BuyMine(int minesCount)
+        public decimal GetStoneCount_BuyMine(int minesCount, bool isVIPPlayer, int surplus)
         {
+            int reservers;
             if (GlobalConfig.GameConfig.MineReservesIsRandom)
             {
-                int value = _ran.Next((int)GlobalConfig.GameConfig.MinStonesReservesPerMine, (int)GlobalConfig.GameConfig.MaxStonesReservesPerMine);
-                return minesCount * value;
+                if (isVIPPlayer)
+                {
+                    int value = _ran.Next(GlobalConfig.GameConfig.MinStonesReservesPerMine_VIPPlayer, GlobalConfig.GameConfig.MaxStonesReservesPerMine_VIPPlayer);
+                    reservers = minesCount * value;
+                }
+                else
+                {
+                    int value = _ran.Next(GlobalConfig.GameConfig.MinStonesReservesPerMine_NormalPlayer, GlobalConfig.GameConfig.MaxStonesReservesPerMine_NormalPlayer);
+                    reservers = minesCount * value;
+                }
             }
             else
             {
-                return minesCount * GlobalConfig.GameConfig.StonesReservesPerMines;
+                reservers = minesCount * (int)GlobalConfig.GameConfig.StonesReservesPerMines;
             }
+
+            if (reservers > surplus)
+            {
+                reservers = surplus;
+            }
+
+            return reservers;
         }
 
         public TradeOperResult BuyMine(string userName, int minesCount, int payType)
         {
             TradeOperResult result = new TradeOperResult();
+            var systemState = DBProvider.UserDBProvider.GetAllXunLingMineFortuneState();
+            int surplus = GlobalConfig.GameConfig.LimitStoneCount - (int)systemState.AllStonesCount;
+            if (surplus <= 0)
+            {
+                result.ResultCode = OperResult.RESULTCODE_BUYMINE_MINEISFULL;
+                return result;
+            }
+
             result.PayType = payType;
             DateTime timenow = DateTime.Now;
-                
+
+            var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+            bool isVIP = playerInfo.FortuneInfo.Exp > GlobalConfig.GameConfig.PlayerVIPInterval;
             string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
-            result.OperNumber = GetStoneCount_BuyMine(minesCount);
+            result.OperNumber = GetStoneCount_BuyMine(minesCount, isVIP, surplus);
             MinesBuyRecord record = new MinesBuyRecord()
             {
                 OrderNumber = orderNumber,

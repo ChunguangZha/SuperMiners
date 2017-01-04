@@ -76,7 +76,7 @@ namespace SuperMinersWPF.MyControl
               "Maximum",
               typeof(double),
               typeof(NumericTextBox),
-              new PropertyMetadata(100.0, (o, e) =>
+              new PropertyMetadata(10000.0, (o, e) =>
               {
                   NumericTextBox tb = (NumericTextBox)o;
                   if (tb.Minimum <= tb.Maximum)

@@ -56,7 +56,7 @@ namespace MetaData.SystemConfig
         /// 矿山储量随机
         /// </summary>
         [DataMember]
-        public bool MineReservesIsRandom = false;
+        public bool MineReservesIsRandom = true;
 
         /// <summary>
         /// 每座矿山的矿石储量
@@ -65,16 +65,34 @@ namespace MetaData.SystemConfig
         public decimal StonesReservesPerMines = 100000;
 
         /// <summary>
+        /// VIP玩家 每座矿山的最小矿石储量
+        /// </summary>
+        [DataMember]
+        public int MinStonesReservesPerMine_VIPPlayer = 90000;
+
+        /// <summary>
+        /// VIP玩家 每座矿山的最大矿石储量
+        /// </summary>
+        [DataMember]
+        public int MaxStonesReservesPerMine_VIPPlayer = 120000;
+
+        /// <summary>
         /// 每座矿山的最小矿石储量
         /// </summary>
         [DataMember]
-        public decimal MinStonesReservesPerMine = 50000;
+        public int MinStonesReservesPerMine_NormalPlayer = 70000;
 
         /// <summary>
         /// 每座矿山的最大矿石储量
         /// </summary>
         [DataMember]
-        public decimal MaxStonesReservesPerMine = 100000;
+        public int MaxStonesReservesPerMine_NormalPlayer = 110000;
+
+        /// <summary>
+        /// 可开采矿山储量下限值，低于50000时可见，可开采
+        /// </summary>
+        [DataMember]
+        public int WorkableReservesVisibleLimitDown = 50000;
 
         /// <summary>
         /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。
@@ -160,5 +178,16 @@ namespace MetaData.SystemConfig
         [DataMember]
         public decimal RaiderExpense = 0.1m;
 
+        /// <summary>
+        /// 系统矿场总储量八千万
+        /// </summary>
+        [DataMember]
+        public int LimitStoneCount = 80000000;
+
+        /// <summary>
+        /// VIP级别间距（贡献值）
+        /// </summary>
+        [DataMember]
+        public int PlayerVIPInterval = 2000;
     }
 }

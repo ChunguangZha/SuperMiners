@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.ActionLog;
 using MetaData.AgentUser;
 using MetaData.Game.RaideroftheLostArk;
 using MetaData.Game.Roulette;
@@ -800,6 +801,51 @@ namespace DataBaseProvider
             return items;
         }
 
+        internal static PlayerRaiderRoundHistoryRecordInfo[] GetPlayerRaiderRoundHistoryRecordInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            PlayerRaiderRoundHistoryRecordInfo[] items = new PlayerRaiderRoundHistoryRecordInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                PlayerRaiderRoundHistoryRecordInfo item = new PlayerRaiderRoundHistoryRecordInfo();
+                item.BetJoinStoneCount = Convert.ToInt32(dt.Rows[i]["AllBetStones"]);
+                item.RoundInfo = new RaiderRoundMetaDataInfo();
+                item.RoundInfo.ID = Convert.ToInt32(dt.Rows[i]["RaiderRoundID"]);
+                item.RoundInfo.State = (RaiderRoundState)Convert.ToInt32(dt.Rows[i]["State"]);
+                if (dt.Rows[i]["StartTime"] != DBNull.Value)
+                {
+                    item.RoundInfo.StartTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["StartTime"]));
+                }
+                if (dt.Rows[i]["AwardPoolSumStones"] != DBNull.Value)
+                {
+                    item.RoundInfo.AwardPoolSumStones = Convert.ToInt32(dt.Rows[i]["AwardPoolSumStones"]);
+                }
+                if (dt.Rows[i]["JoinedPlayerCount"] != DBNull.Value)
+                {
+                    item.RoundInfo.JoinedPlayerCount = Convert.ToInt32(dt.Rows[i]["JoinedPlayerCount"]);
+                }
+                if (dt.Rows[i]["WinnerUserName"] != DBNull.Value)
+                {
+                    item.RoundInfo.WinnerUserName = DESEncrypt.DecryptDES(dt.Rows[i]["WinnerUserName"].ToString());
+                }
+                if (dt.Rows[i]["WinStones"] != DBNull.Value)
+                {
+                    item.RoundInfo.WinStones = Convert.ToInt32(dt.Rows[i]["WinStones"]);
+                }
+                if (dt.Rows[i]["EndTime"] != DBNull.Value)
+                {
+                    item.RoundInfo.EndTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["EndTime"]));
+                }
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
         internal static RaiderRoundMetaDataInfo[] GetRaiderRoundMetaDataInfoFromDataTable(DataTable dt)
         {
             if (dt == null || dt.Rows.Count == 0)
@@ -858,6 +904,29 @@ namespace DataBaseProvider
                 item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 item.BetStones = Convert.ToInt32(dt.Rows[i]["BetStones"]);
                 item.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static XunLingMineStateInfo[] GetXunLingMineStateInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            XunLingMineStateInfo[] items = new XunLingMineStateInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                XunLingMineStateInfo item = new XunLingMineStateInfo();
+                item.AllPlayerCount = Convert.ToInt32(dt.Rows[i]["AllPlayerCount"]);
+                item.AllMinersCount = Convert.ToInt32(dt.Rows[i]["AllMinersCount"]);
+                item.AllStonesReserves = Convert.ToInt32(dt.Rows[i]["AllStonesReserves"]);
+                item.AllProducedStonesCount = Convert.ToDecimal(dt.Rows[i]["AllProducedStonesCount"]);
+                item.AllStockOfStones = Convert.ToDecimal(dt.Rows[i]["AllStockOfStones"]);
+                item.AllStonesCount = Convert.ToDecimal(dt.Rows[i]["AllStonesCount"]);
 
                 items[i] = item;
             }

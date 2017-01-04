@@ -59,7 +59,7 @@ namespace SuperMinersWPF.Models
                         message = this._parentObject.Remark;
                         break;
                     case ActionType.BuyMine:
-                        message = string.Format("购买了 {0} 座矿山，" + this._parentObject.Remark, this._parentObject.OperNumber);
+                        message = string.Format("历尽千辛万苦勘探了一条新的矿脉，矿工又有活干了");
                         break;
                     case ActionType.BuyMiner:
                         message = string.Format("购买了 {0} 位矿工", this._parentObject.OperNumber);

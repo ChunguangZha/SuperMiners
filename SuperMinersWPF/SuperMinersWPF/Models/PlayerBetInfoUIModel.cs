@@ -28,6 +28,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("BetStones");
                 NotifyPropertyChange("TimeText");
+                NotifyPropertyChange("ShortTimeText");
             }
         }
 
@@ -68,6 +69,14 @@ namespace SuperMinersWPF.Models
             get
             {
                 return this._parentObject.Time.ToDateTime().ToString();
+            }
+        }
+
+        public string ShortTimeText
+        {
+            get
+            {
+                return this._parentObject.Time.ToDateTime().ToLongTimeString();
             }
         }
     }

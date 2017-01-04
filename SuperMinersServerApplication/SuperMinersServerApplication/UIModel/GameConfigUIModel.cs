@@ -204,9 +204,9 @@ namespace SuperMinersServerApplication.UIModel
             }
         }
 
-        private decimal _MaxStonesReservesPerMine;
+        private int _MaxStonesReservesPerMine;
 
-        public decimal MaxStonesReservesPerMine
+        public int MaxStonesReservesPerMine
         {
             get { return _MaxStonesReservesPerMine; }
             set
@@ -221,9 +221,9 @@ namespace SuperMinersServerApplication.UIModel
         }
 
 
-        private decimal _MinStonesReservesPerMine;
+        private int _MinStonesReservesPerMine;
 
-        public decimal MinStonesReservesPerMine
+        public int MinStonesReservesPerMine
         {
             get { return _MinStonesReservesPerMine; }
             set
@@ -400,8 +400,8 @@ namespace SuperMinersServerApplication.UIModel
                 Stones_RMB = parent.Stones_RMB,
                 MineReservesIsRandom = parent.MineReservesIsRandom,
                 StonesReservesPerMines = parent.StonesReservesPerMines,
-                MinStonesReservesPerMine = parent.MinStonesReservesPerMine,
-                MaxStonesReservesPerMine = parent.MaxStonesReservesPerMine,
+                MinStonesReservesPerMine = parent.MinStonesReservesPerMine_VIPPlayer,
+                MaxStonesReservesPerMine = parent.MaxStonesReservesPerMine_VIPPlayer,
                 Yuan_RMB = parent.Yuan_RMB,
                 UserMaxHaveMinersCount = parent.UserMaxHaveMinersCount,
                 BuyOrderLockTimeMinutes = parent.BuyOrderLockTimeMinutes,
@@ -429,8 +429,8 @@ namespace SuperMinersServerApplication.UIModel
                 Stones_RMB = this.Stones_RMB,
                 MineReservesIsRandom = this.MineReservesIsRandom,
                 StonesReservesPerMines = this.StonesReservesPerMines,
-                MinStonesReservesPerMine = this.MinStonesReservesPerMine,
-                MaxStonesReservesPerMine = this.MaxStonesReservesPerMine,
+                MinStonesReservesPerMine_VIPPlayer = this.MinStonesReservesPerMine,
+                MaxStonesReservesPerMine_VIPPlayer = this.MaxStonesReservesPerMine,
                 Yuan_RMB = this.Yuan_RMB,
                 UserMaxHaveMinersCount = this.UserMaxHaveMinersCount,
                 BuyOrderLockTimeMinutes = this.BuyOrderLockTimeMinutes,
