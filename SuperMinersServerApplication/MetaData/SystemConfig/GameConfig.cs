@@ -158,7 +158,7 @@ namespace MetaData.SystemConfig
         /// 夺宝奇兵服务费
         /// </summary>
         [DataMember]
-        public float RaiderExpense = 0.1f;
+        public decimal RaiderExpense = 0.1m;
 
     }
 }

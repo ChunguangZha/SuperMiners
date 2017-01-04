@@ -83,7 +83,7 @@ namespace SuperMinersServerApplication
                 OrderController.Instance.Init();
                 NoticeController.Instance.Init();
                 RouletteAwardController.Instance.Init();
-                //RaidersofLostArkController.Instance.Init();
+                RaidersofLostArkController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {
@@ -329,6 +329,7 @@ namespace SuperMinersServerApplication
                 }
                 IsStarted = false;
                 LogHelper.Instance.Stop();
+                RaidersofLostArkController.Instance.StopService();
 
                 return true;
             }

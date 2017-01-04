@@ -60,18 +60,26 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 if (this._currentRoundInfo.State == MetaData.Game.RaideroftheLostArk.RaiderRoundState.Started)
                 {
-
                     this._currentRoundInfo.CountDownTotalSecond = (int)(this._currentRoundInfo.StartTime.ToDateTime().AddMinutes(OpenWinTimeMinutes) - DateTime.Now).TotalSeconds;
                 }
+
+                //this._currentRoundInfo.JoinedPlayerCount = this.listPlayerUserName.Count;
                 return this._currentRoundInfo;
             }
         }
 
         private List<PlayerBetInfo> listPlayerBetInfos = new List<PlayerBetInfo>();
 
+        private List<string> listPlayerUserName = new List<string>();
+
         public void Init()
         {
             ResetRoundInfo();
+        }
+
+        public void StopService()
+        {
+            FinishRound(null, null);
         }
 
         public void CreateNewRound()
@@ -81,6 +89,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             this._currentRoundInfo = lastRoundInfo;
             this.listPlayerBetInfos.Clear();
+            this.listPlayerUserName.Clear();
         }
 
         private void ResetRoundInfo()
@@ -90,10 +99,42 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 lastRoundInfo = new RaiderRoundMetaDataInfo();
                 lastRoundInfo = DBProvider.GameRaiderofLostArkDBProvider.AddNewRaiderRoundMetaDataInfo(lastRoundInfo);
+                this._currentRoundInfo = lastRoundInfo;
+                this.listPlayerBetInfos.Clear();
+                this.listPlayerUserName.Clear();
+            }
+            else
+            {
+                this._currentRoundInfo = lastRoundInfo;
+                this.listPlayerBetInfos.Clear();
+                this.listPlayerUserName.Clear();
+
+                int AwardPoolSumStones = 0;
+                int JoinedPlayerCount = 0;
+
+                var lastRoundJoinedBetRecords = DBProvider.GameRaiderofLostArkDBProvider.GetPlayerBetInfoByRoundID(lastRoundInfo.ID, "", -1, -1);
+                if (lastRoundJoinedBetRecords != null)
+                {
+                    foreach (var item in lastRoundJoinedBetRecords)
+                    {
+                        AwardPoolSumStones += item.BetStones;
+                        this.listPlayerBetInfos.Add(item);
+                        if (!this.listPlayerUserName.Contains(item.UserName))
+                        {
+                            this.listPlayerUserName.Add(item.UserName);
+                            JoinedPlayerCount++;
+                        }
+                    }
+                    this._currentRoundInfo.AwardPoolSumStones = AwardPoolSumStones;
+                    this._currentRoundInfo.JoinedPlayerCount = JoinedPlayerCount;
+
+                    //if (this.listPlayerUserName != null && this.listPlayerUserName.Count > 0 && this.NotifyPlayerToRefreshBetRecordsEvent != null)
+                    //{
+                    //    this.NotifyPlayerToRefreshBetRecordsEvent(this.CurrentRoundInfo, this.listPlayerUserName);
+                    //}
+                }
             }
 
-            this._currentRoundInfo = lastRoundInfo;
-            this.listPlayerBetInfos.Clear();
         }
 
         public int Join(int userID, string userName, int roundID, int stonesCount)
@@ -109,7 +150,15 @@ namespace SuperMinersServerApplication.Controller.Game
                     return OperResult.RESULTCODE_GAME_RAIDER_ROUNDFINISHED;
                 }
 
-                if (this._currentRoundInfo.State == RaiderRoundState.Waiting)
+                if (!this.listPlayerUserName.Contains(userName))
+                {
+                    this.listPlayerUserName.Add(userName);
+                    this._currentRoundInfo.JoinedPlayerCount++;
+                }
+
+                this._currentRoundInfo.AwardPoolSumStones += stonesCount;
+
+                if (this._currentRoundInfo.State == RaiderRoundState.Waiting && this._currentRoundInfo.JoinedPlayerCount >= 2)
                 {
                     StartRound();
                 }
@@ -127,9 +176,14 @@ namespace SuperMinersServerApplication.Controller.Game
             DBProvider.GameRaiderofLostArkDBProvider.SavePlayerBetInfo(betInfo);
             listPlayerBetInfos.Add(betInfo);
 
-            this._currentRoundInfo.AwardPoolSumStones += stonesCount;
-
-            return OperResult.RESULTCODE_TRUE;
+            if (this._currentRoundInfo.JoinedPlayerCount == 2)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+            else
+            {
+                return OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART;
+            }
         }
 
         private void StartRound()
@@ -148,6 +202,10 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 lock (_lockJoin)
                 {
+                    if (this._currentRoundInfo.State == MetaData.Game.RaideroftheLostArk.RaiderRoundState.Finished)
+                    {
+                        return;
+                    }
                     this._currentRoundInfo.State = RaiderRoundState.Finished;
                     if (this.listPlayerBetInfos.Count == 0)
                     {
@@ -198,6 +256,10 @@ namespace SuperMinersServerApplication.Controller.Game
                         {
                             NotifyAllPlayerRaiderWinnerEvent(this._currentRoundInfo);
                         }
+
+                        //10秒后再开始下一轮。
+                        System.Threading.Thread.Sleep(10 * 1000);
+
                         CreateNewRound();
                     }
                 }
@@ -240,5 +302,6 @@ namespace SuperMinersServerApplication.Controller.Game
         }
 
         public event Action<RaiderRoundMetaDataInfo> NotifyAllPlayerRaiderWinnerEvent;
+        //public event Action<RaiderRoundMetaDataInfo, List<string>> NotifyPlayerToRefreshBetRecordsEvent;
     }
 }

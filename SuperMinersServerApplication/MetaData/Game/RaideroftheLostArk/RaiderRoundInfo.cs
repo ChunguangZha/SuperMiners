@@ -44,6 +44,12 @@ namespace MetaData.Game.RaideroftheLostArk
         /// Default Null
         /// </summary>
         [DataMember]
+        public int JoinedPlayerCount;
+
+        /// <summary>
+        /// Default Null
+        /// </summary>
+        [DataMember]
         public string WinnerUserName;
 
         /// <summary>
@@ -66,6 +72,7 @@ namespace MetaData.Game.RaideroftheLostArk
             builder.Append("StartTime:" + StartTime + ";");
             builder.Append("CountDownSecond:" + CountDownTotalSecond + ";");
             builder.Append("AwardPoolSumStones:" + AwardPoolSumStones + ";");
+            builder.Append("JoinedPlayerCount:" + JoinedPlayerCount + ";");
             builder.Append("WinnerUserName:" + WinnerUserName + ";");
             builder.Append("WinStones:" + WinStones + ";");
             builder.Append("EndTime:" + EndTime + ";");

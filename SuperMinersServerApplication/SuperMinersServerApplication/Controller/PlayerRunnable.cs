@@ -1131,7 +1131,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if (this.BasePlayer.FortuneInfo.StockOfStones < winStoneCount)
+                if ((this.BasePlayer.FortuneInfo.StockOfStones - this.BasePlayer.FortuneInfo.FreezingStones) < winStoneCount)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }

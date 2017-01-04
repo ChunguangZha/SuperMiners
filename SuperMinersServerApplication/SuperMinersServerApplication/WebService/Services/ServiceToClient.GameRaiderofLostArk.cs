@@ -83,13 +83,14 @@ namespace SuperMinersServerApplication.WebService.Services
                             return result;
                         }
                         result = RaidersofLostArkController.Instance.Join(playerRunner.BasePlayer.SimpleInfo.UserID, userName, roundID, betStoneCount);
-                        if (result == OperResult.RESULTCODE_TRUE)
+                        if (result == OperResult.RESULTCODE_TRUE || result == OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART)
                         {
                             myTrans.Commit();
                         }
                         else
                         {
                             myTrans.Rollback();
+                            playerRunner.RefreshFortune();
                         }
                     }
                     catch (Exception exc)
@@ -107,11 +108,11 @@ namespace SuperMinersServerApplication.WebService.Services
                         }
                     }
 
-                    if (result == OperResult.RESULTCODE_TRUE)
+                    if (result == OperResult.RESULTCODE_TRUE || result == OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART)
                     {
                         //NotifyAllPlayerBetInfo(RaidersofLostArkController.Instance.CurrentRoundInfo);
                         LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 在第" + roundID + "期 夺宝奇兵，下注" + betStoneCount + "矿石");
-                        PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.GameRaiderJoinBet, roundID, betStoneCount.ToString());
+                        //PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.GameRaiderJoinBet, roundID, betStoneCount.ToString());
                     }
                     return result;
                 }
@@ -127,18 +128,17 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        private void NotifyAllPlayerBetInfo(RaiderRoundMetaDataInfo roundInfo)
-        {
-            //var allClients = ClientManager.AllClients;
-            //foreach (var client in allClients)
-            //{
-            //    new Thread(new ParameterizedThreadStart(o =>
-            //    {
-            //        this.PlayerJoinRaiderSucceed(o.ToString(), roundInfo);
-            //    })).Start(client.Token);
-            //}
-
-        }
+        //private void NotifyPlayerToRefreshBetRecords(RaiderRoundMetaDataInfo roundInfo, List<string> listPlayerUserName)
+        //{
+        //    foreach (var username in listPlayerUserName)
+        //    {
+        //        string token = ClientManager.GetToken(username);
+        //        new Thread(new ParameterizedThreadStart(o =>
+        //        {
+        //            this.PlayerJoinRaiderSucceed(o.ToString(), roundInfo);
+        //        })).Start(token);
+        //    }
+        //}
 
         private void NotifyAllPlayerRaiderWinner(RaiderRoundMetaDataInfo roundInfo)
         {
@@ -146,11 +146,11 @@ namespace SuperMinersServerApplication.WebService.Services
 
             PlayerActionController.Instance.AddLog(roundInfo.WinnerUserName, MetaData.ActionLog.ActionType.GameRaiderWin, roundInfo.ID, roundInfo.WinStones.ToString());
 
-            var token = ClientManager.GetToken(roundInfo.WinnerUserName);
-            new Thread(new ParameterizedThreadStart(o =>
-            {
-                this.PlayerWinedRaiderNotify(o.ToString(), roundInfo);
-            })).Start(token);
+            //var token = ClientManager.GetToken(roundInfo.WinnerUserName);
+            //new Thread(new ParameterizedThreadStart(o =>
+            //{
+            //    this.PlayerWinedRaiderNotify(o.ToString(), roundInfo);
+            //})).Start(token);
 
         }
         
@@ -162,7 +162,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    return DBProvider.GameRaiderofLostArkDBProvider.GetPlayerBetInfoByRoundID(roundID, pageItemCount, pageIndex);
+                    return DBProvider.GameRaiderofLostArkDBProvider.GetPlayerBetInfoByRoundID(roundID, userName, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

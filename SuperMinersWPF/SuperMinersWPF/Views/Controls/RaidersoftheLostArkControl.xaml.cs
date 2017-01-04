@@ -51,8 +51,13 @@ namespace SuperMinersWPF.Views.Controls
                 MyMessageBox.ShowInfo("游戏还未开始，请稍候再试");
                 return;
             }
-
+                        
             int betStoneCount = (int)this.numBetStoneCount.Value;
+            if (GlobalData.CurrentUser.SellableStones < betStoneCount)
+            {
+                MyMessageBox.ShowInfo("抱歉，您没有足够的矿石下注");
+                return;
+            }
             App.GameRaiderofLostArkVMObject.AsyncJoinRaider(App.GameRaiderofLostArkVMObject.CurrentRaiderRound.ID, betStoneCount);
         }
     }

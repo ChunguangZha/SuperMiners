@@ -451,4 +451,213 @@
     <SystemAllOutputStoneCount>9387045.62975658</SystemAllOutputStoneCount>
     <LastLoginTimeString>2016/12/16 0:51:37</LastLoginTimeString>
   </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-04T10:33:21</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638182.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:33:21</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-04T10:34:05</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638182.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:34:05</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>100</Remark>
+    <Time>2017-01-04T10:34:17</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638182.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:34:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>4</Remark>
+    <Time>2017-01-04T10:34:29</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638182.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:34:29</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>209</OperNumber>
+    <Remark />
+    <Time>2017-01-04T10:34:50</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:34:50</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderWin</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>104</Remark>
+    <Time>2017-01-04T10:35:17</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:35:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark>4</Remark>
+    <Time>2017-01-04T10:35:47</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:35:47</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark>40</Remark>
+    <Time>2017-01-04T10:35:51</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:35:51</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark>55</Remark>
+    <Time>2017-01-04T10:36:11</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:36:11</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark>55</Remark>
+    <Time>2017-01-04T10:36:18</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:36:18</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderWin</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark>154</Remark>
+    <Time>2017-01-04T10:36:47</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:36:47</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>3</OperNumber>
+    <Remark>55</Remark>
+    <Time>2017-01-04T10:41:27</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:41:27</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderJoinBet</ActionType>
+    <OperNumber>3</OperNumber>
+    <Remark>55</Remark>
+    <Time>2017-01-04T10:41:30</Time>
+    <SystemAllPlayerCount>0</SystemAllPlayerCount>
+    <SystemAllMinerCount>0</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>0</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:41:30</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GameRaiderWin</ActionType>
+    <OperNumber>3</OperNumber>
+    <Remark>110</Remark>
+    <Time>2017-01-04T10:42:27</Time>
+    <SystemAllPlayerCount>0</SystemAllPlayerCount>
+    <SystemAllMinerCount>0</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>0</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 10:42:27</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-04T12:33:30.069499+08:00</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638391.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 12:33:30</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>312</OperNumber>
+    <Remark />
+    <Time>2017-01-04T12:34:30.3560052+08:00</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638703.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 12:34:30</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GameRaiderWin</ActionType>
+    <OperNumber>7</OperNumber>
+    <Remark>305</Remark>
+    <Time>2017-01-04T12:35:17.9319362+08:00</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638703.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 12:35:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-04T14:55:17.8322121+08:00</Time>
+    <SystemAllPlayerCount>2359</SystemAllPlayerCount>
+    <SystemAllMinerCount>258928</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>10638703.1435414</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 14:55:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>Tony</UserName>
+    <ActionType>GameRaiderWin</ActionType>
+    <OperNumber>8</OperNumber>
+    <Remark>176</Remark>
+    <Time>2017-01-04T14:56:25.392887+08:00</Time>
+    <SystemAllPlayerCount>0</SystemAllPlayerCount>
+    <SystemAllMinerCount>0</SystemAllMinerCount>
+    <SystemAllOutputStoneCount>0</SystemAllOutputStoneCount>
+    <LastLoginTimeString>2017/1/4 14:56:25</LastLoginTimeString>
+  </PlayerActionLog>
 </ArrayOfPlayerActionLog>

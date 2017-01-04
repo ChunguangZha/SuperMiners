@@ -820,6 +820,10 @@ namespace DataBaseProvider
                 {
                     item.AwardPoolSumStones = Convert.ToInt32(dt.Rows[i]["AwardPoolSumStones"]);
                 }
+                if (dt.Rows[i]["JoinedPlayerCount"] != DBNull.Value)
+                {
+                    item.JoinedPlayerCount = Convert.ToInt32(dt.Rows[i]["JoinedPlayerCount"]);
+                }
                 if (dt.Rows[i]["WinnerUserName"] != DBNull.Value)
                 {
                     item.WinnerUserName = DESEncrypt.DecryptDES(dt.Rows[i]["WinnerUserName"].ToString());

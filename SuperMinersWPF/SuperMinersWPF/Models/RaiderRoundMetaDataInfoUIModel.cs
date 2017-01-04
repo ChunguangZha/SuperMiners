@@ -31,6 +31,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("CountDownMinutes");
                 NotifyPropertyChange("CountDownSeconds");
                 NotifyPropertyChange("AwardPoolSumStones");
+                NotifyPropertyChange("JoinedPlayerCount");
                 NotifyPropertyChange("WinnerUserName");
                 NotifyPropertyChange("WinStones");
                 NotifyPropertyChange("EndTimeText");
@@ -125,6 +126,11 @@ namespace SuperMinersWPF.Models
             {
                 return this._parentObject.AwardPoolSumStones;
             }
+        }
+
+        public int JoinedPlayerCount
+        {
+            get { return this._parentObject.JoinedPlayerCount; }
         }
 
         public string WinnerUserName

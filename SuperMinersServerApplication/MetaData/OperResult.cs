@@ -197,6 +197,11 @@ namespace MetaData
         public const int RESULTCODE_GAME_RAIDER_ROUNDFINISHED = 701;
 
         /// <summary>
+        /// 娱乐——夺宝奇兵，正在等待第二位玩家加入，才能开始游戏
+        /// </summary>
+        public const int RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART = 702;
+
+        /// <summary>
         /// 股票市场， 撤单失败，开市期间无法撤单
         /// </summary>
         public const int RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING = 800;
@@ -265,6 +270,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_STACK_DELEGATEORDER_FAILED_MARKETISCLOSED, "尚未开市");
             _resultCode_Msg.Add(RESULTCODE_STACK_PRICE_OUTOFRANGE, "挂单价不能超出涨跌停范围");
             _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_ROUNDFINISHED, "本轮游戏已结束，请参加下一轮");
+            _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART, "正在等待第二位玩家加入才能开始");
         }
 
         public static string GetMsg(int resultCode)

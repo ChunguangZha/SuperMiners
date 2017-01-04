@@ -101,14 +101,15 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "UPDATE superminers.raiderroundmetadatainfo " + 
-                    " set `State` = @State, `StartTime` = @StartTime, `AwardPoolSumStones` = @AwardPoolSumStones, `WinnerUserName`=@WinnerUserName,`WinStones`=@WinStones,`EndTime`=@EndTime where `id` = @id ; ";
+                string sqlText = "UPDATE superminers.raiderroundmetadatainfo " +
+                    " set `State` = @State, `StartTime` = @StartTime, `AwardPoolSumStones` = @AwardPoolSumStones, `JoinedPlayerCount`=@JoinedPlayerCount, `WinnerUserName`=@WinnerUserName,`WinStones`=@WinStones,`EndTime`=@EndTime where `id` = @id ; ";
 
                 mycmd = myTrans.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@State", (int)roundInfo.State);
                 mycmd.Parameters.AddWithValue("@StartTime", roundInfo.StartTime == null ? DBNull.Value : (object)roundInfo.StartTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@AwardPoolSumStones", roundInfo.AwardPoolSumStones);
+                mycmd.Parameters.AddWithValue("@JoinedPlayerCount", roundInfo.JoinedPlayerCount);
                 mycmd.Parameters.AddWithValue("@WinnerUserName", string.IsNullOrEmpty(roundInfo.WinnerUserName) ? DBNull.Value : (object)DESEncrypt.EncryptDES(roundInfo.WinnerUserName));
                 mycmd.Parameters.AddWithValue("@WinStones", roundInfo.WinStones);
                 mycmd.Parameters.AddWithValue("@EndTime", roundInfo.EndTime == null ? DBNull.Value : (object)roundInfo.EndTime.ToDateTime());
@@ -171,7 +172,7 @@ namespace DataBaseProvider
             }
         }
 
-        public PlayerBetInfo[] GetPlayerBetInfoByRoundID(int roundID, int pageItemCount, int pageIndex)
+        public PlayerBetInfo[] GetPlayerBetInfoByRoundID(int roundID, string userName, int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -187,6 +188,18 @@ namespace DataBaseProvider
                 {
                     sqlWhere = " where RaiderRoundID = @RaiderRoundID ";
                     mycmd.Parameters.AddWithValue("@RaiderRoundID", roundID);
+                }
+                if (!string.IsNullOrEmpty(userName))
+                {
+                    if (sqlWhere.Length == 0)
+                    {
+                        sqlWhere = " where UserName = @UserName ";
+                    }
+                    else
+                    {
+                        sqlWhere += " and UserName = @UserName ";
+                    }
+                    mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
 
                 string sqlOrderLimit = " order by id desc ";

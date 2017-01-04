@@ -93,18 +93,18 @@ namespace SuperMinersWPF.ViewModels
 
         public void RegisterEvents()
         {
-            //GlobalData.Client.GetCurrentRaiderRoundInfoCompleted += Client_GetCurrentRaiderRoundInfoCompleted;
-            //GlobalData.Client.JoinRaiderCompleted += Client_JoinRaiderCompleted;
+            GlobalData.Client.GetCurrentRaiderRoundInfoCompleted += Client_GetCurrentRaiderRoundInfoCompleted;
+            GlobalData.Client.JoinRaiderCompleted += Client_JoinRaiderCompleted;
             //GlobalData.Client.OnPlayerJoinRaiderSucceed += Client_OnPlayerJoinRaiderSucceed;
-            //GlobalData.Client.OnPlayerWinedRaiderNotify += Client_OnPlayerWinedRaiderNotify;
-            //GlobalData.Client.GetHistoryRaiderRoundRecordsCompleted += Client_GetHistoryRaiderRoundRecordsCompleted;
-            //GlobalData.Client.GetPlayerselfBetInfoCompleted += Client_GetPlayerselfBetInfoCompleted;
+            GlobalData.Client.OnPlayerWinedRaiderNotify += Client_OnPlayerWinedRaiderNotify;
+            GlobalData.Client.GetHistoryRaiderRoundRecordsCompleted += Client_GetHistoryRaiderRoundRecordsCompleted;
+            GlobalData.Client.GetPlayerselfBetInfoCompleted += Client_GetPlayerselfBetInfoCompleted;
 
-            //isStartedListen = true;
-            //this._thrRefreshCurrentRound = new Thread(RefreshCurrentRound);
-            //this._thrRefreshCurrentRound.IsBackground = true;
-            //this._thrRefreshCurrentRound.Name = "thrRefreshCurrentRound";
-            //this._thrRefreshCurrentRound.Start();
+            isStartedListen = true;
+            this._thrRefreshCurrentRound = new Thread(RefreshCurrentRound);
+            this._thrRefreshCurrentRound.IsBackground = true;
+            this._thrRefreshCurrentRound.Name = "thrRefreshCurrentRound";
+            this._thrRefreshCurrentRound.Start();
         }
 
         void Client_GetPlayerselfBetInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.PlayerBetInfo[]> e)
@@ -170,11 +170,11 @@ namespace SuperMinersWPF.ViewModels
                 //    MyMessageBox.ShowInfo(string.Format("恭喜您成为第{0}期夺宝奇兵得主，您赢得{1}矿石奖励", e.Result.ID, e.Result.WinStones));
                 //}
 
-                MyMessageBox.ShowInfo(string.Format("恭喜您成为第{0}期夺宝奇兵得主，您赢得{1}矿石奖励", roundInfo.ID, roundInfo.WinStones));
+                //MyMessageBox.ShowInfo(string.Format("恭喜您成为第{0}期夺宝奇兵得主，您赢得{1}矿石奖励", roundInfo.ID, roundInfo.WinStones));
 
-                App.UserVMObject.AsyncGetPlayerInfo();
-                AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
-                this.ListSelfBetRecords.Clear();
+                //App.UserVMObject.AsyncGetPlayerInfo();
+                //AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
+                //this.ListSelfBetRecords.Clear();
             }
             catch (Exception exc)
             {
@@ -182,17 +182,15 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        void Client_OnPlayerJoinRaiderSucceed(MetaData.Game.RaideroftheLostArk.RaiderRoundMetaDataInfo roundInfo)
-        {
-            try
-            {
-                this.CurrentRaiderRound.ParentObject = roundInfo;
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("Client_GetCurrentRaiderRoundInfoCompleted Exception", exc);
-            }
-        }
+        ///// <summary>
+        ///// 用于获取上一次登录时没有处理完的游戏
+        ///// </summary>
+        ///// <param name="roundInfo"></param>
+        //void Client_OnPlayerJoinRaiderSucceed(MetaData.Game.RaideroftheLostArk.RaiderRoundMetaDataInfo roundInfo)
+        //{
+        //    this.CurrentRaiderRound.ParentObject = roundInfo;
+        //    AsyncGetSelfCurrentRoundBetInfos();
+        //}
 
         void Client_JoinRaiderCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
@@ -212,6 +210,12 @@ namespace SuperMinersWPF.ViewModels
                     AsyncGetSelfCurrentRoundBetInfos();
                     App.UserVMObject.AsyncGetPlayerInfo();
                 }
+                else if (e.Result == OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART)
+                {
+                    MyMessageBox.ShowInfo("下注成功，" + OperResult.GetMsg(e.Result));
+                    AsyncGetSelfCurrentRoundBetInfos();
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                }
                 else
                 {
                     MyMessageBox.ShowInfo("下注失败，原因为：" + OperResult.GetMsg(e.Result));
@@ -224,6 +228,9 @@ namespace SuperMinersWPF.ViewModels
         }
 
         private int SelfWinRoundID = -1;
+        private object _lockSelfWined = new object();
+
+        private bool selfBetRecordsBeInited = false;
 
         void Client_GetCurrentRaiderRoundInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.RaiderRoundMetaDataInfo> e)
         {
@@ -236,6 +243,31 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 this.CurrentRaiderRound.ParentObject = e.Result;
+                if (e.Result.State == MetaData.Game.RaideroftheLostArk.RaiderRoundState.Finished && !string.IsNullOrEmpty(e.Result.WinnerUserName))
+                {
+                    lock (_lockSelfWined)
+                    {
+                        if (SelfWinRoundID != e.Result.ID)
+                        {
+                            SelfWinRoundID = e.Result.ID;
+                            this.ListHistoryRaiderRoundRecords.Insert(0, new RaiderRoundMetaDataInfoUIModel(e.Result));
+                            if (e.Result.WinnerUserName == GlobalData.CurrentUser.UserName)
+                            {
+                                MyMessageBox.ShowInfo(string.Format("恭喜您成为第{0}期夺宝奇兵得主，您赢得{1}矿石奖励", e.Result.ID, e.Result.WinStones));
+                                App.UserVMObject.AsyncGetPlayerInfo();
+                            }
+                        }
+                    }
+                    this.ListSelfBetRecords.Clear();
+
+                    //AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
+                }
+
+                if (!selfBetRecordsBeInited)
+                {
+                    selfBetRecordsBeInited = true;
+                    AsyncGetSelfCurrentRoundBetInfos();
+                }
             }
             catch (Exception exc)
             {

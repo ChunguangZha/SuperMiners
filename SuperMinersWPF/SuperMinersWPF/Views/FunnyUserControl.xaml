@@ -18,7 +18,7 @@
                     <panelControl:GameRouletteControl x:Name="controlGameRoulette"/>
                 </Grid>
             </TabItem>
-            <TabItem Visibility="Collapsed">
+            <TabItem>
                 <TabItem.Header>
                     <Grid Width="100">
                         <TextBlock Text="夺宝奇兵" HorizontalAlignment="Center"/>
