@@ -176,7 +176,7 @@ namespace SuperMinersServerApplication.Controller.Game
             DBProvider.GameRaiderofLostArkDBProvider.SavePlayerBetInfo(betInfo);
             listPlayerBetInfos.Add(betInfo);
 
-            if (this._currentRoundInfo.JoinedPlayerCount == 2)
+            if (this._currentRoundInfo.JoinedPlayerCount >= 2)
             {
                 return OperResult.RESULTCODE_TRUE;
             }
@@ -231,8 +231,11 @@ namespace SuperMinersServerApplication.Controller.Game
                     {
                         myTrans = MyDBHelper.Instance.CreateTrans();
                         DBProvider.GameRaiderofLostArkDBProvider.UpdateRaiderRoundMetaDataInfo(this._currentRoundInfo, myTrans);
-                        PlayerController.Instance.WinRaiderGetAward(winnerBetInfo.UserName, winnerGainBetCount, myTrans);
-
+                        int result = PlayerController.Instance.WinRaiderGetAward(winnerBetInfo.UserName, winnerGainBetCount, myTrans);
+                        if (result != OperResult.RESULTCODE_TRUE)
+                        {
+                            LogHelper.Instance.AddErrorLog("夺宝奇兵给玩家返奖失败。" + this._currentRoundInfo.ToString(), null);
+                        }
                         myTrans.Commit();
                         isOK = true;
                     }

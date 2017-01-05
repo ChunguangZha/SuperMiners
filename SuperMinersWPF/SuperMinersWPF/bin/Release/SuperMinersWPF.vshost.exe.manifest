@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="3189248">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="3189760">
       <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sNheikmxwyZQLKExeEbD+SskVRljchzVl+fjUHGPH1s=</dsig:DigestValue>
+        <dsig:DigestValue>tXxIpbv0XvcxO+7wjlsBOcNlsdRuy5EBKz6SmKkeuV4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -69,7 +69,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>F7yeoSP5K/3jkpA9PnlOPaGaPFxtQD4tPv3Z+gX34vg=</dsig:DigestValue>
+      <dsig:DigestValue>MLNu5QLFE/yLU/YLLI+kviWxWsPb9LIowgxKAkUjyI0=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -1131,10 +1131,10 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if ((this.BasePlayer.FortuneInfo.StockOfStones - this.BasePlayer.FortuneInfo.FreezingStones) < winStoneCount)
-                {
-                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
-                }
+                //if ((this.BasePlayer.FortuneInfo.StockOfStones - this.BasePlayer.FortuneInfo.FreezingStones) < winStoneCount)
+                //{
+                //    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                //}
 
                 this.BasePlayer.FortuneInfo.StockOfStones += winStoneCount;
                 bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);

@@ -48,10 +48,11 @@ namespace SuperMinersWPF.Utility
                 {
                     Directory.CreateDirectory(GlobalData.LogFolder);
                 }
-                if (!File.Exists(LogErrorFilePath))
+                if (File.Exists(LogErrorFilePath))
                 {
-                    File.Create(LogErrorFilePath);
+                    File.Delete(LogErrorFilePath);
                 }
+                File.Create(LogErrorFilePath);
 
                 InitSuceed = true;
                 //_timer.Elapsed += Timer_Elapsed;

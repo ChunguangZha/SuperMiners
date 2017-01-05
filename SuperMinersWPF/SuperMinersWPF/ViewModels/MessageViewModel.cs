@@ -177,32 +177,18 @@ namespace SuperMinersWPF.ViewModels
                     }
                 }
 
-                PlayerActionLogUIModel lastLogFromClient = null;
-                if (ListPlayerActionLog.Count > 0)
-                {
-                    lastLogFromClient = ListPlayerActionLog[0];
-                }
+                //PlayerActionLogUIModel lastLogFromClient = null;
+                //if (ListPlayerActionLog.Count > 0)
+                //{
+                //    lastLogFromClient = ListPlayerActionLog[0];
+                //}
                 for (int i = 0; i < e.Result.Length; i++)
                 {
-                    var log = e.Result[i];
-                    if (lastLogFromClient != null)
+                    var newLog = e.Result[i];
+                    if (!this.JudgeLogExists(newLog))
                     {
-                        if (lastLogFromClient.Time > log.Time)
-                        {
-                            continue;
-                        }
-                        if (lastLogFromClient.Time == log.Time)
-                        {
-                            if (lastLogFromClient.ParentObject.UserName == log.UserName
-                                && lastLogFromClient.ParentObject.ActionType == log.ActionType
-                                && lastLogFromClient.ParentObject.OperNumber == log.OperNumber
-                                && lastLogFromClient.ParentObject.Remark == log.Remark)
-                            {
-                                continue;
-                            }
-                        }
+                        ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(newLog));
                     }
-                    ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(log));
                 }
 
                 if (GetPlayerActionCompleted != null)
@@ -215,6 +201,33 @@ namespace SuperMinersWPF.ViewModels
                 MyMessageBox.ShowInfo("服务器连接失败。");
                 LogHelper.Instance.AddErrorLog("服务器连接失败。", exc);
             }
+        }
+
+        private bool JudgeLogExists(PlayerActionLog newLog)
+        {
+            bool isExists = false;
+            for (int i = 0; i < this.ListPlayerActionLog.Count; i++)
+            {
+                var oldLog = this.ListPlayerActionLog[i];
+                if (oldLog.Time < newLog.Time)
+                {
+                    isExists = false;
+                    break;
+                }
+                if (oldLog.Time == newLog.Time)
+                {
+                    if (oldLog.ParentObject.UserName == newLog.UserName
+                        && oldLog.ParentObject.ActionType == newLog.ActionType
+                        && oldLog.ParentObject.OperNumber == newLog.OperNumber
+                        && oldLog.ParentObject.Remark == newLog.Remark)
+                    {
+                        isExists = true;
+                        break;
+                    }
+                }
+            }
+
+            return isExists;
         }
 
         public event EventHandler GetPlayerActionCompleted;

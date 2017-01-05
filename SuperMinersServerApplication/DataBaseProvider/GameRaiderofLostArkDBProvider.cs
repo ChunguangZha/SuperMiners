@@ -31,7 +31,7 @@ namespace DataBaseProvider
                                     " (SELECT b.RaiderRoundID, b.UserName, sum(b.BetStones) as AllBetStones " + 
                                     " FROM superminers.raiderplayerbetinfo b " +  
                                     " where b.UserName = @UserName " +
-                                    " group by b.UserName  "+ sqlOrderLimit + " ) ttt " +
+                                    " group by b.RaiderRoundID  " + sqlOrderLimit + " ) ttt " +
                                     "  left join  superminers.raiderroundmetadatainfo r  on ttt.RaiderRoundID = r.id ";
 
                 mycmd = myconn.CreateCommand();
