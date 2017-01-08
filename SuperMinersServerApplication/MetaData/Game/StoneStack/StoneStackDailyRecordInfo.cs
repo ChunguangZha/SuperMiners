@@ -52,7 +52,7 @@ namespace MetaData.Game.StoneStack
         /// 最低成交价(计买入价)
         /// </summary>
         [DataMember]
-        public decimal MinTradeSucceedPrice;
+        public decimal MinTradeSucceedPrice = decimal.MaxValue;
 
         /// <summary>
         /// 最高成交价(计买入价)
@@ -71,6 +71,24 @@ namespace MetaData.Game.StoneStack
 
         [DataMember]
         public int DelegateBuyStoneSum;
+
+        public StoneStackDailyRecordInfo Copy()
+        {
+            return new StoneStackDailyRecordInfo()
+            {
+                Day = this.Day,
+                OpenPrice = this.OpenPrice,
+                ClosePrice = this.ClosePrice,
+                DelegateBuyStoneSum = this.DelegateBuyStoneSum,
+                DelegateSellStoneSum = this.DelegateSellStoneSum,
+                LimitDownPrice = this.LimitDownPrice,
+                LimitUpPrice = this.LimitUpPrice,
+                MaxTradeSucceedPrice = this.MaxTradeSucceedPrice,
+                MinTradeSucceedPrice = this.MinTradeSucceedPrice,
+                TradeSucceedRMBSum = this.TradeSucceedRMBSum,
+                TradeSucceedStoneHandSum = this.TradeSucceedStoneHandSum
+            };
+        }
 
     }
 }

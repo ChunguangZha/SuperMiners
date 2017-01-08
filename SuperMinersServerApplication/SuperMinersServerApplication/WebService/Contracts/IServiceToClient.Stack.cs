@@ -94,6 +94,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         TodayStoneStackTradeRecordInfo GetTodayStoneStackInfo(string token);
 
-
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetTodayRealTimeTradeRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        StoneStackDailyRecordInfo[] GetTodayRealTimeTradeRecords(string token);
     }
 }

@@ -189,5 +189,20 @@ namespace MetaData.SystemConfig
         /// </summary>
         [DataMember]
         public int PlayerVIPInterval = 2000;
+
+        [DataMember]
+        public int StackMarketMorningOpenTime = 9;
+        [DataMember]
+        public int StackMarketMorningCloseTime = 12;
+
+        [DataMember]
+        public int StackMarketAfternoonOpenTime = 13;
+        [DataMember]
+        public int StackMarketAfternoonCloseTime = 17;
+
+        [DataMember]
+        public int StackMarketNightOpenTime = 18;
+        [DataMember]
+        public int StackMarketNightCloseTime = 23;
     }
 }

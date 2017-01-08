@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:my="clr-namespace:SuperMinersWPF.MyControl"
+             xmlns:views="clr-namespace:SuperMinersWPF.Views.Controls"
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="700">
@@ -16,23 +17,58 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-
-        <Grid Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="Collapsed">
-            <TextBlock Text="即将开放，敬请期待..." VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="36"/>
-        </Grid>
-        <Grid Margin="10">
+        <Grid Margin="10" Background="Black">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="K线图" FontSize="18" HorizontalAlignment="Center" Margin="5"></TextBlock>
-            <Border Grid.Row="1" Margin="10" IsEnabled="False" Background="DarkGray" BorderThickness="1"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.RowSpan="2" Text="{Binding TodayStackInfo.ClosePrice, Mode=OneWay}" Foreground="{Binding TodayStackInfo.ClosePriceColor}" FontSize="22" HorizontalAlignment="Center" Margin="5,0"/>
+                <TextBlock Grid.Column="1" Grid.Row="0" Foreground="{Binding TodayStackInfo.RiseValueColor}" VerticalAlignment="Bottom">
+                    <Run Text="{Binding TodayStackInfo.RisePercent, Mode=OneWay}"/>
+                    <Run Text="%"/>
+                </TextBlock>
+                <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding TodayStackInfo.RiseValue, Mode=OneWay}" Foreground="{Binding TodayStackInfo.RiseValueColor}" VerticalAlignment="Bottom"></TextBlock>
+                <TextBlock Grid.Column="2" Grid.RowSpan="2" Foreground="White" VerticalAlignment="Center">
+                    <Run Text="开 "/>
+                    <Run Text="{Binding TodayStackInfo.OpenPrice, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="3">
+                    <Run Text="高 " Foreground="White"/>
+                    <Run Text="{Binding TodayStackInfo.MaxTradeSucceedPrice, Mode=OneWay}" Foreground="{Binding TodayStackInfo.MaxTradeSucceedPriceColor}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="3" Grid.Row="1">
+                    <Run Text="低 " Foreground="White"/>
+                    <Run Text="{Binding TodayStackInfo.MinTradeSucceedPrice, Mode=OneWay}" Foreground="{Binding TodayStackInfo.MinTradeSucceedPriceColor}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="4" Foreground="White">
+                    <Run Text="量 "/>
+                    <Run Text="{Binding TodayStackInfo.TradeSucceedStoneHandSum, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="1" Foreground="White">
+                    <Run Text="额 "/>
+                    <Run Text="{Binding TodayStackInfo.TradeSucceedRMBSum, Mode=OneWay}"/>
+                </TextBlock>
+            </Grid>
+            <views:KLineControl Grid.Row="1" />
         </Grid>
 
         <StackPanel Grid.Column="1" Margin="10" Height="Auto" VerticalAlignment="Top">
@@ -43,13 +79,13 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.ColumnSpan="2" Background="LightGray" Margin="1">
-                    <TextBlock Text="每手矿石的价格" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="每手价格" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
                 <Border Grid.Column="2" Background="LightGray" Margin="1">
-                    <TextBlock Text="挂单数量（手）" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="数量(手)" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 </Border>
             </Grid>
-            <ListView Name="lvSell5Price" HorizontalContentAlignment="Stretch">
+            <ListView Name="lvSell5Price" ItemsSource="{Binding TodayStackInfo.Top5SellOrderList}" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">
@@ -66,7 +102,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Name="lvBuy5Price" HorizontalContentAlignment="Stretch">
+            <ListView Name="lvBuy5Price" ItemsSource="{Binding TodayStackInfo.Top5BuyOrderList}" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,2">
@@ -122,8 +158,8 @@
                     <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnBuyStone" Content="挂单购买" Style="{StaticResource UserInfoButtonStyle}" IsEnabled="False" Width="100" Height="30" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBuyStone_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="未完成的买单">
-                <ListView Name="lvNotFinishedBuyOrder" HorizontalContentAlignment="Stretch">
+            <TabItem Header="买单">
+                <ListView Name="lvNotFinishedBuyOrder" ItemsSource="{Binding AllNotFinishedBuyOrders}" HorizontalContentAlignment="Stretch">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <GroupBox>
@@ -157,8 +193,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </TabItem>
-            <TabItem Header="未完成的卖单">
-                <ListView Name="lvNotFinishedSellOrder" HorizontalContentAlignment="Stretch">
+            <TabItem Header="卖单">
+                <ListView Name="lvNotFinishedSellOrder" ItemsSource="{Binding AllNotFinishedSellOrders}" HorizontalContentAlignment="Stretch">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <GroupBox>

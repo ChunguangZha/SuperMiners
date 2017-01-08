@@ -16,7 +16,22 @@ namespace SuperMinersWPF.ViewModels
     {
         System.Timers.Timer _timer = new System.Timers.Timer(10 * 1000);
 
-        public TodayStoneStackTradeRecordInfoUIModel TodayStackInfo = new TodayStoneStackTradeRecordInfoUIModel(new MetaData.Game.StoneStack.TodayStoneStackTradeRecordInfo());
+        private TodayStoneStackTradeRecordInfoUIModel _currentTodayStackInfo = new TodayStoneStackTradeRecordInfoUIModel(new MetaData.Game.StoneStack.TodayStoneStackTradeRecordInfo());
+        public TodayStoneStackTradeRecordInfoUIModel TodayStackInfo
+        {
+            get
+            {
+                return this._currentTodayStackInfo;
+            }
+        }
+
+        private ObservableCollection<StoneStackDailyRecordInfo> _listTodayRealTimeTradeRecords = new ObservableCollection<StoneStackDailyRecordInfo>();
+
+        public ObservableCollection<StoneStackDailyRecordInfo> ListTodayRealTimeTradeRecords
+        {
+            get { return _listTodayRealTimeTradeRecords; }
+        }
+
 
         private ObservableCollection<StoneDelegateSellOrderInfoUIModel> _allFinishedSellOrders = new ObservableCollection<StoneDelegateSellOrderInfoUIModel>();
         public ObservableCollection<StoneDelegateSellOrderInfoUIModel> AllFinishedSellOrders
@@ -98,6 +113,11 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.CancelDelegateSellStone(sellOrder, null);
         }
 
+        public void AsyncGetTodayRealTimeTradeRecords()
+        {
+            GlobalData.Client.GetTodayRealTimeTradeRecords(null);
+        }
+
         public void RegisterEvent()
         {
             _timer.Elapsed += _timer_Elapsed;
@@ -110,6 +130,28 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.CancelDelegateSellStoneCompleted += Client_CancelDelegateSellStoneCompleted;
             GlobalData.Client.GetFinishedDelegateSellStoneOrdersCompleted += Client_GetFinishedDelegateSellStoneOrdersCompleted;
             GlobalData.Client.GetFinishedDelegateBuyStoneOrdersCompleted += Client_GetFinishedDelegateBuyStoneOrdersCompleted;
+            GlobalData.Client.GetTodayRealTimeTradeRecordsCompleted += Client_GetTodayRealTimeTradeRecordsCompleted;
+        }
+
+        void Client_GetTodayRealTimeTradeRecordsCompleted(object sender, WebInvokeEventArgs<StoneStackDailyRecordInfo[]> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("Client_GetTodayRealTimeTradeRecordsCompleted Server Exception", e.Error);
+                    return;
+                }
+                this.ListTodayRealTimeTradeRecords.Clear();
+                foreach (var item in e.Result)
+                {
+                    this.ListTodayRealTimeTradeRecords.Add(item);
+                }
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Client_GetTodayRealTimeTradeRecordsCompleted Exception", exc);
+            }
         }
 
         public void StopListen()
@@ -288,7 +330,28 @@ namespace SuperMinersWPF.ViewModels
                     LogHelper.Instance.AddErrorLog("Client_GetTodayStoneStackInfoCompleted Exception1", e.Error);
                 }
 
+                //TODO: 为了测试，此处临时获取当前时间
+                //e.Result.DailyInfo.Day = new MyDateTime(DateTime.Now);
                 this.TodayStackInfo.ParentObject = e.Result;
+                if (e.Result == null)
+                {
+                    this.ListTodayRealTimeTradeRecords.Clear();
+                }
+                else
+                {
+                    if (this.ListTodayRealTimeTradeRecords.Count == 0)
+                    {
+                        this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
+                    }
+                    else
+                    {
+                        var lastDateTime = this.ListTodayRealTimeTradeRecords[this.ListTodayRealTimeTradeRecords.Count - 1].Day.ToDateTime();
+                        if (lastDateTime < e.Result.DailyInfo.Day.ToDateTime())
+                        {
+                            this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
+                        }
+                    }
+                }
 
                 if (e.Result != null)
                 {

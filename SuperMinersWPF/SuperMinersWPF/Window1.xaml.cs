@@ -72,8 +72,9 @@ namespace SuperMinersWPF
 
             App.GameRouletteVMObject.AsyncGetAllAwardItems();
             App.GameRouletteVMObject.AsyncGetAllAwardRecord(-1, null, null, -1, -1, 20, 1);
-            App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
+            //App.StoneOrderVMObject.AsyncGetAllNotFinishedSellOrders();
 
+            App.StackStoneVMObject.AsyncGetTodayRealTimeTradeRecords();
             App.StackStoneVMObject.AsyncGetAllNotFinishedSellOrders();
             App.StackStoneVMObject.AsyncGetAllNotFinishedBuyOrders();
             App.GameRaiderofLostArkVMObject.AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);

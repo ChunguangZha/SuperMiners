@@ -462,5 +462,27 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
+
+        public StoneStackDailyRecordInfo[] GetTodayRealTimeTradeRecords(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return OrderController.Instance.StoneStackController.GetTodayRealTimeTradeRecords();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetTodayRealTimeTradeRecords Exception", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

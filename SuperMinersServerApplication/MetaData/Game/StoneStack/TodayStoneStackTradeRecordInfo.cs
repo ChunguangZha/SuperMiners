@@ -92,7 +92,10 @@ namespace MetaData.Game.StoneStack
                 {
                     Day = new MetaData.MyDateTime(DateTime.Now),
                     //初始等于矿石原价
-                    OpenPrice = initPrice
+                    OpenPrice = initPrice,
+                    ClosePrice = initPrice,
+                    MaxTradeSucceedPrice = initPrice,
+                    MinTradeSucceedPrice = initPrice,
                 };
             }
             else
@@ -105,6 +108,9 @@ namespace MetaData.Game.StoneStack
                     {
                         Day = new MetaData.MyDateTime(nowTime),
                         OpenPrice = lastDailyInfo.ClosePrice,
+                        ClosePrice = lastDailyInfo.ClosePrice,
+                        MaxTradeSucceedPrice = lastDailyInfo.ClosePrice,
+                        MinTradeSucceedPrice = lastDailyInfo.ClosePrice,
                     };
                 }
                 else

@@ -29,22 +29,15 @@ namespace SuperMinersWPF.Views
         public StackMarketControl()
         {
             InitializeComponent();
-            BindUI();
-            this.lvNotFinishedSellOrder.ItemsSource = App.StackStoneVMObject.AllNotFinishedSellOrders;
-            this.lvNotFinishedBuyOrder.ItemsSource = App.StackStoneVMObject.AllNotFinishedBuyOrders;
+
+            this.DataContext = App.StackStoneVMObject;
+
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
         }
-
-        private void BindUI()
-        {
-            //BindCountUI();
-            BindPriceUI();
-
-        }
-
+        
         public void AddEventHandlers()
         {
             App.StackStoneVMObject.MarketOpened += StackStoneVMObject_MarketOpened;
@@ -88,21 +81,21 @@ namespace SuperMinersWPF.Views
             }
         }
 
-        private void BindPriceUI()
-        {
-            Binding bind = null;
-            bind = new Binding("Top5BuyOrderList")
-            {
-                Source = App.StackStoneVMObject.TodayStackInfo
-            };
-            this.lvBuy5Price.SetBinding(ListView.ItemsSourceProperty, bind);
+        //private void BindPriceUI()
+        //{
+        //    Binding bind = null;
+        //    bind = new Binding("Top5BuyOrderList")
+        //    {
+        //        Source = App.StackStoneVMObject.TodayStackInfo
+        //    };
+        //    this.lvBuy5Price.SetBinding(ListView.ItemsSourceProperty, bind);
 
-            bind = new Binding("Top5SellOrderList")
-            {
-                Source = App.StackStoneVMObject.TodayStackInfo
-            };
-            this.lvSell5Price.SetBinding(ListView.ItemsSourceProperty, bind);
-        }
+        //    bind = new Binding("Top5SellOrderList")
+        //    {
+        //        Source = App.StackStoneVMObject.TodayStackInfo
+        //    };
+        //    this.lvSell5Price.SetBinding(ListView.ItemsSourceProperty, bind);
+        //}
 
         private void btnBuyStone_Click(object sender, RoutedEventArgs e)
         {

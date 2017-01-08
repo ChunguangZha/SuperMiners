@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace SuperMinersWPF.Models
 {
@@ -42,10 +43,16 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("DayText");
                 NotifyPropertyChange("OpenPrice");
                 NotifyPropertyChange("ClosePrice");
+                NotifyPropertyChange("ClosePriceColor");
+                NotifyPropertyChange("RiseValue");
+                NotifyPropertyChange("RisePercent");
+                NotifyPropertyChange("RiseValueColor");
                 NotifyPropertyChange("LimitUpPrice");
                 NotifyPropertyChange("LimitDownPrice");
                 NotifyPropertyChange("MinTradeSucceedPrice");
+                NotifyPropertyChange("MinTradeSucceedPriceColor");
                 NotifyPropertyChange("MaxTradeSucceedPrice");
+                NotifyPropertyChange("MaxTradeSucceedPriceColor");
                 NotifyPropertyChange("TradeSucceedStoneHandSum");
                 NotifyPropertyChange("TradeSucceedRMBSum");
                 NotifyPropertyChange("DelegateSellStoneSum");
@@ -64,6 +71,10 @@ namespace SuperMinersWPF.Models
 
             }
         }
+
+        private SolidColorBrush _redBrush = new SolidColorBrush(Colors.Red);
+        private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
+        private SolidColorBrush _whiteBrush = new SolidColorBrush(Colors.White);
 
         public StackMarketState MarketState
         {
@@ -164,83 +175,15 @@ namespace SuperMinersWPF.Models
                 }
             }
         }
-
-        //private StackTradeUnitUIModel _sell5Unit = new StackTradeUnitUIModel(5, false, null);
-
-        //public StackTradeUnitUIModel Sell5Unit
-        //{
-        //    get { return _sell5Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _sell4Unit = new StackTradeUnitUIModel(4, false, null);
-
-        //public StackTradeUnitUIModel Sell4Unit
-        //{
-        //    get { return _sell4Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _sell3Unit = new StackTradeUnitUIModel(3, false, null);
-
-        //public StackTradeUnitUIModel Sell3Unit
-        //{
-        //    get { return _sell3Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _sell2Unit = new StackTradeUnitUIModel(2, false, null);
-
-        //public StackTradeUnitUIModel Sell2Unit
-        //{
-        //    get { return _sell2Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _sell1Unit = new StackTradeUnitUIModel(1, false, null);
-
-        //public StackTradeUnitUIModel Sell1Unit
-        //{
-        //    get { return _sell1Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _buy1Unit = new StackTradeUnitUIModel(1, true, null);
-
-        //public StackTradeUnitUIModel Buy1Unit
-        //{
-        //    get { return _buy1Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _buy2Unit = new StackTradeUnitUIModel(2, true, null);
-
-        //public StackTradeUnitUIModel Buy2Unit
-        //{
-        //    get { return _buy2Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _buy3Unit = new StackTradeUnitUIModel(3, true, null);
-
-        //public StackTradeUnitUIModel Buy3Unit
-        //{
-        //    get { return _buy3Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _buy4Unit = new StackTradeUnitUIModel(4, true, null);
-
-        //public StackTradeUnitUIModel Buy4Unit
-        //{
-        //    get { return _buy4Unit; }
-        //}
-
-        //private StackTradeUnitUIModel _buy5Unit = new StackTradeUnitUIModel(5, true, null);
-
-        //public StackTradeUnitUIModel Buy5Unit
-        //{
-        //    get { return _buy5Unit; }
-        //}
-
-
-
+        
         public string DayText
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return "";
+                }
                 return this._parentObject.DailyInfo.Day.ToDateTime().ToLongDateString();
             }
         }
@@ -249,6 +192,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.OpenPrice;
             }
         }
@@ -257,7 +204,49 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.ClosePrice;
+            }
+        }
+
+        public SolidColorBrush ClosePriceColor
+        {
+            get
+            {
+                if (ClosePrice == OpenPrice) return _whiteBrush;
+                return ClosePrice > OpenPrice ? _redBrush : _greenBrush;
+            }
+        }
+
+        public decimal RiseValue
+        {
+            get
+            {
+                return Math.Round(ClosePrice - OpenPrice, 2);
+            }
+        }
+
+        public SolidColorBrush RiseValueColor
+        {
+            get
+            {
+                if (RiseValue == 0) return _whiteBrush;
+                return RiseValue > 0 ? _redBrush : _greenBrush;
+            }
+        }
+
+        public decimal RisePercent
+        {
+            get
+            {
+                if (OpenPrice == 0)
+                {
+                    return 0;
+                }
+                return Math.Round((ClosePrice - OpenPrice) / OpenPrice * 100m, 2);
             }
         }
 
@@ -265,6 +254,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.LimitUpPrice;
             }
         }
@@ -273,6 +266,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.LimitDownPrice;
             }
         }
@@ -281,7 +278,24 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
+                if (this._parentObject.DailyInfo.MinTradeSucceedPrice > this.MaxTradeSucceedPrice)
+                {
+                    return this.MaxTradeSucceedPrice;
+                }
                 return this._parentObject.DailyInfo.MinTradeSucceedPrice;
+            }
+        }
+
+        public SolidColorBrush MinTradeSucceedPriceColor
+        {
+            get
+            {
+                if (this.MinTradeSucceedPrice == this.OpenPrice) return _whiteBrush;
+                return this.MinTradeSucceedPrice > this.OpenPrice ? _redBrush : _greenBrush;
             }
         }
 
@@ -289,7 +303,20 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.MaxTradeSucceedPrice;
+            }
+        }
+
+        public SolidColorBrush MaxTradeSucceedPriceColor
+        {
+            get
+            {
+                if (this.MaxTradeSucceedPrice == this.OpenPrice) return _whiteBrush;
+                return this.MaxTradeSucceedPrice > this.OpenPrice ? _redBrush : _greenBrush;
             }
         }
 
@@ -297,6 +324,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.TradeSucceedStoneHandSum;
             }
         }
@@ -305,6 +336,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.TradeSucceedRMBSum;
             }
         }
@@ -313,6 +348,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.DelegateSellStoneSum;
             }
         }
@@ -321,6 +360,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (this._parentObject == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.DailyInfo.DelegateBuyStoneSum;
             }
         }

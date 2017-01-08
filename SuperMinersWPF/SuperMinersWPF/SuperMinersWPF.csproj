@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>2.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -392,6 +392,15 @@
     <Compile Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml.cs">
       <DependentUpon>GoldCoinRechargeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\KLineControl.xaml.cs">
+      <DependentUpon>KLineControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\KLineDayControl.xaml.cs">
+      <DependentUpon>KLineDayControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\KLineRealTimeControl.xaml.cs">
+      <DependentUpon>KLineRealTimeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\StackMarketControl.xaml.cs">
       <DependentUpon>StackMarketControl.xaml</DependentUpon>
     </Compile>
@@ -594,6 +603,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\GoldCoinRechargeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\KLineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\KLineDayControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\KLineRealTimeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
