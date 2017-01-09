@@ -659,20 +659,18 @@ namespace SuperMinersServerApplication.Controller.Stack
                         continue;
                     }
 
-                    if (this._dicWaitingBuyInfos.Count == 0 || this._dicWaitingSellInfos.Count == 0)
+                    if (this._dicWaitingBuyInfos.Count != 0 && this._dicWaitingSellInfos.Count != 0)
                     {
-                        continue;
+                        //只处理 买1 和 卖1
+                        lock (_lockTodayInfo)
+                        {
+                            TradeBuy1Orders();
+                        }
                     }
 
-                    //只处理 买1 和 卖1
-                    lock (_lockTodayInfo)
-                    {
-                        TradeBuy1Orders();
-
-                        this._todayTradeInfo.DailyInfo.Day = new MyDateTime(DateTime.Now);
-                        var newDailyRecord = this._todayTradeInfo.DailyInfo.Copy();
-                        this._listTodayRealTimeTradeRecords.Add(newDailyRecord);
-                    }
+                    this._todayTradeInfo.DailyInfo.Day = new MyDateTime(DateTime.Now);
+                    var newDailyRecord = this._todayTradeInfo.DailyInfo.Copy();
+                    this._listTodayRealTimeTradeRecords.Add(newDailyRecord);
                 }
                 catch (Exception exc)
                 {

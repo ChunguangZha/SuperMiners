@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <views:KLineRealTimeControl x:Name="klineRealTimeControl"/>
-        <views:KLineDayControl x:Name="klineDayControl"/>
+        <views:KLineDayControl x:Name="klineDayControl" Visibility="Collapsed"/>
         <CheckBox Grid.Row="1" Name="rbtnSwitch" Content="分时图" Foreground="White" Style="{StaticResource SliderCheckBox}" VerticalAlignment="Bottom" HorizontalAlignment="Left" Checked="rbtnSwitch_Checked" Unchecked="rbtnSwitch_Unchecked"/>
     </Grid>
 </UserControl>

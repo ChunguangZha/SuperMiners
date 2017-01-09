@@ -11,6 +11,37 @@ namespace DataBaseProvider
 {
     public class StoneStackDBProvider
     {
+        public StoneStackDailyRecordInfo[] GetAllStoneStackDailyRecordInfo()
+        {
+            MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
+            MySqlCommand mycmd = null;
+            try
+            {
+                string sqlText = "SELECT * FROM superminers.stonestackdailyrecordinfo order by id desc;";
+                mycmd = myconn.CreateCommand();
+                mycmd.CommandText = sqlText;
+                myconn.Open();
+
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+
+                return MetaDBAdapter<StoneStackDailyRecordInfo>.GetStoneStackDailyRecordInfoFromDataTable(table);
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Clone();
+                    myconn.Dispose();
+                }
+            }
+        }
+
         public StoneStackDailyRecordInfo GetLastStoneStackDailyRecordInfo()
         {
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();

@@ -126,5 +126,15 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetAllStoneStackDailyRecordInfo
+
+        public event EventHandler<WebInvokeEventArgs<StoneStackDailyRecordInfo[]>> GetAllStoneStackDailyRecordInfoCompleted;
+        public void GetAllStoneStackDailyRecordInfo(object userState)
+        {
+            this._invoker.InvokeUserState<StoneStackDailyRecordInfo[]>(this._context, "GetAllStoneStackDailyRecordInfo", this.GetAllStoneStackDailyRecordInfoCompleted, userState, GlobalData.Token);
+        }
+
+        #endregion
+
     }
 }

@@ -50,7 +50,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>FdX164HSagbLD80Z+HVdSeKqT1fBoDJNDoUnj+VPHR4=</dsig:DigestValue>
+        <dsig:DigestValue>L2Q5ov2vRVEXHQPJ7llZOTn3OS6x4bTd6A7Vtbk0BZ8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -62,7 +62,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>O2zU5RwCwnoKnw6MyMvdXNRvJucZ7E4vrrFGLj+kuW8=</dsig:DigestValue>
+        <dsig:DigestValue>hAqHtKbbHBcVfZts66165h1qPjsPUez2gpBA+0PpAC4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="509952">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="510464">
       <assemblyIdentity name="SuperMinersServerApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>66Wv7xWNEXK2CqBrpHVt/cQvzXuMoU3pemYz/F0byu4=</dsig:DigestValue>
+        <dsig:DigestValue>Egwd7QljTz/t5oQcfq1+v7CvASfDA3kdJL6OGdCjGzo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>YjngXE0UrNTE9PXZ7pjFzuVS7qEnIR6t5TJ0bZVTfy4=</dsig:DigestValue>
+        <dsig:DigestValue>k2Egj4npsQ5kq+h9wn0zu0IZ9fz+jVGUlkMUOV1Ywio=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

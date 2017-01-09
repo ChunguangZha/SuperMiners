@@ -60,10 +60,18 @@
                     <Run Text="{Binding TodayStackInfo.MinTradeSucceedPrice, Mode=OneWay}" Foreground="{Binding TodayStackInfo.MinTradeSucceedPriceColor}"/>
                 </TextBlock>
                 <TextBlock Grid.Column="4" Foreground="White">
+                    <Run Text="涨停 "/>
+                    <Run Text="{Binding TodayStackInfo.LimitUpPrice, Mode=OneWay}" Foreground="Red"/>
+                </TextBlock>
+                <TextBlock Grid.Column="4" Grid.Row="1" Foreground="White">
+                    <Run Text="跌停 "/>
+                    <Run Text="{Binding TodayStackInfo.LimitDownPrice, Mode=OneWay}" Foreground="Green"/>
+                </TextBlock>
+                <TextBlock Grid.Column="5" Foreground="White">
                     <Run Text="量 "/>
                     <Run Text="{Binding TodayStackInfo.TradeSucceedStoneHandSum, Mode=OneWay}"/>
                 </TextBlock>
-                <TextBlock Grid.Column="4" Grid.Row="1" Foreground="White">
+                <TextBlock Grid.Column="5" Grid.Row="1" Foreground="White">
                     <Run Text="额 "/>
                     <Run Text="{Binding TodayStackInfo.TradeSucceedRMBSum, Mode=OneWay}"/>
                 </TextBlock>

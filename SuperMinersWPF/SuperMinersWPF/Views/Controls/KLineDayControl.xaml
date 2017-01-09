@@ -3,9 +3,32 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="320" d:DesignWidth="520" Background="Black">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Border Margin="10,10,10,0" BorderThickness="1" BorderBrush="{StaticResource LogoPanelBackground}">
+            <Grid>
+                <Canvas Name="canvas">
+                    <Line X1="0" Y1="150" X2="500" Y2="150" Stroke="Yellow" StrokeDashArray="1 1"/>
+                    <Line X1="250" Y1="0" X2="250" Y2="300" Stroke="#FF323232" StrokeDashArray="1 1"/>
+                </Canvas>
+                <TextBlock Name="txtUpRiseValue" Text="10" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBlock Name="txtDownRiseValue" Text="-10" Foreground="Green" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <TextBlock Name="txtOpenPrice" Text="100" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="txtFirstDay" Text="2016/12/20" Foreground="White"/>
+            <TextBlock Name="txtLastDay" Text="2017/01/09" Grid.Column="1" HorizontalAlignment="Right" Foreground="White"/>
+        </Grid>
     </Grid>
 </UserControl>

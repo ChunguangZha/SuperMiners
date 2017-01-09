@@ -32,6 +32,13 @@ namespace SuperMinersWPF.ViewModels
             get { return _listTodayRealTimeTradeRecords; }
         }
 
+        //private ObservableCollection<StoneStackDailyRecordInfo> _listAllHistoryDailyTradeRecords = new ObservableCollection<StoneStackDailyRecordInfo>();
+
+        //public ObservableCollection<StoneStackDailyRecordInfo> ListAllHistoryDailyTradeRecords
+        //{
+        //    get { return _listAllHistoryDailyTradeRecords; }
+        //}
+
 
         private ObservableCollection<StoneDelegateSellOrderInfoUIModel> _allFinishedSellOrders = new ObservableCollection<StoneDelegateSellOrderInfoUIModel>();
         public ObservableCollection<StoneDelegateSellOrderInfoUIModel> AllFinishedSellOrders
@@ -118,6 +125,11 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetTodayRealTimeTradeRecords(null);
         }
 
+        public void AsyncGetAllStoneStackDailyRecords()
+        {
+            GlobalData.Client.GetAllStoneStackDailyRecordInfo(null);
+        }
+
         public void RegisterEvent()
         {
             _timer.Elapsed += _timer_Elapsed;
@@ -131,6 +143,33 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetFinishedDelegateSellStoneOrdersCompleted += Client_GetFinishedDelegateSellStoneOrdersCompleted;
             GlobalData.Client.GetFinishedDelegateBuyStoneOrdersCompleted += Client_GetFinishedDelegateBuyStoneOrdersCompleted;
             GlobalData.Client.GetTodayRealTimeTradeRecordsCompleted += Client_GetTodayRealTimeTradeRecordsCompleted;
+            GlobalData.Client.GetAllStoneStackDailyRecordInfoCompleted += Client_GetAllStoneStackDailyRecordInfoCompleted;
+        }
+
+        void Client_GetAllStoneStackDailyRecordInfoCompleted(object sender, WebInvokeEventArgs<StoneStackDailyRecordInfo[]> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("Client_GetAllStoneStackDailyRecordInfoCompleted Server Exception", e.Error);
+                    return;
+                }
+
+                if (GetAllStoneStackDailyRecordInfoCompleted != null)
+                {
+                    GetAllStoneStackDailyRecordInfoCompleted(e.Result);
+                }
+                //this.ListAllHistoryDailyTradeRecords.Clear();
+                //foreach (var item in e.Result)
+                //{
+                //    this.ListAllHistoryDailyTradeRecords.Add(item);
+                //}
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Client_GetAllStoneStackDailyRecordInfoCompleted Exception", exc);
+            }
         }
 
         void Client_GetTodayRealTimeTradeRecordsCompleted(object sender, WebInvokeEventArgs<StoneStackDailyRecordInfo[]> e)
@@ -331,7 +370,7 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 //TODO: 为了测试，此处临时获取当前时间
-                //e.Result.DailyInfo.Day = new MyDateTime(DateTime.Now);
+                e.Result.DailyInfo.Day = new MyDateTime(DateTime.Now);
                 this.TodayStackInfo.ParentObject = e.Result;
                 if (e.Result == null)
                 {
@@ -339,6 +378,18 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
+                    if (this.ListTodayRealTimeTradeRecords.Count > 200)
+                    {
+                        //e.Result.DailyInfo.ClosePrice += 3;
+                    }
+                    else if (this.ListTodayRealTimeTradeRecords.Count > 100)
+                    {
+                        e.Result.DailyInfo.ClosePrice += 3;
+                    }
+                    else if (this.ListTodayRealTimeTradeRecords.Count > 20)
+                    {
+                        e.Result.DailyInfo.ClosePrice += 1;
+                    }
                     if (this.ListTodayRealTimeTradeRecords.Count == 0)
                     {
                         this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
@@ -385,5 +436,6 @@ namespace SuperMinersWPF.ViewModels
 
         public event Action MarketOpened;
         public event Action MarketClosed;
+        public event Action<StoneStackDailyRecordInfo[]> GetAllStoneStackDailyRecordInfoCompleted;
     }
 }

@@ -24,8 +24,11 @@ namespace SuperMinersWPF.Views.Controls
     /// </summary>
     public partial class KLineRealTimeControl : UserControl
     {
-
         private SolidColorBrush _baseLineBrush = new SolidColorBrush(Color.FromArgb(0xff, 0x32, 0x32, 0x32));
+        private SolidColorBrush _yellowBrush = new SolidColorBrush(Colors.Yellow);
+
+        private SolidColorBrush _redBrush = new SolidColorBrush(Colors.Red);
+        private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
 
         /// <summary>
         /// 每分钟一条记录
@@ -43,11 +46,10 @@ namespace SuperMinersWPF.Views.Controls
         private int marketOpeningHours = 0;
         private int marketOpeningMinutes = 0;
 
+        private decimal OpenPrice;
+
 
         private System.Threading.SynchronizationContext _syn;
-
-        private SolidColorBrush _redBrush = new SolidColorBrush(Colors.Red);
-        private SolidColorBrush _greenBrush = new SolidColorBrush(Colors.Green);
 
         public KLineRealTimeControl()
         {
@@ -83,24 +85,17 @@ namespace SuperMinersWPF.Views.Controls
                     return;
                 }
 
+                _needRendAll = true;
                 if (this._listTodayMinuteTradeRecords.Count == 0)
                 {
-                    _maxRangeValue = Math.Abs(Math.Round((double)(newItem.ClosePrice - newItem.OpenPrice), 2));
-                    _needRendAll = true;
                     this._listTodayMinuteTradeRecords.Add(newItem);
                 }
                 else
                 {
-                    _needRendAll = true;
                     var lastRecord = this._listTodayMinuteTradeRecords[this._listTodayMinuteTradeRecords.Count - 1];
-                    if (newItem.ClosePrice - newItem.OpenPrice > lastRecord.ClosePrice - lastRecord.OpenPrice)
-                    {
-                        _maxRangeValue = Math.Abs(Math.Round((double)(newItem.ClosePrice - newItem.OpenPrice), 2));
-                    }
 
                     if (lastRecord.Day.Hour == newItem.Day.Hour && lastRecord.Day.Minute == newItem.Day.Minute)
                     {
-                        //if(lastRecord.Day.Second == newItem.Day.Second)
                         this._listTodayMinuteTradeRecords[this._listTodayMinuteTradeRecords.Count - 1] = newItem;
                         this._addItem = false;
                     }
@@ -109,6 +104,18 @@ namespace SuperMinersWPF.Views.Controls
                         this._listTodayMinuteTradeRecords.Add(newItem);
                         this._addItem = true;
                     }
+                }
+
+                if (this.OpenPrice != newItem.OpenPrice)
+                {
+                    this._needRendAll = true;
+                }
+                this.OpenPrice = newItem.OpenPrice;
+                double newRangeValue = Math.Abs(Math.Round((double)(newItem.ClosePrice - newItem.OpenPrice), 2));
+                if (newRangeValue > this._maxRangeValue)
+                {
+                    _needRendAll = true;
+                    this._maxRangeValue = newRangeValue;
                 }
 
             }
@@ -130,26 +137,18 @@ namespace SuperMinersWPF.Views.Controls
                         }
                         else
                         {
-                            this.polyLine.Points[this.polyLine.Points.Count - 1] = newPoint;
+                            if (this.polyLine.Points.Count == 0)
+                            {
+                                this.polyLine.Points.Add(newPoint);
+                            }
+                            else
+                            {
+                                this.polyLine.Points[this.polyLine.Points.Count - 1] = newPoint;
+                            }
                         }
                     }
                 }
             }, null);
-        }
-
-        private void CreateTempRecords()
-        {
-            DateTime time = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 9, 0, 0);
-
-            for (int i = 0; i < 60; i++)
-            {
-                _listTodayMinuteTradeRecords.Add(new StoneStackDailyRecordInfo()
-                {
-                    OpenPrice = 100m,
-                    ClosePrice = 100m + i * 0.1m,
-                    Day = new MetaData.MyDateTime(time.AddMinutes(i))
-                });
-            }
         }
 
         public void Draw()
@@ -166,33 +165,31 @@ namespace SuperMinersWPF.Views.Controls
                 marketOpeningMinutes = marketOpeningHours * 60;
 
                 startY = this.canvas.ActualHeight / 2;
-                yOffsetUnit = _maxRangeValue * 100 / startY;
+                yOffsetUnit = startY / _maxRangeValue;
                 xOffsetUnit = this.canvas.ActualWidth / marketOpeningMinutes;
 
                 this.canvas.Children.Clear();
                 this.polyLine.Points.Clear();
-                //DrawText();
+                DrawText();
                 DrawBaseLine();
-                //DrawValueLine();
+                DrawValueLine();
             }
         }
 
         private void DrawText()
         {
-            TextBlock txtUpRise = new TextBlock()
+            this.txtOpenPrice.Text = this.OpenPrice.ToString();
+            this.txtUpRiseValue.Text = ((double)this.OpenPrice + _maxRangeValue).ToString();
+            this.txtDownRiseValue.Text = ((double)this.OpenPrice - _maxRangeValue).ToString();
+            if (this.OpenPrice == 0)
             {
-                Text = _maxRangeValue.ToString(),
-                Foreground = _redBrush
-            };
-            this.canvas.Children.Add(txtUpRise);
-
-            TextBlock txtDownRise = new TextBlock()
+                this.txtUpRisePercent.Text = "0%";
+            }
+            else
             {
-                Text = "-" + _maxRangeValue.ToString(),
-                Foreground = this._greenBrush,
-            };
-            this.canvas.Children.Add(txtDownRise);
-
+                this.txtUpRisePercent.Text = Math.Round(100 * (decimal)_maxRangeValue / this.OpenPrice, 2).ToString("F2") + "%";
+            }
+            this.txtDownRisePercent.Text = "-" + this.txtUpRisePercent.Text;
         }
 
         private void DrawValueLine()
@@ -239,6 +236,10 @@ namespace SuperMinersWPF.Views.Controls
                     Stroke = _baseLineBrush,
                     StrokeDashArray = new DoubleCollection(new double[] { 1, 1 })
                 };
+                if (i == 2)
+                {
+                    lineCenterH.Stroke = this._yellowBrush;
+                }
                 this.canvas.Children.Add(lineCenterH);
 
             }

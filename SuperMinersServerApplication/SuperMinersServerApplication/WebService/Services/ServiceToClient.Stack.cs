@@ -484,5 +484,27 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
+
+        public StoneStackDailyRecordInfo[] GetAllStoneStackDailyRecordInfo(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return DBProvider.StoneStackDBProvider.GetAllStoneStackDailyRecordInfo();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetAllStoneStackDailyRecordInfo Exception", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }
