@@ -477,8 +477,14 @@ namespace DataBaseProvider
                 order.OrderNumber = Convert.ToString(dt.Rows[i]["OrderNumber"]);
                 string encryptedSellerUserName = dt.Rows[i]["SellerUserName"].ToString();
                 order.SellerUserName = DESEncrypt.DecryptDES(encryptedSellerUserName);
-                order.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
-                order.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
+                if (dt.Rows[i]["SellerCreditValue"] != DBNull.Value)
+                {
+                    order.SellerCreditValue = Convert.ToInt64(dt.Rows[i]["SellerCreditValue"]);
+                }
+                if (dt.Rows[i]["SellerExpValue"] != DBNull.Value)
+                {
+                    order.SellerExpValue = Convert.ToInt32(dt.Rows[i]["SellerExpValue"]);
+                }
                 order.SellStonesCount = Convert.ToInt32(dt.Rows[i]["SellStonesCount"]);
                 order.Expense = Convert.ToDecimal(dt.Rows[i]["Expense"]);
                 order.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);

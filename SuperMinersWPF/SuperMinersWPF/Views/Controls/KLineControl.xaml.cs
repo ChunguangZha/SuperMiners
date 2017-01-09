@@ -27,12 +27,16 @@ namespace SuperMinersWPF.Views.Controls
 
         private void rbtnSwitch_Checked(object sender, RoutedEventArgs e)
         {
-
+            this.rbtnSwitch.Content = "日线图";
+            this.klineRealTimeControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.klineDayControl.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void rbtnSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
-
+            this.rbtnSwitch.Content = "分时图";
+            this.klineRealTimeControl.Visibility = System.Windows.Visibility.Visible;
+            this.klineDayControl.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

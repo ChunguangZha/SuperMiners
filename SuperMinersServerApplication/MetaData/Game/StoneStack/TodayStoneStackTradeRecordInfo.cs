@@ -109,9 +109,9 @@ namespace MetaData.Game.StoneStack
                         Day = new MetaData.MyDateTime(nowTime),
                         OpenPrice = lastDailyInfo.ClosePrice,
                         ClosePrice = lastDailyInfo.ClosePrice,
-                        MaxTradeSucceedPrice = lastDailyInfo.ClosePrice,
-                        MinTradeSucceedPrice = lastDailyInfo.ClosePrice,
                     };
+                    this.DailyInfo.MaxTradeSucceedPrice = this.DailyInfo.LimitDownPrice;
+                    this.DailyInfo.MinTradeSucceedPrice = this.DailyInfo.LimitUpPrice;
                 }
                 else
                 {

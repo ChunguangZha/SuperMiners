@@ -31,15 +31,7 @@ namespace SuperMinersWPF.ViewModels
         {
             get { return _listTodayRealTimeTradeRecords; }
         }
-
-        //private ObservableCollection<StoneStackDailyRecordInfo> _listAllHistoryDailyTradeRecords = new ObservableCollection<StoneStackDailyRecordInfo>();
-
-        //public ObservableCollection<StoneStackDailyRecordInfo> ListAllHistoryDailyTradeRecords
-        //{
-        //    get { return _listAllHistoryDailyTradeRecords; }
-        //}
-
-
+        
         private ObservableCollection<StoneDelegateSellOrderInfoUIModel> _allFinishedSellOrders = new ObservableCollection<StoneDelegateSellOrderInfoUIModel>();
         public ObservableCollection<StoneDelegateSellOrderInfoUIModel> AllFinishedSellOrders
         {
@@ -369,8 +361,6 @@ namespace SuperMinersWPF.ViewModels
                     LogHelper.Instance.AddErrorLog("Client_GetTodayStoneStackInfoCompleted Exception1", e.Error);
                 }
 
-                //TODO: 为了测试，此处临时获取当前时间
-                e.Result.DailyInfo.Day = new MyDateTime(DateTime.Now);
                 this.TodayStackInfo.ParentObject = e.Result;
                 if (e.Result == null)
                 {
@@ -378,18 +368,6 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    if (this.ListTodayRealTimeTradeRecords.Count > 200)
-                    {
-                        //e.Result.DailyInfo.ClosePrice += 3;
-                    }
-                    else if (this.ListTodayRealTimeTradeRecords.Count > 100)
-                    {
-                        e.Result.DailyInfo.ClosePrice += 3;
-                    }
-                    else if (this.ListTodayRealTimeTradeRecords.Count > 20)
-                    {
-                        e.Result.DailyInfo.ClosePrice += 1;
-                    }
                     if (this.ListTodayRealTimeTradeRecords.Count == 0)
                     {
                         this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
@@ -406,6 +384,10 @@ namespace SuperMinersWPF.ViewModels
 
                 if (e.Result != null)
                 {
+                    if (GetTodayStackRecordInfoCompleted != null)
+                    {
+                        GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
+                    }
                     if (MarketOpened != null)
                     {
                         MarketOpened();
@@ -436,6 +418,7 @@ namespace SuperMinersWPF.ViewModels
 
         public event Action MarketOpened;
         public event Action MarketClosed;
+        public event Action<StoneStackDailyRecordInfo> GetTodayStackRecordInfoCompleted;
         public event Action<StoneStackDailyRecordInfo[]> GetAllStoneStackDailyRecordInfoCompleted;
     }
 }

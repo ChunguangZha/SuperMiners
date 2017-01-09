@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
-             d:DesignHeight="320" d:DesignWidth="520" Background="Black">
+             d:DesignHeight="327" d:DesignWidth="522" Background="Black">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -13,13 +13,15 @@
         </Grid.RowDefinitions>
         <Border Margin="10,10,10,0" BorderThickness="1" BorderBrush="{StaticResource LogoPanelBackground}">
             <Grid>
-                <Canvas Name="canvas">
+                <Canvas Name="canvas" SizeChanged="canvas_SizeChanged">
                     <Line X1="0" Y1="150" X2="500" Y2="150" Stroke="Yellow" StrokeDashArray="1 1"/>
                     <Line X1="250" Y1="0" X2="250" Y2="300" Stroke="#FF323232" StrokeDashArray="1 1"/>
+                    <Polygon Points="200 100, 200 110, 197 110, 197 140, 197 110, 194 110, 194 100, 197 100, 197 90, 197 100, 200 100" Stroke="Red" StrokeThickness="2"/>
+                    <Polygon Points="191 100, 191 101, 188 101, 188 102, 188 101, 185 101, 185 100, 188 100, 188 99, 188 100, 191 100" Stroke="LightBlue" Fill="LightBlue" StrokeThickness="2"/>
                 </Canvas>
-                <TextBlock Name="txtUpRiseValue" Text="10" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                <TextBlock Name="txtDownRiseValue" Text="-10" Foreground="Green" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
-                <TextBlock Name="txtOpenPrice" Text="100" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBlock Name="txtUpRiseValue" Text="10" Opacity=".5" Foreground="Red" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                <TextBlock Name="txtDownRiseValue" Text="-10" Opacity=".5" Foreground="Green" VerticalAlignment="Bottom" HorizontalAlignment="Left"/>
+                <TextBlock Name="txtOpenPrice" Text="100" Opacity=".5" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </Grid>
         </Border>
         <Grid Grid.Row="1">

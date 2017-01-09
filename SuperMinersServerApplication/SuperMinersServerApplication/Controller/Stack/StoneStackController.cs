@@ -607,7 +607,13 @@ namespace SuperMinersServerApplication.Controller.Stack
                 result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
                 return result;
             }
+            //if (!this._dicWaitingBuyInfos.ContainsKey(sellPrice))
+            //{
+            //    LogHelper.Instance.AddErrorLog("", null);
 
+            //    result.OperResultCode = OperResult.RESULTCODE_FALSE;
+            //    return result;
+            //}
 
             canceledBuyOrder = this._dicWaitingBuyInfos[sellPrice].DeleteOrder(orderNumber);
             if (canceledBuyOrder != null)

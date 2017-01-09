@@ -544,19 +544,21 @@ namespace SuperMinersServerApplication.Controller
                         foreach (var awardrecord in awardRecords)
                         {
                             var referrerPlayerRunnable = this.GetRunnable(awardrecord.ReferrerUserName);
-
-                            var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
-                            referrerPlayerRunnable.ReferAward(award, player.SimpleInfo.UserName, myTrans);
-                            LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "]，的 " + awardrecord.AwardLevel + " 级推荐人[" + awardrecord.ReferrerUserName + "]收获: " + award.ToString());
-                            PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
-                            DBProvider.WaitToAwardExpRecordDBProvider.DeleteWaitToAwardExpRecord(awardrecord.ID, myTrans);
+                            if (referrerPlayerRunnable != null)
+                            {
+                                var award = GlobalConfig.AwardReferrerLevelConfig.GetAwardByLevel(awardrecord.AwardLevel);
+                                referrerPlayerRunnable.ReferAward(award, player.SimpleInfo.UserName, myTrans);
+                                LogHelper.Instance.AddInfoLog("玩家[" + player.SimpleInfo.UserName + "]，的 " + awardrecord.AwardLevel + " 级推荐人[" + awardrecord.ReferrerUserName + "]收获: " + award.ToString());
+                                PlayerActionController.Instance.AddLog(referrerPlayerRunnable.BasePlayer.SimpleInfo.UserName, MetaData.ActionLog.ActionType.Refer, awardrecord.AwardLevel, "收获" + award.ToString());
+                                DBProvider.WaitToAwardExpRecordDBProvider.DeleteWaitToAwardExpRecord(awardrecord.ID, myTrans);
+                            }
                         }
 
                         myTrans.Commit();
                     }
                     catch (Exception exc)
                     {
-                        LogHelper.Instance.AddErrorLog("LoginPlayer Award Referrer Exception", exc);
+                        LogHelper.Instance.AddErrorLog("玩家[" + player.SimpleInfo.UserName + "] LoginPlayer Award Referrer Exception", exc);
                         myTrans.Rollback();
                     }
                     finally

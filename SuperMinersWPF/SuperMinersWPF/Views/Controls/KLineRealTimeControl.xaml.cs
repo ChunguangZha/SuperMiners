@@ -205,7 +205,6 @@ namespace SuperMinersWPF.Views.Controls
 
         private Point ConvertStoneStackDailyRecordInfoToPoint(StoneStackDailyRecordInfo item)
         {
-            //TODO: 为了测试，此处临时减去1小时，正式发布时需删除！！！
             int Hours = item.Day.Hour - GlobalData.GameConfig.StackMarketMorningOpenTime;
             if (item.Day.Hour > GlobalData.GameConfig.StackMarketNightOpenTime)
             {

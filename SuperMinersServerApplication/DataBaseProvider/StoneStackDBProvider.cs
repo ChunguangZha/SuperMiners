@@ -17,7 +17,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT * FROM superminers.stonestackdailyrecordinfo order by id desc;";
+                string sqlText = "SELECT * FROM superminers.stonestackdailyrecordinfo order by id;";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
