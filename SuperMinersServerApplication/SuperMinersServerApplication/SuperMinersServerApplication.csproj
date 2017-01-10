@@ -111,6 +111,7 @@
     <Compile Include="Controller\GameSystemConfigController.cs" />
     <Compile Include="Controller\Game\RaidersofLostArkController.cs" />
     <Compile Include="Controller\Game\RouletteAwardController.cs" />
+    <Compile Include="Controller\GravelController.cs" />
     <Compile Include="Controller\PlayerDeleteController.cs" />
     <Compile Include="Controller\SchedulerTaskController.cs" />
     <Compile Include="Controller\Stack\StoneStackController.cs" />

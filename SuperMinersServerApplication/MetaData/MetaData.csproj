@@ -86,6 +86,7 @@
     <Compile Include="User\AdminInfo.cs" />
     <Compile Include="User\AgentPlayerReferrerLinkInfo.cs" />
     <Compile Include="User\DeleteResultInfo.cs" />
+    <Compile Include="User\PlayerGravelRequsetRecordInfo.cs" />
     <Compile Include="User\PlayerLockedInfo.cs" />
     <Compile Include="User\PlayerLogInfo.cs" />
     <Compile Include="User\PlayerWeiXinUserOpenId.cs" />

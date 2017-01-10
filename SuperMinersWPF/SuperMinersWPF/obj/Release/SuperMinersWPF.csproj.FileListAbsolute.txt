@@ -294,3 +294,4 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\K
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\MyRaiderBetRecordsWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\KLineControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\MyRaiderBetRecordsWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache

@@ -98,6 +98,8 @@ namespace SuperMinersWPF.Views.Controls
                     {
                         this._maxPrice = obj.ClosePrice;
                     }
+
+                    Draw();
                 }
             }, null);
         }
@@ -243,16 +245,24 @@ namespace SuperMinersWPF.Views.Controls
             int maxY = (int)((this._maxPrice - data.MinTradeSucceedPrice) * (decimal)this.yOffsetUnit + this._startY);
             int topY = (int)((this._maxPrice - topYValue) * (decimal)this.yOffsetUnit + this._startY);
             int bottomY = (int)((this._maxPrice - bottomYValue) * (decimal)this.yOffsetUnit + this._startY);
+            if (minY > topY)
+            {
+                minY = topY;
+            }
+            if (maxY < bottomY)
+            {
+                maxY = bottomY;
+            }
 
             pgon.Points.Add(new Point(middleX, minY));
             pgon.Points.Add(new Point(middleX, topY));
-            pgon.Points.Add(new Point(startX, topY));
-            pgon.Points.Add(new Point(startX, bottomY));
+            pgon.Points.Add(new Point(endX, topY));
+            pgon.Points.Add(new Point(endX, bottomY));
             pgon.Points.Add(new Point(middleX, bottomY));
             pgon.Points.Add(new Point(middleX, maxY));
             pgon.Points.Add(new Point(middleX, bottomY));
-            pgon.Points.Add(new Point(endX, bottomY));
-            pgon.Points.Add(new Point(endX, topY));
+            pgon.Points.Add(new Point(startX, bottomY));
+            pgon.Points.Add(new Point(startX, topY));
             pgon.Points.Add(new Point(middleX, topY));
             pgon.Points.Add(new Point(middleX, minY));
 
