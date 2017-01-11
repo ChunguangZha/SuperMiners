@@ -30,7 +30,7 @@ namespace MetaData.User
     }
 
     [DataContract]
-    public class GravelCreateRecordInfo
+    public class GravelDistributeRecordInfo
     {
         [DataMember]
         public MyDateTime CreateDate;
@@ -46,22 +46,6 @@ namespace MetaData.User
     }
 
     [DataContract]
-    public class GravelCompoundRecordInfo
-    {
-        [DataMember]
-        public int UserID;
-
-        [DataMember]
-        public MyDateTime CompoundDate;
-
-        [DataMember]
-        public int FromGravelCount;
-
-        [DataMember]
-        public int ToStoneCount;
-    }
-
-    [DataContract]
     public class PlayerGravelInfo
     {
         [DataMember]
@@ -69,7 +53,15 @@ namespace MetaData.User
 
         [DataMember]
         public int Gravel;
-    }
 
+        [DataMember]
+        public MyDateTime FirstGetGravelTime;
+
+        /// <summary>
+        /// 非数据库字段
+        /// </summary>
+        [DataMember]
+        public bool Getable;
+    }
 
 }

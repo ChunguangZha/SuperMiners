@@ -939,5 +939,31 @@ namespace DataBaseProvider
 
             return items;
         }
+
+        internal static PlayerGravelRequsetRecordInfo[] GetPlayerGravelRequsetRecordInfo(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            PlayerGravelRequsetRecordInfo[] items = new PlayerGravelRequsetRecordInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                PlayerGravelRequsetRecordInfo item = new PlayerGravelRequsetRecordInfo();
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.UserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserName"]));
+                item.RequestDate = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["RequestDate"]));
+                item.IsResponsed = Convert.ToBoolean(dt.Rows[i]["IsResponsed"]);
+                if (dt.Rows[i]["ResponseDate"] != DBNull.Value)
+                {
+                    item.ResponseDate = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["ResponseDate"]));
+                }
+                item.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
     }
 }

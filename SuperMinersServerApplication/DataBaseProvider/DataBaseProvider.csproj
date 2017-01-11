@@ -54,6 +54,7 @@
     <Compile Include="ExpChangeRecordDBProvider.cs" />
     <Compile Include="GameRaiderofLostArkDBProvider.cs" />
     <Compile Include="GoldCoinRecordDBProvider.cs" />
+    <Compile Include="GravelDBProvider.cs" />
     <Compile Include="MetaDBAdapter.cs" />
     <Compile Include="MineRecordDBProvider.cs" />
     <Compile Include="MyDBHelper.cs" />
