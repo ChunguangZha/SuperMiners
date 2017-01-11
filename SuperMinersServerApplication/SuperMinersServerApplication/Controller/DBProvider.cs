@@ -50,5 +50,9 @@ namespace SuperMinersServerApplication.Controller
         public static StoneStackDBProvider StoneStackDBProvider = new StoneStackDBProvider();
 
         public static GameRaiderofLostArkDBProvider GameRaiderofLostArkDBProvider = new GameRaiderofLostArkDBProvider();
+
+        public static GravelDBProvider GravelDBProvider = new GravelDBProvider();
+
+        
     }
 }

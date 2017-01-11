@@ -11,6 +11,9 @@ namespace MetaData.User
     public class PlayerGravelRequsetRecordInfo
     {
         [DataMember]
+        public int ID;
+
+        [DataMember]
         public int UserID;
 
         [DataMember]
@@ -27,6 +30,9 @@ namespace MetaData.User
 
         [DataMember]
         public int Gravel;
+
+        [DataMember]
+        public bool IsGoted = false;
     }
 
     [DataContract]
@@ -54,6 +60,9 @@ namespace MetaData.User
         [DataMember]
         public int Gravel;
 
+        /// <summary>
+        /// 如果该值等于null，或时间超过玩家注册7天以后，玩家不允许申领碎石。
+        /// </summary>
         [DataMember]
         public MyDateTime FirstGetGravelTime;
 
@@ -61,7 +70,18 @@ namespace MetaData.User
         /// 非数据库字段
         /// </summary>
         [DataMember]
-        public bool Getable;
+        public PlayerGravelState Getable;
     }
 
+    public enum PlayerGravelState
+    {
+        /// <summary>
+        /// 注册7天内从未申领过碎石，或贡献值大于50的。
+        /// </summary>
+        Disable,
+        Requestable,
+        Requested,
+        Getable
+
+    }
 }

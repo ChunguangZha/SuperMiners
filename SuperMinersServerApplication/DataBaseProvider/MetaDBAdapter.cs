@@ -950,6 +950,7 @@ namespace DataBaseProvider
             for (int i = 0; i < items.Length; i++)
             {
                 PlayerGravelRequsetRecordInfo item = new PlayerGravelRequsetRecordInfo();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
                 item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 item.UserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserName"]));
                 item.RequestDate = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["RequestDate"]));
@@ -959,6 +960,7 @@ namespace DataBaseProvider
                     item.ResponseDate = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["ResponseDate"]));
                 }
                 item.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
+                item.IsGoted = Convert.ToBoolean(dt.Rows[i]["IsGoted"]);
 
                 items[i] = item;
             }

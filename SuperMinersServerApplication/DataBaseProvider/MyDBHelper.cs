@@ -54,7 +54,89 @@ namespace DataBaseProvider
         {
             return false;
         }
+
+
+        public bool TransactionDataBaseOper(TransactionDBOperDelegte DBOper, TransactionDBOperFailedDelegate FaileOper)
+        {
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                myTrans = MyDBHelper.Instance.CreateTrans();
+                DBOper(myTrans);
+                myTrans.Commit();
+                return true;
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                FaileOper(exc);
+                return false;
+            }
+            finally
+            {
+                myTrans.Dispose();
+            }
+        }
+
+        public bool ConnectionCommandExecuteNonQuery(ConnectionCommandDBOper DBOper)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = this.CreateConnection();
+                mycmd = myconn.CreateCommand();
+                myconn.Open();
+                DBOper(mycmd);
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public bool ConnectionCommandSelect(ConnectionCommandDBOper DBOper)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = this.CreateConnection();
+                mycmd = myconn.CreateCommand();
+                myconn.Open();
+                DBOper(mycmd);
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
     }
+
+    public delegate void TransactionDBOperDelegte(CustomerMySqlTransaction myTrans);
+
+    public delegate void TransactionDBOperFailedDelegate(Exception exc);
+
+    public delegate void ConnectionCommandDBOper(MySqlCommand mycmd);
+
 
     public class CustomerMySqlTransaction
     {

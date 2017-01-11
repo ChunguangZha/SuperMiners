@@ -47,4 +47,10 @@ CREATE TABLE `superminers`.`playergravelinfo` (
 
 -- ----------------------------------------------------------------------
 
+ALTER TABLE `superminers`.`playergravelrequsetrecordinfo` 
+ADD COLUMN `IsGoted` INT(1) NOT NULL DEFAULT 0 AFTER `Gravel`;
+
+
+-- ----------------------------------------------------------------------
+
 UPDATE `superminers`.`paramtable` SET `ParamValue`='20170111164300' WHERE `id`='1';
