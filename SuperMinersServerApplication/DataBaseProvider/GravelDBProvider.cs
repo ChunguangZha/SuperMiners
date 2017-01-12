@@ -64,7 +64,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
 
-                string sqlInnerSelect = " select * from superminers.playergravelrequsetrecordinfo where r.UserID=@userID order by id desc limit 1 ";
+                string sqlInnerSelect = " select * from superminers.playergravelrequsetrecordinfo where UserID=@userID order by id desc limit 1 ";
                 string sqlText = "SELECT r.*, s.UserName FROM (" + sqlInnerSelect + ") r left join playersimpleinfo s on r.UserID = s.id ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@userID", userID);

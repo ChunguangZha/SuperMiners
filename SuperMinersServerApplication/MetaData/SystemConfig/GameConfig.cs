@@ -179,10 +179,10 @@ namespace MetaData.SystemConfig
         public decimal RaiderExpense = 0.1m;
 
         /// <summary>
-        /// 系统矿场总储量八千万
+        /// 系统矿场总储量一千万
         /// </summary>
         [DataMember]
-        public int LimitStoneCount = 80000000;
+        public int LimitStoneCount = 10000000;
 
         /// <summary>
         /// VIP级别间距（贡献值）
