@@ -105,7 +105,7 @@ namespace DataBaseProvider
                 }
 
                 DataTable tablePlayers = new DataTable();
-                string sqlTextB = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.GroupType = @GroupType";
+                string sqlTextB = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.GroupType = @GroupType";
                 mycmd = new MySqlCommand(sqlTextB, myconn);
                 mycmd.Parameters.AddWithValue("@GroupType", (int)PlayerGroupType.AgentPlayer);
                 adapter = new MySqlDataAdapter(mycmd);

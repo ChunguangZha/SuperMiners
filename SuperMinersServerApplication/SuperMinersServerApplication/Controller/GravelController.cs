@@ -80,18 +80,25 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public PlayerGravelRequsetRecordInfo GetGravel(int userID, CustomerMySqlTransaction myTrans)
+        public PlayerGravelRequsetRecordInfo GetGravel(int userID, CustomerMySqlTransaction myTrans, out int result)
         {
             //领取比请求要晚一天
             PlayerGravelRequsetRecordInfo[] records = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecords(new MetaData.MyDateTime(DateTime.Now.AddDays(-1)), userID);
             if (records == null || records.Length == 0)
             {
+                result = OperResult.RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET;
                 return null;
             }
 
             PlayerGravelRequsetRecordInfo record = records[0];
+            if (record.IsGoted)
+            {
+                result = OperResult.RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET;
+                return null;
+            }
             record.IsGoted = true;
             DBProvider.GravelDBProvider.SetPlayerGravelRequsetRecordInfoIsGoted(record, myTrans);
+            result = OperResult.RESULTCODE_TRUE;
             return record;
         }
         

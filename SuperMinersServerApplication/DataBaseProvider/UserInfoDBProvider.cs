@@ -122,6 +122,14 @@ namespace DataBaseProvider
 
                 mycmd.ExecuteNonQuery();
 
+                string cmdTextC = "insert into playergravelinfo " +
+                    "(`UserID`, `Gravel`) values " +
+                    " (@userId, @Gravel ) ";
+                mycmd.CommandText = cmdTextC;
+                mycmd.Parameters.AddWithValue("@Gravel", player.GravelInfo.Gravel);
+
+                mycmd.ExecuteNonQuery();
+
                 return true;
             }
             finally
@@ -228,7 +236,6 @@ namespace DataBaseProvider
                 }
             }
         }
-
 
         public bool SavePlayerLastGatherTime(int userID, DateTime? lastGatherStoneTime)
         {
@@ -338,6 +345,11 @@ namespace DataBaseProvider
             {
                 trans.Dispose();
             }
+        }
+
+        public bool SavePlayerGravelInfo(PlayerGravelInfo playerGravel, CustomerMySqlTransaction trans)
+        {
+            return true;
         }
 
         public bool SavePlayerLoginTime(PlayerSimpleInfo playerSimpleInfo)
@@ -512,7 +524,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID ";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -542,7 +554,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.id = @userID";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.id = @userID";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@userID", userID);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -575,7 +587,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.UserName = @UserName";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.UserName = @UserName";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -585,6 +597,8 @@ namespace DataBaseProvider
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
                 mycmd.Dispose();
+
+                //var lastGravelRecord = 
 
                 return player;
             }
@@ -608,7 +622,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.InvitationCode = @InvitationCode";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.InvitationCode = @InvitationCode";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@InvitationCode", DESEncrypt.EncryptDES(invitationCode));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -921,7 +935,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.Alipay = @Alipay";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.Alipay = @Alipay";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@Alipay", DESEncrypt.EncryptDES(alipayAccount));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -945,39 +959,39 @@ namespace DataBaseProvider
             }
         }
 
-        public PlayerInfo GetPlayerByAlipayRealName(string alipayRealName)
-        {
-            PlayerInfo player = null;
-            MySqlConnection myconn = null;
-            try
-            {
-                DataTable dt = new DataTable();
+        //public PlayerInfo GetPlayerByAlipayRealName(string alipayRealName)
+        //{
+        //    PlayerInfo player = null;
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        DataTable dt = new DataTable();
 
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.AlipayRealName = @AlipayRealName";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
-                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt.Rows.Count > 0)
-                {
-                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
-                }
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
+        //        string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.AlipayRealName = @AlipayRealName";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(alipayRealName));
+        //        MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+        //        adapter.Fill(dt);
+        //        if (dt.Rows.Count > 0)
+        //        {
+        //            player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+        //        }
 
-                mycmd.Dispose();
+        //        mycmd.Dispose();
 
-                return player;
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        return player;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
         public int GetPlayerCountByRegisterIP(string ip)
         {
@@ -1019,7 +1033,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId where a.id = (select w.UserID from playerweixinuseropenid w where w.WeiXinOpenID = @WeiXinOpenID);";
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.id = (select w.UserID from playerweixinuseropenid w where w.WeiXinOpenID = @WeiXinOpenID);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@WeiXinOpenID", openid);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

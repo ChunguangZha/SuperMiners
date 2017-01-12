@@ -177,14 +177,6 @@ namespace DataBaseProvider
                 player.SimpleInfo.InvitationCode = DESEncrypt.DecryptDES(encryptedInvitationCode);
                 player.SimpleInfo.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
 
-                //if (dt.Rows[i]["LockedLogin"] != DBNull.Value)
-                //{
-                //    player.SimpleInfo.LockedLogin = Convert.ToBoolean(dt.Rows[i]["LockedLogin"]);
-                //}
-                //if (dt.Rows[i]["LockedLoginTime"] != DBNull.Value)
-                //{
-                //    player.SimpleInfo.LockedLoginTime = Convert.ToDateTime(dt.Rows[i]["LockedLoginTime"]);
-                //}
                 if (dt.Rows[i]["LastLoginTime"] == DBNull.Value)
                 {
                     player.SimpleInfo.LastLoginTime = null;
@@ -240,6 +232,16 @@ namespace DataBaseProvider
                 player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
                 player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
+
+                player.GravelInfo = new PlayerGravelInfo();
+                if (dt.Rows[i]["Gravel"] != DBNull.Value)
+                {
+                    player.GravelInfo.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
+                }
+                if (dt.Rows[i]["FirstGetGravelTime"] != DBNull.Value)
+                {
+                    player.GravelInfo.FirstGetGravelTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["FirstGetGravelTime"]));
+                }
 
                 players[i] = player;
             }

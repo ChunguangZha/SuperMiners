@@ -93,7 +93,7 @@ namespace SuperMinersServerApplication.WebService.Services
             string ip = ClientManager.GetCurrentIP();
             try
             {
-                PlayerInfo player = DBProvider.UserDBProvider.GetPlayer(userName);
+                PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
                 if (player == null)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;

@@ -18,6 +18,12 @@ namespace MetaData.User
         [DataMember]
         public PlayerFortuneInfo FortuneInfo = new PlayerFortuneInfo();
 
+        /// <summary>
+        /// 可以为null
+        /// </summary>
+        [DataMember]
+        public PlayerGravelInfo GravelInfo = null;
+
     }
 
 

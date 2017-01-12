@@ -21,14 +21,15 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
 
-                string sqlText = "SELECT r.*, s.UserName FROM superminers.playergravelrequsetrecordinfo r left join playersimpleinfo s on r.UserID = s.id ";
+                string sqlInnerSelect = " select * from superminers.playergravelrequsetrecordinfo ";
                 string sqlWhere = " where ";
                 if (userID > 0)
                 {
-                    sqlWhere += " r.UserID=@userID and "; 
+                    sqlWhere += " r.UserID=@userID and ";
                 }
-                sqlWhere +=" @beginDate <= r.RequestDate and r.RequestDate < @endDate ";
-                mycmd.CommandText = sqlText + sqlWhere;
+                sqlWhere += " @beginDate <= r.RequestDate and r.RequestDate < @endDate ";
+                string sqlText = "SELECT r.*, s.UserName FROM (" + sqlInnerSelect + sqlWhere + ") r left join playersimpleinfo s on r.UserID = s.id ";
+                mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@beginDate", new DateTime(date.Year, date.Month, date.Day, 0, 0, 0));
                 mycmd.Parameters.AddWithValue("@endDate", new DateTime(date.Year, date.Month, date.Day + 1, 0, 0, 0));
                 mycmd.Parameters.AddWithValue("@userID", userID);
@@ -39,6 +40,47 @@ namespace DataBaseProvider
                 adapter.Dispose();
 
                 return MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfo(table);
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+                if (myconn != null)
+                {
+                    myconn.Close();
+                    myconn.Dispose();
+                }
+            }
+        }
+
+        public PlayerGravelRequsetRecordInfo GetLastDayPlayerGravelRequsetRecord(int userID)
+        {
+            MySqlConnection myconn = null;
+            MySqlCommand mycmd = null;
+            try
+            {
+                myconn = MyDBHelper.Instance.CreateConnection();
+                mycmd = myconn.CreateCommand();
+
+                string sqlInnerSelect = " select * from superminers.playergravelrequsetrecordinfo where r.UserID=@userID order by id desc limit 1 ";
+                string sqlText = "SELECT r.*, s.UserName FROM (" + sqlInnerSelect + ") r left join playersimpleinfo s on r.UserID = s.id ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@userID", userID);
+
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+
+                var records = MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfo(table);
+                if (records == null || records.Length == 0)
+                {
+                    return null;
+                }
+
+                return records[0];
             }
             finally
             {

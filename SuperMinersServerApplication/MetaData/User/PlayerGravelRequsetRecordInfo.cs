@@ -70,7 +70,7 @@ namespace MetaData.User
         /// 非数据库字段
         /// </summary>
         [DataMember]
-        public PlayerGravelState Getable;
+        public PlayerGravelState GravelState = PlayerGravelState.Disable;
     }
 
     public enum PlayerGravelState

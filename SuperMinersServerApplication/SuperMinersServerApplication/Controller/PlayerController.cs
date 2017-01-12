@@ -368,9 +368,9 @@ namespace SuperMinersServerApplication.Controller
                         UserName = userName,
                         NickName = nickName,
                         Password = password,
-                         Alipay = alipayAccount,
-                          AlipayRealName = alipayRealName,
-                           IDCardNo = IDCardNo,
+                        Alipay = alipayAccount,
+                        AlipayRealName = alipayRealName,
+                        IDCardNo = IDCardNo,
                         Email = email,
                         QQ = qq,
                         InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(userName) : GlobalData.TestInvitationCode,
@@ -389,7 +389,8 @@ namespace SuperMinersServerApplication.Controller
                         MinesCount = GlobalConfig.RegisterPlayerConfig.GiveToNewUserMines,
                         StonesReserves = GlobalConfig.RegisterPlayerConfig.GiveToNewUserMines * GlobalConfig.GameConfig.StonesReservesPerMines,
                         TotalProducedStonesCount = 0
-                    }
+                    },
+                    GravelInfo = new PlayerGravelInfo()
                 };
                 if (referrerLevel1player == null)
                 {
@@ -633,16 +634,58 @@ namespace SuperMinersServerApplication.Controller
         public PlayerInfo GetPlayerInfo(string userName)
         {
             PlayerInfo player = null;
-
-            PlayerRunnable playerrun = null;
-            if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
+            player = DBProvider.UserDBProvider.GetPlayer(userName);
+            if (player != null)
             {
-                player = playerrun.BasePlayer;
+                PlayerRunnable playerrun = null;
+                if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
+                {
+                    playerrun.BasePlayer = player;
+                }
+                else
+                {
+                    this._dicOnlinePlayerRuns.TryAdd(userName, new PlayerRunnable(player));
+                }
             }
 
-            if (player == null)
+            var lastGravelRecord = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecord(player.SimpleInfo.UserID);
+            if (lastGravelRecord == null)
             {
-                player = DBProvider.UserDBProvider.GetPlayer(userName);
+                if ((DateTime.Now - player.SimpleInfo.RegisterTime).TotalDays > 7)
+                {
+                    player.GravelInfo.GravelState = PlayerGravelState.Disable;
+                }
+                else
+                {
+                    player.GravelInfo.GravelState = PlayerGravelState.Requestable;
+                }
+            }
+            else
+            {
+                if (lastGravelRecord.RequestDate.ToDateTime().DayOfYear == DateTime.Now.DayOfYear)
+                {
+                    player.GravelInfo.GravelState = PlayerGravelState.Requested;
+                }
+                else
+                {
+                    if (lastGravelRecord.RequestDate.ToDateTime().DayOfYear == DateTime.Now.AddDays(-1).DayOfYear &&
+                        lastGravelRecord.IsResponsed && lastGravelRecord.ResponseDate != null &&
+                        lastGravelRecord.ResponseDate.ToDateTime().DayOfYear == DateTime.Now.DayOfYear)
+                    {
+                        if (lastGravelRecord.IsGoted)
+                        {
+                            player.GravelInfo.GravelState = PlayerGravelState.Requestable;
+                        }
+                        else
+                        {
+                            player.GravelInfo.GravelState = PlayerGravelState.Getable;
+                        }
+                    }
+                    else
+                    {
+                        player.GravelInfo.GravelState = PlayerGravelState.Requestable;
+                    }
+                }
             }
 
             return player;
@@ -650,18 +693,14 @@ namespace SuperMinersServerApplication.Controller
 
         public PlayerRunnable GetRunnable(string userName)
         {
-            PlayerRunnable playerSellerRun = this.GetOnlinePlayerRunnable(userName);
-            if (playerSellerRun == null)
+            PlayerRunnable playerRun = this.GetOnlinePlayerRunnable(userName);
+            if (playerRun == null)
             {
-                var seller = DBProvider.UserDBProvider.GetPlayer(userName);
-                if (seller != null)
-                {
-                    playerSellerRun = new PlayerRunnable(seller);
-                    this._dicOnlinePlayerRuns.TryAdd(userName, playerSellerRun);
-                }
+                GetPlayerInfo(userName);
+                playerRun = this.GetOnlinePlayerRunnable(userName); 
             }
 
-            return playerSellerRun;
+            return playerRun;
         }
 
         private PlayerRunnable GetOnlinePlayerRunnable(string userName)
@@ -696,8 +735,7 @@ namespace SuperMinersServerApplication.Controller
             var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                var player = DBProvider.UserDBProvider.GetPlayer(userName);
-                playerrun = new PlayerRunnable(player);
+                return false;
             }
 
             return playerrun.ChangePassword(newPassword);
@@ -708,8 +746,7 @@ namespace SuperMinersServerApplication.Controller
             var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
             {
-                var player = DBProvider.UserDBProvider.GetPlayer(userName);
-                playerrun = new PlayerRunnable(player);
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
             var playerFromDB = DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
@@ -1073,18 +1110,18 @@ namespace SuperMinersServerApplication.Controller
             }
         }
         
-        public PlayerInfo GetPlayerByAlipayAccount(string alipayAccount)
-        {
-            foreach (var item in this._dicOnlinePlayerRuns.Values)
-            {
-                if (item.BasePlayer.SimpleInfo.Alipay == alipayAccount)
-                {
-                    return item.BasePlayer;
-                }
-            }
+        //public PlayerInfo GetPlayerByAlipayAccount(string alipayAccount)
+        //{
+        //    foreach (var item in this._dicOnlinePlayerRuns.Values)
+        //    {
+        //        if (item.BasePlayer.SimpleInfo.Alipay == alipayAccount)
+        //        {
+        //            return item.BasePlayer;
+        //        }
+        //    }
 
-            return DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
-        }
+        //    return DBProvider.UserDBProvider.GetPlayerByAlipay(alipayAccount);
+        //}
 
 
 
