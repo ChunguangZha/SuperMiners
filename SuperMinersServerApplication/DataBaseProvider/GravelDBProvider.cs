@@ -194,20 +194,5 @@ namespace DataBaseProvider
             }
         }
 
-        public bool GetPlayerGravelInfo(PlayerGravelRequsetRecordInfo record)
-        {
-            return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
-            {
-                string sqlText = "insert into superminers.playergravelrequsetrecordinfo (`UserID`,`RequestDate`,`IsResponsed` ) values (@UserID,@RequestDate,@IsResponsed ); ";
-
-                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
-                mycmd.Parameters.AddWithValue("@RequestDate", record.RequestDate.ToDateTime());
-                mycmd.Parameters.AddWithValue("@IsResponsed", record.IsResponsed);
-                mycmd.CommandText = sqlText;
-
-                mycmd.ExecuteNonQuery();
-            });
-        }
-
     }
 }

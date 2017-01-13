@@ -77,7 +77,7 @@ namespace SuperMinersWPF.Views.Controls
         {
             this._syn.Post(o =>
             {
-                if (this._lastItem != null && this._listTodayMinuteTradeRecords.Count > 0)
+                if (this._lastItem != null && this._listTodayMinuteTradeRecords.Count > 0 && obj.Day!=null)
                 {
                     if (this._lastItem.Day.Year == obj.Day.Year && this._lastItem.Day.Month == obj.Day.Month && this._lastItem.Day.Day == obj.Day.Day)
                     {
@@ -138,7 +138,7 @@ namespace SuperMinersWPF.Views.Controls
 
         private void Draw()
         {
-            if (this == null || GlobalData.GameConfig == null || this.canvas == null || this._minPrice >= this._maxPrice || this._lastItem == null || this._firstItem == null)
+            if (this == null || GlobalData.GameConfig == null || this.canvas == null || this._minPrice > this._maxPrice || this._lastItem == null || this._firstItem == null)
             {
                 return;
             }
@@ -158,8 +158,14 @@ namespace SuperMinersWPF.Views.Controls
             this._endY = this.canvas.ActualHeight - 5;
             //上下各留出5像素
             this._drawablePanelHeight = this.canvas.ActualHeight - 10;
-            this.yOffsetUnit = this._drawablePanelHeight / (double)this._priceRange;
-
+            if (this._priceRange == 0)
+            {
+                this.yOffsetUnit = this._drawablePanelHeight / 10;
+            }
+            else
+            {
+                this.yOffsetUnit = this._drawablePanelHeight / (double)this._priceRange;
+            }
             //左右各留出2个像素边距
             this._drawableItemsCount = (int)((this.canvas.ActualWidth - 4) / ElementPixelWidth);
 

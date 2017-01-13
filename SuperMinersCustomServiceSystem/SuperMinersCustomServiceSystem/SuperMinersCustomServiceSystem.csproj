@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -175,6 +175,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
       <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerGravelRequsetRecordInfo.cs">
+      <Link>Wcf\Datas\PlayerGravelRequsetRecordInfo.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerLockedInfo.cs">
       <Link>Wcf\Datas\PlayerLockedInfo.cs</Link>

@@ -212,6 +212,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Models\PlayerFortuneInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerGravelRequsetRecordInfo.cs">
+      <Link>Wcf\Models\PlayerGravelRequsetRecordInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerInfo.cs">
       <Link>Wcf\Models\PlayerInfo.cs</Link>
     </Compile>

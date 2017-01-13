@@ -12,6 +12,22 @@ namespace SuperMinersServerApplication.Controller
 {
     public class GravelController
     {
+        #region Single Stone
+
+        private static GravelController _instance = new GravelController();
+
+        public static GravelController Instance
+        {
+            get { return _instance; }
+        }
+
+        private GravelController()
+        {
+
+        }
+
+        #endregion
+
         public void Init()
         {
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
@@ -51,6 +67,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     DBProvider.GravelDBProvider.UpdatePlayerGravelRequsetRecords(records, myTrans);
                     DBProvider.GravelDBProvider.SaveGravelDistributeRecordInfo(distributeRecord, myTrans);
+                    return OperResult.RESULTCODE_TRUE;
                 },
                 exc =>
                 {

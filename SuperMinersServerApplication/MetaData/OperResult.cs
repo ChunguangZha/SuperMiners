@@ -150,6 +150,11 @@ namespace MetaData
         public const int RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET = 509;
 
         /// <summary>
+        /// 此玩家不能申领碎石
+        /// </summary>
+        public const int RESULTCODE_GRAVEL_CANOTREQUEST = 510;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -289,6 +294,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_BUYMINE_MINEISFULL, "已无矿脉储量，无法继续勘探");
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED, "今天已经申请过碎石");
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET, "没有可领取的碎石");
+            _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎石");
         }
 
         public static string GetMsg(int resultCode)

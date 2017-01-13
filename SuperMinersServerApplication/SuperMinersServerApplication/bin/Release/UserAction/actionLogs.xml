@@ -485,7 +485,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-05T00:58:19.8482739+08:00</Time>
+    <Time>2017-01-05T00:58:19</Time>
     <LastLoginTimeString>2017/1/5 0:58:19</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -493,7 +493,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-05T00:59:38.3278792+08:00</Time>
+    <Time>2017-01-05T00:59:38</Time>
     <LastLoginTimeString>2017/1/5 0:59:38</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -501,7 +501,47 @@
     <ActionType>GatherStone</ActionType>
     <OperNumber>209</OperNumber>
     <Remark />
-    <Time>2017-01-05T01:00:03.2275877+08:00</Time>
+    <Time>2017-01-05T01:00:03</Time>
     <LastLoginTimeString>2017/1/5 1:00:03</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-13T10:15:38.9001071+08:00</Time>
+    <LastLoginTimeString>2017/1/13 10:15:38</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark />
+    <Time>2017-01-13T10:15:45.6030026+08:00</Time>
+    <LastLoginTimeString>2017/1/13 10:15:45</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-13T10:17:19.8247377+08:00</Time>
+    <LastLoginTimeString>2017/1/13 10:17:19</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>DelegateSellStone</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-13T10:18:12.5417478+08:00</Time>
+    <LastLoginTimeString>2017/1/13 10:18:12</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-13T10:22:09.6340659+08:00</Time>
+    <LastLoginTimeString>2017/1/13 10:22:09</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

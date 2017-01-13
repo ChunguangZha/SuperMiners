@@ -128,7 +128,7 @@ namespace SuperMinersWPF.Views.Controls
                 }
                 else
                 {
-                    if (newItem != null)
+                    if (newItem != null && newItem.Day != null)
                     {
                         Point newPoint = ConvertStoneStackDailyRecordInfoToPoint(newItem);
                         if (this._addItem)
@@ -197,7 +197,10 @@ namespace SuperMinersWPF.Views.Controls
             for (int i = 0; i < _listTodayMinuteTradeRecords.Count; i++)
             {
                 var item = _listTodayMinuteTradeRecords[i];
-                polyLine.Points.Add(ConvertStoneStackDailyRecordInfoToPoint(item));
+                if (item.Day != null)
+                {
+                    polyLine.Points.Add(ConvertStoneStackDailyRecordInfoToPoint(item));
+                }
             }
 
             this.canvas.Children.Add(polyLine);

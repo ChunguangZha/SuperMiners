@@ -612,6 +612,31 @@ namespace DataBaseProvider
             }
         }
 
+        public PlayerGravelInfo GetPlayerGravelInfo(int userID)
+        {
+            PlayerGravelInfo gravelInfo = null;
+
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from playergravelinfo where `UserID`=@UserID ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.Add("@UserID", userID);
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+                if (table != null && table.Rows.Count == 1)
+                {
+                    gravelInfo = new PlayerGravelInfo();
+                    gravelInfo.UserID = userID;
+                    gravelInfo.Gravel = Convert.ToInt32(table.Rows[0]["Gravel"]);
+                    gravelInfo.FirstGetGravelTime = new MyDateTime(Convert.ToDateTime(table.Rows[0]["FirstGetGravelTime"]));
+                }
+            });
+
+            return gravelInfo;
+        }
+
         public PlayerInfo GetPlayerByInvitationCode(string invitationCode)
         {
             PlayerInfo player = null;

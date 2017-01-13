@@ -1,0 +1,106 @@
+﻿using DataBaseProvider;
+using MetaData;
+using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Encoder;
+using SuperMinersServerApplication.Utility;
+using SuperMinersServerApplication.WebService.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SuperMinersServerApplication.WebService.Services
+{
+    public partial class ServiceToClient : IServiceToClient
+    {
+        public int RequestGravel(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    var playerRunner = PlayerController.Instance.GetRunnable(userName);
+                    if (playerRunner == null)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+
+                    var result = playerRunner.RequestGravel();
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        return result;
+                    }
+
+                    return GravelController.Instance.RequestGravel(playerRunner.BasePlayer.SimpleInfo.UserID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] RequestGravel Exception", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int GetGravel(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = "";
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    var playerRunner = PlayerController.Instance.GetRunnable(userName);
+                    if (playerRunner == null)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+
+                    int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+                    {
+                        int innerResult;
+                        var record = GravelController.Instance.GetGravel(playerRunner.BasePlayer.SimpleInfo.UserID, myTrans, out innerResult);
+                        if (innerResult != OperResult.RESULTCODE_TRUE)
+                        {
+                            return innerResult;
+                        }
+                        if (record == null)
+                        {
+                            return OperResult.RESULTCODE_FALSE;
+                        }
+                        innerResult = playerRunner.GetGravel(record, myTrans);
+
+                        return innerResult;
+                    },
+                    exc =>
+                    {
+                        LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetGravel Transaction Oper Exception", exc);
+                    });
+
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        playerRunner.RefreshGravel();
+                    }
+
+                    return result;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetGravel Exception", exc);
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+    }
+}

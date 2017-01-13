@@ -1142,5 +1142,46 @@ namespace SuperMinersServerApplication.Controller
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
         }
+
+        public int RequestGravel()
+        {
+            if (this.BasePlayer.GravelInfo == null || this.BasePlayer.GravelInfo.GravelState == PlayerGravelState.Disable)
+            {
+                return OperResult.RESULTCODE_GRAVEL_CANOTREQUEST;
+            }
+            if (this.BasePlayer.GravelInfo.GravelState == PlayerGravelState.Requested)
+            {
+                return OperResult.RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED;
+            }
+            if (this.BasePlayer.GravelInfo.GravelState == PlayerGravelState.Requestable)
+            {
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public int GetGravel(PlayerGravelRequsetRecordInfo record, CustomerMySqlTransaction myTrans)
+        {
+            if (this.BasePlayer.GravelInfo == null || this.BasePlayer.GravelInfo.GravelState != PlayerGravelState.Getable)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            this.BasePlayer.GravelInfo.Gravel += record.Gravel;
+            if (this.BasePlayer.GravelInfo.FirstGetGravelTime == null)
+            {
+                this.BasePlayer.GravelInfo.FirstGetGravelTime = new MyDateTime(DateTime.Now);
+            }
+            this.BasePlayer.GravelInfo.GravelState = PlayerGravelState.Requestable;
+            DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public void RefreshGravel()
+        {
+            this.BasePlayer.GravelInfo = DBProvider.UserDBProvider.GetPlayerGravelInfo(this.BasePlayer.SimpleInfo.UserID);
+        }
+
     }
 }

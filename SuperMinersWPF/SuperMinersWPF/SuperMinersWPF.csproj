@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>2.0.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -233,6 +233,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerFortuneInfo.cs">
       <Link>Wcf\Datas\PlayerFortuneInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerGravelRequsetRecordInfo.cs">
+      <Link>Wcf\Datas\PlayerGravelRequsetRecordInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerInfo.cs">
       <Link>Wcf\Datas\PlayerInfo.cs</Link>
     </Compile>
@@ -283,6 +286,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.GameRoulette.cs">
       <Link>Wcf\Contracts\IServiceToClient.GameRoulette.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Gravel.cs">
+      <Link>Wcf\Contracts\IServiceToClient.Gravel.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Message.cs">
       <Link>Wcf\Contracts\IServiceToClient.Message.cs</Link>
@@ -515,6 +521,7 @@
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Game.cs" />
     <Compile Include="Wcf\Clients\ServerClient.GameRoulette.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Gravel.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Message.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
     <Compile Include="Wcf\Clients\ServerClient.RaiderofLostArk.cs" />

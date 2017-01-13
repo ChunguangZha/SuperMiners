@@ -4,15 +4,15 @@
 winexe
 C#
 .cs
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
+F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\
 SuperMinersCustomServiceSystem
 none
 false
 TRACE;DEBUG;Encrypt
-F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
+F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\App.xaml
 50-606795299
 
-149-2058973995
+1501501169868
 25-607272751
 BusyWindow.xaml;View\Controls\DeletedPlayerInfoControl.xaml;View\Controls\GameFunny\RouletteActiveWinRealAwardListControl.xaml;View\Controls\GameFunny\RouletteAwardItemListControl.xaml;View\Controls\GameFunny\RouletteCurrentAwardItemListControl.xaml;View\Controls\GameFunny\RouletteRoundRecordListControl.xaml;View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.xaml;View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml;View\Controls\TradeSystem\StoneNotFinishedTradeRecordControl.xaml;View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml;View\EditPlayerWindow.xaml;LoginWindow.xaml;MainWindow.xaml;Assets\Style.xaml;MyControl\MyDateTimePickerControl.xaml;View\AddNoticeWindow.xaml;View\Controls\NoticeManageControl.xaml;View\Controls\PlayerManagerControl.xaml;View\Controls\TradeSystem\AlipayExceptionRecordListControl.xaml;View\Controls\TradeSystem\GoldCoinRechargeActiveControl.xaml;View\Controls\TradeSystem\GoldCoinRechargeHistoryRecordControl.xaml;View\Controls\TradeSystem\MinerTradeActiveControl.xaml;View\Controls\TradeSystem\MinerTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\MineTradeActiveControl.xaml;View\Controls\TradeSystem\MineTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\StoneTradeActiveControl.xaml;View\Controls\TradeSystem\StoneBuyTradeHistoryRecordControl.xaml;View\Controls\TradeSystem\WithdrawRMBActiveControl.xaml;View\Controls\TradeSystem\WithdrawRMBHistoryRecordControl.xaml;View\Controls\TradeSystem\WithdrawRMBShowImageControl.xaml;View\EditPlayerAlipayWindow.xaml;View\EditPlayerRMBWindow.xaml;View\FillAlipayInfoWindow.xaml;View\InputActionPasswordWindow.xaml;View\Windows\EditAgentInfoWindow.xaml;View\Windows\EditPlayerExpWindow.xaml;View\Windows\EditPlayerGoldCoinWindow.xaml;View\Windows\EditPlayerLastGatherStoneTimeWindow.xaml;View\Windows\EditPlayerMinerCountWindow.xaml;View\Windows\EditPlayerPasswordWindow.xaml;View\Windows\EditPlayerStoneWindow.xaml;View\Windows\EditRouletteAwardItemWindow.xaml;View\Windows\GameRouletteWinAwardWindow.xaml;View\Windows\HandleExceptionAlipayRecordWindow.xaml;View\Windows\HandleExceptionStoneOrderWindow.xaml;View\Windows\InputValueWindow.xaml;View\Windows\RejectPlayerWithdrawRMBWindow.xaml;View\Windows\ViewPlayerExpChangedRecordsWindow.xaml;View\Windows\ViewPlayerLoginLogsWindow.xaml;View\Windows\WithdrawRMBPayWindow.xaml;
 

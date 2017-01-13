@@ -198,6 +198,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.Game.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.GameRaiderofLostArk.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.GameRoulette.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.Gravel.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Stack.cs" />
@@ -214,6 +215,7 @@
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
     <Compile Include="WebService\Services\ServiceToClient.GameRaiderofLostArk.cs" />
     <Compile Include="WebService\Services\ServiceToClient.GameRoulette.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.Gravel.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Message.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Stack.cs" />

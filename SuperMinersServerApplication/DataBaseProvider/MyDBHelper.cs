@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MetaData;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,21 +57,28 @@ namespace DataBaseProvider
         }
 
 
-        public bool TransactionDataBaseOper(TransactionDBOperDelegte DBOper, TransactionDBOperFailedDelegate FaileOper)
+        public int TransactionDataBaseOper(TransactionDBOperDelegte DBOper, TransactionDBOperFailedDelegate FaileOper)
         {
             CustomerMySqlTransaction myTrans = null;
             try
             {
                 myTrans = MyDBHelper.Instance.CreateTrans();
-                DBOper(myTrans);
-                myTrans.Commit();
-                return true;
+                int result = DBOper(myTrans);
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    myTrans.Commit();
+                }
+                else
+                {
+                    myTrans.Rollback();
+                }
+                return result;
             }
             catch (Exception exc)
             {
                 myTrans.Rollback();
                 FaileOper(exc);
-                return false;
+                return OperResult.RESULTCODE_FALSE;
             }
             finally
             {
@@ -131,7 +139,7 @@ namespace DataBaseProvider
         }
     }
 
-    public delegate void TransactionDBOperDelegte(CustomerMySqlTransaction myTrans);
+    public delegate int TransactionDBOperDelegte(CustomerMySqlTransaction myTrans);
 
     public delegate void TransactionDBOperFailedDelegate(Exception exc);
 

@@ -634,18 +634,22 @@ namespace SuperMinersServerApplication.Controller
         public PlayerInfo GetPlayerInfo(string userName)
         {
             PlayerInfo player = null;
-            player = DBProvider.UserDBProvider.GetPlayer(userName);
-            if (player != null)
+            PlayerRunnable playerrun = null;
+            if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
             {
-                PlayerRunnable playerrun = null;
-                if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
-                {
-                    playerrun.BasePlayer = player;
-                }
-                else
+                player = playerrun.BasePlayer;
+            }
+            else
+            {
+                player = DBProvider.UserDBProvider.GetPlayer(userName);
+                if (player != null)
                 {
                     this._dicOnlinePlayerRuns.TryAdd(userName, new PlayerRunnable(player));
                 }
+            }
+            if (player == null)
+            {
+                return null;
             }
 
             var lastGravelRecord = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecord(player.SimpleInfo.UserID);

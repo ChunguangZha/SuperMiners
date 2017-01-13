@@ -365,39 +365,37 @@ namespace SuperMinersWPF.ViewModels
                 if (e.Result == null)
                 {
                     this.ListTodayRealTimeTradeRecords.Clear();
-                }
-                else
-                {
-                    if (this.ListTodayRealTimeTradeRecords.Count == 0)
-                    {
-                        this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
-                    }
-                    else
-                    {
-                        var lastDateTime = this.ListTodayRealTimeTradeRecords[this.ListTodayRealTimeTradeRecords.Count - 1].Day.ToDateTime();
-                        if (lastDateTime < e.Result.DailyInfo.Day.ToDateTime())
-                        {
-                            this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
-                        }
-                    }
-                }
 
-                if (e.Result != null)
-                {
-                    if (GetTodayStackRecordInfoCompleted != null)
-                    {
-                        GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
-                    }
-                    if (MarketOpened != null)
-                    {
-                        MarketOpened();
-                    }
-                }
-                else
-                {
                     if (MarketClosed != null)
                     {
                         MarketClosed();
+                    }
+                }
+                else
+                {
+                    if (e.Result.DailyInfo.Day != null)
+                    {
+                        if (this.ListTodayRealTimeTradeRecords.Count == 0)
+                        {
+                            this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
+                        }
+                        else
+                        {
+                            var lastDateTime = this.ListTodayRealTimeTradeRecords[this.ListTodayRealTimeTradeRecords.Count - 1].Day.ToDateTime();
+                            if (lastDateTime < e.Result.DailyInfo.Day.ToDateTime())
+                            {
+                                this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
+                            }
+                        }
+
+                        if (GetTodayStackRecordInfoCompleted != null)
+                        {
+                            GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
+                        }
+                        if (MarketOpened != null)
+                        {
+                            MarketOpened();
+                        }
                     }
                 }
             }
