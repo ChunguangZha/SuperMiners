@@ -383,5 +383,69 @@ namespace SuperMinersWPF.Models
         {
             get { return this._parentObject.FortuneInfo.StoneSellQuan; }
         }
+
+        public Visibility GravelVisible
+        {
+            get
+            {
+#if V2
+                return Visibility.Visible;
+#else
+                return Visibility.Collapsed;
+#endif
+            }
+        }
+
+        public int Gravel
+        {
+            get
+            {
+                if (this._parentObject.GravelInfo == null)
+                {
+                    return 0;
+                }
+                return this._parentObject.GravelInfo.Gravel;
+            }
+        }
+
+        public bool GravelButtonEnable
+        {
+            get
+            {
+                if (this._parentObject.GravelInfo == null)
+                {
+                    return false;
+                }
+                if (this._parentObject.GravelInfo.GravelState == PlayerGravelState.Requestable || this._parentObject.GravelInfo.GravelState == PlayerGravelState.Getable)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public string GravelButtonContent
+        {
+            get
+            {
+                if (this._parentObject.GravelInfo == null)
+                {
+                    return "";
+                }
+                string content = "";
+                if (this._parentObject.GravelInfo.GravelState == PlayerGravelState.Getable)
+                {
+                    content = "领取";
+                }
+                else
+                {
+                    content = "申请";
+                }
+                return content;
+            }
+        }
     }
 }

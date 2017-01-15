@@ -386,5 +386,10 @@ namespace SuperMinersWPF
             win.ShowDialog();
         }
 
+        private void btnRequestGravel_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

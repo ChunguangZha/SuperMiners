@@ -145,12 +145,68 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetAgentUserInfo();
         }
 
+        public void AsyncRequestGravel()
+        {
+            App.BusyToken.ShowBusyWindow("正在提交请求...");
+            GlobalData.Client.RequestGravel(null);
+        }
+
+        public void AsyncGetGravel()
+        {
+            App.BusyToken.ShowBusyWindow("正在提交请求...");
+            GlobalData.Client.GetGravel(null);
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerInfoCompleted += Client_GetPlayerInfoCompleted;
             GlobalData.Client.GatherStonesCompleted += Client_GatherStonesCompleted;
             GlobalData.Client.OnPlayerInfoChanged += Client_OnPlayerInfoChanged;
             GlobalData.Client.GetAgentUserInfoCompleted += Client_GetAgentUserInfoCompleted;
+            GlobalData.Client.RequestGravelCompleted += Client_RequestGravelCompleted;
+            GlobalData.Client.GetGravelCompleted += Client_GetGravelCompleted;
+        }
+
+        void Client_GetGravelCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("碎石领取成功");
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("碎石领取失败，原因为：" + OperResult.GetMsg(e.Result));
+                }
+                this.AsyncGetPlayerInfo();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+            }
+        }
+
+        void Client_RequestGravelCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("碎石申请成功");
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("碎石申请失败，原因为：" + OperResult.GetMsg(e.Result));
+                }
+                this.AsyncGetPlayerInfo();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+            }
         }
 
         void Client_GetAgentUserInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.AgentUser.AgentUserInfo> e)

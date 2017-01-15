@@ -119,15 +119,15 @@ namespace SuperMinersWPF.Models
                 {
                     return "";
                 }
-                int surplusValue = GlobalData.GameConfig.LimitStoneCount - (int)AllStonesCount;
-                if (surplusValue < 0)
-                {
-                    return "已溢出";
-                }
 
                 if (GlobalData.CurrentUser.ExpLevel == 0)
                 {
                     return "VIP可见";
+                }
+                int surplusValue = GlobalData.GameConfig.LimitStoneCount - (int)AllStonesCount;
+                if (surplusValue < 0)
+                {
+                    return "已溢出";
                 }
                 return surplusValue.ToString() + "矿石";
             }
