@@ -388,7 +388,20 @@ namespace SuperMinersWPF
 
         private void btnRequestGravel_Click(object sender, RoutedEventArgs e)
         {
+            if (GlobalData.CurrentUser.ParentObject.GravelInfo == null)
+            {
+                MyMessageBox.ShowInfo("您无法申请碎石");
+                return;
+            }
 
+            if (GlobalData.CurrentUser.ParentObject.GravelInfo.GravelState == MetaData.User.PlayerGravelState.Requestable)
+            {
+                App.UserVMObject.AsyncRequestGravel();
+            }
+            else if (GlobalData.CurrentUser.ParentObject.GravelInfo.GravelState == MetaData.User.PlayerGravelState.Getable)
+            {
+                App.UserVMObject.AsyncGetGravel();
+            }
         }
 
     }

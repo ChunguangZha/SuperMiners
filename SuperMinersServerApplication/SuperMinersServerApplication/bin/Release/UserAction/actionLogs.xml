@@ -509,7 +509,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-13T10:15:38.9001071+08:00</Time>
+    <Time>2017-01-13T10:15:38</Time>
     <LastLoginTimeString>2017/1/13 10:15:38</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -517,7 +517,7 @@
     <ActionType>GatherStone</ActionType>
     <OperNumber>2</OperNumber>
     <Remark />
-    <Time>2017-01-13T10:15:45.6030026+08:00</Time>
+    <Time>2017-01-13T10:15:45</Time>
     <LastLoginTimeString>2017/1/13 10:15:45</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -525,7 +525,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-13T10:17:19.8247377+08:00</Time>
+    <Time>2017-01-13T10:17:19</Time>
     <LastLoginTimeString>2017/1/13 10:17:19</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -533,7 +533,7 @@
     <ActionType>DelegateSellStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-13T10:18:12.5417478+08:00</Time>
+    <Time>2017-01-13T10:18:12</Time>
     <LastLoginTimeString>2017/1/13 10:18:12</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -541,7 +541,71 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-01-13T10:22:09.6340659+08:00</Time>
+    <Time>2017-01-13T10:22:09</Time>
     <LastLoginTimeString>2017/1/13 10:22:09</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-16T10:15:36</Time>
+    <LastLoginTimeString>2017/1/16 10:15:36</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Register</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>注册成为新矿主。</Remark>
+    <Time>2017-01-16T10:19:15</Time>
+    <LastLoginTimeString>2017/1/16 10:19:15</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Refer</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark>收获第1级推荐奖励：贡献值-[5],金币-[2500]</Remark>
+    <Time>2017-01-16T10:22:10</Time>
+    <LastLoginTimeString>2017/1/16 10:22:10</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-16T10:22:11</Time>
+    <LastLoginTimeString>2017/1/16 10:22:11</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-16T10:41:59.1749555+08:00</Time>
+    <LastLoginTimeString>2017/1/16 10:41:59</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-16T10:45:56.0898977+08:00</Time>
+    <LastLoginTimeString>2017/1/16 10:45:56</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>2</OperNumber>
+    <Remark />
+    <Time>2017-01-16T10:47:36.569575+08:00</Time>
+    <LastLoginTimeString>2017/1/16 10:47:36</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-01-16T11:03:47.0214721+08:00</Time>
+    <LastLoginTimeString>2017/1/16 11:03:47</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

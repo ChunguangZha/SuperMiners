@@ -53,7 +53,7 @@ namespace SuperMinersWPF.Views
             builder.Append(" " + uri);
 
             this.txtInvitationCode.Text = builder.ToString();
-            this.txtReferrerMsg.Text = "推荐好友，注册后成功登录，即可获取如下奖励：" + GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(1).ToString();
+            //this.txtReferrerMsg.Text = "推荐好友，注册后成功登录，即可获取如下奖励：" + GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(1).ToString();
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

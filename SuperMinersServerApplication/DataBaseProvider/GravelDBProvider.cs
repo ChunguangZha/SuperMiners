@@ -25,9 +25,9 @@ namespace DataBaseProvider
                 string sqlWhere = " where ";
                 if (userID > 0)
                 {
-                    sqlWhere += " r.UserID=@userID and ";
+                    sqlWhere += " UserID=@userID and ";
                 }
-                sqlWhere += " @beginDate <= r.RequestDate and r.RequestDate < @endDate ";
+                sqlWhere += " @beginDate <= RequestDate and RequestDate < @endDate ";
                 string sqlText = "SELECT r.*, s.UserName FROM (" + sqlInnerSelect + sqlWhere + ") r left join playersimpleinfo s on r.UserID = s.id ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@beginDate", new DateTime(date.Year, date.Month, date.Day, 0, 0, 0));

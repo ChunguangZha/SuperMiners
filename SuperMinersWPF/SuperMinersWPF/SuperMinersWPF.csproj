@@ -389,6 +389,9 @@
     <Compile Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml.cs">
       <DependentUpon>DelegateSellStoneHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\GambleStoneControl.xaml.cs">
+      <DependentUpon>GambleStoneControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\GamePanelControl.xaml.cs">
       <DependentUpon>GamePanelControl.xaml</DependentUpon>
     </Compile>
@@ -598,6 +601,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\DelegateSellStoneHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\GambleStoneControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

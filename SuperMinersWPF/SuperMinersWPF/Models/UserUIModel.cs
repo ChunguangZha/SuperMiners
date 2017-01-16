@@ -71,6 +71,11 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("FreezingDiamonds");
                 NotifyPropertyChange("SellableDiamonds");
                 NotifyPropertyChange("StoneSellQuan");
+
+                NotifyPropertyChange("GravelVisible");
+                NotifyPropertyChange("Gravel");
+                NotifyPropertyChange("GravelButtonEnable");
+                NotifyPropertyChange("GravelButtonContent");
             }
         }
 
@@ -447,5 +452,6 @@ namespace SuperMinersWPF.Models
                 return content;
             }
         }
+
     }
 }

@@ -109,6 +109,7 @@
     <Compile Include="Controller\AdminController.cs" />
     <Compile Include="Controller\DBProvider.cs" />
     <Compile Include="Controller\GameSystemConfigController.cs" />
+    <Compile Include="Controller\Game\GambleStoneController.cs" />
     <Compile Include="Controller\Game\RaidersofLostArkController.cs" />
     <Compile Include="Controller\Game\RouletteAwardController.cs" />
     <Compile Include="Controller\GravelController.cs" />

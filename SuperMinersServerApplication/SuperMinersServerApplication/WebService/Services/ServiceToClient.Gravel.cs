@@ -28,13 +28,19 @@ namespace SuperMinersServerApplication.WebService.Services
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
-                    var result = playerRunner.RequestGravel();
+                    int result = playerRunner.RequestGravel();
                     if (result != OperResult.RESULTCODE_TRUE)
                     {
                         return result;
                     }
 
-                    return GravelController.Instance.RequestGravel(playerRunner.BasePlayer.SimpleInfo.UserID);
+                    result = GravelController.Instance.RequestGravel(playerRunner.BasePlayer.SimpleInfo.UserID);
+                    if (result == OperResult.RESULTCODE_TRUE)
+                    {
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 申请碎石");
+                    }
+
+                    return result;
                 }
                 catch (Exception exc)
                 {
