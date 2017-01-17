@@ -11,7 +11,10 @@ namespace MetaData.Game.GambleStone
     /// </summary>
     public class GambleStoneInningInfo
     {
-        public int ID;
+        /// <summary>
+        /// GUID
+        /// </summary>
+        public string ID;
 
         public int RoundID;
 
@@ -38,12 +41,14 @@ namespace MetaData.Game.GambleStone
 
         public MyDateTime StartTime;
 
+        public int FinishedInningCount;
+
         public MyDateTime EndTime;
 
         public int AllBetInStone;
 
         public int AllWinedOutStone;
 
-
+        public string TableName;
     }
 }

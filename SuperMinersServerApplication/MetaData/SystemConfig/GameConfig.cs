@@ -204,5 +204,15 @@ namespace MetaData.SystemConfig
         public int StackMarketNightOpenTime = 18;
         [DataMember]
         public int StackMarketNightCloseTime = 23;
+
+        [DataMember]
+        public int GambleStoneRedColorWinTimes = 2;
+        [DataMember]
+        public int GambleStoneGreenColorWinTimes = 3;
+        [DataMember]
+        public int GambleStoneBlueWinTimes = 6;
+        [DataMember]
+        public int GambleStonePurpleWinTimes = 50;
+
     }
 }

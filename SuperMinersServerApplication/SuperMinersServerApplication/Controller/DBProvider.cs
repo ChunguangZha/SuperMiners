@@ -53,6 +53,8 @@ namespace SuperMinersServerApplication.Controller
 
         public static GravelDBProvider GravelDBProvider = new GravelDBProvider();
 
+        public static GambleStoneDBProvider GambleStoneDBProvider = new GambleStoneDBProvider();
+
         
     }
 }
