@@ -626,6 +626,21 @@ namespace SuperMinersServerApplication.Controller
             return null;
         }
 
+        public PlayerInfo GetPlayerInfoByUserID(int userID)
+        {
+            foreach (var playerRunner in this._dicOnlinePlayerRuns.Values)
+            {
+                if (playerRunner.BasePlayer.SimpleInfo.UserID == userID)
+                {
+                    return playerRunner.BasePlayer;
+                }
+            }
+
+            var player = DBProvider.UserDBProvider.GetPlayerByUserID(userID);
+            LoadPlayerLastGravelInfo(player);
+            return player;
+        }
+
         /// <summary>
         /// 不论在线还是离线
         /// </summary>
@@ -652,6 +667,12 @@ namespace SuperMinersServerApplication.Controller
                 return null;
             }
 
+            LoadPlayerLastGravelInfo(player);
+            return player;
+        }
+
+        private void LoadPlayerLastGravelInfo(PlayerInfo player)
+        {
             var lastGravelRecord = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecord(player.SimpleInfo.UserID);
             if (lastGravelRecord == null)
             {
@@ -691,8 +712,6 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
             }
-
-            return player;
         }
 
         public PlayerRunnable GetRunnable(string userName)
@@ -1207,18 +1226,7 @@ namespace SuperMinersServerApplication.Controller
 
             return result;
         }
-
-        //public int JoinRaider(string userName, int betStoneCount)
-        //{
-        //    PlayerRunnable playerrun = this.GetRunnable(userName);
-        //    if (playerrun == null)
-        //    {
-        //        return OperResult.RESULTCODE_USER_NOT_EXIST;
-        //    }
-
-        //    return playerrun.JoinRaider(betStoneCount);
-        //}
-        
+                
         public int WinRaiderGetAward(string userName, int winStoneCount, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(userName);
@@ -1238,10 +1246,16 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        //public PlayerLoginInfo[] GetUserLoginLog(int userID)
-        //{
-        //    return DBProvider.PlayerLoginInfoDBProvider.GetUserLoginLogs(userID);
-        //}
+        public int WinGambleStone(string userName, int winnedStone, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerrun.WinGambleStone(winnedStone, myTrans);
+        }
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;
     }

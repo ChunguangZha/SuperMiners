@@ -1183,5 +1183,38 @@ namespace SuperMinersServerApplication.Controller
             this.BasePlayer.GravelInfo = DBProvider.UserDBProvider.GetPlayerGravelInfo(this.BasePlayer.SimpleInfo.UserID);
         }
 
+        public int BetInGambleStone(int count, bool isGravel, CustomerMySqlTransaction myTrans)
+        {
+            if (isGravel)
+            {
+                if (this.BasePlayer.GravelInfo.Gravel < count)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.GravelInfo.Gravel -= count;
+                DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
+            }
+            if (!isGravel)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfStones < count)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfStones -= count;
+                bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public int WinGambleStone(int winnedStone, CustomerMySqlTransaction myTrans)
+        {
+            this.BasePlayer.FortuneInfo.StockOfStones += winnedStone;
+            bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
+
+            return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+        }
     }
 }

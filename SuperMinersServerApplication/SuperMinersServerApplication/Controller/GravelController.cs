@@ -28,6 +28,9 @@ namespace SuperMinersServerApplication.Controller
 
         #endregion
 
+        private DateTime exeDistributeTime = new DateTime(2000, 1, 1, 0, 0, 0);
+        private bool todayIsDistributed = false;
+
         public void Init()
         {
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
@@ -42,6 +45,14 @@ namespace SuperMinersServerApplication.Controller
         {
             try
             {
+                //每天只执行一次
+                DateTime nowtime = DateTime.Now;
+                if (nowtime.DayOfYear == this.exeDistributeTime.DayOfYear)
+                {
+                    return;
+                }
+                this.exeDistributeTime = nowtime;
+
                 PlayerGravelRequsetRecordInfo[] records = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecords(new MetaData.MyDateTime(DateTime.Now.AddDays(-1)), -1);
                 if (records == null || records.Length == 0)
                 {
@@ -74,6 +85,13 @@ namespace SuperMinersServerApplication.Controller
                     LogHelper.Instance.AddErrorLog("GravelController.DistributeGravel Save ToDB Transaction Exception", exc);
                 });
 
+                if (PlayerGravelInfoChanged != null)
+                {
+                    foreach (var item in records)
+                    {
+                        PlayerGravelInfoChanged(item.UserName);
+                    }
+                }
             }
             catch (Exception exc)
             {
@@ -118,6 +136,7 @@ namespace SuperMinersServerApplication.Controller
             result = OperResult.RESULTCODE_TRUE;
             return record;
         }
-        
+
+        public event Action<string> PlayerGravelInfoChanged;
     }
 }

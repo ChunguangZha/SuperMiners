@@ -13,6 +13,11 @@ namespace MetaData.Game.GambleStone
     {
         public int UserID;
 
+        /// <summary>
+        /// 非数据库字段
+        /// </summary>
+        public string UserName;
+
         public MyDateTime Time;
 
         public int RoundID;

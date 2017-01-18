@@ -46,6 +46,21 @@ namespace SuperMinersServerApplication.WebService.Services
             RaidersofLostArkController.Instance.NotifyAllPlayerRaiderWinnerEvent += NotifyAllPlayerRaiderWinner;
             //RaidersofLostArkController.Instance.NotifyPlayerToRefreshBetRecordsEvent += NotifyPlayerToRefreshBetRecords;
             RouletteAwardController.Instance.RouletteWinRealAwardPaySucceedNotify += Instance_RouletteWinRealAwardPaySucceedNotify;
+            GravelController.Instance.PlayerGravelInfoChanged += Instance_PlayerGravelInfoChanged;
+        }
+
+        void Instance_PlayerGravelInfoChanged(string userName)
+        {
+            string token = ClientManager.GetToken(userName);
+            if (string.IsNullOrEmpty(token))
+            {
+                return;
+            }
+
+            new Thread(new ParameterizedThreadStart(o =>
+            {
+                this.PlayerInfoChanged(token);
+            })).Start();
         }
 
         void StoneStackController_DelegateBuyStoneOrderAlipayPaySucceedNotify(string arg1, string arg2)
@@ -170,41 +185,6 @@ namespace SuperMinersServerApplication.WebService.Services
                 this.PlayerInfoChanged(token);
             })).Start();
         }
-
-//        public Stream GetClientAccessPolicy()
-//        {
-//            RSAProvider.LoadNoRSA();
-
-//            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
-
-//            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
-//                                                    <access-policy>
-//                                                        <cross-domain-access>
-//                                                            <policy>
-//                                                                <allow-from http-request-headers=""*"">
-//                                                                    <domain uri=""*""/>
-//                                                                </allow-from>
-//                                                                <grant-to>
-//                                                                    <resource path=""/"" include-subpaths=""true""/>
-//                                                                </grant-to>
-//                                                            </policy>
-//                                                        </cross-domain-access>
-//                                                    </access-policy>";
-//            return new MemoryStream(Encoding.UTF8.GetBytes(result));
-//        }
-
-//        public Stream GetCrossDomain()
-//        {
-//            RSAProvider.LoadNoRSA();
-
-//            WebOperationContext.Current.OutgoingResponse.ContentType = "application/xml";
-
-//            const string result = @"<?xml version=""1.0"" encoding=""utf-8""?>
-//                                                    <cross-domain-policy>
-//                                                      <allow-access-from domain=""*"" />
-//                                                    </cross-domain-policy>";
-//            return new MemoryStream(Encoding.UTF8.GetBytes(result));
-//        }
 
         public CallbackInfo Callback(string token)
         {

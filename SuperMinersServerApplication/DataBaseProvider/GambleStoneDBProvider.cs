@@ -44,6 +44,9 @@ namespace DataBaseProvider
             return true;
         }
 
-
+        public bool AddGambleStonePlayerBetRecord(GambleStonePlayerBetRecord playerBetRecord, string tableNamePrefix, CustomerMySqlTransaction myTrans)
+        {
+            return true;
+        }
     }
 }

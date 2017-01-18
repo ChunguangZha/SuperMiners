@@ -108,12 +108,14 @@ namespace SuperMinersServerApplication.Controller.Game
         {
             int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
-
+                return this.CurrentInningRunner.SaveInningInfoToDB(this.RoundInfo, myTrans);
             },
             exc =>
             {
 
             });
+
+            return true;
         }
 
         public void LoadFromDB()
@@ -165,16 +167,16 @@ namespace SuperMinersServerApplication.Controller.Game
                 RoundID = this.RoundInfo.ID,
                 CountDownSeconds = OpenWinTimeSeconds,
             };
-            this.CurrentInningRunner = new GambleStoneInningRunner(inning);
+            this.CurrentInningRunner = new GambleStoneInningRunner(this.RoundInfo, inning);
         }
 
-        public int BetIn(GambleStoneItemColor color, int stoneCount, int userID)
+        public int BetIn(GambleStoneItemColor color, int stoneCount, int userID, string userName)
         {
-            if (!this.isListening)
+            if (!this.isListening || this.CurrentInningRunner == null)
             {
                 return OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
             }
-            return this.CurrentInningRunner.BetIn(color, stoneCount, userID);
+            return this.CurrentInningRunner.BetIn(this.RoundInfo.ID, color, stoneCount, userID, userName);
         }
 
     }
@@ -184,17 +186,22 @@ namespace SuperMinersServerApplication.Controller.Game
         //完成时再保存到数据库
         private GambleStoneInningInfo _inningInfo = null;
 
+        private GambleStoneRoundInfo _roundInfo = null;
+
         private Dictionary<int, int> _dicPlayerBetRedStone = new Dictionary<int, int>();
         private Dictionary<int, int> _dicPlayerBetGreenStone = new Dictionary<int, int>();
         private Dictionary<int, int> _dicPlayerBetBlueStone = new Dictionary<int, int>();
         private Dictionary<int, int> _dicPlayerBetPurpleStone = new Dictionary<int, int>();
 
+        private Dictionary<int, GambleStonePlayerBetRecord> _dicPlayerBetRecord = new Dictionary<int, GambleStonePlayerBetRecord>();
+
         private bool _isRandomOpen = false;
 
         private Random _random = new Random();
 
-        public GambleStoneInningRunner(GambleStoneInningInfo inning)
+        public GambleStoneInningRunner(GambleStoneRoundInfo roundInfo, GambleStoneInningInfo inning)
         {
+            this._roundInfo = roundInfo;
             this._inningInfo = inning;
         }
 
@@ -206,16 +213,35 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
-        public int BetIn(GambleStoneItemColor color, int stoneCount, int userID)
+        public int BetIn(int roundID, GambleStoneItemColor color, int stoneCount, int userID, string userName)
         {
             if (this._inningInfo.CountDownSeconds == 0)
             {
                 return OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART;
             }
 
+            GambleStonePlayerBetRecord betrecord = null;
+            if (this._dicPlayerBetRecord.ContainsKey(userID))
+            {
+                betrecord = this._dicPlayerBetRecord[userID];
+            }
+            else
+            {
+                betrecord = new GambleStonePlayerBetRecord()
+                {
+                    UserID = userID,
+                    UserName = userName,
+                    InningID = this._inningInfo.ID,
+                    RoundID = roundID,
+                    Time = new MyDateTime(DateTime.Now)
+                };
+                this._dicPlayerBetRecord.Add(userID, betrecord);
+            }            
+
             switch (color)
             {
                 case GambleStoneItemColor.Red:
+                    betrecord.BetRedStone += stoneCount;
                     this._inningInfo.BetRedStone += stoneCount;
                     if (this._dicPlayerBetRedStone.ContainsKey(userID))
                     {
@@ -227,6 +253,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Green:
+                    betrecord.BetGreenStone += stoneCount;
                     this._inningInfo.BetGreenStone += stoneCount;
                     if (this._dicPlayerBetGreenStone.ContainsKey(userID))
                     {
@@ -238,6 +265,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Blue:
+                    betrecord.BetBlueStone += stoneCount;
                     this._inningInfo.BetBlueStone += stoneCount;
                     if (this._dicPlayerBetBlueStone.ContainsKey(userID))
                     {
@@ -249,6 +277,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Purple:
+                    betrecord.BetPurpleStone += stoneCount;
                     this._inningInfo.BetPurpleStone += stoneCount;
                     if (this._dicPlayerBetPurpleStone.ContainsKey(userID))
                     {
@@ -366,24 +395,65 @@ namespace SuperMinersServerApplication.Controller.Game
         public int SaveInningInfoToDB(GambleStoneRoundInfo roundInfo, CustomerMySqlTransaction myTrans)
         {
             DBProvider.GambleStoneDBProvider.AddGambleStoneInningInfo(roundInfo, this._inningInfo, myTrans);
-        }
-
-        public void NotifyWinnedPlayer()
-        {
             switch (this._inningInfo.WinnedColor)
             {
                 case GambleStoneItemColor.Red:
+                    NotifyWinnedPlayer(this._dicPlayerBetRedStone, GlobalConfig.GameConfig.GambleStoneRedColorWinTimes, myTrans);
                     break;
                 case GambleStoneItemColor.Green:
+                    NotifyWinnedPlayer(this._dicPlayerBetGreenStone, GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes, myTrans);
                     break;
                 case GambleStoneItemColor.Blue:
+                    NotifyWinnedPlayer(this._dicPlayerBetBlueStone, GlobalConfig.GameConfig.GambleStoneBlueWinTimes, myTrans);
                     break;
                 case GambleStoneItemColor.Purple:
+                    NotifyWinnedPlayer(this._dicPlayerBetPurpleStone, GlobalConfig.GameConfig.GambleStonePurpleWinTimes, myTrans);
                     break;
                 default:
                     break;
             }
+            return OperResult.RESULTCODE_TRUE;
+        }
 
+        public void NotifyWinnedPlayer(Dictionary<int, int> dicPlayerBetStoneCount, int winTimes, CustomerMySqlTransaction myTrans)
+        {
+            int maxWinnedUserID;
+            int maxWinnedStone = 0;
+            foreach (var kv in dicPlayerBetStoneCount)
+            {
+                int userID = kv.Key;
+                int winnedStone = kv.Value * winTimes;
+                if (winnedStone > maxWinnedStone)
+                {
+                    maxWinnedStone = winnedStone;
+                    maxWinnedUserID = userID;
+                }
+
+                GambleStonePlayerBetRecord playerBetRecord = null;
+                string userName = null;
+                if (this._dicPlayerBetRecord.ContainsKey(userID))
+                {
+                    playerBetRecord = this._dicPlayerBetRecord[userID];
+                    userName = this._dicPlayerBetRecord[userID].UserName;
+                }
+                if (string.IsNullOrEmpty(userName))
+                {
+                    LogHelper.Instance.AddErrorLog("Gamble NotifyWinnedPlayer Not find PlayerInfo in _dicPlayerBetRecord ", null);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserID(userID);
+                    userName = player.SimpleInfo.UserName;
+                }
+
+                PlayerController.Instance.WinGambleStone(userName, winnedStone, myTrans);
+                if (playerBetRecord != null)
+                {
+                    playerBetRecord.WinnedStone = winnedStone;
+                }
+            }
+
+            foreach (var item in this._dicPlayerBetRecord.Values)
+            {
+                DBProvider.GambleStoneDBProvider.AddGambleStonePlayerBetRecord(item, this._roundInfo.TableName, myTrans);
+            }
         }
 
         private int GetRandom(int max)

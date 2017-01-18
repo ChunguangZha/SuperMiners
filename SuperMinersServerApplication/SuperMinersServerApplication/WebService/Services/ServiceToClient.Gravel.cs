@@ -1,5 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.User;
 using SuperMinersServerApplication.Controller;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Utility;
@@ -68,10 +69,11 @@ namespace SuperMinersServerApplication.WebService.Services
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
+                    PlayerGravelRequsetRecordInfo record = null;
                     int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                     {
                         int innerResult;
-                        var record = GravelController.Instance.GetGravel(playerRunner.BasePlayer.SimpleInfo.UserID, myTrans, out innerResult);
+                        record = GravelController.Instance.GetGravel(playerRunner.BasePlayer.SimpleInfo.UserID, myTrans, out innerResult);
                         if (innerResult != OperResult.RESULTCODE_TRUE)
                         {
                             return innerResult;
@@ -89,7 +91,14 @@ namespace SuperMinersServerApplication.WebService.Services
                         LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetGravel Transaction Oper Exception", exc);
                     });
 
-                    if (result != OperResult.RESULTCODE_TRUE)
+                    if (result == OperResult.RESULTCODE_TRUE)
+                    {
+                        if (record != null)
+                        {
+                            LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 领取 " + record.Gravel + " 碎石");
+                        }
+                    }
+                    else
                     {
                         playerRunner.RefreshGravel();
                     }
