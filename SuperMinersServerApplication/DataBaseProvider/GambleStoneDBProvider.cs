@@ -24,7 +24,22 @@ namespace DataBaseProvider
             return null;
         }
 
-        public bool AddGambleStoneInningInfo(GambleStoneRoundInfo round, GambleStoneInningInfo inning)
+        public GambleStoneDailyScheme GetLastGambleStoneDailyScheme()
+        {
+            return null;
+        }
+
+        public bool AddGambleStoneDailyScheme(GambleStoneDailyScheme dailyScheme)
+        {
+            return true;
+        }
+
+        public bool UpdateGambleStoneDailyScheme(GambleStoneDailyScheme dailyScheme)
+        {
+            return true;
+        }
+
+        public bool AddGambleStoneInningInfo(GambleStoneRoundInfo round, GambleStoneInningInfo inning, CustomerMySqlTransaction myTrans)
         {
             return true;
         }

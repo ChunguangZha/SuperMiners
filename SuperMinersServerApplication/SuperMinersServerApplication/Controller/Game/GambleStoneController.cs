@@ -1,9 +1,12 @@
-﻿using MetaData.Game.GambleStone;
+﻿using DataBaseProvider;
+using MetaData;
+using MetaData.Game.GambleStone;
+using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Timers;
 
 namespace SuperMinersServerApplication.Controller.Game
@@ -24,38 +27,126 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private GambleStoneController()
         {
-            _timer = new Timer(OpenWinTimeSeconds * 1000);
-            this._timer.Elapsed += _timer_Elapsed;
+            _thrGamble = new Thread(ThreadWork);
+            _thrGamble.Name = "thrGambleStone";
+            _thrGamble.IsBackground = true;
         }
 
         #endregion
 
         private int OpenWinTimeSeconds = 40;
-        private Timer _timer = null;
+        private Thread _thrGamble = null;
+        private bool isListening = false;
+        private bool isRunning = false;
 
-        private GambleStoneRoundRunner RoundRunner = null;
+        ManualResetEvent StopEventX = new ManualResetEvent(false);
 
-        public void Init()
+        private GambleStoneDailyScheme dailyScheme = null;
+        private GambleStoneRoundInfo RoundInfo = null;
+
+        private GambleStoneInningRunner CurrentInningRunner = null;
+
+        public bool Init()
         {
-            this._timer.Start();
+            try
+            {
+                LoadFromDB();
+                this.CreateNewInning();
+
+                LogHelper.Instance.AddInfoLog("GambleStoneController Init Succeed");
+                this.isListening = true;
+                this.isRunning = true;
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("GambleStoneController Init Failed", exc);
+                return false;
+            }
         }
 
         public void StopService()
         {
-            this._timer.Stop();
+            this.isRunning = false;
+            StopEventX.WaitOne();
         }
 
-        void _timer_Elapsed(object sender, ElapsedEventArgs e)
+        public GambleStoneInningInfo GetCurrentInningInfo()
         {
-            throw new NotImplementedException();
+            return CurrentInningRunner.InningInfo;
+        }
+
+        private void ThreadWork()
+        {
+            while (this.isRunning)
+            {
+                Thread.Sleep(1000);
+                try
+                {
+                    if (this.CurrentInningRunner == null)
+                    {
+                        continue;
+                    }
+
+                    bool isFinished = this.CurrentInningRunner.CountDownDecrease();
+                    if (isFinished)
+                    {
+
+                    }
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("", exc);
+                }
+            }
+
+            StopEventX.Set();
+        }
+
+        public bool SaveToDB()
+        {
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+
+            },
+            exc =>
+            {
+
+            });
         }
 
         public void LoadFromDB()
         {
+            DateTime nowDate = DateTime.Now;
+            GambleStoneDailyScheme lastDailyScheme = DBProvider.GambleStoneDBProvider.GetLastGambleStoneDailyScheme();
+            if (lastDailyScheme != null && lastDailyScheme.Date != null && lastDailyScheme.Date.Year == nowDate.Year && lastDailyScheme.Date.Month == nowDate.Month && lastDailyScheme.Date.Day == nowDate.Day)
+            {
+                this.dailyScheme = lastDailyScheme;
+            }
+            else
+            {
+                this.dailyScheme = new GambleStoneDailyScheme()
+                {
+                    Date = new MyDateTime(nowDate),
+                    ProfitStoneObjective = GlobalConfig.GameConfig.GambleStone_DailyProfitStoneObjective,
+                };
+                DBProvider.GambleStoneDBProvider.AddGambleStoneDailyScheme(this.dailyScheme);
+            }
+
+            GambleStoneRoundInfo lastRound = DBProvider.GambleStoneDBProvider.GetLastGambleStoneRoundInfo();
+            if (lastRound != null && lastRound.FinishedInningCount < GlobalConfig.GameConfig.GambleStone_Round_InningCount)
+            {
+                this.RoundInfo = lastRound;
+            }
+            else
+            {
+                this.RoundInfo = CreateNewRound();
+            }
 
         }
 
-        public void CreateNewRound()
+        public GambleStoneRoundInfo CreateNewRound()
         {
             GambleStoneRoundInfo round = new GambleStoneRoundInfo()
             {
@@ -63,23 +154,35 @@ namespace SuperMinersServerApplication.Controller.Game
             };
             DBProvider.GambleStoneDBProvider.AddGambleStoneRoundInfo(round);
             round = DBProvider.GambleStoneDBProvider.GetLastGambleStoneRoundInfo();
-
-            this.RoundRunner = new GambleStoneRoundRunner(round);
+            return round;
         }
 
-        public bool BetIn(GambleStoneItemColor color, int stoneCount, int userID)
+        public void CreateNewInning()
         {
-            return this.RoundRunner.BetIn(color, stoneCount, userID);
+            GambleStoneInningInfo inning = new GambleStoneInningInfo()
+            {
+                ID = Guid.NewGuid().ToString(),
+                RoundID = this.RoundInfo.ID,
+                CountDownSeconds = OpenWinTimeSeconds,
+            };
+            this.CurrentInningRunner = new GambleStoneInningRunner(inning);
+        }
+
+        public int BetIn(GambleStoneItemColor color, int stoneCount, int userID)
+        {
+            if (!this.isListening)
+            {
+                return OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
+            }
+            return this.CurrentInningRunner.BetIn(color, stoneCount, userID);
         }
 
     }
 
-    public class GambleStoneRoundRunner
+    public class GambleStoneInningRunner
     {
-        public GambleStoneRoundInfo RoundInfo = null;
-
         //完成时再保存到数据库
-        public GambleStoneInningInfo InningInfo = null;
+        private GambleStoneInningInfo _inningInfo = null;
 
         private Dictionary<int, int> _dicPlayerBetRedStone = new Dictionary<int, int>();
         private Dictionary<int, int> _dicPlayerBetGreenStone = new Dictionary<int, int>();
@@ -90,28 +193,30 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private Random _random = new Random();
 
-        public GambleStoneRoundRunner(GambleStoneRoundInfo round)
+        public GambleStoneInningRunner(GambleStoneInningInfo inning)
         {
-            this.RoundInfo = round;
+            this._inningInfo = inning;
         }
 
-        public bool StartNewInning()
+        public GambleStoneInningInfo InningInfo
         {
-            this.InningInfo = new GambleStoneInningInfo()
+            get
             {
-                ID = Guid.NewGuid().ToString(),
-                RoundID = this.RoundInfo.ID
-            };
-
-            return true;
+                return this._inningInfo;
+            }
         }
 
-        public bool BetIn(GambleStoneItemColor color, int stoneCount, int userID)
+        public int BetIn(GambleStoneItemColor color, int stoneCount, int userID)
         {
+            if (this._inningInfo.CountDownSeconds == 0)
+            {
+                return OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART;
+            }
+
             switch (color)
             {
                 case GambleStoneItemColor.Red:
-                    this.InningInfo.BetRedStone += stoneCount;
+                    this._inningInfo.BetRedStone += stoneCount;
                     if (this._dicPlayerBetRedStone.ContainsKey(userID))
                     {
                         this._dicPlayerBetRedStone[userID] += stoneCount;
@@ -122,7 +227,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Green:
-                    this.InningInfo.BetGreenStone += stoneCount;
+                    this._inningInfo.BetGreenStone += stoneCount;
                     if (this._dicPlayerBetGreenStone.ContainsKey(userID))
                     {
                         this._dicPlayerBetGreenStone[userID] += stoneCount;
@@ -133,7 +238,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Blue:
-                    this.InningInfo.BetBlueStone += stoneCount;
+                    this._inningInfo.BetBlueStone += stoneCount;
                     if (this._dicPlayerBetBlueStone.ContainsKey(userID))
                     {
                         this._dicPlayerBetBlueStone[userID] += stoneCount;
@@ -144,7 +249,7 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
                     break;
                 case GambleStoneItemColor.Purple:
-                    this.InningInfo.BetPurpleStone += stoneCount;
+                    this._inningInfo.BetPurpleStone += stoneCount;
                     if (this._dicPlayerBetPurpleStone.ContainsKey(userID))
                     {
                         this._dicPlayerBetPurpleStone[userID] += stoneCount;
@@ -158,12 +263,24 @@ namespace SuperMinersServerApplication.Controller.Game
                     break;
             }
 
-            return true;
+            return OperResult.RESULTCODE_TRUE;
+        }
+
+        public bool CountDownDecrease()
+        {
+            this._inningInfo.CountDownSeconds--;
+            if (this._inningInfo.CountDownSeconds == 0)
+            {
+                FinishInning();
+                return true;
+            }
+
+            return false;
         }
 
         public bool FinishInning()
         {
-            this.InningInfo.EndTime = new MetaData.MyDateTime(DateTime.Now);
+            this._inningInfo.EndTime = new MetaData.MyDateTime(DateTime.Now);
             GambleStoneItemColor winnedColor;
             int winnedStoneCount;
             int winnedTimes;
@@ -179,34 +296,34 @@ namespace SuperMinersServerApplication.Controller.Game
                 if (random < randomRed)
                 {
                     winnedColor = GambleStoneItemColor.Red;
-                    winnedStoneCount = this.InningInfo.BetRedStone * GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
+                    winnedStoneCount = this._inningInfo.BetRedStone * GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
                     winnedTimes = GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
                 }
                 else if (randomRed < randomRed + randomGreen)
                 {
                     winnedColor = GambleStoneItemColor.Green;
-                    winnedStoneCount = this.InningInfo.BetGreenStone * GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
+                    winnedStoneCount = this._inningInfo.BetGreenStone * GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
                     winnedTimes = GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
                 }
                 else if (randomRed < randomRed + randomGreen + randomBlue)
                 {
                     winnedColor = GambleStoneItemColor.Blue;
-                    winnedStoneCount = this.InningInfo.BetBlueStone * GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
+                    winnedStoneCount = this._inningInfo.BetBlueStone * GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
                     winnedTimes = GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
                 }
                 else
                 {
                     winnedColor = GambleStoneItemColor.Purple;
-                    winnedStoneCount = this.InningInfo.BetPurpleStone * GlobalConfig.GameConfig.GambleStonePurpleWinTimes;
+                    winnedStoneCount = this._inningInfo.BetPurpleStone * GlobalConfig.GameConfig.GambleStonePurpleWinTimes;
                     winnedTimes = GlobalConfig.GameConfig.GambleStonePurpleWinTimes;
                 }
             }
             else
             {
-                int redWinnedStone = this.InningInfo.BetRedStone * GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
-                int greenWinnedStone = this.InningInfo.BetGreenStone * GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
-                int blueWinnedStone = this.InningInfo.BetBlueStone * GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
-                int purpleWinnedStone = this.InningInfo.BetPurpleStone * GlobalConfig.GameConfig.GambleStonePurpleWinTimes;
+                int redWinnedStone = this._inningInfo.BetRedStone * GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
+                int greenWinnedStone = this._inningInfo.BetGreenStone * GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
+                int blueWinnedStone = this._inningInfo.BetBlueStone * GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
+                int purpleWinnedStone = this._inningInfo.BetPurpleStone * GlobalConfig.GameConfig.GambleStonePurpleWinTimes;
 
                 int minWinnedStone = redWinnedStone;
                 winnedColor = GambleStoneItemColor.Red;
@@ -235,26 +352,25 @@ namespace SuperMinersServerApplication.Controller.Game
                 //int allBetInStone = this.InningInfo.BetRedStone + this.InningInfo.BetGreenStone + this.InningInfo.BetBlueStone + this.InningInfo.BetPurpleStone;
             }
 
-            this._dicPlayerBetRedStone.Clear();
-            this._dicPlayerBetGreenStone.Clear();
-            this._dicPlayerBetBlueStone.Clear();
-            this._dicPlayerBetPurpleStone.Clear();
+            this._inningInfo.WinnedColor = winnedColor;
+            this._inningInfo.WinnedOutStone = winnedStoneCount;
+            this._inningInfo.WinnedTimes = winnedTimes;
 
-            this.InningInfo.WinnedColor = winnedColor;
-            this.InningInfo.WinnedOutStone = winnedStoneCount;
-            this.InningInfo.WinnedTimes = winnedTimes;
+            //this.RoundInfo.AllBetInStone += (this._inningInfo.BetRedStone + this._inningInfo.BetGreenStone + this._inningInfo.BetBlueStone + this._inningInfo.BetPurpleStone);
+            //this.RoundInfo.AllWinedOutStone += winnedStoneCount;
+            //this.RoundInfo.FinishedInningCount++;
 
-            this.RoundInfo.AllBetInStone += (this.InningInfo.BetRedStone + this.InningInfo.BetGreenStone + this.InningInfo.BetBlueStone + this.InningInfo.BetPurpleStone);
-            this.RoundInfo.AllWinedOutStone += winnedStoneCount;
-            this.RoundInfo.FinishedInningCount++;
-
-            NotifyWinnedPlayer();
-            return DBProvider.GambleStoneDBProvider.AddGambleStoneInningInfo(this.RoundInfo, this.InningInfo);
+            return true;
         }
 
-        private void NotifyWinnedPlayer()
+        public int SaveInningInfoToDB(GambleStoneRoundInfo roundInfo, CustomerMySqlTransaction myTrans)
         {
-            switch (this.InningInfo.WinnedColor)
+            DBProvider.GambleStoneDBProvider.AddGambleStoneInningInfo(roundInfo, this._inningInfo, myTrans);
+        }
+
+        public void NotifyWinnedPlayer()
+        {
+            switch (this._inningInfo.WinnedColor)
             {
                 case GambleStoneItemColor.Red:
                     break;
@@ -267,6 +383,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 default:
                     break;
             }
+
         }
 
         private int GetRandom(int max)

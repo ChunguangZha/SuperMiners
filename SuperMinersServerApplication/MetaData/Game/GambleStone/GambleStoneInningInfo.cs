@@ -18,6 +18,10 @@ namespace MetaData.Game.GambleStone
 
         public int RoundID;
 
+        public MyDateTime StartTime;
+
+        public int CountDownSeconds;
+
         public MyDateTime EndTime;
 
         public int BetRedStone;
@@ -47,8 +51,19 @@ namespace MetaData.Game.GambleStone
 
         public int AllBetInStone;
 
-        public int AllWinedOutStone;
+        public int AllWinnedOutStone;
 
         public string TableName;
+    }
+
+    public class GambleStoneDailyScheme
+    {
+        public MyDateTime Date;
+
+        public int ProfitStoneObjective;
+
+        public int AllBetInStone;
+
+        public int AllWinnedOutStone;
     }
 }

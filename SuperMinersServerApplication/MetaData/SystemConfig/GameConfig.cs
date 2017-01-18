@@ -213,6 +213,10 @@ namespace MetaData.SystemConfig
         public int GambleStoneBlueWinTimes = 6;
         [DataMember]
         public int GambleStonePurpleWinTimes = 50;
+        [DataMember]
+        public int GambleStone_DailyProfitStoneObjective = 5000;
+        [DataMember]
+        public int GambleStone_Round_InningCount = 64;
 
     }
 }

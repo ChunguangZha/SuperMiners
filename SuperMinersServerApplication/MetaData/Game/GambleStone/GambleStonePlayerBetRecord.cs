@@ -15,10 +15,12 @@ namespace MetaData.Game.GambleStone
 
         public MyDateTime Time;
 
+        public int RoundID;
+
         /// <summary>
         /// 
         /// </summary>
-        public int InningID;
+        public string InningID;
 
         public int BetRedStone;
 
@@ -28,6 +30,6 @@ namespace MetaData.Game.GambleStone
 
         public int BetPurpleStone;
 
-
+        public int WinnedStone;
     }
 }

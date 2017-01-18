@@ -222,6 +222,11 @@ namespace MetaData
         public const int RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART = 702;
 
         /// <summary>
+        /// 娱乐——赌石，当前一局已经结束，请参加下一局。
+        /// </summary>
+        public const int RESULTCODE_GAME_GAMBLE_INNINGFINISHED = 703;
+
+        /// <summary>
         /// 股票市场， 撤单失败，开市期间无法撤单
         /// </summary>
         public const int RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING = 800;
@@ -295,6 +300,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED, "今天已经申请过碎石");
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET, "没有可领取的碎石");
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎石");
+            _resultCode_Msg.Add(RESULTCODE_GAME_GAMBLE_INNINGFINISHED, "此局已经结束，请参加下一局");
         }
 
         public static string GetMsg(int resultCode)
