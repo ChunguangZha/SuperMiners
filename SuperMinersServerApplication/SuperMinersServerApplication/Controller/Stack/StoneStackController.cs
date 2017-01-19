@@ -221,10 +221,10 @@ namespace SuperMinersServerApplication.Controller.Stack
 
         public TodayStoneStackTradeRecordInfo GetTodayStackInfo()
         {
-            if (this._todayTradeInfo.MarketState != StackMarketState.Opening && DateTime.Now.Hour < GlobalConfig.GameConfig.StackMarketMorningOpenTime)
-            {
-                return null;
-            }
+            //if (this._todayTradeInfo.MarketState != StackMarketState.Opening && DateTime.Now.Hour < GlobalConfig.GameConfig.StackMarketMorningOpenTime)
+            //{
+            //    return null;
+            //}
             return this._todayTradeInfo;
         }
 
@@ -313,6 +313,8 @@ namespace SuperMinersServerApplication.Controller.Stack
 
         private void LoadDataFromDatabase()
         {
+            this._todayTradeInfo.Clear();
+
             var buyOrderNotFinishedList = DBProvider.StoneStackDBProvider.GetAllNotFinishedStoneDelegateBuyOrderInfo();
             if (buyOrderNotFinishedList != null)
             {

@@ -362,7 +362,7 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 this.TodayStackInfo.ParentObject = e.Result;
-                if (e.Result == null)
+                if (e.Result == null || e.Result.MarketState != StackMarketState.Opening || e.Result.DailyInfo.Day == null)
                 {
                     this.ListTodayRealTimeTradeRecords.Clear();
 
@@ -373,29 +373,26 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    if (e.Result.DailyInfo.Day != null)
+                    if (this.ListTodayRealTimeTradeRecords.Count == 0)
                     {
-                        if (this.ListTodayRealTimeTradeRecords.Count == 0)
+                        this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
+                    }
+                    else
+                    {
+                        var lastDateTime = this.ListTodayRealTimeTradeRecords[this.ListTodayRealTimeTradeRecords.Count - 1].Day.ToDateTime();
+                        if (lastDateTime < e.Result.DailyInfo.Day.ToDateTime())
                         {
                             this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
                         }
-                        else
-                        {
-                            var lastDateTime = this.ListTodayRealTimeTradeRecords[this.ListTodayRealTimeTradeRecords.Count - 1].Day.ToDateTime();
-                            if (lastDateTime < e.Result.DailyInfo.Day.ToDateTime())
-                            {
-                                this.ListTodayRealTimeTradeRecords.Add(e.Result.DailyInfo);
-                            }
-                        }
+                    }
 
-                        if (GetTodayStackRecordInfoCompleted != null)
-                        {
-                            GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
-                        }
-                        if (MarketOpened != null)
-                        {
-                            MarketOpened();
-                        }
+                    if (GetTodayStackRecordInfoCompleted != null)
+                    {
+                        GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
+                    }
+                    if (MarketOpened != null)
+                    {
+                        MarketOpened();
                     }
                 }
             }

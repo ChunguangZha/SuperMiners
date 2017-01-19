@@ -523,6 +523,12 @@ namespace MetaData.Game.StoneStack
         }
 
         #endregion
+
+        public void Clear()
+        {
+            SellOrderPriceCountList.Clear();
+            BuyOrderPriceCountList.Clear();
+        }
     }
 
     [DataContract]

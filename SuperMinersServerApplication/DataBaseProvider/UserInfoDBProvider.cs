@@ -349,7 +349,27 @@ namespace DataBaseProvider
 
         public bool SavePlayerGravelInfo(PlayerGravelInfo playerGravel, CustomerMySqlTransaction trans)
         {
-            return true;
+            MySqlCommand mycmd = null;
+            try
+            {
+                string cmdTextA = "UPDATE `playergravelinfo` SET "
+                    + " `Gravel`=@Gravel, `FirstGetGravelTime`=@FirstGetGravelTime where `UserID`=@UserID";
+
+                mycmd = trans.CreateCommand();
+                mycmd.CommandText = cmdTextA;
+
+                mycmd.Parameters.AddWithValue("@Gravel", playerGravel.Gravel);
+                mycmd.Parameters.AddWithValue("@FirstGetGravelTime", playerGravel.FirstGetGravelTime);
+                mycmd.Parameters.AddWithValue("@UserID", playerGravel.UserID);
+
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+            }
         }
 
         public bool SavePlayerLoginTime(PlayerSimpleInfo playerSimpleInfo)

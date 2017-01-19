@@ -484,6 +484,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 }
 
                 string userName = null;
+                GambleStonePlayerBetRecord playerBetRecord = null;
                 if (this._dicPlayerBetRecord.ContainsKey(userID))
                 {
                     playerBetRecord = this._dicPlayerBetRecord[userID];

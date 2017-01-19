@@ -172,29 +172,30 @@
                         <DataTemplate>
                             <GroupBox>
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding DelegateTimeText}" Margin="5"/>
-                                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
-                                        <TextBlock Text="交易量："/>
-                                        <TextBlock Text="{Binding TradeStoneHandCount}" Foreground="Red"/>
-                                        <TextBlock Text=" 手 "/>
-                                        <TextBlock Text=" 价格："/>
-                                        <TextBlock Text="{Binding Price}" Foreground="Red"/>
-                                        <TextBlock Text=" 状态："/>
-                                        <TextBlock Text="{Binding BuyStateText}" Foreground="Red"/>
-                                    </StackPanel>
-                                    <Grid Grid.Row="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button Content="撤消" Width="100" Margin="10,5" Click="btnCancelBuyOrder_Click"/>
-                                        <Button Grid.Column="1" Content="支付" Visibility="{Binding PayButtonVisible}" Width="100" Margin="10,5" Click="btnPayOrder_Click"/>
-                                    </Grid>
+                                    <TextBlock Grid.ColumnSpan="2" Text="{Binding DelegateTimeText, Mode=OneWay}" Margin="5"/>
+                                    <TextBlock Grid.Row="1" Text="交易量：" Margin="5"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Foreground="Red" Margin="5">
+                                        <Run Text="{Binding TradeStoneHandCount, Mode=OneWay}"/>
+                                        <Run Text=" 手 "/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2" Text=" 价格：" Margin="5"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Price}" Foreground="Red" Margin="5"/>
+                                    <TextBlock Grid.Row="3" Text=" 状态：" Margin="5"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding BuyStateText}" Foreground="Red" Margin="5"/>
+                                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="撤消" Width="100" Margin="10,5" Click="btnCancelBuyOrder_Click"/>
+                                    <Button Grid.Row="5" Grid.ColumnSpan="2" Content="支付" Visibility="{Binding PayButtonVisible}" Width="100" Margin="10,5" Click="btnPayOrder_Click"/>
                                 </Grid>
                             </GroupBox>
                         </DataTemplate>
@@ -207,22 +208,28 @@
                         <DataTemplate>
                             <GroupBox>
                                 <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition/>
                                         <RowDefinition Height="Auto"/>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Text="{Binding CreateTimeText}" Margin="5"/>
-                                    <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="5">
-                                        <TextBlock Text="交易量："/>
-                                        <TextBlock Text="{Binding TradeStoneHandCount}" Foreground="Red"/>
-                                        <TextBlock Text=" 手 "/>
-                                        <TextBlock Text=" 价格："/>
-                                        <TextBlock Text="{Binding Price}" Foreground="Red"/>
-                                        <TextBlock Text=" 状态："/>
-                                        <TextBlock Text="{Binding SellStateText}" Foreground="Red"/>
-                                    </StackPanel>
-                                    <Button Grid.Row="2" Content="撤消" Width="100" Margin="10,5" Click="btnCancelSellOrder_Click"/>
+                                    <TextBlock Grid.ColumnSpan="2" Text="{Binding CreateTimeText}" Margin="5"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="交易量：" Margin="5"/>
+                                    <TextBlock Grid.Row="1" Grid.Column="1" Foreground="Red" Margin="5">
+                                        <Run Text="{Binding TradeStoneHandCount, Mode=OneWay}"/>
+                                        <Run Text=" 手 "/>
+                                    </TextBlock>
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text=" 价格：" Margin="5"/>
+                                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Price}" Foreground="Red" Margin="5"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text=" 状态：" Margin="5"/>
+                                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SellStateText}" Foreground="Red" Margin="5"/>
+                                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="撤消" Width="100" Margin="10,5" Click="btnCancelSellOrder_Click"/>
                                 </Grid>
                             </GroupBox>
                         </DataTemplate>
