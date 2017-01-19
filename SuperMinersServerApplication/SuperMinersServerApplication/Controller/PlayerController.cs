@@ -1048,6 +1048,19 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
+        public int NotifyChanged(string userName)
+        {
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            NotifyPlayerClient(playerrun.BasePlayer);
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
         public int CheckSellStone_BeforeBuy(string buyUserName, string orderNumber, decimal valueRMB)
         {
             PlayerRunnable playerBuyerRun = this.GetRunnable(buyUserName);

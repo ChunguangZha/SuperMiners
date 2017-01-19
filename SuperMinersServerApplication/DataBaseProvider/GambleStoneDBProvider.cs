@@ -14,7 +14,7 @@ namespace DataBaseProvider
             return true;
         }
 
-        public bool UpdateGambleStoneRoundInfo(GambleStoneRoundInfo round)
+        public bool UpdateGambleStoneRoundInfo(GambleStoneRoundInfo round, CustomerMySqlTransaction myTrans)
         {
             return false;
         }
