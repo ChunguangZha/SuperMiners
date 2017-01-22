@@ -10,7 +10,7 @@ namespace DataBaseProvider
     public class GambleStoneDBProvider
     {
         private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `superminers`.`gamblestoneinninginfo{0}` (" +
-                                                            " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT," +
+                                                            " `id` VARCHAR(40) NOT NULL," +
                                                             " `InningIndex` INT NOT NULL," +
                                                             " `RoundID` INT UNSIGNED NOT NULL," +
                                                             " `CountDownSeconds` INT UNSIGNED NOT NULL DEFAULT 0," +
@@ -24,11 +24,43 @@ namespace DataBaseProvider
                                                             " PRIMARY KEY (`id`)," +
                                                             " UNIQUE INDEX `id_UNIQUE` (`id` ASC)," +
                                                             " INDEX `GambleStoneInningInfo{0}_FK_GambleRoundID_idx` (`RoundID` ASC)," +
-                                                            " CONSTRAINT `GambleStoneInningInfo201701_FK_GambleRoundID`" +
+                                                            " CONSTRAINT `GambleStoneInningInfo{0}_FK_GambleRoundID`" +
                                                             "   FOREIGN KEY (`RoundID`)" +
                                                             "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`)" +
-                                                            "   ON DELETE NO ACTION" +
-                                                            "   ON UPDATE NO ACTION);";
+                                                            "   ON DELETE CASCADE" +
+                                                            "   ON UPDATE CASCADE);";
+
+        private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `superminers`.`gamblestoneplayerbetrecord{0}` ( " +
+                                                                 " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, " +
+                                                                 " `UserID` INT UNSIGNED NOT NULL, " +
+                                                                 " `Time` DATETIME NOT NULL, " +
+                                                                 " `RoundID` INT UNSIGNED NOT NULL, " +
+                                                                 " `InningID` VARCHAR(40) NULL, " +
+                                                                 " `BetRedStone` INT UNSIGNED NOT NULL, " +
+                                                                 " `BetGreenStone` INT UNSIGNED NOT NULL, " +
+                                                                 " `BetBlueStone` INT UNSIGNED NOT NULL, " +
+                                                                 " `BetPurpleStone` INT UNSIGNED NOT NULL, " +
+                                                                 " `WinnedStone` INT UNSIGNED NOT NULL, " +
+                                                                 " PRIMARY KEY (`id`), " +
+                                                                 " UNIQUE INDEX `id_UNIQUE` (`id` ASC), " +
+                                                                 " INDEX `GambleStonePlayerBetRecord{0}_FK_UserID_idx` (`UserID` ASC), " +
+                                                                 " INDEX `GambleStonePlayerBetRecord{0}_FK_GambleRoundID_idx` (`RoundID` ASC), " +
+                                                                 " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_UserID` " +
+                                                                 "   FOREIGN KEY (`UserID`) " +
+                                                                 "   REFERENCES `superminers`.`playersimpleinfo` (`id`) " +
+                                                                 "   ON DELETE CASCADE " +
+                                                                 "   ON UPDATE CASCADE, " +
+                                                                 " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_GambleStoneRoundID` " +
+                                                                 "   FOREIGN KEY (`RoundID`) " +
+                                                                 "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`) " +
+                                                                 "   ON DELETE CASCADE " +
+                                                                 "   ON UPDATE CASCADE, " +
+                                                                 " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_GambleStoneInningID` " +
+                                                                 "   FOREIGN KEY (`InningID`) " +
+                                                                 "   REFERENCES `superminers`.`gamblestoneinninginfo{0}` (`id`) " +
+                                                                 "   ON DELETE CASCADE " +
+                                                                 "   ON UPDATE CASCADE); ";
+
 
 
         public bool AddGambleStoneRoundInfo(GambleStoneRoundInfo round)
