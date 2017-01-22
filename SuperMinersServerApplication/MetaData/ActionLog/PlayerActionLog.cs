@@ -71,6 +71,7 @@ namespace MetaData.ActionLog
         DelegateBuyStoneSucceed,
         DelegateSellStoneSucceed,
         GameRaiderJoinBet,
-        GameRaiderWin
+        GameRaiderWin,
+        GambleStoneMaxWinner,
     }
 }

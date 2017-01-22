@@ -47,6 +47,19 @@ namespace SuperMinersServerApplication.WebService.Services
             //RaidersofLostArkController.Instance.NotifyPlayerToRefreshBetRecordsEvent += NotifyPlayerToRefreshBetRecords;
             RouletteAwardController.Instance.RouletteWinRealAwardPaySucceedNotify += Instance_RouletteWinRealAwardPaySucceedNotify;
             GravelController.Instance.PlayerGravelInfoChanged += Instance_PlayerGravelInfoChanged;
+            GambleStoneController.Instance.GambleStoneInningWinnedNotifyAllClient += Instance_GambleStoneInningWinnedNotifyAllClient;
+        }
+
+        void Instance_GambleStoneInningWinnedNotifyAllClient(MetaData.Game.GambleStone.GambleStoneRoundInfo roundInfo, MetaData.Game.GambleStone.GambleStoneInningInfo inningInfo, MetaData.Game.GambleStone.GambleStonePlayerBetRecord maxWinner)
+        {
+            var allClients = ClientManager.AllClients;
+            foreach (var client in allClients)
+            {
+                new Thread(new ParameterizedThreadStart(o =>
+                {
+                    this.GambleStoneWinNotify(o.ToString(), roundInfo, inningInfo, maxWinner);
+                })).Start(client.Token);
+            }
         }
 
         void Instance_PlayerGravelInfoChanged(string userName)

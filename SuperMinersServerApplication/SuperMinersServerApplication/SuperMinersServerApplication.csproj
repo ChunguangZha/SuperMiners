@@ -190,6 +190,8 @@
     <Compile Include="WebService\ClientManager.cs" />
     <Compile Include="WebService\Contracts\Callbacks\CallbackAttribute.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.GameGambleStone.Calback.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.GameGambleStone.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.GameRaiderofLostArk.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Order.Callback.cs" />
@@ -207,6 +209,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.Trade.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Callback.cs" />
+    <Compile Include="WebService\Services\Callbacks\ServiceToClient.GameGambleStone.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.GameRaiderofLostArk.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.GameRoulette.Callback.cs" />
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.Order.Callback.cs" />
@@ -214,6 +217,7 @@
     <Compile Include="WebService\Services\Callbacks\ServiceToClient.User.Callback.cs" />
     <Compile Include="WebService\Services\ServiceToClient.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Game.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.GameGambleStone.cs" />
     <Compile Include="WebService\Services\ServiceToClient.GameRaiderofLostArk.cs" />
     <Compile Include="WebService\Services\ServiceToClient.GameRoulette.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Gravel.cs" />

@@ -100,6 +100,9 @@ namespace SuperMinersWPF.Models
                     case ActionType.GameRaiderWin:
                         message = string.Format("在第{0}期的夺宝奇兵游戏中获得头魁，赢取{1}矿石。", this.ParentObject.OperNumber, this.ParentObject.Remark);
                         break;
+                    case ActionType.GambleStoneMaxWinner:
+                        message = string.Format("赌石娱乐赢得{0}矿石", this.ParentObject.OperNumber);
+                        break;
                     default:
                         message = this._parentObject.Remark;
                         break;

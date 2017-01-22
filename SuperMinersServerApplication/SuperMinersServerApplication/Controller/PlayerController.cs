@@ -1259,6 +1259,17 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public int GambleBetIn(string userName, int stoneCount, bool isGravel, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerrun.BetInGambleStone(stoneCount, isGravel, myTrans);
+        }
+
         public int WinGambleStone(string userName, int winnedStone, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(userName);

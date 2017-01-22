@@ -103,7 +103,7 @@ namespace SuperMinersServerApplication.Utility
         public FileStream OpenErrorLogFileStream()
         {
             DateTime timenow = DateTime.Now;
-            string fileName = timenow.ToString("yyyMMdd");
+            string fileName = timenow.ToString("yyyyMMdd");
             FileStream stream = null;
             string path = GlobalData.LogFolder + "\\LogErrorFile_" + fileName + ".txt";
             stream = File.Open(path, FileMode.Append, FileAccess.Write);
@@ -113,7 +113,7 @@ namespace SuperMinersServerApplication.Utility
         public FileStream OpenInfoLogFileStream()
         {
             DateTime timenow = DateTime.Now;
-            string fileName = timenow.ToString("yyyMMdd");
+            string fileName = timenow.ToString("yyyyMMdd");
             FileStream stream = null;
             string path = GlobalData.LogFolder + "\\LogInfoFile_" + fileName + ".txt";
             stream = File.Open(path, FileMode.Append, FileAccess.Write);

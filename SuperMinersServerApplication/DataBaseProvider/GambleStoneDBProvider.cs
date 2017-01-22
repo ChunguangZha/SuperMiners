@@ -9,6 +9,28 @@ namespace DataBaseProvider
 {
     public class GambleStoneDBProvider
     {
+        private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `superminers`.`gamblestoneinninginfo{0}` (" +
+                                                            " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT," +
+                                                            " `InningIndex` INT NOT NULL," +
+                                                            " `RoundID` INT UNSIGNED NOT NULL," +
+                                                            " `CountDownSeconds` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `BetRedStone` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `BetGreenStone` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `BetBlueStone` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `BetPurpleStone` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `WinnedColor` INT UNSIGNED NOT NULL," +
+                                                            " `WinnedTimes` INT UNSIGNED NOT NULL," +
+                                                            " `WinnedOutStone` INT UNSIGNED NOT NULL," +
+                                                            " PRIMARY KEY (`id`)," +
+                                                            " UNIQUE INDEX `id_UNIQUE` (`id` ASC)," +
+                                                            " INDEX `GambleStoneInningInfo{0}_FK_GambleRoundID_idx` (`RoundID` ASC)," +
+                                                            " CONSTRAINT `GambleStoneInningInfo201701_FK_GambleRoundID`" +
+                                                            "   FOREIGN KEY (`RoundID`)" +
+                                                            "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`)" +
+                                                            "   ON DELETE NO ACTION" +
+                                                            "   ON UPDATE NO ACTION);";
+
+
         public bool AddGambleStoneRoundInfo(GambleStoneRoundInfo round)
         {
             return true;
