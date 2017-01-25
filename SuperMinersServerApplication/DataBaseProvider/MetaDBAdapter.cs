@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.ActionLog;
 using MetaData.AgentUser;
+using MetaData.Game.GambleStone;
 using MetaData.Game.RaideroftheLostArk;
 using MetaData.Game.Roulette;
 using MetaData.Game.StoneStack;
@@ -942,7 +943,7 @@ namespace DataBaseProvider
             return items;
         }
 
-        internal static PlayerGravelRequsetRecordInfo[] GetPlayerGravelRequsetRecordInfo(DataTable dt)
+        internal static PlayerGravelRequsetRecordInfo[] GetPlayerGravelRequsetRecordInfoFromDataTable(DataTable dt)
         {
             if (dt == null || dt.Rows.Count == 0)
             {
@@ -963,6 +964,63 @@ namespace DataBaseProvider
                 }
                 item.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
                 item.IsGoted = Convert.ToBoolean(dt.Rows[i]["IsGoted"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static GambleStoneRoundInfo[] GetGambleStoneRoundInfoFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            GambleStoneRoundInfo[] items = new GambleStoneRoundInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                GambleStoneRoundInfo item = new GambleStoneRoundInfo();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                item.StartTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["StartTime"]));
+                item.FinishedInningCount = Convert.ToInt32(dt.Rows[i]["FinishedInningCount"]);
+                if (dt.Rows[i]["EndTime"] != DBNull.Value)
+                {
+                    item.EndTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["EndTime"]));
+                }
+                item.CurrentWinRedCount = Convert.ToInt32(dt.Rows[i]["CurrentWinRedCount"]);
+                item.CurrentWinGreenCount = Convert.ToInt32(dt.Rows[i]["CurrentWinGreenCount"]);
+                item.CurrentWinBlueCount = Convert.ToInt32(dt.Rows[i]["CurrentWinBlueCount"]);
+                item.CurrentWinPurpleCount = Convert.ToInt32(dt.Rows[i]["CurrentWinPurpleCount"]);
+                item.LastWinRedCount = Convert.ToInt32(dt.Rows[i]["LastWinRedCount"]);
+                item.LastWinGreenCount = Convert.ToInt32(dt.Rows[i]["LastWinGreenCount"]);
+                item.LastWinBlueCount = Convert.ToInt32(dt.Rows[i]["LastWinBlueCount"]);
+                item.LastWinPurpleCount = Convert.ToInt32(dt.Rows[i]["LastWinPurpleCount"]);
+                item.AllBetInStone = Convert.ToInt32(dt.Rows[i]["AllBetInStone"]);
+                item.AllWinnedOutStone = Convert.ToInt32(dt.Rows[i]["AllWinnedOutStone"]);
+                item.TableName = Convert.ToString(dt.Rows[i]["TableName"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static GambleStoneDailyScheme[] GetGambleStoneDailySchemeFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            GambleStoneDailyScheme[] items = new GambleStoneDailyScheme[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                GambleStoneDailyScheme item = new GambleStoneDailyScheme();
+                item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                item.Date = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Date"]));
+                item.ProfitStoneObjective = Convert.ToInt32(dt.Rows[i]["ProfitStoneObjective"]);
+                item.AllBetInStone = Convert.ToInt32(dt.Rows[i]["AllBetInStone"]);
+                item.AllWinnedOutStone = Convert.ToInt32(dt.Rows[i]["AllWinnedOutStone"]);
 
                 items[i] = item;
             }

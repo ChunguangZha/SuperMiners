@@ -39,7 +39,7 @@ namespace DataBaseProvider
                 adapter.Fill(table);
                 adapter.Dispose();
 
-                return MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfo(table);
+                return MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfoFromDataTable(table);
             }
             finally
             {
@@ -74,7 +74,7 @@ namespace DataBaseProvider
                 adapter.Fill(table);
                 adapter.Dispose();
 
-                var records = MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfo(table);
+                var records = MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfoFromDataTable(table);
                 if (records == null || records.Length == 0)
                 {
                     return null;

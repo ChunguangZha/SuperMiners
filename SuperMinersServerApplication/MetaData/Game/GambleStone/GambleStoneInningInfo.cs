@@ -156,6 +156,9 @@ namespace MetaData.Game.GambleStone
     public class GambleStoneDailyScheme
     {
         [DataMember]
+        public int ID;
+
+        [DataMember]
         public MyDateTime Date;
 
         [DataMember]
