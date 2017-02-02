@@ -998,6 +998,16 @@ namespace DataBaseProvider
                 item.LastWinPurpleCount = Convert.ToInt32(dt.Rows[i]["LastWinPurpleCount"]);
                 item.AllBetInStone = Convert.ToInt32(dt.Rows[i]["AllBetInStone"]);
                 item.AllWinnedOutStone = Convert.ToInt32(dt.Rows[i]["AllWinnedOutStone"]);
+                if (dt.Rows[i]["WinColorItems"] != DBNull.Value)
+                {
+                    byte[] buffer = (byte[])dt.Rows[i]["WinColorItems"];
+                    int index = 0;
+                    item.WinColorItems = BytesConverter.GetByteArrayFromBytes(buffer, index, out index);
+                    if (item.WinColorItems == null || item.WinColorItems.Length == 0)
+                    {
+                        item.WinColorItems = new byte[64];
+                    }
+                }
                 item.TableName = Convert.ToString(dt.Rows[i]["TableName"]);
 
                 items[i] = item;

@@ -45,7 +45,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;Encrypt, Client, -V2</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;Encrypt, Client, V2</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -145,6 +145,15 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
       <Link>Wcf\Datas\Common.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\GambleStone\GambleStoneInningInfo.cs">
+      <Link>Wcf\Datas\GambleStoneInningInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\GambleStone\GambleStonePlayerBetInResult.cs">
+      <Link>Wcf\Datas\GambleStonePlayerBetInResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\GambleStone\GambleStonePlayerBetRecord.cs">
+      <Link>Wcf\Datas\GambleStonePlayerBetRecord.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\RaideroftheLostArk\PlayerRaiderRoundHistoryRecordInfo.cs">
       <Link>Wcf\Datas\PlayerRaiderRoundHistoryRecordInfo.cs</Link>
@@ -260,6 +269,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.Callback.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.GameGambleStone.Calback.cs">
+      <Link>Wcf\Callbacks\IServiceToClient.GameGambleStone.Calback.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\IServiceToClient.GameRaiderofLostArk.Callback.cs">
       <Link>Wcf\Callbacks\IServiceToClient.GameRaiderofLostArk.Callback.cs</Link>
     </Compile>
@@ -280,6 +292,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Game.cs">
       <Link>Wcf\Contracts\IServiceToClient.Game.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.GameGambleStone.cs">
+      <Link>Wcf\Contracts\IServiceToClient.GameGambleStone.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.GameRaiderofLostArk.cs">
       <Link>Wcf\Contracts\IServiceToClient.GameRaiderofLostArk.cs</Link>
@@ -310,6 +325,9 @@
     </Compile>
     <Compile Include="GlobalData.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\GambleStoneInningInfoUIModel.cs" />
+    <Compile Include="Models\GambleStonePlayerBetRecordUIModel.cs" />
+    <Compile Include="Models\GambleStoneRoundInfoUIModel.cs" />
     <Compile Include="Models\LockSellStonesOrderUIModel.cs" />
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\PlayerBetInfoUIModel.cs" />
@@ -349,6 +367,7 @@
     <Compile Include="Utility\MyWebPage.cs" />
     <Compile Include="Utility\RegistryOper.cs" />
     <Compile Include="ViewModels\BusyToken.cs" />
+    <Compile Include="ViewModels\GambleStoneViewModel.cs" />
     <Compile Include="ViewModels\GameRaiderofLostArkViewModel.cs" />
     <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
@@ -391,9 +410,6 @@
     </Compile>
     <Compile Include="Views\Controls\GambleStoneControl.xaml.cs">
       <DependentUpon>GambleStoneControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\GamePanelControl.xaml.cs">
-      <DependentUpon>GamePanelControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Controls\GameRouletteControl.xaml.cs">
       <DependentUpon>GameRouletteControl.xaml</DependentUpon>
@@ -522,6 +538,7 @@
     <Compile Include="Wcf\Channel\RequestState.cs" />
     <Compile Include="Wcf\Channel\RestClient.cs" />
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.GambleStone.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Game.cs" />
     <Compile Include="Wcf\Clients\ServerClient.GameRoulette.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Gravel.cs" />
@@ -605,10 +622,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\GambleStoneControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\GamePanelControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -908,6 +921,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\vip10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\gambleblue.png" />
+    <Resource Include="Resources\gamblegreen.png" />
+    <Resource Include="Resources\gamblered.png" />
+    <Resource Include="Resources\gambleyellow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData.Game.GambleStone;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,46 @@ namespace SuperMinersWPF.Views.Controls
         public GambleStoneControl()
         {
             InitializeComponent();
+            this.DataContext = App.GambleStoneVMObject;
+
+        }
+
+        private void btnBetRed_Click(object sender, RoutedEventArgs e)
+        {
+            BetIn(GambleStoneItemColor.Red);
+        }
+
+        private void btnBetGreen_Click(object sender, RoutedEventArgs e)
+        {
+            BetIn(GambleStoneItemColor.Green);
+        }
+
+        private void btnBetBlue_Click(object sender, RoutedEventArgs e)
+        {
+            BetIn(GambleStoneItemColor.Blue);
+        }
+
+        private void btnBetPurple_Click(object sender, RoutedEventArgs e)
+        {
+            BetIn(GambleStoneItemColor.Purple);
+        }
+
+        private void BetIn(GambleStoneItemColor itemColor)
+        {
+            int stoneCount = 0;
+            int gravelCount = 0;
+            //优先使用碎石
+            if (GlobalData.CurrentUser.Gravel >= GlobalData.GameConfig.GambleStone_OneBetStoneCount)
+            {
+                gravelCount = GlobalData.GameConfig.GambleStone_OneBetStoneCount;
+            }
+            else
+            {
+                gravelCount = GlobalData.CurrentUser.Gravel;
+            }
+            stoneCount = GlobalData.GameConfig.GambleStone_OneBetStoneCount - gravelCount;
+
+            App.GambleStoneVMObject.AsyncBetIn(itemColor, stoneCount, gravelCount);
         }
     }
 }

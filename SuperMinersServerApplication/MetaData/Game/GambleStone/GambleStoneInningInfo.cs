@@ -124,6 +124,12 @@ namespace MetaData.Game.GambleStone
         [DataMember]
         public int AllWinnedOutStone;
 
+        /// <summary>
+        /// BINARY(68)
+        /// </summary>
+        [DataMember]
+        public byte[] WinColorItems = new byte[64];
+
         [DataMember]
         public string TableName;
 
@@ -171,9 +177,10 @@ namespace MetaData.Game.GambleStone
         public int AllWinnedOutStone;
     }
 
-    public enum GambleStoneItemColor
+    public enum GambleStoneItemColor : byte
     {
-        Red,
+        //从1开始，0为表示无效值
+        Red = 1,
         Green,
         Blue,
         Purple

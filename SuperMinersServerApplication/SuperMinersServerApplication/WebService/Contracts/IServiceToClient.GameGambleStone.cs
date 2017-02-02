@@ -12,12 +12,12 @@ namespace SuperMinersServerApplication.WebService.Contracts
     public partial interface IServiceToClient
     {
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/BetIn",
+        [WebInvoke(UriTemplate = "/WebService/GambleStoneBetIn",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int BetIn(string token, GambleStoneItemColor color, int stoneCount, bool isGravel);
+        GambleStonePlayerBetInResult GambleStoneBetIn(string token, GambleStoneItemColor color, int stoneCount, int gravelCount);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetGambleStoneRoundInning",

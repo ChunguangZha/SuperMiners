@@ -1,4 +1,5 @@
-﻿using MetaData.Game.GambleStone;
+﻿using MetaData;
+using MetaData.Game.GambleStone;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -69,8 +70,8 @@ namespace DataBaseProvider
         {
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
-                string sqlText = "insert info gamblestoneroundinfo (`StartTime`,`FinishedInningCount`,`EndTime`,`CurrentWinRedCount`,`CurrentWinGreenCount`,`CurrentWinBlueCount`,`CurrentWinPurpleCount`,`LastWinRedCount`,`LastWinGreenCount`,`LastWinBlueCount`,`LastWinPurpleCount`,`AllBetInStone`,`AllWinnedOutStone`,`TableName`) " +
-                                 " values ( @StartTime,@FinishedInningCount,@EndTime,@CurrentWinRedCount,@CurrentWinGreenCount,@CurrentWinBlueCount,@CurrentWinPurpleCount,@LastWinRedCount,@LastWinGreenCount,@LastWinBlueCount,@LastWinPurpleCount,@AllBetInStone,@AllWinnedOutStone,@TableName ) ";
+                string sqlText = "insert into gamblestoneroundinfo (`StartTime`,`FinishedInningCount`,`EndTime`,`CurrentWinRedCount`,`CurrentWinGreenCount`,`CurrentWinBlueCount`,`CurrentWinPurpleCount`,`LastWinRedCount`,`LastWinGreenCount`,`LastWinBlueCount`,`LastWinPurpleCount`,`AllBetInStone`,`AllWinnedOutStone`,`WinColorItems`,`TableName`) " +
+                                 " values ( @StartTime,@FinishedInningCount,@EndTime,@CurrentWinRedCount,@CurrentWinGreenCount,@CurrentWinBlueCount,@CurrentWinPurpleCount,@LastWinRedCount,@LastWinGreenCount,@LastWinBlueCount,@LastWinPurpleCount,@AllBetInStone,@AllWinnedOutStone,@WinColorItems,@TableName ) ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@StartTime", round.StartTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@FinishedInningCount", round.FinishedInningCount);
@@ -85,6 +86,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@LastWinPurpleCount", round.LastWinPurpleCount);
                 mycmd.Parameters.AddWithValue("@AllBetInStone", round.AllBetInStone);
                 mycmd.Parameters.AddWithValue("@AllWinnedOutStone", round.AllWinnedOutStone);
+                mycmd.Parameters.AddWithValue("@WinColorItems", BytesConverter.ConvertByteArrayToBytes(round.WinColorItems));
                 mycmd.Parameters.AddWithValue("@TableName", round.TableName);
 
                 mycmd.ExecuteNonQuery();
@@ -177,7 +179,7 @@ namespace DataBaseProvider
         {
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
-                string sqlText = "insert info gamblestonedailyscheme (`Date`,`ProfitStoneObjective`,`AllBetInStone`,`AllWinnedOutStone` ) " +
+                string sqlText = "insert into gamblestonedailyscheme (`Date`,`ProfitStoneObjective`,`AllBetInStone`,`AllWinnedOutStone` ) " +
                                  " values ( @Date,@ProfitStoneObjective,@AllBetInStone,@AllWinnedOutStone ) ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Date", dailyScheme.Date.ToDateTime());
@@ -224,12 +226,15 @@ namespace DataBaseProvider
                 adapter.Dispose();
                 if (table.Rows.Count == 0)
                 {
+                    //表不存在，则创建
                     mycmd.CommandText = string.Format(this.sqlCreateGambleStoneInningInfoTable, round.TableName);
                     mycmd.ExecuteNonQuery();
                 }
 
-                string sqlText = "insert into " + tableName + " (`InningIndex`,`RoundID`,`CountDownSeconds`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedColor`,`WinnedTimes`,`WinnedOutStone`) " +
-                                " values (@InningIndex,@RoundID,@CountDownSeconds,@BetRedStone.@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedColor,@WinnedTimes,@WinnedOutStone ) ";
+                string sqlText = "insert into " + tableName + " (`id`,`InningIndex`,`RoundID`,`CountDownSeconds`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedColor`,`WinnedTimes`,`WinnedOutStone`) " +
+                                " values (@ID,@InningIndex,@RoundID,@CountDownSeconds,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedColor,@WinnedTimes,@WinnedOutStone ) ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@ID", inning.ID);
                 mycmd.Parameters.AddWithValue("@InningIndex", inning.InningIndex);
                 mycmd.Parameters.AddWithValue("@RoundID", inning.RoundID);
                 mycmd.Parameters.AddWithValue("@CountDownSeconds", inning.CountDownSeconds);
@@ -252,7 +257,45 @@ namespace DataBaseProvider
 
         public bool AddGambleStonePlayerBetRecord(GambleStonePlayerBetRecord playerBetRecord, string tableNamePrefix, CustomerMySqlTransaction myTrans)
         {
-            return true;
+            MySqlCommand mycmd = null;
+            try
+            {
+                string tableName = "gamblestoneplayerbetrecord" + tableNamePrefix;
+                mycmd = myTrans.CreateCommand();
+                string sqlSelectTableText = "show tables where Tables_in_superminers = @tableName ";
+                mycmd.CommandText = sqlSelectTableText;
+                mycmd.Parameters.AddWithValue("@tableName", tableName);
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+                if (table.Rows.Count == 0)
+                {
+                    //表不存在，则创建
+                    mycmd.CommandText = string.Format(this.sqlCreateGambleStonePlayerBetRecordTable, tableNamePrefix);
+                    mycmd.ExecuteNonQuery();
+                }
+
+                string sqlText = "insert into " + tableName + " (`UserID`,`Time`,`RoundID`,`InningID`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedStone`) " +
+                                " values (@UserID,@Time,@RoundID,@InningID,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedStone ) ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", playerBetRecord.UserID);
+                mycmd.Parameters.AddWithValue("@Time", playerBetRecord.Time.ToDateTime());
+                mycmd.Parameters.AddWithValue("@RoundID", playerBetRecord.RoundID);
+                mycmd.Parameters.AddWithValue("@InningID", playerBetRecord.InningID);
+                mycmd.Parameters.AddWithValue("@BetRedStone", playerBetRecord.BetRedStone);
+                mycmd.Parameters.AddWithValue("@BetGreenStone", playerBetRecord.BetGreenStone);
+                mycmd.Parameters.AddWithValue("@BetBlueStone", playerBetRecord.BetBlueStone);
+                mycmd.Parameters.AddWithValue("@BetPurpleStone", playerBetRecord.BetPurpleStone);
+                mycmd.Parameters.AddWithValue("@WinnedStone", playerBetRecord.WinnedStone);
+                mycmd.ExecuteNonQuery();
+
+                return true;
+            }
+            finally
+            {
+                mycmd.Dispose();
+            }
         }
     }
 }

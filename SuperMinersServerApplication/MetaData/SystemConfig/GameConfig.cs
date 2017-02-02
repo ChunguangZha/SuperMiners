@@ -217,6 +217,8 @@ namespace MetaData.SystemConfig
         public int GambleStone_DailyProfitStoneObjective = 5000;
         [DataMember]
         public int GambleStone_Round_InningCount = 64;
+        [DataMember]
+        public int GambleStone_OneBetStoneCount = 10;
 
     }
 }

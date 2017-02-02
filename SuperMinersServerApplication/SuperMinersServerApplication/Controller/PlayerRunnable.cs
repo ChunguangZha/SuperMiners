@@ -1183,26 +1183,26 @@ namespace SuperMinersServerApplication.Controller
             this.BasePlayer.GravelInfo = DBProvider.UserDBProvider.GetPlayerGravelInfo(this.BasePlayer.SimpleInfo.UserID);
         }
 
-        public int BetInGambleStone(int count, bool isGravel, CustomerMySqlTransaction myTrans)
+        public int BetInGambleStone(int stoneCount, int gravelCount, CustomerMySqlTransaction myTrans)
         {
-            if (isGravel)
+            if (gravelCount > 0)
             {
-                if (this.BasePlayer.GravelInfo.Gravel < count)
+                if (this.BasePlayer.GravelInfo.Gravel < gravelCount)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                this.BasePlayer.GravelInfo.Gravel -= count;
+                this.BasePlayer.GravelInfo.Gravel -= gravelCount;
                 DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
             }
-            if (!isGravel)
+            if (stoneCount > 0)
             {
-                if (this.BasePlayer.FortuneInfo.StockOfStones < count)
+                if (this.BasePlayer.FortuneInfo.StockOfStones < stoneCount)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                this.BasePlayer.FortuneInfo.StockOfStones -= count;
+                this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
                 bool isOK = DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo, myTrans);
             }
 

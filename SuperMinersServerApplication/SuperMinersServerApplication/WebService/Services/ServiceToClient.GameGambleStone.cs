@@ -19,37 +19,45 @@ namespace SuperMinersServerApplication.WebService.Services
         #region IServiceToClient Members
 
 
-        public int BetIn(string token, GambleStoneItemColor color, int stoneCount, bool isGravel)
+        public GambleStonePlayerBetInResult GambleStoneBetIn(string token, GambleStoneItemColor color, int stoneCount, int gravelCount)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = null;
+                GambleStonePlayerBetInResult betResult = new GambleStonePlayerBetInResult();
                 try
                 {
+                    if (stoneCount == 0 && gravelCount == 0)
+                    {
+                        betResult.ResultCode = OperResult.RESULTCODE_PARAM_INVALID;
+                        return betResult;
+                    }
+
                     userName = ClientManager.GetClientUserName(token);
 
                     int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                     {
-                        int innerResult = PlayerController.Instance.GambleBetIn(userName, stoneCount, isGravel, myTrans);
+                        int innerResult = PlayerController.Instance.GambleBetIn(userName, stoneCount, gravelCount, myTrans);
                         if (innerResult == OperResult.RESULTCODE_TRUE)
                         {
                             var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
-                            return GambleStoneController.Instance.BetIn(color, stoneCount, playerInfo.SimpleInfo.UserID, userName);
+                            betResult = GambleStoneController.Instance.BetIn(color, stoneCount + gravelCount, playerInfo.SimpleInfo.UserID, userName);
                         }
 
                         return innerResult;
                     },
                     exc =>
                     {
-                        LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 Inner异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; isGravel: " + isGravel.ToString(), exc);
+                        LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 Inner异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; gravelCount: " + gravelCount.ToString(), exc);
                     });
 
-                    return result;
+                    return betResult;
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; isGravel: " + isGravel.ToString(), exc);
-                    return OperResult.RESULTCODE_EXCEPTION;
+                    LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; isGravel: " + gravelCount.ToString(), exc);
+                    betResult.ResultCode = OperResult.RESULTCODE_EXCEPTION;
+                    return betResult;
                 }
             }
             else

@@ -44,8 +44,10 @@
     <Compile Include="ActionLog\XunLingMineStateInfo.cs" />
     <Compile Include="AgentUser\AgentAwardRecord.cs" />
     <Compile Include="AgentUser\AgentUserInfo.cs" />
+    <Compile Include="BytesConverter.cs" />
     <Compile Include="Common.cs" />
     <Compile Include="Game\GambleStone\GambleStoneInningInfo.cs" />
+    <Compile Include="Game\GambleStone\GambleStonePlayerBetInResult.cs" />
     <Compile Include="Game\GambleStone\GambleStonePlayerBetRecord.cs" />
     <Compile Include="Game\RaideroftheLostArk\PlayerRaiderRoundHistoryRecordInfo.cs" />
     <Compile Include="Game\RaideroftheLostArk\RaiderRoundInfo.cs" />

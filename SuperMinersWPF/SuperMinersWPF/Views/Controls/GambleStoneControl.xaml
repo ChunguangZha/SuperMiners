@@ -5,6 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800" Foreground="White" Background="#FF513700">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="GridColor" Color="#000"/>
+        <Style x:Key="imgInGrid" TargetType="Image">
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="Stretch" Value="UniformToFill"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="203*"/>
@@ -18,7 +25,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="XXXXX" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="161,10"/>
+            <TextBlock Text="赌石娱乐" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -46,10 +53,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.RowSpan="3" Text="红" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Grid.RowSpan="3" Margin="2" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/SuperMinersWPF;component/Resources/gamblered.png"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentRoundInfo.LastWinRedCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Border Grid.Column="1" Grid.Row="1" Height="1" Background="Red" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentRoundInfo.CurrentWinRedCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
                 <Border Grid.Column="2" Background="#FFC7A365" Margin="2" CornerRadius="5">
@@ -63,10 +70,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.RowSpan="3" Text="绿" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Grid.RowSpan="3" Margin="2" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/SuperMinersWPF;component/Resources/gamblegreen.png"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentRoundInfo.LastWinGreenCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Border Grid.Column="1" Grid.Row="1" Height="1" Background="Red" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentRoundInfo.CurrentWinGreenCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
                 <Border Grid.Column="3" Background="#FFC7A365" Margin="2" CornerRadius="5">
@@ -80,10 +87,10 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.RowSpan="3" Text="蓝" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Grid.RowSpan="3" Margin="2" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/SuperMinersWPF;component/Resources/gambleblue.png"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentRoundInfo.LastWinBlueCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Border Grid.Column="1" Grid.Row="1" Height="1" Background="Red" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentRoundInfo.CurrentWinBlueCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
                 <Border Grid.Column="4" Background="#FFC7A365" Margin="2" CornerRadius="5">
@@ -97,15 +104,15 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.RowSpan="3" Text="紫" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Column="1" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <Image Grid.RowSpan="3" Margin="2" Width="24" Height="24" VerticalAlignment="Center" HorizontalAlignment="Center" Source="/SuperMinersWPF;component/Resources/gambleyellow.png"/>
+                        <TextBlock Grid.Column="1" Text="{Binding CurrentRoundInfo.LastWinPurpleCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         <Border Grid.Column="1" Grid.Row="1" Height="1" Background="Red" Margin="10,0" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-                        <TextBlock Grid.Column="1" Grid.Row="2" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding CurrentRoundInfo.CurrentWinPurpleCount, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Grid>
                 </Border>
             </Grid>
-            <Border Grid.Row="2" BorderThickness="1" BorderBrush="Gray">
-                <Grid ShowGridLines="True">
+            <Border Grid.Row="2" Margin="5" BorderThickness="1" BorderBrush="{StaticResource GridColor}">
+                <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -128,12 +135,92 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
+                    <Border Grid.Row="0" Grid.Column="4" Grid.ColumnSpan="6" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="6" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="6" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="3" Grid.ColumnSpan="10" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="4" Grid.ColumnSpan="10" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="5" Grid.ColumnSpan="10" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Row="6" Grid.ColumnSpan="10" Height="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" VerticalAlignment="Bottom"/>
+                    <Border Grid.Column="0" Grid.Row="4" Grid.RowSpan="4" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="1" Grid.Row="4" Grid.RowSpan="4" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="2" Grid.Row="4" Grid.RowSpan="4" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="3" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="4" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="5" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="6" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="7" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Border Grid.Column="8" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
+                    <Image Grid.Row="0" Grid.Column="4" Name="img1" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg1}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="0" Grid.Column="5" Name="img2" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg2}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="0" Grid.Column="6" Name="img3" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg3}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="0" Grid.Column="7" Name="img4" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg4}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="0" Grid.Column="8" Name="img5" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg5}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="0" Grid.Column="9" Name="img6" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg6}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="4" Name="img7" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg7}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="5" Name="img8" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg8}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="6" Name="img9" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg9}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="7" Name="img10" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg10}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="8" Name="img11" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg11}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="1" Grid.Column="9" Name="img12" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg12}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="4" Name="img13" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg13}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="5" Name="img14" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg14}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="6" Name="img15" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg15}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="7" Name="img16" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg16}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="8" Name="img17" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg17}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="2" Grid.Column="9" Name="img18" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg18}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="4" Name="img19" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg19}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="5" Name="img20" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg20}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="6" Name="img21" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg21}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="7" Name="img22" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg22}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="8" Name="img23" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg23}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="3" Grid.Column="9" Name="img24" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg24}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="0" Name="img25" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg25}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="1" Name="img26" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg26}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="2" Name="img27" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg27}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="3" Name="img28" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg28}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="4" Name="img29" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg29}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="5" Name="img30" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg30}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="6" Name="img31" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg31}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="7" Name="img32" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg32}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="8" Name="img33" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg33}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="4" Grid.Column="9" Name="img34" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg34}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="0" Name="img35" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg35}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="1" Name="img36" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg36}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="2" Name="img37" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg37}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="3" Name="img38" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg38}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="4" Name="img39" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg39}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="5" Name="img40" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg40}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="6" Name="img41" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg41}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="7" Name="img42" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg42}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="8" Name="img43" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg43}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="5" Grid.Column="9" Name="img44" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg44}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="0" Name="img45" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg45}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="1" Name="img46" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg46}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="2" Name="img47" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg47}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="3" Name="img48" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg48}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="4" Name="img49" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg49}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="5" Name="img50" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg50}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="6" Name="img51" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg51}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="7" Name="img52" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg52}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="8" Name="img53" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg53}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="6" Grid.Column="9" Name="img54" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg54}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="0" Name="img55" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg55}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="1" Name="img56" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg56}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="2" Name="img57" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg57}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="3" Name="img58" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg58}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="4" Name="img59" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg59}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="5" Name="img60" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg60}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="6" Name="img61" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg61}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="7" Name="img62" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg62}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="8" Name="img63" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg63}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="9" Name="img64" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg64}" Style="{StaticResource imgInGrid}"/>
                     <Grid Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="1" Text="40秒后切开" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Text="{Binding CurrentInningInfo.CountDownSecondsText, Mode=OneWay}" HorizontalAlignment="Center"/>
                     </Grid>
                 </Grid>
             </Border>
@@ -145,20 +232,28 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Horizontal" Margin="5">
-                    <Border Width="28" Height="28" CornerRadius="5" Margin="0" Background="Red"/>
-                    <TextBlock Text="10000万" Margin="5" VerticalAlignment="Center" FontSize="14"/>
+                    <Border Width="28" Height="28" CornerRadius="5" Margin="0">
+                        <Image Source="/SuperMinersWPF;component/Resources/gamblered.png"/>
+                    </Border>
+                    <TextBlock Text="{Binding CurrentInningInfo.BetRedStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="5">
-                    <Border Width="28" Height="28" CornerRadius="5" Margin="0" Background="Green"/>
-                    <TextBlock Text="10000万" Margin="5" VerticalAlignment="Center" FontSize="14"/>
+                    <Border Width="28" Height="28" CornerRadius="5" Margin="0">
+                        <Image Source="/SuperMinersWPF;component/Resources/gamblegreen.png"/>
+                    </Border>
+                    <TextBlock Text="{Binding CurrentInningInfo.BetGreenStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="5">
-                    <Border Width="28" Height="28" CornerRadius="5" Margin="0" Background="Blue"/>
-                    <TextBlock Text="10000万" Margin="5" VerticalAlignment="Center" FontSize="14"/>
+                    <Border Width="28" Height="28" CornerRadius="5" Margin="0">
+                        <Image Source="/SuperMinersWPF;component/Resources/gambleblue.png"/>
+                    </Border>
+                    <TextBlock Text="{Binding CurrentInningInfo.BetBlueStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
                 <StackPanel Grid.Column="3" Orientation="Horizontal" Margin="5">
-                    <Border Width="28" Height="28" CornerRadius="5" Margin="0" Background="Purple"/>
-                    <TextBlock Text="10000万" Margin="5" VerticalAlignment="Center" FontSize="14"/>
+                    <Border Width="28" Height="28" CornerRadius="5" Margin="0">
+                        <Image Source="/SuperMinersWPF;component/Resources/gambleyellow.png"/>
+                    </Border>
+                    <TextBlock Text="{Binding CurrentInningInfo.BetPurpleStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" FontSize="14"/>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -178,18 +273,46 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.ColumnSpan="4" Text="XXXX赢得3000万矿石" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16"/>
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="10000" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="20万" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="2" Text="5000" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="1" Grid.Column="3" Text="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Width="64" Height="64" Margin="15" Background="Red" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
-            <Button Grid.Row="2" Grid.Column="1" Width="64" Height="64" Margin="15" Background="Green" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="2" Width="64" Height="64" Margin="15" Background="Blue" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="3" Width="64" Height="64" Margin="15" Background="Purple" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="猜中赚2倍" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="猜中赚3倍" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="3" Grid.Column="2" Text="猜中赚6倍" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="3" Grid.Column="3" Text="猜中赚50倍" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding CurrentInningPlayerBetRecord.BetRedStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentInningPlayerBetRecord.BetGreenStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurrentInningPlayerBetRecord.BetBlueStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentInningPlayerBetRecord.BetPurpleStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Grid.Row="2" Grid.Column="0" Name="btnBetRed" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetRed_Click">
+                <Button.Content>
+                    <Image Source="/SuperMinersWPF;component/Resources/gamblered.png"/>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="1" Name="btnBetGreen" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetGreen_Click">
+                <Button.Content>
+                    <Image Source="/SuperMinersWPF;component/Resources/gamblegreen.png"/>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="2" Name="btnBetBlue" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetBlue_Click">
+                <Button.Content>
+                    <Image Source="/SuperMinersWPF;component/Resources/gambleblue.png"/>
+                </Button.Content>
+            </Button>
+            <Button Grid.Row="2" Grid.Column="3" Name="btnBetPurple" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetPurple_Click">
+                <Button.Content>
+                    <Image Source="/SuperMinersWPF;component/Resources/gambleyellow.png"/>
+                </Button.Content>
+            </Button>
+            <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Run Text="猜中赚"/>
+                <Run Text="2倍" Foreground="#FFFF4F6E"/>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Run Text="猜中赚"/>
+                <Run Text="3倍" Foreground="#FFFF4F6E"/>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Run Text="猜中赚"/>
+                <Run Text="6倍" Foreground="#FFFF4F6E"/>
+            </TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="3" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Run Text="猜中赚"/>
+                <Run Text="50倍" Foreground="#FFFF4F6E"/>
+            </TextBlock>
             <TextBlock Grid.Row="4" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
         </Grid>

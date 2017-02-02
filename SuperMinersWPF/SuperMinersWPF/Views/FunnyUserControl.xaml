@@ -28,7 +28,16 @@
                     <panelControl:RaidersoftheLostArkControl x:Name="controlGameRaideroftheLostArk"/>
                 </Grid>
             </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <Grid Width="100">
+                        <TextBlock Text="赌石娱乐" HorizontalAlignment="Center"/>
+                    </Grid>
+                </TabItem.Header>
+                <Grid>
+                    <panelControl:GambleStoneControl x:Name="controlGambleStone"/>
+                </Grid>
+            </TabItem>
         </TabControl>
-        <!--<TextBlock Text="该功能暂未开放，敬请期待" VerticalAlignment="Center" HorizontalAlignment="Center"/>-->
     </Grid>
 </UserControl>

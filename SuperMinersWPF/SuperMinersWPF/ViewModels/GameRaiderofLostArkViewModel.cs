@@ -122,7 +122,7 @@ namespace SuperMinersWPF.ViewModels
             isStartedListen = true;
             this._thrRefreshCurrentRound = new Thread(RefreshCurrentRound);
             this._thrRefreshCurrentRound.IsBackground = true;
-            this._thrRefreshCurrentRound.Name = "thrRefreshCurrentRound";
+            this._thrRefreshCurrentRound.Name = "thrRaiderofLostArkRefreshCurrentRound";
             this._thrRefreshCurrentRound.Start();
         }
 
