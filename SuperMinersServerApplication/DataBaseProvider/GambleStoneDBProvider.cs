@@ -102,7 +102,8 @@ namespace DataBaseProvider
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "update gamblestoneroundinfo set `StartTime`=@StartTime,`FinishedInningCount`=@FinishedInningCount,`EndTime`=@EndTime,`CurrentWinRedCount`=@CurrentWinRedCount,"+
                     "`CurrentWinGreenCount`=@CurrentWinGreenCount,`CurrentWinBlueCount`=@CurrentWinBlueCount,`CurrentWinPurpleCount`=@CurrentWinPurpleCount,`LastWinRedCount`=@LastWinRedCount,"+
-                    "`LastWinGreenCount`=@LastWinGreenCount,`LastWinBlueCount`=@LastWinBlueCount,`LastWinPurpleCount`=@LastWinPurpleCount,`AllBetInStone`=@AllBetInStone,`AllWinnedOutStone`=@AllWinnedOutStone,`TableName`=@TableName " +
+                    "`LastWinGreenCount`=@LastWinGreenCount,`LastWinBlueCount`=@LastWinBlueCount,`LastWinPurpleCount`=@LastWinPurpleCount,`AllBetInStone`=@AllBetInStone,"+
+                    "`AllWinnedOutStone`=@AllWinnedOutStone,`WinColorItems`=@WinColorItems,`TableName`=@TableName " +
                                  " where `id`=@id ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@StartTime", round.StartTime.ToDateTime());
@@ -118,6 +119,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@LastWinPurpleCount", round.LastWinPurpleCount);
                 mycmd.Parameters.AddWithValue("@AllBetInStone", round.AllBetInStone);
                 mycmd.Parameters.AddWithValue("@AllWinnedOutStone", round.AllWinnedOutStone);
+                mycmd.Parameters.AddWithValue("@WinColorItems", BytesConverter.ConvertByteArrayToBytes(round.WinColorItems));
                 mycmd.Parameters.AddWithValue("@TableName", round.TableName);
                 mycmd.Parameters.AddWithValue("@id", round.ID);
 

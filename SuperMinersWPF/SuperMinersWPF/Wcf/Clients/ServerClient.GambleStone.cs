@@ -24,14 +24,14 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region GetGambleStoneRoundInning
 
-        public event EventHandler<WebInvokeEventArgs<GambleStoneRound_InningInfo>> GetGambleStoneRoundInningCompleted;
-        public void GetGambleStoneRoundInning(object userState)
-        {
-            if (this._invoker != null)
-            {
-                this._invoker.InvokeUserState<GambleStoneRound_InningInfo>(this._context, "GetGambleStoneRoundInning", this.GetGambleStoneRoundInningCompleted, userState, GlobalData.Token);
-            }
-        }
+        //public event EventHandler<WebInvokeEventArgs<GambleStoneRound_InningInfo>> GetGambleStoneRoundInningCompleted;
+        //public void GetGambleStoneRoundInning(object userState)
+        //{
+        //    if (this._invoker != null)
+        //    {
+        //        this._invoker.InvokeUserState<GambleStoneRound_InningInfo>(this._context, "GetGambleStoneRoundInning", this.GetGambleStoneRoundInningCompleted, userState, GlobalData.Token);
+        //    }
+        //}
 
         #endregion
 

@@ -28,6 +28,7 @@ namespace SuperMinersWPF.Views
         public void AddEventHandlers()
         {
             this.controlGameRoulette.AddEventHandlers();
+            this.controlGambleStone.AddEventHandlers();
         }
 
         public void RemoveEventHandlers()

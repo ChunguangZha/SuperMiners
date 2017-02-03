@@ -109,6 +109,8 @@ namespace SuperMinersServerApplication.Controller.Game
                     {
                         int result = this.CurrentInningRunner.SaveInningInfoToDB();
 
+                        //暂停2秒，让客户端显示开奖效果。
+                        Thread.Sleep(2000);
                         if (this.RoundInfo.FinishedInningCount >= GlobalConfig.GameConfig.GambleStone_Round_InningCount)
                         {
                             this.RoundInfo = this.CreateNewRound(this.RoundInfo);
@@ -483,7 +485,7 @@ namespace SuperMinersServerApplication.Controller.Game
             },
             exc =>
             {
-                LogHelper.Instance.AddErrorLog("赌石游戏，保存第 " + this._roundInfo.ID + " 轮，第 " + this.InningInfo.ID + " 局，异常。局信息：" + this.InningInfo.ToString(), exc);
+                LogHelper.Instance.AddErrorLog("赌石游戏，保存异常。局信息：" + this.InningInfo.ToString(), exc);
                 if (dicWinnedPlayerBetStoneCount != null)
                 {
                     foreach (var userID in dicWinnedPlayerBetStoneCount.Keys)
@@ -495,7 +497,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                LogHelper.Instance.AddInfoLog("赌石游戏，保存第 " + this._roundInfo.ID + " 轮，第 " + this.InningInfo.ID + " 局，成功。局信息：" + this.InningInfo.ToString());
+                LogHelper.Instance.AddInfoLog("赌石游戏，保存成功。局信息：" + this.InningInfo.ToString());
 
                 if (maxWinner == null)
                 {

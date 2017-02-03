@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             Loaded="UserControl_Loaded"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800" Foreground="White" Background="#FF513700">
     <UserControl.Resources>
@@ -112,7 +113,7 @@
                 </Border>
             </Grid>
             <Border Grid.Row="2" Margin="5" BorderThickness="1" BorderBrush="{StaticResource GridColor}">
-                <Grid>
+                <Grid Name="gridWinnedColor">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -151,7 +152,7 @@
                     <Border Grid.Column="6" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="7" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="8" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
-                    <Image Grid.Row="0" Grid.Column="4" Name="img1" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg1}" Style="{StaticResource imgInGrid}"/>
+                    <!--<Image Grid.Row="0" Grid.Column="4" Name="img1" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg1}" Style="{StaticResource imgInGrid}"/>
                     <Image Grid.Row="0" Grid.Column="5" Name="img2" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg2}" Style="{StaticResource imgInGrid}"/>
                     <Image Grid.Row="0" Grid.Column="6" Name="img3" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg3}" Style="{StaticResource imgInGrid}"/>
                     <Image Grid.Row="0" Grid.Column="7" Name="img4" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg4}" Style="{StaticResource imgInGrid}"/>
@@ -214,13 +215,24 @@
                     <Image Grid.Row="7" Grid.Column="6" Name="img61" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg61}" Style="{StaticResource imgInGrid}"/>
                     <Image Grid.Row="7" Grid.Column="7" Name="img62" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg62}" Style="{StaticResource imgInGrid}"/>
                     <Image Grid.Row="7" Grid.Column="8" Name="img63" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg63}" Style="{StaticResource imgInGrid}"/>
-                    <Image Grid.Row="7" Grid.Column="9" Name="img64" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg64}" Style="{StaticResource imgInGrid}"/>
+                    <Image Grid.Row="7" Grid.Column="9" Name="img64" Source="{Binding CurrentRoundInfo.WinnedInning1ColorImg64}" Style="{StaticResource imgInGrid}"/>-->
                     <Grid Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="1" Text="{Binding CurrentInningInfo.CountDownSecondsText, Mode=OneWay}" HorizontalAlignment="Center"/>
+                        <Image Name="imgCurrentWinnedColor" Margin="10"/>
+                        <Image Name="imgSrcStone" Margin="10" Opacity="1" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
+                        <Image Name="imgSplitStone1" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone1.png"/>
+                        <Image Name="imgSplitStone2" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone2.png"/>
+                        <Image Name="imgSplitStone3" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone3.png"/>
+                        <Image Name="imgSplitStone4" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone4.png"/>
+                        
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center">
+                            <Run Text="{Binding CurrentInningInfo.InningIndex, Mode=OneWay}"/>
+                            <Run Text="局"/>
+                            <Run Text="{Binding CurrentInningInfo.CountDownSecondsText, Mode=OneWay}"/>
+                        </TextBlock>
                     </Grid>
                 </Grid>
             </Border>

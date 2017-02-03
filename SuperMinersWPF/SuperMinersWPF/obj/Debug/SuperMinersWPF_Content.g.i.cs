@@ -8,9 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/gambleblue.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/gamblegreen.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/gamblered.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/gambleyellow.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/splitstone1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/splitstone2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/splitstone3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/splitstone4.png")]
 
 

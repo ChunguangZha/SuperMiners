@@ -103,7 +103,7 @@ namespace SuperMinersWPF.ViewModels
 
         public void RegisterEvents()
         {
-            GlobalData.Client.GetGambleStoneRoundInningCompleted += Client_GetGambleStoneRoundInningCompleted;
+            //GlobalData.Client.GetGambleStoneRoundInningCompleted += Client_GetGambleStoneRoundInningCompleted;
             GlobalData.Client.GambleStoneBetInCompleted += Client_GambleStoneBetInCompleted;
             GlobalData.Client.OnGambleStoneWinNotify += Client_OnGambleStoneWinNotify;
             GlobalData.Client.GetGambleStoneRoundInfoCompleted += Client_GetGambleStoneRoundInfoCompleted;
@@ -122,6 +122,10 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 this.CurrentInningInfo.ParentObject = e.Result;
+                if (e.Result.InningIndex == 1)
+                {
+                    AsyncGetCurrentGambleStoneRoundInfo();
+                }
             }
             catch (Exception exc)
             {
@@ -143,6 +147,10 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 this.CurrentRoundInfo.ParentObject = e.Result;
+                if (this.GambleStoneGetRoundInfoEvent != null)
+                {
+                    this.GambleStoneGetRoundInfoEvent(e.Result);
+                }
             }
             catch (Exception exc)
             {
@@ -155,8 +163,15 @@ namespace SuperMinersWPF.ViewModels
         {
             try
             {
-                this.CurrentRoundInfo.ParentObject = roundInfo;
+                //this.CurrentRoundInfo.ParentObject = roundInfo;
                 this.CurrentInningInfo.ParentObject = inningInfo;
+                this.CurrentRoundInfo.SetWinnedInningColor(inningInfo.InningIndex - 1, inningInfo.WinnedColor);
+
+                if (GambleStoneInningFinished != null)
+                {
+                    GambleStoneInningFinished(inningInfo);
+                }
+
                 if (maxWinner != null && !string.IsNullOrEmpty(maxWinner.UserName))
                 {
                     MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
@@ -224,5 +239,8 @@ namespace SuperMinersWPF.ViewModels
                 LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。回调处理异常。", exc);
             }
         }
+
+        public event Action<GambleStoneInningInfo> GambleStoneInningFinished;
+        public event Action<GambleStoneRoundInfo> GambleStoneGetRoundInfoEvent;
     }
 }

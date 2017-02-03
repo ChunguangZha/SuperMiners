@@ -161,9 +161,12 @@ namespace SuperMinersWPF.ViewModels
                 }
 
                 this.ListSelfBetRecords.Clear();
-                foreach (var item in e.Result)
+                if (e.Result != null)
                 {
-                    this.ListSelfBetRecords.Add(new PlayerBetInfoUIModel(item));
+                    foreach (var item in e.Result)
+                    {
+                        this.ListSelfBetRecords.Add(new PlayerBetInfoUIModel(item));
+                    }
                 }
             }
             catch (Exception exc)

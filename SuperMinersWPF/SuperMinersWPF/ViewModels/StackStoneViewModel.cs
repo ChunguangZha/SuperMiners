@@ -319,9 +319,12 @@ namespace SuperMinersWPF.ViewModels
                     return;
                 }
                 this.AllNotFinishedSellOrders.Clear();
-                foreach (var item in e.Result)
+                if (e.Result != null)
                 {
-                    this.AllNotFinishedSellOrders.Add(new StoneDelegateSellOrderInfoUIModel(item));
+                    foreach (var item in e.Result)
+                    {
+                        this.AllNotFinishedSellOrders.Add(new StoneDelegateSellOrderInfoUIModel(item));
+                    }
                 }
             }
             catch (Exception exc)
@@ -341,9 +344,12 @@ namespace SuperMinersWPF.ViewModels
                     return;
                 }
                 this.AllNotFinishedBuyOrders.Clear();
-                foreach (var item in e.Result)
+                if (e.Result != null)
                 {
-                    this.AllNotFinishedBuyOrders.Add(new StoneDelegateBuyOrderInfoUIModel(item));
+                    foreach (var item in e.Result)
+                    {
+                        this.AllNotFinishedBuyOrders.Add(new StoneDelegateBuyOrderInfoUIModel(item));
+                    }
                 }
             }
             catch (Exception exc)
