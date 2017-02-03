@@ -26,5 +26,21 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         GambleStoneRound_InningInfo GetGambleStoneRoundInning(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetGambleStoneRoundInfo",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        GambleStoneRoundInfo GetGambleStoneRoundInfo(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetGambleStoneInningInfo",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        GambleStoneInningInfo GetGambleStoneInningInfo(string token);
     }
 }

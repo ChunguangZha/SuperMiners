@@ -1,39 +1,155 @@
-Error:  [2017/2/3 0:29:55] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+Error:  [2017/2/3 17:43:17] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:55] ---- Log: RestClient ReceiveCallback 2
+Error:  [2017/2/3 17:43:17] ---- Log: RestClient ReceiveCallback 2
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:55] ---- Log: RestClient ReceiveCallback 5
+Error:  [2017/2/3 17:43:17] ---- Log: RestClient ReceiveCallback 5
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:55] ---- Log: RestClient ReceiveCallback 9
+Error:  [2017/2/3 17:43:17] ---- Log: RestClient ReceiveCallback 9
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:56] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+Error:  [2017/2/3 17:43:18] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 164
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:56] ---- Log: RestClient ReceiveCallback 2
+Error:  [2017/2/3 17:43:27] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:56] ---- Log: RestClient ReceiveCallback 5
+Error:  [2017/2/3 17:43:30] ---- Log: RestClient ReceiveCallback 2
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:56] ---- Log: RestClient ReceiveCallback 9
+Error:  [2017/2/3 17:43:30] ---- Log: RestClient ReceiveCallback 5
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:57] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+Error:  [2017/2/3 17:43:30] ---- Log: RestClient ReceiveCallback 9
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:57] ---- Log: Client_GetPlayerselfBetInfoCompleted Exception
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetPlayerselfBetInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 164
+Error:  [2017/2/3 17:43:43] ---- Log: Client_GetNotFinishedDelegateBuyStoneOrdersCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.StackStoneViewModel.Client_GetNotFinishedDelegateBuyStoneOrdersCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\StackStoneViewModel.cs:行号 344
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:57] ---- Log: Client_GetNotFinishedDelegateBuyStoneOrdersCompleted Exception
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.StackStoneViewModel.Client_GetNotFinishedDelegateBuyStoneOrdersCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\StackStoneViewModel.cs:行号 344
+Error:  [2017/2/3 17:43:43] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 
-Error:  [2017/2/3 0:29:57] ---- Log: Client_GetNotFinishedDelegateSellStoneOrdersCompleted Exception
-Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.StackStoneViewModel.Client_GetNotFinishedDelegateSellStoneOrdersCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\StackStoneViewModel.cs:行号 322
+Error:  [2017/2/3 17:43:52] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:43:52] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:43:52] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:44:07] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:44:32] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:44:32] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:44:32] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:30] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:30] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:30] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:30] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:37] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:53] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:53] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:53] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:45:53] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:46:33] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:46:33] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:46:33] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:46:33] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:13] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:13] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:13] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:46] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:53] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:53] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:53] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:47:58] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:48:33] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:48:33] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:48:33] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:48:34] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:14] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:14] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:14] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:14] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:54] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:54] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:54] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/3 17:49:54] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 

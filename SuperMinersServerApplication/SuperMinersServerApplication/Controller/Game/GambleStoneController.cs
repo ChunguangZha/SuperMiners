@@ -82,6 +82,16 @@ namespace SuperMinersServerApplication.Controller.Game
             return resultInfo;
         }
 
+        public GambleStoneRoundInfo GetGambleStoneRoundInfo()
+        {
+            return this.RoundInfo;
+        }
+
+        public GambleStoneInningInfo GetGambleStoneInningInfo()
+        {
+            return this.CurrentInningRunner.InningInfo;
+        }
+
         private void ThreadWork()
         {
             while (this.isRunning)
@@ -487,13 +497,18 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 LogHelper.Instance.AddInfoLog("赌石游戏，保存第 " + this._roundInfo.ID + " 轮，第 " + this.InningInfo.ID + " 局，成功。局信息：" + this.InningInfo.ToString());
 
-                if (maxWinner != null)
+                if (maxWinner == null)
+                {
+                    maxWinner = new GambleStonePlayerBetRecord();
+                }
+
+                if (!string.IsNullOrEmpty(maxWinner.UserName))
                 {
                     PlayerActionController.Instance.AddLog(maxWinner.UserName, MetaData.ActionLog.ActionType.GambleStoneMaxWinner, maxWinner.WinnedStone);
-                    if (this.GambleStoneInningWinnedNotifyAllClient != null)
-                    {
-                        this.GambleStoneInningWinnedNotifyAllClient(this._roundInfo, this.InningInfo, maxWinner);
-                    }
+                }
+                if (this.GambleStoneInningWinnedNotifyAllClient != null)
+                {
+                    this.GambleStoneInningWinnedNotifyAllClient(this._roundInfo, this.InningInfo, maxWinner);
                 }
                 //NotifyWinnedPlayer(dicWinnedPlayerBetStoneCount);
             }

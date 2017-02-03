@@ -230,10 +230,15 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        private static BitmapImage ImgRed = new BitmapImage(new Uri(@"Resources/gamblered.png", UriKind.Relative));
-        private static BitmapImage imgGreen = new BitmapImage(new Uri(@"Resources/gamblegreen.png", UriKind.Relative));
-        private static BitmapImage imgBlue = new BitmapImage(new Uri(@"Resources/gambleblue.png", UriKind.Relative));
-        private static BitmapImage imgPurple = new BitmapImage(new Uri(@"Resources/gambleyellow.png", UriKind.Relative));
+        public void SetWinnedInningColor(int index, byte color)
+        {
+
+        }
+
+        private static BitmapImage ImgRed = new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/gamblered.png"));
+        private static BitmapImage imgGreen = new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/gamblegreen.png"));
+        private static BitmapImage imgBlue = new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/gambleblue.png"));
+        private static BitmapImage imgPurple = new BitmapImage(new Uri(@"/SuperMinersWPF;component/Resources/gambleyellow.png"));
 
         private BitmapSource GetWinnedInningColorImg(int index)
         {

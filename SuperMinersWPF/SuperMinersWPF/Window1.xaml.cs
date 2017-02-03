@@ -80,6 +80,7 @@ namespace SuperMinersWPF
             App.StackStoneVMObject.AsyncGetAllStoneStackDailyRecords();
             App.GameRaiderofLostArkVMObject.AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
             App.GameRaiderofLostArkVMObject.AsyncGetCurrentRaiderRoundInfo();
+            App.GambleStoneVMObject.Init();
 
             AddEventHandlers();
         }

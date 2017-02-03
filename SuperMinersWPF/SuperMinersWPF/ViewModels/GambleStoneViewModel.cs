@@ -47,6 +47,11 @@ namespace SuperMinersWPF.ViewModels
 
         public GambleStoneViewModel()
         {
+        }
+
+        public void Init()
+        {
+            AsyncGetCurrentGambleStoneRoundInfo();
             isStartedListen = true;
             this._thrRefreshCurrentRound = new Thread(RefreshCurrentRound);
             this._thrRefreshCurrentRound.IsBackground = true;
@@ -67,7 +72,7 @@ namespace SuperMinersWPF.ViewModels
 
                 if (GlobalData.IsLogined)
                 {
-                    AsyncGetCurrentGambleStoneRoundInfo();
+                    AsyncGetCurrentGambleStoneInningInfo();
                 }
             }
         }
@@ -80,9 +85,14 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
+        public void AsyncGetCurrentGambleStoneInningInfo()
+        {
+            GlobalData.Client.GetGambleStoneInningInfo(null);
+        }
+
         public void AsyncGetCurrentGambleStoneRoundInfo()
         {
-            GlobalData.Client.GetGambleStoneRoundInning(null);
+            GlobalData.Client.GetGambleStoneRoundInfo(null);
         }
 
         public void AsyncBetIn(GambleStoneItemColor color, int stoneCount, int gravelCount)
@@ -96,6 +106,49 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetGambleStoneRoundInningCompleted += Client_GetGambleStoneRoundInningCompleted;
             GlobalData.Client.GambleStoneBetInCompleted += Client_GambleStoneBetInCompleted;
             GlobalData.Client.OnGambleStoneWinNotify += Client_OnGambleStoneWinNotify;
+            GlobalData.Client.GetGambleStoneRoundInfoCompleted += Client_GetGambleStoneRoundInfoCompleted;
+            GlobalData.Client.GetGambleStoneInningInfoCompleted += Client_GetGambleStoneInningInfoCompleted;
+        }
+
+        void Client_GetGambleStoneInningInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneInningInfo> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("获取赌石娱乐Inning信息，服务器返回失败。", e.Error);
+                    this.CurrentInningInfo.ParentObject = null;
+                    return;
+                }
+
+                this.CurrentInningInfo.ParentObject = e.Result;
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
+                LogHelper.Instance.AddErrorLog("获取赌石娱乐Inning信息失败。", exc);
+            }
+        }
+
+        void Client_GetGambleStoneRoundInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneRoundInfo> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("获取赌石娱乐Round信息，服务器返回失败。", e.Error);
+                    this.CurrentRoundInfo.ParentObject = null;
+                    return;
+                }
+
+                this.CurrentRoundInfo.ParentObject = e.Result;
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
+                LogHelper.Instance.AddErrorLog("获取赌石Round信息失败。", exc);
+            }
         }
 
         void Client_OnGambleStoneWinNotify(GambleStoneRoundInfo roundInfo, GambleStoneInningInfo inningInfo, GambleStonePlayerBetRecord maxWinner)
@@ -104,7 +157,10 @@ namespace SuperMinersWPF.ViewModels
             {
                 this.CurrentRoundInfo.ParentObject = roundInfo;
                 this.CurrentInningInfo.ParentObject = inningInfo;
-                MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
+                if (maxWinner != null && !string.IsNullOrEmpty(maxWinner.UserName))
+                {
+                    MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
+                }
             }
             catch (Exception exc)
             {

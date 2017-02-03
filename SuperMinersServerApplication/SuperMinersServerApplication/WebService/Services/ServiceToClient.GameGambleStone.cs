@@ -88,6 +88,50 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public GambleStoneRoundInfo GetGambleStoneRoundInfo(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = null;
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return GambleStoneController.Instance.GetGambleStoneRoundInfo();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] GetGambleStoneRoundInfo 异常。", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public GambleStoneInningInfo GetGambleStoneInningInfo(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = null;
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    return GambleStoneController.Instance.GetGambleStoneInningInfo();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] GetGambleStoneInningInfo 异常。", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         #endregion
     }
 }

@@ -35,6 +35,32 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetGambleStoneRoundInfo
+
+        public event EventHandler<WebInvokeEventArgs<GambleStoneRoundInfo>> GetGambleStoneRoundInfoCompleted;
+        public void GetGambleStoneRoundInfo(object userState)
+        {
+            if (this._invoker != null)
+            {
+                this._invoker.InvokeUserState<GambleStoneRoundInfo>(this._context, "GetGambleStoneRoundInfo", this.GetGambleStoneRoundInfoCompleted, userState, GlobalData.Token);
+            }
+        }
+
+        #endregion
+
+        #region GetGambleStoneInningInfo
+
+        public event EventHandler<WebInvokeEventArgs<GambleStoneInningInfo>> GetGambleStoneInningInfoCompleted;
+        public void GetGambleStoneInningInfo(object userState)
+        {
+            if (this._invoker != null)
+            {
+                this._invoker.InvokeUserState<GambleStoneInningInfo>(this._context, "GetGambleStoneInningInfo", this.GetGambleStoneInningInfoCompleted, userState, GlobalData.Token);
+            }
+        }
+
+        #endregion
+
         #region Callback
 
         public event Action<GambleStoneRoundInfo, GambleStoneInningInfo, GambleStonePlayerBetRecord> OnGambleStoneWinNotify;
