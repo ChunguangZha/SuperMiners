@@ -109,7 +109,7 @@ namespace SuperMinersWPF.Views.Controls
             DoubleAnimation myDoubleAnimation = new DoubleAnimation();
             myDoubleAnimation.From = 1;
             myDoubleAnimation.To = 0;
-            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(1));
+            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.5));
             storySrcStoneDisplay.Children.Add(myDoubleAnimation);
             Storyboard.SetTarget(myDoubleAnimation, this.imgSrcStone);
             Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(Image.OpacityProperty));

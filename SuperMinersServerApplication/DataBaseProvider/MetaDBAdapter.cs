@@ -235,13 +235,16 @@ namespace DataBaseProvider
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 player.GravelInfo = new PlayerGravelInfo();
-                if (dt.Rows[i]["Gravel"] != DBNull.Value)
+                if (dt.Columns.Contains("Gravel"))
                 {
-                    player.GravelInfo.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
-                }
-                if (dt.Rows[i]["FirstGetGravelTime"] != DBNull.Value)
-                {
-                    player.GravelInfo.FirstGetGravelTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["FirstGetGravelTime"]));
+                    if (dt.Rows[i]["Gravel"] != DBNull.Value)
+                    {
+                        player.GravelInfo.Gravel = Convert.ToInt32(dt.Rows[i]["Gravel"]);
+                    }
+                    if (dt.Rows[i]["FirstGetGravelTime"] != DBNull.Value)
+                    {
+                        player.GravelInfo.FirstGetGravelTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["FirstGetGravelTime"]));
+                    }
                 }
 
                 players[i] = player;

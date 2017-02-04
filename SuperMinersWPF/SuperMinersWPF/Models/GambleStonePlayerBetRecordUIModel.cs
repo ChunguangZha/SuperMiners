@@ -44,6 +44,19 @@ namespace SuperMinersWPF.Models
             NotifyPropertyChange("WinnedStone");
         }
 
+        public void Clear()
+        {
+            this._parentObject.BetRedStone = 0;
+            this._parentObject.BetGreenStone = 0;
+            this._parentObject.BetBlueStone = 0;
+            this._parentObject.BetPurpleStone = 0;
+
+            NotifyPropertyChange("BetRedStoneText");
+            NotifyPropertyChange("BetGreenStoneText");
+            NotifyPropertyChange("BetBlueStoneText");
+            NotifyPropertyChange("BetPurpleStoneText");
+        }
+
         public int UserID
         {
             get

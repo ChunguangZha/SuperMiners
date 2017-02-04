@@ -172,6 +172,12 @@ namespace SuperMinersWPF.ViewModels
                     GambleStoneInningFinished(inningInfo);
                 }
 
+                if (!string.IsNullOrEmpty(this.CurrentInningPlayerBetRecord.InningID))
+                {
+                    this.CurrentInningPlayerBetRecord.Clear();
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                }
+
                 if (maxWinner != null && !string.IsNullOrEmpty(maxWinner.UserName))
                 {
                     MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
