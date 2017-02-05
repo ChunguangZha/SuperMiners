@@ -49,3 +49,18 @@ Error:  [2017/2/6 0:40:55] ---- Log: RestClient ReceiveCallback 9
 Error:  [2017/2/6 0:40:55] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
 -----------------------------------------------------
 
+Error:  [2017/2/6 0:43:11] ---- Log: RestClient ReceiveCallback 2
+-----------------------------------------------------
+
+Error:  [2017/2/6 0:43:11] ---- Log: RestClient ReceiveCallback 5
+-----------------------------------------------------
+
+Error:  [2017/2/6 0:43:11] ---- Log: RestClient ReceiveCallback 9
+-----------------------------------------------------
+
+Error:  [2017/2/6 0:43:11] ---- Log: RestClient ReceiveCallback 1. http://localhost:33101/WebService/Callback
+-----------------------------------------------------
+
+Error:  [2017/2/6 0:43:28] ---- Log: 客户端2017小开心已退出.
+-----------------------------------------------------
+

@@ -358,10 +358,10 @@ namespace SuperMinersServerApplication.Controller.Game
             this._roundInfo.AllBetInStone += allBetIn;
             if (_isRandomOpen || allBetIn == 0)
             {
-                int randomRed = 3000 / GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
-                int randomGreen = 3000 / GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
-                int randomBlue = 3000 / GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
-                int randomPurple = 3000 / (GlobalConfig.GameConfig.GambleStonePurpleWinTimes * 2);
+                int randomRed = 300 / GlobalConfig.GameConfig.GambleStoneRedColorWinTimes;
+                int randomGreen = 300 / GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
+                int randomBlue = 300 / GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
+                int randomPurple = 300 / (GlobalConfig.GameConfig.GambleStonePurpleWinTimes * 2);
                 int allRandoms = randomPurple + randomBlue + randomGreen + randomRed;
                 int random = GetRandom(allRandoms);
                 if (random < randomRed)
