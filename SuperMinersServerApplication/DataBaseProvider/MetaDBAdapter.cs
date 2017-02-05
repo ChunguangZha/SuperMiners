@@ -235,6 +235,7 @@ namespace DataBaseProvider
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 player.GravelInfo = new PlayerGravelInfo();
+                player.GravelInfo.UserID = player.SimpleInfo.UserID;
                 if (dt.Columns.Contains("Gravel"))
                 {
                     if (dt.Rows[i]["Gravel"] != DBNull.Value)

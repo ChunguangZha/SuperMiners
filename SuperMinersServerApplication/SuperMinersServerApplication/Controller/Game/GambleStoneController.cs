@@ -70,6 +70,7 @@ namespace SuperMinersServerApplication.Controller.Game
         {
             this.isRunning = false;
             StopEventX.WaitOne();
+            LogHelper.Instance.AddInfoLog("Gamble Stopped");
         }
 
         public GambleStoneRound_InningInfo GetCurrentInningInfo()
@@ -94,7 +95,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private void ThreadWork()
         {
-            while (this.isRunning)
+            while (this.isListening)
             {
                 Thread.Sleep(1000);
                 try
@@ -109,8 +110,13 @@ namespace SuperMinersServerApplication.Controller.Game
                     {
                         int result = this.CurrentInningRunner.SaveInningInfoToDB();
 
-                        //暂停2秒，让客户端显示开奖效果。
-                        Thread.Sleep(2000);
+                        if (!this.isRunning)
+                        {
+                            break;
+                        }
+
+                        //暂停5秒，让客户端显示开奖效果。
+                        Thread.Sleep(5000);
                         if (this.RoundInfo.FinishedInningCount >= GlobalConfig.GameConfig.GambleStone_Round_InningCount)
                         {
                             this.RoundInfo = this.CreateNewRound(this.RoundInfo);
@@ -126,6 +132,7 @@ namespace SuperMinersServerApplication.Controller.Game
             }
 
             StopEventX.Set();
+            LogHelper.Instance.AddInfoLog("赌石娱乐已退出");
         }
         
         public void LoadFromDB()
@@ -247,7 +254,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             if (this._inningInfo.CountDownSeconds == 0)
             {
-                result.ResultCode = OperResult.RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART;
+                result.ResultCode = OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
                 return result;
             }
 
@@ -355,7 +362,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 int randomGreen = 3000 / GlobalConfig.GameConfig.GambleStoneGreenColorWinTimes;
                 int randomBlue = 3000 / GlobalConfig.GameConfig.GambleStoneBlueWinTimes;
                 int randomPurple = 3000 / (GlobalConfig.GameConfig.GambleStonePurpleWinTimes * 2);
-                int allRandoms = randomRed + randomGreen + randomBlue + randomPurple;
+                int allRandoms = randomPurple + randomBlue + randomGreen + randomRed;
                 int random = GetRandom(allRandoms);
                 if (random < randomRed)
                 {
@@ -600,7 +607,7 @@ namespace SuperMinersServerApplication.Controller.Game
         private int GetRandom(int max)
         {
             int result = 0;
-            int randomCount = this._random.Next(10, 20);
+            int randomCount = 1;// this._random.Next(10, 20);
             for (int i = 0; i < randomCount; i++)
             {
                 result = this._random.Next(0, max);

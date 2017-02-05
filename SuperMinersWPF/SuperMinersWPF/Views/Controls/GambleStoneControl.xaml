@@ -223,10 +223,12 @@
                         </Grid.RowDefinitions>
                         <Image Name="imgCurrentWinnedColor" Margin="10"/>
                         <Image Name="imgSrcStone" Margin="10" Opacity="1" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
-                        <Image Name="imgSplitStone1" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone1.png"/>
-                        <Image Name="imgSplitStone2" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone2.png"/>
-                        <Image Name="imgSplitStone3" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone3.png"/>
-                        <Image Name="imgSplitStone4" Width="50" Height="50" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/splitstone4.png"/>
+                        <Canvas Margin="10" Visibility="Collapsed">
+                            <Image Name="imgSplitStone1" Canvas.Left="11" Width="76" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone1.png"/>
+                            <Image Name="imgSplitStone2" Canvas.Left="38" Canvas.Top="18" Width="100" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone2.png"/>
+                            <Image Name="imgSplitStone3" Canvas.Left="50" Canvas.Top="60" Width="70" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone3.png"/>
+                            <Image Name="imgSplitStone4" Canvas.Left="30" Canvas.Top="30" Width="70" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone4.png"/>
+                        </Canvas>
                         
                         <TextBlock Grid.Row="1" HorizontalAlignment="Center">
                             <Run Text="{Binding CurrentInningInfo.InningIndex, Mode=OneWay}"/>
@@ -289,22 +291,22 @@
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentInningPlayerBetRecord.BetGreenStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurrentInningPlayerBetRecord.BetBlueStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentInningPlayerBetRecord.BetPurpleStoneText, Mode=OneWay}" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Name="btnBetRed" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetRed_Click">
+            <Button Grid.Row="2" Grid.Column="0" Name="btnBetRed" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetRed_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gamblered.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="1" Name="btnBetGreen" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetGreen_Click">
+            <Button Grid.Row="2" Grid.Column="1" Name="btnBetGreen" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetGreen_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gamblegreen.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="2" Name="btnBetBlue" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetBlue_Click">
+            <Button Grid.Row="2" Grid.Column="2" Name="btnBetBlue" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetBlue_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gambleblue.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="3" Name="btnBetPurple" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetPurple_Click">
+            <Button Grid.Row="2" Grid.Column="3" Name="btnBetPurple" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetPurple_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gambleyellow.png"/>
                 </Button.Content>

@@ -222,29 +222,29 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        void Client_GetGambleStoneRoundInningCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneRound_InningInfo> e)
-        {
-            try
-            {
-                if (e.Error != null)
-                {
-                    LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。服务器返回错误。", e.Error);
-                    return;
-                }
+        //void Client_GetGambleStoneRoundInningCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneRound_InningInfo> e)
+        //{
+        //    try
+        //    {
+        //        if (e.Error != null)
+        //        {
+        //            LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。服务器返回错误。", e.Error);
+        //            return;
+        //        }
 
-                if (e.Result == null)
-                {
-                    MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
-                    return;
-                }
-                this.CurrentRoundInfo.ParentObject = e.Result.roundInfo;
-                this.CurrentInningInfo.ParentObject = e.Result.inningInfo;
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。回调处理异常。", exc);
-            }
-        }
+        //        if (e.Result == null)
+        //        {
+        //            MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
+        //            return;
+        //        }
+        //        this.CurrentRoundInfo.ParentObject = e.Result.roundInfo;
+        //        this.CurrentInningInfo.ParentObject = e.Result.inningInfo;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。回调处理异常。", exc);
+        //    }
+        //}
 
         public event Action<GambleStoneInningInfo> GambleStoneInningFinished;
         public event Action<GambleStoneRoundInfo> GambleStoneGetRoundInfoEvent;

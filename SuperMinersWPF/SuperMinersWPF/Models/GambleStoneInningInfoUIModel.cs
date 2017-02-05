@@ -33,6 +33,7 @@ namespace SuperMinersWPF.Models
             NotifyPropertyChange("RoundID");
             NotifyPropertyChange("CountDownSeconds");
             NotifyPropertyChange("CountDownSecondsText");
+            NotifyPropertyChange("BetInButtonEnable");
             NotifyPropertyChange("BetRedStone");
             NotifyPropertyChange("BetGreenStone");
             NotifyPropertyChange("BetBlueStone");
@@ -91,6 +92,14 @@ namespace SuperMinersWPF.Models
                 }
 
                 return this.CountDownSeconds + "秒后切开";
+            }
+        }
+
+        public bool BetInButtonEnable
+        {
+            get
+            {
+                return this.CountDownSeconds > 0;
             }
         }
 

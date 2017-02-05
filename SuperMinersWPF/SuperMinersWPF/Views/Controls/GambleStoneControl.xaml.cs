@@ -143,6 +143,10 @@ namespace SuperMinersWPF.Views.Controls
                         break;
                 }
 
+                if (inningInfo.InningIndex > 1)
+                {
+                    this._WinnedColorItem[inningInfo.InningIndex - 1].Source = null;
+                }
                 this._WinnedColorItem[inningInfo.InningIndex - 1].Source = bmp;
                 this.imgCurrentWinnedColor.Source = bmp;
                 storySrcStoneDisplay.Begin();

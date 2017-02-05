@@ -330,8 +330,10 @@ namespace SuperMinersServerApplication
                     _serviceToAdminHost.Close();
                 }
                 IsStarted = false;
-                LogHelper.Instance.Stop();
+
                 RaidersofLostArkController.Instance.StopService();
+                GambleStoneController.Instance.StopService();
+                LogHelper.Instance.Stop();
 
                 return true;
             }
