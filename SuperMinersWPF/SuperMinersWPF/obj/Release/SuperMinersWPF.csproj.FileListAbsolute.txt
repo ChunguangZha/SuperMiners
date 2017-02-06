@@ -261,12 +261,10 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateBuyStoneHistoryRecordControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateSellStoneHistoryRecordControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\RMBPayTypeComboBox.baml
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GamePanelControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MallControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\RMBPayTypeComboBox.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateBuyStoneHistoryRecordControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\DelegateSellStoneHistoryRecordControl.g.cs
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GamePanelControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\StackMarketControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\MallControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\RaidersoftheLostArkControl.g.cs
@@ -295,3 +293,6 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\My
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GambleStoneControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GambleStoneControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GambleStoneControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GambleStoneControl.g.cs

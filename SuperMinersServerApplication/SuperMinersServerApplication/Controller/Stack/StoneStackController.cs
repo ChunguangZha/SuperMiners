@@ -730,7 +730,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                             IsSubOrder = true,
                             BuyState = StoneDelegateBuyState.Waiting,
                             OrderNumber = OrderController.Instance.CreateOrderNumber(buyOrder.UserName, nowtime, AlipayTradeInType.StackStoneBuy),
-                            ParentOrderNumber = buyOrder.OrderNumber,
+                            ParentOrderNumber = buyOrder.IsSubOrder ? buyOrder.ParentOrderNumber : buyOrder.OrderNumber,
                             UserName = buyOrder.UserName,
                             PayType = buyOrder.PayType,
                             DelegateTime = new MyDateTime(nowtime),

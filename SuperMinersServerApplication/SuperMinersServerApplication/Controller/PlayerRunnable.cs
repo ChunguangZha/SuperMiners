@@ -694,7 +694,17 @@ namespace SuperMinersServerApplication.Controller
                 }
                 else if (buyOrder.PayType == PayType.Alipay)
                 {
-                    var alipayPayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(buyOrder.OrderNumber, "");
+                    AlipayRechargeRecord alipayPayRecord = null;
+
+                    if (buyOrder.IsSubOrder && !string.IsNullOrEmpty(buyOrder.ParentOrderNumber))
+                    {
+                        alipayPayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(buyOrder.ParentOrderNumber, "");
+                    }
+                    else
+                    {
+                        alipayPayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(buyOrder.OrderNumber, "");
+                    }
+
                     if (alipayPayRecord != null && alipayPayRecord.value_rmb >= allNeedRMB)
                     {
                         //确实已充值，将其退回到灵币账户，没有冻结项。

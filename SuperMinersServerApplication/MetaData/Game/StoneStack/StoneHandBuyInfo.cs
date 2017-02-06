@@ -61,7 +61,7 @@ namespace MetaData.Game.StoneStack
         public bool IsSubOrder = false;
 
         /// <summary>
-        /// 当为子订单是的父订单号
+        /// 当为子订单时的根订单号，
         /// </summary>
         [DataMember]
         public string ParentOrderNumber = null;
