@@ -552,6 +552,8 @@ namespace SuperMinersServerApplication.Controller.Stack
                     return result;
                 }
 
+                canceledSellOrder.SellState = StoneDelegateSellState.Cancel;
+                canceledSellOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 DBProvider.StoneStackDBProvider.CancelSellStoneOrder(canceledSellOrder, myTrans);
 
                 result.OperResultCode = OperResult.RESULTCODE_TRUE;
@@ -626,6 +628,8 @@ namespace SuperMinersServerApplication.Controller.Stack
                     return result;
                 }
 
+                canceledBuyOrder.BuyState = StoneDelegateBuyState.Cancel;
+                canceledBuyOrder.FinishedTime = new MyDateTime(DateTime.Now);
                 DBProvider.StoneStackDBProvider.CancelBuyStoneOrder(canceledBuyOrder, myTrans);
                 result.OperResultCode = OperResult.RESULTCODE_TRUE;
             }
@@ -634,6 +638,8 @@ namespace SuperMinersServerApplication.Controller.Stack
                 canceledBuyOrder = this._listTempAlipayBuyOrders.FirstOrDefault(s => s.OrderNumber == orderNumber);
                 if (canceledBuyOrder != null)
                 {
+                    canceledBuyOrder.BuyState = StoneDelegateBuyState.Cancel;
+                    canceledBuyOrder.FinishedTime = new MyDateTime(DateTime.Now);
                     DBProvider.StoneStackDBProvider.CancelBuyStoneOrder(canceledBuyOrder, myTrans);
                     this._listTempAlipayBuyOrders.Remove(canceledBuyOrder);
                     result.OperResultCode = OperResult.RESULTCODE_TRUE;

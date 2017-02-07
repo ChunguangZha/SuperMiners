@@ -323,9 +323,11 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string cmdTextA = "delete FROM superminers.notfinishedstonedelegatesellorderinfo where `OrderNumber` = @OrderNumber";
+                string cmdTextA = "update superminers.notfinishedstonedelegatesellorderinfo set `SellState`=@SellState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
                 mycmd.CommandText = cmdTextA;
+                mycmd.Parameters.AddWithValue("@SellState", (int)sellOrder.SellState);
+                mycmd.Parameters.AddWithValue("@FinishedTime", sellOrder.FinishedTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@OrderNumber", sellOrder.OrderNumber);
 
                 mycmd.ExecuteNonQuery();
@@ -614,9 +616,11 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string cmdTextA = "delete FROM superminers.notfinishedstonedelegatebuyorderinfo where `OrderNumber` = @OrderNumber";
+                string cmdTextA = "update superminers.notfinishedstonedelegatebuyorderinfo set `BuyState`=@BuyState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
                 mycmd.CommandText = cmdTextA;
+                mycmd.Parameters.AddWithValue("@BuyState", (int)buyOrder.BuyState);
+                mycmd.Parameters.AddWithValue("@FinishedTime", buyOrder.FinishedTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@OrderNumber", buyOrder.OrderNumber);
 
                 mycmd.ExecuteNonQuery();

@@ -24,7 +24,7 @@
             <TextBlock Text="人民币" Margin="5"/>
         </StackPanel>
         <TextBlock Grid.Row="3" Text="修改后灵币：" Margin="5" HorizontalAlignment="Right"/>
-        <MyControl:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="txtRMBChanged" Minimum="0" Maximum="200000" IsReadOnly="True" Margin="5"/>
+        <MyControl:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="txtRMBChanged" Minimum="0" Maximum="200000" IsReadOnly="True" Margin="5" DecimalPlaces="2"/>
         <Button Grid.Row="4" Grid.ColumnSpan="2" Name="btnOK" Content="确定" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5,5,120,5" Click="btnOK_Click"/>
         <Button Grid.Row="4" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="5" Click="btnCancel_Click"/>
     </Grid>
