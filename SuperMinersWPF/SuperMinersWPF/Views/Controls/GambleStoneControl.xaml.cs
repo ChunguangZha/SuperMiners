@@ -94,10 +94,13 @@ namespace SuperMinersWPF.Views.Controls
                         bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
                         break;
                     default:
+                        bmp = new BitmapImage();
                         break;
                 }
                 this._WinnedColorItem[i].Source = bmp;
             }
+
+            GC.Collect();
         }
 
         private Storyboard storySrcStoneDisplay = new Storyboard();
@@ -140,6 +143,7 @@ namespace SuperMinersWPF.Views.Controls
                         bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
                         break;
                     default:
+                        bmp = new BitmapImage();
                         break;
                 }
 
