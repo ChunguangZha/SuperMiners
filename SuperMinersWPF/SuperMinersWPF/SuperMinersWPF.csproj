@@ -343,6 +343,9 @@
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
     <Compile Include="Models\UserUIModel.cs" />
     <Compile Include="Models\XunLingMineStateInfoUIModel.cs" />
+    <Compile Include="MyControl\MyAutoScrollTextBlock.xaml.cs">
+      <DependentUpon>MyAutoScrollTextBlock.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MyControl\NumericTextBox.cs" />
     <Compile Include="MyControl\RMBPayTypeComboBox.xaml.cs">
       <DependentUpon>RMBPayTypeComboBox.xaml</DependentUpon>
@@ -573,6 +576,10 @@
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
+    <Page Include="MyControl\MyAutoScrollTextBlock.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyControl\RMBPayTypeComboBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

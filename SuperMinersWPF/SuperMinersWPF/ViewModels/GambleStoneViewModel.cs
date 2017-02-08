@@ -97,7 +97,7 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncBetIn(GambleStoneItemColor color, int stoneCount, int gravelCount)
         {
-            App.BusyToken.ShowBusyWindow("正在下注...");
+            //App.BusyToken.ShowBusyWindow("正在下注...");
             GlobalData.Client.GambleStoneBetIn(color, stoneCount, gravelCount, null);
         }
 
@@ -169,7 +169,7 @@ namespace SuperMinersWPF.ViewModels
 
                 if (GambleStoneInningFinished != null)
                 {
-                    GambleStoneInningFinished(inningInfo);
+                    GambleStoneInningFinished(inningInfo, maxWinner);
                 }
 
                 if (!string.IsNullOrEmpty(this.CurrentInningPlayerBetRecord.InningID))
@@ -178,10 +178,10 @@ namespace SuperMinersWPF.ViewModels
                     App.UserVMObject.AsyncGetPlayerInfo();
                 }
 
-                if (maxWinner != null && !string.IsNullOrEmpty(maxWinner.UserName))
-                {
-                    MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
-                }
+                //if (maxWinner != null && !string.IsNullOrEmpty(maxWinner.UserName))
+                //{
+                //    MyMessageBox.ShowInfo(maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石");
+                //}
             }
             catch (Exception exc)
             {
@@ -194,7 +194,7 @@ namespace SuperMinersWPF.ViewModels
         {
             try
             {
-                App.BusyToken.CloseBusyWindow();
+                //App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
                     MyMessageBox.ShowInfo("赌石娱乐下注失败。服务器返回错误。");
@@ -208,7 +208,7 @@ namespace SuperMinersWPF.ViewModels
                 }
                 if (e.Result.ResultCode != OperResult.RESULTCODE_TRUE)
                 {
-                    MyMessageBox.ShowInfo("赌石娱乐下游失败。原因为：" + OperResult.GetMsg(e.Result.ResultCode));
+                    //MyMessageBox.ShowInfo("赌石娱乐下游失败。原因为：" + OperResult.GetMsg(e.Result.ResultCode));
                     return;
                 }
 
@@ -246,7 +246,7 @@ namespace SuperMinersWPF.ViewModels
         //    }
         //}
 
-        public event Action<GambleStoneInningInfo> GambleStoneInningFinished;
+        public event Action<GambleStoneInningInfo, GambleStonePlayerBetRecord> GambleStoneInningFinished;
         public event Action<GambleStoneRoundInfo> GambleStoneGetRoundInfoEvent;
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,11 +23,15 @@ namespace SuperMinersWPF.Views.Controls
     /// </summary>
     public partial class GambleStoneControl : UserControl
     {
+        private System.Threading.SynchronizationContext _syn;
+
         private Image[] _WinnedColorItem = new Image[64];
 
         public GambleStoneControl()
         {
             InitializeComponent();
+
+            _syn = SynchronizationContext.Current;
             this.DataContext = App.GambleStoneVMObject;
 
         }
@@ -76,31 +81,34 @@ namespace SuperMinersWPF.Views.Controls
 
         void GambleStoneVMObject_GambleStoneGetRoundInfoEvent(GambleStoneRoundInfo obj)
         {
-            for (int i = 0; i < obj.WinColorItems.Length; i++)
+            _syn.Post(o =>
             {
-                BitmapImage bmp = null;
-                switch ((GambleStoneItemColor)obj.WinColorItems[i])
+                for (int i = 0; i < obj.WinColorItems.Length; i++)
                 {
-                    case GambleStoneItemColor.Red:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gamblered.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Green:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gamblegreen.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Blue:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gambleblue.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Purple:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
-                        break;
-                    default:
-                        bmp = new BitmapImage();
-                        break;
+                    BitmapImage bmp = null;
+                    switch ((GambleStoneItemColor)obj.WinColorItems[i])
+                    {
+                        case GambleStoneItemColor.Red:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gamblered.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Green:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gamblegreen.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Blue:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gambleblue.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Purple:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
+                            break;
+                        default:
+                            bmp = new BitmapImage();
+                            break;
+                    }
+                    this._WinnedColorItem[i].Source = bmp;
                 }
-                this._WinnedColorItem[i].Source = bmp;
-            }
 
-            GC.Collect();
+                GC.Collect();
+            }, null);
         }
 
         private Storyboard storySrcStoneDisplay = new Storyboard();
@@ -112,7 +120,7 @@ namespace SuperMinersWPF.Views.Controls
             DoubleAnimation myDoubleAnimation = new DoubleAnimation();
             myDoubleAnimation.From = 1;
             myDoubleAnimation.To = 0;
-            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(0.5));
+            myDoubleAnimation.Duration = new Duration(TimeSpan.FromSeconds(2));
             storySrcStoneDisplay.Children.Add(myDoubleAnimation);
             Storyboard.SetTarget(myDoubleAnimation, this.imgSrcStone);
             Storyboard.SetTargetProperty(myDoubleAnimation, new PropertyPath(Image.OpacityProperty));
@@ -123,38 +131,46 @@ namespace SuperMinersWPF.Views.Controls
             this.imgCurrentWinnedColor.Source = null;
         }
 
-        void GambleStoneVMObject_GambleStoneInningFinished(GambleStoneInningInfo inningInfo)
+        void GambleStoneVMObject_GambleStoneInningFinished(GambleStoneInningInfo inningInfo, GambleStonePlayerBetRecord maxWinner)
         {
-            if (inningInfo != null && inningInfo.InningIndex > 0 && inningInfo.InningIndex <= 64)
+            _syn.Post(o =>
             {
-                BitmapImage bmp = null;
-                switch (inningInfo.WinnedColor)
+                if (maxWinner != null || !string.IsNullOrEmpty(maxWinner.UserName))
                 {
-                    case GambleStoneItemColor.Red:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gamblered.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Green:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gamblegreen.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Blue:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gambleblue.png", UriKind.Relative));
-                        break;
-                    case GambleStoneItemColor.Purple:
-                        bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
-                        break;
-                    default:
-                        bmp = new BitmapImage();
-                        break;
+                    this.txtWinnerNotice.Text = maxWinner.UserName + " 赢得 " + maxWinner.WinnedStone + " 矿石";
                 }
 
-                if (inningInfo.InningIndex > 1)
+                if (inningInfo != null && inningInfo.InningIndex > 0 && inningInfo.InningIndex <= 64)
                 {
-                    this._WinnedColorItem[inningInfo.InningIndex - 1].Source = null;
+                    BitmapImage bmp = null;
+                    switch (inningInfo.WinnedColor)
+                    {
+                        case GambleStoneItemColor.Red:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gamblered.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Green:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gamblegreen.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Blue:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gambleblue.png", UriKind.Relative));
+                            break;
+                        case GambleStoneItemColor.Purple:
+                            bmp = new BitmapImage(new Uri(@"../../Resources/gambleyellow.png", UriKind.Relative));
+                            break;
+                        default:
+                            bmp = new BitmapImage();
+                            break;
+                    }
+
+                    if (inningInfo.InningIndex > 1)
+                    {
+                        this._WinnedColorItem[inningInfo.InningIndex - 1].Source = null;
+                    }
+                    this._WinnedColorItem[inningInfo.InningIndex - 1].Source = bmp;
+                    this.imgCurrentWinnedColor.Source = bmp;
+                    storySrcStoneDisplay.Begin();
                 }
-                this._WinnedColorItem[inningInfo.InningIndex - 1].Source = bmp;
-                this.imgCurrentWinnedColor.Source = bmp;
-                storySrcStoneDisplay.Begin();
-            }
+            }, null);
         }
 
         private void btnBetRed_Click(object sender, RoutedEventArgs e)

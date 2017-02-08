@@ -49,6 +49,14 @@ namespace MetaData.Game.GambleStone
         [DataMember]
         public int BetPurpleStone;
 
+        public int AllBetInStone
+        {
+            get
+            {
+                return BetRedStone + BetGreenStone + BetBlueStone + BetPurpleStone;
+            }
+        }
+
         [DataMember]
         public GambleStoneItemColor WinnedColor;
 
@@ -57,6 +65,14 @@ namespace MetaData.Game.GambleStone
 
         [DataMember]
         public int WinnedOutStone;
+
+        public int StoneProfit
+        {
+            get
+            {
+                return AllBetInStone - WinnedOutStone;
+            }
+        }
 
         public override string ToString()
         {
@@ -176,7 +192,7 @@ namespace MetaData.Game.GambleStone
         [DataMember]
         public int AllWinnedOutStone;
     }
-
+    
     public enum GambleStoneItemColor : byte
     {
         //从1开始，0为表示无效值
