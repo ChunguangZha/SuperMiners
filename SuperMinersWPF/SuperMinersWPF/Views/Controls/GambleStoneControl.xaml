@@ -27,7 +27,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="赌石娱乐" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
+            <TextBlock Text="疯狂猜石" FontSize="26" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"/>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>

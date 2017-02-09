@@ -116,7 +116,7 @@ namespace SuperMinersWPF.ViewModels
             {
                 if (e.Error != null)
                 {
-                    LogHelper.Instance.AddErrorLog("获取赌石娱乐Inning信息，服务器返回失败。", e.Error);
+                    LogHelper.Instance.AddErrorLog("获取疯狂猜石Inning信息，服务器返回失败。", e.Error);
                     this.CurrentInningInfo.ParentObject = null;
                     return;
                 }
@@ -129,8 +129,8 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
-                LogHelper.Instance.AddErrorLog("获取赌石娱乐Inning信息失败。", exc);
+                MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
+                LogHelper.Instance.AddErrorLog("获取疯狂猜石Inning信息失败。", exc);
             }
         }
 
@@ -141,7 +141,7 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
-                    LogHelper.Instance.AddErrorLog("获取赌石娱乐Round信息，服务器返回失败。", e.Error);
+                    LogHelper.Instance.AddErrorLog("获取疯狂猜石Round信息，服务器返回失败。", e.Error);
                     this.CurrentRoundInfo.ParentObject = null;
                     return;
                 }
@@ -154,8 +154,8 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
-                LogHelper.Instance.AddErrorLog("获取赌石Round信息失败。", exc);
+                MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
+                LogHelper.Instance.AddErrorLog("获取疯狂猜石Round信息失败。", exc);
             }
         }
 
@@ -185,8 +185,8 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("赌石开奖失败。");
-                LogHelper.Instance.AddErrorLog("赌石开奖失败。", exc);
+                MyMessageBox.ShowInfo("疯狂猜石开奖失败。");
+                LogHelper.Instance.AddErrorLog("疯狂猜石开奖失败。", exc);
             }
         }
 
@@ -197,13 +197,13 @@ namespace SuperMinersWPF.ViewModels
                 //App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
-                    MyMessageBox.ShowInfo("赌石娱乐下注失败。服务器返回错误。");
-                    LogHelper.Instance.AddErrorLog("赌石娱乐下注失败。服务器返回错误。", e.Error);
+                    MyMessageBox.ShowInfo("疯狂猜石下注失败。服务器返回错误。");
+                    LogHelper.Instance.AddErrorLog("疯狂猜石下注失败。服务器返回错误。", e.Error);
                     return;
                 }
                 if (e.Result == null)
                 {
-                    MyMessageBox.ShowInfo("赌石娱乐下注失败。");
+                    MyMessageBox.ShowInfo("疯狂猜石下注失败。");
                     return;
                 }
                 if (e.Result.ResultCode != OperResult.RESULTCODE_TRUE)
@@ -217,8 +217,8 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("赌石娱乐下注失败。回调处理异常");
-                LogHelper.Instance.AddErrorLog("赌石娱乐下注失败。回调处理异常。", exc);
+                MyMessageBox.ShowInfo("疯狂猜石下注失败。回调处理异常");
+                LogHelper.Instance.AddErrorLog("疯狂猜石下注失败。回调处理异常。", exc);
             }
         }
 
@@ -228,13 +228,13 @@ namespace SuperMinersWPF.ViewModels
         //    {
         //        if (e.Error != null)
         //        {
-        //            LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。服务器返回错误。", e.Error);
+        //            LogHelper.Instance.AddErrorLog("获取疯狂猜石信息。服务器返回错误。", e.Error);
         //            return;
         //        }
 
         //        if (e.Result == null)
         //        {
-        //            MyMessageBox.ShowInfo("获取赌石娱乐信息失败。");
+        //            MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
         //            return;
         //        }
         //        this.CurrentRoundInfo.ParentObject = e.Result.roundInfo;
@@ -242,7 +242,7 @@ namespace SuperMinersWPF.ViewModels
         //    }
         //    catch (Exception exc)
         //    {
-        //        LogHelper.Instance.AddErrorLog("获取赌石娱乐信息。回调处理异常。", exc);
+        //        LogHelper.Instance.AddErrorLog("获取疯狂猜石信息。回调处理异常。", exc);
         //    }
         //}
 

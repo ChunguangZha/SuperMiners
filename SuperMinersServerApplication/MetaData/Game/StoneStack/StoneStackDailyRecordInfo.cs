@@ -24,11 +24,22 @@ namespace MetaData.Game.StoneStack
             }
             set
             {
-                this._openPrice = value;
-                if (value != 0)
+                if (value < SystemConfig.GameConfig.StackMarketMinPrice)
                 {
-                    this.LimitUpPrice = Math.Round(value * 1.1m, 2);
-                    this.LimitDownPrice = Math.Round(value * 0.9m, 2);
+                    this._openPrice = SystemConfig.GameConfig.StackMarketMinPrice;
+                }
+                else
+                {
+                    this._openPrice = value;
+                }
+                if (this._openPrice != 0)
+                {
+                    this.LimitUpPrice = Math.Round(this._openPrice * 1.1m, 2);
+                    this.LimitDownPrice = Math.Round(this._openPrice * 0.9m, 2);
+                    if (this.LimitDownPrice < SystemConfig.GameConfig.StackMarketMinPrice)
+                    {
+                        this.LimitDownPrice = SystemConfig.GameConfig.StackMarketMinPrice;
+                    }
                 }
             }
         }

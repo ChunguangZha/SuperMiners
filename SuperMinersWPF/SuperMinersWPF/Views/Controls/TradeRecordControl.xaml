@@ -19,9 +19,9 @@
                 <ComboBoxItem Content="矿工购买记录"/>
                 <ComboBoxItem Content="矿山购买记录"/>
                 <ComboBoxItem Content="灵币提现记录"/>
-                <ComboBoxItem Content="未完成的矿石订单"/>
+                <!--<ComboBoxItem Content="未完成的矿石订单"/>
                 <ComboBoxItem Content="已完成的矿石买入订单"/>
-                <ComboBoxItem Content="已完成的矿石卖出订单"/>
+                <ComboBoxItem Content="已完成的矿石卖出订单"/>-->
                 <ComboBoxItem Content="委托买入矿石订单记录"/>
                 <ComboBoxItem Content="委托卖出矿石订单记录"/>
             </ComboBox>

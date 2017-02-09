@@ -37,7 +37,7 @@
         <TextBlock Grid.Row="3" Grid.Column="2" Text="手矿石" Margin="5"/>
         <TextBlock Grid.Row="4" Text="挂单价" HorizontalAlignment="Right" Margin="5"/>
         <TextBox Grid.Row="4" Grid.Column="1" x:Name="numPrice" IsReadOnly="True" Foreground="Green" Margin="5"/>
-        <Slider Grid.Row="5" Grid.Column="1" Name="sliderPrice" Value="100" Minimum="90" Maximum="110" SmallChange="0.01" Margin="5" ValueChanged="sliderPrice_ValueChanged" LargeChange="0.01" />
+        <Slider Grid.Row="5" Grid.Column="1" Name="sliderPrice" Value="100" Minimum="100" Maximum="110" SmallChange="0.01" Margin="5" ValueChanged="sliderPrice_ValueChanged" LargeChange="0.01" />
         <TextBlock Grid.Row="4" Grid.Column="2" Text="灵币/手矿石" Margin="5"/>
         <TextBlock Grid.Row="6" Text="手续费" HorizontalAlignment="Right" Margin="5"/>
         <TextBox Grid.Row="6" Grid.Column="1" Name="txtExpense" IsReadOnly="True" Foreground="Green" Margin="5"/>
