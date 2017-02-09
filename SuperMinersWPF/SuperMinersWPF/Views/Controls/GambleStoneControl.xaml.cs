@@ -197,7 +197,7 @@ namespace SuperMinersWPF.Views.Controls
         {
             int stoneCount = 0;
             int gravelCount = 0;
-            //优先使用碎石
+            //优先使用碎片
             if (GlobalData.CurrentUser.Gravel >= GlobalData.GameConfig.GambleStone_OneBetStoneCount)
             {
                 gravelCount = GlobalData.GameConfig.GambleStone_OneBetStoneCount;

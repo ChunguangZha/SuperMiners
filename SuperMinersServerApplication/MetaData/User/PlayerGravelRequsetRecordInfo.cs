@@ -61,7 +61,7 @@ namespace MetaData.User
         public int Gravel;
 
         /// <summary>
-        /// 如果该值等于null，或时间超过玩家注册7天以后，玩家不允许申领碎石。
+        /// 如果该值等于null，或时间超过玩家注册7天以后，玩家不允许申领碎片。
         /// </summary>
         [DataMember]
         public MyDateTime FirstGetGravelTime;
@@ -76,7 +76,7 @@ namespace MetaData.User
     public enum PlayerGravelState
     {
         /// <summary>
-        /// 注册7天内从未申领过碎石，或贡献值大于50的。
+        /// 注册7天内从未申领过碎片，或贡献值大于50的。
         /// </summary>
         Disable,
         Requestable,

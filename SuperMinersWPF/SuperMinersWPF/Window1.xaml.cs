@@ -82,6 +82,7 @@ namespace SuperMinersWPF
             App.GameRaiderofLostArkVMObject.AsyncGetCurrentRaiderRoundInfo();
             App.GambleStoneVMObject.Init();
 
+            this.controlMySuperMiners.Init();
             AddEventHandlers();
         }
 
@@ -391,7 +392,7 @@ namespace SuperMinersWPF
         {
             if (GlobalData.CurrentUser.ParentObject.GravelInfo == null)
             {
-                MyMessageBox.ShowInfo("您无法申请碎石");
+                MyMessageBox.ShowInfo("您无法申请碎片");
                 return;
             }
 

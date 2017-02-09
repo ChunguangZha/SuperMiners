@@ -24,5 +24,10 @@ namespace SuperMinersWPF.Views
         {
             InitializeComponent();
         }
+
+        public void Init()
+        {
+            this.controlMySetting.Init();
+        }
     }
 }

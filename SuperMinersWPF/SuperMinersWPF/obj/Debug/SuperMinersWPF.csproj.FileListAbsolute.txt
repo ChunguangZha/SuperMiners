@@ -275,10 +275,14 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\KLi
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\MyRaiderBetRecordsWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\KLineControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\MyRaiderBetRecordsWindow.baml
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\GambleStoneControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\GambleStoneControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\GambleStoneControl.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\GambleStoneControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoScrollTextBlock.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoScrollTextBlock.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoScrollTextBlock.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoScrollTextBlock.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\MySettingControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\MySettingControl.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache

@@ -174,11 +174,11 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Result == OperResult.RESULTCODE_TRUE)
                 {
-                    MyMessageBox.ShowInfo("碎石领取成功");
+                    MyMessageBox.ShowInfo("碎片领取成功");
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("碎石领取失败，原因为：" + OperResult.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("碎片领取失败，原因为：" + OperResult.GetMsg(e.Result));
                 }
                 this.AsyncGetPlayerInfo();
             }
@@ -195,11 +195,11 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Result == OperResult.RESULTCODE_TRUE)
                 {
-                    MyMessageBox.ShowInfo("碎石申请成功");
+                    MyMessageBox.ShowInfo("碎片申请成功");
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("碎石申请失败，原因为：" + OperResult.GetMsg(e.Result));
+                    MyMessageBox.ShowInfo("碎片申请失败，原因为：" + OperResult.GetMsg(e.Result));
                 }
                 this.AsyncGetPlayerInfo();
             }

@@ -229,3 +229,4 @@ F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSys
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\DeletedPlayerInfoControl.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\DeletedPlayerInfoControl.g.cs
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache

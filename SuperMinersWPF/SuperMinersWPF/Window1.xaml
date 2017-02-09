@@ -153,7 +153,7 @@
                 <Button Grid.Row="7" Grid.Column="2" x:Name="btnStonesSell" Content="挂单出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnStonesSell_Click"/>
                 <TextBlock Grid.Row="8" Visibility="Collapsed" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="矿石出售券"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="8" Grid.Column="1" Visibility="Collapsed" Text="{Binding StoneSellQuan, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <TextBlock Grid.Row="8" Grid.Column="0" Text="碎石" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
+                <TextBlock Grid.Row="8" Grid.Column="0" Text="碎片" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
                 <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="8" Grid.Column="2" Name="btnRequestGravel" Content="{Binding GravelButtonContent}" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
                 <TextBlock Grid.Row="9" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
@@ -163,16 +163,15 @@
                 <TextBox Grid.Row="11" Grid.Column="1" Text="{Binding TempOutputStonesString, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="11" Grid.Column="2" x:Name="btnGatherStones" Content="收取" Style="{StaticResource UserInfoButtonStyle}" Click="btnGatherStones_Click"/>
 
-                <TextBlock Grid.Row="12" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="{Binding Strings.Dope, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <TextBox Grid.Row="12" Grid.Column="1" Text="0天 00:00:00" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="12" Grid.Column="2" x:Name="btnBuyDope" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnBuyDope_Click"/>
-                <Button Grid.Row="13" Grid.ColumnSpan="3" x:Name="btnUseDope" Content="启用" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnUseDope_Click"/>
+                <TextBlock Visibility="Collapsed" Grid.Row="12" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="{Binding Strings.Dope, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
+                <TextBox Visibility="Collapsed" Grid.Row="12" Grid.Column="1" Text="0天 00:00:00" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <Button Visibility="Collapsed" Grid.Row="12" Grid.Column="2" x:Name="btnBuyDope" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnBuyDope_Click"/>
+                <Button Visibility="Collapsed" Grid.Row="13" Grid.ColumnSpan="3" x:Name="btnUseDope" Content="启用" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnUseDope_Click"/>
 
-                <TextBlock Grid.Row="14" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="有效时间"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <StackPanel Grid.Row="14" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2">
+                <TextBlock Visibility="Collapsed" Grid.Row="14" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="有效时间"/><Run Text=" "/><Run Text=""/></TextBlock>
+                <StackPanel Visibility="Collapsed" Grid.Row="14" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBox Text="0 天 00:00:00" FontSize="28" Style="{StaticResource UserInfoTextBoxStyle}" Width="Auto"/>
                 </StackPanel>
-                <Button Grid.Row="16" Grid.ColumnSpan="3" x:Name="btnSetting" Content="设置" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnSetting_Click"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="1" x:Name="panelNotify" Background="{StaticResource NotifyPanelBackground}">

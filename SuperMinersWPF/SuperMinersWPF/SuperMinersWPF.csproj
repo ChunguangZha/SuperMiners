@@ -429,6 +429,9 @@
     <Compile Include="Views\Controls\KLineRealTimeControl.xaml.cs">
       <DependentUpon>KLineRealTimeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\MySettingControl.xaml.cs">
+      <DependentUpon>MySettingControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Controls\StackMarketControl.xaml.cs">
       <DependentUpon>StackMarketControl.xaml</DependentUpon>
     </Compile>
@@ -649,6 +652,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\KLineRealTimeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\MySettingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

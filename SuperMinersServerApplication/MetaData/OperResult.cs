@@ -140,17 +140,17 @@ namespace MetaData
         public const int RESULTCODE_BUYMINE_MINEISFULL = 507;
 
         /// <summary>
-        /// 申请碎石失败，当天已经申请过。
+        /// 申请碎片失败，当天已经申请过。
         /// </summary>
         public const int RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED = 508;
 
         /// <summary>
-        /// 领取碎石失败，没有可领取的碎石
+        /// 领取碎片失败，没有可领取的碎片
         /// </summary>
         public const int RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET = 509;
 
         /// <summary>
-        /// 此玩家不能申领碎石
+        /// 此玩家不能申领碎片
         /// </summary>
         public const int RESULTCODE_GRAVEL_CANOTREQUEST = 510;
 
@@ -297,9 +297,9 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_ROUNDFINISHED, "本轮游戏已结束，请参加下一轮");
             _resultCode_Msg.Add(RESULTCODE_GAME_RAIDER_WAITINGSECONDPLAYERJOIN_TOSTART, "正在等待第二位玩家加入才能开始");
             _resultCode_Msg.Add(RESULTCODE_BUYMINE_MINEISFULL, "已无矿脉储量，无法继续勘探");
-            _resultCode_Msg.Add(RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED, "今天已经申请过碎石");
-            _resultCode_Msg.Add(RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET, "没有可领取的碎石");
-            _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎石");
+            _resultCode_Msg.Add(RESULTCODE_GRAVEL_REQUESTFAILED_TODAYREQUIED, "今天已经申请过碎片");
+            _resultCode_Msg.Add(RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET, "没有可领取的碎片");
+            _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎片");
             _resultCode_Msg.Add(RESULTCODE_GAME_GAMBLE_INNINGFINISHED, "此局已经结束，请参加下一局");
         }
 

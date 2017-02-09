@@ -16,7 +16,7 @@
             </TabItem>
             <TabItem Header="设置" Width="75" FlowDirection="LeftToRight">
                 <Grid Background="#FFE5E5E5">
-                    <TextBlock Text="该功能即将开放，敬请期待..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <tradeControl:MySettingControl x:Name="controlMySetting"/>
                 </Grid>
             </TabItem>
             <TabItem Header="系统消息" Width="75" FlowDirection="LeftToRight">

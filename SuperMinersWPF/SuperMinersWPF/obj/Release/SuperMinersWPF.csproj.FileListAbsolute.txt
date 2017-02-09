@@ -297,3 +297,5 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\G
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\GambleStoneControl.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.g.cs

@@ -85,7 +85,7 @@ namespace SuperMinersWPF.Views.Controls
                     return;
                 }
 
-                _needRendAll = true;
+                //_needRendAll = true;
                 if (this._listTodayMinuteTradeRecords.Count == 0)
                 {
                     this._listTodayMinuteTradeRecords.Add(newItem);
@@ -199,7 +199,9 @@ namespace SuperMinersWPF.Views.Controls
                 var item = _listTodayMinuteTradeRecords[i];
                 if (item.Day != null)
                 {
-                    polyLine.Points.Add(ConvertStoneStackDailyRecordInfoToPoint(item));
+                    Point pt = ConvertStoneStackDailyRecordInfoToPoint(item);
+                    Console.WriteLine(i.ToString() + " pt: " + pt.X + ": " + pt.Y);
+                    polyLine.Points.Add(pt);
                 }
             }
 
@@ -209,11 +211,11 @@ namespace SuperMinersWPF.Views.Controls
         private Point ConvertStoneStackDailyRecordInfoToPoint(StoneStackDailyRecordInfo item)
         {
             int Hours = item.Day.Hour - GlobalData.GameConfig.StackMarketMorningOpenTime;
-            if (item.Day.Hour > GlobalData.GameConfig.StackMarketNightOpenTime)
+            if (item.Day.Hour >= GlobalData.GameConfig.StackMarketNightOpenTime)
             {
                 Hours -= 2;
             }
-            else if (item.Day.Hour > GlobalData.GameConfig.StackMarketAfternoonOpenTime)
+            else if (item.Day.Hour >= GlobalData.GameConfig.StackMarketAfternoonOpenTime)
             {
                 Hours -= 1;
             }
@@ -221,7 +223,8 @@ namespace SuperMinersWPF.Views.Controls
             double pointX = Minutes * xOffsetUnit;
             double Value = (double)(item.ClosePrice - item.OpenPrice);
 
-            return new Point(pointX, startY - Value * yOffsetUnit);
+            Point pt = new Point(pointX, startY - Value * yOffsetUnit);
+            return pt;
         }
 
         private void DrawBaseLine()
