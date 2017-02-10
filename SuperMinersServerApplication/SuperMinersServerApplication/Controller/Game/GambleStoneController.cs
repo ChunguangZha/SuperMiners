@@ -35,12 +35,15 @@ namespace SuperMinersServerApplication.Controller.Game
         #endregion
 
         /// <summary>
-        /// 总累计赢利矿石
+        /// 设定阶段性总赢亏目标
         /// </summary>
         public static int StageSumWinnedStoneCountGoal = 0;
         public static int StageSumLosedStoneCountGoal = 0;
+        
+        public static readonly int WaitBetInTimeSeconds = 40;
+        public static readonly int ReadyTimeSeconds = 5;
+        public static readonly int OpenPriceTimeSeconds = 5;
 
-        private int OpenWinTimeSeconds = 40;
         private Thread _thrGamble = null;
         private bool isListening = false;
         private bool isRunning = false;
@@ -135,17 +138,14 @@ namespace SuperMinersServerApplication.Controller.Game
                     }
 
                     bool isFinished = this.CurrentInningRunner.CountDownDecrease();
-                    if (isFinished)
+                    if (this.CurrentInningRunner.InningInfo.State == GambleStoneInningStatusType.Finished)
                     {
-                        int result = this.CurrentInningRunner.SaveInningInfoToDB();
-
                         if (!this.isRunning)
                         {
                             break;
                         }
 
                         //暂停5秒，让客户端显示开奖效果。
-                        Thread.Sleep(5000);
                         if (this.RoundInfo.FinishedInningCount >= GlobalConfig.GameConfig.GambleStone_Round_InningCount)
                         {
                             this.RoundInfo = this.CreateNewRound(this.RoundInfo);
@@ -228,7 +228,8 @@ namespace SuperMinersServerApplication.Controller.Game
                 ID = Guid.NewGuid().ToString(),
                 InningIndex = this.RoundInfo.FinishedInningCount + 1,
                 RoundID = this.RoundInfo.ID,
-                CountDownSeconds = OpenWinTimeSeconds,
+                State = GambleStoneInningStatusType.Readying,
+                CountDownSeconds = ReadyTimeSeconds,
             };
             this.CurrentInningRunner = new GambleStoneInningRunner(this.RoundInfo, inning, this.DailyScheme, this.ReferBetInInning);
             this.CurrentInningRunner.GambleStoneInningWinnedNotifyAllClient += CurrentInningRunner_GambleStoneInningWinnedNotifyAllClient;
@@ -385,8 +386,23 @@ namespace SuperMinersServerApplication.Controller.Game
             this._inningInfo.CountDownSeconds--;
             if (this._inningInfo.CountDownSeconds == 0)
             {
-                FinishInning();
-                return true;
+                if (this._inningInfo.State == GambleStoneInningStatusType.Readying)
+                {
+                    this._inningInfo.State = GambleStoneInningStatusType.BetInWaiting;
+                    this._inningInfo.CountDownSeconds = GambleStoneController.WaitBetInTimeSeconds;
+                }
+                else if (this._inningInfo.State == GambleStoneInningStatusType.BetInWaiting)
+                {
+                    this._inningInfo.State = GambleStoneInningStatusType.Opening;
+                    this._inningInfo.CountDownSeconds = GambleStoneController.OpenPriceTimeSeconds;
+                    FinishInning();
+                    SaveInningInfoToDB();
+                }
+                else if (this._inningInfo.State == GambleStoneInningStatusType.Opening)
+                {
+                    this._inningInfo.State = GambleStoneInningStatusType.Finished;
+                    return true;
+                }
             }
 
             return false;
@@ -470,32 +486,40 @@ namespace SuperMinersServerApplication.Controller.Game
             listOutput.Add(new Tuple<int, GambleStoneItemColor>(blueOutput, GambleStoneItemColor.Blue));
             listOutput.Add(new Tuple<int, GambleStoneItemColor>(purpleOutput, GambleStoneItemColor.Purple));
 
-            Tuple<int, GambleStoneItemColor> maxOutputItem = null;
-            int maxOutputValue = -1;
-            foreach (var item in listOutput)
+            if (redOutput + greenOutput + blueOutput + purpleOutput == 0)
             {
-                if (item.Item1 > maxOutputValue)
-                {
-                    maxOutputItem = item;
-                }
+                //没人下注时，按1倍随机开奖
+                extraFactorTimes = 1;
             }
-
-            switch (maxOutputItem.Item2)
+            else
             {
-                case GambleStoneItemColor.Red:
-                    randomRed *= extraFactorTimes;
-                    break;
-                case GambleStoneItemColor.Green:
-                    randomGreen *= extraFactorTimes;
-                    break;
-                case GambleStoneItemColor.Blue:
-                    randomBlue *= extraFactorTimes;
-                    break;
-                case GambleStoneItemColor.Purple:
-                    randomPurple *= extraFactorTimes;
-                    break;
-                default:
-                    break;
+                Tuple<int, GambleStoneItemColor> maxOutputItem = null;
+                int maxOutputValue = -1;
+                foreach (var item in listOutput)
+                {
+                    if (item.Item1 > maxOutputValue)
+                    {
+                        maxOutputItem = item;
+                    }
+                }
+
+                switch (maxOutputItem.Item2)
+                {
+                    case GambleStoneItemColor.Red:
+                        randomRed *= extraFactorTimes;
+                        break;
+                    case GambleStoneItemColor.Green:
+                        randomGreen *= extraFactorTimes;
+                        break;
+                    case GambleStoneItemColor.Blue:
+                        randomBlue *= extraFactorTimes;
+                        break;
+                    case GambleStoneItemColor.Purple:
+                        randomPurple *= extraFactorTimes;
+                        break;
+                    default:
+                        break;
+                }
             }
 
             winnedColor = GetRandomWinnedColor(randomRed, randomGreen, randomBlue, randomPurple);

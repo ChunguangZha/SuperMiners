@@ -1,4 +1,5 @@
 ﻿using MetaData.Game.GambleStone;
+using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -197,16 +198,36 @@ namespace SuperMinersWPF.Views.Controls
         {
             int stoneCount = 0;
             int gravelCount = 0;
-            //优先使用碎片
-            if (GlobalData.CurrentUser.Gravel >= GlobalData.GameConfig.GambleStone_OneBetStoneCount)
+
+            int allStone = 10;
+            if (chk1Times.IsChecked == true)
             {
-                gravelCount = GlobalData.GameConfig.GambleStone_OneBetStoneCount;
+                allStone = 10;
+            }
+            else if (chk10Times.IsChecked == true)
+            {
+                allStone = 100;
+            }
+            else if (chk100Times.IsChecked == true)
+            {
+                allStone = 1000;
+            }
+
+            //优先使用碎片
+            if (GlobalData.CurrentUser.Gravel >= allStone)
+            {
+                gravelCount = allStone;
             }
             else
             {
                 gravelCount = GlobalData.CurrentUser.Gravel;
             }
-            stoneCount = GlobalData.GameConfig.GambleStone_OneBetStoneCount - gravelCount;
+            stoneCount = allStone - gravelCount;
+            if (stoneCount > GlobalData.CurrentUser.SellableStones)
+            {
+                MyMessageBox.ShowInfo("没有足够的矿石");
+                return;
+            }
 
             App.GambleStoneVMObject.AsyncBetIn(itemColor, stoneCount, gravelCount);
         }

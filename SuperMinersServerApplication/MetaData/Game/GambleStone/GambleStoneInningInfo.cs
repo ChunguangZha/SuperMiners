@@ -34,8 +34,8 @@ namespace MetaData.Game.GambleStone
         [DataMember]
         public int CountDownSeconds;
 
-        //[DataMember]
-        //public MyDateTime EndTime;
+        [DataMember]
+        public GambleStoneInningStatusType State = GambleStoneInningStatusType.Readying;
 
         [DataMember]
         public int BetRedStone;
@@ -93,6 +93,14 @@ namespace MetaData.Game.GambleStone
 
             return builder.ToString();
         }
+    }
+
+    public enum GambleStoneInningStatusType : byte
+    {
+        Readying,
+        BetInWaiting,
+        Opening,
+        Finished = 9
     }
 
     [DataContract]

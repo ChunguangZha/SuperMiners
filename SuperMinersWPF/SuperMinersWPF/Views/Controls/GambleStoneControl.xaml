@@ -215,6 +215,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="254*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -264,8 +265,13 @@
                 <Run Text="猜中赚"/>
                 <Run Text="50倍" Foreground="#FFFF4F6E"/>
             </TextBlock>
-            <TextBlock Grid.Row="4" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
+            <StackPanel Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="3">
+                <RadioButton Name="chk1Times" Content="1倍" IsChecked="True" GroupName="Times" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk10Times" Content="10倍" GroupName="Times" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk100Times" Content="100倍" GroupName="Times" Margin="10,5" Foreground="White"/>
+            </StackPanel>
+            <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Row="6" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
         </Grid>
     </Grid>
 </UserControl>

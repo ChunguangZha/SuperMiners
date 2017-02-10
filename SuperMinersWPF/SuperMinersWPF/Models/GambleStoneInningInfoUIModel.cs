@@ -91,7 +91,27 @@ namespace SuperMinersWPF.Models
                     return "";
                 }
 
-                return this.CountDownSeconds + "秒后切开";
+                string text = "";
+
+                switch (this._parenObject.State)
+                {
+                    case GambleStoneInningStatusType.Readying:
+                        text = this.CountDownSeconds + " 秒后开始";
+                        break;
+                    case GambleStoneInningStatusType.BetInWaiting:
+                        text = this.CountDownSeconds + " 秒后切开";
+                        break;
+                    case GambleStoneInningStatusType.Opening:
+                        text = "正在开奖 " + this.CountDownSeconds;
+                        break;
+                    case GambleStoneInningStatusType.Finished:
+                        text = "此局结束";
+                        break;
+                    default:
+                        break;
+                }
+
+                return text;
             }
         }
 
@@ -99,7 +119,7 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                return this.CountDownSeconds > 0;
+                return this._parenObject.State == GambleStoneInningStatusType.BetInWaiting && this.CountDownSeconds > 0;
             }
         }
 

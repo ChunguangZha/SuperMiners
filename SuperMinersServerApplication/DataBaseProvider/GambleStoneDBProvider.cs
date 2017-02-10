@@ -17,6 +17,7 @@ namespace DataBaseProvider
                                                             " `InningIndex` INT NOT NULL," +
                                                             " `RoundID` INT UNSIGNED NOT NULL," +
                                                             " `CountDownSeconds` INT UNSIGNED NOT NULL DEFAULT 0," +
+                                                            " `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;'" +
                                                             " `BetRedStone` INT UNSIGNED NOT NULL DEFAULT 0," +
                                                             " `BetGreenStone` INT UNSIGNED NOT NULL DEFAULT 0," +
                                                             " `BetBlueStone` INT UNSIGNED NOT NULL DEFAULT 0," +
@@ -32,6 +33,10 @@ namespace DataBaseProvider
                                                             "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`)" +
                                                             "   ON DELETE CASCADE" +
                                                             "   ON UPDATE CASCADE);";
+
+//        ALTER TABLE `superminers`.`gamblestoneinninginfo201702` 
+        //ADD COLUMN `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;' AFTER `WinnedOutStone`;
+
 
         private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `superminers`.`gamblestoneplayerbetrecord{0}` ( " +
                                                                  " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, " +
@@ -233,13 +238,14 @@ namespace DataBaseProvider
                     mycmd.ExecuteNonQuery();
                 }
 
-                string sqlText = "insert into " + tableName + " (`id`,`InningIndex`,`RoundID`,`CountDownSeconds`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedColor`,`WinnedTimes`,`WinnedOutStone`) " +
-                                " values (@ID,@InningIndex,@RoundID,@CountDownSeconds,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedColor,@WinnedTimes,@WinnedOutStone ) ";
+                string sqlText = "insert into " + tableName + " (`id`,`InningIndex`,`RoundID`,`CountDownSeconds`,`State`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedColor`,`WinnedTimes`,`WinnedOutStone`) " +
+                                " values (@ID,@InningIndex,@RoundID,@CountDownSeconds,@State,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedColor,@WinnedTimes,@WinnedOutStone ) ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@ID", inning.ID);
                 mycmd.Parameters.AddWithValue("@InningIndex", inning.InningIndex);
                 mycmd.Parameters.AddWithValue("@RoundID", inning.RoundID);
                 mycmd.Parameters.AddWithValue("@CountDownSeconds", inning.CountDownSeconds);
+                mycmd.Parameters.AddWithValue("@State", (byte)inning.State);
                 mycmd.Parameters.AddWithValue("@BetRedStone", inning.BetRedStone);
                 mycmd.Parameters.AddWithValue("@BetGreenStone", inning.BetGreenStone);
                 mycmd.Parameters.AddWithValue("@BetBlueStone", inning.BetBlueStone);
