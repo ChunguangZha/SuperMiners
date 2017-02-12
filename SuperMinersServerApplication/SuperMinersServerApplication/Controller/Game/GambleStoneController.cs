@@ -316,11 +316,12 @@ namespace SuperMinersServerApplication.Controller.Game
                     UserID = userID,
                     UserName = userName,
                     InningID = this._inningInfo.ID,
+                    InningIndex = this._inningInfo.InningIndex,
                     RoundID = roundID,
                     Time = new MyDateTime(DateTime.Now)
                 };
                 this._dicPlayerBetRecord.Add(userID, betrecord);
-            }            
+            }
 
             switch (color)
             {

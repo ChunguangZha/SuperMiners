@@ -247,12 +247,13 @@ namespace SuperMinersServerApplication.Controller
             //{
             //    return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
             //}
-            if (!string.IsNullOrEmpty(IDCardNo))
+            if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
             {
-                if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
-                {
-                    return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
-                }
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+            {
+                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
             }
 
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);

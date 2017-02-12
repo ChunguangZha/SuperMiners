@@ -13,7 +13,64 @@
             <Setter Property="Margin" Value="2"/>
             <Setter Property="Stretch" Value="UniformToFill"/>
         </Style>
+        <Storyboard x:Key="StoryboardOpenGamble" Completed="Storyboard_Completed">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="imgSplitStone1">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="imgSplitStone1">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="imgSplitStone2">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="imgSplitStone2">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="imgSplitStone3">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="imgSplitStone3">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="imgSplitStone4">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="imgSplitStone4">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="80"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="imgFlash">
+                <EasingDoubleKeyFrame KeyTime="0" Value="150"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-150"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="imgFlash">
+                <EasingDoubleKeyFrame KeyTime="0" Value="-150"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.5" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="150"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </UserControl.Resources>
+    <!--<UserControl.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="panelAnimation">
+            <BeginStoryboard Storyboard="{StaticResource StoryboardOpenGamble}"/>
+		</EventTrigger>
+	</UserControl.Triggers>-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="203*"/>
@@ -153,20 +210,73 @@
                     <Border Grid.Column="6" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="7" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="8" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
-                    <Grid Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Margin="5">
+                    <Grid x:Name="panelAnimation" Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Margin="5">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Image Name="imgCurrentWinnedColor" Margin="10"/>
-                        <Image Name="imgSrcStone" Margin="10" Opacity="1" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
-                        <Canvas Margin="10" Visibility="Collapsed">
-                            <Image Name="imgSplitStone1" Canvas.Left="11" Width="76" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone1.png"/>
-                            <Image Name="imgSplitStone2" Canvas.Left="38" Canvas.Top="18" Width="100" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone2.png"/>
-                            <Image Name="imgSplitStone3" Canvas.Left="50" Canvas.Top="60" Width="70" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone3.png"/>
-                            <Image Name="imgSplitStone4" Canvas.Left="30" Canvas.Top="30" Width="70" Height="70" Source="/SuperMinersWPF;component/Resources/splitstone4.png"/>
-                        </Canvas>
-                        
+                        <Image Name="imgCurrentWinnedColor" Visibility="{Binding CurrentInningInfo.BitWinnedColorVisible}" Margin="20" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.3" ScaleY="0.3"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="90" Y="-50"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Image Name="imgSrcStone" Visibility="{Binding CurrentInningInfo.SrcStoneVisible}" Margin="10" Opacity="1" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
+                        <Image Name="imgSplitStone1" Margin="10" Source="/SuperMinersWPF;component/Resources/s1.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Image Name="imgSplitStone2" Margin="10" Source="/SuperMinersWPF;component/Resources/s2.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Image Name="imgSplitStone3" Margin="10" Source="/SuperMinersWPF;component/Resources/s3.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Image Name="imgSplitStone4" Margin="10" Source="/SuperMinersWPF;component/Resources/s4.png" RenderTransformOrigin="0.5,0.5">
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="0" Y="0"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+                        <Image Name="imgFlash" Margin="10" Source="/SuperMinersWPF;component/Resources/flash.png" RenderTransformOrigin="0.5,0.5" >
+                            <Image.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform X="-150" Y="150"/>
+                                </TransformGroup>
+                            </Image.RenderTransform>
+                        </Image>
+
                         <TextBlock Grid.Row="1" HorizontalAlignment="Center">
                             <Run Text="{Binding CurrentInningInfo.InningIndex, Mode=OneWay}"/>
                             <Run Text="局"/>
@@ -224,7 +334,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.ColumnSpan="4" x:Name="txtWinnerNotice" Text="XXXX赢得3000万矿石" Margin="5" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.ColumnSpan="4" x:Name="txtWinnerNotice" Text="" Margin="5" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding CurrentInningPlayerBetRecord.BetRedStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentInningPlayerBetRecord.BetGreenStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurrentInningPlayerBetRecord.BetBlueStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -265,12 +375,14 @@
                 <Run Text="猜中赚"/>
                 <Run Text="50倍" Foreground="#FFFF4F6E"/>
             </TextBlock>
-            <StackPanel Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="3">
-                <RadioButton Name="chk1Times" Content="1倍" IsChecked="True" GroupName="Times" Margin="10,5" Foreground="White"/>
-                <RadioButton Name="chk10Times" Content="10倍" GroupName="Times" Margin="10,5" Foreground="White"/>
-                <RadioButton Name="chk100Times" Content="100倍" GroupName="Times" Margin="10,5" Foreground="White"/>
+            <StackPanel Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="3" Background="Brown">
+                <TextBlock Text="每次下注矿石：" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk10Stones" Content="10矿石" IsChecked="True" GroupName="Times" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk100Stones" Content="100矿石" GroupName="Times" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk1000Stones" Content="1000矿石" GroupName="Times" Margin="10,5" Foreground="White"/>
             </StackPanel>
             <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Button Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Name="btnViewMyBetRecord" Content="查看我的下注记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyBetRecord_Click"/>
             <TextBlock Grid.Row="6" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
         </Grid>
     </Grid>

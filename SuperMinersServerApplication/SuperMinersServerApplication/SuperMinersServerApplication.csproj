@@ -162,6 +162,7 @@
     <Compile Include="UIModel\GameConfigUIModel.cs" />
     <Compile Include="UIModel\IncomeMoneyAccountUIModel.cs" />
     <Compile Include="UIModel\RegisterUserConfigUIModel.cs" />
+    <Compile Include="Utility\IDCardVerifyTools.cs" />
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\WinInputPassword.xaml.cs">
       <DependentUpon>WinInputPassword.xaml</DependentUpon>

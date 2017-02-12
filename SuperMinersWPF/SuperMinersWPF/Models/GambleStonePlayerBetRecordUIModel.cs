@@ -33,6 +33,7 @@ namespace SuperMinersWPF.Models
             NotifyPropertyChange("TimeText");
             NotifyPropertyChange("RoundID");
             NotifyPropertyChange("InningID");
+            NotifyPropertyChange("InningIndex");
             NotifyPropertyChange("BetRedStone");
             NotifyPropertyChange("BetGreenStone");
             NotifyPropertyChange("BetBlueStone");
@@ -101,6 +102,14 @@ namespace SuperMinersWPF.Models
             get
             {
                 return this._parentObject.InningID;
+            }
+        }
+
+        public int InningIndex
+        {
+            get
+            {
+                return this._parentObject.InningIndex;
             }
         }
 

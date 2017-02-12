@@ -31,7 +31,7 @@
             <TabItem>
                 <TabItem.Header>
                     <Grid Width="100">
-                        <TextBlock Text="赌石娱乐" HorizontalAlignment="Center"/>
+                        <TextBlock Text="疯狂猜石" HorizontalAlignment="Center"/>
                     </Grid>
                 </TabItem.Header>
                 <Grid>

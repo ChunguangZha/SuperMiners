@@ -67,6 +67,10 @@ namespace SuperMinersServerApplication.Controller
                 distributeRecord.RequestPlayerCount = records.Length;
 
                 int gravel = playerCount / records.Length;
+                if (gravel < GlobalConfig.GameConfig.GravelMin)
+                {
+                    gravel = GlobalConfig.GameConfig.GravelMin;
+                }
                 foreach (var item in records)
                 {
                     item.Gravel = gravel;

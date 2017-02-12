@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SuperMinersWPF.Models
 {
@@ -33,6 +34,8 @@ namespace SuperMinersWPF.Models
             NotifyPropertyChange("RoundID");
             NotifyPropertyChange("CountDownSeconds");
             NotifyPropertyChange("CountDownSecondsText");
+            NotifyPropertyChange("SrcStoneVisible");
+            NotifyPropertyChange("BitWinnedColorVisible");
             NotifyPropertyChange("BetInButtonEnable");
             NotifyPropertyChange("BetRedStone");
             NotifyPropertyChange("BetGreenStone");
@@ -102,7 +105,7 @@ namespace SuperMinersWPF.Models
                         text = this.CountDownSeconds + " 秒后切开";
                         break;
                     case GambleStoneInningStatusType.Opening:
-                        text = "正在开奖 " + this.CountDownSeconds;
+                        text = "开奖 " + this.CountDownSeconds;
                         break;
                     case GambleStoneInningStatusType.Finished:
                         text = "此局结束";
@@ -112,6 +115,46 @@ namespace SuperMinersWPF.Models
                 }
 
                 return text;
+            }
+        }
+
+        public Visibility SrcStoneVisible
+        {
+            get
+            {
+                switch (this._parenObject.State)
+                {
+                    case GambleStoneInningStatusType.Readying:
+                        return Visibility.Visible;
+                    case GambleStoneInningStatusType.BetInWaiting:
+                        return Visibility.Visible;
+                    case GambleStoneInningStatusType.Opening:
+                        return Visibility.Collapsed;
+                    case GambleStoneInningStatusType.Finished:
+                        return Visibility.Collapsed;
+                    default:
+                        return Visibility.Visible;
+                }
+            }
+        }
+
+        public Visibility BitWinnedColorVisible
+        {
+            get
+            {
+                switch (this._parenObject.State)
+                {
+                    case GambleStoneInningStatusType.Readying:
+                        return Visibility.Collapsed;
+                    case GambleStoneInningStatusType.BetInWaiting:
+                        return Visibility.Collapsed;
+                    case GambleStoneInningStatusType.Opening:
+                        return Visibility.Visible;
+                    case GambleStoneInningStatusType.Finished:
+                        return Visibility.Visible;
+                    default:
+                        return Visibility.Collapsed;
+                }
             }
         }
 

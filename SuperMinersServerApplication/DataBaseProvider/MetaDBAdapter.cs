@@ -1041,5 +1041,33 @@ namespace DataBaseProvider
 
             return items;
         }
+
+        internal static GambleStonePlayerBetRecord[] GetGambleStonePlayerBetRecordFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            GambleStonePlayerBetRecord[] records = new GambleStonePlayerBetRecord[dt.Rows.Count];
+            for (int i = 0; i < records.Length; i++)
+            {
+                GambleStonePlayerBetRecord record = new GambleStonePlayerBetRecord();
+                record.BetBlueStone = Convert.ToInt32(dt.Rows[i]["BetBlueStone"]);
+                record.BetGreenStone = Convert.ToInt32(dt.Rows[i]["BetGreenStone"]);
+                record.BetPurpleStone = Convert.ToInt32(dt.Rows[i]["BetPurpleStone"]);
+                record.BetRedStone = Convert.ToInt32(dt.Rows[i]["BetRedStone"]);
+                record.InningIndex = Convert.ToInt32(dt.Rows[i]["InningIndex"]);
+                record.InningID = Convert.ToString(dt.Rows[i]["InningID"]);
+                record.RoundID = Convert.ToInt32(dt.Rows[i]["RoundID"]);
+                record.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.WinnedStone = Convert.ToInt32(dt.Rows[i]["WinnedStone"]);
+
+                records[i] = record;
+            }
+
+            return records;
+        }
     }
 }

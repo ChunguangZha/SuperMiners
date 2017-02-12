@@ -299,3 +299,7 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAut
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\MyControl\MyAutoScrollTextBlock.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\MySettingControl.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Controls\MySettingControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\ViewGambleStoneUserBetInRecordWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\ViewGambleStoneUserBetInRecordWindow.baml

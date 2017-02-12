@@ -12,7 +12,8 @@ namespace DataBaseProvider
 {
     public class GambleStoneDBProvider
     {
-        private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `superminers`.`gamblestoneinninginfo{0}` (" +
+        private static readonly string GambleStoneInningInfoTableNamePrefix = "gamblestoneinninginfo";
+        private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `superminers`.`" + GambleStoneInningInfoTableNamePrefix + "{0}` (" +
                                                             " `id` VARCHAR(40) NOT NULL," +
                                                             " `InningIndex` INT NOT NULL," +
                                                             " `RoundID` INT UNSIGNED NOT NULL," +
@@ -37,13 +38,14 @@ namespace DataBaseProvider
 //        ALTER TABLE `superminers`.`gamblestoneinninginfo201702` 
         //ADD COLUMN `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;' AFTER `WinnedOutStone`;
 
-
-        private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `superminers`.`gamblestoneplayerbetrecord{0}` ( " +
+        private static readonly string GambleStonePlayerBetRecordTableNamePrefix = "gamblestoneplayerbetrecord";
+        private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `superminers`.`" + GambleStonePlayerBetRecordTableNamePrefix + "{0}` ( " +
                                                                  " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, " +
                                                                  " `UserID` INT UNSIGNED NOT NULL, " +
                                                                  " `Time` DATETIME NOT NULL, " +
                                                                  " `RoundID` INT UNSIGNED NOT NULL, " +
                                                                  " `InningID` VARCHAR(40) NULL, " +
+                                                                 " `InningIndex` INT NOT NULL DEFAULT 0, " +
                                                                  " `BetRedStone` INT UNSIGNED NOT NULL, " +
                                                                  " `BetGreenStone` INT UNSIGNED NOT NULL, " +
                                                                  " `BetBlueStone` INT UNSIGNED NOT NULL, " +
@@ -68,6 +70,10 @@ namespace DataBaseProvider
                                                                  "   REFERENCES `superminers`.`gamblestoneinninginfo{0}` (`id`) " +
                                                                  "   ON DELETE CASCADE " +
                                                                  "   ON UPDATE CASCADE); ";
+
+
+//        ALTER TABLE `superminers`.`gamblestoneplayerbetrecord201702` 
+//ADD COLUMN `InningIndex` INT NOT NULL DEFAULT 0 AFTER `InningID`;
 
 
 
@@ -222,7 +228,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string tableName = "gamblestoneinninginfo" + round.TableName;
+                string tableName = GambleStoneInningInfoTableNamePrefix + round.TableName;
                 mycmd = myTrans.CreateCommand();
                 string sqlSelectTableText = "show tables where Tables_in_superminers = @tableName ";
                 mycmd.CommandText = sqlSelectTableText;
@@ -263,12 +269,12 @@ namespace DataBaseProvider
             }
         }
 
-        public bool AddGambleStonePlayerBetRecord(GambleStonePlayerBetRecord playerBetRecord, string tableNamePrefix, CustomerMySqlTransaction myTrans)
+        public bool AddGambleStonePlayerBetRecord(GambleStonePlayerBetRecord playerBetRecord, string tableNameSuffix, CustomerMySqlTransaction myTrans)
         {
             MySqlCommand mycmd = null;
             try
             {
-                string tableName = "gamblestoneplayerbetrecord" + tableNamePrefix;
+                string tableName = GambleStonePlayerBetRecordTableNamePrefix + tableNameSuffix;
                 mycmd = myTrans.CreateCommand();
                 string sqlSelectTableText = "show tables where Tables_in_superminers = @tableName ";
                 mycmd.CommandText = sqlSelectTableText;
@@ -280,17 +286,18 @@ namespace DataBaseProvider
                 if (table.Rows.Count == 0)
                 {
                     //表不存在，则创建
-                    mycmd.CommandText = string.Format(this.sqlCreateGambleStonePlayerBetRecordTable, tableNamePrefix);
+                    mycmd.CommandText = string.Format(this.sqlCreateGambleStonePlayerBetRecordTable, tableNameSuffix);
                     mycmd.ExecuteNonQuery();
                 }
 
-                string sqlText = "insert into " + tableName + " (`UserID`,`Time`,`RoundID`,`InningID`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedStone`) " +
-                                " values (@UserID,@Time,@RoundID,@InningID,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedStone ) ";
+                string sqlText = "insert into " + tableName + " (`UserID`,`Time`,`RoundID`,`InningID`,`InningIndex`,`BetRedStone`,`BetGreenStone`,`BetBlueStone`,`BetPurpleStone`,`WinnedStone`) " +
+                                " values (@UserID,@Time,@RoundID,@InningID,@InningIndex,@BetRedStone,@BetGreenStone,@BetBlueStone,@BetPurpleStone,@WinnedStone ) ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@UserID", playerBetRecord.UserID);
                 mycmd.Parameters.AddWithValue("@Time", playerBetRecord.Time.ToDateTime());
                 mycmd.Parameters.AddWithValue("@RoundID", playerBetRecord.RoundID);
                 mycmd.Parameters.AddWithValue("@InningID", playerBetRecord.InningID);
+                mycmd.Parameters.AddWithValue("@InningIndex", playerBetRecord.InningIndex);
                 mycmd.Parameters.AddWithValue("@BetRedStone", playerBetRecord.BetRedStone);
                 mycmd.Parameters.AddWithValue("@BetGreenStone", playerBetRecord.BetGreenStone);
                 mycmd.Parameters.AddWithValue("@BetBlueStone", playerBetRecord.BetBlueStone);
@@ -304,6 +311,66 @@ namespace DataBaseProvider
             {
                 mycmd.Dispose();
             }
+        }
+
+        public GambleStonePlayerBetRecord[] GetLastMonthGambleStonePlayerBetRecord(int userID)
+        {
+            DateTime todayMaxTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+            DateTime lastMonthTime = todayMaxTime.AddMonths(-1);
+
+            GambleStonePlayerBetRecord[] currentMonth = GetMonthGambleStonePlayerBetRecord(userID, todayMaxTime.Year, todayMaxTime.Month, null);
+            GambleStonePlayerBetRecord[] lastMonth = GetMonthGambleStonePlayerBetRecord(userID, lastMonthTime.Year, lastMonthTime.Month, new MyDateTime(lastMonthTime));
+
+            List<GambleStonePlayerBetRecord> listRecords = new List<GambleStonePlayerBetRecord>();
+            if (currentMonth != null)
+            {
+                listRecords.AddRange(currentMonth);
+            }
+            if (lastMonth != null)
+            {
+                listRecords.AddRange(lastMonth);
+            }
+
+            return listRecords.ToArray();
+        }
+
+        public GambleStonePlayerBetRecord[] GetMonthGambleStonePlayerBetRecord(int userID, int year, int month, MyDateTime beginTime)
+        {
+            GambleStonePlayerBetRecord[] records = null;
+
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string tableName = GambleStonePlayerBetRecordTableNamePrefix + year.ToString("0000") + month.ToString("00");
+
+                string sqlSelectTableName = "show tables where Tables_in_superminers = '" + tableName + "'";
+                mycmd.CommandText = sqlSelectTableName;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+                if (table.Rows.Count == 0)
+                {
+                    return;
+                }
+
+                
+                string sqlText = "select * from " + tableName + " where UserID = @UserID";
+                if (beginTime != null && beginTime.Year == year && beginTime.Month == month)
+                {
+                    sqlText += " and Time >= @BeginTime ";
+                    mycmd.Parameters.AddWithValue("@BeginTime", beginTime);
+                }
+                sqlText += " order by Time desc";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                table.Clear();
+                adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                records = MetaDBAdapter<GambleStonePlayerBetRecord>.GetGambleStonePlayerBetRecordFromDataTable(table);
+
+            });
+
+            return records;
         }
     }
 }

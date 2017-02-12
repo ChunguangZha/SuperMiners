@@ -296,8 +296,11 @@ namespace SuperMinersServerApplication.WebService.Services
 
                         myTrans.Commit();
 
-                        PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateBuyStone, buyStoneHandsCount, "");
-                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托买入 " + buyStoneHandsCount + " 手矿石，Price：" + price);
+                        if (paytype != MetaData.Trade.PayType.Alipay)
+                        {
+                            PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateBuyStone, buyStoneHandsCount, "");
+                        }
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托买入 " + buyStoneHandsCount + " 手矿石：" + buyOrder.ToString());
 
                         resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
                         resultObj.Message = buyOrder.AlipayLink;
@@ -366,8 +369,8 @@ namespace SuperMinersServerApplication.WebService.Services
                     catch (Exception exc)
                     {
                         myTrans.Rollback();
-                        string errorMsg = "ServiceToClient.CancelDelegateBuyStone Exception userName: " 
-                            + userName + ((canceledBuyOrder==null)? "" : ", canceledBuyOrder : " + canceledBuyOrder.ToString());
+                        string errorMsg = "ServiceToClient.CancelDelegateBuyStone Exception userName: "
+                            + userName + ", buyOrder : " + buyOrder.ToString();
                         LogHelper.Instance.AddErrorLog(errorMsg, exc);
                         return OperResult.RESULTCODE_FALSE;
                     }

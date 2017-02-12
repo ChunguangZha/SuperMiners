@@ -4,6 +4,7 @@ using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -43,6 +44,14 @@ namespace SuperMinersWPF.ViewModels
         {
             get { return _currentInningPlayerBetRecord; }
         }
+
+        private ObservableCollection<GambleStonePlayerBetRecordUIModel> _listPlayerBetRecords = new ObservableCollection<GambleStonePlayerBetRecordUIModel>();
+
+        public ObservableCollection<GambleStonePlayerBetRecordUIModel> ListPlayerBetRecords
+        {
+            get { return _listPlayerBetRecords; }
+        }
+        
 
 
         public GambleStoneViewModel()
@@ -101,6 +110,12 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GambleStoneBetIn(color, stoneCount, gravelCount, null);
         }
 
+        public void AsyncGetLastMonthGambleStonePlayerBetRecord()
+        {
+            App.BusyToken.ShowBusyWindow("正在加载数据...");
+            GlobalData.Client.GetLastMonthGambleStonePlayerBetRecord(null);
+        }
+
         public void RegisterEvents()
         {
             //GlobalData.Client.GetGambleStoneRoundInningCompleted += Client_GetGambleStoneRoundInningCompleted;
@@ -108,6 +123,33 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.OnGambleStoneWinNotify += Client_OnGambleStoneWinNotify;
             GlobalData.Client.GetGambleStoneRoundInfoCompleted += Client_GetGambleStoneRoundInfoCompleted;
             GlobalData.Client.GetGambleStoneInningInfoCompleted += Client_GetGambleStoneInningInfoCompleted;
+            GlobalData.Client.GetLastMonthGambleStonePlayerBetRecordCompleted += Client_GetLastMonthGambleStonePlayerBetRecordCompleted;     
+        }
+
+        void Client_GetLastMonthGambleStonePlayerBetRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStonePlayerBetRecord[]> e)
+        {
+            try
+            {
+                if (e.Error != null)
+                {
+                    LogHelper.Instance.AddErrorLog("查询下注记录失败，服务器返回失败。", e.Error);
+                    return;
+                }
+
+                this.ListPlayerBetRecords.Clear();
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListPlayerBetRecords.Add(new GambleStonePlayerBetRecordUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("查询下注记录失败。");
+                LogHelper.Instance.AddErrorLog("查询下注记录失败。", exc);
+            }
         }
 
         void Client_GetGambleStoneInningInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneInningInfo> e)
@@ -125,6 +167,10 @@ namespace SuperMinersWPF.ViewModels
                 if (e.Result.InningIndex == 1)
                 {
                     AsyncGetCurrentGambleStoneRoundInfo();
+                }
+                if (GambleStoneInningChanged != null)
+                {
+                    GambleStoneInningChanged(e.Result);
                 }
             }
             catch (Exception exc)
@@ -222,30 +268,7 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        //void Client_GetGambleStoneRoundInningCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<GambleStoneRound_InningInfo> e)
-        //{
-        //    try
-        //    {
-        //        if (e.Error != null)
-        //        {
-        //            LogHelper.Instance.AddErrorLog("获取疯狂猜石信息。服务器返回错误。", e.Error);
-        //            return;
-        //        }
-
-        //        if (e.Result == null)
-        //        {
-        //            MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
-        //            return;
-        //        }
-        //        this.CurrentRoundInfo.ParentObject = e.Result.roundInfo;
-        //        this.CurrentInningInfo.ParentObject = e.Result.inningInfo;
-        //    }
-        //    catch (Exception exc)
-        //    {
-        //        LogHelper.Instance.AddErrorLog("获取疯狂猜石信息。回调处理异常。", exc);
-        //    }
-        //}
-
+        public event Action<GambleStoneInningInfo> GambleStoneInningChanged;
         public event Action<GambleStoneInningInfo, GambleStonePlayerBetRecord> GambleStoneInningFinished;
         public event Action<GambleStoneRoundInfo> GambleStoneGetRoundInfoEvent;
     }

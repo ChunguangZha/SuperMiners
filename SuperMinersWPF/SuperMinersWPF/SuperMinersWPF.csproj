@@ -263,6 +263,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
       <Link>Wcf\Datas\CallbackInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Utility\IDCardVerifyTools.cs">
+      <Link>Utility\IDCardVerifyTools.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\Callbacks\CallbackAttribute.cs">
       <Link>Wcf\Callbacks\CallbackAttribute.cs</Link>
     </Compile>
@@ -532,6 +535,9 @@
     <Compile Include="Views\Windows\RouletteWinAwardTakeWindow.xaml.cs">
       <DependentUpon>RouletteWinAwardTakeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\ViewGambleStoneUserBetInRecordWindow.xaml.cs">
+      <DependentUpon>ViewGambleStoneUserBetInRecordWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\WithdrawRMBWindow.xaml.cs">
       <DependentUpon>WithdrawRMBWindow.xaml</DependentUpon>
     </Compile>
@@ -791,6 +797,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\ViewGambleStoneUserBetInRecordWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\WithdrawRMBWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -946,10 +956,13 @@
     <Resource Include="Resources\srcstone.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\splitstone1.png" />
-    <Resource Include="Resources\splitstone2.png" />
-    <Resource Include="Resources\splitstone3.png" />
-    <Resource Include="Resources\splitstone4.png" />
+    <Resource Include="Resources\s1.png" />
+    <Resource Include="Resources\s2.png" />
+    <Resource Include="Resources\s3.png" />
+    <Resource Include="Resources\s4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\flash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

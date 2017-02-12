@@ -238,6 +238,7 @@ namespace SuperMinersWPF.Models
             if (index >= 0 && index < this._parentObject.WinColorItems.Length)
             {
                 this._parentObject.WinColorItems[index] = (byte)color;
+                this._parentObject.FinishedInningCount++;
                 //this._winnedColors[index] = GetWinnedInningColorImg(index);
 
                 switch (color)

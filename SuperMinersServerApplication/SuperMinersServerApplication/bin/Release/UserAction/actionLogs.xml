@@ -1,166 +1,6 @@
 <?xml version="1.0"?>
 <ArrayOfPlayerActionLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <PlayerActionLog>
-    <UserName>Tony</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-11-03T10:09:27</Time>
-    <LastLoginTimeString>2016/11/3 10:09:27</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-11-06T18:08:31</Time>
-    <LastLoginTimeString>2016/11/6 18:08:31</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-11-06T18:18:57</Time>
-    <LastLoginTimeString>2016/11/6 18:18:57</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-11-07T23:09:17</Time>
-    <LastLoginTimeString>2016/11/7 23:09:17</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:32:09</Time>
-    <LastLoginTimeString>2016/12/16 0:32:09</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GatherStone</ActionType>
-    <OperNumber>209</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:32:16</Time>
-    <LastLoginTimeString>2016/12/16 0:32:16</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>BuyStone</ActionType>
-    <OperNumber>1200</OperNumber>
-    <Remark>1200</Remark>
-    <Time>2016-12-16T00:38:55</Time>
-    <LastLoginTimeString>2016/12/16 0:38:55</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>SellStone</ActionType>
-    <OperNumber>1000</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:39:22</Time>
-    <LastLoginTimeString>2016/12/16 0:39:22</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GatherStone</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:39:41</Time>
-    <LastLoginTimeString>2016/12/16 0:39:41</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GatherStone</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:50:51</Time>
-    <LastLoginTimeString>2016/12/16 0:50:51</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GatherStone</ActionType>
-    <OperNumber>0</OperNumber>
-    <Remark />
-    <Time>2016-12-16T00:51:37</Time>
-    <LastLoginTimeString>2016/12/16 0:51:37</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2017-01-04T10:33:21</Time>
-    <LastLoginTimeString>2017/1/4 10:33:21</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>Login</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark />
-    <Time>2017-01-04T10:34:05</Time>
-    <LastLoginTimeString>2017/1/4 10:34:05</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderJoinBet</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark>100</Remark>
-    <Time>2017-01-04T10:34:17</Time>
-    <LastLoginTimeString>2017/1/4 10:34:17</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderJoinBet</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark>4</Remark>
-    <Time>2017-01-04T10:34:29</Time>
-    <LastLoginTimeString>2017/1/4 10:34:29</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GatherStone</ActionType>
-    <OperNumber>209</OperNumber>
-    <Remark />
-    <Time>2017-01-04T10:34:50</Time>
-    <LastLoginTimeString>2017/1/4 10:34:50</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderWin</ActionType>
-    <OperNumber>1</OperNumber>
-    <Remark>104</Remark>
-    <Time>2017-01-04T10:35:17</Time>
-    <LastLoginTimeString>2017/1/4 10:35:17</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderJoinBet</ActionType>
-    <OperNumber>2</OperNumber>
-    <Remark>4</Remark>
-    <Time>2017-01-04T10:35:47</Time>
-    <LastLoginTimeString>2017/1/4 10:35:47</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderJoinBet</ActionType>
-    <OperNumber>2</OperNumber>
-    <Remark>40</Remark>
-    <Time>2017-01-04T10:35:51</Time>
-    <LastLoginTimeString>2017/1/4 10:35:51</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
-    <UserName>小开心</UserName>
-    <ActionType>GameRaiderJoinBet</ActionType>
-    <OperNumber>2</OperNumber>
-    <Remark>55</Remark>
-    <Time>2017-01-04T10:36:11</Time>
-    <LastLoginTimeString>2017/1/4 10:36:11</LastLoginTimeString>
-  </PlayerActionLog>
-  <PlayerActionLog>
     <UserName>小开心</UserName>
     <ActionType>GameRaiderJoinBet</ActionType>
     <OperNumber>2</OperNumber>
@@ -653,7 +493,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T11:24:52.3252209+08:00</Time>
+    <Time>2017-02-09T11:24:52</Time>
     <LastLoginTimeString>2017/2/9 11:24:52</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -661,7 +501,7 @@
     <ActionType>GatherStone</ActionType>
     <OperNumber>209</OperNumber>
     <Remark />
-    <Time>2017-02-09T11:25:46.9619194+08:00</Time>
+    <Time>2017-02-09T11:25:46</Time>
     <LastLoginTimeString>2017/2/9 11:25:46</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -669,7 +509,7 @@
     <ActionType>DelegateSellStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T11:41:04.3129262+08:00</Time>
+    <Time>2017-02-09T11:41:04</Time>
     <LastLoginTimeString>2017/2/9 11:41:04</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -677,7 +517,7 @@
     <ActionType>DelegateBuyStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T14:53:11.2936879+08:00</Time>
+    <Time>2017-02-09T14:53:11</Time>
     <LastLoginTimeString>2017/2/9 14:53:11</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -685,7 +525,7 @@
     <ActionType>DelegateSellStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark />
-    <Time>2017-02-09T14:53:20.9266117+08:00</Time>
+    <Time>2017-02-09T14:53:20</Time>
     <LastLoginTimeString>2017/2/9 14:53:20</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -693,7 +533,7 @@
     <ActionType>DelegateBuyStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark>0</Remark>
-    <Time>2017-02-09T14:53:20.9386124+08:00</Time>
+    <Time>2017-02-09T14:53:20</Time>
     <LastLoginTimeString>2017/2/9 14:53:20</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -701,7 +541,7 @@
     <ActionType>DelegateSellStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T14:53:24.6080488+08:00</Time>
+    <Time>2017-02-09T14:53:24</Time>
     <LastLoginTimeString>2017/2/9 14:53:24</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -709,7 +549,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:10:12.6868596+08:00</Time>
+    <Time>2017-02-09T15:10:12</Time>
     <LastLoginTimeString>2017/2/9 15:10:12</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -717,7 +557,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:11:50.8818766+08:00</Time>
+    <Time>2017-02-09T15:11:50</Time>
     <LastLoginTimeString>2017/2/9 15:11:50</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -725,7 +565,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:21:15.1488588+08:00</Time>
+    <Time>2017-02-09T15:21:15</Time>
     <LastLoginTimeString>2017/2/9 15:21:15</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -733,7 +573,7 @@
     <ActionType>DelegateBuyStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:27:58.7014809+08:00</Time>
+    <Time>2017-02-09T15:27:58</Time>
     <LastLoginTimeString>2017/2/9 15:27:58</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -741,7 +581,7 @@
     <ActionType>DelegateSellStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:28:02.4911014+08:00</Time>
+    <Time>2017-02-09T15:28:02</Time>
     <LastLoginTimeString>2017/2/9 15:28:02</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -749,7 +589,7 @@
     <ActionType>DelegateBuyStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark>0</Remark>
-    <Time>2017-02-09T15:28:02.5051032+08:00</Time>
+    <Time>2017-02-09T15:28:02</Time>
     <LastLoginTimeString>2017/2/9 15:28:02</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -757,7 +597,7 @@
     <ActionType>DelegateBuyStone</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:34:34.9016007+08:00</Time>
+    <Time>2017-02-09T15:34:34</Time>
     <LastLoginTimeString>2017/2/9 15:34:34</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -765,7 +605,7 @@
     <ActionType>DelegateSellStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:34:43.1933013+08:00</Time>
+    <Time>2017-02-09T15:34:43</Time>
     <LastLoginTimeString>2017/2/9 15:34:43</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -773,7 +613,7 @@
     <ActionType>DelegateBuyStoneSucceed</ActionType>
     <OperNumber>1000</OperNumber>
     <Remark>0</Remark>
-    <Time>2017-02-09T15:34:43.2173058+08:00</Time>
+    <Time>2017-02-09T15:34:43</Time>
     <LastLoginTimeString>2017/2/9 15:34:43</LastLoginTimeString>
   </PlayerActionLog>
   <PlayerActionLog>
@@ -781,7 +621,167 @@
     <ActionType>Login</ActionType>
     <OperNumber>1</OperNumber>
     <Remark />
-    <Time>2017-02-09T15:44:12.2937775+08:00</Time>
+    <Time>2017-02-09T15:44:12</Time>
     <LastLoginTimeString>2017/2/9 15:44:12</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-11T21:27:37</Time>
+    <LastLoginTimeString>2017/2/11 21:27:37</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-11T21:38:47</Time>
+    <LastLoginTimeString>2017/2/11 21:38:47</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-11T21:50:13</Time>
+    <LastLoginTimeString>2017/2/11 21:50:13</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-11T21:53:42</Time>
+    <LastLoginTimeString>2017/2/11 21:53:42</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>177</OperNumber>
+    <Remark />
+    <Time>2017-02-11T21:55:58</Time>
+    <LastLoginTimeString>2017/2/11 21:55:58</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-11T22:54:59</Time>
+    <LastLoginTimeString>2017/2/11 22:54:59</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:15:11</Time>
+    <LastLoginTimeString>2017/2/12 23:15:11</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>209</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:15:33</Time>
+    <LastLoginTimeString>2017/2/12 23:15:33</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:19:15</Time>
+    <LastLoginTimeString>2017/2/12 23:19:15</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:21:25</Time>
+    <LastLoginTimeString>2017/2/12 23:21:25</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:41:12.1541662+08:00</Time>
+    <LastLoginTimeString>2017/2/12 23:41:12</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-12T23:43:10.4254064+08:00</Time>
+    <LastLoginTimeString>2017/2/12 23:43:10</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:00:31.2040865+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:00:31</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>GatherStone</ActionType>
+    <OperNumber>124</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:01:55.6114159+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:01:55</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>GambleStoneMaxWinner</ActionType>
+    <OperNumber>3030</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:01:58.2392082+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:01:58</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:44:08.9493714+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:44:08</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:45:22.6706318+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:45:22</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T00:55:17.7702104+08:00</Time>
+    <LastLoginTimeString>2017/2/13 0:55:17</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T01:14:42.1009102+08:00</Time>
+    <LastLoginTimeString>2017/2/13 1:14:42</LastLoginTimeString>
+  </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>2017小开心</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>1</OperNumber>
+    <Remark />
+    <Time>2017-02-13T01:16:23.1799265+08:00</Time>
+    <LastLoginTimeString>2017/2/13 1:16:23</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

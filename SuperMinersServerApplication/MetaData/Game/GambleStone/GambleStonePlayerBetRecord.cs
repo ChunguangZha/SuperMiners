@@ -35,6 +35,9 @@ namespace MetaData.Game.GambleStone
         public string InningID;
 
         [DataMember]
+        public int InningIndex;
+
+        [DataMember]
         public int BetRedStone;
 
         [DataMember]

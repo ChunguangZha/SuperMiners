@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using SuperMinersServerApplication.Utility;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
@@ -114,7 +115,7 @@ namespace SuperMinersWPF.Views.Controls
         string nickName = "";
         string alipay = "";
         string alipayRealName = "";
-        string IDCardNo = "";
+        string IDCardNoText = "";
         string email = "";
         string qq = "";
 
@@ -192,28 +193,63 @@ namespace SuperMinersWPF.Views.Controls
                 return;
             }
 
-            IDCardNo = this.txtIDCardNo.Text.Trim();
-            if (string.IsNullOrEmpty(IDCardNo))
+            IDCardNoText = this.txtIDCardNo.Text.Trim();
+            if (!IDCardVerifyTools.VerifyIDCard(IDCardNoText))
             {
-                MyMessageBox.ShowInfo("请填写身份证号。");
+                MyMessageBox.ShowInfo("请输入正确的身份证号。");
                 return;
             }
-            matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
-            if (!matchValue)
-            {
-                MyMessageBox.ShowInfo("请输入正确的身份证号");
-                return;
-            }
-            else
-            {
-                if (IDCardNo.Length != 18)
-                {
-                    MyMessageBox.ShowInfo("请输入正确的身份证号");
-                    return;
-                }
-            }
+            //matchValue = Regex.IsMatch(IDCardNoText, @"^([1-9][0-9]*X{0,1})$");
+            //if (!matchValue)
+            //{
+            //    MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //    return;
+            //}
+            //else
+            //{
+            //    if (IDCardNoText.Length != 18)
+            //    {
+            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //        return;
+            //    }
+            //    string yearText = IDCardNoText.Substring(6, 4);
+            //    string monthText = IDCardNoText.Substring(10, 2);
+            //    string dayText = IDCardNoText.Substring(12, 2);
+            //    int year = Convert.ToInt32(yearText);
+            //    int month = Convert.ToInt32(monthText);
+            //    int day = Convert.ToInt32(dayText);
+            //    if (year < 1950 || year > DateTime.Now.Year - 16)
+            //    {
+            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //        return;
+            //    }
+            //    if (month > 12)
+            //    {
+            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //        return;
+            //    }
+            //    if (day > 31)
+            //    {
+            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //        return;
+            //    }
 
-            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, IDCardNo, email, qq);
+            //    int sumResult = 0;
+            //    for (int i = 0; i < IDCardNoText.Length - 1; i++)
+            //    {
+            //        int cardValue = Convert.ToInt32(IDCardNoText.Substring(i, 1));
+            //        int plusValue = cardValue * IDCARDVERIFYCODE[i];
+            //        sumResult += plusValue;
+            //    }
+            //    int plurValue = (sumResult) % 11;
+            //    if (IDCardNoText.Substring(17, 1) != IDCARDLASTTEXT[plurValue])
+            //    {
+            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
+            //        return;
+            //    }
+            //}
+
+            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, IDCardNoText, email, qq);
             //App.BusyToken.ShowBusyWindow("正在验证...");
             //GlobalData.Client.CheckUserAlipayExist(alipay, alipayRealName, null);
         }

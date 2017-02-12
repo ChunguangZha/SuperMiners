@@ -132,6 +132,35 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public GambleStonePlayerBetRecord[] GetLastMonthGambleStonePlayerBetRecord(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                string userName = null;
+                try
+                {
+                    userName = ClientManager.GetClientUserName(token);
+                    var player = PlayerController.Instance.GetPlayerInfo(userName);
+                    if (player == null)
+                    {
+                        return null;
+                    }
+
+                    return DBProvider.GambleStoneDBProvider.GetLastMonthGambleStonePlayerBetRecord(player.SimpleInfo.UserID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] GetGambleStoneInningInfo 异常。", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+
         #endregion
     }
 }

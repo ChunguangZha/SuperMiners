@@ -61,6 +61,19 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetLastMonthGambleStonePlayerBetRecord
+
+        public event EventHandler<WebInvokeEventArgs<GambleStonePlayerBetRecord[]>> GetLastMonthGambleStonePlayerBetRecordCompleted;
+        public void GetLastMonthGambleStonePlayerBetRecord(object userState)
+        {
+            if (this._invoker != null)
+            {
+                this._invoker.InvokeUserState<GambleStonePlayerBetRecord[]>(this._context, "GetLastMonthGambleStonePlayerBetRecord", this.GetLastMonthGambleStonePlayerBetRecordCompleted, userState, GlobalData.Token);
+            }
+        }
+
+        #endregion
+
         #region Callback
 
         public event Action<GambleStoneRoundInfo, GambleStoneInningInfo, GambleStonePlayerBetRecord> OnGambleStoneWinNotify;

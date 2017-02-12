@@ -490,6 +490,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                 {
                     this.InsertToBuyQueue(buyOrder, null);
                 }
+                PlayerActionController.Instance.AddLog(alipayRecord.user_name, MetaData.ActionLog.ActionType.DelegateBuyStone, buyOrder.BuyUnit.TradeStoneHandCount, "");
                 BuyOrderAlipayPaySucceedNotify(alipayRecord.user_name, alipayRecord.out_trade_no);
             }
 
@@ -536,12 +537,12 @@ namespace SuperMinersServerApplication.Controller.Stack
             canceledSellOrder = null;
             OperResultObject result = new OperResultObject();
 
-            //开市期间不可撤单
-            if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
-            {
-                result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
-                return result;
-            }
+            ////开市期间不可撤单
+            //if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
+            //{
+            //    result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
+            //    return result;
+            //}
 
             canceledSellOrder = this._dicWaitingSellInfos[sellPrice].DeleteOrder(orderNumber);
             if (canceledSellOrder != null)
@@ -600,26 +601,22 @@ namespace SuperMinersServerApplication.Controller.Stack
             return result;
         }
 
-        public OperResultObject PlayerCancelBuyStone(string orderNumber, decimal sellPrice, CustomerMySqlTransaction myTrans, out StoneDelegateBuyOrderInfo canceledBuyOrder)
+        public OperResultObject PlayerCancelBuyStone(string orderNumber, decimal buyPrice, CustomerMySqlTransaction myTrans, out StoneDelegateBuyOrderInfo canceledBuyOrder)
         {
             canceledBuyOrder = null;
             OperResultObject result = new OperResultObject();
 
-            //开市期间不可撤单
-            if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
-            {
-                result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
-                return result;
-            }
-            //if (!this._dicWaitingBuyInfos.ContainsKey(sellPrice))
+            ////开市期间不可撤单
+            //if (this._todayTradeInfo.MarketState == StackMarketState.Opening)
             //{
-            //    LogHelper.Instance.AddErrorLog("", null);
-
-            //    result.OperResultCode = OperResult.RESULTCODE_FALSE;
+            //    result.OperResultCode = OperResult.RESULTCODE_STACK_CANCELORDER_FAILED_MARKETISOPENING;
             //    return result;
             //}
+            if (this._dicWaitingBuyInfos.ContainsKey(buyPrice))
+            {
+                canceledBuyOrder = this._dicWaitingBuyInfos[buyPrice].DeleteOrder(orderNumber);
+            }
 
-            canceledBuyOrder = this._dicWaitingBuyInfos[sellPrice].DeleteOrder(orderNumber);
             if (canceledBuyOrder != null)
             {
                 result = this._todayTradeInfo.DeleteBuyUnit(canceledBuyOrder.BuyUnit);

@@ -223,5 +223,8 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int GambleStone_OneBetStoneCount = 10;
 
+        [DataMember]
+        public int GravelMin = 10;
+
     }
 }

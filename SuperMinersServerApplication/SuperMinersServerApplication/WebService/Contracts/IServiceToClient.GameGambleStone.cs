@@ -42,5 +42,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         GambleStoneInningInfo GetGambleStoneInningInfo(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetLastMonthGambleStonePlayerBetRecord",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        GambleStonePlayerBetRecord[] GetLastMonthGambleStonePlayerBetRecord(string token);
     }
 }
