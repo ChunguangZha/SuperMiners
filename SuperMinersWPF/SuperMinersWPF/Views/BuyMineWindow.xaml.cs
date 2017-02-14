@@ -135,11 +135,7 @@ namespace SuperMinersWPF.Views
                 }
                 else if (this.cmbPayType.SelectedIndex == 1)
                 {
-                    payType = PayType.Diamand; 
-                }
-                else if (this.cmbPayType.SelectedIndex == 2)
-                {
-                    payType = PayType.Alipay; 
+                    payType = PayType.Credits; 
                 }
 
                 if (payType == PayType.RMB)
@@ -151,10 +147,10 @@ namespace SuperMinersWPF.Views
                         return;
                     }
                 }
-                else if (payType == PayType.Diamand)
+                else if (payType == PayType.Credits)
                 {
-                    decimal valueDiamond = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Diamonds_RMB;
-                    if (valueDiamond > GlobalData.CurrentUser.StockOfDiamonds)
+                    decimal valueShoppingCredits = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Credits_RMB;
+                    if (valueShoppingCredits > GlobalData.CurrentUser.ShoppingCreditsEnabled)
                     {
                         MyMessageBox.ShowInfo("账户余额不足，请充值。");
                         return;
@@ -176,11 +172,11 @@ namespace SuperMinersWPF.Views
 
         private void cmbPayType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (this.cmbPayType.SelectedIndex == 1)//钻石
+            if (this.cmbPayType.SelectedIndex == 1)//积分
             {
-                decimal valueDiamond = GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Diamonds_RMB;
+                decimal valueDiamond = GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Credits_RMB;
                 this.txtRMB_Mine.Text = ((int)Math.Ceiling(valueDiamond)).ToString();
-                this.txtPayUnit.Text = "钻石";
+                this.txtPayUnit.Text = "积分";
             }
             else
             {

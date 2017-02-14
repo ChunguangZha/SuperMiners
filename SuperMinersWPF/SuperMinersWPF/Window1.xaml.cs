@@ -406,5 +406,15 @@ namespace SuperMinersWPF
             }
         }
 
+        private void btnGetCredits_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnExchangeDiamonds_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

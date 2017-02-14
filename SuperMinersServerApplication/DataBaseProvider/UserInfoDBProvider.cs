@@ -287,7 +287,7 @@ namespace DataBaseProvider
                 }
 
                 cmdTextB += " `TempOutputStones`=@TempOutputStones,"
-                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward "
+                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward,`ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,`ShoppingCreditsFreezed`=@ShoppingCreditsFreezed "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
@@ -315,6 +315,8 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", playerFortune.FreezingDiamonds);
                 mycmd.Parameters.AddWithValue("@StoneSellQuan", playerFortune.StoneSellQuan);
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", playerFortune.FirstRechargeGoldCoinAward);
+                mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", playerFortune.ShoppingCreditsEnabled);
+                mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", playerFortune.ShoppingCreditsFreezed);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();
@@ -640,7 +642,7 @@ namespace DataBaseProvider
             {
                 string sqlText = "select * from playergravelinfo where `UserID`=@UserID ";
                 mycmd.CommandText = sqlText;
-                mycmd.Parameters.Add("@UserID", userID);
+                mycmd.Parameters.AddWithValue("@UserID", userID);
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);

@@ -66,6 +66,16 @@ namespace SuperMinersWPF.Views.Controls
                 gridWinnedColor.Children.Add(imgControl);
                 Grid.SetColumn(imgControl, col++);
                 Grid.SetRow(imgControl, row);
+                Panel.SetZIndex(imgControl, 10);
+
+                imgControl.RenderTransformOrigin = new Point(0.5, 0.5);
+
+                TransformGroup transGroup = new TransformGroup();
+                transGroup.Children.Add(new ScaleTransform(1,1));
+                transGroup.Children.Add(new SkewTransform());
+                transGroup.Children.Add(new RotateTransform());
+                transGroup.Children.Add(new TranslateTransform(0,0));
+                imgControl.RenderTransform = transGroup;
 
                 if (col > 9)
                 {
@@ -82,6 +92,8 @@ namespace SuperMinersWPF.Views.Controls
 
                 this._WinnedColorItem[i] = imgControl;
             }
+
+            CreateMoveWinnedColorItem();
         }
 
         public void AddEventHandlers()
@@ -170,50 +182,161 @@ namespace SuperMinersWPF.Views.Controls
                         default:
                             break;
                     }
-
-                    //if (inningInfo.InningIndex > 1)
-                    //{
-                    //    this._WinnedColorItem[inningInfo.InningIndex - 1].Source = null;
-                    //}
-                    this._WinnedColorItem[inningInfo.InningIndex - 1].Source = bmp;
-                    if (bmp == null)
-                    {
-                        this._WinnedColorItem[inningInfo.InningIndex - 1].Visibility = System.Windows.Visibility.Collapsed;
-                    }
-                    else
-                    {
-                        this._WinnedColorItem[inningInfo.InningIndex - 1].Visibility = System.Windows.Visibility.Visible;
-                    }
-
-                    this.imgCurrentWinnedColor.Source = bmp;
+                    
+                    //this.imgCurrentWinnedColor.Source = bmp;
                     this.imgSplitStone1.Visibility = System.Windows.Visibility.Visible;
                     this.imgSplitStone2.Visibility = System.Windows.Visibility.Visible;
                     this.imgSplitStone3.Visibility = System.Windows.Visibility.Visible;
                     this.imgSplitStone4.Visibility = System.Windows.Visibility.Visible;
+
+                    SetNewValueToStoryboard(inningInfo.InningIndex - 1, bmp);
                     Storyboard StoryboardOpenGamble = this.FindResource("StoryboardOpenGamble") as Storyboard;
                     if (StoryboardOpenGamble != null)
                     {
                         StoryboardOpenGamble.Begin();
                     }
-                    CreateMoveWinnedColorItem();
                 }
             }, null);
         }
 
+        private int _destImgLocationX = 42 * 4 / 2;
+        private int _destImgLocationY = (42 * 4 - 16) / 2;
+        Storyboard boardMoveWinnedItem = new Storyboard();
+        DoubleAnimationUsingKeyFrames keyFrameTransX = new DoubleAnimationUsingKeyFrames();
+        DoubleAnimationUsingKeyFrames keyFrameTransY = new DoubleAnimationUsingKeyFrames();
+        DoubleAnimationUsingKeyFrames keyFrameScaleX = new DoubleAnimationUsingKeyFrames();
+        DoubleAnimationUsingKeyFrames keyFrameScaleY = new DoubleAnimationUsingKeyFrames();
+
+        private void SetNewValueToStoryboard(int index, BitmapImage bmp)
+        {
+            int currentXPixel = 0;
+            int currentYPixel = 0;
+            int xIndex = 0;
+            int yIndex = 0;
+            if (index < 24)
+            {
+                yIndex = index / 6;
+                xIndex = index % 6 + 4;
+            }
+            else
+            {
+                yIndex = (index - 24) / 10 + 4;
+                xIndex = (index - 24) % 10;
+            }
+            currentXPixel = xIndex * 42 + 21;
+            currentYPixel = yIndex * 42 + 21;
+
+            int offsetX = _destImgLocationX - currentXPixel;
+            int offsetY = _destImgLocationY - currentYPixel;
+
+            Console.WriteLine("index = " + index + "; xIndex = " + xIndex + "; yIndex = " + yIndex + "; currentXPixel = " + currentXPixel + "; currentYPixel = " + currentYPixel + "; offsetX = " + offsetX + "; offsetY = " + offsetY);
+
+
+            Storyboard.SetTarget(keyFrameTransX, this._WinnedColorItem[index]);
+            keyFrameTransX.KeyFrames[0].Value = offsetX;
+            keyFrameTransX.KeyFrames[1].Value = offsetX;
+
+            Storyboard.SetTarget(keyFrameTransY, this._WinnedColorItem[index]);
+            keyFrameTransY.KeyFrames[0].Value = offsetY;
+            keyFrameTransY.KeyFrames[1].Value = offsetY;
+
+            Storyboard.SetTarget(keyFrameScaleX, this._WinnedColorItem[index]);
+            Storyboard.SetTarget(keyFrameScaleY, this._WinnedColorItem[index]);
+
+            this._WinnedColorItem[index].Source = bmp;
+            if (bmp == null)
+            {
+                this._WinnedColorItem[index].Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                this._WinnedColorItem[index].Visibility = System.Windows.Visibility.Visible;
+            }
+            boardMoveWinnedItem.Begin();
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="index">从0开始</param>
+        /// <returns></returns>
         private Storyboard CreateMoveWinnedColorItem()
         {
-            if (this.gridWinnedColor.ActualHeight == 0 || double.IsNaN(this.gridWinnedColor.ActualHeight) || double.IsInfinity(this.gridWinnedColor.ActualHeight))
+            //Storyboard.SetTarget(keyFrameTransX, this._WinnedColorItem[index]);
+            Storyboard.SetTargetProperty(keyFrameTransX, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)"));
+            keyFrameTransX.KeyFrames.Add(new EasingDoubleKeyFrame()
             {
-                return null;
-            }
-            Storyboard board = new Storyboard();
-            DoubleAnimationUsingKeyFrames keyFrames = new DoubleAnimationUsingKeyFrames();
+                KeyTime = TimeSpan.FromSeconds(0),
+                Value = 0
+            });
+            keyFrameTransX.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(4),
+                Value = 0
+            });
+            keyFrameTransX.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(5),
+                Value = 0
+            });
+            boardMoveWinnedItem.Children.Add(keyFrameTransX);
 
-            Console.WriteLine(this.gridWinnedColor.ActualHeight);
-            Console.WriteLine(App.GambleStoneVMObject.CurrentRoundInfo.FinishedInningCount);
-            Console.WriteLine(this._WinnedColorItem[App.GambleStoneVMObject.CurrentRoundInfo.FinishedInningCount - 1].ActualHeight);
+            Storyboard.SetTargetProperty(keyFrameTransY, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)"));
+            keyFrameTransY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(0),
+                Value = 0
+            });
+            keyFrameTransY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(4),
+                Value = 0
+            });
+            keyFrameTransY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(5),
+                Value = 0
+            });
+            boardMoveWinnedItem.Children.Add(keyFrameTransY);
+            
+            Storyboard.SetTargetProperty(keyFrameScaleX, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"));
+            keyFrameScaleX.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(0),
+                Value = 3
+            });
+            keyFrameScaleX.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(4),
+                Value = 3
+            });
+            keyFrameScaleX.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(5),
+                Value = 1
+            });
+            boardMoveWinnedItem.Children.Add(keyFrameScaleX);
 
-            return board;
+            Storyboard.SetTargetProperty(keyFrameScaleY, new PropertyPath("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"));
+            keyFrameScaleY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(0),
+                Value = 3
+            });
+            keyFrameScaleY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(4),
+                Value = 3
+            });
+            keyFrameScaleY.KeyFrames.Add(new EasingDoubleKeyFrame()
+            {
+                KeyTime = TimeSpan.FromSeconds(5),
+                Value = 1
+            });
+            boardMoveWinnedItem.Children.Add(keyFrameScaleY);
+
+            return boardMoveWinnedItem;
         }
 
         private void Storyboard_Completed(object sender, EventArgs e)

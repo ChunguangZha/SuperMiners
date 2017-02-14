@@ -47,6 +47,12 @@ namespace MetaData.SystemConfig
         public decimal Diamonds_RMB = 1;
 
         /// <summary>
+        /// 多少积分等价于1RMB
+        /// </summary>
+        [DataMember]
+        public decimal Credits_RMB = 1;
+
+        /// <summary>
         /// 每个矿工每小时生产矿石数
         /// </summary>
         [DataMember]

@@ -44,11 +44,11 @@
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="QQ" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Name="txtQQ" Margin="5" MaxLength="15"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="支付宝账户" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" Name="txtAlipayAccount" Margin="5" MaxLength="30"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" Name="txtAlipayAccount" IsEnabled="False" Margin="5" MaxLength="30"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="支付宝真实姓名" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" Name="txtAlipayRealName" Margin="5" MaxLength="15"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Name="txtAlipayRealName" IsEnabled="False" Margin="5" MaxLength="15"/>
                     <TextBlock Grid.Row="7" Grid.Column="0" Text="身份证号" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-                    <TextBox Grid.Row="7" Grid.Column="1" Name="txtIDCardNo" Margin="5" MaxLength="18"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Name="txtIDCardNo" IsEnabled="False" Margin="5" MaxLength="18"/>
                     <TextBlock Grid.Row="8" Text="提示" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="5"/>
                     <TextBlock Grid.Row="8" Grid.Column="1" Name="txtMessage" TextWrapping="Wrap" Margin="5" Foreground="Red"/>
                 </Grid>

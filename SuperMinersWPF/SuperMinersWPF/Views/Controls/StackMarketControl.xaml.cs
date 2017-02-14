@@ -119,10 +119,6 @@ namespace SuperMinersWPF.Views
             }
             else if (this.cmbPayType.SelectedIndex == 1)
             {
-                paytype = PayType.Diamand;
-            }
-            else if (this.cmbPayType.SelectedIndex == 2)
-            {
                 paytype = PayType.Alipay;
             }
             else

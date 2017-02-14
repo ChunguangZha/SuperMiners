@@ -71,6 +71,8 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("FreezingDiamonds");
                 NotifyPropertyChange("SellableDiamonds");
                 NotifyPropertyChange("StoneSellQuan");
+                NotifyPropertyChange("ShoppingCreditsEnabled");
+                NotifyPropertyChange("ShoppingCreditsFreezed");
 
                 NotifyPropertyChange("GravelVisible");
                 NotifyPropertyChange("Gravel");
@@ -387,6 +389,22 @@ namespace SuperMinersWPF.Models
         public int StoneSellQuan
         {
             get { return this._parentObject.FortuneInfo.StoneSellQuan; }
+        }
+
+        public int ShoppingCreditsEnabled
+        {
+            get
+            {
+                return this._parentObject.FortuneInfo.ShoppingCreditsEnabled;
+            }
+        }
+
+        public int ShoppingCreditsFreezed
+        {
+            get
+            {
+                return this._parentObject.FortuneInfo.ShoppingCreditsFreezed;
+            }
         }
 
         public Visibility GravelVisible

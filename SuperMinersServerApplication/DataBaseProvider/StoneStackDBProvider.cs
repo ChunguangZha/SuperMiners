@@ -323,15 +323,47 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string cmdTextA = "update superminers.notfinishedstonedelegatesellorderinfo set `SellState`=@SellState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
+                //string cmdTextA = "update superminers.notfinishedstonedelegatesellorderinfo set `SellState`=@SellState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
-                mycmd.CommandText = cmdTextA;
-                mycmd.Parameters.AddWithValue("@SellState", (int)sellOrder.SellState);
-                mycmd.Parameters.AddWithValue("@FinishedTime", sellOrder.FinishedTime.ToDateTime());
+                //mycmd.CommandText = cmdTextA;
+                //mycmd.Parameters.AddWithValue("@SellState", (int)sellOrder.SellState);
+                //mycmd.Parameters.AddWithValue("@FinishedTime", sellOrder.FinishedTime.ToDateTime());
+                //mycmd.Parameters.AddWithValue("@OrderNumber", sellOrder.OrderNumber);
+
+                //mycmd.ExecuteNonQuery();
+                //return true;
+
+
+                string cmdTextA = "insert into stonedelegatesellordercanceledinfo " +
+                    "(`OrderNumber`, `UserID`, `Price`, `TradeStoneHandCount`, `FinishedStoneTradeHandCount`, `SellState`, `DelegateTime`, `IsSubOrder`, `ParentOrderNumber`, `FinishedTime` ) " +
+                    " values " +
+                    "(@OrderNumber, @UserID, @Price, @TradeStoneHandCount, @FinishedStoneTradeHandCount, @SellState, @DelegateTime, @IsSubOrder, @ParentOrderNumber, @FinishedTime); ";
+
+                string cmdTextB = "delete from notfinishedstonedelegatesellorderinfo where `OrderNumber` = @OrderNumber ;";
+
+                mycmd.CommandText = cmdTextA + cmdTextB;
                 mycmd.Parameters.AddWithValue("@OrderNumber", sellOrder.OrderNumber);
+                mycmd.Parameters.AddWithValue("@UserID", sellOrder.UserID);
+                mycmd.Parameters.AddWithValue("@Price", sellOrder.SellUnit.Price);
+                mycmd.Parameters.AddWithValue("@TradeStoneHandCount", sellOrder.SellUnit.TradeStoneHandCount);
+                mycmd.Parameters.AddWithValue("@FinishedStoneTradeHandCount", sellOrder.FinishedStoneTradeHandCount);
+                mycmd.Parameters.AddWithValue("@SellState", (int)sellOrder.SellState);
+                mycmd.Parameters.AddWithValue("@DelegateTime", sellOrder.DelegateTime.ToDateTime());
+                mycmd.Parameters.AddWithValue("@IsSubOrder", sellOrder.IsSubOrder);
+                if (sellOrder.ParentOrderNumber == null)
+                {
+                    mycmd.Parameters.AddWithValue("@ParentOrderNumber", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@ParentOrderNumber", sellOrder.ParentOrderNumber);
+                }
+                mycmd.Parameters.AddWithValue("@FinishedTime", sellOrder.FinishedTime);
 
+                //myconn.Open();
                 mycmd.ExecuteNonQuery();
                 return true;
+
             }
             finally
             {
@@ -616,13 +648,48 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string cmdTextA = "update superminers.notfinishedstonedelegatebuyorderinfo set `BuyState`=@BuyState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
+                //string cmdTextA = "update superminers.notfinishedstonedelegatebuyorderinfo set `BuyState`=@BuyState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
-                mycmd.CommandText = cmdTextA;
-                mycmd.Parameters.AddWithValue("@BuyState", (int)buyOrder.BuyState);
-                mycmd.Parameters.AddWithValue("@FinishedTime", buyOrder.FinishedTime.ToDateTime());
+                //mycmd.CommandText = cmdTextA;
+                //mycmd.Parameters.AddWithValue("@BuyState", (int)buyOrder.BuyState);
+                //mycmd.Parameters.AddWithValue("@FinishedTime", buyOrder.FinishedTime.ToDateTime());
+                //mycmd.Parameters.AddWithValue("@OrderNumber", buyOrder.OrderNumber);
+
+                //mycmd.ExecuteNonQuery();
+                //return true;
+
+
+                //mycmd = myconn.CreateCommand();
+
+                string cmdTextA = "insert into stonedelegatebuyordercanceledinfo " +
+                    "(`OrderNumber`, `UserID`, `Price`, `TradeStoneHandCount`, `PayType`, `FinishedStoneTradeHandCount`, `BuyState`, `DelegateTime`, `IsSubOrder`, `ParentOrderNumber`, `FinishedTime`, `AwardGoldCoin` ) " +
+                    " values " +
+                    "(@OrderNumber, @UserID, @Price, @TradeStoneHandCount, @PayType, @FinishedStoneTradeHandCount, @BuyState, @DelegateTime, @IsSubOrder, @ParentOrderNumber, @FinishedTime, @AwardGoldCoin); ";
+
+                string cmdTextB = "delete from notfinishedstonedelegatebuyorderinfo where `OrderNumber` = @OrderNumber ;";
+
+                mycmd.CommandText = cmdTextA + cmdTextB;
                 mycmd.Parameters.AddWithValue("@OrderNumber", buyOrder.OrderNumber);
+                mycmd.Parameters.AddWithValue("@UserID", buyOrder.UserID);
+                mycmd.Parameters.AddWithValue("@Price", buyOrder.BuyUnit.Price);
+                mycmd.Parameters.AddWithValue("@TradeStoneHandCount", buyOrder.BuyUnit.TradeStoneHandCount);
+                mycmd.Parameters.AddWithValue("@PayType", (int)buyOrder.PayType);
+                mycmd.Parameters.AddWithValue("@FinishedStoneTradeHandCount", buyOrder.FinishedStoneTradeHandCount);
+                mycmd.Parameters.AddWithValue("@BuyState", (int)buyOrder.BuyState);
+                mycmd.Parameters.AddWithValue("@DelegateTime", buyOrder.DelegateTime.ToDateTime());
+                mycmd.Parameters.AddWithValue("@IsSubOrder", buyOrder.IsSubOrder);
+                if (buyOrder.ParentOrderNumber == null)
+                {
+                    mycmd.Parameters.AddWithValue("@ParentOrderNumber", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@ParentOrderNumber", buyOrder.ParentOrderNumber);
+                }
+                mycmd.Parameters.AddWithValue("@FinishedTime", buyOrder.FinishedTime.ToDateTime());
+                mycmd.Parameters.AddWithValue("@AwardGoldCoin", buyOrder.AwardGoldCoin);
 
+                //myconn.Open();
                 mycmd.ExecuteNonQuery();
                 return true;
             }

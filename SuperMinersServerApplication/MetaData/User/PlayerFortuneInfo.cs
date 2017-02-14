@@ -145,6 +145,18 @@ namespace MetaData.User
         [DataMember]
         public bool FirstRechargeGoldCoinAward { get; set; }
 
+        /// <summary>
+        /// 可用积分
+        /// </summary>
+        [DataMember]
+        public int ShoppingCreditsEnabled { get; set; }
+
+        /// <summary>
+        /// 冻结积分
+        /// </summary>
+        [DataMember]
+        public int ShoppingCreditsFreezed { get; set; }
+
         public PlayerFortuneInfo CopyTo()
         {
             PlayerFortuneInfo infoB = new PlayerFortuneInfo()
@@ -166,7 +178,9 @@ namespace MetaData.User
                 TotalProducedStonesCount = this.TotalProducedStonesCount,
                 UserName = this.UserName,
                 FirstRechargeGoldCoinAward = this.FirstRechargeGoldCoinAward,
-                StoneSellQuan = this.StoneSellQuan
+                StoneSellQuan = this.StoneSellQuan,
+                ShoppingCreditsEnabled = this.ShoppingCreditsEnabled,
+                ShoppingCreditsFreezed = this.ShoppingCreditsFreezed
             };
 
             return infoB;
@@ -192,6 +206,8 @@ namespace MetaData.User
             this.UserName = fortuneInfo.UserName;
             this.FirstRechargeGoldCoinAward = fortuneInfo.FirstRechargeGoldCoinAward;
             this.StoneSellQuan = fortuneInfo.StoneSellQuan;
+            this.ShoppingCreditsEnabled = fortuneInfo.ShoppingCreditsEnabled;
+            this.ShoppingCreditsFreezed = fortuneInfo.ShoppingCreditsFreezed;
         }
     }
 }

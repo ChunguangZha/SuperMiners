@@ -50,6 +50,7 @@ namespace MetaData.Trade
         Alipay = 0,
         RMB = 1,
         GoldCoin = 2,
-        Diamand = 3
+        Diamand = 3,
+        Credits = 4
     }
 }

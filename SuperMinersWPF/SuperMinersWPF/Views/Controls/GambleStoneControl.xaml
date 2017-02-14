@@ -73,14 +73,14 @@
 	</UserControl.Triggers>-->
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="203*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="197*"/>
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="50"/>
-                <RowDefinition Height="166*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -171,7 +171,7 @@
                 </Border>
             </Grid>
             <Border Grid.Row="2" Margin="5" BorderThickness="1" BorderBrush="{StaticResource GridColor}">
-                <Grid Name="gridWinnedColor">
+                <Grid Name="gridWinnedColor" Width="420" Height="336">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
@@ -210,79 +210,91 @@
                     <Border Grid.Column="6" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="7" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
                     <Border Grid.Column="8" Grid.RowSpan="8" Width="1" BorderBrush="{StaticResource GridColor}" BorderThickness="1" HorizontalAlignment="Right"/>
-                    <Grid x:Name="panelAnimation" Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Margin="5">
+                    <Grid x:Name="panelAnimation" Grid.RowSpan="4" Grid.ColumnSpan="4" Background="Black" Opacity="1" Panel.ZIndex="0">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="16"/>
                         </Grid.RowDefinitions>
-                        <Image Name="imgCurrentWinnedColor" Visibility="{Binding CurrentInningInfo.BitWinnedColorVisible}" Margin="20" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform ScaleX="0.3" ScaleY="0.3"/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="90" Y="-50"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <Image Name="imgSrcStone" Visibility="{Binding CurrentInningInfo.SrcStoneVisible}" Margin="10" Opacity="1" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
-                        <Image Name="imgSplitStone1" Margin="10" Source="/SuperMinersWPF;component/Resources/s1.png" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="0" Y="0"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <Image Name="imgSplitStone2" Margin="10" Source="/SuperMinersWPF;component/Resources/s2.png" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="0" Y="0"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <Image Name="imgSplitStone3" Margin="10" Source="/SuperMinersWPF;component/Resources/s3.png" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="0" Y="0"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <Image Name="imgSplitStone4" Margin="10" Source="/SuperMinersWPF;component/Resources/s4.png" RenderTransformOrigin="0.5,0.5">
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="0" Y="0"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-                        <Image Name="imgFlash" Margin="10" Source="/SuperMinersWPF;component/Resources/flash.png" RenderTransformOrigin="0.5,0.5" >
-                            <Image.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform X="-150" Y="150"/>
-                                </TransformGroup>
-                            </Image.RenderTransform>
-                        </Image>
-
+                        <Grid Margin="8,0">
+                            <!--<Image Name="imgCurrentWinnedColor" Visibility="Collapsed" Margin="20" RenderTransformOrigin="0,0" Source="/SuperMinersWPF;component/Resources/gambleblue.png">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                        <SkewTransform/>
+                                        <RotateTransform/>
+                                        <TranslateTransform X="-0" Y="0"/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>-->
+                        </Grid>
                         <TextBlock Grid.Row="1" HorizontalAlignment="Center">
                             <Run Text="{Binding CurrentInningInfo.InningIndex, Mode=OneWay}"/>
                             <Run Text="局"/>
                             <Run Text="{Binding CurrentInningInfo.CountDownSecondsText, Mode=OneWay}"/>
                         </TextBlock>
                     </Grid>
+
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgSrcStone" Visibility="{Binding CurrentInningInfo.SrcStoneVisible}" Margin="18,10,18,26" Opacity="1" Panel.ZIndex="100" Source="/SuperMinersWPF;component/Resources/srcstone.png"/>
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgSplitStone1" Margin="18,10,18,26" Source="/SuperMinersWPF;component/Resources/s1.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="100">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0" Y="0"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgSplitStone2" Margin="18,10,18,26" Source="/SuperMinersWPF;component/Resources/s2.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="100">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0" Y="0"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgSplitStone3" Margin="18,10,18,26" Source="/SuperMinersWPF;component/Resources/s3.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="100">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0" Y="0"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgSplitStone4" Margin="18,10,18,26" Source="/SuperMinersWPF;component/Resources/s4.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="100">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="0" Y="0"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Grid.RowSpan="4" Grid.ColumnSpan="4" Name="imgFlash" Margin="18,10,18,26" Source="/SuperMinersWPF;component/Resources/flash.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="100">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-150" Y="150"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                    <Image Grid.Row="5" Grid.Column="4" Margin="5" Visibility="Collapsed" Source="/SuperMinersWPF;component/Resources/gambleyellow.png" RenderTransformOrigin="0.5,0.5" Panel.ZIndex="0">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform X="-105" Y="-155"/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
                 </Grid>
             </Border>
             <Grid Grid.Row="3">
@@ -339,22 +351,22 @@
             <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding CurrentInningPlayerBetRecord.BetGreenStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding CurrentInningPlayerBetRecord.BetBlueStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="1" Grid.Column="3" Text="{Binding CurrentInningPlayerBetRecord.BetPurpleStoneText, Mode=OneWay}" Margin="5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="2" Grid.Column="0" Name="btnBetRed" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetRed_Click">
+            <Button Grid.Row="2" Grid.Column="0" Name="btnBetRed" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetRed_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gamblered.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="1" Name="btnBetGreen" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetGreen_Click">
+            <Button Grid.Row="2" Grid.Column="1" Name="btnBetGreen" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetGreen_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gamblegreen.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="2" Name="btnBetBlue" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetBlue_Click">
+            <Button Grid.Row="2" Grid.Column="2" Name="btnBetBlue" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetBlue_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gambleblue.png"/>
                 </Button.Content>
             </Button>
-            <Button Grid.Row="2" Grid.Column="3" Name="btnBetPurple" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Width="64" Height="64" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetPurple_Click">
+            <Button Grid.Row="2" Grid.Column="3" Name="btnBetPurple" IsEnabled="{Binding CurrentInningInfo.BetInButtonEnable}" Margin="15" Background="Transparent" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBetPurple_Click">
                 <Button.Content>
                     <Image Source="/SuperMinersWPF;component/Resources/gambleyellow.png"/>
                 </Button.Content>
@@ -377,12 +389,11 @@
             </TextBlock>
             <StackPanel Grid.Row="4" Grid.ColumnSpan="4" Orientation="Horizontal" Margin="3" Background="Brown">
                 <TextBlock Text="每次下注矿石：" Margin="10,5" Foreground="White"/>
-                <RadioButton Name="chk10Stones" Content="10矿石" IsChecked="True" GroupName="Times" Margin="10,5" Foreground="White"/>
-                <RadioButton Name="chk100Stones" Content="100矿石" GroupName="Times" Margin="10,5" Foreground="White"/>
-                <RadioButton Name="chk1000Stones" Content="1000矿石" GroupName="Times" Margin="10,5" Foreground="White"/>
+                <RadioButton Name="chk10Stones" Content="10矿石" IsChecked="True" GroupName="Times" Margin="5" Foreground="White"/>
+                <RadioButton Name="chk100Stones" Content="100矿石" GroupName="Times" Margin="5" Foreground="White"/>
+                <RadioButton Name="chk1000Stones" Content="1000矿石" GroupName="Times" Margin="5" Foreground="White"/>
             </StackPanel>
-            <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <Button Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Name="btnViewMyBetRecord" Content="查看我的下注记录>" Foreground="#ffdc15" FontSize="14" Margin="5" VerticalAlignment="Center" BorderThickness="0" Background="{x:Null}" FontStyle="Italic" Click="btnViewMyBetRecord_Click"/>
+            <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <TextBlock Grid.Row="6" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
         </Grid>
     </Grid>

@@ -22,10 +22,10 @@ namespace DataBaseProvider
                 cmdTextA = "insert into deletedplayerinfo " +
                     "(`UserName`, `NickName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `LastLoginTime`, `LastLogOutTime`, `ReferrerUserName`, `LastLoginIP`, `LastLoginMac`, " +
                     " `Exp`, `CreditValue`, `RMB`, `FreezingRMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, `TempOutputStonesStartTime`, `TempOutputStones`, " +
-                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`, `DeleteTime` ) values " +
+                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`,`ShoppingCreditsEnabled`,Shopping`CreditsFreezed`, `DeleteTime` ) values " +
                     " (@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, @LastLoginTime, @LastLogOutTime, @ReferrerUserName, @LastLoginIP, @LastLoginMac, " +
                     " @Exp, @CreditValue, @RMB, @FreezingRMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, @TempOutputStonesStartTime, @TempOutputStones, " +
-                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward, @DeleteTime ); ";
+                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,@ShoppingCreditsEnabled,@ShoppingCreditsFreezed, @DeleteTime ); ";
 
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
                 mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(player.SimpleInfo.NickName));
@@ -64,6 +64,8 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", player.FortuneInfo.FreezingDiamonds);
                 mycmd.Parameters.AddWithValue("@StoneSellQuan", player.FortuneInfo.StoneSellQuan);
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", player.FortuneInfo.FirstRechargeGoldCoinAward);
+                mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", player.FortuneInfo.ShoppingCreditsEnabled);
+                mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", player.FortuneInfo.ShoppingCreditsFreezed);
                 mycmd.Parameters.AddWithValue("@DeleteTime", time);
 
                 mycmd.CommandText = cmdTextA;
@@ -77,50 +79,50 @@ namespace DataBaseProvider
             }
         }
 
-        public void AddDeletedPlayer(List<PlayerInfo> players)
-        {
-            MySqlConnection myconn = null;
-            MySqlCommand mycmd = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
-                mycmd = myconn.CreateCommand();
+        //public void AddDeletedPlayer(List<PlayerInfo> players)
+        //{
+        //    MySqlConnection myconn = null;
+        //    MySqlCommand mycmd = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
+        //        mycmd = myconn.CreateCommand();
 
-                StringBuilder builder = new StringBuilder();
-                builder.Append("insert into deletedplayerinfo values ");
+        //        StringBuilder builder = new StringBuilder();
+        //        builder.Append("insert into deletedplayerinfo values ");
 
-                for (int i = 0; i < players.Count; i++)
-                {
-                    builder.Append("(");
+        //        for (int i = 0; i < players.Count; i++)
+        //        {
+        //            builder.Append("(");
 
 
 
-                    builder.Append(")");
+        //            builder.Append(")");
 
-                    if (i != players.Count)
-                    {
-                        builder.Append(" , ");
-                    }
-                }
-                mycmd.CommandText = builder.ToString();
+        //            if (i != players.Count)
+        //            {
+        //                builder.Append(" , ");
+        //            }
+        //        }
+        //        mycmd.CommandText = builder.ToString();
 
-                mycmd.ExecuteNonQuery();
+        //        mycmd.ExecuteNonQuery();
 
-            }
-            finally
-            {
-                if (mycmd != null)
-                {
-                    mycmd.Dispose();
-                }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
-                }
-            }
-        }
+        //    }
+        //    finally
+        //    {
+        //        if (mycmd != null)
+        //        {
+        //            mycmd.Dispose();
+        //        }
+        //        if (myconn != null)
+        //        {
+        //            myconn.Close();
+        //            myconn.Dispose();
+        //        }
+        //    }
+        //}
 
         public PlayerInfo[] GetDeletedPlayers()
         {

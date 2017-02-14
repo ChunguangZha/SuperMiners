@@ -232,6 +232,8 @@ namespace DataBaseProvider
                 player.FortuneInfo.StockOfDiamonds = Convert.ToDecimal(dt.Rows[i]["StockOfDiamonds"]);
                 player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
                 player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
+                player.FortuneInfo.ShoppingCreditsEnabled = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsEnabled"]);
+                player.FortuneInfo.ShoppingCreditsFreezed = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsFreezed"]);
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 player.GravelInfo = new PlayerGravelInfo();
