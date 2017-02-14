@@ -311,6 +311,35 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buyRecord"></param>
+        /// <param name="myTrans"></param>
+        /// <returns></returns>
+        public int BuyMineByShoppingCredits(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                int valueCredits = buyRecord.SpendRMB * GlobalConfig.GameConfig.Credits_RMB;
+                if (valueCredits > BasePlayer.FortuneInfo.ShoppingCreditsEnabled)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
+                BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
+                BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FALSE;
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        /// <summary>
         /// 矿山只能用RMB购买。0表示账户余额不足；-1表示操作失败；minesCount表示成功。
         /// </summary>
         /// <param name="minesCount"></param>
@@ -394,6 +423,33 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_FALSE;
                 }
                 DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(expRecord, myTrans);
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        public int RechargeGoldCoinByShoppingCredits(decimal rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
+        {
+            if (rmbValue <= 0)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            lock (_lockFortuneAction)
+            {
+                int valueCredits = (int)Math.Ceiling(rmbValue * GlobalConfig.GameConfig.Credits_RMB);
+                if (valueCredits > BasePlayer.FortuneInfo.ShoppingCreditsEnabled)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
+                BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
+                if (!DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, myTrans))
+                {
+                    RefreshFortune();
+                    return OperResult.RESULTCODE_FALSE;
+                }
 
                 return OperResult.RESULTCODE_TRUE;
             }

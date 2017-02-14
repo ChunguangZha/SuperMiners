@@ -218,7 +218,7 @@ namespace SuperMinersWPF.ViewModels
                     GambleStoneInningFinished(inningInfo, maxWinner);
                 }
 
-                if (!string.IsNullOrEmpty(this.CurrentInningPlayerBetRecord.InningID))
+                //if (!string.IsNullOrEmpty(this.CurrentInningPlayerBetRecord.InningID))
                 {
                     this.CurrentInningPlayerBetRecord.Clear();
                     App.UserVMObject.AsyncGetPlayerInfo();

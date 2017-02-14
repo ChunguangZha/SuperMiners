@@ -283,7 +283,7 @@ namespace SuperMinersWPF.Wcf.Channel
         {
             try
             {
-                LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1. " + req.Request.RequestUri.ToString(), null);
+                //LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 1. " + req.Request.RequestUri.ToString(), null);
 
                 IAsyncResult asyncResponseResult = req.Request.BeginGetResponse(new AsyncCallback(result =>
                 {
@@ -291,7 +291,7 @@ namespace SuperMinersWPF.Wcf.Channel
                     try
                     {
                         resp = req.Request.EndGetResponse(result);
-                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 2", null);
+                        //LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 2", null);
 
                     }
                     catch (Exception ex)
@@ -314,7 +314,7 @@ namespace SuperMinersWPF.Wcf.Channel
                     try
                     {
                         resultData = CryptEncoder.Read(resp.GetResponseStream());
-                        LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 5", null);
+                        //LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 5", null);
 
                     }
                     catch (Exception ex)
@@ -335,7 +335,7 @@ namespace SuperMinersWPF.Wcf.Channel
                         return;
                     }
 
-                    LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 9", null);
+                    //LogHelper.Instance.AddErrorLog("RestClient ReceiveCallback 9", null);
 
                     if (null != resultHandler)
                     {

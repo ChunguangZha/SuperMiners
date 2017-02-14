@@ -217,6 +217,26 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
+        public int CheckUserNickName(string nickName)
+        {
+            if (string.IsNullOrEmpty(nickName))
+            {
+                return OperResult.RESULTCODE_PARAM_INVALID;
+            }
+            int count = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
+            if (count == 0)
+            {
+                count = DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayerCountByPlayerNickName(nickName);
+                if (count == 0)
+                {
+                    //不存在
+                    return OperResult.RESULTCODE_FALSE;
+                }
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
         /// </summary>
@@ -255,7 +275,10 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
             }
-
+            if (this.CheckUserNickName(nickName) == OperResult.RESULTCODE_TRUE)
+            {
+                return OperResult.RESULTCODE_REGISTER_NICKNAME_EXIST;
+            }
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
             //if (userCount > 0)
             //{
@@ -953,6 +976,17 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.BuyMiner(minersCount);
         }
 
+        public int BuyMineByShoppingCredits(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return playerrun.BuyMineByShoppingCredits(buyRecord, myTrans);
+        }
+
         public int BuyMineByDiamond(MinesBuyRecord buyRecord, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(buyRecord.UserName);
@@ -993,6 +1027,17 @@ namespace SuperMinersServerApplication.Controller
             }
 
             return value;
+        }
+
+        public int RechargeGoldCoinByShoppingCredits(string userName, decimal rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)
+        {
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                return OperResult.RESULTCODE_FALSE;
+            }
+
+            return playerrun.RechargeGoldCoinByShoppingCredits(rmbValue, goldcoinValue, myTrans);
         }
 
         public int RechargeGoldCoinByDiamond(string userName, decimal rmbValue, int goldcoinValue, CustomerMySqlTransaction myTrans)

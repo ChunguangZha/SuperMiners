@@ -142,7 +142,7 @@
                 <Button Grid.Row="3" Grid.Column="2" x:Name="btnGetMoney" Content="提现" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetMoney_Click"/>
                 <TextBlock Grid.Row="4" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.GoldCoin, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding GoldCoin, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="4" Grid.Column="2" x:Name="btnGoldCoinRecharge" Content="充值" Style="{StaticResource UserInfoButtonStyle}" Click="btnGoldCoinRecharge_Click"/>
+                <Button Grid.Row="4" Grid.Column="2" x:Name="btnGoldCoinRecharge" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnGoldCoinRecharge_Click"/>
                 <TextBlock Grid.Row="5" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="储量"/></TextBlock>
                 <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WorkableStonesReserversText, Mode=OneWay, StringFormat='0.00'}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinesBuy" Content="勘探" IsEnabled="{Binding StoneReservesBuyable, Mode=OneWay}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinesBuy_Click"/>

@@ -125,11 +125,7 @@ namespace SuperMinersWPF.Views
             }
             else if (this.cmbPayType.SelectedIndex == 1)
             {
-                payType = PayType.Diamand;
-            }
-            else if (this.cmbPayType.SelectedIndex == 2)
-            {
-                payType = PayType.Alipay;
+                payType = PayType.Credits;
             }
 
             return payType;
@@ -181,6 +177,18 @@ namespace SuperMinersWPF.Views
                     spendRMB = payMoney;
                     GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
                     this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+                }
+                else if (payType == PayType.Credits)
+                {
+                    spendRMB = payMoney;
+                    GainGoldCoin = spendRMB * GlobalData.GameConfig.RMB_GoldCoin;
+                    this.txtGainGoldCoin.Text = GainGoldCoin.ToString();
+
+                    if (payMoney > GlobalData.CurrentUser.ShoppingCreditsEnabled)
+                    {
+                        MyMessageBox.ShowInfo("账户余额不足，请选择其它支付方式。");
+                        return;
+                    }
                 }
 
                 GlobalData.Client.GoldCoinRecharge((int)GainGoldCoin, (int)payType);

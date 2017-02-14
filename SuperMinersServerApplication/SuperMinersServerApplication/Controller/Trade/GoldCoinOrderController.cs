@@ -70,8 +70,50 @@ namespace SuperMinersServerApplication.Controller
                 result.ResultCode = OperResult.RESULTCODE_TRUE;
                 result.AlipayLink = OrderController.Instance.CreateAlipayLink(userName, record.OrderNumber, "迅灵金币", record.SpendRMB, "金币可用于购买矿工");
             }
+            else if (payType == (int)PayType.Credits)
+            {
+                result = RechargeGoldCoinByShoppingCredits(record);
+            }
 
             return result;
+        }
+
+        private TradeOperResult RechargeGoldCoinByShoppingCredits(GoldCoinRechargeRecord record)
+        {
+            TradeOperResult result = new TradeOperResult();
+            CustomerMySqlTransaction myTrans = null;
+            try
+            {
+                myTrans = MyDBHelper.Instance.CreateTrans();
+
+                int value = PlayerController.Instance.RechargeGoldCoinByShoppingCredits(record.UserName, record.SpendRMB, (int)record.GainGoldCoin, myTrans);
+                result.ResultCode = value;
+                if (value == OperResult.RESULTCODE_TRUE)
+                {
+                    record.PayTime = DateTime.Now;
+                    DBProvider.GoldCoinRecordDBProvider.SaveFinalGoldCoinRechargeRecord(record, myTrans);
+                }
+
+                myTrans.Commit();
+                PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, record.GainGoldCoin,
+                    "充值了 " + record.GainGoldCoin.ToString() + " 的金币");
+                return result;
+            }
+            catch (Exception exc)
+            {
+                myTrans.Rollback();
+                LogHelper.Instance.AddErrorLog("玩家[" + record.UserName + "] 用灵币购买金币异常", exc);
+                result.ResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return result;
+            }
+            finally
+            {
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
+
+            }
         }
 
         private TradeOperResult RechargeGoldCoinByDiamond(GoldCoinRechargeRecord record)

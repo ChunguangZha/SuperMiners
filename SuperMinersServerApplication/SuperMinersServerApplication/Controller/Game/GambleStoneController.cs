@@ -145,7 +145,6 @@ namespace SuperMinersServerApplication.Controller.Game
                             break;
                         }
 
-                        //暂停5秒，让客户端显示开奖效果。
                         if (this.RoundInfo.FinishedInningCount >= GlobalConfig.GameConfig.GambleStone_Round_InningCount)
                         {
                             this.RoundInfo = this.CreateNewRound(this.RoundInfo);
