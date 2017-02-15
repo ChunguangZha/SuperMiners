@@ -63,12 +63,12 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region GetPlayerselfBetInfo
 
-        public event EventHandler<WebInvokeEventArgs<PlayerBetInfo[]>> GetPlayerselfBetInfoCompleted;
+        public event EventHandler<WebInvokeEventArgs<RaiderPlayerBetInfo[]>> GetPlayerselfBetInfoCompleted;
         public void GetPlayerselfBetInfo(int roundID, int pageItemCount, int pageIndex, object userState)
         {
             if (this._invoker != null)
             {
-                this._invoker.InvokeUserState<PlayerBetInfo[]>(this._context, "GetPlayerselfBetInfo", this.GetPlayerselfBetInfoCompleted, userState, GlobalData.Token, roundID, pageItemCount, pageIndex);
+                this._invoker.InvokeUserState<RaiderPlayerBetInfo[]>(this._context, "GetPlayerselfBetInfo", this.GetPlayerselfBetInfoCompleted, userState, GlobalData.Token, roundID, pageItemCount, pageIndex);
             }
         }
 

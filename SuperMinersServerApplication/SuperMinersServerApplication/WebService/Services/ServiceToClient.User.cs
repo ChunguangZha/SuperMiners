@@ -57,7 +57,7 @@ namespace SuperMinersServerApplication.WebService.Services
         //    }
         //}
 
-        public OperResultObject Login(string userName, string password, string key, string mac, string clientVersion)
+        public OperResultObject Login(string UserLoginName, string password, string key, string mac, string clientVersion)
         {
 #if Delay
 
@@ -67,7 +67,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
             OperResultObject resultObj = new OperResultObject();
 
-            if (String.IsNullOrEmpty(userName) || String.IsNullOrEmpty(password))
+            if (String.IsNullOrEmpty(UserLoginName) || String.IsNullOrEmpty(password))
             {
                 resultObj.OperResultCode = OperResult.RESULTCODE_PARAM_INVALID;
                 return resultObj;
@@ -79,26 +79,27 @@ namespace SuperMinersServerApplication.WebService.Services
                 return resultObj;
             }
 
-            string token = ClientManager.GetToken(userName);
-            if (!string.IsNullOrEmpty(token))
-            {
-                new Thread(new ParameterizedThreadStart(o =>
-                {
-                    this.KickoutByUser(o.ToString());
-                })).Start(token);
-
-                //return "ISLOGGED";
-            }
-
+            string token = null;
             string ip = ClientManager.GetCurrentIP();
             try
             {
-                PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
+                PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserLoginName(UserLoginName);
                 if (player == null)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
                     return resultObj;
                 }
+                token = ClientManager.GetToken(player.SimpleInfo.UserName);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    new Thread(new ParameterizedThreadStart(o =>
+                    {
+                        this.KickoutByUser(o.ToString());
+                    })).Start(token);
+
+                    //return "ISLOGGED";
+                }
+
                 if (password != player.SimpleInfo.Password)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
@@ -118,17 +119,17 @@ namespace SuperMinersServerApplication.WebService.Services
                         var logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByMac(mac);
                         if (logState == null)
                         {
-                            logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByUserName(userName);
+                            logState = DBProvider.TestUserLogStateDBProvider.GetTestUserLogStateByUserName(player.SimpleInfo.UserName);
                             if (logState != null)
                             {
                                 resultObj.OperResultCode = OperResult.RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT;
                                 return resultObj;
                             }
-                            DBProvider.TestUserLogStateDBProvider.AddTestUserLogState(userName, mac, ip);
+                            DBProvider.TestUserLogStateDBProvider.AddTestUserLogState(player.SimpleInfo.UserName, mac, ip);
                         }
                         else
                         {
-                            if (logState.UserName != userName)
+                            if (logState.UserName != player.SimpleInfo.UserName)
                             {
                                 resultObj.OperResultCode = OperResult.RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT;
                                 return resultObj;
@@ -137,7 +138,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     }
                     catch (Exception exc)
                     {
-                        LogHelper.Instance.AddErrorLog("Test User [" + userName + "] Add Exception.", exc);
+                        LogHelper.Instance.AddErrorLog("Test User [" + UserLoginName + "] Add Exception.", exc);
                     }
                 }
 
@@ -152,22 +153,22 @@ namespace SuperMinersServerApplication.WebService.Services
                 RSAProvider.SetRSA(token, rsa);
                 RSAProvider.LoadRSA(token);
 
-                ClientManager.AddClient(userName, token);
+                ClientManager.AddClient(player.SimpleInfo.UserName, token);
                 lock (this._callbackDicLocker)
                 {
                     this._callbackDic[token] = new Queue<CallbackInfo>();
                 }
 
-                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登录矿场, IP=" + ip + ", Mac=" + mac);
+                LogHelper.Instance.AddInfoLog("玩家 [" + UserLoginName + "] 登录矿场, IP=" + ip + ", Mac=" + mac);
 
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.AddErrorLog("玩家 [" + userName + "] 登录矿场失败, IP=" + ip + ", Mac=" + mac, ex);
+                LogHelper.Instance.AddErrorLog("玩家 [" + UserLoginName + "] 登录矿场失败, IP=" + ip + ", Mac=" + mac, ex);
             }
             if (!string.IsNullOrEmpty(token))
             {
-                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Login, 1);
+                PlayerActionController.Instance.AddLog(UserLoginName, MetaData.ActionLog.ActionType.Login, 1);
                 new Thread(new ParameterizedThreadStart(o =>
                 {
                     this.LogedIn(o.ToString());
@@ -230,7 +231,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     string userName = ClientManager.GetClientUserName(token);
-                    PlayerInfo user = PlayerController.Instance.GetPlayerInfo(userName);
+                    PlayerInfo user = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     return user;
                 }
                 catch (Exception exc)
@@ -404,7 +405,7 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+                    var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (playerInfo == null)
                     {
                         return null;

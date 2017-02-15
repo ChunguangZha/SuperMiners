@@ -41,11 +41,13 @@ namespace SuperMinersServerApplication.Controller
             result.PayType = payType;
             DateTime timenow = DateTime.Now;
 
+            var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
             string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyGoldCoin);
             GoldCoinRechargeRecord record = new GoldCoinRechargeRecord()
             {
                 OrderNumber = orderNumber,
                 CreateTime = timenow,
+                UserID = player.SimpleInfo.UserID,
                 UserName = userName,
                 SpendRMB = rmbValue,
                 GainGoldCoin = gainGoldCoin

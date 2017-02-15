@@ -66,7 +66,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             OperResultObject resultObj = new OperResultObject();
 
-            PlayerInfo player = PlayerController.Instance.GetPlayerInfo(xlUserName);
+            PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserName(xlUserName);
             if (player == null)
             {
                 resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
@@ -225,7 +225,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
-                return PlayerController.Instance.GetPlayerInfo(xlUserName);
+                return PlayerController.Instance.GetPlayerInfoByUserName(xlUserName);
             }
             catch (Exception exc)
             {

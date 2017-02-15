@@ -20,10 +20,10 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into minersbuyrecord " +
                         "(`UserID`, `SpendGoldCoin`, `GainMinersCount`, `Time`) values " +
-                        " ((select c.id from playersimpleinfo c where c.UserName = @UserName), @SpendGoldCoin, @GainMinersCount, @Time); ";
+                        " (@UserID, @SpendGoldCoin, @GainMinersCount, @Time); ";
 
                 mycmd.CommandText = cmdTextA;
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@SpendGoldCoin", record.SpendGoldCoin);
                 mycmd.Parameters.AddWithValue("@GainMinersCount", record.GainMinersCount);
                 mycmd.Parameters.AddWithValue("@Time", record.Time);
@@ -49,12 +49,12 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select a.*, b.UserName from minersbuyrecord a left join playersimpleinfo b on a.UserID=b.id  ";
+                string sqlTextA = "select a.* from minersbuyrecord a  ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" UserName = @UserName ");
+                    builder.Append(" a.UserID = ( select id from superminers.playersimpleinfo where UserName = @UserName )");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -71,7 +71,7 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" Time >= @beginCreateTime and Time < @endCreateTime ");
+                    builder.Append(" a.Time >= @beginCreateTime and a.Time < @endCreateTime ");
                     mycmd.Parameters.AddWithValue("@beginCreateTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endCreateTime", endTime);
                 }
@@ -81,14 +81,18 @@ namespace DataBaseProvider
                     sqlWhere = " where " + builder.ToString();
                 }
 
-                string sqlOrderLimit = " order by Time desc ";
+                string sqlOrderLimit = " order by a.Time desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+
 
                 mycmd.CommandText = sqlAllText;
 

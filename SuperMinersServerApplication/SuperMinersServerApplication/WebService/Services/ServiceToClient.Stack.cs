@@ -166,7 +166,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+                    var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (playerInfo == null)
                     {
                         return null;
@@ -399,7 +399,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+                    var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (playerInfo == null)
                     {
                         return null;

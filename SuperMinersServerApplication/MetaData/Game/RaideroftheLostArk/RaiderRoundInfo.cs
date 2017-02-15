@@ -81,13 +81,16 @@ namespace MetaData.Game.RaideroftheLostArk
     }
 
     [DataContract]
-    public class PlayerBetInfo
+    public class RaiderPlayerBetInfo
     {
         [DataMember]
         public int ID;
 
         [DataMember]
         public int RaiderRoundID;
+
+        [DataMember]
+        public int UserID;
 
         [DataMember]
         public string UserName;

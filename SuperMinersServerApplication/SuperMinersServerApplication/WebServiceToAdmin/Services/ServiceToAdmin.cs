@@ -344,7 +344,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         return null;
                     }
 
-                    PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
+                    PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (player == null)
                     {
                         return null;

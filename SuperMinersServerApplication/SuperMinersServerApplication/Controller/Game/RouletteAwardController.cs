@@ -463,7 +463,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 AwardItem = this._dicCurrentRouletteAwardItems[winAwardID],
                 UserID = userID,
                 UserName = userName,
-                UserNickName = userNickName,
+                //UserNickName = userNickName,
                 WinTime = MyDateTime.FromDateTime(DateTime.Now),
                 IsGot = false,
                 IsPay = false
@@ -502,7 +502,7 @@ namespace SuperMinersServerApplication.Controller.Game
 
             //Save Record
             DBProvider.GameRouletteDBProvider.AddRouletteWinnerRecord(record);
-            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserID, record.UserName, winAwardID, record.WinTime.ToDateTime());
+            var dbRecord = DBProvider.GameRouletteDBProvider.GetPayWinAwardRecord(record.UserID, winAwardID, record.WinTime.ToDateTime());
             if (dbRecord != null)
             {
                 record.RecordID = dbRecord.RecordID;

@@ -68,11 +68,11 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 myconn.Open();
                 mycmd = myconn.CreateCommand();
-                string cmdText = "select a.*, b.UserName from minesbuyrecord a left join playersimpleinfo b on a.UserID=b.id ";
+                string cmdText = "select a.* from minesbuyrecord a ";
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" b.UserName = @UserName ");
+                    builder.Append(" a.UserID = ( select id from superminers.playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
                 if (startDate != null && !startDate.IsNull && endDate != null && !endDate.IsNull)
@@ -106,8 +106,11 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = cmdText + sqlWhere + sqlOrderLimit;
-
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + cmdText + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                
                 mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
@@ -177,11 +180,11 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into tempminesbuyrecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainMinesCount`,`GainStonesReserves`, `CreateTime`) values " +
-                        " (@OrderNumber, (select c.id from playersimpleinfo c where c.UserName = @UserName), @SpendRMB, @GainMinesCount, @GainStonesReserves, @CreateTime); ";
+                        " (@OrderNumber, @UserID, @SpendRMB, @GainMinesCount, @GainStonesReserves, @CreateTime); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", record.OrderNumber);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@SpendRMB", record.SpendRMB);
                 mycmd.Parameters.AddWithValue("@GainMinesCount", record.GainMinesCount);
                 mycmd.Parameters.AddWithValue("@GainStonesReserves", record.GainStonesReserves);
@@ -237,11 +240,11 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into minesbuyrecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainMinesCount`,`GainStonesReserves`, `CreateTime`, `PayTime`) values " +
-                        " (@OrderNumber, (select c.id from playersimpleinfo c where c.UserName = @UserName), @SpendRMB, @GainMinesCount, @GainStonesReserves, @CreateTime, @PayTime); ";
+                        " (@OrderNumber, @UserID, @SpendRMB, @GainMinesCount, @GainStonesReserves, @CreateTime, @PayTime); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", record.OrderNumber);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@SpendRMB", record.SpendRMB);
                 mycmd.Parameters.AddWithValue("@GainMinesCount", record.GainMinesCount);
                 mycmd.Parameters.AddWithValue("@GainStonesReserves", record.GainStonesReserves);

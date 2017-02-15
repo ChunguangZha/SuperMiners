@@ -25,9 +25,9 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        private ObservableCollection<PlayerBetInfoUIModel> _listSelfBetRecords = new ObservableCollection<PlayerBetInfoUIModel>();
+        private ObservableCollection<RaiderPlayerBetInfoUIModel> _listSelfBetRecords = new ObservableCollection<RaiderPlayerBetInfoUIModel>();
 
-        public ObservableCollection<PlayerBetInfoUIModel> ListSelfBetRecords
+        public ObservableCollection<RaiderPlayerBetInfoUIModel> ListSelfBetRecords
         {
             get { return _listSelfBetRecords; }
         }
@@ -149,7 +149,7 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
-        void Client_GetPlayerselfBetInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.PlayerBetInfo[]> e)
+        void Client_GetPlayerselfBetInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Game.RaideroftheLostArk.RaiderPlayerBetInfo[]> e)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     foreach (var item in e.Result)
                     {
-                        this.ListSelfBetRecords.Add(new PlayerBetInfoUIModel(item));
+                        this.ListSelfBetRecords.Add(new RaiderPlayerBetInfoUIModel(item));
                     }
                 }
             }

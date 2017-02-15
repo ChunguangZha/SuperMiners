@@ -176,7 +176,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
         }
         
-        public MetaData.Game.RaideroftheLostArk.PlayerBetInfo[] GetPlayerselfBetInfo(string token, int roundID, int pageItemCount, int pageIndex)
+        public MetaData.Game.RaideroftheLostArk.RaiderPlayerBetInfo[] GetPlayerselfBetInfo(string token, int roundID, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {

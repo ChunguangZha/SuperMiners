@@ -354,7 +354,7 @@ namespace SuperMinersServerApplication.Controller
                                 var playerrun = this.GetOnlinePlayerRunnable(previousReferrerUserName);
                                 if (playerrun == null)
                                 {
-                                    PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayer(previousReferrerUserName);
+                                    PlayerInfo previousReferrerPlayer = DBProvider.UserDBProvider.GetPlayerByUserName(previousReferrerUserName);
                                     if (previousReferrerPlayer == null)
                                     {
                                         break;
@@ -670,7 +670,34 @@ namespace SuperMinersServerApplication.Controller
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public PlayerInfo GetPlayerInfo(string userName)
+        public PlayerInfo GetPlayerInfoByUserLoginName(string userLoginName)
+        {
+            PlayerInfo player = DBProvider.UserDBProvider.GetPlayerByUserLoginName(userLoginName);
+            if (player == null)
+            {
+                return null;
+            }
+
+            PlayerRunnable playerrun = null;
+            if (this._dicOnlinePlayerRuns.TryGetValue(player.SimpleInfo.UserName, out playerrun))
+            {
+                player = playerrun.BasePlayer;
+            }
+            else
+            {
+                this._dicOnlinePlayerRuns.TryAdd(player.SimpleInfo.UserName, new PlayerRunnable(player));
+            }
+
+            LoadPlayerLastGravelInfo(player);
+            return player;
+        }
+
+        /// <summary>
+        /// 不论在线还是离线
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public PlayerInfo GetPlayerInfoByUserName(string userName)
         {
             PlayerInfo player = null;
             PlayerRunnable playerrun = null;
@@ -680,7 +707,7 @@ namespace SuperMinersServerApplication.Controller
             }
             else
             {
-                player = DBProvider.UserDBProvider.GetPlayer(userName);
+                player = DBProvider.UserDBProvider.GetPlayerByUserName(userName);
                 if (player != null)
                 {
                     this._dicOnlinePlayerRuns.TryAdd(userName, new PlayerRunnable(player));
@@ -743,7 +770,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerRun = this.GetOnlinePlayerRunnable(userName);
             if (playerRun == null)
             {
-                GetPlayerInfo(userName);
+                GetPlayerInfoByUserName(userName);
                 playerRun = this.GetOnlinePlayerRunnable(userName); 
             }
 
@@ -907,7 +934,7 @@ namespace SuperMinersServerApplication.Controller
             CustomerMySqlTransaction myTrans = null;
             try
             {
-                var player = this.GetPlayerInfo(userName);
+                var player = this.GetPlayerInfoByUserName(userName);
                 if (player == null)
                 {
                     return OperResult.RESULTCODE_USER_NOT_EXIST;
@@ -1211,7 +1238,14 @@ namespace SuperMinersServerApplication.Controller
         {
             OperResultObject resultObj = new OperResultObject();
 
-            WithdrawRMBRecord lastRecord = DBProvider.WithdrawRMBRecordDBProvider.GetLastWithdrawRMBRecord(userName);
+            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
+            if (playerrun == null)
+            {
+                resultObj.OperResultCode = OperResult.RESULTCODE_USER_OFFLINE;
+
+            }
+
+            WithdrawRMBRecord lastRecord = DBProvider.WithdrawRMBRecordDBProvider.GetLastWithdrawRMBRecord(playerrun.BasePlayer.SimpleInfo.UserID);
 
             if (lastRecord != null)
             {
@@ -1222,13 +1256,6 @@ namespace SuperMinersServerApplication.Controller
                     resultObj.Message = "距离下一次提现申请，还有" + (GlobalConfig.GameConfig.LimitWithdrawIntervalHours - (int)intervalHours).ToString() + "小时";
                     return resultObj;
                 }
-            }
-
-            PlayerRunnable playerrun = this.GetOnlinePlayerRunnable(userName);
-            if (playerrun == null)
-            {
-                resultObj.OperResultCode = OperResult.RESULTCODE_USER_OFFLINE;
-
             }
 
             DateTime createTime = DateTime.Now;

@@ -527,7 +527,7 @@ namespace DataBaseProvider
 
         public PlayerFortuneInfo GetPlayerFortuneInfo(string userName)
         {
-            var player = GetPlayer(userName);
+            var player = GetPlayerByUserName(userName);
             if (player == null)
             {
                 return null;
@@ -599,7 +599,42 @@ namespace DataBaseProvider
             }
         }
 
-        public PlayerInfo GetPlayer(string userName)
+        public PlayerInfo GetPlayerByUserLoginName(string userLoginName)
+        {
+            PlayerInfo player = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                string cmdText = "select a.*, c.UserName as ReferrerUserName, b.* , g.Gravel, g.FirstGetGravelTime from playersimpleinfo a left join playersimpleinfo c on a.ReferrerUserID = c.id left join playerfortuneinfo b on a.id = b.userId left join playergravelinfo g on a.id = g.UserID  where a.UserLoginName = @UserLoginName";
+                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+                mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(userLoginName));
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
+                }
+                mycmd.Dispose();
+
+                //var lastGravelRecord = 
+
+                return player;
+            }
+            catch (Exception exc)
+            {
+                throw exc;
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
+        public PlayerInfo GetPlayerByUserName(string userName)
         {
             PlayerInfo player = null;
             MySqlConnection myconn = null;

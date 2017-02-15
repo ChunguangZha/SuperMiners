@@ -10,6 +10,7 @@ namespace MetaData
     [DataContract]
     public class GoldCoinRechargeRecord
     {
+        [DataMember]
         public int UserID;
 
         [DataMember]

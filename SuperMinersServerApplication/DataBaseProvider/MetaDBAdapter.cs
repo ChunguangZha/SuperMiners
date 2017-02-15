@@ -153,6 +153,7 @@ namespace DataBaseProvider
                 PlayerInfo player = new PlayerInfo();
 
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
+                string encryptedUserLoginName = dt.Rows[i]["UserLoginName"].ToString();
                 string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
                 string encryptedUserPassword = dt.Rows[i]["Password"].ToString();
                 string encryptedAlipay = dt.Rows[i]["Alipay"] == DBNull.Value ? "" : dt.Rows[i]["Alipay"].ToString();
@@ -162,6 +163,7 @@ namespace DataBaseProvider
                 string encryptedInvitationCode = dt.Rows[i]["InvitationCode"].ToString();
 
                 player.SimpleInfo.UserID = Convert.ToInt32(dt.Rows[i]["id"]);
+                player.SimpleInfo.UserLoginName = DESEncrypt.DecryptDES(encryptedUserLoginName);
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
                 player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
@@ -442,14 +444,14 @@ namespace DataBaseProvider
                 record.RecordID = Convert.ToInt32(dt.Rows[i]["id"]);
                 record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.UserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserName"]));
-                if (dt.Rows[i]["UserNickName"] == DBNull.Value)
-                {
-                    record.UserNickName = record.UserName;
-                }
-                else
-                {
-                    record.UserNickName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserNickName"]));
-                }
+                //if (dt.Rows[i]["UserNickName"] == DBNull.Value)
+                //{
+                //    record.UserNickName = record.UserName;
+                //}
+                //else
+                //{
+                //    record.UserNickName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["UserNickName"]));
+                //}
                 record.RouletteAwardItemID = Convert.ToInt32(dt.Rows[i]["AwardItemID"]);
                 record.WinTime = MyDateTime.FromDateTime(Convert.ToDateTime(dt.Rows[i]["WinTime"]));
                 record.IsGot = Convert.ToBoolean(dt.Rows[i]["IsGot"]);
@@ -529,6 +531,7 @@ namespace DataBaseProvider
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 MinesBuyRecord record = new MinesBuyRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
                 record.GainMinesCount = Convert.ToDecimal(dt.Rows[i]["GainMinesCount"]);
                 record.GainStonesReserves = Convert.ToInt32(dt.Rows[i]["GainStonesReserves"]);
@@ -549,6 +552,7 @@ namespace DataBaseProvider
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 GoldCoinRechargeRecord record = new GoldCoinRechargeRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.CreateTime = Convert.ToDateTime(dt.Rows[i]["CreateTime"]);
                 record.GainGoldCoin = Convert.ToDecimal(dt.Rows[i]["GainGoldCoin"]);
                 record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
@@ -646,6 +650,7 @@ namespace DataBaseProvider
                 records[i] = new WithdrawRMBRecord()
                 {
                     id = Convert.ToInt32(dt.Rows[i]["id"]),
+                    PlayerUserID = Convert.ToInt32(dt.Rows[i]["PlayerUserID"]),
                     PlayerUserName = payerUserName,
                     AlipayAccount = alipayAccount,
                     AlipayRealName = alipayRealName,
@@ -669,6 +674,7 @@ namespace DataBaseProvider
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 MinersBuyRecord record = new MinersBuyRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 record.SpendGoldCoin = Convert.ToDecimal(dt.Rows[i]["SpendGoldCoin"]);
                 record.GainMinersCount = Convert.ToInt32(dt.Rows[i]["GainMinersCount"]);
@@ -904,18 +910,19 @@ namespace DataBaseProvider
             return items;
         }
 
-        internal static PlayerBetInfo[] GetPlayerBetInfoFromDataTable(DataTable dt)
+        internal static RaiderPlayerBetInfo[] GetPlayerBetInfoFromDataTable(DataTable dt)
         {
             if (dt == null || dt.Rows.Count == 0)
             {
                 return null;
             }
-            PlayerBetInfo[] items = new PlayerBetInfo[dt.Rows.Count];
+            RaiderPlayerBetInfo[] items = new RaiderPlayerBetInfo[dt.Rows.Count];
             for (int i = 0; i < items.Length; i++)
             {
-                PlayerBetInfo item = new PlayerBetInfo();
+                RaiderPlayerBetInfo item = new RaiderPlayerBetInfo();
                 item.ID = Convert.ToInt32(dt.Rows[i]["id"]);
                 item.RaiderRoundID = Convert.ToInt32(dt.Rows[i]["RaiderRoundID"]);
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 item.BetStones = Convert.ToInt32(dt.Rows[i]["BetStones"]);
                 item.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));

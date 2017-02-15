@@ -14,6 +14,9 @@ namespace MetaData.Trade
         public int id;
 
         [DataMember]
+        public int PlayerUserID;
+
+        [DataMember]
         public string PlayerUserName = "";
 
         [DataMember]

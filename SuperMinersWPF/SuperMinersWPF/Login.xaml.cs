@@ -169,10 +169,10 @@ namespace SuperMinersWPF
                 return;
             }
 
-            string userName = this.txtUserName.Text.Trim();
+            string userLoginName = this.txtUserName.Text.Trim();
             string password = this.txtPassword.Password;
 
-            RegistryOper.SaveUserNamePassword(userName, password, this.chkRememberPwd.IsChecked.Value);
+            RegistryOper.SaveUserNamePassword(userLoginName, password, this.chkRememberPwd.IsChecked.Value);
 
             GlobalData.InitToken(null);
 
@@ -193,7 +193,7 @@ namespace SuperMinersWPF
             App.BusyToken.ShowBusyWindow("正在加载...");
 
             string clientVersion = System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
-            GlobalData.Client.Login(userName, password, CryptEncoder.Key, mac, clientVersion);
+            GlobalData.Client.Login(userLoginName, password, CryptEncoder.Key, mac, clientVersion);
         }
 
         private string GetMac()

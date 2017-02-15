@@ -14,6 +14,9 @@ namespace MetaData
     public class MinesBuyRecord
     {
         [DataMember]
+        public int UserID;
+
+        [DataMember]
         public string UserName = "";
 
         [DataMember]

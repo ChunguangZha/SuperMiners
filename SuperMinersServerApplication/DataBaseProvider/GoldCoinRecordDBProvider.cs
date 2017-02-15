@@ -56,11 +56,11 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into tempgoldcoinrechargerecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainGoldCoin`,`CreateTime`) values " +
-                        " (@OrderNumber, (select c.id from playersimpleinfo c where c.UserName = @UserName), @SpendRMB, @GainGoldCoin, @CreateTime); ";
+                        " (@OrderNumber, @UserID, @SpendRMB, @GainGoldCoin, @CreateTime); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", record.OrderNumber);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@SpendRMB", record.SpendRMB);
                 mycmd.Parameters.AddWithValue("@GainGoldCoin", record.GainGoldCoin);
                 mycmd.Parameters.AddWithValue("@CreateTime", record.CreateTime);
@@ -115,11 +115,11 @@ namespace DataBaseProvider
 
                 string cmdTextA = "insert into goldcoinrechargerecord " +
                         "(`OrderNumber`, `UserID`, `SpendRMB`, `GainGoldCoin`, `CreateTime`, `PayTime`) values " +
-                        " (@OrderNumber, (select c.id from playersimpleinfo c where c.UserName = @UserName), @SpendRMB, @GainGoldCoin, @CreateTime, @PayTime); ";
+                        " (@OrderNumber, @UserID, @SpendRMB, @GainGoldCoin, @CreateTime, @PayTime); ";
 
                 mycmd.CommandText = cmdTextA;
                 mycmd.Parameters.AddWithValue("@OrderNumber", record.OrderNumber);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@SpendRMB", record.SpendRMB);
                 mycmd.Parameters.AddWithValue("@GainGoldCoin", record.GainGoldCoin);
                 mycmd.Parameters.AddWithValue("@CreateTime", record.CreateTime);
@@ -149,12 +149,12 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select a.*, b.UserName from goldcoinrechargerecord a left join playersimpleinfo b on a.UserID=b.id  ";
+                string sqlTextA = "select a.* from goldcoinrechargerecord a  ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" UserName = @UserName ");
+                    builder.Append(" a.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -171,8 +171,12 @@ namespace DataBaseProvider
 
                 string whereText = builder.Length > 0 ? " where " : "";
 
-                string cmdText = sqlTextA + whereText + builder.ToString();
-                mycmd.CommandText = cmdText;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + whereText + builder.ToString() +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+
+                mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -206,12 +210,12 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select a.*, b.UserName from goldcoinrechargerecord a left join playersimpleinfo b on a.UserID=b.id  ";
+                string sqlTextA = "select a.* from goldcoinrechargerecord ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" UserName = @UserName ");
+                    builder.Append(" UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -255,7 +259,10 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
 

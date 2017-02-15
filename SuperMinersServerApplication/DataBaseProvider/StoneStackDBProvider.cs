@@ -381,12 +381,12 @@ namespace DataBaseProvider
             try
             {
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "SELECT n.* , p.UserName FROM superminers.finishedstonedelegatesellorderinfo n left join playersimpleinfo p on n.UserID = p.id  ";
+                string sqlTextA = "SELECT n.* FROM superminers.finishedstonedelegatesellorderinfo n ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" p.UserName = @UserName ");
+                    builder.Append(" n.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", userName);
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
@@ -418,7 +418,10 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -741,12 +744,12 @@ namespace DataBaseProvider
             try
             {
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "SELECT n.* , p.UserName FROM superminers.finishedstonedelegatebuyorderinfo n left join playersimpleinfo p on n.UserID = p.id  ";
+                string sqlTextA = "SELECT n.* FROM superminers.finishedstonedelegatebuyorderinfo n ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" p.UserName = @UserName ");
+                    builder.Append(" n.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", userName);
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
@@ -778,7 +781,10 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();

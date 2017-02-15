@@ -470,7 +470,7 @@ namespace DataBaseProvider
             }
         }
 
-        public RouletteWinnerRecord GetPayWinAwardRecord(int UserID, string UserName, int RouletteAwardItemID, DateTime WinTime)
+        public RouletteWinnerRecord GetPayWinAwardRecord(int UserID, int RouletteAwardItemID, DateTime WinTime)
         {
             RouletteWinnerRecord record = null;
             MySqlConnection myconn = null;
@@ -482,15 +482,21 @@ namespace DataBaseProvider
 
                 DataTable table = new DataTable();
 
-                string sqlTextB = "select  r.*, s.UserName, s.NickName as UserNickName from roulettewinnerrecord r left join playersimpleinfo s on r.UserID = s.id  " +
+                string sqlTextB = "select  r.* from roulettewinnerrecord r " +
                     " where  r.UserID = @UserID and r.AwardItemID = @AwardItemID order by r.id desc limit 1;";// and r.WinTime >= @WinTime";
 
                 mycmd = myconn.CreateCommand();
-                //string encryptUserName = DESEncrypt.EncryptDES(UserName);
                 mycmd.Parameters.AddWithValue("@UserID", UserID);
                 mycmd.Parameters.AddWithValue("@AwardItemID", RouletteAwardItemID);
                 //mycmd.Parameters.AddWithValue("@WinTime", WinTime);
-                mycmd.CommandText = sqlTextB;
+
+
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextB +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+
+                mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
@@ -616,9 +622,8 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "select  r.*, s.UserName, s.NickName as UserNickName , m.AwardName, m.RouletteAwardType " +
+                string sqlTextA = "select  r.*, m.AwardName, m.RouletteAwardType " +
                                     " from roulettewinnerrecord r " + 
-                                    " left join playersimpleinfo s on r.UserID = s.id " +
                                     " left join rouletteawarditem m on r.AwardItemID = m.id ";
 
                 StringBuilder builder = new StringBuilder();
@@ -632,7 +637,7 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    builder.Append(" s.UserName = @UserName ");
+                    builder.Append(" r.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     string encryptUserName = DESEncrypt.EncryptDES(UserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -706,7 +711,10 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -745,13 +753,18 @@ namespace DataBaseProvider
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string sqlText = "select  r.*, s.UserName, s.NickName as UserNickName , m.AwardName, m.RouletteAwardType " +
+                string sqlText = "select  r.*, m.AwardName, m.RouletteAwardType " +
                                     " from roulettewinnerrecord r " +
-                                    " left join playersimpleinfo s on r.UserID = s.id " +
                                     " left join rouletteawarditem m on r.AwardItemID = m.id " +
                                     " where m.RouletteAwardType = @RouletteAwardType and r.IsPay = @IsPay ";
+
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlText +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+
                 mycmd = myconn.CreateCommand();
-                mycmd.CommandText = sqlText;
+                mycmd.CommandText = sqlAllText;
                 mycmd.Parameters.AddWithValue("@RouletteAwardType", RouletteAwardType.RealAward);
                 mycmd.Parameters.AddWithValue("@IsPay", false);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

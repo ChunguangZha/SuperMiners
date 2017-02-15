@@ -94,7 +94,7 @@ namespace SuperMinersServerApplication.Controller
             result.PayType = payType;
             DateTime timenow = DateTime.Now;
 
-            var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+            var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
             bool isVIP = playerInfo.FortuneInfo.Exp > GlobalConfig.GameConfig.PlayerVIPInterval;
             string orderNumber = OrderController.Instance.CreateOrderNumber(userName, timenow, AlipayTradeInType.BuyMine);
             result.OperNumber = GetStoneCount_BuyMine(minesCount, isVIP, surplus);
@@ -102,6 +102,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 OrderNumber = orderNumber,
                 CreateTime = timenow,
+                UserID = playerInfo.SimpleInfo.UserID,
                 UserName = userName,
                 GainMinesCount = minesCount,
                 GainStonesReserves = (int)result.OperNumber,

@@ -17,6 +17,12 @@ namespace MetaData.User
         public int UserID { get; set; }
 
         /// <summary>
+        /// 玩家登录名，限制登录使用
+        /// </summary>
+        [DataMember]
+        public string UserLoginName { get; set; }
+
+        /// <summary>
         /// maxlength=15
         /// </summary>
         [DataMember]

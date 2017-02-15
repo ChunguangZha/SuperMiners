@@ -112,7 +112,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
 
-                var agent = PlayerController.Instance.GetPlayerInfo(agentUserName);
+                var agent = PlayerController.Instance.GetPlayerInfoByUserName(agentUserName);
                 if (agent == null)
                 {
                     return OperResult.RESULTCODE_FALSE;

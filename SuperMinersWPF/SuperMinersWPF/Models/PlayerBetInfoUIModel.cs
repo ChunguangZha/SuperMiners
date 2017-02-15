@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace SuperMinersWPF.Models
 {
-    public class PlayerBetInfoUIModel : BaseModel
+    public class RaiderPlayerBetInfoUIModel : BaseModel
     {
-        public PlayerBetInfoUIModel(PlayerBetInfo parent)
+        public RaiderPlayerBetInfoUIModel(RaiderPlayerBetInfo parent)
         {
             this.ParentObject = parent;
         }
 
-        private PlayerBetInfo _parentObject;
+        private RaiderPlayerBetInfo _parentObject;
 
-        public PlayerBetInfo ParentObject
+        public RaiderPlayerBetInfo ParentObject
         {
             get { return _parentObject; }
             set

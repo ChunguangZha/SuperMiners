@@ -68,7 +68,7 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
-        private List<PlayerBetInfo> listPlayerBetInfos = new List<PlayerBetInfo>();
+        private List<RaiderPlayerBetInfo> listPlayerBetInfos = new List<RaiderPlayerBetInfo>();
 
         private List<string> listPlayerUserName = new List<string>();
 
@@ -164,8 +164,9 @@ namespace SuperMinersServerApplication.Controller.Game
                 }
             }
 
-            var betInfo = new PlayerBetInfo()
+            var betInfo = new RaiderPlayerBetInfo()
             {
+                UserID = userID,
                 UserName = userName,
                 RaiderRoundID = _currentRoundInfo.ID,
                 BetStones = stonesCount,
@@ -212,8 +213,8 @@ namespace SuperMinersServerApplication.Controller.Game
                         return;
                     }
 
-                    PlayerBetInfo winnerBetInfo = FindWinner();
-                    var winnerPersonAllBetCount = this.listPlayerBetInfos.Where(b => b.UserName == winnerBetInfo.UserName).Sum(b => b.BetStones);
+                    RaiderPlayerBetInfo winnerBetInfo = FindWinner();
+                    var winnerPersonAllBetCount = this.listPlayerBetInfos.Where(b => b.UserID == winnerBetInfo.UserID).Sum(b => b.BetStones);
                     int expense = (int)Math.Ceiling(this._currentRoundInfo.AwardPoolSumStones * GlobalConfig.GameConfig.RaiderExpense);
                     int winnerGainBetCount = this._currentRoundInfo.AwardPoolSumStones - expense;
                     if (winnerGainBetCount < winnerPersonAllBetCount)
@@ -273,7 +274,7 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
-        public PlayerBetInfo FindWinner()
+        public RaiderPlayerBetInfo FindWinner()
         {
             int ranCount = _ran.Next(2, 10);
 
@@ -283,7 +284,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 winnerNumber = _ran.Next(this._currentRoundInfo.AwardPoolSumStones);
             }
 
-            PlayerBetInfo winnerBetInfo = null;
+            RaiderPlayerBetInfo winnerBetInfo = null;
 
             int sum = 0;
             for (int i = 0; i < this.listPlayerBetInfos.Count; i++)

@@ -101,9 +101,13 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select * " +
-                                    "from withdrawrmbrecord " +
-                                    "where id = @id ";
+                string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
+                                    " (SELECT w.* " +
+                                    " FROM superminers.withdrawrmbrecord w " +
+                                    " where w.id = @id " +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+
                 mycmd.Parameters.AddWithValue("@id", id);
 
                 mycmd.CommandText = sqlTextA;
@@ -128,7 +132,7 @@ namespace DataBaseProvider
             }
         }
 
-        public WithdrawRMBRecord GetLastWithdrawRMBRecord(string playerUserName)
+        public WithdrawRMBRecord GetLastWithdrawRMBRecord(int playerUserID)
         {
             WithdrawRMBRecord record = null;
             MySqlConnection myconn = null;
@@ -140,11 +144,14 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select * " +
-                                    "from withdrawrmbrecord " +
-                                    "where PlayerUserName = @PlayerUserName  order by CreateTime desc limit 1;";
-                string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
-                mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
+                string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
+                                    " (SELECT w.* " +
+                                    " FROM superminers.withdrawrmbrecord w " +
+                                    " where w.PlayerUserID = @PlayerUserID order by CreateTime desc limit 1 " +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+
+                mycmd.Parameters.AddWithValue("@PlayerUserID", playerUserID);
 
                 mycmd.CommandText = sqlTextA;
 
@@ -180,12 +187,16 @@ namespace DataBaseProvider
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select * " +
-                                    "from withdrawrmbrecord " +
-                                    "where RMBWithdrawState = @RMBWithdrawState and PlayerUserName = @PlayerUserName and WidthdrawRMB = @WidthdrawRMB and CreateTime = @CreateTime ";
-                string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
+                                    " (SELECT w.* " +
+                                    " FROM superminers.withdrawrmbrecord w " +
+                                    " where w.PlayerUserID = (select id from superminers.playersimpleinfo where UserName=@UserName ) and w.RMBWithdrawState = @RMBWithdrawState and w.WidthdrawRMB = @WidthdrawRMB and w.CreateTime = @CreateTime  " +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+
+                string encrypedUserName = DESEncrypt.EncryptDES(playerUserName);
+                mycmd.Parameters.AddWithValue("@UserName", encrypedUserName);
                 mycmd.Parameters.AddWithValue("@RMBWithdrawState", state);
-                mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
                 mycmd.Parameters.AddWithValue("@WidthdrawRMB", withdrawRMB);
                 mycmd.Parameters.AddWithValue("@CreateTime", createTime);
 
@@ -252,9 +263,9 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    builder.Append(" PlayerUserName = @PlayerUserName ");
-                    string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
-                    mycmd.Parameters.AddWithValue("@PlayerUserName", encryptUserName);
+                    builder.Append(" PlayerUserID = (select id from superminers.playersimpleinfo where UserName=@UserName ) ");
+                    string encrypedUserName = DESEncrypt.EncryptDES(playerUserName);
+                    mycmd.Parameters.AddWithValue("@UserName", encrypedUserName);
                 }
 
                 if (beginCreateTime != null && !beginCreateTime.IsNull && endCreateTime != null && !endCreateTime.IsNull)
@@ -324,7 +335,12 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as PlayerUserName from " +
+                                    " ( " +sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+
+
                 mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

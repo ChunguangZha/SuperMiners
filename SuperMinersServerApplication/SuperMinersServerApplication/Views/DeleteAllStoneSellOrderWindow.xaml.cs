@@ -43,7 +43,7 @@ namespace SuperMinersServerApplication.Views
                 }
                 else
                 {
-                    playerInfo = DBProvider.UserDBProvider.GetPlayer(item.SellerUserName);
+                    playerInfo = DBProvider.UserDBProvider.GetPlayerByUserName(item.SellerUserName);
                     dicPlayers.Add(item.SellerUserName, playerInfo);
                 }
 

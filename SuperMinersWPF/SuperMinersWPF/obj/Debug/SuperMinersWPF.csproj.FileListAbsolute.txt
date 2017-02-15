@@ -290,6 +290,5 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.ex
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.application
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.exe
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.pdb
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\ViewGambleStoneUserBetInRecordWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\ViewGambleStoneUserBetInRecordWindow.baml

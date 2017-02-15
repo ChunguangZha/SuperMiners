@@ -220,7 +220,7 @@ namespace DataBaseProvider
             }
         }
 
-        public PlayerBetInfo[] GetPlayerBetInfoByRoundID(int roundID, string userName, int pageItemCount, int pageIndex)
+        public RaiderPlayerBetInfo[] GetPlayerBetInfoByRoundID(int roundID, string userName, int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -241,12 +241,14 @@ namespace DataBaseProvider
                 {
                     if (sqlWhere.Length == 0)
                     {
-                        sqlWhere = " where UserName = @UserName ";
+                        sqlWhere = " where ";
                     }
                     else
                     {
-                        sqlWhere += " and UserName = @UserName ";
+                        sqlWhere += " and ";
                     }
+
+                    sqlWhere += " UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ";
                     mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
 
@@ -257,7 +259,10 @@ namespace DataBaseProvider
                     sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
                 }
 
-                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
+                                    " ) ttt " +
+                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -267,7 +272,7 @@ namespace DataBaseProvider
                 adapter.Fill(table);
                 adapter.Dispose();
 
-                return MetaDBAdapter<PlayerBetInfo>.GetPlayerBetInfoFromDataTable(table);
+                return MetaDBAdapter<RaiderPlayerBetInfo>.GetPlayerBetInfoFromDataTable(table);
             }
             finally
             {
@@ -283,7 +288,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SavePlayerBetInfo(PlayerBetInfo betInfo)
+        public bool SavePlayerBetInfo(RaiderPlayerBetInfo betInfo)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -292,12 +297,12 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 //1. Save to DB
-                string sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserName`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserName,@BetStones,@Time) ;";
+                string sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@BetStones,@Time) ;";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextA;
                 mycmd.Parameters.AddWithValue("@RaiderRoundID", betInfo.RaiderRoundID);
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(betInfo.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", betInfo.UserID);
                 mycmd.Parameters.AddWithValue("@BetStones", betInfo.BetStones);
                 mycmd.Parameters.AddWithValue("@Time", betInfo.Time.ToDateTime());
                 mycmd.ExecuteNonQuery();

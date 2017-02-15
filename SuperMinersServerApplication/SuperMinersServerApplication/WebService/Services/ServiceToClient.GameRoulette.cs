@@ -75,7 +75,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                 try
                 {
-                    var user = PlayerController.Instance.GetPlayerInfo(userName);
+                    var user = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (user == null)
                     {
                         return null;

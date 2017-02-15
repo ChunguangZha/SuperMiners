@@ -22,8 +22,8 @@ namespace MetaData.Game.Roulette
         [DataMember]
         public string UserName;
 
-        [DataMember]
-        public string UserNickName;
+        //[DataMember]
+        //public string UserNickName;
 
         public int RouletteAwardItemID;
 

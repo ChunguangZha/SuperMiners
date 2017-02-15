@@ -371,7 +371,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
                     }
 
-                    PlayerInfo player = PlayerController.Instance.GetPlayerInfo(userName);
+                    PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (player == null)
                     {
                         return OperResult.RESULTCODE_USER_NOT_EXIST;

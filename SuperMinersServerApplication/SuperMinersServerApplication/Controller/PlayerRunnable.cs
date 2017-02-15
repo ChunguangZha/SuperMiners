@@ -282,6 +282,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     MinersBuyRecord record = new MinersBuyRecord()
                     {
+                        UserID = BasePlayer.SimpleInfo.UserID,
                         UserName = BasePlayer.SimpleInfo.UserName,
                         SpendGoldCoin = allNeedGoldCoin,
                         GainMinersCount = minersCount,

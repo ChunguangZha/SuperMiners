@@ -40,7 +40,7 @@ namespace SuperMinersServerApplication.WebService.Services
                         int innerResult = PlayerController.Instance.GambleBetIn(userName, stoneCount, gravelCount, myTrans);
                         if (innerResult == OperResult.RESULTCODE_TRUE)
                         {
-                            var playerInfo = PlayerController.Instance.GetPlayerInfo(userName);
+                            var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                             betResult = GambleStoneController.Instance.BetIn(color, stoneCount + gravelCount, playerInfo.SimpleInfo.UserID, userName);
                         }
 
@@ -140,7 +140,7 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    var player = PlayerController.Instance.GetPlayerInfo(userName);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                     if (player == null)
                     {
                         return null;
