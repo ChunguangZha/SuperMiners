@@ -81,14 +81,14 @@ namespace SuperMinersServerApplication.WebService.Services
                         return null;
                     }
 
-                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, user.SimpleInfo.NickName, winAwardID);
+                    var result = RouletteAwardController.Instance.Finish(user.SimpleInfo.UserID, userName, winAwardID);
                     if (result != null && result.AwardItem.RouletteAwardType != RouletteAwardType.None)
                     {
                         RouletteWinAwardNotifyAllPlayers(result);
 
                         if (result.AwardItem.IsLargeAward)
                         {
-                            PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.GameFunny, 1, result.ToString());
+                            PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.GameRoulette, 1, result.ToString());
                         }
                     }
 

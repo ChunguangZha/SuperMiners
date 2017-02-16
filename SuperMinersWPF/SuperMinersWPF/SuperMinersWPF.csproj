@@ -505,9 +505,6 @@
     <Compile Include="Views\SellStonesWindow.xaml.cs">
       <DependentUpon>SellStonesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingWindow.xaml.cs">
-      <DependentUpon>SettingWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\StonesMarketUserControl.xaml.cs">
       <DependentUpon>StonesMarketUserControl.xaml</DependentUpon>
     </Compile>
@@ -754,10 +751,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SellStonesWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SettingWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

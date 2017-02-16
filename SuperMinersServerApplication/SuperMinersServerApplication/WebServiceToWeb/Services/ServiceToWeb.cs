@@ -32,12 +32,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password,
+        public int RegisterUser(string clientIP, string userLoginName, string userName, string password,
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
-                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                if (string.IsNullOrEmpty(userLoginName) || userLoginName.Length < 3)
                 {
                     return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
                 }
@@ -61,11 +61,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
-                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+                return PlayerController.Instance.RegisterUser(clientIP, userLoginName, userName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
+                LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",loginUserName: " + userLoginName + ",password: " + password
                                     + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",IDCardNo:" + IDCardNo + ",email: " + email + ",qq: " + qq, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
@@ -76,18 +76,18 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="userLoginName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="qq"></param>
         /// <param name="agentUserName"></param>
         /// <returns></returns>
-        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password,
+        public int RegisterUserByAgent(string clientIP, string userLoginName, string userName, string password,
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string agentUserName)
         {
             try
             {
-                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                if (string.IsNullOrEmpty(userLoginName) || userLoginName.Length < 3)
                 {
                     return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
                 }
@@ -118,11 +118,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_FALSE;
                 }
 
-                return PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, agent.SimpleInfo.InvitationCode);
+                return PlayerController.Instance.RegisterUser(clientIP, userLoginName, userName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, agent.SimpleInfo.InvitationCode);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",userName: " + userName + ",password: " + password
+                LogHelper.Instance.AddErrorLog("RegisterUser Exception. clientIP:" + clientIP + ",loginUserName: " + userLoginName + ",password: " + password
                                     + "alipayAccount:" + alipayAccount + "alipayRealName:" + alipayRealName + ",IDCardNo:" + IDCardNo + ",email: " + email + ",qq: " + qq, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
@@ -164,15 +164,15 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// </summary>
         /// <param name="userName"></param>
         /// <returns></returns>
-        public int CheckNickNameExist(string nickName)
+        public int CheckUserLoginNameExist(string userLoginName)
         {
             try
             {
-                if (string.IsNullOrEmpty(nickName))
+                if (string.IsNullOrEmpty(userLoginName))
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
-                int count = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
+                int count = DBProvider.UserDBProvider.GetPlayerCountByLoginUserName(userLoginName);
                 if (count == 0)
                 {
                     //不存在
@@ -183,7 +183,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("CheckNickNameExist Exception. nickName: " + nickName, exc);
+                LogHelper.Instance.AddErrorLog("CheckNickNameExist Exception. nickName: " + userLoginName, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;
             }

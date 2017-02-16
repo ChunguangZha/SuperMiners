@@ -18,28 +18,28 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="userLoginName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUser(string clientIP, string userName, string nickName, string password,
+        int RegisterUser(string clientIP, string userLoginName, string userName, string password,
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode);
 
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="userLoginName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="qq"></param>
         /// <param name="agentUserName"></param>
         /// <returns></returns>
         [OperationContract]
-        int RegisterUserByAgent(string clientIP, string userName, string nickName, string password,
+        int RegisterUserByAgent(string clientIP, string userLoginName, string userName, string password,
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string agentUserName);
 
         /// <summary>
@@ -53,10 +53,10 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
-        /// <param name="nickName"></param>
+        /// <param name="userLoginName"></param>
         /// <returns></returns>
         [OperationContract]
-        int CheckNickNameExist(string nickName);
+        int CheckUserLoginNameExist(string userLoginName);
 
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_SUCCEED; RESULTCODE_FALSE; RESULTCODE_EXCEPTION

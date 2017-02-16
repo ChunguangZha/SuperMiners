@@ -54,7 +54,7 @@ namespace DataBaseProvider
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@ReferrerUserName", DESEncrypt.EncryptDES(record.ReferrerUserName));
-                mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(record.NewRegisterUserNme));
+                mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(record.NewRegisterUserName));
                 mycmd.Parameters.AddWithValue("@AwardLevel", record.AwardLevel);
                 mycmd.ExecuteNonQuery();
                 return true;

@@ -42,10 +42,10 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this.ParentObject.UserName; }
         }
 
-        public string UserNickName
-        {
-            get { return this.ParentObject.UserNickName; }
-        }
+        //public string UserNickName
+        //{
+        //    get { return this.ParentObject.UserNickName; }
+        //}
 
         public int RouletteAwardItemID
         {

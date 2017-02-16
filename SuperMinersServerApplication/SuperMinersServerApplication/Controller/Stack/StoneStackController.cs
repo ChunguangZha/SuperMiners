@@ -490,7 +490,7 @@ namespace SuperMinersServerApplication.Controller.Stack
                 {
                     this.InsertToBuyQueue(buyOrder, null);
                 }
-                PlayerActionController.Instance.AddLog(alipayRecord.user_name, MetaData.ActionLog.ActionType.DelegateBuyStone, buyOrder.BuyUnit.TradeStoneHandCount, "");
+                //PlayerActionController.Instance.AddLog(alipayRecord.user_name, MetaData.ActionLog.ActionType.DelegateBuyStone, buyOrder.BuyUnit.TradeStoneHandCount, "");
                 BuyOrderAlipayPaySucceedNotify(alipayRecord.user_name, alipayRecord.out_trade_no);
             }
 

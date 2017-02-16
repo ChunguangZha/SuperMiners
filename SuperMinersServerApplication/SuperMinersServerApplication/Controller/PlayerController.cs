@@ -217,21 +217,21 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_TRUE;
         }
 
-        public int CheckUserNickName(string nickName)
+        public int CheckUserLoginName(string userLoginName)
         {
-            if (string.IsNullOrEmpty(nickName))
+            if (string.IsNullOrEmpty(userLoginName))
             {
                 return OperResult.RESULTCODE_PARAM_INVALID;
             }
-            int count = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
+            int count = DBProvider.UserDBProvider.GetPlayerCountByLoginUserName(userLoginName);
             if (count == 0)
             {
-                count = DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayerCountByPlayerNickName(nickName);
-                if (count == 0)
-                {
+                //count = DBProvider.DeletedPlayerInfoDBProvider.GetDeletedPlayerCountByPlayerNickName(userLoginName);
+                //if (count == 0)
+                //{
                     //不存在
                     return OperResult.RESULTCODE_FALSE;
-                }
+                //}
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -241,19 +241,23 @@ namespace SuperMinersServerApplication.Controller
         /// RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="loginUserName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, 
+        public int RegisterUser(string clientIP, string loginUserName, string userName, string password, 
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
+            if (this.CheckUserLoginName(loginUserName) == OperResult.RESULTCODE_TRUE)
+            {
+                return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
+            }
             int userCount = DBProvider.UserDBProvider.GetPlayerCountByUserName(userName);
             if (userCount > 0)
             {
-                return OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
+                return OperResult.RESULTCODE_REGISTER_NICKNAME_EXIST;
             }
 
             if (!string.IsNullOrEmpty(alipayAccount))
@@ -274,10 +278,6 @@ namespace SuperMinersServerApplication.Controller
             if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
             {
                 return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
-            }
-            if (this.CheckUserNickName(nickName) == OperResult.RESULTCODE_TRUE)
-            {
-                return OperResult.RESULTCODE_REGISTER_NICKNAME_EXIST;
             }
             //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
             //if (userCount > 0)
@@ -333,7 +333,7 @@ namespace SuperMinersServerApplication.Controller
                                     var awardRecord = new WaitToReferAwardRecord()
                                     {
                                         AwardLevel = 1,
-                                        NewRegisterUserNme = userName,
+                                        NewRegisterUserName = userName,
                                         ReferrerUserName = referrerLevel1player.SimpleInfo.UserName
                                     };
                                     listWaitToAwardExpRecord.Add(awardRecord);
@@ -369,7 +369,7 @@ namespace SuperMinersServerApplication.Controller
                                     var awardExpRecord = new WaitToReferAwardRecord()
                                     {
                                         AwardLevel = indexLevel,
-                                        NewRegisterUserNme = userName,
+                                        NewRegisterUserName = userName,
                                         ReferrerUserName = previousReferrerUserName
                                     };
                                     listWaitToAwardExpRecord.Add(awardExpRecord);
@@ -389,15 +389,15 @@ namespace SuperMinersServerApplication.Controller
                 {
                     SimpleInfo = new PlayerSimpleInfo()
                     {
+                        UserLoginName = loginUserName,
                         UserName = userName,
-                        NickName = nickName,
                         Password = password,
                         Alipay = alipayAccount,
                         AlipayRealName = alipayRealName,
                         IDCardNo = IDCardNo,
                         Email = email,
                         QQ = qq,
-                        InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(userName) : GlobalData.TestInvitationCode,
+                        InvitationCode = invitationCode != GlobalData.TestInvitationCode ? CreateInvitationCode(loginUserName) : GlobalData.TestInvitationCode,
                         RegisterTime = DateTime.Now,
                         RegisterIP = clientIP,
                         ReferrerUserName = referrerLevel1player == null ? "" : referrerLevel1player.SimpleInfo.UserName,
@@ -446,8 +446,8 @@ namespace SuperMinersServerApplication.Controller
                 }
                 trans.Commit();
 
-                LogHelper.Instance.AddInfoLog("玩家[" + userName + "]注册成功，推荐人：" + newplayer.SimpleInfo.ReferrerUserName + "。");
-                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
+                LogHelper.Instance.AddInfoLog("玩家[" + loginUserName + "]注册成功，推荐人：" + newplayer.SimpleInfo.ReferrerUserName + "。");
+                PlayerActionController.Instance.AddLog(loginUserName, MetaData.ActionLog.ActionType.Register, 1, "注册成为新矿主。");
 
                 return OperResult.RESULTCODE_TRUE;
             }
@@ -462,9 +462,9 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        private string CreateInvitationCode(string userName)
+        private string CreateInvitationCode(string userLoginName)
         {
-            return (Math.Abs(userName.GetHashCode())).ToString();
+            return (Math.Abs(userLoginName.GetHashCode())).ToString();
         }
 
         public int BindWeiXinUser(string wxUserOpenID, PlayerInfo player)
@@ -815,7 +815,7 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.ChangePassword(newPassword);
         }
 
-        public int ChangePlayerSimpleInfo(string userName, string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        public int ChangePlayerSimpleInfo(string userName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             var playerrun = this.GetRunnable(userName);
             if (playerrun == null)
@@ -850,7 +850,7 @@ namespace SuperMinersServerApplication.Controller
             //        return OperResult.RESULTCODE_USER_CANNOT_UPDATEALIPAY;
             //    }
             //}
-            var isOK = playerrun.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
+            var isOK = playerrun.ChangePlayerSimpleInfo(alipayAccount, alipayRealName, IDCardNo, email, qq);
             if (isOK)
             {
                 return OperResult.RESULTCODE_TRUE;

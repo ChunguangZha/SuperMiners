@@ -20,16 +20,15 @@ namespace DataBaseProvider
 
                 string cmdTextA;
                 cmdTextA = "insert into deletedplayerinfo " +
-                    "(`UserLoginName`,`UserName`, `NickName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `LastLoginTime`, `LastLogOutTime`, `ReferrerUserName`, `LastLoginIP`, `LastLoginMac`, " +
+                    "(`UserLoginName`,`UserName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `LastLoginTime`, `LastLogOutTime`, `ReferrerUserName`, `LastLoginIP`, `LastLoginMac`, " +
                     " `Exp`, `CreditValue`, `RMB`, `FreezingRMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, `TempOutputStonesStartTime`, `TempOutputStones`, " +
                     " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`,`ShoppingCreditsEnabled`,Shopping`CreditsFreezed`, `DeleteTime` ) values " +
-                    " (@UserLoginName,@UserName, @NickName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, @LastLoginTime, @LastLogOutTime, @ReferrerUserName, @LastLoginIP, @LastLoginMac, " +
+                    " (@UserLoginName,@UserName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, @LastLoginTime, @LastLogOutTime, @ReferrerUserName, @LastLoginIP, @LastLoginMac, " +
                     " @Exp, @CreditValue, @RMB, @FreezingRMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, @TempOutputStonesStartTime, @TempOutputStones, " +
                     " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,@ShoppingCreditsEnabled,@ShoppingCreditsFreezed, @DeleteTime ); ";
 
                 mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(player.SimpleInfo.UserLoginName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
-                mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(player.SimpleInfo.NickName));
                 mycmd.Parameters.AddWithValue("@Password", DESEncrypt.EncryptDES(player.SimpleInfo.Password));
                 mycmd.Parameters.AddWithValue("@GroupType", (int)player.SimpleInfo.GroupType);
                 mycmd.Parameters.AddWithValue("@IsAgentReferred", player.SimpleInfo.IsAgentReferred);

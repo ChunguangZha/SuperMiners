@@ -63,11 +63,11 @@ namespace SuperMinersWeb
             {
                 return;
             }
-            if (!CheckUserName(userName))
+            if (!CheckUserLoginName(userName))
             {
                 return;
             }
-            if (!CheckNickName(nickName))
+            if (!CheckUserName(nickName))
             {
                 return;
             }
@@ -101,7 +101,7 @@ namespace SuperMinersWeb
             RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
         }
 
-        private bool CheckUserName(string userName)
+        private bool CheckUserLoginName(string userName)
         {
             if (userName == "")
             {
@@ -118,7 +118,7 @@ namespace SuperMinersWeb
                 Response.Write("<script>alert('用户名长度不能超过15个字符!')</script>");
                 return false;
             }
-            int result = WcfClient.Instance.CheckUserNameExist(userName);
+            int result = WcfClient.Instance.CheckUserLoginNameExist(userName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
                 Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");
@@ -138,7 +138,7 @@ namespace SuperMinersWeb
             return true;
         }
 
-        private bool CheckNickName(string nickName)
+        private bool CheckUserName(string nickName)
         {
             if (nickName == "")
             {
@@ -151,7 +151,7 @@ namespace SuperMinersWeb
                 return false;
             }
 
-            int result = WcfClient.Instance.CheckNickNameExist(nickName);
+            int result = WcfClient.Instance.CheckUserNameExist(nickName);
             if (result == OperResult.RESULTCODE_PARAM_INVALID)
             {
                 Response.Write("<script>alert('注册失败, 可能是输入数据无效，请重新输入再试!')</script>");

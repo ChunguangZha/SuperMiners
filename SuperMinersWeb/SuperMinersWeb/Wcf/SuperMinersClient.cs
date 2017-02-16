@@ -54,17 +54,17 @@ namespace SuperMinersWeb.Wcf
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FAILED; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="userLoginName"></param>
         /// <param name="password"></param>
         /// <param name="alipayAccount"></param>
         /// <param name="alipayRealName"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
+        public int RegisterUser(string clientIP, string userLoginName, string userName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+                return base.Channel.RegisterUser(clientIP, userLoginName, userName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -72,11 +72,11 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
-        public int RegisterUserByAgent(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
+        public int RegisterUserByAgent(string clientIP, string userLoginName, string userName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
             {
-                return base.Channel.RegisterUserByAgent(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+                return base.Channel.RegisterUserByAgent(clientIP, userLoginName, userName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             }
             catch (Exception)
             {
@@ -104,13 +104,13 @@ namespace SuperMinersWeb.Wcf
         /// <summary>
         /// RESULTCODE_PARAM_INVALID; RESULTCODE_TRUE; RESULTCODE_FALSE; RESULTCODE_EXCEPTION
         /// </summary>
-        /// <param name="nickName"></param>
+        /// <param name="userLoginName"></param>
         /// <returns></returns>
-        public int CheckNickNameExist(string nickName)
+        public int CheckUserLoginNameExist(string userLoginName)
         {
             try
             {
-                return base.Channel.CheckNickNameExist(nickName);
+                return base.Channel.CheckUserLoginNameExist(userLoginName);
             }
             catch (Exception)
             {

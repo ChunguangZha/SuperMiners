@@ -36,37 +36,37 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// </summary>
         /// <param name="wxUserOpenID"></param>
         /// <param name="wxUserName"></param>
-        /// <param name="xlUserName"></param>
+        /// <param name="xlUserLoginName"></param>
         /// <param name="xlUserPassword"></param>
         /// <param name="ip"></param>
         /// <returns></returns>
-        public OperResultObject BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        public OperResultObject BindWeiXinUser(string wxUserOpenID, string wxUserName, string xlUserLoginName, string xlUserPassword, string ip)
         {
             OperResultObject resultObj = new OperResultObject();
             try
             {
-                int userID = DBProvider.UserDBProvider.JudgeWeiXinOpenIDorXLUserName_Binded(wxUserOpenID, xlUserName);
+                int userID = DBProvider.UserDBProvider.JudgeWeiXinOpenIDorXLUserName_Binded(wxUserOpenID, xlUserLoginName);
                 if (userID > 0)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_WEIXIN_USERBINDEDBYOTHER;
                     return resultObj;
                 }
 
-                return InnerBindWeixinUser(wxUserOpenID, wxUserName, xlUserName, xlUserPassword, ip);
+                return InnerBindWeixinUser(wxUserOpenID, wxUserName, xlUserLoginName, xlUserPassword, ip);
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("微信端。绑定玩家信息异常。 wxUserOpenID: " + wxUserOpenID + "，绑定用户：[" + xlUserName + "]失败.", exc);
+                LogHelper.Instance.AddErrorLog("微信端。绑定玩家信息异常。 wxUserOpenID: " + wxUserOpenID + "，绑定用户：[" + xlUserLoginName + "]失败.", exc);
                 resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
                 return resultObj;
             }
         }
 
-        private OperResultObject InnerBindWeixinUser(string wxUserOpenID, string wxUserName, string xlUserName, string xlUserPassword, string ip)
+        private OperResultObject InnerBindWeixinUser(string wxUserOpenID, string wxUserName, string xlUserLoginName, string xlUserPassword, string ip)
         {
             OperResultObject resultObj = new OperResultObject();
 
-            PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserName(xlUserName);
+            PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserLoginName(xlUserLoginName);
             if (player == null)
             {
                 resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
@@ -81,7 +81,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             int result = PlayerController.Instance.BindWeiXinUser(wxUserOpenID, player);
             if (result == OperResult.RESULTCODE_TRUE)
             {
-                LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + xlUserName);
+                LogHelper.Instance.AddInfoLog("wxUserOpenID: " + wxUserOpenID + "，成功绑定用户：" + player.SimpleInfo.UserName);
                 resultObj = PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName);
                 if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
                 {
@@ -104,13 +104,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         /// 注册加绑定  RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
         /// <param name="clientIP"></param>
-        /// <param name="userName"></param>
+        /// <param name="userLoginName"></param>
         /// <param name="password"></param>
         /// <param name="email"></param>
         /// <param name="qq"></param>
         /// <param name="invitationCode"></param>
         /// <returns></returns>
-        public int RegisterUserFromWeiXin(string wxUserOpenID, string wxUserName, string clientIP, string userName, string nickName, string password,
+        public int RegisterUserFromWeiXin(string wxUserOpenID, string wxUserName, string clientIP, string userLoginName, string userName, string password,
             string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq, string invitationCode)
         {
             try
@@ -130,7 +130,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     return OperResult.RESULTCODE_WEXIN_REGISTER_OPENID_EXIST;
                 }
 
-                if (string.IsNullOrEmpty(userName) || userName.Length < 3)
+                if (string.IsNullOrEmpty(userLoginName) || userLoginName.Length < 3)
                 {
                     return OperResult.RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT;
                 }
@@ -154,10 +154,10 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 //{
                 //    return OperResult.RESULTCODE_PARAM_INVALID;
                 //}
-                int result = PlayerController.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+                int result = PlayerController.Instance.RegisterUser(clientIP, userLoginName, userName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    OperResultObject resultObj = InnerBindWeixinUser(wxUserOpenID, wxUserName, userName, password, clientIP);
+                    OperResultObject resultObj = InnerBindWeixinUser(wxUserOpenID, wxUserName, userLoginName, password, clientIP);
                     result = resultObj.OperResultCode;
                 }
 
@@ -165,7 +165,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("WeiXinRegisterUser Exception. wxUserOpenID: " + wxUserOpenID + ";wxUserName:"+ wxUserName + ";clientIP:" + clientIP + ";userName: " + userName + ";password: " + password
+                LogHelper.Instance.AddErrorLog("WeiXinRegisterUser Exception. wxUserOpenID: " + wxUserOpenID + ";wxUserName:"+ wxUserName + ";clientIP:" + clientIP + ";userName: " + userLoginName + ";password: " + password
                                     + "alipayAccount:" + alipayAccount + ";alipayRealName:" + alipayRealName + ";IDCardNo:" + IDCardNo + ";email: " + email + ";qq: " + qq, exc);
 
                 return OperResult.RESULTCODE_EXCEPTION;

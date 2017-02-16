@@ -152,9 +152,8 @@ namespace DataBaseProvider
             {
                 PlayerInfo player = new PlayerInfo();
 
-                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
                 string encryptedUserLoginName = dt.Rows[i]["UserLoginName"].ToString();
-                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
+                string encryptedUserName = dt.Rows[i]["UserName"].ToString();
                 string encryptedUserPassword = dt.Rows[i]["Password"].ToString();
                 string encryptedAlipay = dt.Rows[i]["Alipay"] == DBNull.Value ? "" : dt.Rows[i]["Alipay"].ToString();
                 string encryptedAlipayRealName = dt.Rows[i]["AlipayRealName"] == DBNull.Value ? "" : dt.Rows[i]["AlipayRealName"].ToString();
@@ -165,7 +164,6 @@ namespace DataBaseProvider
                 player.SimpleInfo.UserID = Convert.ToInt32(dt.Rows[i]["id"]);
                 player.SimpleInfo.UserLoginName = DESEncrypt.DecryptDES(encryptedUserLoginName);
                 player.SimpleInfo.UserName = DESEncrypt.DecryptDES(encryptedUserName);
-                player.SimpleInfo.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.SimpleInfo.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.SimpleInfo.Password = DESEncrypt.DecryptDES(encryptedUserPassword);
                 player.SimpleInfo.GroupType = (PlayerGroupType)Convert.ToInt32(dt.Rows[i]["GroupType"]);
                 player.SimpleInfo.IsAgentReferred = Convert.ToBoolean(dt.Rows[i]["IsAgentReferred"]);
@@ -596,7 +594,7 @@ namespace DataBaseProvider
                 {
                     ID = Convert.ToInt32(dt.Rows[i]["id"]),
                     AwardLevel = Convert.ToInt32(dt.Rows[i]["AwardLevel"]),
-                    NewRegisterUserNme = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["NewRegisterUserNme"])),
+                    NewRegisterUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["NewRegisterUserNme"])),
                     ReferrerUserName = DESEncrypt.DecryptDES(Convert.ToString(dt.Rows[i]["ReferrerUserName"]))
                 };
             }

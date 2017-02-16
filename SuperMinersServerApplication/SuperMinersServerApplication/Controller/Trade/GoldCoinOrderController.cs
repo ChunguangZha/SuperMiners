@@ -97,8 +97,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 myTrans.Commit();
-                PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, record.GainGoldCoin,
-                    "充值了 " + record.GainGoldCoin.ToString() + " 的金币");
+                PlayerActionController.Instance.AddLog(record.UserName, MetaData.ActionLog.ActionType.GoldCoinRecharge, record.GainGoldCoin);
                 return result;
             }
             catch (Exception exc)

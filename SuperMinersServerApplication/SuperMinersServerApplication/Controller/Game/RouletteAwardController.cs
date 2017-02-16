@@ -442,7 +442,7 @@ namespace SuperMinersServerApplication.Controller.Game
             return totalProbabilityMaxValue;
         }
 
-        public RouletteWinnerRecord Finish(int userID, string userName, string userNickName, int winAwardID)
+        public RouletteWinnerRecord Finish(int userID, string userName, int winAwardID)
         {
             int serverWinAwardID = -1;
 

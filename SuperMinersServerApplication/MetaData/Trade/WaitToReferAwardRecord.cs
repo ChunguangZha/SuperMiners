@@ -12,7 +12,7 @@ namespace MetaData.Trade
 
         public string ReferrerUserName;
 
-        public string NewRegisterUserNme;
+        public string NewRegisterUserName;
 
         public int AwardLevel;
     }

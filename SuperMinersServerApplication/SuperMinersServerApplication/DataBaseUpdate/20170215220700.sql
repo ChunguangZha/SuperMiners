@@ -35,4 +35,10 @@ ADD UNIQUE INDEX `UserLoginName_UNIQUE` (`UserLoginName` ASC);
 
 -- -------------------------------
 
+ALTER TABLE `superminers`.`playersimpleinfo` 
+DROP COLUMN `NickName`,
+CHANGE COLUMN `UserName` `UserName` VARCHAR(150) NOT NULL ;
+
+-- --------------------------------
+
 UPDATE `superminers`.`paramtable` SET `ParamValue`='20170215220700' WHERE `id`='1';

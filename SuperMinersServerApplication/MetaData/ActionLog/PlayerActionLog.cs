@@ -64,7 +64,7 @@ namespace MetaData.ActionLog
         SellDiamond,
         GatherStone,
         Login,
-        GameFunny,
+        GameRoulette,
         WithdrawRMB,
         DelegateBuyStone,
         DelegateSellStone,
@@ -73,5 +73,6 @@ namespace MetaData.ActionLog
         GameRaiderJoinBet,
         GameRaiderWin,
         GambleStoneMaxWinner,
+        ShoppingCredits,
     }
 }

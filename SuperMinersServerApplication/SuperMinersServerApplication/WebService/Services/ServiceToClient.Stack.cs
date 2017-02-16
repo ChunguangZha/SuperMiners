@@ -74,7 +74,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                         myTrans.Commit();
 
-                        PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateSellStone, sellStoneHandsCount, "");
+                        //PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateSellStone, sellStoneHandsCount, "");
                         LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托出售 " + sellStoneHandsCount + " 手矿石，Price：" + price);
                         return OperResult.RESULTCODE_TRUE;
                     }
@@ -298,7 +298,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
                         if (paytype != MetaData.Trade.PayType.Alipay)
                         {
-                            PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateBuyStone, buyStoneHandsCount, "");
+                            //PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.DelegateBuyStone, buyStoneHandsCount, "");
                         }
                         LogHelper.Instance.AddInfoLog("玩家[" + userName + "] 挂单委托买入 " + buyStoneHandsCount + " 手矿石：" + buyOrder.ToString());
 

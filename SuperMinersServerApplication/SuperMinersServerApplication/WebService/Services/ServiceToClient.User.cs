@@ -81,9 +81,10 @@ namespace SuperMinersServerApplication.WebService.Services
 
             string token = null;
             string ip = ClientManager.GetCurrentIP();
+            PlayerInfo player = null;
             try
             {
-                PlayerInfo player = PlayerController.Instance.GetPlayerInfoByUserLoginName(UserLoginName);
+                player = PlayerController.Instance.GetPlayerInfoByUserLoginName(UserLoginName);
                 if (player == null)
                 {
                     resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
@@ -168,7 +169,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
             if (!string.IsNullOrEmpty(token))
             {
-                PlayerActionController.Instance.AddLog(UserLoginName, MetaData.ActionLog.ActionType.Login, 1);
+                PlayerActionController.Instance.AddLog(UserLoginName, MetaData.ActionLog.ActionType.Login, (int)player.FortuneInfo.Exp / 2000);
                 new Thread(new ParameterizedThreadStart(o =>
                 {
                     this.LogedIn(o.ToString());
@@ -273,7 +274,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public int ChangePlayerSimpleInfo(string token, string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        public int ChangePlayerSimpleInfo(string token, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
 #if Delay
 
@@ -285,15 +286,15 @@ namespace SuperMinersServerApplication.WebService.Services
             {
                 try
                 {
-                    if (string.IsNullOrEmpty(nickName) || string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
+                    if (string.IsNullOrEmpty(alipayAccount) || string.IsNullOrEmpty(alipayRealName))
                     {
                         return OperResult.RESULTCODE_PARAM_INVALID;
                     }
                     string userName = ClientManager.GetClientUserName(token);
-                    int value = PlayerController.Instance.ChangePlayerSimpleInfo(userName, nickName, alipayAccount, alipayRealName, IDCardNo, email, qq);
+                    int value = PlayerController.Instance.ChangePlayerSimpleInfo(userName, alipayAccount, alipayRealName, IDCardNo, email, qq);
                     if (value == OperResult.RESULTCODE_TRUE)
                     {
-                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "]修改了用户信息，修改后昵称为：" + nickName + "，支付宝账户为：" + alipayAccount + "，实名为：" + alipayRealName + "，邮箱为：" + email + "， QQ为：" + qq);
+                        LogHelper.Instance.AddInfoLog("玩家[" + userName + "]修改了用户信息，修改后支付宝账户为：" + alipayAccount + "，实名为：" + alipayRealName + "，邮箱为：" + email + "， QQ为：" + qq);
                     }
 
                     return value;

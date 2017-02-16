@@ -34,9 +34,9 @@
                         <ColumnDefinition Width="23*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="用户名" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Name="txtUserName" IsReadOnly="True" MaxLength="15" VerticalAlignment="Center" Margin="5"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Name="txtUserLoginName" IsReadOnly="True" MaxLength="15" VerticalAlignment="Center" Margin="5"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="昵称" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="txtNickName" MaxLength="15" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="txtUserName" IsReadOnly="True" MaxLength="15" Margin="5"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="密码" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>
                     <Button Grid.Row="2" Grid.Column="1" Name="btnChangePassword" Content="修改密码" VerticalAlignment="Center" Margin="5" Click="btnChangePassword_Click"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="电子邮箱" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5"/>

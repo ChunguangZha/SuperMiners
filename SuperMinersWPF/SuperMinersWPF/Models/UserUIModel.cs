@@ -40,7 +40,7 @@ namespace SuperMinersWPF.Models
                 }
 
                 NotifyPropertyChange("UserName");
-                NotifyPropertyChange("NickName");
+                NotifyPropertyChange("UserLoginName");
                 NotifyPropertyChange("Password");
                 NotifyPropertyChange("ExpLevelImg");
                 NotifyPropertyChange("Alipay");
@@ -86,9 +86,9 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.SimpleInfo.UserName; }
         }
 
-        public string NickName
+        public string UserLoginName
         {
-            get { return this._parentObject.SimpleInfo.NickName; }
+            get { return this._parentObject.SimpleInfo.UserLoginName; }
         }
 
         public string Password

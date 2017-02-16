@@ -44,8 +44,8 @@ namespace SuperMinersWPF.Views.Controls
                 return;
             }
             this.txtMessage.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
+            this.txtUserLoginName.Text = GlobalData.CurrentUser.UserLoginName;
             this.txtUserName.Text = GlobalData.CurrentUser.UserName;
-            this.txtNickName.Text = GlobalData.CurrentUser.NickName;
             this.txtAlipayAccount.Text = GlobalData.CurrentUser.Alipay;
             this.txtAlipayRealName.Text = GlobalData.CurrentUser.AlipayRealName;
             this.txtEmail.Text = GlobalData.CurrentUser.Email;
@@ -121,12 +121,12 @@ namespace SuperMinersWPF.Views.Controls
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            nickName = this.txtNickName.Text.Trim();
-            if (string.IsNullOrEmpty(nickName))
-            {
-                MyMessageBox.ShowInfo("请填写昵称。");
-                return;
-            }
+            //nickName = this.txtNickName.Text.Trim();
+            //if (string.IsNullOrEmpty(nickName))
+            //{
+            //    MyMessageBox.ShowInfo("请填写昵称。");
+            //    return;
+            //}
 
             email = this.txtEmail.Text.Trim();
             if (string.IsNullOrEmpty(email))
@@ -199,65 +199,14 @@ namespace SuperMinersWPF.Views.Controls
                 MyMessageBox.ShowInfo("请输入正确的身份证号。");
                 return;
             }
-            //matchValue = Regex.IsMatch(IDCardNoText, @"^([1-9][0-9]*X{0,1})$");
-            //if (!matchValue)
-            //{
-            //    MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //    return;
-            //}
-            //else
-            //{
-            //    if (IDCardNoText.Length != 18)
-            //    {
-            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //        return;
-            //    }
-            //    string yearText = IDCardNoText.Substring(6, 4);
-            //    string monthText = IDCardNoText.Substring(10, 2);
-            //    string dayText = IDCardNoText.Substring(12, 2);
-            //    int year = Convert.ToInt32(yearText);
-            //    int month = Convert.ToInt32(monthText);
-            //    int day = Convert.ToInt32(dayText);
-            //    if (year < 1950 || year > DateTime.Now.Year - 16)
-            //    {
-            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //        return;
-            //    }
-            //    if (month > 12)
-            //    {
-            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //        return;
-            //    }
-            //    if (day > 31)
-            //    {
-            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //        return;
-            //    }
 
-            //    int sumResult = 0;
-            //    for (int i = 0; i < IDCardNoText.Length - 1; i++)
-            //    {
-            //        int cardValue = Convert.ToInt32(IDCardNoText.Substring(i, 1));
-            //        int plusValue = cardValue * IDCARDVERIFYCODE[i];
-            //        sumResult += plusValue;
-            //    }
-            //    int plurValue = (sumResult) % 11;
-            //    if (IDCardNoText.Substring(17, 1) != IDCARDLASTTEXT[plurValue])
-            //    {
-            //        MyMessageBox.ShowInfo("请输入正确的身份证号");
-            //        return;
-            //    }
-            //}
-
-            AsyncChangePlayerSimpleInfo(nickName, alipay, alipayRealName, IDCardNoText, email, qq);
-            //App.BusyToken.ShowBusyWindow("正在验证...");
-            //GlobalData.Client.CheckUserAlipayExist(alipay, alipayRealName, null);
+            AsyncChangePlayerSimpleInfo(alipay, alipayRealName, IDCardNoText, email, qq);
         }
 
-        public void AsyncChangePlayerSimpleInfo(string nickName, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        public void AsyncChangePlayerSimpleInfo(string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
-            GlobalData.Client.ChangePlayerSimpleInfo(nickName, alipayAccount, alipayRealName, IDCardNo, email, qq, new string[] { alipayAccount, alipayRealName });
+            GlobalData.Client.ChangePlayerSimpleInfo(alipayAccount, alipayRealName, IDCardNo, email, qq, new string[] { alipayAccount, alipayRealName });
         }
 
     }

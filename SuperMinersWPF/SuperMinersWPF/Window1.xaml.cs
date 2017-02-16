@@ -264,12 +264,6 @@ namespace SuperMinersWPF
             win.ShowDialog();
         }
 
-        private void btnSetting_Click(object sender, RoutedEventArgs e)
-        {
-            SettingWindow win = new SettingWindow();
-            win.ShowDialog();
-        }
-
         private void btnGatherStones_Click(object sender, RoutedEventArgs e)
         {
             if ((int)GlobalData.CurrentUser.TempOutputStones > 0)

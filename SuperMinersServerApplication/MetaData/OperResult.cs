@@ -70,6 +70,11 @@ namespace MetaData
         public const int RESULTCODE_WEXIN_REGISTER_OPENID_EXIST = 106;
 
         /// <summary>
+        /// 注册用户时_用户登录名已存在
+        /// </summary>
+        public const int RESULTCODE_REGISTER_USERLOGINNAME_EXIST = 107;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
@@ -301,6 +306,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_GETFAILED_NOTHINGTOGET, "没有可领取的碎片");
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎片");
             _resultCode_Msg.Add(RESULTCODE_GAME_GAMBLE_INNINGFINISHED, "此局已经结束，请参加下一局");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_USERLOGINNAME_EXIST, "用户登录名已经存在");
         }
 
         public static string GetMsg(int resultCode)
