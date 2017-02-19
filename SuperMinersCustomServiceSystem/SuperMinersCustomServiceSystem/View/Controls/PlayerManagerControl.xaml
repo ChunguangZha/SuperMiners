@@ -73,8 +73,8 @@
             <DataGrid Name="datagridPlayerInfos" ItemsSource="{Binding ListFilteredPlayers}" SelectionMode="Single" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding UserID}" Header="用户ID"/>
+                    <DataGridTextColumn Binding="{Binding UserLoginName}" ClipboardContentBinding="{x:Null}" Header="用户登录名"/>
                     <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
-                    <DataGridTextColumn Binding="{Binding NickName}" ClipboardContentBinding="{x:Null}" Header="昵称"/>
                     <DataGridTextColumn Binding="{Binding GroupTypeText}" Header="用户组"/>
                     <DataGridTextColumn Binding="{Binding IsAgentReferred}" Header="是否为代理推荐"/>
                     <DataGridTextColumn Binding="{Binding AgentReferredLevel}" Header="代理推荐级别"/>

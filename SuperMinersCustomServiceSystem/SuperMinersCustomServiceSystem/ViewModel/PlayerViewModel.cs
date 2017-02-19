@@ -133,7 +133,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             {
                 checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = checkLoginIPOK = checkLoginMacOK = false;
 
-                if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
+                if (string.IsNullOrEmpty(userName) || item.UserLoginName.Contains(userName))
                 {
                     checkUserNameOK = true;
                 }
@@ -302,7 +302,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     return;
                 }
 
-                var user = this.ListAllPlayers.FirstOrDefault(u => u.UserName == e.Result.SimpleInfo.UserName);
+                var user = this.ListAllPlayers.FirstOrDefault(u => u.UserLoginName == e.Result.SimpleInfo.UserName);
                 if (user != null)
                 {
                     user.ParentObject = e.Result;

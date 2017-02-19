@@ -68,6 +68,9 @@ namespace DataBaseProvider
                 agent.TotalAwardRMB = Convert.ToDecimal(tableAgents.Rows[0]["TotalAwardRMB"]);
                 agent.InvitationURL = Convert.ToString(tableAgents.Rows[0]["InvitationURL"]);
                 agent.Player = player;
+                tableAgents.Clear();
+                tableAgents.Dispose();
+                adapter.Dispose();
 
                 return agent;
             }
@@ -116,7 +119,12 @@ namespace DataBaseProvider
                     return null;
                 }
 
-                return MetaDBAdapter<AgentUserInfo>.GetAgentUserInfoFromDataTable(tableAgents, players);
+                var lists = MetaDBAdapter<AgentUserInfo>.GetAgentUserInfoFromDataTable(tableAgents, players);
+                tablePlayers.Clear();
+                tablePlayers.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {

@@ -32,8 +32,8 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>9</ApplicationRevision>
-    <ApplicationVersion>2.0.1.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>2.0.2.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -256,6 +256,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\UserReferrerTreeItem.cs">
       <Link>Wcf\Datas\UserReferrerTreeItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Utility\JsonSerializeTest.cs">
+      <Link>Utility\JsonSerializeTest.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\AESEncrypt.cs">
       <Link>Wcf\Channel\AESEncrypt.cs</Link>

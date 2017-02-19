@@ -59,8 +59,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 DataTable table = new DataTable();
                 adapter.Fill(table);
+                var lists = MetaDBAdapter<AgentAwardRecord>.GetAgentAwardRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
                 adapter.Dispose();
-                return MetaDBAdapter<AgentAwardRecord>.GetAgentAwardRecordFromDataTable(table);
+
+                return lists;
             }
             finally
             {

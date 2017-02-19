@@ -24,12 +24,13 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
-                {
-                    return MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(table);
-                }
 
-                return null;
+                var lists = MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -184,6 +185,9 @@ namespace DataBaseProvider
                 {
                     records = MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(dt);
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 if (records.Length > 0)
@@ -204,18 +208,16 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                DataTable dt = new DataTable();
-
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "select a.* from goldcoinrechargerecord ";
+                string sqlTextA = "select a.* from goldcoinrechargerecord a ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
+                    builder.Append(" a.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -226,7 +228,7 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    builder.Append(" OrderNumber = @OrderNumber ");
+                    builder.Append(" .OrderNumber = @OrderNumber ");
                     mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
                 }
 
@@ -242,7 +244,7 @@ namespace DataBaseProvider
                     {
                         return null;
                     }
-                    builder.Append(" CreateTime >= @beginCreateTime and CreateTime < @endCreateTime ");
+                    builder.Append(" a.CreateTime >= @beginCreateTime and a.CreateTime < @endCreateTime ");
                     mycmd.Parameters.AddWithValue("@beginCreateTime", beginTime);
                     mycmd.Parameters.AddWithValue("@endCreateTime", endTime);
                 }
@@ -252,7 +254,7 @@ namespace DataBaseProvider
                     sqlWhere = " where " + builder.ToString();
                 }
 
-                string sqlOrderLimit = " order by CreateTime desc ";
+                string sqlOrderLimit = " order by a.id desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
@@ -267,11 +269,15 @@ namespace DataBaseProvider
                 mycmd.CommandText = sqlAllText;
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt != null)
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+                if (table != null)
                 {
-                    records = MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(dt);
+                    records = MetaDBAdapter<GoldCoinRechargeRecord>.GetGoldCoinRechargeRecordFromDataTable(table);
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;

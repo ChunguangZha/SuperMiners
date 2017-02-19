@@ -34,7 +34,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditAlipay_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerAlipayWindow win = new EditPlayerAlipayWindow(this._player.UserName, this._player.Alipay, this._player.AlipayRealName, this._player.IDCardNo);
+            EditPlayerAlipayWindow win = new EditPlayerAlipayWindow(this._player.UserLoginName, this._player.Alipay, this._player.AlipayRealName, this._player.IDCardNo);
             if (win.ShowDialog() == true)
             {
                 this._player.Alipay = win.AlipayAccount;
@@ -45,7 +45,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditExp_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerExpWindow win = new EditPlayerExpWindow(this._player.UserName, this._player.Exp);
+            EditPlayerExpWindow win = new EditPlayerExpWindow(this._player.UserLoginName, this._player.Exp);
             if (win.ShowDialog() == true)
             {
                 this._player.SetExp(win.ExpChanged);
@@ -56,7 +56,7 @@ namespace SuperMinersCustomServiceSystem
         {
             try
             {
-                EditPlayerRMBWindow win = new EditPlayerRMBWindow(this._player.UserName, this._player.RMB);
+                EditPlayerRMBWindow win = new EditPlayerRMBWindow(this._player.UserLoginName, this._player.RMB);
                 win.ShowDialog();
                 if (win.IsOK == true)
                 {
@@ -71,7 +71,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditGoldCoin_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerGoldCoinWindow win = new EditPlayerGoldCoinWindow(this._player.UserName, this._player.GoldCoin);
+            EditPlayerGoldCoinWindow win = new EditPlayerGoldCoinWindow(this._player.UserLoginName, this._player.GoldCoin);
             if (win.ShowDialog() == true)
             {
                 this._player.SetGoldCoin(win.ChangedGoldCoin);
@@ -99,7 +99,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditMiners_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerMinerCountWindow win = new EditPlayerMinerCountWindow(this._player.UserName, this._player.MinersCount);
+            EditPlayerMinerCountWindow win = new EditPlayerMinerCountWindow(this._player.UserLoginName, this._player.MinersCount);
             if (win.ShowDialog() == true)
             {
                 this._player.SetMinersCount(win.ChangedMinerCount);
@@ -108,7 +108,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnChangePassword_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerPasswordWindow win = new EditPlayerPasswordWindow(this._player.UserName);
+            EditPlayerPasswordWindow win = new EditPlayerPasswordWindow(this._player.UserLoginName);
             win.ShowDialog();
         }
 
@@ -120,7 +120,7 @@ namespace SuperMinersCustomServiceSystem
 
         private void btnEditLastGahterStoneTime_Click(object sender, RoutedEventArgs e)
         {
-            EditPlayerLastGatherStoneTimeWindow win = new EditPlayerLastGatherStoneTimeWindow(this._player.UserName, this._player.LastGatherStoneTime);
+            EditPlayerLastGatherStoneTimeWindow win = new EditPlayerLastGatherStoneTimeWindow(this._player.UserLoginName, this._player.LastGatherStoneTime);
             if (win.ShowDialog() == true)
             {
                 this._player.SetLastGatherStoneTime(win.DataTimeValue.ToDateTime());

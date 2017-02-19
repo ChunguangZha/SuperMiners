@@ -82,6 +82,10 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
                 var items = MetaDBAdapter<PlayerLockedInfo>.GetPlayerLockedInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 if (items != null && items.Length > 0)
                 {
                     return items[0];
@@ -119,6 +123,10 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
                 var items = MetaDBAdapter<PlayerLockedInfo>.GetPlayerLockedInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 return items;
             }

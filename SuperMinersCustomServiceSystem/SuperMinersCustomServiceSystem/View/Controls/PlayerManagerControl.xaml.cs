@@ -106,9 +106,9 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                         string ActionPassword = win.ActionPassword;
                         PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
 
-                        if (MessageBox.Show("删除玩家【" + player.UserName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        if (MessageBox.Show("删除玩家【" + player.UserLoginName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
-                            App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserName }, ActionPassword);
+                            App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserLoginName }, ActionPassword);
                         }
                     }
                 }
@@ -132,9 +132,9 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 foreach (var item in App.PlayerVMObject.ListFilteredPlayers)
                 {
                     #region
-                    builder.Append(item.UserName);
+                    builder.Append(item.UserLoginName);
                     builder.Append(",");
-                    builder.Append(item.NickName);
+                    builder.Append(item.UserName);
                     builder.Append(",");
                     builder.Append(item.Alipay);
                     builder.Append(",");
@@ -211,7 +211,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                         InputValueWindow winInputValue = new InputValueWindow("请确认", "请输入要锁定玩家登录天数", 100, 1);
                         if (winInputValue.ShowDialog() == true)
                         {
-                            App.PlayerVMObject.AsyncLockPlayerInfos(player.UserName, ActionPassword, (int)winInputValue.Value);
+                            App.PlayerVMObject.AsyncLockPlayerInfos(player.UserLoginName, ActionPassword, (int)winInputValue.Value);
                         }
                     }
                 }
@@ -239,9 +239,9 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         string ActionPassword = win.ActionPassword;
 
-                        if (MessageBox.Show("请确认要解锁玩家【" + player.UserName + "】", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        if (MessageBox.Show("请确认要解锁玩家【" + player.UserLoginName + "】", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
-                            App.PlayerVMObject.AsyncUnLockPlayerInfos(player.UserName, ActionPassword);
+                            App.PlayerVMObject.AsyncUnLockPlayerInfos(player.UserLoginName, ActionPassword);
                         }
                     }
                 }
@@ -259,14 +259,14 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
                 {
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (MessageBox.Show("请确认要将玩家【" + player.UserName + "】设置为代理？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                    if (MessageBox.Show("请确认要将玩家【" + player.UserLoginName + "】设置为代理？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                     {
                         InputActionPasswordWindow win = new InputActionPasswordWindow();
                         if (win.ShowDialog() == true)
                         {
                             //string ActionPassword = win.ActionPassword;
 
-                            EditAgentInfoWindow winEdit = new EditAgentInfoWindow(player.UserID, player.UserName);
+                            EditAgentInfoWindow winEdit = new EditAgentInfoWindow(player.UserID, player.UserLoginName);
                             winEdit.ShowDialog();
                             if (winEdit.ISOK)
                             {
@@ -329,7 +329,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (this.ViewPlayerBuyMineRecords != null)
                         {
-                            this.ViewPlayerBuyMineRecords(player.UserName);
+                            this.ViewPlayerBuyMineRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -351,7 +351,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (this.ViewPlayerBuyGoldCoinRecords != null)
                         {
-                            this.ViewPlayerBuyGoldCoinRecords(player.UserName);
+                            this.ViewPlayerBuyGoldCoinRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -373,7 +373,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerBuyMinerRecords != null)
                         {
-                            this.ViewPlayerBuyMinerRecords(player.UserName);
+                            this.ViewPlayerBuyMinerRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -395,7 +395,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerSellStoneOrderRecords != null)
                         {
-                            ViewPlayerSellStoneOrderRecords(player.UserName);
+                            ViewPlayerSellStoneOrderRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -417,7 +417,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerLockedStoneOrderRecords != null)
                         {
-                            ViewPlayerLockedStoneOrderRecords(player.UserName);
+                            ViewPlayerLockedStoneOrderRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -439,7 +439,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerBuyStoneOrderRecords != null)
                         {
-                            ViewPlayerBuyStoneOrderRecords(player.UserName);
+                            ViewPlayerBuyStoneOrderRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -461,7 +461,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerAlipayRechargeRecords != null)
                         {
-                            ViewPlayerAlipayRechargeRecords(player.UserName);
+                            ViewPlayerAlipayRechargeRecords(player.UserLoginName);
                         }
                     }
                 }
@@ -483,7 +483,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerRMBWithdrawRecords != null)
                         {
-                            ViewPlayerRMBWithdrawRecords(player.UserName);
+                            ViewPlayerRMBWithdrawRecords(player.UserLoginName);
                         }
                     }
                 }

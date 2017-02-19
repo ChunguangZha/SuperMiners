@@ -58,10 +58,10 @@
                         </div>
                         <div class="menusplit"><div class="split"></div></div>
                         <div class="menuitem" style="background-image: url('../Images/menu-background_05.png');">
-                            <a id="A4" runat="server" href="~/Register.aspx">
+                            <a id="A4" runat="server" href="~/TransferPage.aspx">
                                 <div class="linkcontent">
                                     <div>
-                                        注册
+                                        转移
                                     </div>
                                     <div class="link_subline">
 

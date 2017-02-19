@@ -439,6 +439,7 @@ namespace SuperMinersServerApplication.Controller.Game
             this._inningInfo.WinnedTimes = winnedTimes;
 
             this._roundInfo.AllWinnedOutStone += winnedStoneCount;
+            this._roundInfo.AllBetInStone += this._inningInfo.AllBetInStone;
             this._roundInfo.WinColorItems[this._roundInfo.FinishedInningCount] = (byte)winnedColor;
             this._roundInfo.FinishedInningCount++;
             switch (winnedColor)
@@ -675,6 +676,10 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private void RecoverPlayerFortune(Dictionary<int, int> dicPlayerBetStoneCount)
         {
+            if (dicPlayerBetStoneCount == null)
+            {
+                return;
+            }
             foreach (var userID in dicPlayerBetStoneCount.Keys)
             {
                 string userName = null;

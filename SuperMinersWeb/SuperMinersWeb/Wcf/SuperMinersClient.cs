@@ -1,5 +1,7 @@
 ﻿using MetaData;
 using MetaData.SystemConfig;
+using MetaData.Trade;
+using MetaData.User;
 using SuperMinersServerApplication.WebServiceToWeb.Contracts;
 using SuperMinersWeb.Utility;
 using System;
@@ -238,5 +240,40 @@ namespace SuperMinersWeb.Wcf
             }
         }
 
+
+
+        public OperResultObject Login(string clientIP, string userLoginName, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public WebPlayerInfo GetPlayerInfo(string token, string userLoginName, string clientIP)
+        {
+            throw new NotImplementedException();
+        }
+
+        public UserRemoteServerItem[] GetUserRemoteServerItems(string token, string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        {
+            try
+            {
+                return base.Channel.TransferOldUser(userName, password, alipayAccount, alipayRealName, email);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return OperResult.RESULTCODE_EXCEPTION;
+            }
+        }
     }
 }

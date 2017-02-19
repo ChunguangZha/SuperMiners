@@ -394,7 +394,13 @@
                 <RadioButton Name="chk1000Stones" Content="1000矿石" GroupName="Times" Margin="5" Foreground="White"/>
             </StackPanel>
             <TextBlock Grid.Row="5" Grid.ColumnSpan="4" Text="玩法说明" Margin="10" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            <TextBlock Grid.Row="6" Grid.ColumnSpan="4" Margin="10" Background="LightGray" />
+            <StackPanel Grid.Row="6" Grid.ColumnSpan="4" Margin="10" Background="#FFC7A365" Orientation="Vertical">
+                <TextBlock Text="1. 每个原石含有4种宝石中的一种。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14"/>
+                <TextBlock Text="2. 点击每个宝石按钮，即选择猜宝石种类。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14"/>
+                <TextBlock Text="3. 每次猜宝石都要花费一定数量的矿石，同时猜中将获得相应倍数的矿石奖励。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14"/>
+                <TextBlock Text="4. 每次切开原石后，宝石商人（系统）会自动发放奖励。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14"/>
+                <TextBlock Text="小提示：游戏过程中，可能会由于网络原因造成极少用户奖励没有到账。请不要担心，系统会在24小时内自动返还至您的账户。" Margin="5" Foreground="#ffdc15" TextWrapping="Wrap" FontSize="14"/>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

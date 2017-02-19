@@ -230,6 +230,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 items = MetaDBAdapter<RouletteAwardItem>.GetRouletteAwardItemFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 return items;
             }
             finally
@@ -263,6 +266,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 items = MetaDBAdapter<RouletteAwardItem>.GetRouletteAwardItemFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 return items;
             }
             finally
@@ -295,6 +301,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 var items = MetaDBAdapter<RouletteRoundInfo>.GetRouletteRoundInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 return items;
             }
             finally
@@ -327,6 +336,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 var items = MetaDBAdapter<RouletteRoundInfo>.GetRouletteRoundInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 if (items == null ||items.Length == 0)
                 {
                     return null;
@@ -483,7 +495,7 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
 
                 string sqlTextB = "select  r.* from roulettewinnerrecord r " +
-                    " where  r.UserID = @UserID and r.AwardItemID = @AwardItemID order by r.id desc limit 1;";// and r.WinTime >= @WinTime";
+                    " where  r.UserID = @UserID and r.AwardItemID = @AwardItemID order by r.id desc limit 1 ";// and r.WinTime >= @WinTime";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.Parameters.AddWithValue("@UserID", UserID);
@@ -501,6 +513,9 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
                 var records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 if (records != null && records.Length != 0)
                 {
                     record = records[records.Length - 1];
@@ -724,6 +739,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 return records;
             }
             finally
@@ -772,6 +790,9 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 records = MetaDBAdapter<RouletteWinnerRecord>.GetRouletteWinnerRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 return records;
             }
             finally

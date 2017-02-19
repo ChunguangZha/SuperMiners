@@ -133,7 +133,7 @@
                 </StackPanel>
                 <TextBlock Grid.Row="1" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Exp, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="1" Grid.Column="2" x:Name="btnInvitationFriends" Visibility="Collapsed" Content="邀请好友" Style="{StaticResource UserInfoButtonStyle}" Click="btnInvitationFriends_Click"/>
+                <Button Grid.Row="1" Grid.Column="2" x:Name="btnInvitationFriends" Content="邀请好友" Style="{StaticResource UserInfoButtonStyle}" Click="btnInvitationFriends_Click"/>
                 <TextBlock Grid.Row="2" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="积分"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ShoppingCreditsEnabled, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="2" Grid.Column="2" x:Name="btnGetCredits" Content="获取" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetCredits_Click"/>
@@ -145,7 +145,7 @@
                 <Button Grid.Row="4" Grid.Column="2" x:Name="btnGoldCoinRecharge" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnGoldCoinRecharge_Click"/>
                 <TextBlock Grid.Row="5" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="储量"/></TextBlock>
                 <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WorkableStonesReserversText, Mode=OneWay, StringFormat='0.00'}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinesBuy" Content="勘探" IsEnabled="{Binding StoneReservesBuyable, Mode=OneWay}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinesBuy_Click"/>
+                <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinesBuy" Visibility="Collapsed" Content="勘探" IsEnabled="{Binding StoneReservesBuyable, Mode=OneWay}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinesBuy_Click"/>
                 <TextBlock Grid.Row="6" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding MinersCount, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="6" Grid.Column="2" x:Name="btnMinersBuy" Content="雇佣" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinersBuy_Click"/>

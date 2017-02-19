@@ -251,7 +251,15 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_STACK_PRICE_OUTOFRANGE = 803;
 
+        /// <summary>
+        /// 转移玩家失败，支付宝信息不正确
+        /// </summary>
+        public const int RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR = 900;
 
+        /// <summary>
+        /// 转移玩家失败，已经注册过
+        /// </summary>
+        public const int RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED = 901;
 
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
@@ -267,7 +275,7 @@ namespace MetaData
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_BELONE_CURRENT_PLAYER, "订单不属于当前玩家");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_NOT_EXIST, "订单不存在");
             _resultCode_Msg.Add(OperResult.RESULTCODE_ORDER_SELLABLE_STONE_LACK, "可出售矿石不足");
-            _resultCode_Msg.Add(OperResult.RESULTCODE_PARAM_INVALID, "参数无效");
+            _resultCode_Msg.Add(OperResult.RESULTCODE_PARAM_INVALID, "输入值无效");
             _resultCode_Msg.Add(OperResult.RESULTCODE_TRUE, "成功");
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_NOT_EXIST, "玩家不存在");
             _resultCode_Msg.Add(OperResult.RESULTCODE_USER_OFFLINE, "玩家不在线");
@@ -307,6 +315,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_GRAVEL_CANOTREQUEST, "您当前不能申领碎片");
             _resultCode_Msg.Add(RESULTCODE_GAME_GAMBLE_INNINGFINISHED, "此局已经结束，请参加下一局");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_USERLOGINNAME_EXIST, "用户登录名已经存在");
+            _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR, "支付宝信息不正确");
+            _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED, "该账户已经登录过");
         }
 
         public static string GetMsg(int resultCode)

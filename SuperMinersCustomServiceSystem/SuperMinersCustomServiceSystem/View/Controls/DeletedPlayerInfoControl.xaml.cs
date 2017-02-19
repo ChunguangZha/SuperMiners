@@ -121,7 +121,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             {
                 checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = checkLoginIPOK = checkLoginMacOK = false;
 
-                if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
+                if (string.IsNullOrEmpty(userName) || item.UserLoginName.Contains(userName))
                 {
                     checkUserNameOK = true;
                 }

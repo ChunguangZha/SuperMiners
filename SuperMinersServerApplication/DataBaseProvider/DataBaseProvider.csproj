@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;V1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -60,6 +60,7 @@
     <Compile Include="MineRecordDBProvider.cs" />
     <Compile Include="MyDBHelper.cs" />
     <Compile Include="GameRouletteDBProvider.cs" />
+    <Compile Include="OldPlayerTransferDBProvider.cs" />
     <Compile Include="PlayerLockedInfoDBProvider.cs" />
     <Compile Include="PlayerLoginInfoDBProvider.cs" />
     <Compile Include="StoneOrderDBProvider.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="SystemDBProvider.cs" />
     <Compile Include="TestUserLogStateDBProvider.cs" />
     <Compile Include="UserInfoDBProvider.cs" />
+    <Compile Include="UserRemoteServerDBProvider.cs" />
     <Compile Include="WaitToAwardExpRecordDBProvider.cs" />
     <Compile Include="WithdrawRMBRecordDBProvider.cs" />
     <Compile Include="WithdrawRMBShowImageRecordDBProvider.cs" />

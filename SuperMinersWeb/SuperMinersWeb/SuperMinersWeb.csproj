@@ -206,6 +206,7 @@
     <Content Include="Handler\CheckAlipayAccount.ashx" />
     <Content Include="Handler\CheckAlipayRealName.ashx" />
     <Content Include="Handler\CheckIDCardNo.ashx" />
+    <Content Include="Handler\CheckNickName.ashx" />
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\Default.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
@@ -217,15 +218,20 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\transferOldPlayer.js" />
     <Content Include="Shopping\MinerTrade.aspx" />
     <Content Include="Shopping\MineTrade.aspx" />
     <Content Include="ShopList.aspx" />
     <Content Include="Shopping\StoneTrade.aspx" />
+    <Content Include="TransferPage.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
+      <Link>Wcf\Common.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
       <Link>Wcf\OperResult.cs</Link>
     </Compile>
@@ -235,8 +241,17 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
       <Link>Wcf\TradeType.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\UserRemoteServerItem.cs">
+      <Link>Wcf\UserRemoteServerItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\WebPlayerInfo.cs">
+      <Link>Wcf\WebPlayerInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Encoder\DESEncrypt.cs">
       <Link>AlipayCode\DESEncrypt.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Utility\IDCardVerifyTools.cs">
+      <Link>Utility\IDCardVerifyTools.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebServiceToWeb\Contracts\IServiceToWeb.cs">
       <Link>Wcf\IServiceToWeb.cs</Link>
@@ -295,6 +310,9 @@
     </Compile>
     <Compile Include="Handler\CheckIDCardNo.ashx.cs">
       <DependentUpon>CheckIDCardNo.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler\CheckNickName.ashx.cs">
+      <DependentUpon>CheckNickName.ashx</DependentUpon>
     </Compile>
     <Compile Include="Handler\CheckUserName.ashx.cs">
       <DependentUpon>CheckUserName.ashx</DependentUpon>
@@ -359,6 +377,13 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
+    </Compile>
+    <Compile Include="TransferPage.aspx.cs">
+      <DependentUpon>TransferPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TransferPage.aspx.designer.cs">
+      <DependentUpon>TransferPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\Tools.cs" />

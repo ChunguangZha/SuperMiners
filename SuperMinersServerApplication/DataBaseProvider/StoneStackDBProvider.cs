@@ -26,7 +26,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneStackDailyRecordInfo>.GetStoneStackDailyRecordInfoFromDataTable(table);
+                var lists = MetaDBAdapter<StoneStackDailyRecordInfo>.GetStoneStackDailyRecordInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -34,11 +39,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -58,6 +59,10 @@ namespace DataBaseProvider
                 adapter.Fill(table);
 
                 var list = MetaDBAdapter<StoneStackDailyRecordInfo>.GetStoneStackDailyRecordInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 if (list == null || list.Length != 1)
                 {
                     return null;
@@ -71,11 +76,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -98,7 +99,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+                var lists = MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -106,11 +112,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -135,11 +137,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -162,7 +160,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, false);
+                var lists = MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, false);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -170,11 +173,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -227,11 +226,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -430,7 +425,13 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+                var lists = MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -438,11 +439,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -462,7 +459,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+                var lists = MetaDBAdapter<StoneDelegateSellOrderInfo>.GetStoneDelegateSellOrderInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -470,11 +472,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -529,11 +527,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -721,7 +715,13 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, false);
+                var lists = MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, false);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -729,11 +729,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -793,7 +789,12 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
 
-                return MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, true);
+                var lists = MetaDBAdapter<StoneDelegateBuyOrderInfo>.GetStoneDelegateBuyOrderInfoFromDataTable(table, true);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -801,11 +802,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -870,11 +867,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
     }

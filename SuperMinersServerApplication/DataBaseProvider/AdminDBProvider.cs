@@ -92,6 +92,9 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 listAdmin = MetaDBAdapter<AdminInfo>.GetAdminInfoListFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 return listAdmin;
             }
             catch (Exception exc)
@@ -130,6 +133,9 @@ namespace DataBaseProvider
                 }
                 admin = MetaDBAdapter<AdminInfo>.GetAdminInfoListFromDataTable(dt)[0];
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 return admin;
             }
             catch (Exception exc)

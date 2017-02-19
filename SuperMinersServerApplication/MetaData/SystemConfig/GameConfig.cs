@@ -50,7 +50,7 @@ namespace MetaData.SystemConfig
         /// 多少积分等价于1RMB
         /// </summary>
         [DataMember]
-        public int Credits_RMB = 1;
+        public int ShoppingCredits_RMB = 1;
 
         /// <summary>
         /// 每个矿工每小时生产矿石数
@@ -212,7 +212,7 @@ namespace MetaData.SystemConfig
         public int StackMarketNightCloseTime = 23;
 
         [DataMember]
-        public static int StackMarketMinPrice = 100;
+        public static int StackMarketMinPrice = 10;
 
         [DataMember]
         public int GambleStoneRedColorWinTimes = 2;
@@ -231,6 +231,12 @@ namespace MetaData.SystemConfig
 
         [DataMember]
         public int GravelMin = 10;
+
+        /// <summary>
+        /// 远程协助服务充值返灵币倍数，充1元人民币，返10灵币
+        /// </summary>
+        [DataMember]
+        public int RemoteServerRechargeReturnShoppingCreditsTimes = 10;
 
     }
 }

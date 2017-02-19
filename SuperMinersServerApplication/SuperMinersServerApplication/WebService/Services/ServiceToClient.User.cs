@@ -69,7 +69,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
             if (String.IsNullOrEmpty(UserLoginName) || String.IsNullOrEmpty(password))
             {
-                resultObj.OperResultCode = OperResult.RESULTCODE_PARAM_INVALID;
+                resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
                 return resultObj;
             }
             if (!string.IsNullOrEmpty(GlobalConfig.CurrentClientVersion) && GlobalConfig.CurrentClientVersion != clientVersion)

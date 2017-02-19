@@ -1,4 +1,7 @@
-﻿using MetaData.SystemConfig;
+﻿using MetaData;
+using MetaData.SystemConfig;
+using MetaData.Trade;
+using MetaData.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,18 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
     {
         [OperationContract]
         bool Active();
+
+        [OperationContract]
+        OperResultObject Login(string clientIP, string userLoginName, string password);
+
+        [OperationContract]
+        WebPlayerInfo GetPlayerInfo(string token, string userLoginName, string clientIP);
+
+        [OperationContract]
+        UserRemoteServerItem[] GetUserRemoteServerItems(string token, string userName);
+
+        [OperationContract]
+        string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType);
 
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_SUCCEED; RESULTCODE_EXCEPTION
@@ -101,5 +116,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
 
         [OperationContract]
         int CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
+
+        [OperationContract]
+        int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email);
+
     }
 }

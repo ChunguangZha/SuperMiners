@@ -37,9 +37,13 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
-                return MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfoFromDataTable(table);
+                var lists = MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+                return lists;
             }
             finally
             {
@@ -72,9 +76,11 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
                 var records = MetaDBAdapter<PlayerGravelRequsetRecordInfo>.GetPlayerGravelRequsetRecordInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 if (records == null || records.Length == 0)
                 {
                     return null;

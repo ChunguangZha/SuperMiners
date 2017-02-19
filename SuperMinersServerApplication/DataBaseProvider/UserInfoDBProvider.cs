@@ -29,11 +29,14 @@ namespace DataBaseProvider
                 string sqlText = "SELECT count(id) as AllPlayerCount, sum(MinersCount) as AllMinersCount, sum(StonesReserves) as AllStonesReserves, sum(TotalProducedStonesCount) as AllProducedStonesCount,  sum(StockOfStones) as AllStockOfStones, sum(StonesReserves - TotalProducedStonesCount + StockOfStones) as AllStonesCount FROM superminers.playerfortuneinfo ;";
                 mycmd.CommandText = sqlText;
 
-                DataTable table = new DataTable();
+                DataTable dt = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(table);
+                adapter.Fill(dt);
+                XunLingMineStateInfo[] results = MetaDBAdapter<XunLingMineStateInfo>.GetXunLingMineStateInfoFromDataTable(dt);
+                dt.Clear();
+                dt.Dispose();
                 adapter.Dispose();
-                XunLingMineStateInfo[] results = MetaDBAdapter<XunLingMineStateInfo>.GetXunLingMineStateInfoFromDataTable(table);
+
                 if (results == null || results.Length == 0)
                 {
                     return null;
@@ -277,7 +280,8 @@ namespace DataBaseProvider
             try
             {
                 string cmdTextA = "UPDATE `playerfortuneinfo` SET "
-                    + " `Exp`=@Exp, `CreditValue`=@CreditValue, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
+                    + " `Exp`=@Exp, `CreditValue`=@CreditValue, `RMB`=@RMB, `FreezingRMB`=@FreezingRMB, `GoldCoin`=@GoldCoin, "
+                    +" `MinesCount`=@MinesCount, `StonesReserves`=@StonesReserves, `TotalProducedStonesCount`=@TotalProducedStonesCount, "
                     + " `MinersCount`=@MinersCount, `StockOfStones`=@StockOfStones,";
 
                 string cmdTextB = "";
@@ -287,7 +291,9 @@ namespace DataBaseProvider
                 }
 
                 cmdTextB += " `TempOutputStones`=@TempOutputStones,"
-                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward,`ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,`ShoppingCreditsFreezed`=@ShoppingCreditsFreezed "
+                    + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, "
+                    + " `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward,`ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,"
+                    + " `ShoppingCreditsFreezed`=@ShoppingCreditsFreezed, `UserRemoteServerValidStopTime`=@UserRemoteServerValidStopTime "
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
@@ -317,6 +323,14 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", playerFortune.FirstRechargeGoldCoinAward);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", playerFortune.ShoppingCreditsEnabled);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", playerFortune.ShoppingCreditsFreezed);
+                if (playerFortune.UserRemoteServerValidStopTime == null)
+                {
+                    mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", playerFortune.UserRemoteServerValidStopTime);
+                }
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();
@@ -551,6 +565,10 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 players = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return players;
@@ -584,6 +602,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return player;
@@ -617,6 +639,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 //var lastGravelRecord = 
@@ -652,6 +678,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 //var lastGravelRecord = 
@@ -712,6 +742,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
+
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -787,35 +821,35 @@ namespace DataBaseProvider
             }
         }
 
-        public int GetPlayerCountByNickName(string nickName)
-        {
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public int GetPlayerCountByNickName(string nickName)
+        //{
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                string cmdText = "select count(id) from playersimpleinfo where NickName = @NickName";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
-                object objResult = mycmd.ExecuteScalar();
-                mycmd.Dispose();
+        //        string cmdText = "select count(id) from playersimpleinfo where NickName = @NickName";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        mycmd.Parameters.AddWithValue("@NickName", DESEncrypt.EncryptDES(nickName));
+        //        object objResult = mycmd.ExecuteScalar();
+        //        mycmd.Dispose();
 
-                if (objResult == DBNull.Value)
-                {
-                    return 0;
-                }
-                return Convert.ToInt32(objResult);
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        if (objResult == DBNull.Value)
+        //        {
+        //            return 0;
+        //        }
+        //        return Convert.ToInt32(objResult);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
         public int GetAllPlayerCount()
         {
@@ -1056,6 +1090,10 @@ namespace DataBaseProvider
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return player;
@@ -1153,6 +1191,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(dt)[0];
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return player;
@@ -1250,7 +1292,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`NickName`,a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " +
+                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " +
                                 " where a.`ReferrerUserID` = (select b.`id` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
@@ -1260,6 +1302,10 @@ namespace DataBaseProvider
                 {
                     players = MetaDBAdapter<UserReferrerTreeItem>.GetUserReferrerTreeItem(dt);
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return players;
@@ -1291,7 +1337,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`NickName`,a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " + 
+                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " + 
                                 " where a.`id` = (select b.`ReferrerUserID` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
@@ -1301,6 +1347,10 @@ namespace DataBaseProvider
                 {
                     player = MetaDBAdapter<UserReferrerTreeItem>.GetUserReferrerTreeItem(dt)[0];
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return player;
@@ -1346,7 +1396,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select a.UserName, a.NickName, (select count(b.id) from playersimpleinfo b where b.ReferrerUserID = a.id) as " + valueType + " from playersimpleinfo a order by " + valueType + " desc limit 20;";
+                string cmdText = "select a.UserName, (select count(b.id) from playersimpleinfo b where b.ReferrerUserID = a.id) as " + valueType + " from playersimpleinfo a order by " + valueType + " desc limit 20;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -1354,6 +1404,10 @@ namespace DataBaseProvider
                 {
                     toplistInfos = MetaDBAdapter<TopListInfo>.GetTopListInfo(valueType, dt);
                 }
+
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -1379,7 +1433,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "SELECT s.UserName, s.NickName , f." + valueType + " FROM playersimpleinfo s left join playerfortuneinfo f on s.id=f.userId order by f." + valueType + " desc limit 20;";
+                string cmdText = "SELECT s.UserName, f." + valueType + " FROM playersimpleinfo s left join playerfortuneinfo f on s.id=f.userId order by f." + valueType + " desc limit 20;";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
@@ -1387,6 +1441,10 @@ namespace DataBaseProvider
                 {
                     toplistInfos = MetaDBAdapter<TopListInfo>.GetTopListInfo(valueType, dt);
                 }
+
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 

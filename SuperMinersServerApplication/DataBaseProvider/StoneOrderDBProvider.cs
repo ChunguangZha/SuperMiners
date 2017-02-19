@@ -28,6 +28,10 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 var records = MetaDBAdapter<PlayerLastSellStoneRecord>.GetPlayerLastSellStoneRecord(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 if (records.Length == 0)
                 {
                     return null;
@@ -307,8 +311,6 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                DataTable dt = new DataTable();
-
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
@@ -402,12 +404,18 @@ namespace DataBaseProvider
 
                 mycmd.CommandText = sqlAllText;
 
+                DataTable table = new DataTable();
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt != null)
+                adapter.Fill(table);
+                if (table != null)
                 {
-                    orders = MetaDBAdapter<BuyStonesOrder>.GetBuyStonesOrderFromDataTable(dt);
+                    orders = MetaDBAdapter<BuyStonesOrder>.GetBuyStonesOrderFromDataTable(table);
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return orders;
@@ -430,8 +438,6 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                DataTable dt = new DataTable();
-
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 MySqlCommand mycmd = myconn.CreateCommand();
@@ -499,12 +505,18 @@ namespace DataBaseProvider
 
                 mycmd.CommandText = sqlAllText;
 
+                DataTable table = new DataTable();
+
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt != null)
+                adapter.Fill(table);
+                if (table != null)
                 {
-                    orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt);
+                    orders = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(table);
                 }
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -527,7 +539,7 @@ namespace DataBaseProvider
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             try
             {
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
@@ -582,11 +594,15 @@ namespace DataBaseProvider
                 string sqlAllText = sqlTextA + sqlWhere;
                 mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt != null)
+                adapter.Fill(table);
+                if (table != null)
                 {
-                    orders = MetaDBAdapter<LockSellStonesOrder>.GetLockStonesOrderListFromDataTable(dt);
+                    orders = MetaDBAdapter<LockSellStonesOrder>.GetLockStonesOrderListFromDataTable(table);
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return orders;
@@ -603,7 +619,7 @@ namespace DataBaseProvider
             MySqlConnection myconn = null;
             try
             {
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
@@ -615,11 +631,15 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@OrderNumber", orderNumber);
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt != null && dt.Rows.Count > 0)
+                adapter.Fill(table);
+                if (table != null && table.Rows.Count > 0)
                 {
-                    order = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(dt)[0];
+                    order = MetaDBAdapter<SellStonesOrder>.GetSellStonesOrderFromDataTable(table)[0];
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return order;

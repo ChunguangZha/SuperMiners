@@ -40,6 +40,16 @@ namespace MetaData.Trade
 
         StackStoneSell=31,
 
+        RemoteServerOnce = 40,
+
+        RemoteServerOneMonth = 41,
+
+        RemoteServerHalfYear = 42,
+
+        RemoteServerOneYear = 43,
+
+
+
     }
 
     /// <summary>

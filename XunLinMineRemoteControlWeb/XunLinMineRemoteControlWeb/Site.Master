@@ -1,0 +1,39 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="XunLinMineRemoteControlWeb.Site" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>迅灵信息远程协助</title>
+    <link href="css/web.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <header>
+        <div class="left">
+            <img src="images/index_01.jpg" />
+        </div>
+        <div class="center">
+            <img src="images/index_02.jpg" />
+        </div>
+        <div class="right">
+            <asp:LoginView ID="LoginView1" runat="server">
+                <LoggedInTemplate>
+                    矿主： <asp:LoginName ID="LoginName" runat="server" />服务期到：
+                </LoggedInTemplate>
+                <AnonymousTemplate>
+                    <a href="Login.aspx">登录</a><a href="Register.aspx">注册</a>
+                </AnonymousTemplate>
+            </asp:LoginView>
+        </div>
+    </header>
+    <form id="form1" runat="server">
+    <div>
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+</body>
+</html>

@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -184,6 +184,9 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerLogInfo.cs">
       <Link>Wcf\Datas\PlayerLogInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Utility\JsonSerializeTest.cs">
+      <Link>Wcf\Datas\JsonSerializeTest.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\Model\CallbackInfo.cs">
       <Link>Wcf\Datas\CallbackInfo.cs</Link>

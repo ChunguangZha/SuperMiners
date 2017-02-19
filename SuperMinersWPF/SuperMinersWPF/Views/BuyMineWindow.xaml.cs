@@ -149,7 +149,7 @@ namespace SuperMinersWPF.Views
                 }
                 else if (payType == PayType.Credits)
                 {
-                    decimal valueShoppingCredits = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Credits_RMB;
+                    decimal valueShoppingCredits = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.ShoppingCredits_RMB;
                     if (valueShoppingCredits > GlobalData.CurrentUser.ShoppingCreditsEnabled)
                     {
                         MyMessageBox.ShowInfo("账户余额不足，请充值。");
@@ -174,7 +174,7 @@ namespace SuperMinersWPF.Views
         {
             if (this.cmbPayType.SelectedIndex == 1)//积分
             {
-                decimal valueDiamond = GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Credits_RMB;
+                decimal valueDiamond = GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.ShoppingCredits_RMB;
                 this.txtRMB_Mine.Text = ((int)Math.Ceiling(valueDiamond)).ToString();
                 this.txtPayUnit.Text = "积分";
             }

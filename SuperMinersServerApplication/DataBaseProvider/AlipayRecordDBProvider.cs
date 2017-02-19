@@ -124,6 +124,9 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 if (records == null || records.Length == 0)
@@ -215,7 +218,7 @@ namespace DataBaseProvider
                     sqlWhere = " where " + builder.ToString();
                 }
 
-                string sqlOrderLimit = " order by pay_time desc ";
+                string sqlOrderLimit = " order by id desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
@@ -231,6 +234,9 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;
@@ -262,6 +268,9 @@ namespace DataBaseProvider
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);
                 records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 if (records == null || records.Length == 0)
                 {
                     return null;
@@ -298,6 +307,9 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 records = MetaDBAdapter<AlipayRechargeRecord>.GetAlipayRechargeRecordListFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;

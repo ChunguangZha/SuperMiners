@@ -75,14 +75,6 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public string NickName
-        {
-            get
-            {
-                return this._parentObject.NickName;
-            }
-        }
-
         public decimal Value
         {
             get

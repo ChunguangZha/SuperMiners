@@ -9,10 +9,10 @@
                         <tbody>
                             <tr>
                                 <th>
-                                    <label for="txtUserName"><span>*</span>用户名： </label>
+                                    <label for="txtUserName"><span>*</span>用户登录名： </label>
                                 </th>
                                 <td class="inputcol">
-                                    <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入用户名！" TabIndex="1" />
+                                    <asp:TextBox ID="txtUserName" runat="server" MaxLength="15" CssClass="textbox" ToolTip="请输入用户登录名！" TabIndex="1" />
                                 </td>
                                 <td>
                                     <span id="msgUserName" class="message"></span>

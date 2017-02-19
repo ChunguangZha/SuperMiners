@@ -13,8 +13,8 @@ namespace MetaData.User
         [DataMember]
         public string UserName;
 
-        [DataMember]
-        public string NickName;
+        //[DataMember]
+        //public string NickName;
 
         [DataMember]
         public decimal Value;

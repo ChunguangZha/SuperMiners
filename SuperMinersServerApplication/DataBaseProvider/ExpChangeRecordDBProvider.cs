@@ -63,6 +63,9 @@ namespace DataBaseProvider
                 {
                     records = MetaDBAdapter<ExpChangeRecord>.GetExpChangeRecordListFromDataTable(dt);
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;

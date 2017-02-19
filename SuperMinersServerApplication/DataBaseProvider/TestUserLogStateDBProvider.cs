@@ -25,12 +25,18 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
+                
+                var lists = MetaDBAdapter<TestUserLogState>.GetTestUserLogStateFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                if (lists == null || lists.Length == 0)
                 {
-                    return MetaDBAdapter<TestUserLogState>.GetTestUserLogStateFromDataTable(table)[0];
+                    return null;
                 }
 
-                return null;
+                return lists[0];
             }
             finally
             {
@@ -60,12 +66,17 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
-                {
-                    return MetaDBAdapter<TestUserLogState>.GetTestUserLogStateFromDataTable(table)[0];
-                }
+                var lists = MetaDBAdapter<TestUserLogState>.GetTestUserLogStateFromDataTable(table);
 
-                return null;
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                if (lists == null || lists.Length == 0)
+                {
+                    return null;
+                }
+                return lists[0];
             }
             finally
             {
@@ -109,11 +120,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
@@ -141,11 +148,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Clone();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
     }

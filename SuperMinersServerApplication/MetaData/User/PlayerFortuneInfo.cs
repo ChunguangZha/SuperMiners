@@ -157,6 +157,9 @@ namespace MetaData.User
         [DataMember]
         public int ShoppingCreditsFreezed { get; set; }
 
+        [DataMember]
+        public MyDateTime UserRemoteServerValidStopTime { get; set; }
+
         public PlayerFortuneInfo CopyTo()
         {
             PlayerFortuneInfo infoB = new PlayerFortuneInfo()
@@ -180,7 +183,8 @@ namespace MetaData.User
                 FirstRechargeGoldCoinAward = this.FirstRechargeGoldCoinAward,
                 StoneSellQuan = this.StoneSellQuan,
                 ShoppingCreditsEnabled = this.ShoppingCreditsEnabled,
-                ShoppingCreditsFreezed = this.ShoppingCreditsFreezed
+                ShoppingCreditsFreezed = this.ShoppingCreditsFreezed,
+                UserRemoteServerValidStopTime = this.UserRemoteServerValidStopTime
             };
 
             return infoB;
@@ -208,6 +212,12 @@ namespace MetaData.User
             this.StoneSellQuan = fortuneInfo.StoneSellQuan;
             this.ShoppingCreditsEnabled = fortuneInfo.ShoppingCreditsEnabled;
             this.ShoppingCreditsFreezed = fortuneInfo.ShoppingCreditsFreezed;
+            this.UserRemoteServerValidStopTime = fortuneInfo.UserRemoteServerValidStopTime;
+        }
+
+        public override string ToString()
+        {
+            return MetaData.Utility.JsonSerializeTest<PlayerFortuneInfo>.SaveToJson(this);
         }
     }
 }

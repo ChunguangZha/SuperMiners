@@ -22,38 +22,41 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 string cmdText = "SELECT * FROM gameconfig";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt.Rows.Count != 0)
+                adapter.Fill(table);
+                if (table.Rows.Count != 0)
                 {
                     config = new GameConfig();
-                    config.Yuan_RMB = Convert.ToDecimal(dt.Rows[0]["Yuan_RMB"]);
-                    config.RMB_GoldCoin = Convert.ToDecimal(dt.Rows[0]["RMB_GoldCoin"]);
-                    config.RMB_Mine = Convert.ToDecimal(dt.Rows[0]["RMB_Mine"]);
-                    config.GoldCoin_Miner = Convert.ToDecimal(dt.Rows[0]["GoldCoin_Miner"]);
-                    config.Stones_RMB = Convert.ToDecimal(dt.Rows[0]["Stones_RMB"]);
-                    config.Diamonds_RMB = Convert.ToDecimal(dt.Rows[0]["Diamonds_RMB"]);
-                    config.StoneBuyerAwardGoldCoinMultiple = Convert.ToDecimal(dt.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
-                    config.OutputStonesPerHour = Convert.ToDecimal(dt.Rows[0]["OutputStonesPerHour"]);
-                    config.TempStoneOutputValidHour = Convert.ToInt32(dt.Rows[0]["TempStoneOutputValidHour"]);
-                    config.MineReservesIsRandom = Convert.ToBoolean(dt.Rows[0]["MineReservesIsRandom"]);
-                    config.StonesReservesPerMines = Convert.ToDecimal(dt.Rows[0]["StonesReservesPerMines"]);
+                    config.Yuan_RMB = Convert.ToDecimal(table.Rows[0]["Yuan_RMB"]);
+                    config.RMB_GoldCoin = Convert.ToDecimal(table.Rows[0]["RMB_GoldCoin"]);
+                    config.RMB_Mine = Convert.ToDecimal(table.Rows[0]["RMB_Mine"]);
+                    config.GoldCoin_Miner = Convert.ToDecimal(table.Rows[0]["GoldCoin_Miner"]);
+                    config.Stones_RMB = Convert.ToDecimal(table.Rows[0]["Stones_RMB"]);
+                    config.Diamonds_RMB = Convert.ToDecimal(table.Rows[0]["Diamonds_RMB"]);
+                    config.StoneBuyerAwardGoldCoinMultiple = Convert.ToDecimal(table.Rows[0]["StoneBuyerAwardGoldCoinMultiple"]);
+                    config.OutputStonesPerHour = Convert.ToDecimal(table.Rows[0]["OutputStonesPerHour"]);
+                    config.TempStoneOutputValidHour = Convert.ToInt32(table.Rows[0]["TempStoneOutputValidHour"]);
+                    config.MineReservesIsRandom = Convert.ToBoolean(table.Rows[0]["MineReservesIsRandom"]);
+                    config.StonesReservesPerMines = Convert.ToDecimal(table.Rows[0]["StonesReservesPerMines"]);
                     //config.MinStonesReservesPerMine_VIPPlayer = Convert.ToInt32(dt.Rows[0]["MinStonesReservesPerMine"]);
                     //config.MaxStonesReservesPerMine_VIPPlayer = Convert.ToInt32(dt.Rows[0]["MaxStonesReservesPerMine"]);
-                    config.ExchangeExpensePercent = Convert.ToDecimal(dt.Rows[0]["ExchangeExpensePercent"]);
-                    config.ExchangeExpenseMinNumber = Convert.ToDecimal(dt.Rows[0]["ExchangeExpenseMinNumber"]);
-                    config.UserMaxHaveMinersCount = Convert.ToInt32(dt.Rows[0]["UserMaxHaveMinersCount"]);
-                    config.BuyOrderLockTimeMinutes = Convert.ToInt32(dt.Rows[0]["BuyOrderLockTimeMinutes"]);
-                    config.CanExchangeMinExp = Convert.ToInt32(dt.Rows[0]["CanExchangeMinExp"]);
-                    config.CanDiscountMinExp = Convert.ToInt32(dt.Rows[0]["CanDiscountMinExp"]);
-                    config.Discount = Convert.ToDecimal(dt.Rows[0]["Discount"]);
+                    config.ExchangeExpensePercent = Convert.ToDecimal(table.Rows[0]["ExchangeExpensePercent"]);
+                    config.ExchangeExpenseMinNumber = Convert.ToDecimal(table.Rows[0]["ExchangeExpenseMinNumber"]);
+                    config.UserMaxHaveMinersCount = Convert.ToInt32(table.Rows[0]["UserMaxHaveMinersCount"]);
+                    config.BuyOrderLockTimeMinutes = Convert.ToInt32(table.Rows[0]["BuyOrderLockTimeMinutes"]);
+                    config.CanExchangeMinExp = Convert.ToInt32(table.Rows[0]["CanExchangeMinExp"]);
+                    config.CanDiscountMinExp = Convert.ToInt32(table.Rows[0]["CanDiscountMinExp"]);
+                    config.Discount = Convert.ToDecimal(table.Rows[0]["Discount"]);
 
-                    dt.Dispose();
                 }
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -116,20 +119,23 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 string cmdText = "SELECT * FROM incomemoneyaccount";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt.Rows.Count != 0)
+                adapter.Fill(table);
+                if (table.Rows.Count != 0)
                 {
                     config = new IncomeMoneyAccount();
-                    config.IncomeMoneyAlipay = Convert.ToString(dt.Rows[0]["IncomeMoneyAlipay"]);
-                    config.IncomeMoneyAlipayRealName = Convert.ToString(dt.Rows[0]["IncomeMoneyAlipayRealName"]);
-                    config.Alipay2DCode = (byte[])dt.Rows[0]["Alipay2DCode"];
-                    dt.Dispose();
+                    config.IncomeMoneyAlipay = Convert.ToString(table.Rows[0]["IncomeMoneyAlipay"]);
+                    config.IncomeMoneyAlipayRealName = Convert.ToString(table.Rows[0]["IncomeMoneyAlipayRealName"]);
+                    config.Alipay2DCode = (byte[])table.Rows[0]["Alipay2DCode"];
                 }
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -189,25 +195,28 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 string cmdText = "SELECT * FROM registeruserconfig";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt.Rows.Count != 0)
+                adapter.Fill(table);
+                if (table.Rows.Count != 0)
                 {
                     config = new RegisterUserConfig();
-                    config.UserCountCreateByOneIP = Convert.ToInt32(dt.Rows[0]["UserCountCreateByOneIP"]);
-                    config.GiveToNewUserExp = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserExp"]);
-                    config.GiveToNewUserGoldCoin = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserGoldCoin"]);
-                    config.GiveToNewUserMines = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserMines"]);
-                    config.GiveToNewUserMiners = Convert.ToInt32(dt.Rows[0]["GiveToNewUserMiners"]);
-                    config.GiveToNewUserStones = Convert.ToDecimal(dt.Rows[0]["GiveToNewUserStones"]);
-                    config.FirstAlipayRechargeGoldCoinAwardMultiple = Convert.ToSingle(dt.Rows[0]["FirstAlipayRechargeGoldCoinAwardMultiple"]);
+                    config.UserCountCreateByOneIP = Convert.ToInt32(table.Rows[0]["UserCountCreateByOneIP"]);
+                    config.GiveToNewUserExp = Convert.ToDecimal(table.Rows[0]["GiveToNewUserExp"]);
+                    config.GiveToNewUserGoldCoin = Convert.ToDecimal(table.Rows[0]["GiveToNewUserGoldCoin"]);
+                    config.GiveToNewUserMines = Convert.ToDecimal(table.Rows[0]["GiveToNewUserMines"]);
+                    config.GiveToNewUserMiners = Convert.ToInt32(table.Rows[0]["GiveToNewUserMiners"]);
+                    config.GiveToNewUserStones = Convert.ToDecimal(table.Rows[0]["GiveToNewUserStones"]);
+                    config.FirstAlipayRechargeGoldCoinAwardMultiple = Convert.ToSingle(table.Rows[0]["FirstAlipayRechargeGoldCoinAwardMultiple"]);
 
-                    dt.Dispose();
                 }
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 
@@ -257,26 +266,29 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 string cmdText = "SELECT * FROM awardreferrerconfig";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                for (int i = 0; i < dt.Rows.Count; i++)
+                adapter.Fill(table);
+                for (int i = 0; i < table.Rows.Count; i++)
                 {
                     AwardReferrerConfig config = new AwardReferrerConfig();
-                    config.ReferLevel = Convert.ToInt32(dt.Rows[i]["ReferLevel"]);
-                    config.AwardReferrerExp = Convert.ToDecimal(dt.Rows[i]["AwardReferrerExp"]);
-                    config.AwardReferrerGoldCoin = Convert.ToDecimal(dt.Rows[i]["AwardReferrerGoldCoin"]);
-                    config.AwardReferrerMines = Convert.ToDecimal(dt.Rows[i]["AwardReferrerMines"]);
-                    config.AwardReferrerMiners = Convert.ToInt32(dt.Rows[i]["AwardReferrerMiners"]);
-                    config.AwardReferrerStones = Convert.ToDecimal(dt.Rows[i]["AwardReferrerStones"]);
-                    config.AwardReferrerDiamond = Convert.ToDecimal(dt.Rows[i]["AwardReferrerDiamond"]);
+                    config.ReferLevel = Convert.ToInt32(table.Rows[i]["ReferLevel"]);
+                    config.AwardReferrerExp = Convert.ToDecimal(table.Rows[i]["AwardReferrerExp"]);
+                    config.AwardReferrerGoldCoin = Convert.ToDecimal(table.Rows[i]["AwardReferrerGoldCoin"]);
+                    config.AwardReferrerMines = Convert.ToDecimal(table.Rows[i]["AwardReferrerMines"]);
+                    config.AwardReferrerMiners = Convert.ToInt32(table.Rows[i]["AwardReferrerMiners"]);
+                    config.AwardReferrerStones = Convert.ToDecimal(table.Rows[i]["AwardReferrerStones"]);
+                    config.AwardReferrerDiamond = Convert.ToDecimal(table.Rows[i]["AwardReferrerDiamond"]);
                     listAwardConfig.Add(config);
                 }
 
-                dt.Dispose();
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 mycmd.Dispose();
 
                 return listAwardConfig;
@@ -337,19 +349,22 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                DataTable dt = new DataTable();
+                DataTable table = new DataTable();
 
                 string cmdText = "SELECT * FROM rouletteconfig";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(dt);
-                if (dt.Rows.Count != 0)
+                adapter.Fill(table);
+                if (table.Rows.Count != 0)
                 {
                     config = new RouletteConfig();
-                    config.RouletteLargeWinMultiple = Convert.ToDecimal(dt.Rows[0]["RouletteLargeWinMultiple"]);
+                    config.RouletteLargeWinMultiple = Convert.ToDecimal(table.Rows[0]["RouletteLargeWinMultiple"]);
 
-                    dt.Dispose();
                 }
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
 
                 mycmd.Dispose();
 

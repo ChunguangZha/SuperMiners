@@ -22,10 +22,10 @@ namespace DataBaseProvider
                 cmdTextA = "insert into deletedplayerinfo " +
                     "(`UserLoginName`,`UserName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `LastLoginTime`, `LastLogOutTime`, `ReferrerUserName`, `LastLoginIP`, `LastLoginMac`, " +
                     " `Exp`, `CreditValue`, `RMB`, `FreezingRMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, `TempOutputStonesStartTime`, `TempOutputStones`, " +
-                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`,`ShoppingCreditsEnabled`,Shopping`CreditsFreezed`, `DeleteTime` ) values " +
+                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`,`ShoppingCreditsEnabled`,`ShoppingCreditsFreezed`,`UserRemoteServerValidStopTime`, `DeleteTime` ) values " +
                     " (@UserLoginName,@UserName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, @LastLoginTime, @LastLogOutTime, @ReferrerUserName, @LastLoginIP, @LastLoginMac, " +
                     " @Exp, @CreditValue, @RMB, @FreezingRMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, @TempOutputStonesStartTime, @TempOutputStones, " +
-                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,@ShoppingCreditsEnabled,@ShoppingCreditsFreezed, @DeleteTime ); ";
+                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,@ShoppingCreditsEnabled,@ShoppingCreditsFreezed,@UserRemoteServerValidStopTime, @DeleteTime ); ";
 
                 mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(player.SimpleInfo.UserLoginName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
@@ -66,6 +66,14 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", player.FortuneInfo.FirstRechargeGoldCoinAward);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", player.FortuneInfo.ShoppingCreditsEnabled);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", player.FortuneInfo.ShoppingCreditsFreezed);
+                if (player.FortuneInfo.UserRemoteServerValidStopTime == null)
+                {
+                    mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", DBNull.Value);
+                }
+                else
+                {
+                    mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", player.FortuneInfo.UserRemoteServerValidStopTime);
+                }
                 mycmd.Parameters.AddWithValue("@DeleteTime", time);
 
                 mycmd.CommandText = cmdTextA;
@@ -139,7 +147,11 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                return MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(table);
+                var lists = MetaDBAdapter<PlayerInfo>.GetPlayerInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+                return lists;
             }
             finally
             {
@@ -191,7 +203,7 @@ namespace DataBaseProvider
             }
         }
 
-        public int GetDeletedPlayerCountByPlayerNickName(string nickName)
+        public int GetDeletedPlayerCountByPlayerUserLoginName(string userLoginName)
         {
             MySqlConnection myconn = null;
             try
@@ -199,9 +211,9 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
 
-                string cmdText = "select count(id) from deletedplayerinfo where NickName = @NickName";
+                string cmdText = "select count(id) from deletedplayerinfo where UserLoginName = @UserLoginName";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@NickName", nickName);
+                mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(userLoginName));
                 object objResult = mycmd.ExecuteScalar();
                 mycmd.Dispose();
 

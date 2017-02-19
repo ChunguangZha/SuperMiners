@@ -18,14 +18,14 @@ namespace SuperMinersWeb
             context.Response.ContentType = "text/plain";
             var userName = context.Request["UserName"];
             int result;
-            result = WcfClient.Instance.CheckUserNameExist(userName);
+            result = WcfClient.Instance.CheckUserLoginNameExist(userName);
             if (result == OperResult.RESULTCODE_FALSE)
             {
                 context.Response.Write("OK");
             }
             else if (result == OperResult.RESULTCODE_TRUE)
             {
-                context.Response.Write("用户名已经存在，请选择其它用户名");
+                context.Response.Write("用户登录名已经存在，请选择其它用户登录名");
             }
         }
 

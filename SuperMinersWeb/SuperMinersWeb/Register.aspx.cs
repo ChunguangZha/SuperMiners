@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using SuperMinersServerApplication.Utility;
 using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
@@ -270,20 +271,12 @@ namespace SuperMinersWeb
                 return false;
             }
 
-            bool matchValue = Regex.IsMatch(IDCardNo, @"^([1-9][0-9]*X{0,1})$");
-            if (!matchValue)
+            if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
             {
                 Response.Write("<script>alert('请输入正确的身份证号')</script>");
                 return false;
             }
-            else
-            {
-                if (IDCardNo.Length != 18)
-                {
-                    Response.Write("<script>alert('身份证号必须为18位')</script>");
-                    return false;
-                }
-            }
+
             int result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
             if (result == OperResult.RESULTCODE_TRUE)
             {

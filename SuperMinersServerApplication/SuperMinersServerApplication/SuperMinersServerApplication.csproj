@@ -127,6 +127,7 @@
     <Compile Include="Controller\PlayerController.cs" />
     <Compile Include="Controller\PlayerRunnable.cs" />
     <Compile Include="Controller\TopListController.cs" />
+    <Compile Include="Controller\Trade\UserRemoteServerController.cs" />
     <Compile Include="Controller\Trade\WithdrawRMBController.cs" />
     <Compile Include="Encoder\AESEncrypt.cs" />
     <Compile Include="Encoder\CryptEncoder.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="WebServiceToWeb\Contracts\IServiceToWeb.WeiXin.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.cs" />
     <Compile Include="WebServiceToWeb\Services\ServiceToWeb.WeiXin.cs" />
+    <Compile Include="WebServiceToWeb\Services\WebClientManager.cs" />
     <Compile Include="WebService\ClientManager.cs" />
     <Compile Include="WebService\Contracts\Callbacks\CallbackAttribute.cs" />
     <Compile Include="WebService\Contracts\Callbacks\IServiceToClient.Callback.cs" />

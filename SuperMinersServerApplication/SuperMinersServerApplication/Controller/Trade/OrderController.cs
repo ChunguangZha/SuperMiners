@@ -105,6 +105,18 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.StackStoneBuy:
                     result = this.StoneStackController.AlipayCallback(alipayRecord);
                     break;
+                case AlipayTradeInType.RemoteServerOnce:
+                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.Once);
+                    break;
+                case AlipayTradeInType.RemoteServerOneMonth:
+                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.OneMonth);
+                    break;
+                case AlipayTradeInType.RemoteServerHalfYear:
+                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.HalfYear);
+                    break;
+                case AlipayTradeInType.RemoteServerOneYear:
+                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.OneYear);
+                    break;
                 default:
                     break;
             }

@@ -81,7 +81,7 @@ namespace DataBaseProvider
                     sqlWhere = " where " + builder.ToString();
                 }
 
-                string sqlOrderLimit = " order by a.Time desc ";
+                string sqlOrderLimit = " order by a.id desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
@@ -102,6 +102,9 @@ namespace DataBaseProvider
                 {
                     records = MetaDBAdapter<MinersBuyRecord>.GetMinersBuyRecordListFromDataTable(dt);
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;

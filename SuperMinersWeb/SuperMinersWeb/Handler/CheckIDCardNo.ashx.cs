@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using SuperMinersServerApplication.Utility;
 using SuperMinersWeb.Wcf;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace SuperMinersWeb
             context.Response.ContentType = "text/plain";
             var IDCardNo = context.Request["IDCardNo"];
             int result;
+            if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
+            {
+                context.Response.Write("请输入正确的身份证号");
+                return;
+            }
+
             result = WcfClient.Instance.CheckUserIDCardNoExist(IDCardNo);
             if (result == OperResult.RESULTCODE_FALSE)
             {

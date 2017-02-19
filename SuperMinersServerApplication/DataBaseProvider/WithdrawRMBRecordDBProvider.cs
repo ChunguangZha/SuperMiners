@@ -122,6 +122,9 @@ namespace DataBaseProvider
                         record = records[0];
                     }
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return record;
@@ -165,6 +168,9 @@ namespace DataBaseProvider
                         record = records[0];
                     }
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return record;
@@ -212,6 +218,9 @@ namespace DataBaseProvider
                         record = records[0];
                     }
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return record;
@@ -349,6 +358,9 @@ namespace DataBaseProvider
                 {
                     orders = MetaDBAdapter<WithdrawRMBRecord>.GetWithdrawRMBRecordListFromDataTable(dt);
                 }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return orders;

@@ -27,7 +27,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("Online");
                 NotifyPropertyChange("LoginIP");
                 NotifyPropertyChange("UserName");
-                NotifyPropertyChange("NickName");
+                NotifyPropertyChange("UserLoginName");
                 NotifyPropertyChange("GroupType");
                 NotifyPropertyChange("GroupTypeText");
                 NotifyPropertyChange("IsAgentReferred");
@@ -82,14 +82,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.SimpleInfo.UserID; }
         }
 
+        public string UserLoginName
+        {
+            get { return this._parentObject.SimpleInfo.UserLoginName; }
+        }
+
         public string UserName
         {
             get { return this._parentObject.SimpleInfo.UserName; }
-        }
-
-        public string NickName
-        {
-            get { return this._parentObject.SimpleInfo.NickName; }
         }
 
         public string Password

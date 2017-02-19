@@ -22,6 +22,144 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             return true;
         }
 
+        public OperResultObject Login(string clientIP, string userLoginName, string password)
+        {
+            OperResultObject resultObj = new OperResultObject();
+
+            string token = "";
+            PlayerInfo player = null;
+            try
+            {
+                player = PlayerController.Instance.GetPlayerInfoByUserLoginName(userLoginName);
+                if (player == null)
+                {
+                    resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                    return resultObj;
+                }
+                token = WebClientManager.GetToken(player.SimpleInfo.UserName);
+                if (!string.IsNullOrEmpty(token))
+                {
+                    WebClientManager.RemoveClient(token);
+                }
+                
+                if (password != player.SimpleInfo.Password)
+                {
+                    resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                    return resultObj;
+                }
+
+                resultObj = PlayerController.Instance.CheckPlayerIsLocked(player.SimpleInfo.UserID, player.SimpleInfo.UserName);
+                if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
+                {
+                    return resultObj;
+                }
+
+                token = Guid.NewGuid().ToString();
+                WebClientManager.AddClient(player.SimpleInfo.UserName, token, clientIP);
+
+                LogHelper.Instance.AddInfoLog("WEB 玩家登录名 [" + userLoginName + "] 登录矿场, IP=" + clientIP);
+
+                resultObj.OperResultCode = OperResult.RESULTCODE_TRUE;
+                resultObj.Message = token;
+                return resultObj;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("WEB 玩家登录名 [" + userLoginName + "] 登录矿场失败, IP=" + clientIP, exc);
+                resultObj.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                return resultObj;
+            }
+        }
+
+        public WebPlayerInfo GetPlayerInfo(string token, string userLoginName, string clientIP)
+        {
+            try
+            {
+                string userName = WebClientManager.GetClientUserName(token);
+                if (string.IsNullOrEmpty(userName))
+                {
+                    return null;
+                }
+
+                var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
+                if (playerInfo.SimpleInfo.UserLoginName != userLoginName)
+                {
+                    return null;
+                }
+
+                WebPlayerInfo webPlayerInfo = new WebPlayerInfo()
+                {
+                    Token = token,
+                    UserName = playerInfo.SimpleInfo.UserName,
+                    UserLoginName = playerInfo.SimpleInfo.UserLoginName,
+                    ShoppingCredits = playerInfo.FortuneInfo.ShoppingCreditsEnabled
+                };
+                if (playerInfo.FortuneInfo.UserRemoteServerValidStopTime != null)
+                {
+                    DateTime stopTime = playerInfo.FortuneInfo.UserRemoteServerValidStopTime.ToDateTime();
+                    if (stopTime >= DateTime.Now)
+                    {
+                        webPlayerInfo.UserRemoteServerValidStopTime = playerInfo.FortuneInfo.UserRemoteServerValidStopTime;
+                    }
+                }
+
+                return webPlayerInfo;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("WEB 玩家登录名 [" + userLoginName + "] 登录矿场失败, IP=" + clientIP, exc);
+                return null;
+            }
+        }
+
+        public UserRemoteServerItem[] GetUserRemoteServerItems(string token, string userName)
+        {
+            try
+            {
+                return UserRemoteServerController.Instance.GetUserRemoteServerItems();
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("WEB 玩家用户名 [" + userName + "] GetUserRemoteServerItems失败" , exc);
+                return null;
+            }
+        }
+
+        public string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType)
+        {
+            AlipayTradeInType alipayType;
+            switch (serverType)
+            {
+                case RemoteServerType.Once:
+                    alipayType = AlipayTradeInType.RemoteServerOnce;
+                    break;
+                case RemoteServerType.OneMonth:
+                    alipayType = AlipayTradeInType.RemoteServerOneMonth;
+                    break;
+                case RemoteServerType.HalfYear:
+                    alipayType = AlipayTradeInType.RemoteServerHalfYear;
+                    break;
+                case RemoteServerType.OneYear:
+                    alipayType = AlipayTradeInType.RemoteServerOneYear;
+                    break;
+                default:
+                    return null;
+            }
+
+            var serverItem = UserRemoteServerController.Instance.GetUserRemoteServerItem(serverType);
+            if(serverItem==null){
+                return null;
+            }
+
+            DateTime time = DateTime.Now;
+            string orderNumber = OrderController.Instance.CreateOrderNumber(userName, time, alipayType);
+            string alipayLink = OrderController.Instance.CreateAlipayLink(userName, orderNumber, serverItem.ShopName, serverItem.PayMoneyYuan * GlobalConfig.GameConfig.Yuan_RMB, serverItem.Description);
+            return alipayLink;
+
+        }
+
+
+
         /// <summary>
         /// RESULTCODE_REGISTER_USERNAME_LENGTH_SHORT; RESULTCODE_FALSE; RESULTCODE_REGISTER_USERNAME_EXIST; RESULTCODE_TRUE; RESULTCODE_EXCEPTION
         /// </summary>
@@ -391,6 +529,49 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                                             " orderNumber: " + out_trade_no + ";" +
                                             " money: " + total_fee.ToString() + ";" +
                                             " payAlipayAccount: " + buyer_email, exc);
+
+                return OperResult.RESULTCODE_FALSE;
+            }
+        }
+
+        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        {
+            try
+            {
+                var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
+                if (player.SimpleInfo.Password != password)
+                {
+                    return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                }
+                if (player.SimpleInfo.Alipay != alipayAccount || player.SimpleInfo.AlipayRealName != alipayRealName)
+                {
+                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR;
+                }
+                int count = DBProvider.OldPlayerTransferDBProvider.GetRegisteredCountByUserName(userName);
+                if (count > 0)
+                {
+                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
+                }
+
+                DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
+                {
+                    UserName = userName,
+                    AlipayAccount = alipayAccount,
+                    AlipayRealName = alipayRealName,
+                    Email = email,
+                    isTransfered = false,
+                    SubmitTime = new MyDateTime(DateTime.Now)
+                });
+
+                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登记跨区转移账户。");
+                return OperResult.RESULTCODE_TRUE;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("TransferOldUser Exception. " +
+                                            " userName: " + userName + ";" +
+                                            " alipayAccount: " + alipayAccount + ";" +
+                                            " alipayRealName: " + alipayRealName, exc);
 
                 return OperResult.RESULTCODE_FALSE;
             }

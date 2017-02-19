@@ -18,7 +18,7 @@ namespace DataBaseProvider
                                                             " `InningIndex` INT NOT NULL," +
                                                             " `RoundID` INT UNSIGNED NOT NULL," +
                                                             " `CountDownSeconds` INT UNSIGNED NOT NULL DEFAULT 0," +
-                                                            " `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;'" +
+                                                            " `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;'," +
                                                             " `BetRedStone` INT UNSIGNED NOT NULL DEFAULT 0," +
                                                             " `BetGreenStone` INT UNSIGNED NOT NULL DEFAULT 0," +
                                                             " `BetBlueStone` INT UNSIGNED NOT NULL DEFAULT 0," +
@@ -156,12 +156,14 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
                 GambleStoneRoundInfo[] rounds = MetaDBAdapter<GambleStoneRoundInfo>.GetGambleStoneRoundInfoFromDataTable(table);
                 if (rounds != null && rounds.Length == 1)
                 {
                     lastRound = rounds[0];
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
             });
 
             return lastRound;
@@ -177,12 +179,14 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
                 GambleStoneDailyScheme[] schemes = MetaDBAdapter<GambleStoneDailyScheme>.GetGambleStoneDailySchemeFromDataTable(table);
                 if (schemes != null && schemes.Length == 1)
                 {
                     lastScheme = schemes[0];
                 }
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
             });
 
             return lastScheme;
@@ -368,6 +372,9 @@ namespace DataBaseProvider
                 adapter.Fill(table);
                 records = MetaDBAdapter<GambleStonePlayerBetRecord>.GetGambleStonePlayerBetRecordFromDataTable(table);
 
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
             });
 
             return records;

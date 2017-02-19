@@ -55,6 +55,9 @@ namespace SuperMinersServerApplication.Controller
 
         public static GambleStoneDBProvider GambleStoneDBProvider = new GambleStoneDBProvider();
 
+        public static UserRemoteServerDBProvider UserRemoteServerDBProvider = new UserRemoteServerDBProvider();
+
+        public static OldPlayerTransferDBProvider OldPlayerTransferDBProvider = new OldPlayerTransferDBProvider();
         
     }
 }

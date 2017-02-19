@@ -28,6 +28,9 @@ namespace DataBaseProvider
                 adapter.Fill(dt);
                 records = MetaDBAdapter<WaitToReferAwardRecord>.GetWaitToAwardExpRecordListFromDataTable(dt);
 
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
                 mycmd.Dispose();
 
                 return records;

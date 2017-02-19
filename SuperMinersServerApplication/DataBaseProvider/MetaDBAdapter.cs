@@ -68,10 +68,10 @@ namespace DataBaseProvider
                 TopListInfo info = new TopListInfo();
 
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
-                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
+                //string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
 
                 info.UserName = DESEncrypt.DecryptDES(encryptedUserName);
-                info.NickName = string.IsNullOrEmpty(encryptedNickName) ? info.UserName : DESEncrypt.DecryptDES(encryptedNickName);
+                //info.NickName = string.IsNullOrEmpty(encryptedNickName) ? info.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 info.Value = Convert.ToDecimal(dt.Rows[i][valueType]);
 
                 toplistInfos[i] = info;
@@ -88,10 +88,10 @@ namespace DataBaseProvider
                 UserReferrerTreeItem player = new UserReferrerTreeItem();
 
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
-                string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
+                //string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
                 
                 player.UserName = DESEncrypt.DecryptDES(encryptedUserName);
-                player.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.UserName : DESEncrypt.DecryptDES(encryptedNickName);
+                //player.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.UserName : DESEncrypt.DecryptDES(encryptedNickName);
                 player.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
                 player.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
 
@@ -234,6 +234,10 @@ namespace DataBaseProvider
                 player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
                 player.FortuneInfo.ShoppingCreditsEnabled = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsEnabled"]);
                 player.FortuneInfo.ShoppingCreditsFreezed = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsFreezed"]);
+                if (dt.Rows[i]["UserRemoteServerValidStopTime"] != DBNull.Value)
+                {
+                    player.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["UserRemoteServerValidStopTime"]));
+                }
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 player.GravelInfo = new PlayerGravelInfo();
@@ -508,6 +512,10 @@ namespace DataBaseProvider
 
         internal static TestUserLogState[] GetTestUserLogStateFromDataTable(DataTable dt)
         {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
             TestUserLogState[] records = new TestUserLogState[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -525,6 +533,10 @@ namespace DataBaseProvider
 
         internal static MinesBuyRecord[] GetMinesBuyRecordFromDataTable(DataTable dt)
         {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
             MinesBuyRecord[] records = new MinesBuyRecord[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -546,6 +558,11 @@ namespace DataBaseProvider
 
         internal static GoldCoinRechargeRecord[] GetGoldCoinRechargeRecordFromDataTable(DataTable dt)
         {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
             GoldCoinRechargeRecord[] records = new GoldCoinRechargeRecord[dt.Rows.Count];
             for (int i = 0; i < dt.Rows.Count; i++)
             {
@@ -648,7 +665,7 @@ namespace DataBaseProvider
                 records[i] = new WithdrawRMBRecord()
                 {
                     id = Convert.ToInt32(dt.Rows[i]["id"]),
-                    PlayerUserID = Convert.ToInt32(dt.Rows[i]["PlayerUserID"]),
+                    PlayerUserID = dt.Rows[i]["PlayerUserID"] == DBNull.Value ? 0 : Convert.ToInt32(dt.Rows[i]["PlayerUserID"]),
                     PlayerUserName = payerUserName,
                     AlipayAccount = alipayAccount,
                     AlipayRealName = alipayRealName,
@@ -677,6 +694,50 @@ namespace DataBaseProvider
                 record.SpendGoldCoin = Convert.ToDecimal(dt.Rows[i]["SpendGoldCoin"]);
                 record.GainMinersCount = Convert.ToInt32(dt.Rows[i]["GainMinersCount"]);
                 record.Time = Convert.ToDateTime(dt.Rows[i]["Time"]);
+                records[i] = record;
+            }
+
+            return records;
+        }
+
+        internal static UserRemoteServerBuyRecord[] GetUserRemoteServerBuyRecordListFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            UserRemoteServerBuyRecord[] records = new UserRemoteServerBuyRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                UserRemoteServerBuyRecord record = new UserRemoteServerBuyRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                record.ServerType = (RemoteServerType)Convert.ToInt32(dt.Rows[i]["ServerType"]);
+                record.PayMoneyYuan = Convert.ToInt32(dt.Rows[i]["PayMoneyYuan"]);
+                record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
+                record.GetShoppingCredits = Convert.ToInt32(dt.Rows[i]["GetShoppingCredits"]);
+                record.BuyRemoteServerTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["BuyRemoteServerTime"]));
+                records[i] = record;
+            }
+
+            return records;
+        }
+
+        internal static UserRemoteHandleServiceRecord[] GetUserRemoteHandleServiceRecordListFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+            UserRemoteHandleServiceRecord[] records = new UserRemoteHandleServiceRecord[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                UserRemoteHandleServiceRecord record = new UserRemoteHandleServiceRecord();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                record.WorkerName = DESEncrypt.DecryptDES(dt.Rows[i]["WorkerName"].ToString());
+                record.ServiceContent = DESEncrypt.DecryptDES(dt.Rows[i]["ServiceContent"].ToString());
+                record.ServiceTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["ServiceTime"]));
                 records[i] = record;
             }
 
@@ -1075,6 +1136,29 @@ namespace DataBaseProvider
             }
 
             return records;
+        }
+
+        internal static UserRemoteServerItem[] GetUserRemoteServerItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            UserRemoteServerItem[] items = new UserRemoteServerItem[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                UserRemoteServerItem item = new UserRemoteServerItem();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.ServerType = (RemoteServerType)Convert.ToInt32(dt.Rows[i]["ServerType"]);
+                item.PayMoneyYuan = Convert.ToInt32(dt.Rows[i]["PayMoneyYuan"]);
+                item.ShopName = dt.Rows[i]["ShopName"].ToString();
+                item.Description = dt.Rows[i]["Description"].ToString();
+
+                items[i] = item;
+            }
+
+            return items;
         }
     }
 }

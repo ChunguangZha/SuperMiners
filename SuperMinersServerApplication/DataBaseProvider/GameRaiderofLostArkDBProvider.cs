@@ -42,9 +42,14 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
+
+                var lists = MetaDBAdapter<PlayerRaiderRoundHistoryRecordInfo>.GetPlayerRaiderRoundHistoryRecordInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
                 adapter.Dispose();
 
-                return MetaDBAdapter<PlayerRaiderRoundHistoryRecordInfo>.GetPlayerRaiderRoundHistoryRecordInfoFromDataTable(table);
+                return lists;
             }
             finally
             {
@@ -86,9 +91,13 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
-                return MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+                var lists = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+                return lists;
             }
             finally
             {
@@ -119,10 +128,12 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
                 var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
 
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
                 if (roundInfos == null || roundInfos.Length == 0)
                 {
                     return null;
@@ -200,9 +211,12 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
                 var roundInfos = MetaDBAdapter<RaiderRoundMetaDataInfo>.GetRaiderRoundMetaDataInfoFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
                 if (roundInfos == null || roundInfos.Length == 0)
                 {
                     return null;
@@ -270,9 +284,13 @@ namespace DataBaseProvider
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                adapter.Dispose();
 
-                return MetaDBAdapter<RaiderPlayerBetInfo>.GetPlayerBetInfoFromDataTable(table);
+                var lists = MetaDBAdapter<RaiderPlayerBetInfo>.GetPlayerBetInfoFromDataTable(table);
+
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+                return lists;
             }
             finally
             {
@@ -297,12 +315,26 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 //1. Save to DB
-                string sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@BetStones,@Time) ;";
+
+                string sqlTextA = "";
+
+#if V1
+                sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`UserName`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@UserName,@BetStones,@Time) ;";
+
+#endif
+
+#if V2
+                sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@BetStones,@Time) ;";
+
+#endif
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextA;
                 mycmd.Parameters.AddWithValue("@RaiderRoundID", betInfo.RaiderRoundID);
                 mycmd.Parameters.AddWithValue("@UserID", betInfo.UserID);
+#if V1
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(betInfo.UserName));
+#endif
                 mycmd.Parameters.AddWithValue("@BetStones", betInfo.BetStones);
                 mycmd.Parameters.AddWithValue("@Time", betInfo.Time.ToDateTime());
                 mycmd.ExecuteNonQuery();

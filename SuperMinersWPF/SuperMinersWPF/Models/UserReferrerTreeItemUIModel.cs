@@ -40,11 +40,6 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.UserName; }
         }
 
-        public string NickName
-        {
-            get { return this._parentObject.NickName; }
-        }
-
         public string RegisterIP
         {
             get { return this._parentObject.RegisterIP; }

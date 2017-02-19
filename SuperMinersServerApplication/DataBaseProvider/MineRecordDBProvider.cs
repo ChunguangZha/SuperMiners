@@ -37,12 +37,18 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
+
+                var lists = MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table);
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                if (lists == null || lists.Length == 0)
                 {
-                    return MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table)[0];
+                    return null;
                 }
 
-                return null;
+                return lists[0];
             }
             finally
             {
@@ -99,7 +105,7 @@ namespace DataBaseProvider
                     sqlWhere = " where " + builder.ToString();
                 }
 
-                string sqlOrderLimit = " order by a.CreateTime desc ";
+                string sqlOrderLimit = " order by a.id desc ";
                 if (pageItemCount > 0)
                 {
                     int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
@@ -114,12 +120,12 @@ namespace DataBaseProvider
                 mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
-                {
-                    return MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table);
-                }
+                var lists = MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table);
 
-                return null;
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+                return lists;
             }
             finally
             {
@@ -148,12 +154,13 @@ namespace DataBaseProvider
                 mycmd.CommandText = cmdText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(table);
-                if (table.Rows.Count > 0)
-                {
-                    return MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table);
-                }
+                var lists = MetaDBAdapter<MinesBuyRecord>.GetMinesBuyRecordFromDataTable(table);
 
-                return null;
+                table.Clear();
+                table.Dispose();
+                adapter.Dispose();
+
+                return lists;
             }
             finally
             {
@@ -161,11 +168,7 @@ namespace DataBaseProvider
                 {
                     mycmd.Dispose();
                 }
-                if (myconn != null)
-                {
-                    myconn.Close();
-                    myconn.Dispose();
-                }
+                MyDBHelper.Instance.DisposeConnection(myconn);
             }
         }
 
