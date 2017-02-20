@@ -13,5 +13,21 @@ namespace XunLinMineRemoteControlWeb
         {
 
         }
+
+        protected void btnLogin_Click(object sender, EventArgs e)
+        {
+            string userLoginName = this.txtUserLoginName.Text.Trim();
+            if (string.IsNullOrEmpty(userLoginName))
+            {
+                Response.Write("<script>alert('请输入用户名!')</script>");
+                return;
+            }
+            string password = this.txtPassword.Text;
+            if (string.IsNullOrEmpty(password))
+            {
+                Response.Write("<script>alert('请输入密码!')</script>");
+                return;
+            }
+        }
     }
 }

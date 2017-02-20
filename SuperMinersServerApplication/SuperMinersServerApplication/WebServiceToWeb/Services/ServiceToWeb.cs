@@ -539,6 +539,10 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             try
             {
                 var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
+                if (player == null)
+                {
+                    return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+                }
                 if (player.SimpleInfo.Password != password)
                 {
                     return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;

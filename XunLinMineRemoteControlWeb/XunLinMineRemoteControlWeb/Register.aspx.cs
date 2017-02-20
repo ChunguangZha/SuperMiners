@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using XunLinMineRemoteControlWeb.Core;
+using XunLinMineRemoteControlWeb.Utility;
 using XunLinMineRemoteControlWeb.Wcf;
 
 namespace XunLinMineRemoteControlWeb
@@ -31,76 +32,83 @@ namespace XunLinMineRemoteControlWeb
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
-            string userName = this.txtUserName.Text.Trim();
-            string nickName = this.txtNickName.Text.Trim();
-            string email = this.txtEmail.Text.Trim();
-            string qq = this.txtQQ.Text.Trim();
-            string password = this.txtPassword.Text;
-            string confirmpwd = this.txtConfirmPassword.Text;
-            string alipayAccount = this.txtAlipayAccount.Text.Trim();
-            string alipayRealName = this.txtAlipayRealName.Text.Trim();
-            string IDCardNo = this.txtIDCardNo.Text.Trim();
-
-            foreach (var item in GlobalData.InvalidName)
+            try
             {
-                if (userName.Contains(item))
+                string userName = this.txtUserName.Text.Trim();
+                string nickName = this.txtNickName.Text.Trim();
+                string email = this.txtEmail.Text.Trim();
+                string qq = this.txtQQ.Text.Trim();
+                string password = this.txtPassword.Text;
+                string confirmpwd = this.txtConfirmPassword.Text;
+                string alipayAccount = this.txtAlipayAccount.Text.Trim();
+                string alipayRealName = this.txtAlipayRealName.Text.Trim();
+                string IDCardNo = this.txtIDCardNo.Text.Trim();
+
+                foreach (var item in GlobalData.InvalidName)
                 {
-                    Response.Write("<script>alert('用户名无效，无法注册!')</script>");
+                    if (userName.Contains(item))
+                    {
+                        Response.Write("<script>alert('用户名无效，无法注册!')</script>");
+                        return;
+                    }
+                    if (nickName.Contains(item))
+                    {
+                        Response.Write("<script>alert('昵称无效，无法注册!')</script>");
+                        return;
+                    }
+                }
+
+                if (!WcfClient.IsReady)
+                {
+                    Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
                     return;
                 }
-                if (nickName.Contains(item))
+
+                if (!CheckAuthCode())
                 {
-                    Response.Write("<script>alert('昵称无效，无法注册!')</script>");
                     return;
                 }
-            }
+                if (!CheckUserLoginName(userName))
+                {
+                    return;
+                }
+                if (!CheckUserName(nickName))
+                {
+                    return;
+                }
+                if (!CheckPassword(password, confirmpwd))
+                {
+                    return;
+                }
+                if (!CheckAlipayAccount(alipayAccount))
+                {
+                    return;
+                }
+                if (!CheckAlipayRealName(alipayRealName))
+                {
+                    return;
+                }
+                if (!CheckIDCardNo(IDCardNo))
+                {
+                    return;
+                }
+                if (!CheckEmail(email))
+                {
+                    return;
+                }
+                if (!CheckQQ(qq))
+                {
+                    return;
+                }
 
-            if (!WcfClient.IsReady)
-            {
-                Response.Write("<script>alert('服务器繁忙，请稍候!')</script>");
-                return;
-            }
+                string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            if (!CheckAuthCode())
-            {
-                return;
+                RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
             }
-            if (!CheckUserLoginName(userName))
+            catch (Exception exc)
             {
-                return;
+                LogHelper.Instance.AddErrorLog("RegisterUser Exception ", exc);
             }
-            if (!CheckUserName(nickName))
-            {
-                return;
-            }
-            if (!CheckPassword(password, confirmpwd))
-            {
-                return;
-            }
-            if (!CheckAlipayAccount(alipayAccount))
-            {
-                return;
-            }
-            if (!CheckAlipayRealName(alipayRealName))
-            {
-                return;
-            }
-            if (!CheckIDCardNo(IDCardNo))
-            {
-                return;
-            }
-            if (!CheckEmail(email))
-            {
-                return;
-            }
-            if (!CheckQQ(qq))
-            {
-                return;
-            }
-
-            string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
-
-            RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
         }
 
         private bool CheckUserLoginName(string userName)
@@ -366,30 +374,30 @@ namespace XunLinMineRemoteControlWeb
 
         private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
-            
-            //invitationCode = Session["ic"] as string;
 
-            //int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
-            //if (result == OperResult.RESULTCODE_TRUE)
-            //{
-            //    var player = WcfClient.Instance.GetPlayerByWeiXinOpenID(userObj.openid);
+            invitationCode = Session["ic"] as string;
 
-            //    this.lblMsg.Text = "player OK";
-            //    WebUserInfo userinfo = new WebUserInfo();
-            //    userinfo.xlUserID = player.SimpleInfo.UserID;
-            //    userinfo.xlUserName = player.SimpleInfo.UserName;
-            //    userinfo.wxOpenID = userObj.openid;
+            int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+            if (result == OperResult.RESULTCODE_TRUE)
+            {
+                var player = WcfClient.Instance.Login(userObj.openid);
 
-            //    // 登录状态100分钟内有效
-            //    MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
-            //    //Session[userinfo.xlUserName] = player;
+                this.lblMsg.Text = "player OK";
+                WebUserInfo userinfo = new WebUserInfo();
+                userinfo.xlUserID = player.SimpleInfo.UserID;
+                userinfo.xlUserName = player.SimpleInfo.UserName;
+                userinfo.wxOpenID = userObj.openid;
 
-            //    Response.Redirect("Views/Shopping.aspx", false);
-            //}
-            //else
-            //{
-            //    Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
-            //}
+                // 登录状态100分钟内有效
+                MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
+                //Session[userinfo.xlUserName] = player;
+
+                Response.Redirect("Views/Shopping.aspx", false);
+            }
+            else
+            {
+                Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+            }
         }
     }
 }

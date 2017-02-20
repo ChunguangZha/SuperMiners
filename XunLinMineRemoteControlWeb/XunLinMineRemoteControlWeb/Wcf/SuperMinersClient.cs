@@ -242,22 +242,64 @@ namespace XunLinMineRemoteControlWeb.Wcf
 
         public OperResultObject Login(string clientIP, string userLoginName, string password)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return base.Channel.Login(clientIP, userLoginName, password);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return new OperResultObject() { OperResultCode = OperResult.RESULTCODE_EXCEPTION };
+            }
         }
 
         public WebPlayerInfo GetPlayerInfo(string token, string userLoginName, string clientIP)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return base.Channel.GetPlayerInfo(token, userLoginName, clientIP);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
         }
 
         public UserRemoteServerItem[] GetUserRemoteServerItems(string token, string userName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return base.Channel.GetUserRemoteServerItems(token, userName);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
         }
 
         public string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType)
         {
+            try
+            {
+                return base.Channel.CreateBuyRemoteServerAlipayLink(token, userName, serverType);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
+        }
+
+        #region IServiceToWeb Members
+
+
+        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        {
             throw new NotImplementedException();
         }
+
+        #endregion
     }
 }

@@ -10,7 +10,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div class="center registerpage">
+    <div class=" content-wrapper registerpage">
          <table>
              <tbody>
                  <tr>

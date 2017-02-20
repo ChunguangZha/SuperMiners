@@ -10,7 +10,7 @@
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <header>
+    <header class="content-wrapper">
         <div class="left">
             <img src="images/index_01.jpg" />
         </div>
@@ -29,11 +29,11 @@
         </div>
     </header>
     <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-        
-        </asp:ContentPlaceHolder>
-    </div>
+        <div class="content-wrapper">
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            
+            </asp:ContentPlaceHolder>
+        </div>
     </form>
 </body>
 </html>
