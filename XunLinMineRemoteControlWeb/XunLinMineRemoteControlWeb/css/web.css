@@ -37,23 +37,31 @@ a {
 
 header {
     display:flex;
+    height:90px;
+    width:968px;
 }
 
-.left {
-    display:inline;
-    flex:1;
+.headerleft {
+    display: inline;
+    flex: 190px;
+    width:190px;
+    background-position: center center;
+    background-image: url('../images/index_01.jpg');
+    background-repeat: no-repeat;
 }
-.right {
+.headerright {
     display:inline;
-    flex:1;
+    flex:190px;
 }
-.center {
-    position:relative;
-    display:inline;
-    flex:900px;
-    
+.headercenter {
+    background-position: center center;
+    position: relative;
+    display: inline;
+    flex: 544px;
     margin: 0 auto;
-    width:900px;
+    width: 544px;
+    background-image: url('../images/index_02.jpg');
+    background-repeat: no-repeat;
 }
 
 .content-wrapper {
@@ -62,6 +70,40 @@ header {
     margin:0 auto;
     text-align:center;
 }
+
+
+/* login
+----------------------------------------------------------*/
+#login {
+    display: block;
+    font-size: .85em;
+    margin: 0 0 10px;
+    text-align: right;
+    color:black;
+}
+
+    #login a {
+        background-color: #d3dce0;
+        margin-left: 10px;
+        margin-right: 3px;
+        padding: 2px 3px;
+        text-decoration: none;
+    }
+
+    #login a.username {
+        background: none;
+        margin-left: 0px;
+        text-decoration: underline;
+    }
+
+    #login ul {
+        margin: 0;
+    }
+
+    #login li {
+        display: inline;
+        list-style: none;
+    }
 
 
 /* Index Page
@@ -156,3 +198,105 @@ header {
     }
 
 
+    
+/* shoplist listview itemtemplate span
+----------------------------------------------------------*/
+
+.shoplistview {
+    position:relative;
+    margin:10px auto;
+    width:90%;
+    text-align:center;
+}
+
+div.shopitemwrap {
+    position:relative;
+    float:left;
+    letter-spacing:normal;
+    margin:18px;
+}
+
+a.shopitem {
+    margin:50px;
+}
+
+    a.shopitem div.img-wrap {
+        text-align:center;
+    }
+
+    a.shopitem div.title {
+        position:relative;
+        font-size:18px;
+        text-align:center;
+        bottom:10px;
+    }
+
+        a.shopitem div.title .price {
+            color:#f3425e;
+            font-weight:700;
+            margin-left:50px;
+        }
+
+
+/* shoppage
+----------------------------------------------------------*/
+div.shoppageinfo {
+    float:left;
+    width:100%;
+}
+
+div.shoppageinfo-l {
+    float:left;
+    width:250px;
+    padding:20px;
+    position:relative;
+}
+div.shoppageinfo-r {
+    position:relative;
+    text-align:left;
+    margin:20px;
+}
+    div.shoppageinfo-r ul {
+        list-style:none;
+        position:relative;
+        margin:0;
+        font-size:18px;
+    }
+
+        div.shoppageinfo-r ul il {
+            margin:5px;
+            height:30px;
+        }
+
+            shoppageinfoprice {
+                color:#f40;
+                font-size:26px;
+                font-weight:700;
+            }
+            
+
+/* info and errors */
+.message-info {
+    border: 1px solid;
+    clear: both;
+    padding: 10px 20px;
+}
+
+.message-error {
+    clear: both;
+    color: #e80c4d;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.message-success {
+    color: #7ac0da;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.error {
+    color: #e80c4d;
+}

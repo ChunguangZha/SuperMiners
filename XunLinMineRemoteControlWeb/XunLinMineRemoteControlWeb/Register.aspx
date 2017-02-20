@@ -6,7 +6,8 @@
 <head runat="server">
     <title>注册迅灵账户</title>
     <link href="css/web.css" type="text/css" rel="stylesheet" />
-    <script src="js/register.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-3.1.1.js"></script>
+    <script src="Scripts/register.js" type="text/javascript"></script>
 </head>
 <body>
     <form id="form1" runat="server">

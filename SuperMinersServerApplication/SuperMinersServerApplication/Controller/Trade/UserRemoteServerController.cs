@@ -49,6 +49,7 @@ namespace SuperMinersServerApplication.Controller.Trade
 
         public UserRemoteServerItem GetUserRemoteServerItem(RemoteServerType serverType)
         {
+            GetUserRemoteServerItems();
             if (_serverItems == null)
             {
                 return null;
@@ -67,19 +68,51 @@ namespace SuperMinersServerApplication.Controller.Trade
 
         public int AlipayCallback(AlipayRechargeRecord alipay, RemoteServerType serverType)
         {
+            int result = OperResult.RESULTCODE_FALSE;
+
+            MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipay, myTrans);
+
+                LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务，" + serverType.ToString() + ", Alipay:" + alipay.ToString());
+                result = OperResult.RESULTCODE_TRUE;
+                return result;
+            },
+            exc =>
+            {
+                LogHelper.Instance.AddErrorLog("远程协助1服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
+                result = OperResult.RESULTCODE_EXCEPTION;
+            });
+            if (result != OperResult.RESULTCODE_TRUE)
+            {
+                return result;
+            }
+
+            var serverItem = this.GetUserRemoteServerItem(serverType);
+            if (serverItem == null)
+            {
+                LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败1，原因为：" + OperResult.GetMsg(OperResult.RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR));
+                return OperResult.RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR;
+            }
+            if (alipay.total_fee != serverItem.PayMoneyYuan)
+            {
+                LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败2，原因为：" + OperResult.GetMsg(OperResult.RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR));
+                return OperResult.RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR;
+            }
+
             var playerRunner = PlayerController.Instance.GetRunnable(alipay.user_name);
             if (playerRunner == null)
             {
+                LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败3，原因为：" + OperResult.GetMsg(OperResult.RESULTCODE_USER_NOT_EXIST));
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
-
-            int result = OperResult.RESULTCODE_FALSE;
 
             MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
                 result = playerRunner.BuyRemoteServer(alipay, serverType, myTrans);
                 if (result != OperResult.RESULTCODE_TRUE)
                 {
+                    LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败4，原因为：" + OperResult.GetMsg(result));
                     return result;
                 }
                 UserRemoteServerBuyRecord buyRecord = new UserRemoteServerBuyRecord()
@@ -93,8 +126,6 @@ namespace SuperMinersServerApplication.Controller.Trade
                     GetShoppingCredits = (int)alipay.total_fee * GlobalConfig.GameConfig.RemoteServerRechargeReturnShoppingCreditsTimes
                 };
                 DBProvider.UserRemoteServerDBProvider.SaveUserRemoteServerBuyRecord(buyRecord, myTrans);
-
-                DBProvider.AlipayRecordDBProvider.SaveAlipayRechargeRecord(alipay, myTrans);
 
                 LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 成功购买远程协助服务，" + serverType.ToString() + ", Alipay:" + alipay.ToString());
                 result = OperResult.RESULTCODE_TRUE;

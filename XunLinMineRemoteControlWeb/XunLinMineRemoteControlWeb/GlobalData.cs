@@ -1,4 +1,5 @@
 ﻿using MetaData.SystemConfig;
+using MetaData.Trade;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace XunLinMineRemoteControlWeb
     public class GlobalData
     {
         public static GameConfig GameConfig;
+
+        public static UserRemoteServerItem[] ServerItems = null;
 
         public static float MinerPrice
         {

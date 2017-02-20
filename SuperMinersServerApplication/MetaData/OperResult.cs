@@ -160,6 +160,16 @@ namespace MetaData
         public const int RESULTCODE_GRAVEL_CANOTREQUEST = 510;
 
         /// <summary>
+        /// 玩家购买远程协助服务失败，服务类型错误
+        /// </summary>
+        public const int RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR = 511;
+
+        /// <summary>
+        /// 玩家购买远程协助服务失败，支付金额错误
+        /// </summary>
+        public const int RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR = 512;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -317,6 +327,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_USERLOGINNAME_EXIST, "用户登录名已经存在");
             _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR, "支付宝信息不正确");
             _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED, "该账户已经登录过");
+            _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR, "服务类型选择失败");
+            _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR, "支付金额错误");
         }
 
         public static string GetMsg(int resultCode)

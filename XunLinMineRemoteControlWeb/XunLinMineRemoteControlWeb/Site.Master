@@ -6,29 +6,36 @@
 <head runat="server">
     <title>迅灵信息远程协助</title>
     <link href="css/web.css" rel="stylesheet" type="text/css" />
+    <script src="Scripts/jquery-3.1.1.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
-    <header class="content-wrapper">
-        <div class="left">
-            <img src="images/index_01.jpg" />
-        </div>
-        <div class="center">
-            <img src="images/index_02.jpg" />
-        </div>
-        <div class="right">
-            <asp:LoginView ID="LoginView1" runat="server">
-                <LoggedInTemplate>
-                    矿主： <asp:LoginName ID="LoginName" runat="server" />服务期到：
-                </LoggedInTemplate>
-                <AnonymousTemplate>
-                    <a href="Login.aspx">登录</a><a href="Register.aspx">注册</a>
-                </AnonymousTemplate>
-            </asp:LoginView>
-        </div>
-    </header>
     <form id="form1" runat="server">
+        <header class="content-wrapper">
+            <div class="headerleft">
+            </div>
+            <div class="headercenter">
+            </div>
+            <div class="headerright">
+                <section id="login">
+                    <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
+                        <LoggedInTemplate>
+                                <p>
+                                    欢迎矿主：<asp:LoginName ID="LoginName1" runat="server" CssClass="username" />!
+                                    <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
+                                </p>
+                        </LoggedInTemplate>
+                        <AnonymousTemplate>
+                                    <ul>
+                                        <li><a id="registerLink" runat="server" href="Register.aspx">注册</a></li>
+                                        <li><a id="loginLink" runat="server" href="Login.aspx">登录</a></li>
+                                    </ul>
+                        </AnonymousTemplate>
+                    </asp:LoginView>
+                </section>
+            </div>
+        </header>
         <div class="content-wrapper">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             

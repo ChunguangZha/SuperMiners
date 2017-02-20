@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.User;
 using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
@@ -378,26 +379,31 @@ namespace XunLinMineRemoteControlWeb
             invitationCode = Session["ic"] as string;
 
             int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
-            if (result == OperResult.RESULTCODE_TRUE)
-            {
-                var player = WcfClient.Instance.Login(userObj.openid);
-
-                this.lblMsg.Text = "player OK";
-                WebUserInfo userinfo = new WebUserInfo();
-                userinfo.xlUserID = player.SimpleInfo.UserID;
-                userinfo.xlUserName = player.SimpleInfo.UserName;
-                userinfo.wxOpenID = userObj.openid;
-
-                // 登录状态100分钟内有效
-                MyFormsPrincipal<WebUserInfo>.SignIn(userinfo.xlUserName, userinfo, 100);
-                //Session[userinfo.xlUserName] = player;
-
-                Response.Redirect("Views/Shopping.aspx", false);
-            }
-            else
+            if (result != OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                return;
             }
+
+            var resultObj = WcfClient.Instance.Login(clientIP, userName, password);
+            if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
+            {
+                Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                return;
+            }
+
+            WebPlayerInfo userinfo = WcfClient.Instance.GetPlayerInfo(resultObj.Message, userName, clientIP);
+            if (userinfo == null)
+            {
+                Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                return;
+            }
+
+            // 登录状态100分钟内有效
+            MyFormsPrincipal<WebPlayerInfo>.SignIn(userinfo.UserLoginName, userinfo, 100);
+            //Session[userinfo.xlUserName] = player;
+
+            Response.Redirect("Views/Shopping.aspx", false);
         }
     }
 }
