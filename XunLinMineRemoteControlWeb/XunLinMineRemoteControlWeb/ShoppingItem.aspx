@@ -1,6 +1,6 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ShoppingItem.aspx.cs" ViewStateMode="Disabled" Inherits="XunLinMineRemoteControlWeb.ShoppingItem" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-    <script src="Scripts/shopping.js" type="text/javascript" />
+    <script src="Scripts/shopping.js" type="text/javascript"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="shoppageinfo">
@@ -30,11 +30,8 @@
                 </li>
             </ul>
             <p>
-            <asp:Button ID="btnPay" runat="server" class="button" Text="购买" OnClick="btnPay_Click"/>
+                <asp:Button ID="btnPay" runat="server" class="button" Text="购买" OnClick="btnPay_Click"/>
             </p>
-            <dl>
-                <dt></dt>
-            </dl>
         </div>
     </div>
 </asp:Content>

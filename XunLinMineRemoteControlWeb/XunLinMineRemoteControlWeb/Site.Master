@@ -29,7 +29,7 @@
                     <% var user = Context.User as XunLinMineRemoteControlWeb.Core.MyFormsPrincipal<XunLinMineRemoteControlWeb.Core.WebLoginUserInfo>; %>
                     <% if(user !=null ) { %>
                         <span>
-                            欢迎矿主：<%= user.UserData.UserName  %>!
+                            欢迎会员：<%= user.UserData.UserName  %>!
                             <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
                         </span>
                         <span>

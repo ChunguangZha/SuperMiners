@@ -6,7 +6,7 @@ using System.Web;
 
 namespace XunLinMineRemoteControlWeb.Core
 {
-    public class WebLoginUserInfo : IPrincipal
+    public class WebLoginUserInfo
     {
         public string UserLoginName;
 
@@ -18,18 +18,5 @@ namespace XunLinMineRemoteControlWeb.Core
 
         public string UserRemoteServerValidStopTimeText = "";
         
-        #region IPrincipal Members
-
-        public IIdentity Identity
-        {
-            get { throw new NotImplementedException(); }
-        }
-
-        public bool IsInRole(string role)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
     }
 }

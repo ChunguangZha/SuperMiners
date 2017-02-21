@@ -55,8 +55,17 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
+            WebLoginUserInfo webloginPlayer = new WebLoginUserInfo()
+            {
+                ShoppingCredits = userinfo.ShoppingCredits,
+                Token = userinfo.Token,
+                UserLoginName = userinfo.UserLoginName,
+                UserName = userinfo.UserName,
+                UserRemoteServerValidStopTimeText = userinfo.UserRemoteServerValidStopTime == null ? "" : userinfo.UserRemoteServerValidStopTime.ToDateTime().ToString()
+            };
+
             // 登录状态100分钟内有效
-            MyFormsPrincipal<WebPlayerInfo>.SignIn(userinfo.UserLoginName, userinfo, 100);
+            MyFormsPrincipal<WebLoginUserInfo>.SignIn(userinfo.UserLoginName, webloginPlayer, 100);
 
             Response.Redirect("ShoppingItem.aspx", false);
         }

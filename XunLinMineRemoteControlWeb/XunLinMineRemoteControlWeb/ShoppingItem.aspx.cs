@@ -56,7 +56,12 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, serverType);
+            string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, serverType);
+            if (!string.IsNullOrEmpty(alipayLink))
+            {
+                Response.Redirect(alipayLink);
+            }
+
         }
     }
 }
