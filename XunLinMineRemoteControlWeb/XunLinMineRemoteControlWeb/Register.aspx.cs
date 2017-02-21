@@ -388,22 +388,21 @@ namespace XunLinMineRemoteControlWeb
             var resultObj = WcfClient.Instance.Login(clientIP, userName, password);
             if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
             {
-                Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(resultObj.OperResultCode) + "')</script>");
                 return;
             }
 
             WebPlayerInfo userinfo = WcfClient.Instance.GetPlayerInfo(resultObj.Message, userName, clientIP);
             if (userinfo == null)
             {
-                Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
+                Response.Write("<script>alert('注册成功，但登录失败。')</script>");
                 return;
             }
 
             // 登录状态100分钟内有效
             MyFormsPrincipal<WebPlayerInfo>.SignIn(userinfo.UserLoginName, userinfo, 100);
-            //Session[userinfo.xlUserName] = player;
 
-            Response.Redirect("Views/Shopping.aspx", false);
+            Response.Redirect("ShoppingItem.aspx", false);
         }
     }
 }

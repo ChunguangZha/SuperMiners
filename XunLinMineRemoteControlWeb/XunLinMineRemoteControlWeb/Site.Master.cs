@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using XunLinMineRemoteControlWeb.Core;
 
 namespace XunLinMineRemoteControlWeb
 {
@@ -16,15 +17,19 @@ namespace XunLinMineRemoteControlWeb
             {
                 if (Request.IsAuthenticated)
                 {
-                    FormsIdentity identity = Context.User.Identity as FormsIdentity;
-                    //identity.Ticket.UserData;
+                    MyFormsPrincipal<WebLoginUserInfo> principal = Context.User as MyFormsPrincipal<WebLoginUserInfo>;
+                    if (principal == null)
+                    {
+                        Response.Redirect("Login.aspx");
+                    }
                 }
             }
         }
 
-        public string GetValidTime()
+        protected void btnLogout_Click(object sender, EventArgs e)
         {
-            return DateTime.Now.AddDays(10).ToString();
+            MyFormsPrincipal<WebLoginUserInfo>.SignOut();
+            Response.Redirect("Index.aspx");
         }
     }
 }

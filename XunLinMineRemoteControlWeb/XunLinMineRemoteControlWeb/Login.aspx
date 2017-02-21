@@ -23,7 +23,7 @@
                                 </td>
                                 <td>
                                     <span id="msgUserName" class="message"></span>
-                                    <img id="imgUserNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                                    <img id="imgUserNameOK" src="images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -35,7 +35,7 @@
                                 </td>
                                 <td>                                    
                                     <span id="msgPassword" class="message"></span>
-                                    <img id="imgPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
+                                    <img id="imgPasswordOK" src="images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>
@@ -47,7 +47,7 @@
                                 </td>
                                 <td>
                                     <span id="msgAuthCode" class="message"></span>
-                                    <img id="imgAuthCodeOK" src="Images/yes.png" class="message" style="display:none"/>
+                                    <img id="imgAuthCodeOK" src="images/yes.png" class="message" style="display:none"/>
                                 </td>
                             </tr>
                             <tr>

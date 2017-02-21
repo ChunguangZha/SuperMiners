@@ -23,7 +23,7 @@
                      </td>
                      <td>
                          <span id="msgUserName" class="message"></span>
-                         <img id="imgUserNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgUserNameOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -35,7 +35,7 @@
                      </td>
                      <td>
                          <span id="msgNickName" class="message"></span>
-                         <img id="imgNickNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgNickNameOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -47,7 +47,7 @@
                      </td>
                      <td>                                    
                          <span id="msgPassword" class="message"></span>
-                         <img id="imgPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgPasswordOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -59,7 +59,7 @@
                      </td>
                      <td>
                          <span id="msgConfirmPassword" class="message"></span>
-                         <img id="imgConfirmPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgConfirmPasswordOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -71,7 +71,7 @@
                      </td>
                      <td>
                          <span id="msgAlipayAccount" class="message"></span>
-                         <img id="imgAlipayAccountOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgAlipayAccountOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -83,7 +83,7 @@
                      </td>
                      <td>
                          <span id="msgAlipayRealName" class="message"></span>
-                         <img id="imgAlipayRealNameOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgAlipayRealNameOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -95,7 +95,7 @@
                      </td>
                      <td>
                          <span id="msgIDCardNo" class="message"></span>
-                         <img id="imgIDCardNoOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgIDCardNoOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -107,7 +107,7 @@
                      </td>
                      <td>
                          <span id="msgEmail" class="message"></span>
-                         <img id="imgEmailOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgEmailOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -119,7 +119,7 @@
                      </td>
                      <td>
                          <span id="msgQQ" class="message"></span>
-                         <img id="imgQQOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgQQOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>
@@ -131,7 +131,7 @@
                      </td>
                      <td>
                          <span id="msgAuthCode" class="message"></span>
-                         <img id="imgAuthCodeOK" src="Images/yes.png" class="message" style="display:none"/>
+                         <img id="imgAuthCodeOK" src="images/yes.png" class="message" style="display:none"/>
                      </td>
                  </tr>
                  <tr>

@@ -45,8 +45,8 @@ header {
     display: inline;
     flex: 190px;
     width:190px;
-    background-position: center center;
-    background-image: url('../images/index_01.jpg');
+    /*background-position: center center;
+    background-image: url('../images/index_01.jpg');*/
     background-repeat: no-repeat;
 }
 .headerright {
@@ -60,8 +60,8 @@ header {
     flex: 544px;
     margin: 0 auto;
     width: 544px;
-    background-image: url('../images/index_02.jpg');
-    background-repeat: no-repeat;
+    /*background-image: url('../images/index_02.jpg');
+    background-repeat: no-repeat;*/
 }
 
 .content-wrapper {
@@ -241,6 +241,8 @@ a.shopitem {
 /* shoppage
 ----------------------------------------------------------*/
 div.shoppageinfo {
+	background-color:black;
+	color:white;
     float:left;
     width:100%;
 }

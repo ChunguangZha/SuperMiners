@@ -13,9 +13,17 @@ using System.Threading.Tasks;
 
 namespace SuperMinersWPF
 {
+    public enum ServerType
+    {
+        Server1,
+        Server2
+    }
+
     public class GlobalData
     {
         public static readonly string DebugServer = "localhost";
+
+        public static ServerType ServerType;
 
         public const int PageItemsCount = 30;
 

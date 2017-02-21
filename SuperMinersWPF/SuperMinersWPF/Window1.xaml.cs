@@ -38,6 +38,22 @@ namespace SuperMinersWPF
             //this.Title = "内测版";
 
             this._syn = System.Threading.SynchronizationContext.Current;
+
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                this.btnMall.Visibility = System.Windows.Visibility.Collapsed;
+                this.lblGravel.Visibility = System.Windows.Visibility.Collapsed;
+                this.txtGravel.Visibility = System.Windows.Visibility.Collapsed;
+                this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                this.btnMall.Visibility = System.Windows.Visibility.Visible;
+                this.lblGravel.Visibility = System.Windows.Visibility.Visible;
+                this.txtGravel.Visibility = System.Windows.Visibility.Visible;
+                this.btnRequestGravel.Visibility = System.Windows.Visibility.Visible;
+            }
+
             GlobalData.Client.SetContext(this._syn);
             GlobalData.Client.Error += new EventHandler(Client_Error);
             GlobalData.Client.OnSendMessage += new Action<string>(Client_OnSendMessage);

@@ -60,7 +60,16 @@ namespace XunLinMineRemoteControlWeb
             "骗",
             "shabi",
             "caonima",
-            "pianzi"
+            "pianzi",
+            "{",
+            "}",
+            "<",
+            ">",
+            ".",
+            ";",
+            "(",
+            ")",
+
         };
     }
 }

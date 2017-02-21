@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.UI;
+using XunLinMineRemoteControlWeb.Core;
 using XunLinMineRemoteControlWeb.Utility;
 using XunLinMineRemoteControlWeb.Wcf;
 
@@ -33,7 +34,8 @@ namespace XunLinMineRemoteControlWeb
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-
+            HttpApplication app = (HttpApplication)sender;
+            MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(app.Context);
         }
 
         protected void Application_Error(object sender, EventArgs e)

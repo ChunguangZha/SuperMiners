@@ -14,28 +14,42 @@
     <form id="form1" runat="server">
         <header class="content-wrapper">
             <div class="headerleft">
+                <a href="Index.aspx">
+                    <img src="images/index_01.jpg" />
+                </a>
             </div>
             <div class="headercenter">
-            </div>
-            <div class="headerright">
-                <section id="login">
-                    <asp:LoginView ID="LoginView1" runat="server" ViewStateMode="Disabled">
-                        <LoggedInTemplate>
-                                <p>
-                                    欢迎矿主：<asp:LoginName ID="LoginName1" runat="server" CssClass="username" />!
-                                    <asp:LoginStatus ID="LoginStatus1" runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" />
-                                </p>
-                        </LoggedInTemplate>
-                        <AnonymousTemplate>
-                                    <ul>
-                                        <li><a id="registerLink" runat="server" href="Register.aspx">注册</a></li>
-                                        <li><a id="loginLink" runat="server" href="Login.aspx">登录</a></li>
-                                    </ul>
-                        </AnonymousTemplate>
-                    </asp:LoginView>
-                </section>
+                <img src="images/index_02.jpg" />
             </div>
         </header>
+            <div class="content-wrapper">
+                <section id="login">
+                    <% bool isLogined = false; %>
+                    <% if( Request.IsAuthenticated) { %>
+                    <% var user = Context.User as XunLinMineRemoteControlWeb.Core.MyFormsPrincipal<XunLinMineRemoteControlWeb.Core.WebLoginUserInfo>; %>
+                    <% if(user !=null ) { %>
+                        <span>
+                            欢迎矿主：<%= user.UserData.UserName  %>!
+                            <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
+                        </span>
+                        <span>
+                            远程协助到期时间：<%= user.UserData.UserRemoteServerValidStopTimeText %>
+                        </span>
+                        <span>
+                            <a id="shoppingLink" runat="server" href="ShoppingItem.aspx">购买服务</a>
+                        </span>
+                    <% isLogined = true; %>
+                    <% } %>
+                    <% } %>
+                    <% if(!isLogined) { %>
+                        <ul>
+                            <li><a id="registerLink" runat="server" href="Register.aspx">注册</a></li>
+                            <li><a id="loginLink" runat="server" href="Login.aspx">登录</a></li>
+                        </ul>
+                    <% } %>
+
+                </section>
+            </div>
         <div class="content-wrapper">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             

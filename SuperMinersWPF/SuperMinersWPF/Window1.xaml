@@ -145,7 +145,7 @@
                 <Button Grid.Row="4" Grid.Column="2" x:Name="btnGoldCoinRecharge" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnGoldCoinRecharge_Click"/>
                 <TextBlock Grid.Row="5" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="储量"/></TextBlock>
                 <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding WorkableStonesReserversText, Mode=OneWay, StringFormat='0.00'}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinesBuy" Visibility="Collapsed" Content="勘探" IsEnabled="{Binding StoneReservesBuyable, Mode=OneWay}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinesBuy_Click"/>
+                <Button Grid.Row="5" Grid.Column="2" x:Name="btnMinesBuy" Content="勘探" IsEnabled="{Binding StoneReservesBuyable, Mode=OneWay}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinesBuy_Click"/>
                 <TextBlock Grid.Row="6" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding MinersCount, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="6" Grid.Column="2" x:Name="btnMinersBuy" Content="雇佣" Style="{StaticResource UserInfoButtonStyle}" Click="btnMinersBuy_Click"/>
@@ -158,8 +158,8 @@
                 <Button Grid.Row="8" Grid.Column="2" x:Name="btnStonesSell" Content="挂单出售" Style="{StaticResource UserInfoButtonStyle}" Click="btnStonesSell_Click"/>
                 <TextBlock Grid.Row="9" Visibility="Collapsed" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="矿石出售券"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="9" Grid.Column="1" Visibility="Collapsed" Text="{Binding StoneSellQuan, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <TextBlock Grid.Row="9" Grid.Column="0" Text="碎片" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
-                <TextBox Grid.Row="9" Grid.Column="1" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <TextBlock Grid.Row="9" Grid.Column="0" Name="lblGravel" Text="碎片" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
+                <TextBox Grid.Row="9" Grid.Column="1" Name="txtGravel" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="9" Grid.Column="2" Name="btnRequestGravel" Content="{Binding GravelButtonContent}" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
                 <TextBlock Grid.Row="10" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
                 <TextBlock Grid.Row="11" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="距离下一次收益计算： "/><Run Text=" "/><Run Text="{Binding OutputCountdownString, Mode=OneWay}"/></TextBlock>

@@ -110,6 +110,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="images\2.jpg" />
+    <Content Include="images\alipay_logo.png" />
     <Content Include="images\index_01.jpg" />
     <Content Include="images\index_02.jpg" />
     <Content Include="images\index_03.jpg" />
@@ -125,6 +126,10 @@
     <Content Include="images\index_13.jpg" />
     <Content Include="images\index_14.jpg" />
     <Content Include="images\index_15.jpg" />
+    <Content Include="images\mine.jpg" />
+    <Content Include="images\miner.jpg" />
+    <Content Include="images\stones.jpg" />
+    <Content Include="images\yes.png" />
     <Content Include="images\分隔符.gif" />
     <Content Include="Index.aspx" />
     <Content Include="Scripts\login.js" />
@@ -139,6 +144,8 @@
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
+    <Content Include="Scripts\shopping.js" />
+    <Content Include="ShoppingItem.aspx" />
     <Content Include="Views\ShoppingList.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -192,6 +199,7 @@
     </Compile>
     <Compile Include="Core\MyFormsPrincipal.cs" />
     <Compile Include="Core\ShopItem.cs" />
+    <Compile Include="Core\WebLoginUserInfo.cs" />
     <Compile Include="DataBaseOper\DBOper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -239,6 +247,13 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ShoppingItem.aspx.cs">
+      <DependentUpon>ShoppingItem.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ShoppingItem.aspx.designer.cs">
+      <DependentUpon>ShoppingItem.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\ShoppingList.aspx.cs">
       <DependentUpon>ShoppingList.aspx</DependentUpon>
