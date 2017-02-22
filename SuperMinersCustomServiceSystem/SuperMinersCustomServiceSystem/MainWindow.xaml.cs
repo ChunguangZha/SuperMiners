@@ -28,7 +28,15 @@ namespace SuperMinersCustomServiceSystem
         public MainWindow()
         {
             InitializeComponent();
-            this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "  --" + GlobalData.CurrentAdmin.UserName;
+
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵一区" + "  --" + GlobalData.CurrentAdmin.UserName;
+            }
+            else
+            {
+                this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵二区" + "  --" + GlobalData.CurrentAdmin.UserName;
+            }
             //this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
 

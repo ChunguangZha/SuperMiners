@@ -10,11 +10,19 @@ using System.Threading.Tasks;
 
 namespace SuperMinersCustomServiceSystem
 {
+    public enum ServerType
+    {
+        Server1,
+        Server2
+    }
+
     public class GlobalData
     {
         public static readonly string DebugServer = "localhost";
 
         public static readonly ServerClient Client = new ServerClient();
+
+        public static ServerType ServerType;
 
         public static AdminInfo CurrentAdmin
         {

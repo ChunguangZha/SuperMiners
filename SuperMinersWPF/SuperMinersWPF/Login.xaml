@@ -36,7 +36,7 @@
         </Grid>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="账号:" Margin="20,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
         <TextBox Grid.Row="2" Grid.Column="1" Name="txtUserName" Margin="10,5" MaxLength="50" FontSize="18"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0">
+        <TextBlock Grid.Row="2" Grid.Column="2" Name="txtRegister" Visibility="Collapsed" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,10,0">
                 <Hyperlink Name="hlinkRegister" NavigateUri="http://ore.xlwinfo.com" RequestNavigate="hlinkRegister_RequestNavigate">快速注册</Hyperlink>
         </TextBlock>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="密码:" Margin="20,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
@@ -45,7 +45,7 @@
                 <Hyperlink Name="hlinkForgetPassword" RequestNavigate="hlinkForgetPassword_RequestNavigate">忘记密码</Hyperlink>
         </TextBlock>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="服务器:" Margin="20,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="14"/>
-        <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbServer" Margin="10,5" FontSize="14" SelectedIndex="0">
+        <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbServer" Margin="10,5" FontSize="14" SelectedIndex="0" SelectionChanged="cmbServer_SelectionChanged">
             <ComboBoxItem Content="迅灵一区"/>
             <ComboBoxItem Content="迅灵二区"/>
         </ComboBox>

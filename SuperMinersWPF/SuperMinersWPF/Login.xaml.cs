@@ -294,5 +294,17 @@ namespace SuperMinersWPF
                 this.DragMove();
             }
         }
+
+        private void cmbServer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (this.cmbServer.SelectedIndex == 0)
+            {
+                this.txtRegister.Visibility = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                this.txtRegister.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
     }
 }

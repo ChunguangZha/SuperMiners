@@ -207,7 +207,19 @@ namespace SuperMinersCustomServiceSystem
 #if DEBUG
             GlobalData.Client.Init(GlobalData.DebugServer);
 #else
-            string serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri"];
+
+            string serverUri = "";
+            if (this.cmbServer.SelectedIndex == 0)
+            {
+                serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
+                GlobalData.ServerType = ServerType.Server1;
+            }
+            else if(this.cmbServer.SelectedIndex == 1)
+            {
+                serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
+                GlobalData.ServerType = ServerType.Server2;
+            }
+
             if (string.IsNullOrEmpty(serverUri))
             {
                 MessageBox.Show("找不到服务器Uri地址，请联系系统管理员，或者安装最新版本。");

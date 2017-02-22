@@ -34,7 +34,6 @@ namespace SuperMinersWPF
 
             this.Closing += Window1_Closing;
 
-            this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
             //this.Title = "内测版";
 
             this._syn = System.Threading.SynchronizationContext.Current;
@@ -45,6 +44,9 @@ namespace SuperMinersWPF
                 this.lblGravel.Visibility = System.Windows.Visibility.Collapsed;
                 this.txtGravel.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
+                this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
+                
+                this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵一区";
             }
             else
             {
@@ -52,6 +54,9 @@ namespace SuperMinersWPF
                 this.lblGravel.Visibility = System.Windows.Visibility.Visible;
                 this.txtGravel.Visibility = System.Windows.Visibility.Visible;
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Visible;
+                this.btnInvitationFriends.Visibility = System.Windows.Visibility.Visible;
+
+                this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵二区";
             }
 
             GlobalData.Client.SetContext(this._syn);
