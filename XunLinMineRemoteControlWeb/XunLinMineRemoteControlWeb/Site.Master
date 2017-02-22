@@ -5,7 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>迅灵信息远程协助</title>
-    <link href="css/web.css" rel="stylesheet" type="text/css" />
+    <%--<link href="css/web.css" rel="stylesheet" type="text/css" />--%>
+    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
     <script src="Scripts/jquery-3.1.1.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
