@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ft5_27_energy", ".", "{7A94AF81-45C7-485B-B8BF-713788A11D67}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ft5_27_energy", ".", "{1684BDC9-00DF-4134-9876-D7F3C8698CE9}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/ft5_27_energy"
-		Debug.AspNetCompiler.PhysicalPath = "F:\GitHub\SuperMiners\ft5_27_energy\"
+		Debug.AspNetCompiler.PhysicalPath = "..\ft5_27_energy\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ft5_27_energy\"
 		Debug.AspNetCompiler.Updateable = "true"
 		Debug.AspNetCompiler.ForceOverwrite = "true"
 		Debug.AspNetCompiler.FixedNames = "false"
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.VirtualPath = "/ft5_27_energy"
-		Release.AspNetCompiler.PhysicalPath = "F:\GitHub\SuperMiners\ft5_27_energy\"
+		Release.AspNetCompiler.PhysicalPath = "..\ft5_27_energy\"
 		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\ft5_27_energy\"
 		Release.AspNetCompiler.Updateable = "true"
 		Release.AspNetCompiler.ForceOverwrite = "true"
@@ -26,8 +26,8 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7A94AF81-45C7-485B-B8BF-713788A11D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A94AF81-45C7-485B-B8BF-713788A11D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1684BDC9-00DF-4134-9876-D7F3C8698CE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1684BDC9-00DF-4134-9876-D7F3C8698CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

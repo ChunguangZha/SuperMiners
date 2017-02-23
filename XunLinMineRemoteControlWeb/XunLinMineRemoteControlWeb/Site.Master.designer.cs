@@ -40,31 +40,22 @@ namespace XunLinMineRemoteControlWeb {
         protected global::System.Web.UI.WebControls.LinkButton btnLogout;
         
         /// <summary>
-        /// shoppingLink control.
+        /// login_link control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor shoppingLink;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor login_link;
         
         /// <summary>
-        /// registerLink control.
+        /// register_link control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor registerLink;
-        
-        /// <summary>
-        /// loginLink control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor loginLink;
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor register_link;
         
         /// <summary>
         /// ContentPlaceHolder1 control.

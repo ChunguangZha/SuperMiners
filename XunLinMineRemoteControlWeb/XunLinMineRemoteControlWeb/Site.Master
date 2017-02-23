@@ -5,14 +5,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>迅灵信息远程协助</title>
-    <%--<link href="css/web.css" rel="stylesheet" type="text/css" />--%>
-    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-    <script src="Scripts/jquery-3.1.1.js"></script>
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css" type="text/css" />
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css" type="text/css" />
+	<!-- Simple Line Icons -->
+	<link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" />
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+	<!-- Superfish -->
+	<link rel="stylesheet" href="css/superfish.css" type="text/css" />
+	<!-- Flexslider  -->
+	<link rel="stylesheet" href="css/flexslider.css" type="text/css" />
+
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
 <body>
     <form id="form1" runat="server">
+		<div id="fh5co-wrapper">
+	    	<div id="fh5co-page">
+		        <div id="fh5co-header">
+		        	<header id="fh5co-header-section">
+		        		<div class="container">
+		        			<div class="nav-header">
+		        				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
+		        				<h1 id="fh5co-logo"><a href="#">XUNLING迅灵信息</a></h1>
+		        				<!-- START #fh5co-menu-wrap -->
+                                <section id="login">
+                                    <% bool isLogined = false; %>
+                                    <% if( Request.IsAuthenticated) { %>
+                                    <% var user = Context.User as XunLinMineRemoteControlWeb.Core.MyFormsPrincipal<XunLinMineRemoteControlWeb.Core.WebLoginUserInfo>; %>
+                                    <% if(user !=null ) { %>
+                                        <span>
+                                            欢迎会员：<%= user.UserData.UserName  %>!
+                                            <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
+                                        </span>
+                                        <span>
+                                            服务到期时间：<%= user.UserData.UserRemoteServerValidStopTimeText %>
+                                        </span>
+                                    <% isLogined = true; %>
+                                    <% } %>
+                                    <% } %>
+                                    <% if(!isLogined) { %>
+		        				        <nav id="fh5co-menu-wrap" role="navigation">
+		        				        	<ul class="sf-menu" id="fh5co-primary-menu">
+		        				        		<li><a id="login_link" runat="server" href="Login.aspx">登录</a></li>
+		        				        		<li><a id="register_link" runat="server" href="Register.aspx">注册</a></li>
+		        				        	</ul>
+		        				        </nav>
+                                    <% } %>
+
+                                </section>
+		        			</div>
+		        		</div>
+		        	</header>		
+		        </div>
+		        <!-- end:fh5co-header -->
+
+
+            </div>
+        </div>
         <header class="content-wrapper">
             <div class="headerleft">
                 <a href="Index.aspx">
@@ -24,32 +78,6 @@
             </div>
         </header>
             <div class="content-wrapper">
-                <section id="login">
-                    <% bool isLogined = false; %>
-                    <% if( Request.IsAuthenticated) { %>
-                    <% var user = Context.User as XunLinMineRemoteControlWeb.Core.MyFormsPrincipal<XunLinMineRemoteControlWeb.Core.WebLoginUserInfo>; %>
-                    <% if(user !=null ) { %>
-                        <span>
-                            欢迎会员：<%= user.UserData.UserName  %>!
-                            <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
-                        </span>
-                        <span>
-                            远程协助到期时间：<%= user.UserData.UserRemoteServerValidStopTimeText %>
-                        </span>
-                        <span>
-                            <a id="shoppingLink" runat="server" href="ShoppingItem.aspx">购买服务</a>
-                        </span>
-                    <% isLogined = true; %>
-                    <% } %>
-                    <% } %>
-                    <% if(!isLogined) { %>
-                        <ul>
-                            <li><a id="registerLink" runat="server" href="Register.aspx">注册</a></li>
-                            <li><a id="loginLink" runat="server" href="Login.aspx">登录</a></li>
-                        </ul>
-                    <% } %>
-
-                </section>
             </div>
         <div class="content-wrapper">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
