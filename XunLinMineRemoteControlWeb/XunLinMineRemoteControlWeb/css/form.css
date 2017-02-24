@@ -1,0 +1,77 @@
+﻿
+.alertmsg {
+    color:red;
+    font-weight:700;
+}
+
+
+/* Register Page
+----------------------------------------------------------*/
+.registerpanel
+{
+	margin-top:20px;
+}
+
+.registerpanel label
+{
+	float: right;
+}
+	.registerpanel label span
+	{
+		vertical-align: baseline;
+		color: red;
+		margin: 0 5px;
+	}
+
+.registerpanel .message {
+    float:left;
+    color:red;
+    vertical-align:middle;
+}
+
+.textbox
+{
+	border: 1px solid #e2e2e2;
+	background: #fff;
+	color: #333;
+	font-size: 1.2em;
+	margin: 5px 0 6px 0;
+	padding: 5px;
+	width: 100%;
+}
+
+	.textbox:focus
+	{
+		border: 1px solid #7ac0da;
+	}
+
+.checkimg{
+    vertical-align:middle;
+}
+    
+
+/* info and errors */
+.message-info {
+    border: 1px solid;
+    clear: both;
+    padding: 10px 20px;
+}
+
+.message-error {
+    clear: both;
+    color: #e80c4d;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.message-success {
+    color: #7ac0da;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 20px 0 10px 0;
+}
+
+.error {
+    color: #e80c4d;
+}

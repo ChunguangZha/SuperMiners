@@ -11,11 +11,15 @@ using XunLinMineRemoteControlWeb.Wcf;
 
 namespace XunLinMineRemoteControlWeb
 {
-    public partial class Login : System.Web.UI.Page
+    public partial class Login1 : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (GlobalData.GameConfig == null)
+            {
+                Response.Write("<script>alart('服务器连接失败，暂时无法注册，请稍后再试！');</script>");
+                return;
+            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
@@ -65,9 +69,10 @@ namespace XunLinMineRemoteControlWeb
             };
 
             // 登录状态100分钟内有效
-            MyFormsPrincipal<WebLoginUserInfo>.SignIn(userinfo.UserLoginName, webloginPlayer, 100);
+            MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
+            MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
 
-            Response.Redirect("ShoppingItem.aspx", false);
+            Response.Redirect("~", false);
         }
     }
 }

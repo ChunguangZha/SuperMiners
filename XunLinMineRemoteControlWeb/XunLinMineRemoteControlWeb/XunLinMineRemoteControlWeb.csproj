@@ -33,7 +33,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>TRACE;-TestAlipay</DefineConstants>
+    <DefineConstants>TRACE;TestAlipay</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -116,7 +116,7 @@
     <Content Include="css\simple-line-icons.css" />
     <Content Include="css\style.css" />
     <Content Include="css\superfish.css" />
-    <Content Include="css\web.css" />
+    <Content Include="css\form.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\bootstrap\glyphicons-halflings-regular.svg" />
@@ -162,6 +162,8 @@
     <Content Include="images\yes.png" />
     <Content Include="images\分隔符.gif" />
     <Content Include="Index.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="Register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\google_map.js" />
@@ -176,8 +178,6 @@
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.min.js" />
     <Content Include="Scripts\register.js" />
-    <Content Include="Login.aspx" />
-    <Content Include="Register.aspx" />
     <Content Include="packages.config" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
@@ -209,8 +209,9 @@
     <Content Include="Scripts\shopping.js" />
     <Content Include="Scripts\superfish.js" />
     <Content Include="ShoppingItem.aspx" />
-    <Content Include="Views\ShoppingList.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Common.cs">
@@ -261,7 +262,6 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Core\MyFormsPrincipal.cs" />
-    <Compile Include="Core\ShopItem.cs" />
     <Compile Include="Core\WebLoginUserInfo.cs" />
     <Compile Include="DataBaseOper\DBOper.cs" />
     <Compile Include="Default.aspx.cs">
@@ -325,13 +325,6 @@
     <Compile Include="ShoppingItem.aspx.designer.cs">
       <DependentUpon>ShoppingItem.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShoppingList.aspx.cs">
-      <DependentUpon>ShoppingList.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Views\ShoppingList.aspx.designer.cs">
-      <DependentUpon>ShoppingList.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -353,7 +346,6 @@
     <Content Include="Handler\CheckIDCardNo.ashx" />
     <Content Include="Handler\CheckUserName.ashx" />
     <Content Include="Site.Master" />
-    <Content Include="Views\Web.config" />
     <Content Include="key\alipay_public_key.pem" />
     <Content Include="key\rsa_private_key.pem" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />

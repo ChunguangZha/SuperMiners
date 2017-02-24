@@ -61,7 +61,7 @@
                             <a id="A4" runat="server" href="~/TransferPage.aspx">
                                 <div class="linkcontent">
                                     <div>
-                                        转移
+                                        转区申请
                                     </div>
                                     <div class="link_subline">
 
@@ -101,9 +101,9 @@
             <div class="floatDtt">联系我们</div>
             <div class="floatShadow">
                 <ul class="floatDqq">
-                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服1</a></div></li>
-                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921155&Site=Service&menu=yes">在线客服2</a></div></li>
-                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>
+                    <%--<li><div class="imgQQ"><a href="tencent://message/?uin=502921166&Site=Service&menu=yes">在线客服1</a></div></li>--%>
+                    <li><div class="imgQQ"><a href="tencent://message/?uin=502921155&Site=Service&menu=yes">在线客服1</a></div></li>
+                    <%--<li><div class="imgQQ"><a href="tencent://message/?uin=502921177&Site=Service&menu=yes">商务合作</a></div></li>--%>
                 </ul>
             </div>
             <div class="floatDbg"></div>

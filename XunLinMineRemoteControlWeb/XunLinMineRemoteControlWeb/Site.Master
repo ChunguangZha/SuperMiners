@@ -4,7 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
+    <meta name="keywords" content="远程协助，远程服务，手机刷机" />
+    <meta name="application-name" content="迅灵远程协助" />
+    <meta name="author" content="迅灵信息" />
     <title>迅灵信息远程协助</title>
+    <link href="/Logo128.ico" rel="shortcut icon" type="image/x-icon" />
 	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css" type="text/css" />
 	<!-- Icomoon Icon Fonts-->
@@ -19,6 +23,8 @@
 	<link rel="stylesheet" href="css/flexslider.css" type="text/css" />
 
     <link rel="stylesheet" href="css/style.css" type="text/css" />
+	<!-- jQuery -->
+	<script src="Scripts/jquery.min.js"></script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -31,25 +37,27 @@
 		        		<div class="container">
 		        			<div class="nav-header">
 		        				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
-		        				<h1 id="fh5co-logo"><a href="#">XUNLING迅灵信息</a></h1>
+		        				<h1 id="fh5co-logo"><a href="~">XUNLING迅灵信息</a></h1>
 		        				<!-- START #fh5co-menu-wrap -->
-                                <section id="login">
+                                <section>
                                     <% bool isLogined = false; %>
                                     <% if( Request.IsAuthenticated) { %>
                                     <% var user = Context.User as XunLinMineRemoteControlWeb.Core.MyFormsPrincipal<XunLinMineRemoteControlWeb.Core.WebLoginUserInfo>; %>
                                     <% if(user !=null ) { %>
-                                        <span>
-                                            欢迎会员：<%= user.UserData.UserName  %>!
-                                            <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
-                                        </span>
-                                        <span>
-                                            服务到期时间：<%= user.UserData.UserRemoteServerValidStopTimeText %>
-                                        </span>
+                                        <ul id="loginned">
+                                            <li>
+                                                欢迎会员：<%= user.UserData.UserName  %>!
+                                                <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
+                                            </li>
+                                            <li>
+                                                服务到期时间：<%= user.UserData.UserRemoteServerValidStopTimeText %>
+                                            </li>
+                                        </ul>
                                     <% isLogined = true; %>
                                     <% } %>
                                     <% } %>
                                     <% if(!isLogined) { %>
-		        				        <nav id="fh5co-menu-wrap" role="navigation">
+		        				        <nav id="fh5co1-menu-wrap" role="navigation">
 		        				        	<ul class="sf-menu" id="fh5co-primary-menu">
 		        				        		<li><a id="login_link" runat="server" href="Login.aspx">登录</a></li>
 		        				        		<li><a id="register_link" runat="server" href="Register.aspx">注册</a></li>
@@ -63,27 +71,48 @@
 		        	</header>		
 		        </div>
 		        <!-- end:fh5co-header -->
+                
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
+                
+                </asp:ContentPlaceHolder>
+                
+	            <footer id="footer">
+	            	<div class="container">
+	            		<div class="row">
+                               <div class="col-md-4">
 
-
+                               </div>
+	            			<div class="col-md-6">
+	            				<div class="copyright">
+	            					<p><small>&copy; 2017 盐山迅灵信息服务有限公司. 版权所有. </small></p>
+	            				</div>
+	            			</div>
+	            		</div>
+	            	</div>
+	            </footer>
+    
             </div>
-        </div>
-        <header class="content-wrapper">
-            <div class="headerleft">
-                <a href="Index.aspx">
-                    <img src="images/index_01.jpg" />
-                </a>
-            </div>
-            <div class="headercenter">
-                <img src="images/index_02.jpg" />
-            </div>
-        </header>
-            <div class="content-wrapper">
-            </div>
-        <div class="content-wrapper">
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            
-            </asp:ContentPlaceHolder>
         </div>
     </form>
+    
+	<!-- jQuery Easing -->
+	<script src="Scripts/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="Scripts/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="Scripts/jquery.waypoints.min.js"></script>
+	<!-- Superfish -->
+	<script src="Scripts/hoverIntent.js"></script>
+	<script src="Scripts/superfish.js"></script>
+	<!-- Flexslider -->
+	<script src="Scripts/jquery.flexslider-min.js"></script>
+	<!-- Stellar -->
+	<script src="Scripts/jquery.stellar.min.js"></script>
+	<!-- Counters -->
+	<script src="Scripts/jquery.countTo.js"></script>
+
+	<!-- Main JS (Do not remove) -->
+	<script src="Scripts/main.js"></script>
+
 </body>
 </html>

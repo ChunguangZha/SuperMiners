@@ -514,7 +514,14 @@ figure {
   }
 }
 
-#fh5co-menu-wrap {
+#fh5co1-menu-wrap {
+  position: relative;
+  z-index: 2;
+  display: block;
+  float: right;
+}
+#loginned
+{
   position: relative;
   z-index: 2;
   display: block;

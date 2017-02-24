@@ -47,19 +47,19 @@
 	};
 
 	// Main Menu Superfish
-	var mainMenu = function() {
+	//var mainMenu = function() {
 
-		$('#fh5co-primary-menu').superfish({
-			delay: 0,
-			animation: {
-				opacity: 'show'
-			},
-			speed: 'fast',
-			cssArrows: true,
-			disableHI: true
-		});
+	//	$('#fh5co-primary-menu').superfish({
+	//		delay: 0,
+	//		animation: {
+	//			opacity: 'show'
+	//		},
+	//		speed: 'fast',
+	//		cssArrows: true,
+	//		disableHI: true
+	//	});
 
-	};
+	//};
 
 	var sliderMain = function() {
 		
@@ -90,49 +90,49 @@
 	};
 
 
-	// Offcanvas and cloning of the main menu
-	var offcanvas = function() {
+	//// Offcanvas and cloning of the main menu
+	//var offcanvas = function() {
 
-		var $clone = $('#fh5co-menu-wrap').clone();
-		$clone.attr({
-			'id' : 'offcanvas-menu'
-		});
-		$clone.find('> ul').attr({
-			'class' : '',
-			'id' : ''
-		});
+	//	var $clone = $('#fh5co-menu-wrap').clone();
+	//	$clone.attr({
+	//		'id' : 'offcanvas-menu'
+	//	});
+	//	$clone.find('> ul').attr({
+	//		'class' : '',
+	//		'id' : ''
+	//	});
 
-		$('#fh5co-page').prepend($clone);
+	//	$('#fh5co-page').prepend($clone);
 
-		// click the burger
-		$('.js-fh5co-nav-toggle').on('click', function(){
+	//	// click the burger
+	//	$('.js-fh5co-nav-toggle').on('click', function(){
 
-			if ( $('body').hasClass('fh5co-offcanvas') ) {
-				$('body').removeClass('fh5co-offcanvas');
-			} else {
-				$('body').addClass('fh5co-offcanvas');
-			}
-			// $('body').toggleClass('fh5co-offcanvas');
+	//		if ( $('body').hasClass('fh5co-offcanvas') ) {
+	//			$('body').removeClass('fh5co-offcanvas');
+	//		} else {
+	//			$('body').addClass('fh5co-offcanvas');
+	//		}
+	//		// $('body').toggleClass('fh5co-offcanvas');
 
-		});
+	//	});
 
-		$('#offcanvas-menu').css('height', $(window).height());
+	//	$('#offcanvas-menu').css('height', $(window).height());
 
-		$(window).resize(function(){
-			var w = $(window);
+	//	$(window).resize(function(){
+	//		var w = $(window);
 
 
-			$('#offcanvas-menu').css('height', w.height());
+	//		$('#offcanvas-menu').css('height', w.height());
 
-			if ( w.width() > 769 ) {
-				if ( $('body').hasClass('fh5co-offcanvas') ) {
-					$('body').removeClass('fh5co-offcanvas');
-				}
-			}
+	//		if ( w.width() > 769 ) {
+	//			if ( $('body').hasClass('fh5co-offcanvas') ) {
+	//				$('body').removeClass('fh5co-offcanvas');
+	//			}
+	//		}
 
-		});	
+	//	});	
 
-	}
+	//}
 
 	
 
@@ -217,8 +217,8 @@
 
 	// Document on load.
 	$(function(){
-		mainMenu();
-		offcanvas();
+		//mainMenu();
+		//offcanvas();
 		mobileMenuOutsideClick();
 		contentWayPoint();
 		sliderMain();

@@ -2,15 +2,15 @@
 $().ready(function () {
 
     //123
-    $("#txtUserLoginName").blur(CheckUserName);
-    $("#txtAuthCode").blur(CheckAuthCode);
+    $("#MainContent_txtUserLoginName").blur(CheckUserName);
+    $("#MainContent_txtAuthCode").blur(CheckAuthCode);
 });
 
 function CheckUserName() {
     $("#msgUserName").text("");
     $("#imgUserNameOK").css("display", "none");
 
-    var username = $("#txtUserLoginName").val();
+    var username = $("#MainContent_txtUserLoginName").val();
     if (username.length == 0) {
         $("#msgUserName").text("请输入用户名");
         return;
@@ -30,7 +30,7 @@ function CheckAuthCode() {
     $("#msgAuthCode").text("");
     $("#imgAuthCodeOK").css("display", "none");
 
-    var authcode = $("#txtAuthCode").val();
+    var authcode = $("#MainContent_txtAuthCode").val();
 
     $.post("CheckAuthCode",
         { AuthCode: authcode },

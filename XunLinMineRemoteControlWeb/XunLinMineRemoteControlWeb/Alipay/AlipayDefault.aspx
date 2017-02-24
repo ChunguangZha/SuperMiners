@@ -300,7 +300,7 @@
         <form id="Form1" class="alipayform" target="_blank" runat="server">
             <div class="element" style="margin-top: 60px;">
                 <div class="legend">支付宝即时到账交易 </div>
-                <div class="risk">投资有风险，游戏需谨慎</div>
+                <div class="risk">迅灵远程协助服务</div>
             </div>
 			
             <div class="element">

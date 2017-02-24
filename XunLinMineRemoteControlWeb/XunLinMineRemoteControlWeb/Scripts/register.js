@@ -1,54 +1,7 @@
 ﻿
 $().ready(function () {
-    try {
-        $("#form1").validate({
-            rules: {
-                MainContent_txtUserName: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 15
-                },
-                MainContent_txtNickName: {
-                    maxlength: 15
-                },
-                MainContent_txtEmail: {
-                    required: true,
-                    maxlength: 20
-                }
-
-            },
-            messages: {
-                MainContent_txtUserName: {
-                    required: "请输入用户名",
-                    minlength: "用户名最少3个字符",
-                    maxlength: "用户名最多15个字符"
-                },
-                MainContent_txtNickName: {
-                    maxlength: "昵称最多15个字符"
-                },
-                //MainContent_txtPassword: {
-                //    required: "请输入密码",
-                //    minlength: "密码最少6位",
-                //    maxlength: "密码最多15位"
-                //},
-                //MainContent_txtConfirmPassword: {
-                //    required: "请再次输入密码",
-                //    minlength: "密码最少6位",
-                //    maxlength: "密码最多15位",
-                //    equalTo: "两次密码不一至，请重新输入"
-                //},
-                MainContent_txtEmail: {
-                    required: "请输入电子邮箱",
-                    maxlength: "您输入的电子邮箱过长"
-                }
-            }
-        })
-    } catch (err) {
-        //alert(err);
-    }
-
     //123
-    $("#MainContent_txtUserName").blur(CheckUserName);
+    $("#MainContent_txtUserLoginName").blur(CheckUserName);
     $("#MainContent_txtNickName").blur(CheckNickName);
     $("#MainContent_txtPassword").blur(CheckPassword);
     $("#MainContent_txtConfirmPassword").blur(CheckConfirmPassword);
@@ -64,7 +17,7 @@ function CheckUserName() {
     $("#msgUserName").text("");
     $("#imgUserNameOK").css("display", "none");
 
-    var username = $("#MainContent_txtUserName").val();
+    var username = $("#MainContent_txtUserLoginName").val();
     if (username.length == 0) {
         $("#msgUserName").text("请输入用户名");
         return;
@@ -79,7 +32,7 @@ function CheckUserName() {
     }
 
     $.post("CheckUserName",
-        { UserName: $("#MainContent_txtUserName").val() },
+        { UserName: username },
         function (data, status) {
             if (data == "OK") {
                 $("#imgUserNameOK").css("display", "inline");
@@ -98,7 +51,7 @@ function CheckNickName() {
     }
 
     $.post("CheckNickName",
-        { UserName: $("#MainContent_txtNickName").val() },
+        { UserName: nickname },
         function (data, status) {
             if (data == "OK") {
                 $("#imgNickNameOK").css("display", "inline");

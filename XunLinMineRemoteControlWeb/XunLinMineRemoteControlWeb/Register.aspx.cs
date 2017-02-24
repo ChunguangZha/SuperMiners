@@ -14,11 +14,16 @@ using XunLinMineRemoteControlWeb.Wcf;
 
 namespace XunLinMineRemoteControlWeb
 {
-    public partial class Register : System.Web.UI.Page
+    public partial class Register1 : System.Web.UI.Page
     {
         string invitationCode = null;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (GlobalData.GameConfig == null)
+            {
+                Response.Write("<script>alart('服务器连接失败，暂时无法注册，请稍后再试！');</script>");
+                return;
+            }
             if (!IsPostBack)
             {
                 this.lblAlert.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
@@ -35,7 +40,7 @@ namespace XunLinMineRemoteControlWeb
         {
             try
             {
-                string userName = this.txtUserName.Text.Trim();
+                string userName = this.txtUserLoginName.Text.Trim();
                 string nickName = this.txtNickName.Text.Trim();
                 string email = this.txtEmail.Text.Trim();
                 string qq = this.txtQQ.Text.Trim();
@@ -375,7 +380,6 @@ namespace XunLinMineRemoteControlWeb
 
         private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
-
             invitationCode = Session["ic"] as string;
 
             int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
@@ -399,10 +403,20 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            // 登录状态100分钟内有效
-            MyFormsPrincipal<WebPlayerInfo>.SignIn(userinfo.UserLoginName, userinfo, 100);
+            WebLoginUserInfo webloginPlayer = new WebLoginUserInfo()
+            {
+                ShoppingCredits = userinfo.ShoppingCredits,
+                Token = userinfo.Token,
+                UserLoginName = userinfo.UserLoginName,
+                UserName = userinfo.UserName,
+                UserRemoteServerValidStopTimeText = userinfo.UserRemoteServerValidStopTime == null ? "" : userinfo.UserRemoteServerValidStopTime.ToDateTime().ToString()
+            };
 
-            Response.Redirect("ShoppingItem.aspx", false);
+            // 登录状态100分钟内有效
+            MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
+            MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
+
+            Response.Redirect("~", false);
         }
     }
 }

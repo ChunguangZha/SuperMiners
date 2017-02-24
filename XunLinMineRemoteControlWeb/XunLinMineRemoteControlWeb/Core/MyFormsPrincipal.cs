@@ -83,6 +83,7 @@ namespace XunLinMineRemoteControlWeb.Core
                 // 5. 写登录Cookie
                 context.Response.Cookies.Remove(cookie.Name);
                 context.Response.Cookies.Add(cookie);
+
             }
             catch (Exception exc)
             {
