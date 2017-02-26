@@ -15,15 +15,16 @@ namespace XunLinMineRemoteControlWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (GlobalData.GameConfig == null)
-            {
-                Response.Write("<script>alart('服务器连接失败，暂时无法注册，请稍后再试！');</script>");
-                return;
-            }
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
+            if (GlobalData.GameConfig == null)
+            {
+                Response.Write("<script>alert('服务器连接失败，暂时无法注册，请稍后再试！')</script>");
+                return;
+            }
+
             string userLoginName = this.txtUserLoginName.Text.Trim();
             if (string.IsNullOrEmpty(userLoginName))
             {
@@ -72,7 +73,7 @@ namespace XunLinMineRemoteControlWeb
             MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
             MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
 
-            Response.Redirect("~", false);
+            Response.Redirect("Index.aspx", false);
         }
     }
 }

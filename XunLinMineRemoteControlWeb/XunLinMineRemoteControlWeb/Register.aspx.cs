@@ -21,9 +21,10 @@ namespace XunLinMineRemoteControlWeb
         {
             if (GlobalData.GameConfig == null)
             {
-                Response.Write("<script>alart('服务器连接失败，暂时无法注册，请稍后再试！');</script>");
+                Response.Write("<script>alert('服务器连接失败，暂时无法注册，请稍后再试！')</script>");
                 return;
             }
+
             if (!IsPostBack)
             {
                 this.lblAlert.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
@@ -416,7 +417,7 @@ namespace XunLinMineRemoteControlWeb
             MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
             MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
 
-            Response.Redirect("~", false);
+            Response.Redirect("Index.aspx", false);
         }
     }
 }
