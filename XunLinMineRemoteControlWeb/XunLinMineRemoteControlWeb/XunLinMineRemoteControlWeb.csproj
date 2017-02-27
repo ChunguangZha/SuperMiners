@@ -137,6 +137,7 @@
     <Content Include="images\digital5.png" />
     <Content Include="images\digital6.png" />
     <Content Include="images\digitalLogo.png" />
+    <Content Include="images\dota.jpg" />
     <Content Include="images\hero2.jpg" />
     <Content Include="images\index_02.jpg" />
     <Content Include="images\index_03.jpg" />
@@ -208,7 +209,6 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\shopping.js" />
     <Content Include="Scripts\superfish.js" />
-    <Content Include="ShoppingItem.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -317,13 +317,6 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ShoppingItem.aspx.cs">
-      <DependentUpon>ShoppingItem.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ShoppingItem.aspx.designer.cs">
-      <DependentUpon>ShoppingItem.aspx</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>

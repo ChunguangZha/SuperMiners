@@ -42,31 +42,31 @@
 						<i class="sl-icon-heart"></i>
 					</div>
 				</a>
-				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital3.png);">
+				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital6.png);">
 					<div class="desc2">
 						<h3>互联网电视有问题？</h3>
 						<span>找迅灵</span>
 						<i class="sl-icon-heart"></i>
 					</div>
 				</a>
-				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital4.jpg);">
+				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/dota.jpg);">
 					<div class="desc2">
 						<h3>网络游戏有问题？</h3>
 						<span>找迅灵</span>
 						<i class="sl-icon-heart"></i>
 					</div>
 				</a>
-				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital5.png);">
+				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital4.jpg);">
 					<div class="desc2">
 						<h3>数码相机有问题？</h3>
 						<span>找迅灵</span>
 						<i class="sl-icon-heart"></i>
 					</div>
 				</a>
-				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital6.png);">
+				<a href="#fh5co-pricing-section" class="portfolio-grid-item" style="background-image: url(images/digital7.jpg);">
 					<div class="desc2">
-						<h3>Shoes</h3>
-						<span>平板有问题？</span>
+						<h3>监控有问题？</h3>
+						<span>找迅灵</span>
 						<i class="sl-icon-heart"></i>
 					</div>
 				</a>
@@ -93,13 +93,13 @@
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">单次</h2>
 							<div class="price"><sup class="currency">￥</sup>50<small></small></div>
-							<p>提供单次服务</p>
+							<p>提供单次服务，快速解决</p>
 							<hr/>
 							<ul class="pricing-info">
 								<li>远程清理电脑</li>
 								<li>远程清理手机</li>
 								<li>远程杀毒</li>
-								<li>电脑加速</li>
+								<li>等所有远程服务</li>
 							</ul>
 							<p><asp:Button runat="server" ID="btnBuyOnce" class="btn btn-primary" Text="购买" OnClick="btnBuyOnce_Click"></asp:Button></p>
 						</div>
@@ -108,7 +108,7 @@
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">一个月期</h2>
 							<div class="price"><sup class="currency">￥</sup>300<small></small></div>
-							<p>提供一个月内长期服务</p>
+							<p>提供一个月内多次服务</p>
 							<hr/>
 							<ul class="pricing-info">
 								<li>手机</li>
