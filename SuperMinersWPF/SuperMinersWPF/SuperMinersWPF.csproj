@@ -330,6 +330,7 @@
       <Link>Wcf\Contracts\IServiceToClient.User.cs</Link>
     </Compile>
     <Compile Include="GlobalData.cs" />
+    <Compile Include="LotteryTicket\IoCLotteryTicketInterface.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\GambleStoneInningInfoUIModel.cs" />
     <Compile Include="Models\GambleStonePlayerBetRecordUIModel.cs" />
