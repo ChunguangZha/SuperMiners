@@ -91,11 +91,11 @@ namespace SuperMinersServerApplication.Controller
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                GlobalConfig.IncomeMoneyAccount = DBProvider.SystemDBProvider.GetIncomeMoneyAccountConfig();
-                if (GlobalConfig.IncomeMoneyAccount == null)
-                {
-                    //LogHelper.Instance.AddErrorLog("没有设置收款信息。", null);
-                }
+                //GlobalConfig.IncomeMoneyAccount = DBProvider.SystemDBProvider.GetIncomeMoneyAccountConfig();
+                //if (GlobalConfig.IncomeMoneyAccount == null)
+                //{
+                //    //LogHelper.Instance.AddErrorLog("没有设置收款信息。", null);
+                //}
 
                 GlobalConfig.GameConfig = DBProvider.SystemDBProvider.GetGameConfig();
                 if (GlobalConfig.GameConfig == null)
@@ -150,7 +150,6 @@ namespace SuperMinersServerApplication.Controller
                 }
                 this.AwardLevelFrom0 = GlobalConfig.AwardReferrerLevelConfig.AwardLevelCount - 1;
                 this.InnerGameConfig = GameConfigUIModel.CreateFromDBObject(GlobalConfig.GameConfig);
-                this.InnerIncomeMoneyAccount = IncomeMoneyAccountUIModel.CreateFromDBObject(GlobalConfig.IncomeMoneyAccount);
                 this.InnerRegisterPlayerConfig = RegisterUserConfigUIModel.CreateFromDBObject(GlobalConfig.RegisterPlayerConfig);
 
             }

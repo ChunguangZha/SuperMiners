@@ -31,5 +31,10 @@ namespace MetaData.Trade
         [DataMember]
         public string ServiceContent;
 
+        /// <summary>
+        /// 操作管理员
+        /// </summary>
+        [DataMember]
+        public string AdminUserName;
     }
 }

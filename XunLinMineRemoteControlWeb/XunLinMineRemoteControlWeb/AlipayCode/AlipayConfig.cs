@@ -34,10 +34,10 @@ namespace XunLinMineRemoteControlWeb.AlipayCode
         public static string alipay_public_key = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnxj/9qwVfgoUh/y2W89L6BkRAFljhNhgPdyPuBV64bfQNN1PjbCzkIM6qRdKBoLPXmKKMiFYnkd6rAoprih3/PrQEB/VsW8OoM8fxn67UDYuyBTqA23MML9q1+ilIZwBC2AQ2UBVOrFXfFl75p6/B5KsiNG9zpgmLCUYuLkxpLQIDAQAB";
 
         // 服务器异步通知页面路径，需http://格式的完整路径，不能加?id=123这类自定义参数,必须外网可以正常访问
-        public static string notify_url = "http://goto.xlore.net//Alipay/notify_url.aspx";
+        public static string notify_url = "http://goto.xlore.net/Alipay/notify_url.aspx";
 
         // 页面跳转同步通知页面路径，需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-        public static string return_url = "http://goto.xlore.net//Alipay/return_url.aspx";
+        public static string return_url = "http://goto.xlore.net/Alipay/return_url.aspx";
 
         // 签名方式
         public static string sign_type = "RSA";

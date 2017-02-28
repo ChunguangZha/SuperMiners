@@ -102,6 +102,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                         webPlayerInfo.UserRemoteServerValidStopTime = playerInfo.FortuneInfo.UserRemoteServerValidStopTime;
                     }
                 }
+                webPlayerInfo.IsLongTermRemoteServiceUser = playerInfo.FortuneInfo.IsLongTermRemoteServiceUser;
+                webPlayerInfo.UserRemoteServiceValidTimes = playerInfo.FortuneInfo.UserRemoteServiceValidTimes;
 
                 return webPlayerInfo;
             }
@@ -136,8 +138,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 case RemoteServerType.OneMonth:
                     alipayType = AlipayTradeInType.RemoteServerOneMonth;
                     break;
-                case RemoteServerType.HalfYear:
-                    alipayType = AlipayTradeInType.RemoteServerHalfYear;
+                case RemoteServerType.ThreeMonth:
+                    alipayType = AlipayTradeInType.RemoteServerThreeMonth;
                     break;
                 case RemoteServerType.OneYear:
                     alipayType = AlipayTradeInType.RemoteServerOneYear;

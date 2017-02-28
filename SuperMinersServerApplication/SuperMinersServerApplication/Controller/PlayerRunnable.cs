@@ -448,16 +448,23 @@ namespace SuperMinersServerApplication.Controller
                 switch (serverType)
                 {
                     case RemoteServerType.Once:
-                        this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(lastStopTime.AddDays(7));
+                        this.BasePlayer.FortuneInfo.UserRemoteServiceValidTimes += 1;
+                        if (this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime == null)
+                        {
+                            this.BasePlayer.FortuneInfo.IsLongTermRemoteServiceUser = false;
+                        }
                         break;
                     case RemoteServerType.OneMonth:
                         this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(lastStopTime.AddMonths(1));
+                        this.BasePlayer.FortuneInfo.IsLongTermRemoteServiceUser = true;
                         break;
-                    case RemoteServerType.HalfYear:
-                        this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(lastStopTime.AddMonths(6));
+                    case RemoteServerType.ThreeMonth:
+                        this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(lastStopTime.AddMonths(3));
+                        this.BasePlayer.FortuneInfo.IsLongTermRemoteServiceUser = true;
                         break;
                     case RemoteServerType.OneYear:
                         this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(lastStopTime.AddYears(1));
+                        this.BasePlayer.FortuneInfo.IsLongTermRemoteServiceUser = true;
                         break;
                     default:
                         break;

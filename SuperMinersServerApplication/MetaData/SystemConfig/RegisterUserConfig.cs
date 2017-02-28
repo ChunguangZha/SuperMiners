@@ -29,19 +29,19 @@ namespace MetaData.SystemConfig
         /// 给新注册用户赠送金币数
         /// </summary>
         [DataMember]
-        public decimal GiveToNewUserGoldCoin = 2500;
+        public decimal GiveToNewUserGoldCoin = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿山数
         /// </summary>
         [DataMember]
-        public decimal GiveToNewUserMines = 0.6m;
+        public decimal GiveToNewUserMines = 0m;
 
         /// <summary>
         /// 给新注册用户赠送矿工数
         /// </summary>
         [DataMember]
-        public int GiveToNewUserMiners = 70;
+        public int GiveToNewUserMiners = 0;
 
         /// <summary>
         /// 给新注册用户赠送矿石数

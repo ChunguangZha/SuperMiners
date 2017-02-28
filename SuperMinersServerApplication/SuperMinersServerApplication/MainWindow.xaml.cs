@@ -215,7 +215,6 @@ namespace SuperMinersServerApplication
 
                 this.tabitemAwardReferrer.DataContext = GameSystemConfigController.Instance;
                 this.tabitemGameConfig.DataContext = GameSystemConfigController.Instance.InnerGameConfig;
-                this.tabitemIncomeAccount.DataContext = GameSystemConfigController.Instance.InnerIncomeMoneyAccount;
                 this.tabitemRegisterUser.DataContext = GameSystemConfigController.Instance.InnerRegisterPlayerConfig;
             }
             catch (Exception exc)

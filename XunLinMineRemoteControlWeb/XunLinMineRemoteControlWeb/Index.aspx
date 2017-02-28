@@ -93,14 +93,12 @@
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">单次</h2>
 							<div class="price"><sup class="currency">￥</sup>50<small></small></div>
-							<p>提供单次服务，快速解决</p>
+							<p>24小时之内只能购买一次  不使用不清空</p>
 							<hr/>
-							<ul class="pricing-info">
-								<li>远程清理电脑</li>
-								<li>远程清理手机</li>
-								<li>远程杀毒</li>
-								<li>等所有远程服务</li>
-							</ul>
+							<div class="pricing-info">
+								定向服务，一次付费，满意为止，
+无论是电视、电脑、手机、数码相机、游戏机、ipad、watch、ipod、iTouch、投影、LED、监控，两个工作日内应答解决，软件问题在线解决，硬件问题线下解决，为您的设备保驾护航。
+							</div>
 							<p><asp:Button runat="server" ID="btnBuyOnce" class="btn btn-primary" Text="购买" OnClick="btnBuyOnce_Click"></asp:Button></p>
 						</div>
 					</div>
@@ -108,46 +106,37 @@
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">一个月期</h2>
 							<div class="price"><sup class="currency">￥</sup>300<small></small></div>
-							<p>提供一个月内多次服务</p>
+							<p>为个人用户，提供一个月长期服务</p>
 							<hr/>
-							<ul class="pricing-info">
-								<li>手机</li>
-								<li>电脑</li>
-								<li>网络</li>
-								<li>其它数码产品</li>
-							</ul>
+							<div class="pricing-info">
+								包月服务时长为30天，从付费起计时，不限制地域，不限制设备 ，不限制网络，只要是您的呼唤，我们都可以为您服务，24小时 应答确保您的设备完善运转。
+							</div>
 							<p><asp:Button runat="server" ID="btnBuyOneMonth" class="btn btn-primary" Text="购买" OnClick="btnBuyOneMonth_Click"></asp:Button></p>
 						</div>
 					</div>
 					<div class="clearfix visible-sm-block"></div>
-					<div class="col-md-3 col-sm-6 to-animate">
-						<div class="price-box popular">
-							<div class="popular-text">最佳选择</div>
-							<h2 class="pricing-plan">半年期</h2>
+					<div class="col-md-3 col-sm-6">
+						<div class="price-box to-animate">
+							<%--<div class="popular-text">最佳选择</div>--%>
+							<h2 class="pricing-plan">一季度</h2>
 							<div class="price"><sup class="currency">￥</sup>2000<small></small></div>
-							<p>全天候专人为您提供服务</p>
+							<p>为企业用户，提供一季度长期服务</p>
 							<hr/>
-							<ul class="pricing-info">
-								<li>手机</li>
-								<li>电脑</li>
-								<li>网络</li>
-								<li>其它数码产品</li>
-							</ul>
-							<p><asp:Button runat="server" ID="btnBuyHalfYear" class="btn btn-primary" Text="购买" OnClick="btnBuyHalfYear_Click"></asp:Button></p>
+							<div class="pricing-info">
+								服务时长为90天，服务需登记您的企业信息，包括您的员工数量 ，公用、私用的数码设备数量，只提供在线类服务，只要是您的 线上需求都可以尽量满足，付费后有您的专员为您答疑一切数码问题。 
+							</div>
+							<p><asp:Button runat="server" ID="btnBuyThreeMonth" class="btn btn-primary" Text="购买" OnClick="btnBuyThreeMonth_Click"></asp:Button></p>
 						</div>
 					</div>
 					<div class="col-md-3 col-sm-6">
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">一年期</h2>
 							<div class="price"><sup class="currency">￥</sup>5000<small></small></div>
-							<p>全天候专人为您提供服务</p>
+							<p>365天全天候专人为您提供服务</p>
 							<hr/>
-							<ul class="pricing-info">
-								<li>手机</li>
-								<li>电脑</li>
-								<li>网络</li>
-								<li>其它数码产品</li>
-							</ul>
+							<div class="pricing-info">
+								服务时长为365天，提供一切线上服务，包括网站、程序等周边服务，开设贵宾级服务特权，包括私人专员为您服务，专属热线开通，7*24应答您的需求，必要情况下提供上门服务，更多特权期待您的开通。
+							</div>
 							<p><asp:Button runat="server" ID="btnBuyOneYear" class="btn btn-primary" Text="购买" OnClick="btnBuyOneYear_Click"></asp:Button></p>
 						</div>
 					</div>

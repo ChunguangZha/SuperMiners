@@ -14,9 +14,17 @@ namespace SuperMinersWPF.Utility
             string baseuri = "";
 #if DEBUG
             baseuri = "http://localhost:8509/";
-#else
+#else 
 
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri1"];
+            }
+            else
+            {
+                baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri2"];
+            }
+
 #endif
 
             Process.Start(new ProcessStartInfo(baseuri + subUrl));

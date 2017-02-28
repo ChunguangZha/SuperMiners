@@ -232,12 +232,20 @@ namespace DataBaseProvider
                 player.FortuneInfo.StockOfDiamonds = Convert.ToDecimal(dt.Rows[i]["StockOfDiamonds"]);
                 player.FortuneInfo.FreezingDiamonds = Convert.ToDecimal(dt.Rows[i]["FreezingDiamonds"]);
                 player.FortuneInfo.FirstRechargeGoldCoinAward = Convert.ToBoolean(dt.Rows[i]["FirstRechargeGoldCoinAward"]);
+
+#if !V1
+
                 player.FortuneInfo.ShoppingCreditsEnabled = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsEnabled"]);
                 player.FortuneInfo.ShoppingCreditsFreezed = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsFreezed"]);
                 if (dt.Rows[i]["UserRemoteServerValidStopTime"] != DBNull.Value)
                 {
                     player.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["UserRemoteServerValidStopTime"]));
                 }
+                player.FortuneInfo.IsLongTermRemoteServiceUser = Convert.ToBoolean(dt.Rows[i]["IsLongTermRemoteServiceUser"]);
+                player.FortuneInfo.UserRemoteServiceValidTimes = Convert.ToInt32(dt.Rows[i]["UserRemoteServiceValidTimes"]);
+
+#endif
+
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);
 
                 player.GravelInfo = new PlayerGravelInfo();

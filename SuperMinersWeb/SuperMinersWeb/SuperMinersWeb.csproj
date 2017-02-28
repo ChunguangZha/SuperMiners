@@ -170,6 +170,12 @@
     <Content Include="Images\menu-background_06.png" />
     <Content Include="Images\menu-background_07.png" />
     <Content Include="Images\menu-download_03.png" />
+    <Content Include="Images\nouns1.png" />
+    <Content Include="Images\nouns2.png" />
+    <Content Include="Images\nouns3.png" />
+    <Content Include="Images\nouns4.png" />
+    <Content Include="Images\nouns5.png" />
+    <Content Include="Images\nouns6.png" />
     <Content Include="Images\online_arrow.jpg" />
     <Content Include="Images\online_botbg.jpg" />
     <Content Include="Images\qq.png" />

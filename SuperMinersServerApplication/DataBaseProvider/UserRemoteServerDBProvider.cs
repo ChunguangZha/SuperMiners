@@ -35,7 +35,7 @@ namespace DataBaseProvider
                     mycmd.CommandText = insertText;
                     mycmd.Parameters.AddWithValue("@Type1", (int)RemoteServerType.Once);
                     mycmd.Parameters.AddWithValue("@Type2", (int)RemoteServerType.OneMonth);
-                    mycmd.Parameters.AddWithValue("@Type3", (int)RemoteServerType.HalfYear);
+                    mycmd.Parameters.AddWithValue("@Type3", (int)RemoteServerType.ThreeMonth);
                     mycmd.Parameters.AddWithValue("@Type4", (int)RemoteServerType.OneYear);
 
                     mycmd.Parameters.AddWithValue("@Money1", 50);
@@ -45,12 +45,12 @@ namespace DataBaseProvider
 
                     mycmd.Parameters.AddWithValue("@ShopName1", "远程协助服务一次");
                     mycmd.Parameters.AddWithValue("@ShopName2", "远程协助服务一月");
-                    mycmd.Parameters.AddWithValue("@ShopName3", "远程协助服务半年");
+                    mycmd.Parameters.AddWithValue("@ShopName3", "远程协助服务一季度");
                     mycmd.Parameters.AddWithValue("@ShopName4", "远程协助服务一年");
 
                     mycmd.Parameters.AddWithValue("@Description1", "远程协助服务一次");
                     mycmd.Parameters.AddWithValue("@Description2", "远程协助服务一月");
-                    mycmd.Parameters.AddWithValue("@Description3", "远程协助服务半年");
+                    mycmd.Parameters.AddWithValue("@Description3", "远程协助服务一季度");
                     mycmd.Parameters.AddWithValue("@Description4", "远程协助服务一年");
                     mycmd.ExecuteNonQuery();
 

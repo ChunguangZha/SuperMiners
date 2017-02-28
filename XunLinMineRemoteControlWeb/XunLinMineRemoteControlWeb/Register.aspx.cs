@@ -404,14 +404,7 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            WebLoginUserInfo webloginPlayer = new WebLoginUserInfo()
-            {
-                ShoppingCredits = userinfo.ShoppingCredits,
-                Token = userinfo.Token,
-                UserLoginName = userinfo.UserLoginName,
-                UserName = userinfo.UserName,
-                UserRemoteServerValidStopTimeText = userinfo.UserRemoteServerValidStopTime == null ? "" : userinfo.UserRemoteServerValidStopTime.ToDateTime().ToString()
-            };
+            WebLoginUserInfo webloginPlayer = WebLoginUserInfo.FromWebPlayerInfo(userinfo);
 
             // 登录状态100分钟内有效
             MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);

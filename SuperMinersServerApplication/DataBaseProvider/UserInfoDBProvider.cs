@@ -292,8 +292,15 @@ namespace DataBaseProvider
 
                 cmdTextB += " `TempOutputStones`=@TempOutputStones,"
                     + " `FreezingStones`=@FreezingStones, `StockOfDiamonds`=@StockOfDiamonds, `FreezingDiamonds`=@FreezingDiamonds, "
-                    + " `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward,`ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,"
-                    + " `ShoppingCreditsFreezed`=@ShoppingCreditsFreezed, `UserRemoteServerValidStopTime`=@UserRemoteServerValidStopTime "
+                    + " `StoneSellQuan`=@StoneSellQuan, `FirstRechargeGoldCoinAward`=@FirstRechargeGoldCoinAward "
+
+#if !V1
+
+                    + ", `ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,`ShoppingCreditsFreezed`=@ShoppingCreditsFreezed, `UserRemoteServerValidStopTime`=@UserRemoteServerValidStopTime, "
+                    + " `IsLongTermRemoteServiceUser`=@IsLongTermRemoteServiceUser,`UserRemoteServiceValidTimes`=@UserRemoteServiceValidTimes "
+
+#endif
+
                     + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
 
                 mycmd = trans.CreateCommand();
@@ -321,6 +328,9 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", playerFortune.FreezingDiamonds);
                 mycmd.Parameters.AddWithValue("@StoneSellQuan", playerFortune.StoneSellQuan);
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", playerFortune.FirstRechargeGoldCoinAward);
+
+#if !V1
+
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", playerFortune.ShoppingCreditsEnabled);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", playerFortune.ShoppingCreditsFreezed);
                 if (playerFortune.UserRemoteServerValidStopTime == null)
@@ -331,6 +341,11 @@ namespace DataBaseProvider
                 {
                     mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", playerFortune.UserRemoteServerValidStopTime);
                 }
+                mycmd.Parameters.AddWithValue("@IsLongTermRemoteServiceUser", playerFortune.IsLongTermRemoteServiceUser);
+                mycmd.Parameters.AddWithValue("@UserRemoteServiceValidTimes", playerFortune.UserRemoteServiceValidTimes);
+
+#endif
+
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
 
                 mycmd.ExecuteNonQuery();

@@ -44,7 +44,7 @@ namespace MetaData.Trade
 
         RemoteServerOneMonth = 41,
 
-        RemoteServerHalfYear = 42,
+        RemoteServerThreeMonth = 42,
 
         RemoteServerOneYear = 43,
 

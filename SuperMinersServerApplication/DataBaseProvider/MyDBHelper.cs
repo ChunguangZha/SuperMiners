@@ -33,7 +33,15 @@ namespace DataBaseProvider
 
         public MySqlConnection CreateConnection()
         {
-            return new MySqlConnection(CONNECTIONSTRING);
+            try
+            {
+                return new MySqlConnection(CONNECTIONSTRING);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return null;
+            }
         }
 
 

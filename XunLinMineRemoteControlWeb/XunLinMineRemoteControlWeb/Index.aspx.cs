@@ -49,7 +49,7 @@ namespace XunLinMineRemoteControlWeb
 
         }
 
-        protected void btnBuyHalfYear_Click(object sender, EventArgs e)
+        protected void btnBuyThreeMonth_Click(object sender, EventArgs e)
         {
             MyFormsPrincipal<WebLoginUserInfo> principal = Context.User as MyFormsPrincipal<WebLoginUserInfo>;
             if (principal == null || principal.UserData == null)
@@ -58,7 +58,7 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, MetaData.Trade.RemoteServerType.HalfYear);
+            string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, MetaData.Trade.RemoteServerType.OneMonth);
             if (!string.IsNullOrEmpty(alipayLink))
             {
                 Response.Redirect(alipayLink);

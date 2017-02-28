@@ -492,17 +492,17 @@ footer {
             font-size:18px;
         }
         .homepage .content1 .content1_body {
+            font-size:13px;
+            color:#f2e775;
             position:relative;
             top:85px;
             left:55px;
             width:400px;
             height:200px;
-            background-color:gray;
             text-align:left;
+            overflow-y:scroll;
+            scrollbar-base-color:black;
         }
-    .homepage .content2 {
-        height:500px;        
-    }
         .homepage .content2 .content2_header {
             background-image: url('../Images/contents_2_header.png');
             background-repeat: no-repeat;
@@ -511,11 +511,26 @@ footer {
             background-size:100% 60px;
             height:60px;
         }
-        .homepage .content2 .content2_body {
-        }
 
-    .homepage .content3 {
-        height:300px;
+    .homepage .content3_body {
+        display:flex;
+    }
+        .homepage .content3_body div {
+            display:inline-block;
+            flex:1;
+            width:30%;
+            margin:5px;
+            border:solid 1px #00abdd;           
+            background:#0e0e0e;
+        }
+            .homepage .content3_body div p {
+                font-size:13px;
+                color:#f2e775;
+            }
+    .homepage .content_header {
+        text-align:left;
+        font-size:18px;
+        padding:20px;
     }
 
 /* Register Page

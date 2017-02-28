@@ -111,8 +111,8 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.RemoteServerOneMonth:
                     result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.OneMonth);
                     break;
-                case AlipayTradeInType.RemoteServerHalfYear:
-                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.HalfYear);
+                case AlipayTradeInType.RemoteServerThreeMonth:
+                    result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.ThreeMonth);
                     break;
                 case AlipayTradeInType.RemoteServerOneYear:
                     result = UserRemoteServerController.Instance.AlipayCallback(alipayRecord, RemoteServerType.OneYear);

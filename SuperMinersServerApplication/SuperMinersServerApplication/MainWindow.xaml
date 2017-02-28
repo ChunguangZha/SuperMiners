@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:my="clr-namespace:SuperMinersServerApplication.MyControl"
-        Loaded="Window_Loaded"
+        Loaded="Window_Loaded"        
         Title="服务器配置" Height="500" Width="800" Icon="Images/black_server.ico">
     <Grid>
         <TabControl>
@@ -341,30 +341,6 @@
 
                                 </Grid>
                             </ScrollViewer>
-                        </TabItem>
-                        <TabItem Name="tabitemIncomeAccount" Header="收款账户" Visibility="Collapsed">
-                            <Grid>
-                                <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock Text="收款支付宝账户：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBox Grid.Column="1" Text="{Binding IncomeMoneyAlipay, Mode=TwoWay}" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="收款支付宝真实姓名：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding IncomeMoneyAlipayRealName, Mode=TwoWay}"  Width="100" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"/>
-                                    <StackPanel Grid.Row="2" Grid.Column="0">
-                                        <TextBlock Text="收款支付宝二维码：" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10"/>
-                                        <Button Name="btnUpdateAlipay2DCodeImage" Content="导入收款二维码图片" Margin="10" Click="btnUpdateAlipay2DCodeImage_Click"/>
-                                    </StackPanel>
-                                    <Image Grid.Row="2" Grid.Column="1" Source="{Binding Alipay2DCodeImage}" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
-                                </Grid>
-                            </Grid>
                         </TabItem>
                     </TabControl>
                     <Button Grid.Row="1" Name="btnSaveConfig" Content="保  存" HorizontalAlignment="Right" Margin="20,10" Padding="30,5" Click="btnSaveConfig_Click"/>

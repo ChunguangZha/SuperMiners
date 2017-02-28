@@ -22,10 +22,25 @@ namespace DataBaseProvider
                 cmdTextA = "insert into deletedplayerinfo " +
                     "(`UserLoginName`,`UserName`, `Password`, `GroupType`, `IsAgentReferred`, `AgentReferredLevel`, `AgentUserID`, `Alipay`, `AlipayRealName`, `IDCardNo`, `Email`, `QQ`, `RegisterIP`, `InvitationCode`, `RegisterTime`, `LastLoginTime`, `LastLogOutTime`, `ReferrerUserName`, `LastLoginIP`, `LastLoginMac`, " +
                     " `Exp`, `CreditValue`, `RMB`, `FreezingRMB`, `GoldCoin`, `MinesCount`, `StonesReserves`, `TotalProducedStonesCount`, `MinersCount`, `StockOfStones`, `TempOutputStonesStartTime`, `TempOutputStones`, " +
-                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`,`ShoppingCreditsEnabled`,`ShoppingCreditsFreezed`,`UserRemoteServerValidStopTime`, `DeleteTime` ) values " +
+                    " `FreezingStones`, `StockOfDiamonds`, `FreezingDiamonds`, `StoneSellQuan`, `FirstRechargeGoldCoinAward`," +
+
+#if !V1
+
+                    "`ShoppingCreditsEnabled`,`ShoppingCreditsFreezed`,`UserRemoteServerValidStopTime`,`IsLongTermRemoteServiceUser`,`UserRemoteServiceValidTimes`, "+
+
+#endif
+                    " `DeleteTime` ) values " +
                     " (@UserLoginName,@UserName, @Password, @GroupType, @IsAgentReferred, @AgentReferredLevel, @AgentUserID, @Alipay, @AlipayRealName, @IDCardNo, @Email, @QQ, @RegisterIP, @InvitationCode, @RegisterTime, @LastLoginTime, @LastLogOutTime, @ReferrerUserName, @LastLoginIP, @LastLoginMac, " +
                     " @Exp, @CreditValue, @RMB, @FreezingRMB, @GoldCoin, @MinesCount, @StonesReserves, @TotalProducedStonesCount, @MinersCount, @StockOfStones, @TempOutputStonesStartTime, @TempOutputStones, " +
-                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,@ShoppingCreditsEnabled,@ShoppingCreditsFreezed,@UserRemoteServerValidStopTime, @DeleteTime ); ";
+                    " @FreezingStones, @StockOfDiamonds,@FreezingDiamonds, @StoneSellQuan, @FirstRechargeGoldCoinAward,"+
+
+#if !V1
+
+                    "@ShoppingCreditsEnabled,@ShoppingCreditsFreezed,@UserRemoteServerValidStopTime,@IsLongTermRemoteServiceUser,@UserRemoteServiceValidTimes, "+
+
+#endif
+
+                    "@DeleteTime ); ";
 
                 mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(player.SimpleInfo.UserLoginName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
@@ -64,6 +79,9 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@FreezingDiamonds", player.FortuneInfo.FreezingDiamonds);
                 mycmd.Parameters.AddWithValue("@StoneSellQuan", player.FortuneInfo.StoneSellQuan);
                 mycmd.Parameters.AddWithValue("@FirstRechargeGoldCoinAward", player.FortuneInfo.FirstRechargeGoldCoinAward);
+
+#if !V1
+
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsEnabled", player.FortuneInfo.ShoppingCreditsEnabled);
                 mycmd.Parameters.AddWithValue("@ShoppingCreditsFreezed", player.FortuneInfo.ShoppingCreditsFreezed);
                 if (player.FortuneInfo.UserRemoteServerValidStopTime == null)
@@ -74,6 +92,12 @@ namespace DataBaseProvider
                 {
                     mycmd.Parameters.AddWithValue("@UserRemoteServerValidStopTime", player.FortuneInfo.UserRemoteServerValidStopTime);
                 }
+
+                mycmd.Parameters.AddWithValue("@IsLongTermRemoteServiceUser", player.FortuneInfo.IsLongTermRemoteServiceUser);
+                mycmd.Parameters.AddWithValue("@UserRemoteServiceValidTimes", player.FortuneInfo.UserRemoteServiceValidTimes);
+
+#endif
+
                 mycmd.Parameters.AddWithValue("@DeleteTime", time);
 
                 mycmd.CommandText = cmdTextA;

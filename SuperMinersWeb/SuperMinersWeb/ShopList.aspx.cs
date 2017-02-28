@@ -27,7 +27,7 @@ namespace SuperMinersWeb
         {
             if (GlobalData.GameConfig == null)
             {
-                Response.Write("<script>alart('获取不到配置，无法打开商城');</script>");
+                Response.Write("<script>alert('获取不到配置，无法打开商城');</script>");
                 return;
             }
             if (list == null || list.Count == 0)

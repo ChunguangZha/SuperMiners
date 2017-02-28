@@ -31,13 +31,13 @@ namespace XunLinMineRemoteControlWeb {
         protected global::System.Web.UI.WebControls.Button btnBuyOneMonth;
         
         /// <summary>
-        /// btnBuyHalfYear control.
+        /// btnBuyThreeMonth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnBuyHalfYear;
+        protected global::System.Web.UI.WebControls.Button btnBuyThreeMonth;
         
         /// <summary>
         /// btnBuyOneYear control.

@@ -300,10 +300,12 @@ namespace SuperMinersWPF
             if (this.cmbServer.SelectedIndex == 0)
             {
                 this.txtRegister.Visibility = System.Windows.Visibility.Collapsed;
+                GlobalData.ServerType = ServerType.Server1;
             }
             else
             {
                 this.txtRegister.Visibility = System.Windows.Visibility.Visible;
+                GlobalData.ServerType = ServerType.Server2;
             }
         }
     }

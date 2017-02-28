@@ -31,7 +31,7 @@ namespace MetaData.Trade
     {
         Once,
         OneMonth,
-        HalfYear,
+        ThreeMonth,
         OneYear,
     }
 

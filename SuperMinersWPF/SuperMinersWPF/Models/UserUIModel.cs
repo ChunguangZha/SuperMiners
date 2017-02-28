@@ -411,11 +411,14 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-#if V2
-                return Visibility.Visible;
-#else
-                return Visibility.Collapsed;
-#endif
+                if (GlobalData.ServerType == ServerType.Server2)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    return Visibility.Collapsed;
+                }
             }
         }
 
