@@ -33,12 +33,16 @@ namespace SuperMinersServerApplication.Controller
 
         public void Init()
         {
+#if !V1
+
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
                 //DailyTime = DateTime.Now.AddMinutes(2),
                 DailyTime = new DateTime(2000, 1, 1, 0, 0, 0),
                 Task = DistributeGravel
             });
+
+#endif
         }
 
         public void DistributeGravel()

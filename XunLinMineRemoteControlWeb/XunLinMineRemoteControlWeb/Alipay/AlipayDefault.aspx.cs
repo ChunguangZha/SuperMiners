@@ -134,7 +134,7 @@ namespace XunLinMineRemoteControlWeb.Alipay
 
             //建立请求
             string sHtmlText = Submit.BuildRequest(sParaTemp, "get", "确认");
-            Response.Write(sHtmlText);
+            Response.Write(sHtmlText + "本页面将在3秒后关闭" + "<script>setTimeout('window.location.href='./Index.aspx';',3000);</script>");
 
 #endif
 

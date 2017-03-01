@@ -51,6 +51,8 @@ namespace XunLinMineRemoteControlWeb
         }
 
         public static string[] InvalidName = new string[]{
+            "迅灵",
+            "xunling",
             "傻逼",
             "骗子",
             "上当",

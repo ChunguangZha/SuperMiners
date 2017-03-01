@@ -73,6 +73,7 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("StoneSellQuan");
                 NotifyPropertyChange("ShoppingCreditsEnabled");
                 NotifyPropertyChange("ShoppingCreditsFreezed");
+                NotifyPropertyChange("OutputCountdownVisible");
 
                 NotifyPropertyChange("GravelVisible");
                 NotifyPropertyChange("Gravel");
@@ -265,6 +266,19 @@ namespace SuperMinersWPF.Models
         public string OutputCountdownString
         {
             get { return OutputCountdown.ToString() + "秒"; }
+        }
+
+        public Visibility OutputCountdownVisible
+        {
+            get
+            {
+                if (this.MinersCount == 0 || this.WorkableStonesReservers == 0)
+                {
+                    return Visibility.Collapsed;
+                }
+
+                return Visibility.Visible;
+            }
         }
 
         /// <summary>

@@ -1,0 +1,22 @@
+Error:  [2017/3/1 23:40:35] ---- Log: Client_GetAllStoneStackDailyRecordInfoCompleted Exception
+Exc.Message: 值不能为 null。
+参数名: collectionExc.Stack:    在 System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   在 SuperMinersWPF.Views.Controls.KLineDayControl.StackStoneVMObject_GetAllStoneStackDailyRecordInfoCompleted(StoneStackDailyRecordInfo[] items) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Views\Controls\KLineDayControl.xaml.cs:行号 110
+   在 SuperMinersWPF.ViewModels.StackStoneViewModel.Client_GetAllStoneStackDailyRecordInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\StackStoneViewModel.cs:行号 153
+-----------------------------------------------------
+
+Error:  [2017/3/1 23:40:36] ---- Log: Client_GetHistoryRaiderRoundRecordsCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetHistoryRaiderRoundRecordsCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 194
+-----------------------------------------------------
+
+Error:  [2017/3/1 23:42:17] ---- Log: RestClient ReceiveCallback 3
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
+-----------------------------------------------------
+
+Error:  [2017/3/1 23:42:17] ---- Log: RestClient ReceiveCallback 4
+-----------------------------------------------------
+
+Error:  [2017/3/1 23:42:21] ---- Log: 客户端霸王餐已退出.
+-----------------------------------------------------
+

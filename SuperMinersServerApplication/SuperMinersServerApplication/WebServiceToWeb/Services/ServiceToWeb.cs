@@ -185,6 +185,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
+
+#if V1
                 if (string.IsNullOrEmpty(alipayAccount))
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
@@ -193,6 +195,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;
                 }
+
+#endif
+
                 if (string.IsNullOrEmpty(IDCardNo))
                 {
                     return OperResult.RESULTCODE_PARAM_INVALID;

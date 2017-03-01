@@ -27,7 +27,6 @@ namespace XunLinMineRemoteControlWeb
 
             if (!IsPostBack)
             {
-                this.lblAlert.Text = string.Format("请绑定正确的支付宝账户和真实姓名，否则您将无法提现。如需修改支付宝信息，请联系客服，修改一次需支付{0}矿石。", 50 * GlobalData.GameConfig.Yuan_RMB * GlobalData.GameConfig.Stones_RMB);
                 invitationCode = Request["ic"];
 
                 if (!string.IsNullOrEmpty(invitationCode))
@@ -47,8 +46,8 @@ namespace XunLinMineRemoteControlWeb
                 string qq = this.txtQQ.Text.Trim();
                 string password = this.txtPassword.Text;
                 string confirmpwd = this.txtConfirmPassword.Text;
-                string alipayAccount = this.txtAlipayAccount.Text.Trim();
-                string alipayRealName = this.txtAlipayRealName.Text.Trim();
+                //string alipayAccount = this.txtAlipayAccount.Text.Trim();
+                //string alipayRealName = this.txtAlipayRealName.Text.Trim();
                 string IDCardNo = this.txtIDCardNo.Text.Trim();
 
                 foreach (var item in GlobalData.InvalidName)
@@ -87,14 +86,14 @@ namespace XunLinMineRemoteControlWeb
                 {
                     return;
                 }
-                if (!CheckAlipayAccount(alipayAccount))
-                {
-                    return;
-                }
-                if (!CheckAlipayRealName(alipayRealName))
-                {
-                    return;
-                }
+                //if (!CheckAlipayAccount(alipayAccount))
+                //{
+                //    return;
+                //}
+                //if (!CheckAlipayRealName(alipayRealName))
+                //{
+                //    return;
+                //}
                 if (!CheckIDCardNo(IDCardNo))
                 {
                     return;
@@ -110,7 +109,7 @@ namespace XunLinMineRemoteControlWeb
 
                 string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-                RegisterUser(ip, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq);
+                RegisterUser(ip, userName, nickName, password, null, null, IDCardNo, email, qq);
             }
             catch (Exception exc)
             {

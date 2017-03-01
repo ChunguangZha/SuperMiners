@@ -33,7 +33,7 @@ namespace SuperMinersServerApplication.Controller
         public event Action GameConfigChanged;
 
         public GameConfigUIModel InnerGameConfig { get; set; }
-        public IncomeMoneyAccountUIModel InnerIncomeMoneyAccount { get; set; }
+        //public IncomeMoneyAccountUIModel InnerIncomeMoneyAccount { get; set; }
         public RegisterUserConfigUIModel InnerRegisterPlayerConfig { get; set; }
 
         private ObservableCollection<AwardReferrerConfigUIModel> _innerListAwardReferrerConfig = new ObservableCollection<AwardReferrerConfigUIModel>();
@@ -196,7 +196,7 @@ namespace SuperMinersServerApplication.Controller
 
                 GlobalConfig.AwardReferrerLevelConfig.SetListAward(listBaseAwardConfig);
                 GlobalConfig.GameConfig = this.InnerGameConfig.ToDBObject();
-                GlobalConfig.IncomeMoneyAccount = this.InnerIncomeMoneyAccount.ToDBObject();
+                //GlobalConfig.IncomeMoneyAccount = this.InnerIncomeMoneyAccount.ToDBObject();
                 GlobalConfig.RegisterPlayerConfig = this.InnerRegisterPlayerConfig.ToDBObject();
             }
             catch (Exception exc)

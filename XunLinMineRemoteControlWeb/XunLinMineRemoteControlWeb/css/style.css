@@ -526,7 +526,21 @@ figure {
   z-index: 2;
   display: block;
   float: right;
+  background-color: #00ADB5 !important;
+  color:white;
+  margin-bottom: 0;
+  margin-top: 1.4em;
 }
+    #loginned li {
+        display:inline-block;
+        margin:10px;
+    }
+        #loginned li a {
+            color:black;
+        }
+            #loginned li a:hover {
+                color:red !important;
+            }
 
 #fh5co-primary-menu > li > ul li.active > a {
   color: #00ADB5 !important;

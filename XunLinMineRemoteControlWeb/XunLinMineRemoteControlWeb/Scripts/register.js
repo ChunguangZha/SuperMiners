@@ -8,8 +8,8 @@ $().ready(function () {
     $("#MainContent_txtEmail").blur(CheckEmail);
     $("#MainContent_txtQQ").blur(CheckQQ);
     $("#MainContent_txtAuthCode").blur(CheckAuthCode);
-    $("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
-    $("#MainContent_txtAlipayRealName").blur(CheckAlipayRealName);
+    //$("#MainContent_txtAlipayAccount").blur(CheckAlipayAccount);
+    //$("#MainContent_txtAlipayRealName").blur(CheckAlipayRealName);
     $("#MainContent_txtIDCardNo").blur(CheckIDCardNo);
 });
 
@@ -87,71 +87,71 @@ function CheckConfirmPassword() {
     $("#imgConfirmPasswordOK").css("display", "inline");
 }
 
-function CheckAlipayAccount() {
-    $("#msgAlipayAccount").text("");
-    $("#imgAlipayAccountOK").css("display", "none");
+//function CheckAlipayAccount() {
+//    $("#msgAlipayAccount").text("");
+//    $("#imgAlipayAccountOK").css("display", "none");
 
-    var alipayAccount = $("#MainContent_txtAlipayAccount").val();
-    if (alipayAccount.length == 0) {
-        $("#msgAlipayAccount").text("请输入支付宝账户");
-        return;
-    }
+//    var alipayAccount = $("#MainContent_txtAlipayAccount").val();
+//    if (alipayAccount.length == 0) {
+//        $("#msgAlipayAccount").text("请输入支付宝账户");
+//        return;
+//    }
 
-    var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-    var bChk = szReg.test(alipayAccount);
-    if (!bChk) {
-        szReg = /^([1-9][0-9]*)$/;
-        if (!szReg.test(alipayAccount)) {
-            $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
-            return;
-        } else {
-            if (alipayAccount.length != 11) {
-                $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
-                return;
-            }
-        }
-    }
+//    var szReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+//    var bChk = szReg.test(alipayAccount);
+//    if (!bChk) {
+//        szReg = /^([1-9][0-9]*)$/;
+//        if (!szReg.test(alipayAccount)) {
+//            $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
+//            return;
+//        } else {
+//            if (alipayAccount.length != 11) {
+//                $("#msgAlipayAccount").text("支付宝账户只能为电子邮箱或者手机号");
+//                return;
+//            }
+//        }
+//    }
 
-    $.post("CheckAlipayAccount",
-        { AlipayAccount: alipayAccount },
-        function (data, status) {
-            if (data == "OK") {
-                $("#imgAlipayAccountOK").css("display", "inline");
-            } else {
-                $("#msgAlipayAccount").text(data);
-            }
-        });
+//    $.post("CheckAlipayAccount",
+//        { AlipayAccount: alipayAccount },
+//        function (data, status) {
+//            if (data == "OK") {
+//                $("#imgAlipayAccountOK").css("display", "inline");
+//            } else {
+//                $("#msgAlipayAccount").text(data);
+//            }
+//        });
 
-}
+//}
 
-function CheckAlipayRealName() {
-    $("#msgAlipayRealName").text("");
-    $("#imgAlipayRealNameOK").css("display", "none");
+//function CheckAlipayRealName() {
+//    $("#msgAlipayRealName").text("");
+//    $("#imgAlipayRealNameOK").css("display", "none");
 
-    var alipayRealName = $("#MainContent_txtAlipayRealName").val();
-    if (alipayRealName.length == 0) {
-        $("#msgAlipayRealName").text("请输入支付宝实名");
-        return;
-    }
-    var szReg = /^[\u4E00-\u9FA5\uF900-\uFA2D]/;
-    var bChk = szReg.test(alipayRealName);
-    if (!bChk) {
-        $("#msgAlipayRealName").text("请输入正确支付宝实名");
-        return;
-    }
+//    var alipayRealName = $("#MainContent_txtAlipayRealName").val();
+//    if (alipayRealName.length == 0) {
+//        $("#msgAlipayRealName").text("请输入支付宝实名");
+//        return;
+//    }
+//    var szReg = /^[\u4E00-\u9FA5\uF900-\uFA2D]/;
+//    var bChk = szReg.test(alipayRealName);
+//    if (!bChk) {
+//        $("#msgAlipayRealName").text("请输入正确支付宝实名");
+//        return;
+//    }
 
-    $("#imgAlipayRealNameOK").css("display", "inline");
-    //$.post("CheckAlipayRealName",
-    //    { AlipayRealName: alipayRealName },
-    //    function (data, status) {
-    //        if (data == "OK") {
-    //            $("#imgAlipayRealNameOK").css("display", "inline");
-    //        } else {
-    //            $("#msgAlipayRealName").text(data);
-    //        }
-    //    });
+//    $("#imgAlipayRealNameOK").css("display", "inline");
+//    //$.post("CheckAlipayRealName",
+//    //    { AlipayRealName: alipayRealName },
+//    //    function (data, status) {
+//    //        if (data == "OK") {
+//    //            $("#imgAlipayRealNameOK").css("display", "inline");
+//    //        } else {
+//    //            $("#msgAlipayRealName").text(data);
+//    //        }
+//    //    });
 
-}
+//}
 
 function CheckIDCardNo() {
     $("#msgIDCardNo").text("");

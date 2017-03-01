@@ -93,7 +93,7 @@
 						<div class="price-box to-animate">
 							<h2 class="pricing-plan">单次</h2>
 							<div class="price"><sup class="currency">￥</sup>50<small></small></div>
-							<p>24小时之内只能购买一次  不使用不清空</p>
+							<p>24小时内只能购买一次，可累计</p>
 							<hr/>
 							<div class="pricing-info">
 								定向服务，一次付费，满意为止，

@@ -50,6 +50,9 @@
                                                 <asp:LinkButton ID="btnLogout" runat="server" Text="退出" onclick="btnLogout_Click" />
                                             </li>
                                             <li>
+                                                积分：<%= user.UserData.ShoppingCredits %>
+                                            </li>
+                                            <li>
                                                 服务有效期：<%= user.UserData.UserRemoteServerValidStopTimeText %>
                                             </li>
                                         </ul>

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta charset="utf-8" />
-    <meta name="keywords" content="迅灵矿场，灵币，挖矿" />
+    <meta name="keywords" content="迅灵矿场,网赚,矿场,挂机,积分" />
     <meta name="application-name" content="迅灵矿场" />
     <meta name="author" content="迅灵信息" />
     <title><%: Page.Title %> - 迅灵矿场</title>

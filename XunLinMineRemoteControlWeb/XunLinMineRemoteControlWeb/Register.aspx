@@ -53,7 +53,7 @@
                          <img id="imgConfirmPasswordOK" src="images/yes.png" class="message" style="display:none"/>
 			</div>
 		</div>
-		<div class="row">
+		<%--<div class="row">
             <div class="col-md-4">
                          <label for="txtAlipayAccount"><span>*</span>支付宝账户： </label>
             </div>
@@ -76,7 +76,7 @@
                          <span id="msgAlipayRealName" class="message"></span>
                          <img id="imgAlipayRealNameOK" src="images/yes.png" class="message" style="display:none"/>
 			</div>
-		</div>
+		</div>--%>
 		<div class="row">
             <div class="col-md-4">
                          <label for="txtIDCardNo"><span>*</span>身份证号： </label>
@@ -132,15 +132,6 @@
                                     请输入此验证码
                                     <img id="imgAuthCode" src="AuthCode" class="checkimg" alt="验证码" /> 
                                     <a href="javascript:CallServerForUpdate()" class="checkimg">换下一张</a> 
-			</div>
-			<div class="col-md-2">
-			</div>
-		</div>
-		<div class="row">
-            <div class="col-md-4">
-            </div>
-			<div class="col-md-4">
-                                    <asp:Label ID="lblAlert" runat="server" CssClass="alertmsg"/>
 			</div>
 			<div class="col-md-2">
 			</div>

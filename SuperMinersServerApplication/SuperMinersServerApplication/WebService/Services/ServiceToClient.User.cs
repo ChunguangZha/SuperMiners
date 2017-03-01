@@ -81,6 +81,7 @@ namespace SuperMinersServerApplication.WebService.Services
 
             string token = null;
             string ip = ClientManager.GetCurrentIP();
+            string userName = "";
             PlayerInfo player = null;
             try
             {
@@ -90,6 +91,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
                     return resultObj;
                 }
+                userName = player.SimpleInfo.UserName;
                 token = ClientManager.GetToken(player.SimpleInfo.UserName);
                 if (!string.IsNullOrEmpty(token))
                 {
@@ -139,7 +141,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     }
                     catch (Exception exc)
                     {
-                        LogHelper.Instance.AddErrorLog("Test User [" + UserLoginName + "] Add Exception.", exc);
+                        LogHelper.Instance.AddErrorLog("Test User [" + userName + "] Add Exception.", exc);
                     }
                 }
 
@@ -160,16 +162,16 @@ namespace SuperMinersServerApplication.WebService.Services
                     this._callbackDic[token] = new Queue<CallbackInfo>();
                 }
 
-                LogHelper.Instance.AddInfoLog("玩家 [" + UserLoginName + "] 登录矿场, IP=" + ip + ", Mac=" + mac);
+                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登录矿场, IP=" + ip + ", Mac=" + mac);
 
             }
             catch (Exception ex)
             {
-                LogHelper.Instance.AddErrorLog("玩家 [" + UserLoginName + "] 登录矿场失败, IP=" + ip + ", Mac=" + mac, ex);
+                LogHelper.Instance.AddErrorLog("玩家 [" + userName + "] 登录矿场失败, IP=" + ip + ", Mac=" + mac, ex);
             }
             if (!string.IsNullOrEmpty(token))
             {
-                PlayerActionController.Instance.AddLog(UserLoginName, MetaData.ActionLog.ActionType.Login, (int)player.FortuneInfo.Exp / 2000);
+                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.Login, (int)player.FortuneInfo.Exp / 2000);
                 new Thread(new ParameterizedThreadStart(o =>
                 {
                     this.LogedIn(o.ToString());

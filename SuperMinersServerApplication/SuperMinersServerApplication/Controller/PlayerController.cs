@@ -279,11 +279,6 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
             }
-            //userCount = DBProvider.UserDBProvider.GetPlayerCountByNickName(nickName);
-            //if (userCount > 0)
-            //{
-            //    return OperResult.RESULTCODE_REGISTER_NICKNAME_EXIST;
-            //}
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);
