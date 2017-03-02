@@ -45,6 +45,12 @@ namespace SuperMinersWPF
                 this.txtGravel.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
+                this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
+
+                this.btnGetCredits.IsEnabled = true;
+                this.btnInvitationFriends.IsEnabled = true;
+                this.btnGetMoney.IsEnabled = true;
+                this.btnStonesSell.IsEnabled = true;
                 
                 this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵一区";
             }
@@ -55,6 +61,12 @@ namespace SuperMinersWPF
                 this.txtGravel.Visibility = System.Windows.Visibility.Visible;
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Visible;
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Visible;
+                this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Visible;
+
+                this.btnGetCredits.IsEnabled = false;
+                this.btnInvitationFriends.IsEnabled = false;
+                this.btnGetMoney.IsEnabled = false;
+                this.btnStonesSell.IsEnabled = false;
 
                 this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵二区";
             }

@@ -162,7 +162,7 @@
                         <ComboBoxItem Content="灵币"/>
                         <ComboBoxItem Content="支付宝"/>
                     </ComboBox>
-                    <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnBuyStone" Content="挂单购买" Style="{StaticResource UserInfoButtonStyle}" IsEnabled="False" Width="100" Height="30" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBuyStone_Click"/>
+                    <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnBuyStone" Content="挂单购买" Style="{StaticResource UserInfoButtonStyle}" Width="100" Height="30" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBuyStone_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="买单">

@@ -473,6 +473,14 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
+                var existsAlipayRecord = DBProvider.AlipayRecordDBProvider.GetAlipayRechargeRecordByOrderNumber_OR_Alipay_trade_no(out_trade_no, alipay_trade_no);
+                if (existsAlipayRecord != null)
+                {
+                    if (existsAlipayRecord.buyer_email == buyer_email && existsAlipayRecord.total_fee == total_fee && existsAlipayRecord.user_name == userName)
+                    {
+                        return OperResult.RESULTCODE_TRUE;
+                    }
+                }
                 AlipayRechargeRecord record = new AlipayRechargeRecord()
                 {
                     alipay_trade_no = alipay_trade_no,

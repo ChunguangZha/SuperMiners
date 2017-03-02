@@ -378,38 +378,34 @@ namespace XunLinMineRemoteControlWeb
             return true;
         }
 
-        private void RegisterUser(string clientIP, string userName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
+        private void RegisterUser(string clientIP, string userLoginName, string nickName, string password, string alipayAccount, string alipayRealName, string IDCardNo, string email, string qq)
         {
             invitationCode = Session["ic"] as string;
 
-            int result = WcfClient.Instance.RegisterUser(clientIP, userName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
+            int result = WcfClient.Instance.RegisterUser(clientIP, userLoginName, nickName, password, alipayAccount, alipayRealName, IDCardNo, email, qq, invitationCode);
             if (result != OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('注册失败, 原因为：" + OperResult.GetMsg(result) + "')</script>");
                 return;
             }
 
-            var resultObj = WcfClient.Instance.Login(clientIP, userName, password);
+            var resultObj = WcfClient.Instance.Login(clientIP, userLoginName, password);
             if (resultObj.OperResultCode != OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('注册成功，但登录失败, 原因为：" + OperResult.GetMsg(resultObj.OperResultCode) + "')</script>");
                 return;
             }
 
-            WebPlayerInfo userinfo = WcfClient.Instance.GetPlayerInfo(resultObj.Message, userName, clientIP);
-            if (userinfo == null)
+            string message = "";
+            bool isOK = Controller.GetPlayerInfo(resultObj.Message, userLoginName, clientIP, Context, out message);
+            if (!isOK)
             {
-                Response.Write("<script>alert('注册成功，但登录失败。')</script>");
-                return;
+                Response.Write("<script>alert('" + message + "')</script>");
             }
-
-            WebLoginUserInfo webloginPlayer = WebLoginUserInfo.FromWebPlayerInfo(userinfo);
-
-            // 登录状态100分钟内有效
-            MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
-            MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
-
-            Response.Redirect("Index.aspx", false);
+            else
+            {
+                Response.Redirect("Index.aspx", false);
+            }
         }
     }
 }

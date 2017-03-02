@@ -18,9 +18,20 @@ namespace XunLinMineRemoteControlWeb
                 if (Request.IsAuthenticated)
                 {
                     MyFormsPrincipal<WebLoginUserInfo> principal = Context.User as MyFormsPrincipal<WebLoginUserInfo>;
-                    if (principal == null)
+                    if (principal == null || principal.UserData == null)
                     {
                         Response.Redirect("Login.aspx");
+                    }
+                    else
+                    {
+                        string clientIP = System.Web.HttpContext.Current.Request.UserHostAddress;
+
+                        string message = "";
+                        bool isOK = Controller.GetPlayerInfo(principal.UserData.Token, principal.UserData.UserLoginName, clientIP, Context, out message);
+                        if (!isOK)
+                        {
+                            Response.Redirect("Login.aspx");
+                        }
                     }
                 }
             }

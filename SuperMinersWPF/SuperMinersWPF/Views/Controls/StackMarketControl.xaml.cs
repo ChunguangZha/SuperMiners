@@ -36,6 +36,14 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                this.btnBuyStone.IsEnabled = true;
+            }
+            else
+            {
+                this.btnBuyStone.IsEnabled = false;
+            }
         }
         
         public void AddEventHandlers()

@@ -1068,43 +1068,6 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        #region 取消充值功能
-
-        //public bool RechargeRMB(decimal yuan)
-        //{
-        //    lock (_lockFortuneAction)
-        //    {
-        //        RMBRechargeRecord record = new RMBRechargeRecord()
-        //        {
-        //            UserName = BasePlayer.SimpleInfo.UserName,
-        //            RechargeMoney = yuan,
-        //            GainRMB = yuan * GlobalConfig.GameConfig.Yuan_RMB,
-        //            Time = DateTime.Now
-        //        };
-        //        BasePlayer.FortuneInfo.RMB += record.GainRMB;
-
-        //        var trans = MyDBHelper.Instance.CreateTrans();
-        //        try
-        //        {
-        //            DBProvider.UserDBProvider.SavePlayerFortuneInfo(BasePlayer.FortuneInfo, trans);
-        //            DBProvider.RechargeDBProvider.AddRechargeRMBRecord(record, trans);
-        //            trans.Commit();
-        //            return true;
-        //        }
-        //        catch (Exception exc)
-        //        {
-        //            trans.Rollback();
-        //            RefreshFortune();
-        //            throw exc;
-        //        }
-        //        finally
-        //        {
-        //            trans.Dispose();
-        //        }
-        //    }
-        //}
-        #endregion
-
         public bool ReferAward(AwardReferrerConfig awardConfig, string newUserName, CustomerMySqlTransaction trans)
         {
             bool isOK = false;

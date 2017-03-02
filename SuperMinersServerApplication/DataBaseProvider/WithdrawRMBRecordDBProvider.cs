@@ -18,12 +18,12 @@ namespace DataBaseProvider
             try
             {
                 string sqlText = "insert into withdrawrmbrecord " +
-                    "(`PlayerUserName`, `AlipayAccount`, `AlipayRealName`, `WidthdrawRMB`, `ValueYuan`,`CreateTime`, `RMBWithdrawState`, `AdminUserName`, `PayTime`) " +
-                    " values (@PlayerUserName, @AlipayAccount, @AlipayRealName, @WidthdrawRMB, @ValueYuan, @CreateTime, @RMBWithdrawState, @AdminUserName, @PayTime)";
+                    "(`PlayerUserID`, `AlipayAccount`, `AlipayRealName`, `WidthdrawRMB`, `ValueYuan`,`CreateTime`, `RMBWithdrawState`, `AdminUserName`, `PayTime`) " +
+                    " values (@PlayerUserID, @AlipayAccount, @AlipayRealName, @WidthdrawRMB, @ValueYuan, @CreateTime, @RMBWithdrawState, @AdminUserName, @PayTime)";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = sqlText;
-                mycmd.Parameters.AddWithValue("@PlayerUserName", DESEncrypt.EncryptDES(record.PlayerUserName));
+                mycmd.Parameters.AddWithValue("@PlayerUserID", record.PlayerUserID);
                 mycmd.Parameters.AddWithValue("@AlipayAccount", DESEncrypt.EncryptDES(record.AlipayAccount));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(record.AlipayRealName));
                 mycmd.Parameters.AddWithValue("@WidthdrawRMB", record.WidthdrawRMB);

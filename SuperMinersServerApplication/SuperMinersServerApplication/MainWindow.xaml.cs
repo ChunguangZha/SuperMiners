@@ -44,7 +44,15 @@ namespace SuperMinersServerApplication
         {
             InitializeComponent();
 
-            this.Title = "服务器配置" + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+#if V1
+
+            this.Title = "迅灵矿场一区 服务器" + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+
+#else
+
+            this.Title = "迅灵矿场二区 服务器" + System.Configuration.ConfigurationManager.AppSettings["softwareversion"];
+
+#endif
 
             LogHelper.Instance.LogAdded += Instance_LogAdded;
             App.ServiceToRun.ServiceStateChanged += ServiceToRun_ServiceStateChanged;

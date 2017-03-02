@@ -176,47 +176,47 @@ namespace SuperMinersServerApplication.Controller.Stack
         {
             LoadDataFromDatabase();
 
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(2),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningOpenTime, 0, 0),
-            //    Task = MarketOpen
-            //});
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(22),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningCloseTime, 0, 0),
-            //    Task = MarketSuspend
-            //});
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(32),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonOpenTime, 0, 0),
-            //    Task = MarketResume
-            //});
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(42),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonCloseTime, 0, 0),
-            //    Task = MarketSuspend
-            //});
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(52),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightOpenTime, 0, 0),
-            //    Task = MarketResume
-            //});
-            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            //{
-            //    //DailyTime = DateTime.Now.AddMinutes(62),
-            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightCloseTime, 0, 0),
-            //    Task = MarketClose
-            //});
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(2),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningOpenTime, 0, 0),
+                Task = MarketOpen
+            });
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(22),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningCloseTime, 0, 0),
+                Task = MarketSuspend
+            });
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(32),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonOpenTime, 0, 0),
+                Task = MarketResume
+            });
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(42),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonCloseTime, 0, 0),
+                Task = MarketSuspend
+            });
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(52),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightOpenTime, 0, 0),
+                Task = MarketResume
+            });
+            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            {
+                //DailyTime = DateTime.Now.AddMinutes(62),
+                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightCloseTime, 0, 0),
+                Task = MarketClose
+            });
 
-            //this._thrStoneStackTrade = new Thread(ThreadStoneStackTrade);
-            //this._thrStoneStackTrade.IsBackground = true;
-            //this._thrStoneStackTrade.Name = "ThreadStoneStackTrade";
-            //this._thrStoneStackTrade.Start();
+            this._thrStoneStackTrade = new Thread(ThreadStoneStackTrade);
+            this._thrStoneStackTrade.IsBackground = true;
+            this._thrStoneStackTrade.Name = "ThreadStoneStackTrade";
+            this._thrStoneStackTrade.Start();
         }
 
         public TodayStoneStackTradeRecordInfo GetTodayStackInfo()

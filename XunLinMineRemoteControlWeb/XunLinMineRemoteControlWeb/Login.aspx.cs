@@ -48,25 +48,16 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            WebPlayerInfo userinfo = WcfClient.Instance.GetPlayerInfo(resultObj.Message, userLoginName, clientIP);
-            if (userinfo == null)
+            string message = "";
+            bool isOK = Controller.GetPlayerInfo(resultObj.Message, userLoginName, clientIP, Context, out message);
+            if (!isOK)
             {
-                Response.Write("<script>alert('登录失败。')</script>");
-                return;
+                Response.Write("<script>alert('" + message + "')</script>");
             }
-            if (userinfo.IsLocked)
+            else
             {
-                Response.Write("<script>alert('您的账户已经被锁定，无法登录，请联系管理员解决。')</script>");
-                return;
+                Response.Redirect("Index.aspx", false);
             }
-
-            WebLoginUserInfo webloginPlayer = WebLoginUserInfo.FromWebPlayerInfo(userinfo);
-
-            // 登录状态100分钟内有效
-            MyFormsPrincipal<WebLoginUserInfo>.SignIn(webloginPlayer.UserLoginName, webloginPlayer, 30);
-            MyFormsPrincipal<WebLoginUserInfo>.TrySetUserInfo(Context);
-
-            Response.Redirect("Index.aspx", false);
         }
     }
 }

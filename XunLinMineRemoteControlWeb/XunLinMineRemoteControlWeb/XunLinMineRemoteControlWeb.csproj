@@ -261,6 +261,7 @@
       <DependentUpon>return_url.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Core\Controller.cs" />
     <Compile Include="Core\MyFormsPrincipal.cs" />
     <Compile Include="Core\WebLoginUserInfo.cs" />
     <Compile Include="DataBaseOper\DBOper.cs" />
