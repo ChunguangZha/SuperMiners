@@ -116,7 +116,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select * from superminers.alipayrechargerecord where out_trade_no = @orderNumber or alipay_trade_no = @alipay_trade_no ";
+                string cmdText = "select * from  alipayrechargerecord where out_trade_no = @orderNumber or alipay_trade_no = @alipay_trade_no ";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@orderNumber", orderNumber);
                 mycmd.Parameters.AddWithValue("@alipay_trade_no", alipay_trade_no);
@@ -155,7 +155,7 @@ namespace DataBaseProvider
                 MySqlCommand mycmd = myconn.CreateCommand();
                 DataTable dt = new DataTable();
 
-                string sqlTextA = "select * from superminers.alipayrechargerecord ";
+                string sqlTextA = "select * from  alipayrechargerecord ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(orderNumber))
@@ -262,7 +262,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select * from superminers.alipayrecharge_exception_record where out_trade_no = @out_trade_no ";
+                string cmdText = "select * from  alipayrecharge_exception_record where out_trade_no = @out_trade_no ";
                 mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@out_trade_no", orderNumber);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -301,7 +301,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select * from superminers.alipayrecharge_exception_record ";
+                string cmdText = "select * from  alipayrecharge_exception_record ";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 adapter.Fill(dt);

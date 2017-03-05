@@ -17,7 +17,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT * FROM superminers.stonestackdailyrecordinfo order by id;";
+                string sqlText = "SELECT * FROM  stonestackdailyrecordinfo order by id;";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
@@ -49,7 +49,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT * FROM superminers.stonestackdailyrecordinfo order by id desc limit 1;";
+                string sqlText = "SELECT * FROM  stonestackdailyrecordinfo order by id desc limit 1;";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
@@ -90,7 +90,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT n.* , p.UserName FROM superminers.notfinishedstonedelegatesellorderinfo n left join playersimpleinfo p on n.UserID = p.id; ";
+                string sqlText = "SELECT n.* , p.UserName FROM  notfinishedstonedelegatesellorderinfo n left join playersimpleinfo p on n.UserID = p.id; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
@@ -122,7 +122,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "delete FROM superminers.notfinishedstonedelegatebuyorderinfo where `BuyState`  = @BuyState; ";
+                string sqlText = "delete FROM  notfinishedstonedelegatebuyorderinfo where `BuyState`  = @BuyState; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@BuyState", StoneDelegateBuyState.NotPayed);
@@ -151,7 +151,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT n.* , p.UserName FROM superminers.notfinishedstonedelegatebuyorderinfo n left join playersimpleinfo p on n.UserID = p.id; ";
+                string sqlText = "SELECT n.* , p.UserName FROM  notfinishedstonedelegatebuyorderinfo n left join playersimpleinfo p on n.UserID = p.id; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
@@ -318,7 +318,7 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                //string cmdTextA = "update superminers.notfinishedstonedelegatesellorderinfo set `SellState`=@SellState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
+                //string cmdTextA = "update  notfinishedstonedelegatesellorderinfo set `SellState`=@SellState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
                 //mycmd.CommandText = cmdTextA;
                 //mycmd.Parameters.AddWithValue("@SellState", (int)sellOrder.SellState);
@@ -376,12 +376,12 @@ namespace DataBaseProvider
             try
             {
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "SELECT n.* FROM superminers.finishedstonedelegatesellorderinfo n ";
+                string sqlTextA = "SELECT n.* FROM  finishedstonedelegatesellorderinfo n ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" n.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
+                    builder.Append(" n.UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", userName);
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
@@ -416,7 +416,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -449,7 +449,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT n.* , p.UserName FROM superminers.notfinishedstonedelegatesellorderinfo n left join playersimpleinfo p on n.UserID = p.id where n.UserID = @UserID; ";
+                string sqlText = "SELECT n.* , p.UserName FROM  notfinishedstonedelegatesellorderinfo n left join playersimpleinfo p on n.UserID = p.id where n.UserID = @UserID; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@UserID", userID);
@@ -645,7 +645,7 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                //string cmdTextA = "update superminers.notfinishedstonedelegatebuyorderinfo set `BuyState`=@BuyState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
+                //string cmdTextA = "update  notfinishedstonedelegatebuyorderinfo set `BuyState`=@BuyState,`FinishedTime`=@FinishedTime where `OrderNumber` = @OrderNumber";
 
                 //mycmd.CommandText = cmdTextA;
                 //mycmd.Parameters.AddWithValue("@BuyState", (int)buyOrder.BuyState);
@@ -705,7 +705,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "SELECT n.* , p.UserName FROM superminers.notfinishedstonedelegatebuyorderinfo n left join playersimpleinfo p on n.UserID = p.id where n.UserID = @UserID; ";
+                string sqlText = "SELECT n.* , p.UserName FROM  notfinishedstonedelegatebuyorderinfo n left join playersimpleinfo p on n.UserID = p.id where n.UserID = @UserID; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@UserID", userID);
@@ -740,12 +740,12 @@ namespace DataBaseProvider
             try
             {
                 mycmd = myconn.CreateCommand();
-                string sqlTextA = "SELECT n.* FROM superminers.finishedstonedelegatebuyorderinfo n ";
+                string sqlTextA = "SELECT n.* FROM  finishedstonedelegatebuyorderinfo n ";
 
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" n.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
+                    builder.Append(" n.UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", userName);
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
@@ -780,7 +780,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();

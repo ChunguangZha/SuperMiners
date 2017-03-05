@@ -172,6 +172,18 @@ namespace MetaData.User
         [DataMember]
         public int UserRemoteServiceValidTimes { get; set; }
 
+        /// <summary>
+        /// 神灵许愿时间（以DayofYear来保存）
+        /// </summary>
+        [DataMember]
+        public int MakeAVowToGodTime_DayofYear { get; set; }
+
+        /// <summary>
+        /// 最近一次许愿次数（不能超过系统设置最大值）
+        /// </summary>
+        [DataMember]
+        public int MakeAVowToGodTimesLastDay { get; set; }
+
         public PlayerFortuneInfo CopyTo()
         {
             PlayerFortuneInfo infoB = new PlayerFortuneInfo()
@@ -199,6 +211,8 @@ namespace MetaData.User
                 UserRemoteServerValidStopTime = this.UserRemoteServerValidStopTime,
                 IsLongTermRemoteServiceUser = this.IsLongTermRemoteServiceUser,
                 UserRemoteServiceValidTimes = this.UserRemoteServiceValidTimes,
+                MakeAVowToGodTime_DayofYear = this.MakeAVowToGodTime_DayofYear,
+                MakeAVowToGodTimesLastDay = this.MakeAVowToGodTimesLastDay,
             };
 
             return infoB;
@@ -229,6 +243,8 @@ namespace MetaData.User
             this.UserRemoteServerValidStopTime = fortuneInfo.UserRemoteServerValidStopTime;
             this.IsLongTermRemoteServiceUser = fortuneInfo.IsLongTermRemoteServiceUser;
             this.UserRemoteServiceValidTimes = fortuneInfo.UserRemoteServiceValidTimes;
+            this.MakeAVowToGodTime_DayofYear = fortuneInfo.MakeAVowToGodTime_DayofYear;
+            this.MakeAVowToGodTimesLastDay = fortuneInfo.MakeAVowToGodTimesLastDay;
         }
 
         public override string ToString()

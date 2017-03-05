@@ -176,6 +176,8 @@ namespace SuperMinersServerApplication.Controller.Stack
         {
             LoadDataFromDatabase();
 
+            InitTodayDailyInfo();
+
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
                 //DailyTime = DateTime.Now.AddMinutes(2),
@@ -309,6 +311,8 @@ namespace SuperMinersServerApplication.Controller.Stack
             }
 
             LoadDataFromDatabase();
+
+            this._todayTradeInfo.InitTodayDailyInfo(this._todayTradeInfo.DailyInfo, 100);
         }
 
         private void LoadDataFromDatabase()

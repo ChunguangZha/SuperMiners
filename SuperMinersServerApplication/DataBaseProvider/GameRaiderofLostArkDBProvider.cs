@@ -29,10 +29,10 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select ttt.*, r.* from " +
                                     " (SELECT b.RaiderRoundID, b.UserName, sum(b.BetStones) as AllBetStones " + 
-                                    " FROM superminers.raiderplayerbetinfo b " +  
+                                    " FROM  raiderplayerbetinfo b " +  
                                     " where b.UserName = @UserName " +
                                     " group by b.RaiderRoundID  " + sqlOrderLimit + " ) ttt " +
-                                    "  left join  superminers.raiderroundmetadatainfo r  on ttt.RaiderRoundID = r.id ";
+                                    "  left join   raiderroundmetadatainfo r  on ttt.RaiderRoundID = r.id ";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextA;
@@ -72,7 +72,7 @@ namespace DataBaseProvider
             try
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
-                string sqlTextA = "SELECT * FROM superminers.raiderroundmetadatainfo where State = @State ";
+                string sqlTextA = "SELECT * FROM  raiderroundmetadatainfo where State = @State ";
 
                 string sqlOrderLimit = " order by id desc ";
                 if (pageItemCount > 0)
@@ -120,7 +120,7 @@ namespace DataBaseProvider
             try
             {
                 myconn = MyDBHelper.Instance.CreateConnection();
-                string sqlText = "SELECT * FROM superminers.raiderroundmetadatainfo order by id desc limit 1; ";
+                string sqlText = "SELECT * FROM  raiderroundmetadatainfo order by id desc limit 1; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlText;
                 myconn.Open();
@@ -160,7 +160,7 @@ namespace DataBaseProvider
             MySqlCommand mycmd = null;
             try
             {
-                string sqlText = "UPDATE superminers.raiderroundmetadatainfo " +
+                string sqlText = "UPDATE  raiderroundmetadatainfo " +
                     " set `State` = @State, `StartTime` = @StartTime, `AwardPoolSumStones` = @AwardPoolSumStones, `JoinedPlayerCount`=@JoinedPlayerCount, `WinnerUserName`=@WinnerUserName,`WinStones`=@WinStones,`EndTime`=@EndTime where `id` = @id ; ";
 
                 mycmd = myTrans.CreateCommand();
@@ -195,7 +195,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
                 //1. Save to DB
-                string sqlTextA = "insert into superminers.raiderroundmetadatainfo (`State`) values ( @State) ;";
+                string sqlTextA = "insert into  raiderroundmetadatainfo (`State`) values ( @State) ;";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextA;
@@ -204,7 +204,7 @@ namespace DataBaseProvider
                 mycmd.Dispose();
 
                 //2. Select from DB
-                string sqlTextB = "SELECT * FROM superminers.raiderroundmetadatainfo order by id desc limit 1; ";
+                string sqlTextB = "SELECT * FROM  raiderroundmetadatainfo order by id desc limit 1; ";
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextB;
 
@@ -243,7 +243,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
 
-                string sqlTextA = "SELECT * FROM superminers.raiderplayerbetinfo ";
+                string sqlTextA = "SELECT * FROM  raiderplayerbetinfo ";
 
                 string sqlWhere = "";
                 if (roundID > 0)
@@ -262,7 +262,7 @@ namespace DataBaseProvider
                         sqlWhere += " and ";
                     }
 
-                    sqlWhere += " UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ";
+                    sqlWhere += " UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ";
                     mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
 
@@ -276,7 +276,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -319,12 +319,10 @@ namespace DataBaseProvider
                 string sqlTextA = "";
 
 #if V1
-                sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`UserName`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@UserName,@BetStones,@Time) ;";
+                sqlTextA = "insert into  raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`UserName`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@UserName,@BetStones,@Time) ;";
 
-#endif
-
-#if V2
-                sqlTextA = "insert into superminers.raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@BetStones,@Time) ;";
+#else
+                sqlTextA = "insert into  raiderplayerbetinfo (`RaiderRoundID`,`UserID`,`BetStones`,`Time`) values ( @RaiderRoundID,@UserID,@BetStones,@Time) ;";
 
 #endif
 

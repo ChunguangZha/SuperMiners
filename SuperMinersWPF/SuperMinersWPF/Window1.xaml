@@ -136,9 +136,9 @@
                 <TextBlock Grid.Row="1" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.Exp, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Exp, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="1" Grid.Column="2" x:Name="btnInvitationFriends" Content="邀请好友" Style="{StaticResource UserInfoButtonStyle}" Click="btnInvitationFriends_Click"/>
-                <TextBlock Grid.Row="2" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="积分"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding ShoppingCreditsEnabled, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Grid.Row="2" Grid.Column="2" x:Name="btnGetCredits" Content="获取" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetCredits_Click"/>
+                <TextBlock Grid.Row="2" Name="lblShoppingCredits" Style="{StaticResource UserInfoTextBlockStyle}" Text="积分 "></TextBlock>
+                <TextBox Grid.Row="2" Grid.Column="1" Name="txtShoppingCredits" Text="{Binding ShoppingCreditsEnabled, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <Button Grid.Row="2" Grid.Column="2" x:Name="btnGetShoppingCredits" Content="获取" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetCredits_Click"/>
                 <TextBlock Grid.Row="3" Style="{StaticResource UserInfoTextBlockStyle}"><Run Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding RMB, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="3" Grid.Column="2" x:Name="btnGetMoney" Content="提现" Style="{StaticResource UserInfoButtonStyle}" Click="btnGetMoney_Click"/>
@@ -162,8 +162,9 @@
                 <TextBox Grid.Row="9" Grid.Column="1" Visibility="Collapsed" Text="{Binding StoneSellQuan, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <TextBlock Grid.Row="9" Grid.Column="0" Name="lblGravel" Text="碎片" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtGravel" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                
                 <Button Grid.Row="9" Grid.Column="2" Name="btnRequestGravel" Content="{Binding GravelButtonContent}" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
-                <Button Grid.Row="10" Grid.Column="2" Name="btnMakeAVowToGod" Content="神灵许愿(3)" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
+                <Button Grid.Row="10" Grid.Column="2" Name="btnMakeAVowToGod" Content="神灵许愿(3)" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMakeAVowToGod_Click"/>
                 <TextBlock Grid.Row="12" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
                 <TextBlock Grid.Row="13" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold" Visibility="{Binding OutputCountdownVisible}"><Run Text="距离下一次收益计算： "/><Run Text=" "/><Run Text="{Binding OutputCountdownString, Mode=OneWay}"/></TextBlock>
 

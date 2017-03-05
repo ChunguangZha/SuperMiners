@@ -71,7 +71,7 @@
                         </div>
                         <div class="menusplit"><div class="split"></div></div>
                         <div class="menuitem" style="background-image: url('../Images/menu-background_06.png');">
-                            <a id="A1" runat="server" href="~/">
+                            <a id="A1" runat="server" href="http://goto.xlore.net/">
                                 <div class="linkcontent">
                                     <div>
                                         联系我们

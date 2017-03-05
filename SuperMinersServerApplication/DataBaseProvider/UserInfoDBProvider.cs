@@ -26,7 +26,7 @@ namespace DataBaseProvider
                 myconn = MyDBHelper.Instance.CreateConnection();
                 mycmd = myconn.CreateCommand();
                 myconn.Open();
-                string sqlText = "SELECT count(id) as AllPlayerCount, sum(MinersCount) as AllMinersCount, sum(StonesReserves) as AllStonesReserves, sum(TotalProducedStonesCount) as AllProducedStonesCount,  sum(StockOfStones) as AllStockOfStones, sum(StonesReserves - TotalProducedStonesCount + StockOfStones) as AllStonesCount FROM superminers.playerfortuneinfo ;";
+                string sqlText = "SELECT count(id) as AllPlayerCount, sum(MinersCount) as AllMinersCount, sum(StonesReserves) as AllStonesReserves, sum(TotalProducedStonesCount) as AllProducedStonesCount,  sum(StockOfStones) as AllStockOfStones, sum(StonesReserves - TotalProducedStonesCount + StockOfStones) as AllStonesCount FROM  playerfortuneinfo ;";
                 mycmd.CommandText = sqlText;
 
                 DataTable dt = new DataTable();
@@ -297,7 +297,8 @@ namespace DataBaseProvider
 #if !V1
 
                     + ", `ShoppingCreditsEnabled`=@ShoppingCreditsEnabled,`ShoppingCreditsFreezed`=@ShoppingCreditsFreezed, `UserRemoteServerValidStopTime`=@UserRemoteServerValidStopTime, "
-                    + " `IsLongTermRemoteServiceUser`=@IsLongTermRemoteServiceUser,`UserRemoteServiceValidTimes`=@UserRemoteServiceValidTimes "
+                    + " `IsLongTermRemoteServiceUser`=@IsLongTermRemoteServiceUser,`UserRemoteServiceValidTimes`=@UserRemoteServiceValidTimes, "
+                    + " `MakeAVowToGodTime_DayofYear`=@MakeAVowToGodTime_DayofYear,`MakeAVowToGodTimesLastDay`=@MakeAVowToGodTimesLastDay "
 
 #endif
 
@@ -343,6 +344,9 @@ namespace DataBaseProvider
                 }
                 mycmd.Parameters.AddWithValue("@IsLongTermRemoteServiceUser", playerFortune.IsLongTermRemoteServiceUser);
                 mycmd.Parameters.AddWithValue("@UserRemoteServiceValidTimes", playerFortune.UserRemoteServiceValidTimes);
+
+                mycmd.Parameters.AddWithValue("@MakeAVowToGodTime_DayofYear", playerFortune.MakeAVowToGodTime_DayofYear);
+                mycmd.Parameters.AddWithValue("@MakeAVowToGodTimesLastDay", playerFortune.MakeAVowToGodTimesLastDay);
 
 #endif
 
@@ -1307,7 +1311,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " +
+                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " +
                                 " where a.`ReferrerUserID` = (select b.`id` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
@@ -1352,7 +1356,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM superminers.playersimpleinfo a " + 
+                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " + 
                                 " where a.`id` = (select b.`ReferrerUserID` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));

@@ -4,8 +4,9 @@
         xmlns:gameControl="clr-namespace:SuperMinersCustomServiceSystem.View.Controls.GameFunny"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="矿工管理员系统" Height="600" Width="800"
+        
         Loaded="Window_Loaded"
-        Closed="Window_Closed">
+        Closed="Window_Closed" WindowState="Maximized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

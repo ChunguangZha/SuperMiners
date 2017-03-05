@@ -25,6 +25,7 @@ namespace SuperMinersWPF.Views
     public partial class StackMarketControl : UserControl
     {
         private bool AlipayPaySucceed = false;
+        public Dictionary<int, string> DicPayType = new Dictionary<int, string>();
 
         public StackMarketControl()
         {
@@ -32,6 +33,21 @@ namespace SuperMinersWPF.Views
 
             this.DataContext = App.StackStoneVMObject;
 
+            BindPayTypeComboBox();
+        }
+
+        public void BindPayTypeComboBox()
+        {
+            DicPayType.Add((int)PayType.RMB, "灵币");
+
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                DicPayType.Add((int)PayType.Diamand, "钻石");
+            }
+            DicPayType.Add((int)PayType.Alipay, "支付宝");
+
+            this.cmbPayType.ItemsSource = DicPayType;
+            this.cmbPayType.SelectedValue = (int)PayType.RMB;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -44,6 +60,10 @@ namespace SuperMinersWPF.Views
             {
                 this.btnBuyStone.IsEnabled = false;
             }
+
+            this.sliderPrice.Maximum = (double)App.StackStoneVMObject.TodayStackInfo.LimitUpPrice;
+            this.sliderPrice.Minimum = (double)App.StackStoneVMObject.TodayStackInfo.LimitDownPrice;
+            this.sliderPrice.Value = (double)App.StackStoneVMObject.TodayStackInfo.OpenPrice;
         }
         
         public void AddEventHandlers()
@@ -52,6 +72,7 @@ namespace SuperMinersWPF.Views
             App.StackStoneVMObject.MarketClosed += StackStoneVMObject_MarketClosed;
             GlobalData.Client.DelegateBuyStoneCompleted += Client_DelegateBuyStoneCompleted;
             App.StoneOrderVMObject.DelegateBuyStoneAlipayPaySucceed += StoneOrderVMObject_DelegateBuyStoneAlipayPaySucceed;
+            App.StackStoneVMObject.GetTodayStackRecordInfoCompleted += StackStoneVMObject_GetTodayStackRecordInfoCompleted;
         }
 
         public void RemoveEventHandlers()
@@ -59,7 +80,24 @@ namespace SuperMinersWPF.Views
             App.StackStoneVMObject.MarketOpened -= StackStoneVMObject_MarketOpened;
             App.StackStoneVMObject.MarketClosed -= StackStoneVMObject_MarketClosed;
             GlobalData.Client.DelegateBuyStoneCompleted -= Client_DelegateBuyStoneCompleted;
-            App.StoneOrderVMObject.DelegateBuyStoneAlipayPaySucceed += StoneOrderVMObject_DelegateBuyStoneAlipayPaySucceed;
+            App.StoneOrderVMObject.DelegateBuyStoneAlipayPaySucceed -= StoneOrderVMObject_DelegateBuyStoneAlipayPaySucceed;
+            App.StackStoneVMObject.GetTodayStackRecordInfoCompleted -= StackStoneVMObject_GetTodayStackRecordInfoCompleted;
+        }
+
+        void StackStoneVMObject_GetTodayStackRecordInfoCompleted(MetaData.Game.StoneStack.StoneStackDailyRecordInfo obj)
+        {
+            if (this.btnBuyStone.IsEnabled)
+            {
+                //防止重复设置
+                return;
+            }
+            if (App.StackStoneVMObject.TodayStackInfo != null)
+            {
+                this.sliderPrice.Value = (double)App.StackStoneVMObject.TodayStackInfo.OpenPrice;
+                this.sliderPrice.Minimum = (double)App.StackStoneVMObject.TodayStackInfo.LimitDownPrice;
+                this.sliderPrice.Maximum = (double)App.StackStoneVMObject.TodayStackInfo.LimitUpPrice;
+                this.numPrice.Text = this.sliderPrice.Value.ToString();
+            }
         }
 
         void StackStoneVMObject_MarketClosed()
@@ -77,11 +115,6 @@ namespace SuperMinersWPF.Views
             if (App.StackStoneVMObject.TodayStackInfo != null && App.StackStoneVMObject.TodayStackInfo.MarketState != MetaData.Game.StoneStack.StackMarketState.Closed)
             {
                 this.btnBuyStone.IsEnabled = true;
-
-                this.sliderPrice.Value = (double)App.StackStoneVMObject.TodayStackInfo.OpenPrice;
-                this.sliderPrice.Minimum = (double)App.StackStoneVMObject.TodayStackInfo.LimitDownPrice;
-                this.sliderPrice.Maximum = (double)App.StackStoneVMObject.TodayStackInfo.LimitUpPrice;
-                this.numPrice.Text = this.sliderPrice.Value.ToString();
             }
             else
             {
@@ -120,39 +153,39 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            PayType paytype;
-            if (this.cmbPayType.SelectedIndex == 0)
-            {
-                paytype = PayType.RMB;
-            }
-            else if (this.cmbPayType.SelectedIndex == 1)
-            {
-                paytype = PayType.Alipay;
-            }
-            else
-            {
-                MyMessageBox.ShowInfo("请选择支付方式");
-                return;
-            }
+            PayType paytype = (PayType)this.cmbPayType.SelectedValue;
+            //if (this.cmbPayType.SelectedIndex == 0)
+            //{
+            //    paytype = PayType.RMB;
+            //}
+            //else if (this.cmbPayType.SelectedIndex == 1)
+            //{
+            //    paytype = PayType.Alipay;
+            //}
+            //else
+            //{
+            //    MyMessageBox.ShowInfo("请选择支付方式");
+            //    return;
+            //}
 
-            //if (paytype == PayType.RMB)
-            //{
-            //    decimal money = (buyStoneHandsCount * GlobalData.GameConfig.HandStoneCount) / GlobalData.GameConfig.Stones_RMB;
-            //    if (money > GlobalData.CurrentUser.RMB)
-            //    {
-            //        MyMessageBox.ShowInfo("账户余额不足，请充值。");
-            //        return;
-            //    }
-            //}
-            //else if (paytype == PayType.Diamand)
-            //{
-            //    decimal valueDiamond = count * GlobalData.GameConfig.RMB_Mine * GlobalData.GameConfig.Diamonds_RMB;
-            //    if (valueDiamond > GlobalData.CurrentUser.StockOfDiamonds)
-            //    {
-            //        MyMessageBox.ShowInfo("账户余额不足，请充值。");
-            //        return;
-            //    }
-            //}
+            if (paytype == PayType.RMB)
+            {
+                decimal money = buyStoneHandsCount * price;
+                if (money > GlobalData.CurrentUser.RMB)
+                {
+                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    return;
+                }
+            }
+            else if (paytype == PayType.Diamand)
+            {
+                decimal valueDiamond = buyStoneHandsCount * price / GlobalData.GameConfig.Diamonds_RMB;
+                if (valueDiamond > GlobalData.CurrentUser.StockOfDiamonds)
+                {
+                    MyMessageBox.ShowInfo("账户余额不足，请充值。");
+                    return;
+                }
+            }
             this.AlipayPaySucceed = false;
             App.BusyToken.ShowBusyWindow("正在提交订单...");
             GlobalData.Client.DelegateBuyStone(buyStoneHandsCount, price, paytype, paytype);

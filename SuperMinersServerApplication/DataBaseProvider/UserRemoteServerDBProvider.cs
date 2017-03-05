@@ -17,7 +17,7 @@ namespace DataBaseProvider
             UserRemoteServerItem[] items = null;
             MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
             {
-                string sqlText = "select * from `superminers`.`userremoteserveritem` ";
+                string sqlText = "select * from userremoteserveritem ";
                 mycmd.CommandText = sqlText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
                 DataTable table = new DataTable();
@@ -30,7 +30,7 @@ namespace DataBaseProvider
 
                 if (items == null || items.Length == 0)
                 {
-                    string insertText = "insert into `superminers`.`userremoteserveritem` (`ServerType`,`PayMoneyYuan`,`ShopName`,`Description`) values (@Type1,@Money1,@ShopName1,@Description1), (@Type2,@Money2,@ShopName2,@Description2), (@Type3,@Money3,@ShopName3,@Description3), (@Type4,@Money4,@ShopName4,@Description4)";
+                    string insertText = "insert into userremoteserveritem (`ServerType`,`PayMoneyYuan`,`ShopName`,`Description`) values (@Type1,@Money1,@ShopName1,@Description1), (@Type2,@Money2,@ShopName2,@Description2), (@Type3,@Money3,@ShopName3,@Description3), (@Type4,@Money4,@ShopName4,@Description4)";
 
                     mycmd.CommandText = insertText;
                     mycmd.Parameters.AddWithValue("@Type1", (int)RemoteServerType.Once);
@@ -117,7 +117,7 @@ namespace DataBaseProvider
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" a.UserID = ( select id from superminers.playersimpleinfo where UserName = @UserName )");
+                    builder.Append(" a.UserID = ( select id from  playersimpleinfo where UserName = @UserName )");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -154,7 +154,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
 
                 mycmd.CommandText = sqlAllText;
@@ -223,7 +223,7 @@ namespace DataBaseProvider
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(playerUserName))
                 {
-                    builder.Append(" a.UserID = ( select id from superminers.playersimpleinfo where UserName = @UserName )");
+                    builder.Append(" a.UserID = ( select id from  playersimpleinfo where UserName = @UserName )");
                     string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -260,7 +260,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
 
                 mycmd.CommandText = sqlAllText;

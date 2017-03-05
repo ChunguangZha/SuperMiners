@@ -29,7 +29,19 @@ namespace DataBaseProvider
 
         #endregion
 
-        internal static readonly string CONNECTIONSTRING = "server=localhost;port=13344; uid=xunlingDBA;pwd=xl985!@6XL;database=superminers;charset=utf8; pooling=false; Keep Alive=5; Allow User Variables=True;";
+        internal static readonly string CONNECTIONSTRING = "server=localhost;port=13344; uid=xunlingDBA;pwd=xl985!@6XL;database=" + DataBaseServerName + ";charset=utf8; pooling=false; Keep Alive=5; Allow User Variables=True;";
+
+        public static string DataBaseServerName
+        {
+            get
+            {
+#if V1
+                return "superminers";
+#else
+                return "xunlingmine2";
+#endif
+            }
+        }
 
         public MySqlConnection CreateConnection()
         {

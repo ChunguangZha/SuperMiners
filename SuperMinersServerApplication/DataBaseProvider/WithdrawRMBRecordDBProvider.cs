@@ -103,10 +103,10 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
                                     " (SELECT w.* " +
-                                    " FROM superminers.withdrawrmbrecord w " +
+                                    " FROM  withdrawrmbrecord w " +
                                     " where w.id = @id " +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.PlayerUserID = s.id ";
 
                 mycmd.Parameters.AddWithValue("@id", id);
 
@@ -149,10 +149,10 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
                                     " (SELECT w.* " +
-                                    " FROM superminers.withdrawrmbrecord w " +
+                                    " FROM  withdrawrmbrecord w " +
                                     " where w.PlayerUserID = @PlayerUserID order by CreateTime desc limit 1 " +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.PlayerUserID = s.id ";
 
                 mycmd.Parameters.AddWithValue("@PlayerUserID", playerUserID);
 
@@ -195,10 +195,10 @@ namespace DataBaseProvider
 
                 string sqlTextA = "select ttt.*, s.UserName as PlayerUserName from " +
                                     " (SELECT w.* " +
-                                    " FROM superminers.withdrawrmbrecord w " +
-                                    " where w.PlayerUserID = (select id from superminers.playersimpleinfo where UserName=@UserName ) and w.RMBWithdrawState = @RMBWithdrawState and w.WidthdrawRMB = @WidthdrawRMB and w.CreateTime = @CreateTime  " +
+                                    " FROM  withdrawrmbrecord w " +
+                                    " where w.PlayerUserID = (select id from  playersimpleinfo where UserName=@UserName ) and w.RMBWithdrawState = @RMBWithdrawState and w.WidthdrawRMB = @WidthdrawRMB and w.CreateTime = @CreateTime  " +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.PlayerUserID = s.id ";
 
                 string encrypedUserName = DESEncrypt.EncryptDES(playerUserName);
                 mycmd.Parameters.AddWithValue("@UserName", encrypedUserName);
@@ -272,7 +272,7 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    builder.Append(" PlayerUserID = (select id from superminers.playersimpleinfo where UserName=@UserName ) ");
+                    builder.Append(" PlayerUserID = (select id from  playersimpleinfo where UserName=@UserName ) ");
                     string encrypedUserName = DESEncrypt.EncryptDES(playerUserName);
                     mycmd.Parameters.AddWithValue("@UserName", encrypedUserName);
                 }
@@ -347,7 +347,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as PlayerUserName from " +
                                     " ( " +sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.PlayerUserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.PlayerUserID = s.id ";
 
 
                 mycmd.CommandText = sqlAllText;

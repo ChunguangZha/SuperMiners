@@ -158,10 +158,7 @@
                     <TextBox Grid.Row="2" Grid.Column="2" x:Name="numPrice" IsReadOnly="True" Margin="10,5"/>
                     <Slider Grid.Row="3" Grid.Column="1" Name="sliderPrice" Value="100" Minimum="100" Maximum="110" SmallChange="0.01" Margin="5" ValueChanged="sliderPrice_ValueChanged" LargeChange="0.01" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="支付" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,5"/>
-                    <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbPayType" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,5" SelectedIndex="0">
-                        <ComboBoxItem Content="灵币"/>
-                        <ComboBoxItem Content="支付宝"/>
-                    </ComboBox>
+                    <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbPayType" SelectedValuePath="Key" DisplayMemberPath="Value" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="10,5" SelectedIndex="0"/>
                     <Button Grid.Row="5" Grid.ColumnSpan="2" Name="btnBuyStone" Content="挂单购买" Style="{StaticResource UserInfoButtonStyle}" Width="100" Height="30" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Center" Click="btnBuyStone_Click"/>
                 </Grid>
             </TabItem>

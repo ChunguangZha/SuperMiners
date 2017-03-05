@@ -311,6 +311,42 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public MakeAVowToGodResult MakeAVowToGod(int gravelValue)
+        {
+            MakeAVowToGodResult result = new MakeAVowToGodResult();
+
+            lock (_lockFortuneAction)
+            {
+                int todayOfYear = DateTime.Now.DayOfYear;
+                if (this.BasePlayer.FortuneInfo.MakeAVowToGodTime_DayofYear == todayOfYear)
+                {
+                    if (this.BasePlayer.FortuneInfo.MakeAVowToGodTimesLastDay > GlobalConfig.GameConfig.MaxMakeAVowTimesOfOneDay)
+                    {
+                        result.OperResultCode = OperResult.RESULTCODE_MAKEAVOWTIMESOUT;
+                        return result;
+                    }
+                }
+
+                this.BasePlayer.FortuneInfo.MakeAVowToGodTime_DayofYear = todayOfYear;
+                this.BasePlayer.FortuneInfo.MakeAVowToGodTimesLastDay += 1;
+
+                result.OperResultCode = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+                {
+                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    return OperResult.RESULTCODE_TRUE;
+                },
+                exc =>
+                {
+                    this.RefreshFortune();
+                    LogHelper.Instance.AddErrorLog("玩家[ " + this.BasePlayer.SimpleInfo.UserName + "] Save MakeAVowToGod Failed ", exc);
+                });
+
+                result.GravelResult = gravelValue;
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -951,6 +987,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     WithdrawRMBRecord record = new WithdrawRMBRecord()
                     {
+                        PlayerUserID = this.BasePlayer.SimpleInfo.UserID,
                         PlayerUserName = this.BasePlayer.SimpleInfo.UserName,
                         AlipayAccount = this.BasePlayer.SimpleInfo.Alipay,
                         AlipayRealName = this.BasePlayer.SimpleInfo.AlipayRealName,

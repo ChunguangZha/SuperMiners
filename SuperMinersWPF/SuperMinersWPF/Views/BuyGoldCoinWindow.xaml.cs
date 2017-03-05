@@ -27,10 +27,32 @@ namespace SuperMinersWPF.Views
         private SynchronizationContext _syn;
         private bool AlipayPaySucceed = false;
 
+        public Dictionary<int, string> DicPayType = new Dictionary<int, string>();
+
         public BuyGoldCoinWindow()
         {
             InitializeComponent();
             _syn = SynchronizationContext.Current;
+
+            BindPayTypeComboBox();
+        }
+
+        public void BindPayTypeComboBox()
+        {
+            DicPayType.Add((int)PayType.RMB, "灵币");
+
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                DicPayType.Add((int)PayType.Diamand, "钻石");
+            }
+            else if (GlobalData.ServerType == ServerType.Server2)
+            {
+                DicPayType.Add((int)PayType.Credits, "积分");
+            }
+            DicPayType.Add((int)PayType.Alipay, "支付宝");
+
+            this.cmbPayType.ItemsSource = DicPayType;
+            this.cmbPayType.SelectedValue = (int)PayType.RMB;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -106,7 +128,8 @@ namespace SuperMinersWPF.Views
                 App.UserVMObject.AsyncGetPlayerInfo();
                 _syn.Post(p =>
                 {
-                    this.DialogResult = true;
+                    //this.DialogResult = true;
+                    this.Close();
                 }, null);
             }
             catch (Exception exc)
@@ -117,17 +140,7 @@ namespace SuperMinersWPF.Views
 
         private PayType GetPayType()
         {
-            PayType payType = PayType.RMB;
-
-            if (this.cmbPayType.SelectedIndex == 0)
-            {
-                payType = PayType.RMB;
-            }
-            else if (this.cmbPayType.SelectedIndex == 1)
-            {
-                payType = PayType.Credits;
-            }
-
+            PayType payType = (PayType)this.cmbPayType.SelectedValue;
             return payType;
         }
 

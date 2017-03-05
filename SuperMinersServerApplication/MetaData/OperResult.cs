@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace MetaData
 {
+    public class MakeAVowToGodResult
+    {
+        public int OperResultCode = OperResult.RESULTCODE_FALSE;
+
+        public int GravelResult;
+    }
+
     [DataContract]
     public class OperResultObject
     {
@@ -170,6 +177,11 @@ namespace MetaData
         public const int RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR = 512;
 
         /// <summary>
+        /// 玩家神灵许愿次数超限
+        /// </summary>
+        public const int RESULTCODE_MAKEAVOWTIMESOUT = 523;
+
+        /// <summary>
         /// 订单不存在
         /// </summary>
         public const int RESULTCODE_ORDER_NOT_EXIST = 600;
@@ -329,6 +341,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED, "该账户已经登录过");
             _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR, "服务类型选择失败");
             _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR, "支付金额错误");
+            _resultCode_Msg.Add(RESULTCODE_MAKEAVOWTIMESOUT, "您许愿次数超限，每天最多可以许3次");
         }
 
         public static string GetMsg(int resultCode)

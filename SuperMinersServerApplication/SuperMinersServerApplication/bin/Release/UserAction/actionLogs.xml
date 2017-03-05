@@ -797,7 +797,7 @@
     <ActionType>Login</ActionType>
     <OperNumber>0</OperNumber>
     <Remark />
-    <Time>2017-02-20T02:05:01.3819582+08:00</Time>
+    <Time>2017-02-20T02:05:01</Time>
     <LastLoginTimeString>2017/2/20 2:05:01</LastLoginTimeString>
   </PlayerActionLog>
 </ArrayOfPlayerActionLog>

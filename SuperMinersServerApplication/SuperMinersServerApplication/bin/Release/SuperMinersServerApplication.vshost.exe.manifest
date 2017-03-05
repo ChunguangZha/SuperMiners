@@ -50,19 +50,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aCOp02Bt4SLwlzI6fqHUyuA+kPMZq1p4zIT4W7a3XQM=</dsig:DigestValue>
+        <dsig:DigestValue>2RKw8ibB6JB63LijFAbjhklwYIcig01k2ypskIB0gVU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="63488">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="64000">
       <assemblyIdentity name="MetaData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>szrjswPEI+6dvixE4gQO1Xf23VYlpDEghyyGzL0yXP0=</dsig:DigestValue>
+        <dsig:DigestValue>fL07nDIMlt2j4zD1/N7ZJs32BEoRVIanHCDlaeEw4co=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,14 +79,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="544256">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersServerApplication.exe" size="545280">
       <assemblyIdentity name="SuperMinersServerApplication" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>4bsEt/oV9I/GErvejPXFAn+L+s54UjBwmQPla4DmK4U=</dsig:DigestValue>
+        <dsig:DigestValue>YGexWcJAkwGFmHihuJ/4OVWSNDOOX9MMzsg/IOX1iZc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>007BVk0P1KzijXTw3msBOuhkuLMr9yU+890n6i9Jw6I=</dsig:DigestValue>
+        <dsig:DigestValue>Z4aBHVRyqdB7fTQ9H6GQyRvj5BaTprwLA11U46Lkj10=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

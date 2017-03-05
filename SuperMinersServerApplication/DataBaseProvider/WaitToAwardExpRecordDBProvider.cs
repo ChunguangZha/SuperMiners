@@ -21,7 +21,7 @@ namespace DataBaseProvider
 
                 myconn = MyDBHelper.Instance.CreateConnection();
                 myconn.Open();
-                string cmdText = "select * from superminers.waittoawardexprecord where NewRegisterUserNme = @NewRegisterUserNme ";
+                string cmdText = "select * from  waittoawardexprecord where NewRegisterUserNme = @NewRegisterUserNme ";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@NewRegisterUserNme", DESEncrypt.EncryptDES(newRegisterUserName));
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

@@ -210,6 +210,35 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
+        public MakeAVowToGodResult MakeAVowToGod(string token, string userName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                MakeAVowToGodResult result = new MakeAVowToGodResult();
+
+                try
+                {
+                    if (ClientManager.GetClientUserName(token) != userName)
+                    {
+                        result.OperResultCode = OperResult.RESULTCODE_USER_NOT_EXIST;
+                        return result;
+                    }
+                    result = PlayerController.Instance.MakeAVowToGod(userName);
+                    return result;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("玩家[" + userName + "] 神灵许愿异常", exc);
+                    result.OperResultCode = OperResult.RESULTCODE_EXCEPTION;
+                    return result;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         public TopListInfo[] GetExpTopList(string token)
         {
 #if Delay

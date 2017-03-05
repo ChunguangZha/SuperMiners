@@ -392,13 +392,17 @@ namespace SuperMinersWPF.ViewModels
                         }
                     }
 
-                    if (GetTodayStackRecordInfoCompleted != null)
-                    {
-                        GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
-                    }
                     if (MarketOpened != null)
                     {
                         MarketOpened();
+                    }
+                }
+
+                if (e.Result != null && e.Result.DailyInfo.Day != null)
+                {
+                    if (GetTodayStackRecordInfoCompleted != null)
+                    {
+                        GetTodayStackRecordInfoCompleted(e.Result.DailyInfo);
                     }
                 }
             }

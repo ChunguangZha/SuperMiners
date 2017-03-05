@@ -126,5 +126,14 @@ namespace SuperMinersCustomServiceSystem
                 this._player.SetLastGatherStoneTime(win.DataTimeValue.ToDateTime());
             }
         }
+
+        private void btnEditDiamonds_Click(object sender, RoutedEventArgs e)
+        {
+            EditPlayerDiamondsWindow win = new EditPlayerDiamondsWindow(this._player.UserLoginName, this._player.StockOfDiamonds, this._player.FreezingDiamonds);
+            if (win.ShowDialog() == true)
+            {
+                this._player.SetStockOfDiamonds(win.ChangedStackDiamonds, win.ChangedFreezingDiamonds);
+            }
+        }
     }
 }

@@ -244,6 +244,9 @@ namespace DataBaseProvider
                 player.FortuneInfo.IsLongTermRemoteServiceUser = Convert.ToBoolean(dt.Rows[i]["IsLongTermRemoteServiceUser"]);
                 player.FortuneInfo.UserRemoteServiceValidTimes = Convert.ToInt32(dt.Rows[i]["UserRemoteServiceValidTimes"]);
 
+                player.FortuneInfo.MakeAVowToGodTime_DayofYear = Convert.ToInt32(dt.Rows[i]["MakeAVowToGodTime_DayofYear"]);
+                player.FortuneInfo.MakeAVowToGodTimesLastDay = Convert.ToInt32(dt.Rows[i]["MakeAVowToGodTimesLastDay"]);
+
 #endif
 
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);

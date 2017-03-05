@@ -427,6 +427,15 @@ namespace SuperMinersCustomServiceSystem.Model
             get { return this._parentObject.FortuneInfo.StockOfDiamonds; }
         }
 
+        public void SetStockOfDiamonds(decimal newStackDiamonds, decimal newFreezingDiamonds)
+        {
+            this._parentObject.FortuneInfo.StockOfDiamonds = newStackDiamonds;
+            NotifyPropertyChange("StockOfDiamonds");
+
+            this._parentObject.FortuneInfo.FreezingDiamonds = newFreezingDiamonds;
+            NotifyPropertyChange("FreezingDiamonds");
+        }
+
         public decimal FreezingDiamonds
         {
             get { return this._parentObject.FortuneInfo.FreezingDiamonds; }

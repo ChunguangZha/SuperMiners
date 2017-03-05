@@ -49,6 +49,8 @@ namespace SuperMinersServerApplication.Controller
         //public decimal AllMiners { get; private set; }
         //public decimal AllOutputStones { get; private set; }
 
+        private Random _randomMakeAVow = new Random();
+
         private ConcurrentDictionary<string, PlayerRunnable> _dicOnlinePlayerRuns = new ConcurrentDictionary<string, PlayerRunnable>();
 
         #endregion
@@ -1266,6 +1268,21 @@ namespace SuperMinersServerApplication.Controller
 
             resultObj.OperResultCode = result;
             return resultObj;
+        }
+
+        public MakeAVowToGodResult MakeAVowToGod(string userName)
+        {
+            MakeAVowToGodResult result = new MakeAVowToGodResult();
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null)
+            {
+                result.OperResultCode = OperResult.RESULTCODE_REGISTER_USERNAME_EXIST;
+                return result;
+            }
+
+            int gravel = this._randomMakeAVow.Next(GlobalConfig.GameConfig.MaxMakeAVowToGodGravelValue);
+            result = playerrun.MakeAVowToGod(gravel);
+            return result;
         }
 
         public int PayWithdrawRMB(WithdrawRMBRecord record)

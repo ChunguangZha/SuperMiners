@@ -78,7 +78,7 @@ namespace DataBaseProvider
                 StringBuilder builder = new StringBuilder();
                 if (!string.IsNullOrEmpty(userName))
                 {
-                    builder.Append(" a.UserID = ( select id from superminers.playersimpleinfo where UserName = @UserName ) ");
+                    builder.Append(" a.UserID = ( select id from  playersimpleinfo where UserName = @UserName ) ");
                     mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
                 if (startDate != null && !startDate.IsNull && endDate != null && !endDate.IsNull)
@@ -115,7 +115,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + cmdText + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join playersimpleinfo s  on ttt.UserID = s.id ";
                 
                 mycmd.CommandText = sqlAllText;
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

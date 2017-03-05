@@ -506,7 +506,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextB +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
 
@@ -652,7 +652,7 @@ namespace DataBaseProvider
                     {
                         builder.Append(" and ");
                     }
-                    builder.Append(" r.UserID = ( select id from  superminers.playersimpleinfo where UserName = @UserName ) ");
+                    builder.Append(" r.UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ");
                     string encryptUserName = DESEncrypt.EncryptDES(UserName);
                     mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
                 }
@@ -729,7 +729,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlTextA + sqlWhere + sqlOrderLimit +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd.CommandText = sqlAllText;
                 myconn.Open();
@@ -779,7 +779,7 @@ namespace DataBaseProvider
                 string sqlAllText = "select ttt.*, s.UserName as UserName from " +
                                     " ( " + sqlText +
                                     " ) ttt " +
-                                    "  left join  superminers.playersimpleinfo s  on ttt.UserID = s.id ";
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlAllText;

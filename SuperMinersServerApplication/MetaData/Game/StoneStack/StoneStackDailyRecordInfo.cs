@@ -13,9 +13,9 @@ namespace MetaData.Game.StoneStack
         [DataMember]
         public MyDateTime Day;
 
+        [DataMember]
         private decimal _openPrice;
 
-        [DataMember]
         public decimal OpenPrice
         {
             get
@@ -24,9 +24,13 @@ namespace MetaData.Game.StoneStack
             }
             set
             {
-                if (value < SystemConfig.GameConfig.StackMarketMinPrice)
+
+#if MetaData
+#if V1
+
+                if (value < SystemConfig.GameConfig.Server1StackMarketMinPrice)
                 {
-                    this._openPrice = SystemConfig.GameConfig.StackMarketMinPrice;
+                    this._openPrice = SystemConfig.GameConfig.Server1StackMarketMinPrice;
                 }
                 else
                 {
@@ -36,11 +40,40 @@ namespace MetaData.Game.StoneStack
                 {
                     this.LimitUpPrice = Math.Round(this._openPrice * 1.1m, 2);
                     this.LimitDownPrice = Math.Round(this._openPrice * 0.9m, 2);
-                    if (this.LimitDownPrice < SystemConfig.GameConfig.StackMarketMinPrice)
+                    if (this.LimitDownPrice < SystemConfig.GameConfig.Server1StackMarketMinPrice)
                     {
-                        this.LimitDownPrice = SystemConfig.GameConfig.StackMarketMinPrice;
+                        this.LimitDownPrice = SystemConfig.GameConfig.Server1StackMarketMinPrice;
                     }
                 }
+
+#else
+                
+                if (value < SystemConfig.GameConfig.Server2StackMarketMinPrice)
+                {
+                    this._openPrice = SystemConfig.GameConfig.Server2StackMarketMinPrice;
+                }
+                else
+                {
+                    this._openPrice = value;
+                }
+                if (this._openPrice != 0)
+                {
+                    this.LimitUpPrice = Math.Round(this._openPrice * 1.1m, 2);
+                    this.LimitDownPrice = Math.Round(this._openPrice * 0.9m, 2);
+                    if (this.LimitDownPrice < SystemConfig.GameConfig.Server2StackMarketMinPrice)
+                    {
+                        this.LimitDownPrice = SystemConfig.GameConfig.Server2StackMarketMinPrice;
+                    }
+                }
+
+#endif
+
+#else
+
+                this._openPrice = value;
+
+#endif
+
             }
         }
 

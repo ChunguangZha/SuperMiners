@@ -13,7 +13,7 @@ namespace DataBaseProvider
     public class GambleStoneDBProvider
     {
         private static readonly string GambleStoneInningInfoTableNamePrefix = "gamblestoneinninginfo";
-        private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `superminers`.`" + GambleStoneInningInfoTableNamePrefix + "{0}` (" +
+        private string sqlCreateGambleStoneInningInfoTable = "CREATE TABLE `" + GambleStoneInningInfoTableNamePrefix + "{0}` (" +
                                                             " `id` VARCHAR(40) NOT NULL," +
                                                             " `InningIndex` INT NOT NULL," +
                                                             " `RoundID` INT UNSIGNED NOT NULL," +
@@ -31,15 +31,15 @@ namespace DataBaseProvider
                                                             " INDEX `GambleStoneInningInfo{0}_FK_GambleRoundID_idx` (`RoundID` ASC)," +
                                                             " CONSTRAINT `GambleStoneInningInfo{0}_FK_GambleRoundID`" +
                                                             "   FOREIGN KEY (`RoundID`)" +
-                                                            "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`)" +
+                                                            "   REFERENCES `gamblestoneroundinfo` (`id`)" +
                                                             "   ON DELETE CASCADE" +
                                                             "   ON UPDATE CASCADE);";
 
-//        ALTER TABLE `superminers`.`gamblestoneinninginfo201702` 
+//        ALTER TABLE `gamblestoneinninginfo201702` 
         //ADD COLUMN `State` TINYINT(1) NOT NULL DEFAULT 9 COMMENT 'Readying=0;BetInWaiting=1;Opening=2;Finished=9;' AFTER `WinnedOutStone`;
 
         private static readonly string GambleStonePlayerBetRecordTableNamePrefix = "gamblestoneplayerbetrecord";
-        private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `superminers`.`" + GambleStonePlayerBetRecordTableNamePrefix + "{0}` ( " +
+        private string sqlCreateGambleStonePlayerBetRecordTable = "CREATE TABLE `" + GambleStonePlayerBetRecordTableNamePrefix + "{0}` ( " +
                                                                  " `id` INT UNSIGNED NOT NULL AUTO_INCREMENT, " +
                                                                  " `UserID` INT UNSIGNED NOT NULL, " +
                                                                  " `Time` DATETIME NOT NULL, " +
@@ -57,22 +57,22 @@ namespace DataBaseProvider
                                                                  " INDEX `GambleStonePlayerBetRecord{0}_FK_GambleRoundID_idx` (`RoundID` ASC), " +
                                                                  " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_UserID` " +
                                                                  "   FOREIGN KEY (`UserID`) " +
-                                                                 "   REFERENCES `superminers`.`playersimpleinfo` (`id`) " +
+                                                                 "   REFERENCES `playersimpleinfo` (`id`) " +
                                                                  "   ON DELETE CASCADE " +
                                                                  "   ON UPDATE CASCADE, " +
                                                                  " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_GambleStoneRoundID` " +
                                                                  "   FOREIGN KEY (`RoundID`) " +
-                                                                 "   REFERENCES `superminers`.`gamblestoneroundinfo` (`id`) " +
+                                                                 "   REFERENCES `gamblestoneroundinfo` (`id`) " +
                                                                  "   ON DELETE CASCADE " +
                                                                  "   ON UPDATE CASCADE, " +
                                                                  " CONSTRAINT `GambleStonePlayerBetRecord{0}_FK_GambleStoneInningID` " +
                                                                  "   FOREIGN KEY (`InningID`) " +
-                                                                 "   REFERENCES `superminers`.`gamblestoneinninginfo{0}` (`id`) " +
+                                                                 "   REFERENCES `gamblestoneinninginfo{0}` (`id`) " +
                                                                  "   ON DELETE CASCADE " +
                                                                  "   ON UPDATE CASCADE); ";
 
 
-//        ALTER TABLE `superminers`.`gamblestoneplayerbetrecord201702` 
+//        ALTER TABLE `gamblestoneplayerbetrecord201702` 
 //ADD COLUMN `InningIndex` INT NOT NULL DEFAULT 0 AFTER `InningID`;
 
 
@@ -234,7 +234,7 @@ namespace DataBaseProvider
             {
                 string tableName = GambleStoneInningInfoTableNamePrefix + round.TableName;
                 mycmd = myTrans.CreateCommand();
-                string sqlSelectTableText = "show tables where Tables_in_superminers = @tableName ";
+                string sqlSelectTableText = "show tables where Tables_in_" + MyDBHelper.DataBaseServerName + " = @tableName ";
                 mycmd.CommandText = sqlSelectTableText;
                 mycmd.Parameters.AddWithValue("@tableName", tableName);
                 DataTable table = new DataTable();
@@ -280,7 +280,7 @@ namespace DataBaseProvider
             {
                 string tableName = GambleStonePlayerBetRecordTableNamePrefix + tableNameSuffix;
                 mycmd = myTrans.CreateCommand();
-                string sqlSelectTableText = "show tables where Tables_in_superminers = @tableName ";
+                string sqlSelectTableText = "show tables where Tables_in_" + MyDBHelper.DataBaseServerName + " = @tableName ";
                 mycmd.CommandText = sqlSelectTableText;
                 mycmd.Parameters.AddWithValue("@tableName", tableName);
                 DataTable table = new DataTable();
@@ -346,7 +346,7 @@ namespace DataBaseProvider
             {
                 string tableName = GambleStonePlayerBetRecordTableNamePrefix + year.ToString("0000") + month.ToString("00");
 
-                string sqlSelectTableName = "show tables where Tables_in_superminers = '" + tableName + "'";
+                string sqlSelectTableName = "show tables where Tables_in_" + MyDBHelper.DataBaseServerName + " = '" + tableName + "'";
                 mycmd.CommandText = sqlSelectTableName;
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);

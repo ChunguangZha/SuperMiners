@@ -5,6 +5,7 @@ using SuperMinersWPF.Views;
 using SuperMinersWPF.Views.Windows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -47,7 +48,10 @@ namespace SuperMinersWPF
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
 
-                this.btnGetCredits.IsEnabled = true;
+                this.lblShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+                this.txtShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+                this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+
                 this.btnInvitationFriends.IsEnabled = true;
                 this.btnGetMoney.IsEnabled = true;
                 this.btnStonesSell.IsEnabled = true;
@@ -63,7 +67,10 @@ namespace SuperMinersWPF
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Visible;
                 this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Visible;
 
-                this.btnGetCredits.IsEnabled = false;
+                this.lblShoppingCredits.Visibility = System.Windows.Visibility.Visible;
+                this.txtShoppingCredits.Visibility = System.Windows.Visibility.Visible;
+                this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Visible;
+                
                 this.btnInvitationFriends.IsEnabled = false;
                 this.btnGetMoney.IsEnabled = false;
                 this.btnStonesSell.IsEnabled = false;
@@ -435,10 +442,15 @@ namespace SuperMinersWPF
 
         private void btnGetCredits_Click(object sender, RoutedEventArgs e)
         {
-
+            Process.Start(new ProcessStartInfo("http://goto.xlore.net/"));
         }
 
         private void btnExchangeDiamonds_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnMakeAVowToGod_Click(object sender, RoutedEventArgs e)
         {
 
         }

@@ -54,6 +54,14 @@ namespace SuperMinersServerApplication.WebService.Contracts
         int GatherStones(string token, string userName, decimal stones);
 
         [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/MakeAVowToGod",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        MakeAVowToGodResult MakeAVowToGod(string token, string userName);
+
+        [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/GetExpTopList",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,

@@ -26,7 +26,7 @@ namespace DataBaseProvider
 
 #if !V1
 
-                    "`ShoppingCreditsEnabled`,`ShoppingCreditsFreezed`,`UserRemoteServerValidStopTime`,`IsLongTermRemoteServiceUser`,`UserRemoteServiceValidTimes`, "+
+ "`ShoppingCreditsEnabled`,`ShoppingCreditsFreezed`,`UserRemoteServerValidStopTime`,`IsLongTermRemoteServiceUser`,`UserRemoteServiceValidTimes`,`MakeAVowToGodTime_DayofYear`,`MakeAVowToGodTimesLastDay` " +
 
 #endif
                     " `DeleteTime` ) values " +
@@ -36,11 +36,11 @@ namespace DataBaseProvider
 
 #if !V1
 
-                    "@ShoppingCreditsEnabled,@ShoppingCreditsFreezed,@UserRemoteServerValidStopTime,@IsLongTermRemoteServiceUser,@UserRemoteServiceValidTimes, "+
+ "@ShoppingCreditsEnabled,@ShoppingCreditsFreezed,@UserRemoteServerValidStopTime,@IsLongTermRemoteServiceUser,@UserRemoteServiceValidTimes,@MakeAVowToGodTime_DayofYear,@MakeAVowToGodTimesLastDay " +
 
 #endif
 
-                    "@DeleteTime ); ";
+                    " @DeleteTime ); ";
 
                 mycmd.Parameters.AddWithValue("@UserLoginName", DESEncrypt.EncryptDES(player.SimpleInfo.UserLoginName));
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(player.SimpleInfo.UserName));
@@ -95,6 +95,8 @@ namespace DataBaseProvider
 
                 mycmd.Parameters.AddWithValue("@IsLongTermRemoteServiceUser", player.FortuneInfo.IsLongTermRemoteServiceUser);
                 mycmd.Parameters.AddWithValue("@UserRemoteServiceValidTimes", player.FortuneInfo.UserRemoteServiceValidTimes);
+                mycmd.Parameters.AddWithValue("@MakeAVowToGodTime_DayofYear", player.FortuneInfo.MakeAVowToGodTime_DayofYear);
+                mycmd.Parameters.AddWithValue("@MakeAVowToGodTimesLastDay", player.FortuneInfo.MakeAVowToGodTimesLastDay);
 
 #endif
 

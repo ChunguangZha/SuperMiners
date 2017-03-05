@@ -41,7 +41,7 @@ namespace MetaData.SystemConfig
         public decimal Stones_RMB = 10;
 
         /// <summary>
-        /// 多少钻石等价于1RMB
+        /// 一区钻石与灵币兑换比例（1钻石：1灵币）；二区钻石不与灵币有对应关系，只在商城使用
         /// </summary>
         [DataMember]
         public decimal Diamonds_RMB = 1;
@@ -212,7 +212,10 @@ namespace MetaData.SystemConfig
         public int StackMarketNightCloseTime = 23;
 
         [DataMember]
-        public static int StackMarketMinPrice = 10;
+        public static int Server1StackMarketMinPrice = 1;
+
+        [DataMember]
+        public static int Server2StackMarketMinPrice = 100;
 
         [DataMember]
         public int GambleStoneRedColorWinTimes = 2;
@@ -238,5 +241,16 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int RemoteServerRechargeReturnShoppingCreditsTimes = 10;
 
+        /// <summary>
+        /// 神灵许愿最大值
+        /// </summary>
+        [DataMember]
+        public int MaxMakeAVowToGodGravelValue = 50;
+
+        /// <summary>
+        /// 每天可以许愿的最大次数
+        /// </summary>
+        [DataMember]
+        public int MaxMakeAVowTimesOfOneDay = 3;
     }
 }
