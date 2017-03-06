@@ -32,10 +32,12 @@ namespace SuperMinersCustomServiceSystem
             if (GlobalData.ServerType == ServerType.Server1)
             {
                 this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵一区" + "  --" + GlobalData.CurrentAdmin.UserName;
+                this.tvL1TransferManager.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
                 this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵二区" + "  --" + GlobalData.CurrentAdmin.UserName;
+                this.tvL1TransferManager.Visibility = System.Windows.Visibility.Collapsed;
             }
             //this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
@@ -326,6 +328,11 @@ namespace SuperMinersCustomServiceSystem
             HideAllControls();
             this.controlDeletedPlayerManage.Visibility = System.Windows.Visibility.Visible;
             this.controlDeletedPlayerManage.RefreshDB();
+        }
+
+        private void tvL1TransferManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
         }
 
     }

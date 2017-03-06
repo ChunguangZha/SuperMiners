@@ -250,11 +250,23 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<PlayerInfo[]>(this._context, "GetDeletedPlayers", this.GetDeletedPlayersCompleted, GlobalData.Token);
         }
 
-        //public event EventHandler<WebInvokeEventArgs<PlayerLoginInfo[]>> GetUserLoginLogCompleted;
-        //public void GetUserLoginLog(int userID)
-        //{
-        //    this._invoker.Invoke<PlayerLoginInfo[]>(this._context, "GetUserLoginLog", this.GetUserLoginLogCompleted, GlobalData.Token, userID);
-        //}
+        public event EventHandler<WebInvokeEventArgs<OldPlayerTransferRegisterInfo[]>> GetPlayerTransferRecordsCompleted;
+        public void GetPlayerTransferRecords()
+        {
+            this._invoker.Invoke<OldPlayerTransferRegisterInfo[]>(this._context, "GetPlayerTransferRecords", this.GetPlayerTransferRecordsCompleted, GlobalData.Token);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerFromCompleted;
+        public void TransferPlayerFrom(int recordID, string userName, string adminUserName)
+        {
+            this._invoker.Invoke<int>(this._context, "TransferPlayerFrom", this.TransferPlayerFromCompleted, GlobalData.Token, recordID, userName, adminUserName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerToCompleted;
+        public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
+        {
+            this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.Token, simpleInfo, fortuneInfo);
+        }
 
         #endregion
     }

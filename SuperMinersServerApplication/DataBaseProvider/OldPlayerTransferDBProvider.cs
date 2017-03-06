@@ -11,6 +11,22 @@ namespace DataBaseProvider
 {
     public class OldPlayerTransferDBProvider
     {
+        public OldPlayerTransferRegisterInfo[] GetAllPlayerTransferRecords()
+        {
+            OldPlayerTransferRegisterInfo[] records = null;
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from oldplayertransferregisterinfo ";
+                mycmd.CommandText = sqlText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                records = MetaDBAdapter<OldPlayerTransferRegisterInfo>.GetOldPlayerTransferRegisterInfo(table);
+            });
+
+            return records;
+        }
+
         public bool AddOldPlayerTransferRecord(OldPlayerTransferRegisterInfo record)
         {
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
@@ -41,6 +57,20 @@ namespace DataBaseProvider
             });
 
             return count;
+        }
+
+        public bool TransferPlayer(int recordID, string adminUserName)
+        {
+            return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "update oldplayertransferregisterinfo set `isTransfered`=@isTransfered,`HandledTime`=@HandledTime,`HandlerName`=@HandlerName where `ID`=@ID ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@isTransfered", true);
+                mycmd.Parameters.AddWithValue("@HandledTime", DateTime.Now);
+                mycmd.Parameters.AddWithValue("@HandlerName", DESEncrypt.EncryptDES(adminUserName));
+                mycmd.Parameters.AddWithValue("@ID", recordID);
+                mycmd.ExecuteNonQuery();
+            });
         }
     }
 }

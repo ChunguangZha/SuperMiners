@@ -263,14 +263,6 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         int SetPlayerAsAgent(string token, int userID, string userName, string agentReferURL);
 
-        //[OperationContract]
-        //[WebInvoke(UriTemplate = "/WebServiceAdmin/GetUserLoginLog",
-        //    Method = "POST",
-        //    ResponseFormat = WebMessageFormat.Json,
-        //    RequestFormat = WebMessageFormat.Json,
-        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        //PlayerLoginInfo[] GetUserLoginLog(string token, int userID);
-
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetExpChangeRecord",
             Method = "POST",
@@ -286,5 +278,31 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PlayerInfo[] GetDeletedPlayers(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetPlayerTransferRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        OldPlayerTransferRegisterInfo[] GetPlayerTransferRecords(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayer",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int TransferPlayerFrom(string token, int recordID, string userName, string adminUserName);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerTo",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int TransferPlayerTo(string token, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo);
+
+
     }
 }

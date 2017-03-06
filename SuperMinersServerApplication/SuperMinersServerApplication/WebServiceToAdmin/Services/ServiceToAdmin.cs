@@ -1064,5 +1064,107 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
 
         #endregion
 
+
+        #region IServiceToAdmin Members
+
+
+        public OldPlayerTransferRegisterInfo[] GetPlayerTransferRecords(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.OldPlayerTransferDBProvider.GetAllPlayerTransferRecords();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 GetPlayerTransferRecords 异常", exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// 一区服务器处理
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="recordID"></param>
+        /// <param name="userName"></param>
+        /// <param name="adminUserName"></param>
+        /// <returns></returns>
+        public int TransferPlayerFrom(string token, int recordID, string userName, string adminUserName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var playerRunner = PlayerController.Instance.GetRunnable(userName);
+                    if (playerRunner == null)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+                    playerRunner.LockPlayer(1000);
+                    bool IsOK = DBProvider.OldPlayerTransferDBProvider.TransferPlayer(recordID, adminUserName);
+                    return OperResult.RESULTCODE_TRUE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 TransferPlayerFrom 异常", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        /// <summary>
+        /// 二区服务器处理
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="simpleInfo"></param>
+        /// <param name="fortuneInfo"></param>
+        /// <returns></returns>
+        public int TransferPlayerTo(string token, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    int result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
+                        simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        return result;
+                    }
+
+                    var playerRunner = PlayerController.Instance.GetRunnable(simpleInfo.UserName);
+                    if (playerRunner == null)
+                    {
+                        return OperResult.RESULTCODE_FALSE;
+                    }
+
+                    bool isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+
+                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("管理员 TransferPlayerTo 异常", exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        #endregion
     }
 }

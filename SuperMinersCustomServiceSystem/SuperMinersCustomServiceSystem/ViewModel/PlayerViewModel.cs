@@ -29,6 +29,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return this._listFilteredPlayers; }
         }
 
+        private ObservableCollection<OldPlayerTransferRegisterInfoUIModel> _listPlayerTransferRecords = new ObservableCollection<OldPlayerTransferRegisterInfoUIModel>();
+
+        public ObservableCollection<OldPlayerTransferRegisterInfoUIModel> ListPlayerTransferRecords
+        {
+            get { return _listPlayerTransferRecords; }
+        }
+
+        private ObservableCollection<OldPlayerTransferRegisterInfoUIModel> _listFilterPlayerTransferRecords = new ObservableCollection<OldPlayerTransferRegisterInfoUIModel>();
+
+        public ObservableCollection<OldPlayerTransferRegisterInfoUIModel> ListFilterPlayerTransferRecords
+        {
+            get { return _listFilterPlayerTransferRecords; }
+        }
+
+
+
         //private ObservableCollection<PlayerLoginInfoUIModel> _listPlayerLoginInfo = new ObservableCollection<PlayerLoginInfoUIModel>();
 
         //public ObservableCollection<PlayerLoginInfoUIModel> ListPlayerLoginInfo
@@ -53,6 +69,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         //        GlobalData.Client.GetUserLoginLog(userID);
         //    }
         //}
+
+        public void AsyncGetAllTransferPlayerRecords()
+        {
+            if (GlobalData.Client != null && GlobalData.Client.IsConnected)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载转区申请...");
+                GlobalData.Client.GetPlayerTransferRecords();
+            }
+        }
 
         public void AsyncGetListPlayers()
         {
@@ -106,6 +131,47 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                 App.BusyToken.ShowBusyWindow("正在解锁玩家...");
                 GlobalData.Client.UnlockPlayer(playerUserName, actionPassword);
             }
+        }
+
+        public void SearchTransferPlayers(string userName, int transferState)
+        {
+            bool checkUserNameOK = false;
+            bool checkTransferStateOK = false;
+
+            ListFilterPlayerTransferRecords.Clear();
+            foreach (var item in this.ListPlayerTransferRecords)
+            {
+                checkUserNameOK = checkTransferStateOK = false;
+
+                if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
+                {
+                    checkUserNameOK = true;
+                }
+                if (transferState == 0)
+                {
+                    checkTransferStateOK = true;
+                }
+                else if (transferState == 1)//未转移
+                {
+                    if (!item.isTransfered)
+                    {
+                        checkTransferStateOK = true;
+                    }
+                }
+                else if (transferState == 2)//已完成
+                {
+                    if (item.isTransfered)
+                    {
+                        checkTransferStateOK = true;
+                    }
+                }
+
+                if (checkUserNameOK && checkTransferStateOK)
+                {
+                    ListFilterPlayerTransferRecords.Add(item);
+                }
+            }
+
         }
 
         /// <summary>
@@ -253,7 +319,38 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.LockPlayerCompleted += Client_LockPlayerCompleted;
             GlobalData.Client.UnlockPlayerCompleted += Client_UnlockPlayerCompleted;
             GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
+            GlobalData.Client.GetPlayerTransferRecordsCompleted += Client_GetPlayerTransferRecordsCompleted;
             //GlobalData.Client.GetUserLoginLogCompleted += Client_GetUserLoginLogCompleted;
+        }
+
+        void Client_GetPlayerTransferRecordsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<OldPlayerTransferRegisterInfo[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Cancelled)
+                {
+                    return;
+                }
+
+                if (e.Error != null || e.Result == null)
+                {
+                    MessageBox.Show("获取跨区申请信息失败。");
+                    return;
+                }
+
+                this.ListPlayerTransferRecords.Clear();
+                foreach (var item in e.Result)
+                {
+                    this.ListPlayerTransferRecords.Add(new OldPlayerTransferRegisterInfoUIModel(item));
+                }
+
+                SearchTransferPlayers("", 1);
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取玩家信息,服务器回调异常。信息为：" + exc.Message);
+            }
         }
 
         //void Client_GetUserLoginLogCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PlayerLoginInfo[]> e)

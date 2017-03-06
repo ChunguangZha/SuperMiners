@@ -306,6 +306,35 @@ namespace DataBaseProvider
             return records;
         }
 
+        internal static OldPlayerTransferRegisterInfo[] GetOldPlayerTransferRegisterInfo(DataTable dt)
+        {
+            OldPlayerTransferRegisterInfo[] records = new OldPlayerTransferRegisterInfo[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                OldPlayerTransferRegisterInfo record = new OldPlayerTransferRegisterInfo();
+                record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                record.UserName = dt.Rows[i]["UserName"].ToString();
+                record.AlipayAccount = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayAccount"].ToString());
+                record.AlipayRealName = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayRealName"].ToString());
+                record.Email = DESEncrypt.DecryptDES(dt.Rows[i]["Email"].ToString());
+                if (dt.Rows[i]["HandledTime"] != DBNull.Value)
+                {
+                    record.HandledTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["HandledTime"]));
+                }
+                if (dt.Rows[i]["HandlerName"] != DBNull.Value)
+                {
+                    record.HandlerName = DESEncrypt.DecryptDES(dt.Rows[i]["HandlerName"].ToString());
+                }
+
+                record.isTransfered = Convert.ToBoolean(dt.Rows[i]["isTransfered"]);
+                record.SubmitTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["SubmitTime"]));
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
         internal static ExpChangeRecord[] GetExpChangeRecordListFromDataTable(DataTable dt)
         {
             ExpChangeRecord[] records = new ExpChangeRecord[dt.Rows.Count];

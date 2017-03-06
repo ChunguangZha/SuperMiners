@@ -176,6 +176,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\DeleteResultInfo.cs">
       <Link>Wcf\Datas\DeleteResultInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\OldPlayerTransferRegisterInfo.cs">
+      <Link>Wcf\Datas\OldPlayerTransferRegisterInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerGravelRequsetRecordInfo.cs">
       <Link>Wcf\Datas\PlayerGravelRequsetRecordInfo.cs</Link>
     </Compile>
@@ -229,6 +232,7 @@
     <Compile Include="Model\GoldCoinRechargeRecordUIModel.cs" />
     <Compile Include="Model\MinersBuyRecordUIModel.cs" />
     <Compile Include="Model\MinesBuyRecordUIModel.cs" />
+    <Compile Include="Model\OldPlayerTransferRegisterInfoUIModel.cs" />
     <Compile Include="Model\PlayerLoginInfoUIModel.cs" />
     <Compile Include="Model\RouletteAwardItemUIModel.cs" />
     <Compile Include="Model\RouletteRoundInfoUIModel.cs" />
@@ -262,6 +266,9 @@
     </Compile>
     <Compile Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>StoneSellTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TransferServerManagerControl.xaml.cs">
+      <DependentUpon>TransferServerManagerControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditPlayerWindow.xaml.cs">
       <DependentUpon>EditPlayerWindow.xaml</DependentUpon>
@@ -443,6 +450,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TransferServerManagerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
