@@ -329,10 +329,12 @@ namespace SuperMinersServerApplication.Controller
 
                 this.BasePlayer.FortuneInfo.MakeAVowToGodTime_DayofYear = todayOfYear;
                 this.BasePlayer.FortuneInfo.MakeAVowToGodTimesLastDay += 1;
+                this.BasePlayer.GravelInfo.Gravel += gravelValue;
 
                 result.OperResultCode = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                 {
                     this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
                     return OperResult.RESULTCODE_TRUE;
                 },
                 exc =>

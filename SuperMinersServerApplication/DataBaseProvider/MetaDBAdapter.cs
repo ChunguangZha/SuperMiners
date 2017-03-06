@@ -313,7 +313,7 @@ namespace DataBaseProvider
             {
                 OldPlayerTransferRegisterInfo record = new OldPlayerTransferRegisterInfo();
                 record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                record.UserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 record.AlipayAccount = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayAccount"].ToString());
                 record.AlipayRealName = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayRealName"].ToString());
                 record.Email = DESEncrypt.DecryptDES(dt.Rows[i]["Email"].ToString());

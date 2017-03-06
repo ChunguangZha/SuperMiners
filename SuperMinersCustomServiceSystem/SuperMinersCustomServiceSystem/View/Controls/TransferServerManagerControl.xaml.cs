@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using MetaData;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
@@ -29,16 +30,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         {
             InitializeComponent();
             _syn = SynchronizationContext.Current;
+            BindUI();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.PlayerVMObject == null || GlobalData.CurrentAdmin == null)
-            {
-                return;
-            }
-
-            App.PlayerVMObject.AsyncGetAllTransferPlayerRecords();
         }
 
         private void BindUI()
@@ -73,12 +69,29 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     OldPlayerTransferRegisterInfoUIModel player = this.datagridPlayerInfos.SelectedItem as OldPlayerTransferRegisterInfoUIModel;
 
                     GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
-                    GlobalData.Client.GetPlayer(player.UserName);
+                    GlobalData.Client.GetPlayer(player.UserName, "ViewPlayer");
                 }
             }
             catch (Exception exc)
             {
+                MyMessageBox.ShowInfo(exc.Message);
+            }
+        }
 
+        public void RefreshDB()
+        {
+            try
+            {
+                if (App.PlayerVMObject == null || GlobalData.CurrentAdmin == null)
+                {
+                    return;
+                }
+
+                App.PlayerVMObject.AsyncGetAllTransferPlayerRecords();
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo(exc.Message);
             }
         }
 
@@ -86,6 +99,18 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         {
             try
             {
+                if (e.UserState == null)
+                {
+                    return;
+                }
+                string strState = e.UserState as string;
+                if (strState == null)
+                {
+                    return;
+                }
+
+                GlobalData.Client.GetPlayerCompleted -= Client_GetPlayerCompleted;
+
                 if (e.Error != null)
                 {
                     MyMessageBox.ShowInfo("获取用户信息失败。原因为：" + e.Error.Message);
@@ -97,33 +122,21 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     return;
                 }
 
-                this._syn.Post(o =>
+                if (strState == "ViewPlayer")
                 {
-                    EditPlayerWindow win = new EditPlayerWindow(new PlayerInfoUIModel(e.Result));
-                    win.ShowDialog();
-
-                }, null);
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        void PlayerListContextMenu_ViewBuyMineRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
+                    this._syn.Post(o =>
                     {
-                        if (this.ViewPlayerBuyMineRecords != null)
-                        {
-                            this.ViewPlayerBuyMineRecords(player.UserLoginName);
-                        }
-                    }
+                        EditPlayerWindow win = new EditPlayerWindow(new PlayerInfoUIModel(e.Result));
+                        win.ShowDialog();
+
+                    }, null);
+                }
+                else if (strState == "Transfer")
+                {
+                    string serverUri2 = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
+                    GlobalData.Client.Init(serverUri2);
+                    GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;
+                    GlobalData.Client.TransferPlayerTo(e.Result.SimpleInfo, e.Result.FortuneInfo);
                 }
             }
             catch (Exception exc)
@@ -132,168 +145,91 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             }
         }
 
-        void PlayerListContextMenu_ViewRechargeGoldCoinRecordItem_Click(object sender, RoutedEventArgs e)
+        void Client_TransferPlayerToCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
         {
             try
             {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                string serverUri1 = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
+                GlobalData.Client.Init(serverUri1);
+                
+                GlobalData.Client.TransferPlayerToCompleted -= Client_TransferPlayerToCompleted;
+                if (e.Error != null)
                 {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
+                    MyMessageBox.ShowInfo("转区失败1，原因为：" + e.Error.Message);
+                    return;
+                }
+                if (e.Result != OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("转区失败2，原因为：" + OperResult.GetMsg(e.Result));
+                    return;
+                }
+
+                if (this.datagridPlayerInfos.SelectedItem is OldPlayerTransferRegisterInfoUIModel)
+                {
+                    OldPlayerTransferRegisterInfoUIModel player = this.datagridPlayerInfos.SelectedItem as OldPlayerTransferRegisterInfoUIModel;
+
+                    GlobalData.Client.TransferPlayerFromCompleted += Client_TransferPlayerFromCompleted;
+                    GlobalData.Client.TransferPlayerFrom(player.ID, player.UserName, GlobalData.CurrentAdmin.UserName);
+
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo(exc.Message);
+            }
+        }
+
+        void Client_TransferPlayerFromCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                GlobalData.Client.TransferPlayerFromCompleted -= Client_TransferPlayerFromCompleted;
+
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("转区失败3，原因：" + e.Error.Message);
+                    return;
+                }
+                if (e.Result != OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("转区失败4，原因：" + OperResult.GetMsg(e.Result));
+                    return;
+                }
+
+                MyMessageBox.ShowInfo("转区成功！");
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo(exc.Message);
+            }
+        }
+
+        private void btnTransfer_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is OldPlayerTransferRegisterInfoUIModel)
+                {
+                    OldPlayerTransferRegisterInfoUIModel player = this.datagridPlayerInfos.SelectedItem as OldPlayerTransferRegisterInfoUIModel;
+                    if (player.isTransfered)
                     {
-                        if (this.ViewPlayerBuyGoldCoinRecords != null)
-                        {
-                            this.ViewPlayerBuyGoldCoinRecords(player.UserLoginName);
-                        }
+                        MyMessageBox.ShowInfo("玩家[" + player.UserName + "] 已经转区成功。");
+                        return;
+                    }
+
+                    if (MyMessageBox.ShowQuestionOKCancel("请确认要将玩家[" + player.UserName + "]转区？") == System.Windows.Forms.DialogResult.OK)
+                    {
+                        GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
+                        GlobalData.Client.GetPlayer(player.UserName, "Transfer");
+
                     }
                 }
             }
             catch (Exception exc)
             {
-                MessageBox.Show(exc.Message);
+                MyMessageBox.ShowInfo(exc.Message);
             }
         }
 
-        void PlayerListContextMenu_ViewBuyMinerRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerBuyMinerRecords != null)
-                        {
-                            this.ViewPlayerBuyMinerRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        void PlayerListContextMenu_ViewSellStoneRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerSellStoneOrderRecords != null)
-                        {
-                            ViewPlayerSellStoneOrderRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        void PlayerListContextMenu_ViewLockStoneRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerLockedStoneOrderRecords != null)
-                        {
-                            ViewPlayerLockedStoneOrderRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        void PlayerListContextMenu_ViewBuyStoneRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerBuyStoneOrderRecords != null)
-                        {
-                            ViewPlayerBuyStoneOrderRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        void PlayerListContextMenu_ViewAlipayPayRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerAlipayRechargeRecords != null)
-                        {
-                            ViewPlayerAlipayRechargeRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-        private void PlayerListContextMenu_ViewRMBWithdrawRecordItem_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
-                {
-                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
-                    if (player != null)
-                    {
-                        if (ViewPlayerRMBWithdrawRecords != null)
-                        {
-                            ViewPlayerRMBWithdrawRecords(player.UserLoginName);
-                        }
-                    }
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show(exc.Message);
-            }
-        }
-
-
-        public event Action<string> ViewPlayerSellStoneOrderRecords;
-        public event Action<string> ViewPlayerLockedStoneOrderRecords;
-        public event Action<string> ViewPlayerBuyStoneOrderRecords;
-        public event Action<string> ViewPlayerBuyMinerRecords;
-        public event Action<string> ViewPlayerBuyMineRecords;
-        public event Action<string> ViewPlayerBuyGoldCoinRecords;
-        public event Action<string> ViewPlayerAlipayRechargeRecords;
-        public event Action<string> ViewPlayerRMBWithdrawRecords;
     }
 }

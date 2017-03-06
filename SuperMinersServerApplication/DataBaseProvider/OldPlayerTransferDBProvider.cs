@@ -44,7 +44,7 @@ namespace DataBaseProvider
             });
         }
 
-        public int GetRegisteredCountByUserName(string userName)
+        public int GetRegisteredCountByUserLoginName(string userName)
         {
             int count = 0;
             MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>

@@ -549,11 +549,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email)
         {
             try
             {
-                var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
+                var player = PlayerController.Instance.GetPlayerInfoByUserLoginName(userLoginName);
                 if (player == null)
                 {
                     return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
@@ -566,7 +566,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR;
                 }
-                int count = DBProvider.OldPlayerTransferDBProvider.GetRegisteredCountByUserName(userName);
+                int count = DBProvider.OldPlayerTransferDBProvider.GetRegisteredCountByUserLoginName(userLoginName);
                 if (count > 0)
                 {
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
@@ -574,7 +574,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 
                 DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
                 {
-                    UserName = userName,
+                    UserName = userLoginName,
                     AlipayAccount = alipayAccount,
                     AlipayRealName = alipayRealName,
                     Email = email,
@@ -582,13 +582,13 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                     SubmitTime = new MyDateTime(DateTime.Now)
                 });
 
-                LogHelper.Instance.AddInfoLog("玩家 [" + userName + "] 登记跨区转移账户。");
+                LogHelper.Instance.AddInfoLog("玩家 [" + userLoginName + "] 登记跨区转移账户。");
                 return OperResult.RESULTCODE_TRUE;
             }
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("TransferOldUser Exception. " +
-                                            " userName: " + userName + ";" +
+                                            " userLoginName: " + userLoginName + ";" +
                                             " alipayAccount: " + alipayAccount + ";" +
                                             " alipayRealName: " + alipayRealName, exc);
 

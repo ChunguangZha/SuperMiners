@@ -93,7 +93,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             if (GlobalData.Client.IsConnected)
             {
                 App.BusyToken.ShowBusyWindow("正在加载玩家信息...");
-                GlobalData.Client.GetPlayer(userName);
+                GlobalData.Client.GetPlayer(userName, null);
             }
         }
 

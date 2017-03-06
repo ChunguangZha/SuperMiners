@@ -185,9 +185,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<PlayerInfoLoginWrap>> GetPlayerCompleted;
-        public void GetPlayer(string userName)
+        public void GetPlayer(string userName, object userState)
         {
-            this._invoker.Invoke<PlayerInfoLoginWrap>(this._context, "GetPlayer", this.GetPlayerCompleted, GlobalData.Token, userName);
+            this._invoker.InvokeUserState<PlayerInfoLoginWrap>(this._context, "GetPlayer", this.GetPlayerCompleted, userState, GlobalData.Token, userName);
         }
 
         public event EventHandler<WebInvokeEventArgs<int>> ChangePlayerCompleted;
@@ -265,7 +265,7 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerToCompleted;
         public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
         {
-            this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.Token, simpleInfo, fortuneInfo);
+            this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo);
         }
 
         #endregion

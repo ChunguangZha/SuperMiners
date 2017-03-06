@@ -288,7 +288,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
         OldPlayerTransferRegisterInfo[] GetPlayerTransferRecords(string token);
 
         [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayer",
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerFrom",
             Method = "POST",
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
@@ -301,7 +301,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int TransferPlayerTo(string token, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo);
+        int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo);
 
 
     }

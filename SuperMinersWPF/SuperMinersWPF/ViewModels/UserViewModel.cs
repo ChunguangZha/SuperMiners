@@ -157,6 +157,12 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetGravel(null);
         }
 
+        public void AsyncMakeAVowToGod()
+        {
+            App.BusyToken.ShowBusyWindow("正在许愿...");
+            GlobalData.Client.MakeAVowToGod();
+        }
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerInfoCompleted += Client_GetPlayerInfoCompleted;
@@ -165,6 +171,29 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetAgentUserInfoCompleted += Client_GetAgentUserInfoCompleted;
             GlobalData.Client.RequestGravelCompleted += Client_RequestGravelCompleted;
             GlobalData.Client.GetGravelCompleted += Client_GetGravelCompleted;
+            GlobalData.Client.MakeAVowToGodCompleted += Client_MakeAVowToGodCompleted;
+        }
+
+        void Client_MakeAVowToGodCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MakeAVowToGodResult> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Result != null && e.Result.OperResultCode == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("许愿显灵，获取" + e.Result.GravelResult + "碎片");
+                    this.AsyncGetPlayerInfo();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("碎片领取失败，原因为：" + OperResult.GetMsg(e.Result.OperResultCode));
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+            }
         }
 
         void Client_GetGravelCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)

@@ -79,6 +79,9 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("Gravel");
                 NotifyPropertyChange("GravelButtonEnable");
                 NotifyPropertyChange("GravelButtonContent");
+
+                NotifyPropertyChange("BtnMakeAVowEnable");
+                NotifyPropertyChange("SurplusMakeAVowTimes");
             }
         }
 
@@ -488,5 +491,26 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        public int SurplusMakeAVowTimes
+        {
+            get
+            {
+                int value = GlobalData.GameConfig.MaxMakeAVowTimesOfOneDay - this._parentObject.FortuneInfo.MakeAVowToGodTimesLastDay;
+                if (value < 0)
+                {
+                    value = 0;
+                }
+
+                return value;
+            }
+        }
+
+        public bool BtnMakeAVowEnable
+        {
+            get
+            {
+                return (SurplusMakeAVowTimes > 0);
+            }
+        }
     }
 }

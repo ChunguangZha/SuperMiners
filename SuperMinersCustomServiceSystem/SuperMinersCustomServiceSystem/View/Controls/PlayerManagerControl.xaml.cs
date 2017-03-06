@@ -84,6 +84,10 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 {
                     PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
 
+
+                    //GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;
+                    //GlobalData.Client.TransferPlayerTo(player.ParentObject.SimpleInfo, player.ParentObject.FortuneInfo);
+
                     EditPlayerWindow win = new EditPlayerWindow(player);
                     win.ShowDialog();
                 }
@@ -93,6 +97,25 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
             }
         }
+
+        //void Client_TransferPlayerToCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        //{
+        //    try
+        //    {
+        //        GlobalData.Client.TransferPlayerToCompleted -= Client_TransferPlayerToCompleted;
+        //        if (e.Error != null)
+        //        {
+        //            MessageBox.Show(e.Error.Message);
+        //            return;
+        //        }
+                
+        //        MessageBox.Show(MetaData.OperResult.GetMsg(e.Result));
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        MessageBox.Show(exc.Message);
+        //    }
+        //}
 
         private void btnDeletePlayer_Click(object sender, RoutedEventArgs e)
         {

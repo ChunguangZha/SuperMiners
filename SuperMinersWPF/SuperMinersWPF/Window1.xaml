@@ -164,7 +164,15 @@
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtGravel" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 
                 <Button Grid.Row="9" Grid.Column="2" Name="btnRequestGravel" Content="{Binding GravelButtonContent}" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
-                <Button Grid.Row="10" Grid.Column="2" Name="btnMakeAVowToGod" Content="神灵许愿(3)" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMakeAVowToGod_Click"/>
+                <Button Grid.Row="10" Grid.Column="2" Name="btnMakeAVowToGod" Visibility="{Binding GravelVisible}" IsEnabled="{Binding BtnMakeAVowEnable}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMakeAVowToGod_Click">
+                    <Button.Content>
+                        <TextBlock>
+                            <Run Text="神灵许愿("/>
+                            <Run Text="{Binding SurplusMakeAVowTimes, Mode=OneWay}"/>
+                            <Run Text=")"/>
+                        </TextBlock>
+                    </Button.Content>
+                </Button>
                 <TextBlock Grid.Row="12" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold"><Run Text="当前产量： "/><Run Text=" "/><Run Text="{Binding AllOutputPerDay, Mode=OneWay}"/><Run Text=" "/><Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text="/天"/></TextBlock>
                 <TextBlock Grid.Row="13" Grid.ColumnSpan="3" Foreground="White" Margin="5" FontStyle="Italic" FontWeight="Bold" Visibility="{Binding OutputCountdownVisible}"><Run Text="距离下一次收益计算： "/><Run Text=" "/><Run Text="{Binding OutputCountdownString, Mode=OneWay}"/></TextBlock>
 

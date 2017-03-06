@@ -124,6 +124,7 @@
             <gameControl:RouletteRoundRecordListControl x:Name="controlRouletteRoundList" Visibility="Collapsed"/>
             <Controls:NoticeManageControl x:Name="controlNoticeManage" Visibility="Collapsed"/>
             <Controls:DeletedPlayerInfoControl x:Name="controlDeletedPlayerManage" Visibility="Collapsed"/>
+            <Controls:TransferServerManagerControl x:Name="controlTransferServerManage" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

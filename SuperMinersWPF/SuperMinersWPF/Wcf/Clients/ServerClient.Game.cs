@@ -110,5 +110,15 @@ namespace SuperMinersWPF.Wcf.Clients
         }
 
         #endregion
+
+        #region MakeAVowToGod
+
+        public event EventHandler<WebInvokeEventArgs<MakeAVowToGodResult>> MakeAVowToGodCompleted;
+        public void MakeAVowToGod()
+        {
+            this._invoker.Invoke<MakeAVowToGodResult>(this._context, "MakeAVowToGod", this.MakeAVowToGodCompleted, GlobalData.Token, GlobalData.CurrentUser.UserName);
+        }
+
+        #endregion
     }
 }

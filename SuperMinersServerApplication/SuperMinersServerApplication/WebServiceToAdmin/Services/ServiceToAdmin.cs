@@ -1126,43 +1126,45 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         /// <summary>
         /// 二区服务器处理
         /// </summary>
-        /// <param name="token"></param>
+        /// <param name="adminUserName"></param>
         /// <param name="simpleInfo"></param>
         /// <param name="fortuneInfo"></param>
         /// <returns></returns>
-        public int TransferPlayerTo(string token, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
+        public int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
         {
-            if (RSAProvider.LoadRSA(token))
+            int result = OperResult.RESULTCODE_FALSE;
+            try
             {
-                try
+                result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
+                    simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                if (result != OperResult.RESULTCODE_TRUE)
                 {
-                    int result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
-                        simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
-                    if (result != OperResult.RESULTCODE_TRUE)
-                    {
-                        return result;
-                    }
-
-                    var playerRunner = PlayerController.Instance.GetRunnable(simpleInfo.UserName);
-                    if (playerRunner == null)
-                    {
-                        return OperResult.RESULTCODE_FALSE;
-                    }
-
-                    bool isOK = playerRunner.SetFortuneInfo(fortuneInfo);
-
-                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                    return result;
                 }
-                catch (Exception exc)
+
+                var playerRunner = PlayerController.Instance.GetRunnable(simpleInfo.UserName);
+                if (playerRunner == null)
                 {
-                    LogHelper.Instance.AddErrorLog("管理员 TransferPlayerTo 异常", exc);
-                    return OperResult.RESULTCODE_EXCEPTION;
+                    result = OperResult.RESULTCODE_USER_NOT_EXIST;
+                    return result;
                 }
+
+                bool isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+
+                result = isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                return result;
             }
-            else
+            catch (Exception exc)
             {
-                throw new Exception();
+                LogHelper.Instance.AddErrorLog("管理员 TransferPlayerTo 异常", exc);
+                result = OperResult.RESULTCODE_EXCEPTION;
+                return result;
             }
+            finally
+            {
+                LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "]，操作结果为：" + OperResult.GetMsg(result));
+            }
+
         }
 
         #endregion

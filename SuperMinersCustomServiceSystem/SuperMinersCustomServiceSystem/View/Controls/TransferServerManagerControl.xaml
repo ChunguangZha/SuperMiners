@@ -37,33 +37,21 @@
         <GroupBox Grid.Row="2" Name="panelPlayersManager" Margin="5">
             <DataGrid Name="datagridPlayerInfos" ItemsSource="{Binding ListFilteredPlayers}" SelectionMode="Single" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding UserID}" Header="记录ID"/>
-                    <DataGridTextColumn Binding="{Binding UserName}" Header="用户名"/>
-                    <DataGridTextColumn Binding="{Binding isTransfered}" Header="转移状态"/>
-                    <DataGridTextColumn Binding="{Binding Alipay}" Header="支付宝账户"/>
-                    <DataGridTextColumn Binding="{Binding AlipayRealName}" Header="支付宝真实姓名"/>
-                    <DataGridTextColumn Binding="{Binding Email}" Header="邮箱"/>
-                    <DataGridTextColumn Binding="{Binding SubmitTime}" Header="申请时间"/>
-                    <DataGridTextColumn Binding="{Binding HandledTime}" Header="处理时间"/>
-                    <DataGridTextColumn Binding="{Binding HandlerName}" Header="处理人"/>
+                    <DataGridTextColumn Binding="{Binding ID}" Header="记录ID" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding UserName}" Header="用户名" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding isTransfered}" Header="转移状态" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding AlipayAccount}" Header="支付宝账户" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding AlipayRealName}" Header="支付宝实名" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding Email}" Header="邮箱" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding SubmitTimeText}" Header="申请时间" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding HandledTimeText}" Header="处理时间" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding HandlerName}" Header="处理人" Width="*"/>
                 </DataGrid.Columns>
-                <DataGrid.ContextMenu>
-                    <ContextMenu Name="cmenuDataGridPlayer" StaysOpen="True">
-                        <MenuItem Header="查看矿山购买记录" Click="PlayerListContextMenu_ViewBuyMineRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看金币充值记录" Click="PlayerListContextMenu_ViewRechargeGoldCoinRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看矿工购买记录" Click="PlayerListContextMenu_ViewBuyMinerRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看矿石出售记录" Click="PlayerListContextMenu_ViewSellStoneRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看矿石锁定记录" Click="PlayerListContextMenu_ViewLockStoneRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看矿石购买记录" Click="PlayerListContextMenu_ViewBuyStoneRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看支付宝支付记录" Click="PlayerListContextMenu_ViewAlipayPayRecordItem_Click"></MenuItem>
-                        <MenuItem Header="查看灵币提现记录" Click="PlayerListContextMenu_ViewRMBWithdrawRecordItem_Click"></MenuItem>
-                    </ContextMenu>
-                </DataGrid.ContextMenu>
             </DataGrid>
         </GroupBox>
         <StackPanel Grid.Row="3" Orientation="Horizontal">
             <Button Name="btnEditPlayerInfo" HorizontalAlignment="Right" Content="查看玩家详细信息" Width="200" Margin="10" Click="btnEditPlayerInfo_Click"/>
-            <Button Name="btnTransfer" HorizontalAlignment="Right" Content="确认转区" Width="200" Margin="10" Click="btnCSV_Click"/>
+            <Button Name="btnTransfer" HorizontalAlignment="Right" Content="确认转区" Width="200" Margin="10" Click="btnTransfer_Click"/>
         </StackPanel>
     </Grid>
 </UserControl>

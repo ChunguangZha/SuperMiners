@@ -86,7 +86,8 @@ namespace SuperMinersWPF.Views
 
         void StackStoneVMObject_GetTodayStackRecordInfoCompleted(MetaData.Game.StoneStack.StoneStackDailyRecordInfo obj)
         {
-            if (this.btnBuyStone.IsEnabled)
+            if (this.btnBuyStone.IsEnabled && this.sliderPrice.Minimum == (double)App.StackStoneVMObject.TodayStackInfo.LimitDownPrice &&
+                this.sliderPrice.Maximum == (double)App.StackStoneVMObject.TodayStackInfo.LimitUpPrice)
             {
                 //防止重复设置
                 return;

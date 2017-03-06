@@ -452,7 +452,7 @@ namespace SuperMinersWPF
 
         private void btnMakeAVowToGod_Click(object sender, RoutedEventArgs e)
         {
-
+            App.UserVMObject.AsyncMakeAVowToGod();
         }
 
     }
