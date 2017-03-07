@@ -549,7 +549,7 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email)
+        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
         {
             try
             {
