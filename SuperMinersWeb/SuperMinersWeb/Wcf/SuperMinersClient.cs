@@ -263,11 +263,11 @@ namespace SuperMinersWeb.Wcf
         }
 
 
-        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
         {
             try
             {
-                return base.Channel.TransferOldUser(userName, password, alipayAccount, alipayRealName, email);
+                return base.Channel.TransferOldUser(userLoginName, password, alipayAccount, alipayRealName, email, newServerUserLoginName, newServerPassword);
             }
             catch (Exception exc)
             {

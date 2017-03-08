@@ -106,6 +106,31 @@ function CheckEmail() {
         return;
     }
 }
+
+//function CheckNewServerUserLoginName() {
+
+//    $("#msgNewServerUserLoginName").text("");
+//    $("#imgNewServerUserLoginNameOK").css("display", "none");
+
+//    var newServerUserLoginName = $("#MainContent_txtNewServerUserLoginName").val();
+//    if (newServerUserLoginName.length == 0) {
+//        $("#msgNewServerUserLoginName").text("请输入新区用户名");
+//        return;
+//    }
+//}
+
+//function CheckNewServerUserLoginName() {
+
+//    $("#msgNewServerPassword").text("");
+//    $("#imgNewServerPasswordOK").css("display", "none");
+
+//    var newServerPassword = $("#MainContent_txtNewServerPassword").val();
+//    if (newServerPassword.length == 0) {
+//        $("#msgNewServerPassword").text("请输入新区密码");
+//        return;
+//    }
+//}
+
 function CheckAuthCode() {
     $("#msgAuthCode").text("");
     $("#imgAuthCodeOK").css("display", "none");

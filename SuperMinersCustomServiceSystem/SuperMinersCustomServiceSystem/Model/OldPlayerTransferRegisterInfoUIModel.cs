@@ -34,7 +34,7 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get
             {
-                return this._parentObject.UserName;
+                return this._parentObject.UserLoginName;
             }
         }
 
@@ -59,6 +59,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.Email;
+            }
+        }
+
+        public string NewServerUserLoginName
+        {
+            get
+            {
+                return this._parentObject.NewServerUserLoginName;
             }
         }
 

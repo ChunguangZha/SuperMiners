@@ -313,10 +313,20 @@ namespace DataBaseProvider
             {
                 OldPlayerTransferRegisterInfo record = new OldPlayerTransferRegisterInfo();
                 record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
-                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                record.UserLoginName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 record.AlipayAccount = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayAccount"].ToString());
                 record.AlipayRealName = DESEncrypt.DecryptDES(dt.Rows[i]["AlipayRealName"].ToString());
                 record.Email = DESEncrypt.DecryptDES(dt.Rows[i]["Email"].ToString());
+
+                if (dt.Rows[i]["NewServerUserLoginName"] != DBNull.Value)
+                {
+                    record.NewServerUserLoginName = DESEncrypt.DecryptDES(dt.Rows[i]["NewServerUserLoginName"].ToString());
+                }
+                if (dt.Rows[i]["NewServerPassword"] != DBNull.Value)
+                {
+                    record.NewServerPassword = DESEncrypt.DecryptDES(dt.Rows[i]["NewServerPassword"].ToString());
+                }
+
                 if (dt.Rows[i]["HandledTime"] != DBNull.Value)
                 {
                     record.HandledTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["HandledTime"]));

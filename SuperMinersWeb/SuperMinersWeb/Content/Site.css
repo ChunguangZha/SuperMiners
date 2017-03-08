@@ -16,7 +16,9 @@ body {
 
 .alertmsg {
     color:red;
-    font-weight:700;
+    font-weight:500;
+	width:300px;
+	text-align:left;
 }
 
 /*a {

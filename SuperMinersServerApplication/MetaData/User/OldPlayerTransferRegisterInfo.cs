@@ -14,7 +14,7 @@ namespace MetaData.User
         public int ID;
 
         [DataMember]
-        public string UserName;
+        public string UserLoginName;
 
         [DataMember]
         public string AlipayAccount;
@@ -24,6 +24,12 @@ namespace MetaData.User
 
         [DataMember]
         public string Email;
+
+        [DataMember]
+        public string NewServerUserLoginName;
+
+        [DataMember]
+        public string NewServerPassword;
 
         [DataMember]
         public MyDateTime SubmitTime;

@@ -574,10 +574,12 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 
                 DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
                 {
-                    UserName = userLoginName,
+                    UserLoginName = userLoginName,
                     AlipayAccount = alipayAccount,
                     AlipayRealName = alipayRealName,
                     Email = email,
+                    NewServerUserLoginName = newServerUserLoginName,
+                    NewServerPassword = newServerPassword,
                     isTransfered = false,
                     SubmitTime = new MyDateTime(DateTime.Now)
                 });

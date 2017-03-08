@@ -1130,26 +1130,31 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         /// <param name="simpleInfo"></param>
         /// <param name="fortuneInfo"></param>
         /// <returns></returns>
-        public int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
+        public int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword)
         {
             int result = OperResult.RESULTCODE_FALSE;
             try
             {
-                result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
-                    simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
-                if (result != OperResult.RESULTCODE_TRUE)
+                if (string.IsNullOrEmpty(newUserLoginName) || string.IsNullOrEmpty(newPassword))
                 {
-                    return result;
-                }
+                    result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
+                        simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        return result;
+                    }
 
-                var playerRunner = PlayerController.Instance.GetRunnable(simpleInfo.UserName);
-                if (playerRunner == null)
-                {
+                    newUserLoginName = simpleInfo.UserName;
+                }
+                var playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(newUserLoginName);
+                if (playerRunner == null || playerRunner.BasePlayer.SimpleInfo.Password != newPassword)
+                {                    
                     result = OperResult.RESULTCODE_USER_NOT_EXIST;
                     return result;
                 }
 
-                bool isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                bool isOK = playerRunner.ChangePlayerSimpleInfo(simpleInfo.Alipay, simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ);
+                isOK = playerRunner.SetFortuneInfo(fortuneInfo);
 
                 result = isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
                 return result;
@@ -1162,7 +1167,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
             finally
             {
-                LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "]，操作结果为：" + OperResult.GetMsg(result));
+                LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "] " + "，操作结果为：" + OperResult.GetMsg(result) + "。 newUserLoginName=" + newUserLoginName + "; newPassword=" + newPassword + "; fortuneInfo=" + fortuneInfo.ToString());
             }
 
         }

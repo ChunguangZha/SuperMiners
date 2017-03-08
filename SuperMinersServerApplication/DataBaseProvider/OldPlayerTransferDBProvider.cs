@@ -31,13 +31,15 @@ namespace DataBaseProvider
         {
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
-                string sqlText = "insert into oldplayertransferregisterinfo (`UserName`,`AlipayAccount`,`AlipayRealName`,`Email`,`SubmitTime`,`isTransfered`) "+
-                    " values (@UserName,@AlipayAccount,@AlipayRealName,@Email,@SubmitTime,@isTransfered) ";
+                string sqlText = "insert into oldplayertransferregisterinfo (`UserName`,`AlipayAccount`,`AlipayRealName`,`Email`,`NewServerUserLoginName`,`NewServerPassword`,`SubmitTime`,`isTransfered`) " +
+                    " values (@UserName,@AlipayAccount,@AlipayRealName,@Email,@NewServerUserLoginName,@NewServerPassword,@SubmitTime,@isTransfered) ";
                 mycmd.CommandText = sqlText;
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserName));
+                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(record.UserLoginName));
                 mycmd.Parameters.AddWithValue("@AlipayAccount", DESEncrypt.EncryptDES(record.AlipayAccount));
                 mycmd.Parameters.AddWithValue("@AlipayRealName", DESEncrypt.EncryptDES(record.AlipayRealName));
                 mycmd.Parameters.AddWithValue("@Email", DESEncrypt.EncryptDES(record.Email));
+                mycmd.Parameters.AddWithValue("@NewServerUserLoginName", DESEncrypt.EncryptDES(record.NewServerUserLoginName));
+                mycmd.Parameters.AddWithValue("@NewServerPassword", DESEncrypt.EncryptDES(record.NewServerPassword));
                 mycmd.Parameters.AddWithValue("@SubmitTime", record.SubmitTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@isTransfered", false);
                 mycmd.ExecuteNonQuery();

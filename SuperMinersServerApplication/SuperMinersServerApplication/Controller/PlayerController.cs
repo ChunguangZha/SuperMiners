@@ -762,6 +762,23 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public PlayerRunnable GetRunnableByUserLoginName(string userLoginName)
+        {
+            var player = DBProvider.UserDBProvider.GetPlayerByUserLoginName(userLoginName);
+            if (player == null)
+            {
+                return null;
+            }
+            var playerRunner = GetOnlinePlayerRunnable(player.SimpleInfo.UserName);
+            if (playerRunner == null)
+            {
+                playerRunner = new PlayerRunnable(player);
+                this._dicOnlinePlayerRuns.TryAdd(player.SimpleInfo.UserName, playerRunner);
+            }
+
+            return playerRunner;
+        }
+
         public PlayerRunnable GetRunnable(string userName)
         {
             PlayerRunnable playerRun = this.GetOnlinePlayerRunnable(userName);

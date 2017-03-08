@@ -263,9 +263,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerToCompleted;
-        public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo)
+        public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword)
         {
-            this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo);
+            this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo, newUserLoginName, newPassword);
         }
 
         #endregion

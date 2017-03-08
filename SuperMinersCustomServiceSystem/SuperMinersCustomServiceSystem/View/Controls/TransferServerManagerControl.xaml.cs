@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.Uility;
+using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
     public partial class TransferServerManagerControl : UserControl
     {
         private System.Threading.SynchronizationContext _syn;
+        private OldPlayerTransferRegisterInfoUIModel selectedPlayer = null;
 
         public TransferServerManagerControl()
         {
@@ -121,7 +123,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     MyMessageBox.ShowInfo("获取用户信息失败。");
                     return;
                 }
-
                 if (strState == "ViewPlayer")
                 {
                     this._syn.Post(o =>
@@ -133,10 +134,16 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 }
                 else if (strState == "Transfer")
                 {
+                    if (selectedPlayer == null)
+                    {
+                        MyMessageBox.ShowInfo("没有选中的用户信息。");
+                        return;
+                    }
+
                     string serverUri2 = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
                     GlobalData.Client.Init(serverUri2);
                     GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;
-                    GlobalData.Client.TransferPlayerTo(e.Result.SimpleInfo, e.Result.FortuneInfo);
+                    GlobalData.Client.TransferPlayerTo(e.Result.SimpleInfo, e.Result.FortuneInfo, selectedPlayer.ParentObject.NewServerUserLoginName, selectedPlayer.ParentObject.NewServerPassword);
                 }
             }
             catch (Exception exc)
@@ -210,17 +217,29 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             {
                 if (this.datagridPlayerInfos.SelectedItem is OldPlayerTransferRegisterInfoUIModel)
                 {
-                    OldPlayerTransferRegisterInfoUIModel player = this.datagridPlayerInfos.SelectedItem as OldPlayerTransferRegisterInfoUIModel;
-                    if (player.isTransfered)
+                    selectedPlayer = this.datagridPlayerInfos.SelectedItem as OldPlayerTransferRegisterInfoUIModel;
+                    if (selectedPlayer.isTransfered)
                     {
-                        MyMessageBox.ShowInfo("玩家[" + player.UserName + "] 已经转区成功。");
+                        MyMessageBox.ShowInfo("玩家[" + selectedPlayer.UserName + "] 已经转区成功。");
                         return;
                     }
 
-                    if (MyMessageBox.ShowQuestionOKCancel("请确认要将玩家[" + player.UserName + "]转区？") == System.Windows.Forms.DialogResult.OK)
+                    if (MyMessageBox.ShowQuestionOKCancel("请确认要将玩家[" + selectedPlayer.UserName + "]转区？") == System.Windows.Forms.DialogResult.OK)
                     {
+                        if (string.IsNullOrEmpty(selectedPlayer.ParentObject.NewServerUserLoginName) || string.IsNullOrEmpty(selectedPlayer.ParentObject.NewServerPassword))
+                        {
+                            InputUserLoginNamePasswordWindow winInput = new InputUserLoginNamePasswordWindow();
+                            if (winInput.ShowDialog() != true)
+                            {
+                                return;
+                            }
+
+                            selectedPlayer.ParentObject.NewServerUserLoginName = winInput.NewServerUserLoginName;
+                            selectedPlayer.ParentObject.NewServerPassword = winInput.NewServerPassword;
+                        }
+
                         GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
-                        GlobalData.Client.GetPlayer(player.UserName, "Transfer");
+                        GlobalData.Client.GetPlayer(selectedPlayer.UserName, "Transfer");
 
                     }
                 }
