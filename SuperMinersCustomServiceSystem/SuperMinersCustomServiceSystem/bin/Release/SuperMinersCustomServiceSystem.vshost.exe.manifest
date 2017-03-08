@@ -44,14 +44,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="421376">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="424960">
       <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NmunnLjqV/MjKg4/Jz32nb8K7WXLewdIgGhs3cHnQbQ=</dsig:DigestValue>
+        <dsig:DigestValue>MrkrPWEWTe/L9Iwp8hLXrm5xiCXVgEXnWW9Fn7dt0mI=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -61,7 +61,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>QEw8X9mxIFSwUcOvXh9Tv0Gm8a81jYGhUgwv/OKz+JQ=</dsig:DigestValue>
+      <dsig:DigestValue>t2s7I+iX/zSRBLkfzpOm+a6ALGSPVu5aadJ5ysPoMzE=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

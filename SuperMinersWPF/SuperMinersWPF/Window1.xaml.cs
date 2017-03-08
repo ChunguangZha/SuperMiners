@@ -442,7 +442,7 @@ namespace SuperMinersWPF
 
         private void btnGetCredits_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(new ProcessStartInfo("http://goto.xlore.net/"));
+            Process.Start(new ProcessStartInfo("http://goto.xlore.net/Login.aspx"));
         }
 
         private void btnExchangeDiamonds_Click(object sender, RoutedEventArgs e)

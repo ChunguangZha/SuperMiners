@@ -29,7 +29,7 @@ namespace SuperMinersServerApplication.Controller
         #endregion
 
         private DateTime exeDistributeTime = new DateTime(2000, 1, 1, 0, 0, 0);
-        private bool todayIsDistributed = false;
+        //private bool todayIsDistributed = false;
 
         public void Init()
         {

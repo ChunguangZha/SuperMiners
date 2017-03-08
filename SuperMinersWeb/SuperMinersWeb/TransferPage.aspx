@@ -68,30 +68,6 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <label for="txtNewServerUserLoginName"><span>*</span>新区用户名： </label>
-                                </th>
-                                <td>
-                                    <asp:TextBox ID="txtNewServerUserLoginName" runat="server" MaxLength="30" CssClass="textbox" ToolTip="请输入新区用户名！" TabIndex="7" />
-                                </td>
-                                <td>
-                                    <span id="msgNewServerUserLoginName" class="message"></span>
-                                    <img id="imgNewServerUserLoginNameOK" src="Images/yes.png" class="message" style="display:none"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <label for="txtNewServerPassword"><span>*</span>新区密码： </label>
-                                </th>
-                                <td>
-                                    <asp:TextBox ID="txtNewServerPassword" runat="server" MaxLength="30" CssClass="textbox" ToolTip="请输入新区密码！" TabIndex="7" />
-                                </td>
-                                <td>
-                                    <span id="msgNewServerPassword" class="message"></span>
-                                    <img id="imgNewServerPasswordOK" src="Images/yes.png" class="message" style="display:none"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
                                     <label for="txtAuthCode"><span>*</span>验证码： </label>
                                 </th>
                                 <td>
@@ -117,12 +93,6 @@
                                 <th>
                                 </th>
                                 <td>
-                                    <label class="alertmsg" style="font-size:18px">转区流程</label>
-                                    <ul class="alertmsg">
-                                        <li>玩家先去新区注册账户</li>
-                                        <li>在此页面添加新的账户和密码</li>
-                                        <li>验证一致则系统会将老区账户信息转移到新区新注册账户中</li>
-                                    </ul>
                                 </td>
                                 <td></td>
                             </tr>

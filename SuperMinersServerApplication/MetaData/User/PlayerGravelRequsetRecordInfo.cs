@@ -81,7 +81,8 @@ namespace MetaData.User
         Disable,
         Requestable,
         Requested,
-        Getable
+        Getable,
+        Got
 
     }
 }

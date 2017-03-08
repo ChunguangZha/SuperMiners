@@ -1006,7 +1006,7 @@ namespace SuperMinersServerApplication.Controller.Stack
 
         private void AddLogNotifyBuyer(StoneDelegateBuyOrderInfo buyOrder)
         {
-            PlayerActionController.Instance.AddLog(buyOrder.UserName, MetaData.ActionLog.ActionType.DelegateBuyStoneSucceed, buyOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount, buyOrder.AwardGoldCoin.ToString());
+            //PlayerActionController.Instance.AddLog(buyOrder.UserName, MetaData.ActionLog.ActionType.DelegateBuyStoneSucceed, buyOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount, buyOrder.AwardGoldCoin.ToString());
 
             string tokenBuyer = ClientManager.GetToken(buyOrder.UserName);
             if (!string.IsNullOrEmpty(tokenBuyer))
@@ -1021,7 +1021,7 @@ namespace SuperMinersServerApplication.Controller.Stack
 
         private void AddLogNotifySeller(StoneDelegateSellOrderInfo sellOrder)
         {
-            PlayerActionController.Instance.AddLog(sellOrder.UserName, MetaData.ActionLog.ActionType.DelegateSellStoneSucceed, sellOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount);
+            //PlayerActionController.Instance.AddLog(sellOrder.UserName, MetaData.ActionLog.ActionType.DelegateSellStoneSucceed, sellOrder.FinishedStoneTradeHandCount * GlobalConfig.GameConfig.HandStoneCount);
 
             string tokenBuyer = ClientManager.GetToken(sellOrder.UserName);
             if (!string.IsNullOrEmpty(tokenBuyer))

@@ -283,6 +283,11 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED = 901;
 
+        /// <summary>
+        /// 转移玩家失败，矿石最不足缴纳手续费
+        /// </summary>
+        public const int RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE = 902;
+
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
 
@@ -342,6 +347,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_SERVERTYPEERROR, "服务类型选择失败");
             _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR, "支付金额错误");
             _resultCode_Msg.Add(RESULTCODE_MAKEAVOWTIMESOUT, "您许愿次数超限，每天最多可以许3次");
+            _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE, "矿石量不足十万，不够支付手续费");
         }
 
         public static string GetMsg(int resultCode)

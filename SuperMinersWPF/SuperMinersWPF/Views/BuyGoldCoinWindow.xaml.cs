@@ -44,12 +44,12 @@ namespace SuperMinersWPF.Views
             if (GlobalData.ServerType == ServerType.Server1)
             {
                 DicPayType.Add((int)PayType.Diamand, "钻石");
+                DicPayType.Add((int)PayType.Alipay, "支付宝");
             }
             else if (GlobalData.ServerType == ServerType.Server2)
             {
                 DicPayType.Add((int)PayType.Credits, "积分");
             }
-            DicPayType.Add((int)PayType.Alipay, "支付宝");
 
             this.cmbPayType.ItemsSource = DicPayType;
             this.cmbPayType.SelectedValue = (int)PayType.RMB;
@@ -244,6 +244,19 @@ namespace SuperMinersWPF.Views
             else
             {
                 gainGoldCoin = payMoney * GlobalData.GameConfig.RMB_GoldCoin;
+            }
+
+            if (payType == PayType.Diamand)
+            {
+                this.txtPayUnit.Text = "钻石";
+            }
+            else if (payType == PayType.Credits)
+            {
+                this.txtPayUnit.Text = "积分";
+            }
+            else
+            {
+                this.txtPayUnit.Text = "灵币";
             }
             if (this.txtGainGoldCoin != null)
             {

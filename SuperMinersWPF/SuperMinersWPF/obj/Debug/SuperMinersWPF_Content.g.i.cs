@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/flash.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("views/gamehelper1.txt")]
 
 

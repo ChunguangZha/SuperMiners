@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Resources;
 using System.Windows.Shapes;
 
 namespace SuperMinersWPF.Views
@@ -48,12 +49,43 @@ namespace SuperMinersWPF.Views
         {
             InitializeComponent();
 
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                CreateVariableValue();
+                SetText();
+            }
+            else
+            {
+                GetGameHelperFromResourceFile();
+            }
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            CreateVariableValue();
-            SetText();
+        }
+
+        private void GetGameHelperFromResourceFile()
+        {
+            try
+            {
+                Uri uri = new Uri("Resources\\Server2GameHelper.txt", UriKind.Relative);//这个就是所以的pack uri。
+                StreamResourceInfo info = Application.GetContentStream(uri);
+                if (info == null)
+                {
+                    return;
+                }
+                Stream s = info.Stream;
+                byte[] buffer = new byte[s.Length];
+                s.Read(buffer, 0, buffer.Length);
+                string x = Encoding.GetEncoding("gb2312").GetString(buffer);
+                this.txtHelperInfo.Text = x;
+                s.Close();
+                s.Dispose();
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("Load Game Helper Exception", exc);
+            }
         }
 
         private void CreateVariableValue()

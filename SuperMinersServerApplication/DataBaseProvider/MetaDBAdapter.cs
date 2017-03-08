@@ -247,6 +247,11 @@ namespace DataBaseProvider
                 player.FortuneInfo.MakeAVowToGodTime_DayofYear = Convert.ToInt32(dt.Rows[i]["MakeAVowToGodTime_DayofYear"]);
                 player.FortuneInfo.MakeAVowToGodTimesLastDay = Convert.ToInt32(dt.Rows[i]["MakeAVowToGodTimesLastDay"]);
 
+                if (player.FortuneInfo.MakeAVowToGodTime_DayofYear != DateTime.Now.DayOfYear)
+                {
+                    player.FortuneInfo.MakeAVowToGodTimesLastDay = 0;
+                }
+
 #endif
 
                 player.FortuneInfo.StoneSellQuan = Convert.ToInt32(dt.Rows[i]["StoneSellQuan"]);

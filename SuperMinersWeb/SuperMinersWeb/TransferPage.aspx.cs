@@ -24,8 +24,8 @@ namespace SuperMinersWeb
             string password = this.txtPassword.Text;
             string alipayAccount = this.txtAlipayAccount.Text.Trim();
             string alipayRealName = this.txtAlipayRealName.Text.Trim();
-            string newServerUserLoginName = this.txtNewServerUserLoginName.Text.Trim();
-            string newServerPassword = this.txtNewServerPassword.Text.Trim();
+            //string newServerUserLoginName = this.txtNewServerUserLoginName.Text.Trim();
+            //string newServerPassword = this.txtNewServerPassword.Text.Trim();
 
             if (!WcfClient.IsReady)
             {
@@ -48,7 +48,7 @@ namespace SuperMinersWeb
 
             string ip = System.Web.HttpContext.Current.Request.UserHostAddress;
 
-            int result = WcfClient.Instance.TransferOldUser(userName, password, alipayAccount, alipayRealName, email, newServerUserLoginName, newServerPassword);
+            int result = WcfClient.Instance.TransferOldUser(userName, password, alipayAccount, alipayRealName, email, "", "");
             if (result == OperResult.RESULTCODE_TRUE)
             {
                 Response.Write("<script>alert('您的账户已经登记成功，等待管理员处理，处理结果将发送到您的邮箱中!');this.location.href='Default.aspx';</script>");

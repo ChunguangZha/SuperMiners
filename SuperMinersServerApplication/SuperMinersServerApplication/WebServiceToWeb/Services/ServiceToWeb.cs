@@ -571,7 +571,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
                 }
-
+                if (player.FortuneInfo.StockOfStones < 100000)
+                {
+                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE;
+                }
+                
                 DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
                 {
                     UserLoginName = userLoginName,
