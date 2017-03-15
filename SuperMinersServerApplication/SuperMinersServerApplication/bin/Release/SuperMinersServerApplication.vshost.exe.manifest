@@ -43,38 +43,38 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DataBaseProvider.dll" size="200704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DataBaseProvider.dll" size="197120">
       <assemblyIdentity name="DataBaseProvider" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Li/bTByoOaH/cNXTNDIeFDX9YoF2v0nRlYR7TU08zOo=</dsig:DigestValue>
+        <dsig:DigestValue>2UR6hsTBC7zmuOSYZQHzkfx2ojLc0wBbK9/e1aXI+cs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="64000">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MetaData.dll" size="64512">
       <assemblyIdentity name="MetaData" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>BpokVp4KljCBRLKK5cNjPi45ChaJwfCCcf6HdbeEDSk=</dsig:DigestValue>
+        <dsig:DigestValue>ZPNFJ3IT2HDSGPNmudGSGa3HEj+zuiiZ3t2OuSBCsDY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="456192">
-      <assemblyIdentity name="MySql.Data" version="6.9.4.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="MySql.Data.dll" size="457728">
+      <assemblyIdentity name="MySql.Data" version="6.9.8.0" publicKeyToken="C5687FC88969C44D" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>CsAfKohz41xKpBC20sPdpHZtuswSXXcQpv4WU0Magko=</dsig:DigestValue>
+        <dsig:DigestValue>vZOt5pn+YIjqzABheL5YRnsrxRe1pFgyD4tfa0entVA=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -86,7 +86,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>qcTYVQZ/aUbKHZDiAE/0RZgQVsrFub8nsIhvoZcqgp8=</dsig:DigestValue>
+        <dsig:DigestValue>WzBViKZCAM/z32i21PuR6uLdyOqXM6cIaEw7TSZ1HNQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -98,7 +98,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>fIYgePXwx9YFMyCR2rNs2WzoKeVOcQRi8IcG0AUNIhs=</dsig:DigestValue>
+        <dsig:DigestValue>CWd3mbAnR6gZuUxwa2aqwITBhg5zskShTZq0FQdYXak=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

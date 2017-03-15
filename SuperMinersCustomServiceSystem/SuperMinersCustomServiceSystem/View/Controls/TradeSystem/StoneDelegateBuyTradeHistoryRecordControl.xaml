@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="SuperMinersCustomServiceSystem.View.Controls.TradeSystem.StoneDelegateBuyTradeHistoryRecordControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:MyControl="clr-namespace:SuperMinersWPF.MyControl"
+             xmlns:myc="clr-namespace:SuperMinersCustomServiceSystem.MyControl"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="股市矿石委托买入历史记录" FontSize="18" FontWeight="Bold" Margin="10"/>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Text="订单号：" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <TextBox Name="txtOrderNumber" Margin="0,10,5,10" Width="100" MaxLength="100" VerticalAlignment="Center"/>
+                <TextBlock Text="卖家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <TextBox Name="txtSellerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
+                <TextBlock Text="买家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <TextBox Name="txtBuyerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
+                <TextBlock Text="订单状态：" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <ComboBox Name="cmbOrderState" Margin="0,10,5,10" Width="100" VerticalAlignment="Center" SelectedIndex="0">
+                    <ComboBoxItem Content="全部"/>
+                    <ComboBoxItem Content="等待"/>
+                    <ComboBoxItem Content="锁定"/>
+                    <ComboBoxItem Content="完成"/>
+                    <ComboBoxItem Content="异常"/>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal">
+                <TextBlock Text="出售时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
+                <TextBlock Text="到" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
+                <TextBlock Text="购买时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpStartPayTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
+                <TextBlock Text="到" VerticalAlignment="Center"/>
+                <myc:MyDateTimePickerControl x:Name="dpEndPayTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
+            </StackPanel>
+            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>
+                <TextBlock Text="每页显示：30 行" Margin="50,10,10,10" VerticalAlignment="Center"/>
+                <Button Name="btnPreviousPage" Content="上一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnPreviousPage_Click"/>
+                <TextBlock Text="当前显示第" Margin="5,10" VerticalAlignment="Center"/>
+                <MyControl:NumericTextBox x:Name="numPageIndex" MinWidth="50" IsReadOnly="True" Margin="5,10" VerticalAlignment="Center" Minimum="1" Maximum="10000000"/>
+                <TextBlock Text="页" Margin="5,10" VerticalAlignment="Center"/>
+                <Button Name="btnNextPage" Content="下一页" Width="70" Margin="10" VerticalAlignment="Center" Click="btnNextPage_Click"/>
+            </StackPanel>
+        </Grid>
+        <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="订单号" Width="*" Binding="{Binding OrderNumber, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="卖家用户名" Width="*" Binding="{Binding SellerUserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="交易矿石数" Width="*" Binding="{Binding SellStonesCount, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="价值灵币" Width="*" Binding="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="手续费" Width="*" Binding="{Binding Expense, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="订单状态" Width="*" Binding="{Binding OrderStateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="出售时间" Width="*" Binding="{Binding SellTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="买家用户名" Width="*" Binding="{Binding BuyerUserName, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="奖励金币" Width="*" Binding="{Binding AwardGoldCoin, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付时间" Width="*" Binding="{Binding BuyTime, Mode=OneWay}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,5">
+            <TextBlock Text="当前页面总计交易矿石" Margin="10"/>
+            <TextBox Name="txtSumStone" Width="200" IsReadOnly="True" Margin="10"/>
+            <TextBlock Text="总计价值灵币" Margin="10"/>
+            <TextBox Name="txtSumRMB" Width="200" IsReadOnly="True" Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="20,5">
+            <TextBlock Text="总计手续费" Margin="10"/>
+            <TextBox Name="txtSumFee" Width="200" IsReadOnly="True" Margin="10"/>
+            <TextBlock Text="总计奖励金币" Margin="10"/>
+            <TextBox Name="txtSumGoldCoin" Width="200" IsReadOnly="True" Margin="10"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

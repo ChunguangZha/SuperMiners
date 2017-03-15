@@ -240,6 +240,7 @@
     <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />
+    <Compile Include="ViewModel\StoneDelegateTradeViewModel.cs" />
     <Compile Include="View\Controls\DeletedPlayerInfoControl.xaml.cs">
       <DependentUpon>DeletedPlayerInfoControl.xaml</DependentUpon>
     </Compile>
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml.cs">
       <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>StoneDelegateBuyTradeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\StoneNotFinishedTradeRecordControl.xaml.cs">
       <DependentUpon>StoneNotFinishedTradeRecordControl.xaml</DependentUpon>
@@ -445,6 +449,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

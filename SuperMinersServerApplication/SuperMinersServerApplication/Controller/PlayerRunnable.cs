@@ -1107,6 +1107,17 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        public bool BuyShoppingCreditAwardParent(decimal awardShoppingCreditsValue, CustomerMySqlTransaction trans)
+        {
+            lock (_lockFortuneAction)
+            {
+                BasePlayer.FortuneInfo.ShoppingCreditsEnabled += (int)awardShoppingCreditsValue;
+                this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, trans);
+            }
+
+            return true;
+        }
+
         public bool ReferAward(AwardReferrerConfig awardConfig, string newUserName, CustomerMySqlTransaction trans)
         {
             bool isOK = false;

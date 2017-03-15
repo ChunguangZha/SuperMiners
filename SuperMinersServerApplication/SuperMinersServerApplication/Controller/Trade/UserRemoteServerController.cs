@@ -107,6 +107,8 @@ namespace SuperMinersServerApplication.Controller.Trade
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
+            int getShoppingCredits = (int)alipay.total_fee * GlobalConfig.GameConfig.RemoteServerRechargeReturnShoppingCreditsTimes;
+
             MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
                 result = playerRunner.BuyRemoteServer(alipay, serverType, myTrans);
@@ -115,6 +117,25 @@ namespace SuperMinersServerApplication.Controller.Trade
                     LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败4，原因为：" + OperResult.GetMsg(result));
                     return result;
                 }
+                if (!string.IsNullOrEmpty(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
+                {
+                    var parent1PlayerRunner = PlayerController.Instance.GetRunnable(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
+                    if (parent1PlayerRunner != null)
+                    {
+                        parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyShoppingCreditsAwardConfig[0], myTrans);
+
+                        if (!string.IsNullOrEmpty(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
+                        {
+                            var parent2PlayerRunner = PlayerController.Instance.GetRunnable(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
+                            if (parent2PlayerRunner != null)
+                            {
+                                parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyShoppingCreditsAwardConfig[1], myTrans);
+
+                            }
+                        }
+                    }
+                }
+
                 UserRemoteServerBuyRecord buyRecord = new UserRemoteServerBuyRecord()
                 {
                     UserID = playerRunner.BasePlayer.SimpleInfo.UserID,
@@ -123,7 +144,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                     BuyRemoteServerTime = new MyDateTime(DateTime.Now),
                     ServerType = serverType,
                     PayMoneyYuan = (int)alipay.total_fee,
-                    GetShoppingCredits = (int)alipay.total_fee * GlobalConfig.GameConfig.RemoteServerRechargeReturnShoppingCreditsTimes
+                    GetShoppingCredits = getShoppingCredits
                 };
                 DBProvider.UserRemoteServerDBProvider.SaveUserRemoteServerBuyRecord(buyRecord, myTrans);
 
