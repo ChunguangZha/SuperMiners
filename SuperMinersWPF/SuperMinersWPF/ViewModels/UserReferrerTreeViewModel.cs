@@ -104,7 +104,19 @@ namespace SuperMinersWPF.ViewModels
                 this.ListDownRefrerrerTree.Clear();
                 foreach (var item in e.Result.Where(u => u.Level > 0))
                 {
-                    this.ListDownRefrerrerTree.Add(new UserReferrerTreeItemUIModel(item));
+                    if (item.Level == 1)
+                    {
+                        this.ListDownRefrerrerTree.Add(new UserReferrerTreeItemUIModel(item));
+                    }
+                    else
+                    {
+                        //此代码只支持两级
+                        var parent = this.ListDownRefrerrerTree.FirstOrDefault(r => r.UserID == item.ParentUserID);
+                        if (parent != null)
+                        {
+                            parent.ListDownRefrerrerTree.Add(new UserReferrerTreeItemUIModel(item));
+                        }
+                    }
                 }
 
                 NotifyPropertyChange("DownRefrerrerCount");

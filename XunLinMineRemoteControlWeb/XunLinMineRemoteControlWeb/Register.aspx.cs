@@ -14,7 +14,7 @@ using XunLinMineRemoteControlWeb.Wcf;
 
 namespace XunLinMineRemoteControlWeb
 {
-    public partial class Register1 : System.Web.UI.Page
+    public partial class Register : System.Web.UI.Page
     {
         string invitationCode = null;
         protected void Page_Load(object sender, EventArgs e)

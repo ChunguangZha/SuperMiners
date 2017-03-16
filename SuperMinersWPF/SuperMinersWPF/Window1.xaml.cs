@@ -52,7 +52,6 @@ namespace SuperMinersWPF
                 this.txtShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
 
-                this.btnInvitationFriends.IsEnabled = true;
                 this.btnGetMoney.IsEnabled = true;
                 this.btnStonesSell.IsEnabled = true;
                 
@@ -71,7 +70,6 @@ namespace SuperMinersWPF
                 this.txtShoppingCredits.Visibility = System.Windows.Visibility.Visible;
                 this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Visible;
                 
-                this.btnInvitationFriends.IsEnabled = false;
                 this.btnGetMoney.IsEnabled = false;
                 this.btnStonesSell.IsEnabled = false;
 

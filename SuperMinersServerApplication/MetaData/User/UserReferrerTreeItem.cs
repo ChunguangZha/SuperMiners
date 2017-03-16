@@ -17,10 +17,13 @@ namespace MetaData.User
         public int Level { get; set; }
 
         [DataMember]
+        public int UserID { get; set; }
+
+        [DataMember]
         public string UserName { get; set; }
 
-        //[DataMember]
-        //public string NickName { get; set; }
+        [DataMember]
+        public int ParentUserID { get; set; }
 
         [DataMember]
         public string RegisterIP { get; set; }

@@ -292,14 +292,11 @@ namespace XunLinMineRemoteControlWeb.Wcf
             }
         }
 
-        #region IServiceToWeb Members
 
 
-        public int TransferOldUser(string userName, string password, string alipayAccount, string alipayRealName, string email)
+        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
         {
             throw new NotImplementedException();
         }
-
-        #endregion
     }
 }

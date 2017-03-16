@@ -1311,7 +1311,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " +
+                string cmdText = "SELECT a.`id`, a.`UserName`,a.`ReferrerUserID`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " +
                                 " where a.`ReferrerUserID` = (select b.`id` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
@@ -1356,7 +1356,7 @@ namespace DataBaseProvider
                 myconn = new MySqlConnection(MyDBHelper.CONNECTIONSTRING);
                 myconn.Open();
 
-                string cmdText = "SELECT a.`UserName`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " + 
+                string cmdText = "SELECT a.`id`, a.`UserName`,a.`ReferrerUserID`, a.`RegisterIP`,a.`RegisterTime` FROM  playersimpleinfo a " + 
                                 " where a.`id` = (select b.`ReferrerUserID` from playersimpleinfo b where b.`UserName` = @UserName);";
                 MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
                 mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));

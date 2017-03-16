@@ -86,12 +86,16 @@ namespace DataBaseProvider
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 UserReferrerTreeItem player = new UserReferrerTreeItem();
-
+                 //a.`id`, a.`UserName`,a.`ReferrerUserID`
                 string encryptedUserName = dt.Rows[i]["UserName"].ToString();
                 //string encryptedNickName = dt.Rows[i]["NickName"] == DBNull.Value ? "" : dt.Rows[i]["NickName"].ToString();
-                
+
+                player.UserID = Convert.ToInt32(dt.Rows[i]["id"]);
                 player.UserName = DESEncrypt.DecryptDES(encryptedUserName);
-                //player.NickName = string.IsNullOrEmpty(encryptedNickName) ? player.UserName : DESEncrypt.DecryptDES(encryptedNickName);
+                if (dt.Rows[i]["ReferrerUserID"] != DBNull.Value)
+                {
+                    player.ParentUserID = Convert.ToInt32(dt.Rows[i]["ReferrerUserID"]);
+                }
                 player.RegisterIP = dt.Rows[i]["RegisterIP"].ToString();
                 player.RegisterTime = Convert.ToDateTime(dt.Rows[i]["RegisterTime"]);
 

@@ -1,6 +1,7 @@
 ﻿using MetaData.User;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,9 +36,19 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.Level; }
         }
 
+        public int UserID
+        {
+            get { return this._parentObject.UserID; }
+        }
+
         public string UserName
         {
             get { return this._parentObject.UserName; }
+        }
+
+        public int ParentUserID
+        {
+            get { return this._parentObject.ParentUserID; }
         }
 
         public string RegisterIP
@@ -64,5 +75,17 @@ namespace SuperMinersWPF.Models
                 return this.RegisterTime.ToLongDateString();
             }
         }
+
+        private ObservableCollection<UserReferrerTreeItemUIModel> _listDownRefrerrerTree = new ObservableCollection<UserReferrerTreeItemUIModel>();
+
+        /// <summary>
+        /// 下线
+        /// </summary>
+        public ObservableCollection<UserReferrerTreeItemUIModel> ListDownRefrerrerTree
+        {
+            get { return _listDownRefrerrerTree; }
+            set { _listDownRefrerrerTree = value; }
+        }
+
     }
 }

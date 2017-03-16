@@ -384,6 +384,16 @@ namespace SuperMinersServerApplication.WebService.Services
                         {
                             child.Level = 1;
                             results.Add(child);
+
+                            UserReferrerTreeItem[] subChildrens = DBProvider.UserDBProvider.GetUserReferrerDownTree(child.UserName);
+                            if (subChildrens != null)
+                            {
+                                foreach (var subChild in subChildrens)
+                                {
+                                    subChild.Level = 2;
+                                    results.Add(subChild);
+                                }
+                            }
                         }
                     }
 

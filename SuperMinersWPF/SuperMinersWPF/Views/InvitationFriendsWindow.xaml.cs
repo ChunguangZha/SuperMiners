@@ -40,20 +40,32 @@ namespace SuperMinersWPF.Views
 
         private void SetAdText()
         {
-            StringBuilder builder = new StringBuilder();
             string baseuri = "";
 #if DEBUG
-            baseuri = "http://localhost:8509/";
+
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                baseuri = "http://localhost:8509/";
+            }
+            else
+            {
+                baseuri = "http://localhost:34634/";
+            }
 #else
 
-            baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri"];
+            if (GlobalData.ServerType == ServerType.Server1)
+            {
+                baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri1"];
+            }
+            else
+            {
+                baseuri = System.Configuration.ConfigurationManager.AppSettings["WebUri2"];
+            }
 #endif
 
             string uri = baseuri + "Register.aspx?ic=" + GlobalData.CurrentUser.InvitationCode;
-            builder.Append(" " + uri);
 
-            this.txtInvitationCode.Text = builder.ToString();
-            //this.txtReferrerMsg.Text = "推荐好友，注册后成功登录，即可获取如下奖励：" + GlobalData.AwardReferrerLevelConfig.GetAwardByLevel(1).ToString();
+            this.txtInvitationCode.Text = uri;
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)

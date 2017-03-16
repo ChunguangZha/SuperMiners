@@ -10,7 +10,7 @@
 namespace XunLinMineRemoteControlWeb {
     
     
-    public partial class Register1 {
+    public partial class Register {
         
         /// <summary>
         /// txtUserLoginName control.

@@ -1,5 +1,6 @@
 ﻿<Window x:Class="SuperMinersWPF.Views.InvitationFriendsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:myControl="clr-namespace:SuperMinersWPF.MyControl"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Loaded="Window_Loaded_1"
         Title="邀请好友" Height="500" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" Background="{DynamicResource MainPanelBackground}">
@@ -33,7 +34,46 @@
                 <Run Text="{Binding DownRefrerrerCount, Mode=OneWay}"/>
                 <Run Text="位"/>
         </TextBlock>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Name="datagridTopList" ItemsSource="{Binding ListDownRefrerrerTree}" FontSize="12" Foreground="Gray" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource DataGridColumnHeaderBackground}" AlternatingRowBackground="#FFF3F3F3" HeadersVisibility="Column" SelectionMode="Single">
+        <TreeView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding ListDownRefrerrerTree}" HorizontalContentAlignment="Stretch" >
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding ListDownRefrerrerTree}">
+                    <Grid HorizontalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding UserName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                        <TextBlock Grid.Column="1" Text="{Binding RegisterIP}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                        <TextBlock Grid.Column="2" Text="{Binding RegisterTimeString}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                    </Grid>
+                 <HierarchicalDataTemplate.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding UserName}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                                <TextBlock Grid.Column="1" Text="{Binding RegisterIP}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                                <TextBlock Grid.Column="2" Text="{Binding RegisterTimeString}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,5"/>
+                            </Grid>
+                        </DataTemplate>
+                    </HierarchicalDataTemplate.ItemTemplate>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Name="datagridTopList" Visibility="Collapsed" ItemsSource="{Binding ListDownRefrerrerTree}" FontSize="12" Foreground="Gray" AutoGenerateColumns="False" CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserSortColumns="False" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="{DynamicResource DataGridColumnHeaderBackground}" AlternatingRowBackground="#FFF3F3F3" HeadersVisibility="Column" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="用户名" Width="*" HeaderStyle="{StaticResource DataGridColumnHeaderStyle1}">
                     <DataGridTemplateColumn.CellTemplate>

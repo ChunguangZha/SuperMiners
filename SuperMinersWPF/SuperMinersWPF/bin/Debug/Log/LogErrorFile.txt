@@ -1,11 +1,7 @@
-Error:  [2017/3/7 1:35:41] ---- Log: RestClient ReceiveCallback 3
-Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
-   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
+Error:  [2017/3/16 23:58:44] ---- Log: Client_GetHistoryRaiderRoundRecordsCompleted Exception
+Exc.Message: 未将对象引用设置到对象的实例。Exc.Stack:    在 SuperMinersWPF.ViewModels.GameRaiderofLostArkViewModel.Client_GetHistoryRaiderRoundRecordsCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\GameRaiderofLostArkViewModel.cs:行号 194
 -----------------------------------------------------
 
-Error:  [2017/3/7 1:35:41] ---- Log: RestClient ReceiveCallback 4
------------------------------------------------------
-
-Error:  [2017/3/7 1:35:56] ---- Log: 客户端小开心已退出.
+Error:  [2017/3/16 23:58:58] ---- Log: 客户端小开心2017已退出.
 -----------------------------------------------------
 
