@@ -47,6 +47,7 @@ namespace SuperMinersWPF
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
                 this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
+                this.lblMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
 
                 this.lblShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
                 this.txtShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
@@ -65,6 +66,7 @@ namespace SuperMinersWPF
                 this.btnRequestGravel.Visibility = System.Windows.Visibility.Visible;
                 this.btnInvitationFriends.Visibility = System.Windows.Visibility.Visible;
                 this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Visible;
+                this.lblMakeAVowToGod.Visibility = System.Windows.Visibility.Visible;
 
                 this.lblShoppingCredits.Visibility = System.Windows.Visibility.Visible;
                 this.txtShoppingCredits.Visibility = System.Windows.Visibility.Visible;

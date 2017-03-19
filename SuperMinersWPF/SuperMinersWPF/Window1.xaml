@@ -164,7 +164,7 @@
                 <TextBox Grid.Row="9" Grid.Column="1" Name="txtGravel" Text="{Binding Gravel, Mode=OneWay}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 
                 <Button Grid.Row="9" Grid.Column="2" Name="btnRequestGravel" Content="{Binding GravelButtonContent}" IsEnabled="{Binding GravelButtonEnable}" Visibility="{Binding GravelVisible}" Style="{StaticResource UserInfoButtonStyle}" Click="btnRequestGravel_Click"/>
-                <TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Text="向神灵许愿，矿石不够用啊" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
+                <TextBlock Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Name="lblMakeAVowToGod" Text="向神灵许愿，矿石不够用啊" Style="{StaticResource UserInfoTextBlockStyle}" Margin="10,5"/>
                 <Button Grid.Row="10" Grid.Column="2" Name="btnMakeAVowToGod" Visibility="{Binding GravelVisible}" IsEnabled="{Binding BtnMakeAVowEnable}" Style="{StaticResource UserInfoButtonStyle}" Click="btnMakeAVowToGod_Click">
                     <Button.Content>
                         <TextBlock>
