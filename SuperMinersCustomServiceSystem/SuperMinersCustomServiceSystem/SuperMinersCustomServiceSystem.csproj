@@ -116,6 +116,18 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\Roulette\RouletteWinnerRecord.cs">
       <Link>Wcf\Datas\RouletteWinnerRecord.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneHandBuyInfo.cs">
+      <Link>Wcf\Datas\StoneHandBuyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneHandSellInfo.cs">
+      <Link>Wcf\Datas\StoneHandSellInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\StoneStackDailyRecordInfo.cs">
+      <Link>Wcf\Datas\StoneStackDailyRecordInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Game\StoneStack\TodayStoneStackTradeRecordInfo.cs">
+      <Link>Wcf\Datas\TodayStoneStackTradeRecordInfo.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\NoticeInfo.cs">
       <Link>Wcf\Datas\NoticeInfo.cs</Link>
     </Compile>
@@ -237,6 +249,8 @@
     <Compile Include="Model\RouletteAwardItemUIModel.cs" />
     <Compile Include="Model\RouletteRoundInfoUIModel.cs" />
     <Compile Include="Model\RouletteWinnerRecordUIModel.cs" />
+    <Compile Include="Model\StoneDelegateBuyOrderInfoUIModel.cs" />
+    <Compile Include="Model\StoneDelegateSellOrderInfoUIModel.cs" />
     <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />

@@ -1173,5 +1173,46 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         }
 
         #endregion
+
+
+        public MetaData.Game.StoneStack.StoneDelegateBuyOrderInfo[] GetStoneDelegateBuyOrderInfo(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateBuyOrderInfoByPlayer(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetStoneDelegateBuyOrderInfo Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Game.StoneStack.StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetStoneDelegateSellOrderInfo Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

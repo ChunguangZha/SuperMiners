@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Game.StoneStack;
 using MetaData.Trade;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,18 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         public void GetExpChangeRecord(int userID)
         {
             this._invoker.Invoke<ExpChangeRecord[]>(this._context, "GetExpChangeRecord", this.GetExpChangeRecordCompleted, GlobalData.Token, userID);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<StoneDelegateBuyOrderInfo[]>> GetStoneDelegateBuyOrderInfoCompleted;
+        public void GetStoneDelegateBuyOrderInfo(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            this._invoker.Invoke<StoneDelegateBuyOrderInfo[]>(this._context, "GetStoneDelegateBuyOrderInfo", this.GetStoneDelegateBuyOrderInfoCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<StoneDelegateSellOrderInfo[]>> GetStoneDelegateSellOrderInfoCompleted;
+        public void GetStoneDelegateSellOrderInfo(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            this._invoker.Invoke<StoneDelegateSellOrderInfo[]>(this._context, "GetStoneDelegateSellOrderInfo", this.GetStoneDelegateSellOrderInfoCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
         }
 
     }

@@ -23,10 +23,6 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <TextBlock Text="订单号：" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <TextBox Name="txtOrderNumber" Margin="0,10,5,10" Width="100" MaxLength="100" VerticalAlignment="Center"/>
-                <TextBlock Text="卖家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <TextBox Name="txtSellerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
                 <TextBlock Text="买家用户名：" Margin="10,10,5,10" VerticalAlignment="Center"/>
                 <TextBox Name="txtBuyerUserName" Margin="0,10,5,10" Width="100" MaxLength="64" VerticalAlignment="Center"/>
                 <TextBlock Text="订单状态：" Margin="10,10,5,10" VerticalAlignment="Center"/>
@@ -39,10 +35,6 @@
                 </ComboBox>
             </StackPanel>
             <StackPanel Grid.Row="1" Orientation="Horizontal">
-                <TextBlock Text="出售时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpStartCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
-                <TextBlock Text="到" VerticalAlignment="Center"/>
-                <myc:MyDateTimePickerControl x:Name="dpEndCreateTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="EndOfDay"/>
                 <TextBlock Text="购买时间：从" Margin="10,10,5,10" VerticalAlignment="Center"/>
                 <myc:MyDateTimePickerControl x:Name="dpStartPayTime" VerticalAlignment="Center" ShowTime="False" TimeTickType="StartOfDay"/>
                 <TextBlock Text="到" VerticalAlignment="Center"/>
@@ -61,15 +53,15 @@
         <DataGrid Grid.Row="2" Name="dgRecords" Margin="5" AutoGenerateColumns="False" HorizontalContentAlignment="Center">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="订单号" Width="*" Binding="{Binding OrderNumber, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="卖家用户名" Width="*" Binding="{Binding SellerUserName, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="交易矿石数" Width="*" Binding="{Binding SellStonesCount, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="价值灵币" Width="*" Binding="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="手续费" Width="*" Binding="{Binding Expense, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="订单状态" Width="*" Binding="{Binding OrderStateText, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="出售时间" Width="*" Binding="{Binding SellTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="价格" Width="*" Binding="{Binding Price, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="交易手数" Width="*" Binding="{Binding TradeStoneHandCount, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="支付方式" Width="*" Binding="{Binding PayTypeText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="完成交易手数" Width="*" Binding="{Binding FinishedStoneTradeHandCount, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="订单状态" Width="*" Binding="{Binding BuyStateText, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="委托时间" Width="*" Binding="{Binding DelegateTimeText, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="买家用户名" Width="*" Binding="{Binding BuyerUserName, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="奖励金币" Width="*" Binding="{Binding AwardGoldCoin, Mode=OneWay}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="支付时间" Width="*" Binding="{Binding BuyTime, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="完成时间" Width="*" Binding="{Binding FinishedTimeText, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="20,5">

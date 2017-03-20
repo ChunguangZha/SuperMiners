@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetaData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
                 return;
             }
 
-            this.dgRecords.ItemsSource = App.StoneTradeVMObject.ListBuyStoneOrderRecords;
             Binding bind = new Binding("SumListBuyStoneOrderRecords_AwardGoldCoin")
             {
                 Mode = BindingMode.OneWay
@@ -55,14 +55,13 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
                 Mode = BindingMode.OneWay
             };
             this.txtSumStone.SetBinding(TextBox.TextProperty, bind);
+            bind = new Binding("ListStoneDelegateBuyOrders")
+            {
+                Mode = BindingMode.OneWay
+            };
+            this.dgRecords.SetBinding(DataGrid.ItemsSourceProperty, bind);
 
-            this.DataContext = App.StoneTradeVMObject;
-        }
-
-        public void SetSellerUserName(string sellerUserName)
-        {
-            this.txtSellerUserName.Text = sellerUserName;
-            Search();
+            this.DataContext = App.StoneDelegateTradeVMObject;
         }
 
         public void SetBuyerUserName(string buyerUserName)
@@ -73,20 +72,15 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void Search()
         {
-            string sellerUserName = this.txtSellerUserName.Text.Trim();
-            string orderNumber = this.txtOrderNumber.Text.Trim();
             string buyerUserName = this.txtBuyerUserName.Text.Trim();
             int orderState = this.cmbOrderState.SelectedIndex;
-
-            MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
-            MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
 
             MyDateTime beginPayTime = this.dpStartPayTime.ValueTime;
             MyDateTime endPayTime = this.dpEndPayTime.ValueTime;
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.StoneTradeVMObject.AsyncGetBuyStonesOrderList(sellerUserName, orderNumber, buyerUserName, orderState, beginCreateTime, endCreateTime, beginPayTime, endPayTime, GlobalData.PageItemsCount, pageIndex);
+            App.StoneDelegateTradeVMObject.AsyncGetStoneDelegateBuyOrderInfo(sellerUserName, orderNumber, buyerUserName, orderState, beginCreateTime, endCreateTime, beginPayTime, endPayTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
