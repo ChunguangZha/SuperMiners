@@ -26,23 +26,23 @@ namespace SuperMinersWPF.Views.Controls
             InitializeComponent();
 
             this.dgRecords.ItemsSource = App.StackStoneVMObject.AllFinishedSellOrders;
-            this.dpStartCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-7));
-            this.dpEndCreateTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now);
+            this.dpStartFinishedTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now.AddDays(-7));
+            this.dpEndFinishedTime.ValueTime = MyDateTime.FromDateTime(DateTime.Now);
         }
 
         private void Search()
         {
             string orderNumber = this.txtOrderNumber.Text.Trim();
 
-            MyDateTime beginCreateTime = this.dpStartCreateTime.ValueTime;
-            MyDateTime endCreateTime = this.dpEndCreateTime.ValueTime;
-            endCreateTime.Hour = 23;
-            endCreateTime.Minute = 59;
-            endCreateTime.Second = 59;
+            MyDateTime beginFinishedTime = this.dpStartFinishedTime.ValueTime;
+            MyDateTime endFinishedTime = this.dpEndFinishedTime.ValueTime;
+            endFinishedTime.Hour = 23;
+            endFinishedTime.Minute = 59;
+            endFinishedTime.Second = 59;
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.StackStoneVMObject.AsyncGetAllFinishedSellOrders(beginCreateTime, endCreateTime, GlobalData.PageItemsCount, pageIndex);
+            App.StackStoneVMObject.AsyncGetAllFinishedSellOrders(beginFinishedTime, endFinishedTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)

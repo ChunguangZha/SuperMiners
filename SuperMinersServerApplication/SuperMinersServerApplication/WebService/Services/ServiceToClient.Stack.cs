@@ -185,7 +185,7 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public MetaData.Game.StoneStack.StoneDelegateSellOrderInfo[] GetFinishedDelegateSellStoneOrders(string token, MetaData.MyDateTime myBeginCreateTime, MetaData.MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        public MetaData.Game.StoneStack.StoneDelegateSellOrderInfo[] GetFinishedDelegateSellStoneOrders(string token, MetaData.MyDateTime myBeginFinishedTime, MetaData.MyDateTime myEndFinishedTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -197,7 +197,7 @@ namespace SuperMinersServerApplication.WebService.Services
                     {
                         return null;
                     }
-                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer(userName, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
+                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer(userName, myBeginFinishedTime, myEndFinishedTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

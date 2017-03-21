@@ -17,15 +17,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return "矿石委托交易"; }
         }
 
-        private decimal _sumListBuyStoneOrderRecords_Stone;
+        private decimal _sumListBuyStoneOrderRecords_StoneHand;
 
-        public decimal SumListBuyStoneOrderRecords_Stone
+        public decimal SumListBuyStoneOrderRecords_StoneHand
         {
-            get { return _sumListBuyStoneOrderRecords_Stone; }
+            get { return _sumListBuyStoneOrderRecords_StoneHand; }
             set
             {
-                _sumListBuyStoneOrderRecords_Stone = value;
-                NotifyPropertyChanged("SumListBuyStoneOrderRecords_Stone");
+                _sumListBuyStoneOrderRecords_StoneHand = value;
+                NotifyPropertyChanged("SumListBuyStoneOrderRecords_StoneHand");
             }
         }
 
@@ -41,49 +41,66 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        private decimal _sumListBuyStoneOrderRecords_Fee;
 
-        public decimal SumListBuyStoneOrderRecords_Fee
+        private decimal _sumListSellStoneOrderRecords_StoneHand;
+
+        public decimal SumListSellStoneOrderRecords_StoneHand
         {
-            get { return _sumListBuyStoneOrderRecords_Fee; }
+            get { return _sumListSellStoneOrderRecords_StoneHand; }
             set
             {
-                _sumListBuyStoneOrderRecords_Fee = value;
-                NotifyPropertyChanged("SumListBuyStoneOrderRecords_Fee");
+                _sumListSellStoneOrderRecords_StoneHand = value;
+                NotifyPropertyChanged("SumListSellStoneOrderRecords_StoneHand");
             }
         }
 
-        private decimal _sumListBuyStoneOrderRecords_AwardGoldCoin;
+        private decimal _sumListSellStoneOrderRecords_RMB;
 
-        public decimal SumListBuyStoneOrderRecords_AwardGoldCoin
+        public decimal SumListSellStoneOrderRecords_RMB
         {
-            get { return _sumListBuyStoneOrderRecords_AwardGoldCoin; }
+            get { return _sumListSellStoneOrderRecords_RMB; }
             set
             {
-                _sumListBuyStoneOrderRecords_AwardGoldCoin = value;
-                NotifyPropertyChanged("SumListBuyStoneOrderRecords_AwardGoldCoin");
+                _sumListSellStoneOrderRecords_RMB = value;
+                NotifyPropertyChanged("SumListSellStoneOrderRecords_RMB");
             }
         }
+
 
         public StoneDelegateTradeViewModel()
         {
             RegisterEvents();
         }
 
-        public ObservableCollection<StoneDelegateBuyOrderInfoUIModel> ListStoneDelegateBuyOrders = new ObservableCollection<StoneDelegateBuyOrderInfoUIModel>();
+        private ObservableCollection<StoneDelegateBuyOrderInfoUIModel> _listStoneDelegateBuyOrders = new ObservableCollection<StoneDelegateBuyOrderInfoUIModel>();
 
-        public ObservableCollection<StoneDelegateSellOrderInfoUIModel> ListStoneDelegateSellOrders = new ObservableCollection<StoneDelegateSellOrderInfoUIModel>();
-
-        public void AsyncGetStoneDelegateSellOrderInfo(MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        public ObservableCollection<StoneDelegateBuyOrderInfoUIModel> ListStoneDelegateBuyOrders
         {
-            App.BusyToken.ShowBusyWindow("正在加载矿石委托出售数据...");
-            GlobalData.Client.GetStoneDelegateSellOrderInfo(GlobalData.CurrentAdmin.UserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+            get
+            {
+                return this._listStoneDelegateBuyOrders;
+            }
+        }
+        
+        private ObservableCollection<StoneDelegateSellOrderInfoUIModel> _listStoneDelegateSellOrders = new ObservableCollection<StoneDelegateSellOrderInfoUIModel>();
+        public ObservableCollection<StoneDelegateSellOrderInfoUIModel> ListStoneDelegateSellOrders
+        {
+            get
+            {
+                return this._listStoneDelegateSellOrders;
+            }
         }
 
-        public void AsyncGetStoneDelegateBuyOrderInfo(MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        public void AsyncGetStoneDelegateSellOrderInfo(string sellerUserName, MyDateTime beginFinishedTime, MyDateTime endFinishedTime, int pageItemCount, int pageIndex)
+        {
+            App.BusyToken.ShowBusyWindow("正在加载矿石委托出售数据...");
+            GlobalData.Client.GetStoneDelegateSellOrderInfo(sellerUserName, beginFinishedTime, endFinishedTime, pageItemCount, pageIndex);
+        }
+
+        public void AsyncGetStoneDelegateBuyOrderInfo(string buyerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
         {
             App.BusyToken.ShowBusyWindow("正在加载矿石委托购买数据...");
-            GlobalData.Client.GetStoneDelegateBuyOrderInfo(GlobalData.CurrentAdmin.UserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+            GlobalData.Client.GetStoneDelegateBuyOrderInfo(buyerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
         }
 
 
@@ -108,11 +125,23 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     MyMessageBox.ShowInfo("获取委托矿石出售数据失败。");
                     return;
                 }
-
+                this.SumListSellStoneOrderRecords_RMB = 0;
+                this.SumListSellStoneOrderRecords_StoneHand = 0;
                 this.ListStoneDelegateSellOrders.Clear();
+
+                if (e.Result == null)
+                {
+                    return;
+                }
+
                 foreach (var item in e.Result)
                 {
                     this.ListStoneDelegateSellOrders.Add(new StoneDelegateSellOrderInfoUIModel(item));
+                    if (item.SellUnit != null)
+                    {
+                        this.SumListSellStoneOrderRecords_RMB += item.FinishedStoneTradeHandCount * item.SellUnit.Price;
+                    }
+                    this.SumListSellStoneOrderRecords_StoneHand += item.FinishedStoneTradeHandCount;
                 }
 
             }
@@ -137,11 +166,22 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     MyMessageBox.ShowInfo("获取委托矿石购买数据失败。");
                     return;
                 }
-
+                this.SumListBuyStoneOrderRecords_RMB = 0;
+                this.SumListBuyStoneOrderRecords_StoneHand = 0;
                 this.ListStoneDelegateBuyOrders.Clear();
+                if (e.Result == null)
+                {
+                    return;
+                }
+
                 foreach (var item in e.Result)
                 {
                     this.ListStoneDelegateBuyOrders.Add(new StoneDelegateBuyOrderInfoUIModel(item));
+                    if (item.BuyUnit != null)
+                    {
+                        this.SumListBuyStoneOrderRecords_RMB += item.FinishedStoneTradeHandCount * item.BuyUnit.Price;
+                    }
+                    this.SumListBuyStoneOrderRecords_StoneHand += item.FinishedStoneTradeHandCount;
                 }
 
             }

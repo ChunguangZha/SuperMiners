@@ -1195,13 +1195,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public MetaData.Game.StoneStack.StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        public MetaData.Game.StoneStack.StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginFinishedTime, MyDateTime endFinishedTime, int pageItemCount, int pageIndex)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                    return DBProvider.StoneStackDBProvider.GetAllFinishedStoneDelegateSellOrderInfoByPlayer(playerUserName, beginFinishedTime, endFinishedTime, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {

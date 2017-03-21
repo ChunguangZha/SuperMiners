@@ -79,8 +79,8 @@ namespace SuperMinersCustomServiceSystem
         void controlPlayerManager_ViewPlayerSellStoneOrderRecords(string obj)
         {
             this.HideAllControls();
-            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
-            this.controlStoneSellTradeHistory.SetSellerUserName(obj);
+            this.controlStoneDelegateSellTrade.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneDelegateSellTrade.SetSellerUserName(obj);
             this.tvL2_TS_Stone_SellHistory.IsSelected = true;
             this.tvL2_TS_Stone_SellHistory.IsExpanded = true;
         }
@@ -97,8 +97,8 @@ namespace SuperMinersCustomServiceSystem
         void controlPlayerManager_ViewPlayerBuyStoneOrderRecords(string obj)
         {
             this.HideAllControls();
-            this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Visible;
-            this.controlStoneBuyTradeHistory.SetBuyerUserName(obj);
+            this.controlStoneDelegateBuyTrade.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneDelegateBuyTrade.SetBuyerUserName(obj);
             this.tvL2_TS_Stone_BuyHistory.IsSelected = true;
             this.tvL2_TS_Stone_BuyHistory.IsExpanded = true;
         }
@@ -182,6 +182,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlRouletteRoundList.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDeletedPlayerManage.Visibility = System.Windows.Visibility.Collapsed;
             this.controlTransferServerManage.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneDelegateBuyTrade.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneDelegateSellTrade.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -223,13 +225,15 @@ namespace SuperMinersCustomServiceSystem
         private void tvL2_TS_Stone_BuyHistory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HideAllControls();
-            this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            //this.controlStoneBuyTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneDelegateBuyTrade.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_TS_Stone_SellHistory_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             HideAllControls();
-            this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            //this.controlStoneSellTradeHistory.Visibility = System.Windows.Visibility.Visible;
+            this.controlStoneDelegateSellTrade.Visibility = System.Windows.Visibility.Visible;
         }
 
         private void tvL2_TS_GoldCoin_Active_MouseDoubleClick(object sender, MouseButtonEventArgs e)

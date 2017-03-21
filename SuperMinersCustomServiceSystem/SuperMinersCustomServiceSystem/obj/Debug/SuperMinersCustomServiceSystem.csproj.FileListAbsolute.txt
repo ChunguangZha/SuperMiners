@@ -239,3 +239,9 @@ F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSys
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditPlayerDiamondsWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\InputUserLoginNamePasswordWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditPlayerDiamondsWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\InputUserLoginNamePasswordWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\InputUserLoginNamePasswordWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\StoneDelegateSellTradeHistoryRecordControl.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\StoneDelegateSellTradeHistoryRecordControl.baml

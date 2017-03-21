@@ -51,7 +51,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        StoneDelegateSellOrderInfo[] GetFinishedDelegateSellStoneOrders(string token, MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex);
+        StoneDelegateSellOrderInfo[] GetFinishedDelegateSellStoneOrders(string token, MyDateTime myBeginFinishedTime, MyDateTime myEndFinishedTime, int pageItemCount, int pageIndex);
 
 
         [OperationContract]

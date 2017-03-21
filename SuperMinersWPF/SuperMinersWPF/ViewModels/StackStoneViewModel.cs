@@ -62,10 +62,10 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.GetFinishedDelegateBuyStoneOrders(myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex, null);
         }
 
-        public void AsyncGetAllFinishedSellOrders(MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        public void AsyncGetAllFinishedSellOrders(MyDateTime myBeginFinishedTime, MyDateTime myEndFinishedTime, int pageItemCount, int pageIndex)
         {
             App.BusyToken.ShowBusyWindow("正在查询数据...");
-            GlobalData.Client.GetFinishedDelegateSellStoneOrders(myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex, null);
+            GlobalData.Client.GetFinishedDelegateSellStoneOrders(myBeginFinishedTime, myEndFinishedTime, pageItemCount, pageIndex, null);
         }
 
         public void AsyncGetAllNotFinishedBuyOrders()

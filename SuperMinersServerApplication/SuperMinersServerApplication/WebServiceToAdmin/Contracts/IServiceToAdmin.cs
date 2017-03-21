@@ -318,7 +318,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
+        StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginFinishedTime, MyDateTime endFinishedTime, int pageItemCount, int pageIndex);
 
 
 

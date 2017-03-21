@@ -86,9 +86,9 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<StoneDelegateSellOrderInfo[]>> GetStoneDelegateSellOrderInfoCompleted;
-        public void GetStoneDelegateSellOrderInfo(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        public void GetStoneDelegateSellOrderInfo(string playerUserName, MyDateTime beginFinishedTime, MyDateTime endFinishedTime, int pageItemCount, int pageIndex)
         {
-            this._invoker.Invoke<StoneDelegateSellOrderInfo[]>(this._context, "GetStoneDelegateSellOrderInfo", this.GetStoneDelegateSellOrderInfoCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+            this._invoker.Invoke<StoneDelegateSellOrderInfo[]>(this._context, "GetStoneDelegateSellOrderInfo", this.GetStoneDelegateSellOrderInfoCompleted, GlobalData.Token, playerUserName, beginFinishedTime, endFinishedTime, pageItemCount, pageIndex);
         }
 
     }

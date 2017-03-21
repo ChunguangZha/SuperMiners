@@ -23,6 +23,7 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 _parentObject = value;
 
+                NotifyPropertyChange("SellUserName");
                 NotifyPropertyChange("OrderNumber");
                 NotifyPropertyChange("Price");
                 NotifyPropertyChange("TradeStoneHandCount");
@@ -32,6 +33,14 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("CreateTimeText");
                 NotifyPropertyChange("FinishedTimeText");
 
+            }
+        }
+
+        public string SellUserName
+        {
+            get
+            {
+                return this.ParentObject.UserName;
             }
         }
 
@@ -55,6 +64,10 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get
             {
+                if (this.ParentObject.SellUnit == null)
+                {
+                    return 0;
+                }
                 return this.ParentObject.SellUnit.TradeStoneHandCount;
             }
         }

@@ -24,42 +24,6 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         public StoneDelegateBuyTradeHistoryRecordControl()
         {
             InitializeComponent();
-            BindUI();
-        }
-
-        private void BindUI()
-        {
-            if (this.txtSumGoldCoin == null)
-            {
-                return;
-            }
-
-            Binding bind = new Binding("SumListBuyStoneOrderRecords_AwardGoldCoin")
-            {
-                Mode = BindingMode.OneWay
-            };
-            this.txtSumGoldCoin.SetBinding(TextBox.TextProperty, bind);
-
-            bind = new Binding("SumListBuyStoneOrderRecords_Fee")
-            {
-                Mode = BindingMode.OneWay
-            };
-            this.txtSumFee.SetBinding(TextBox.TextProperty, bind);
-            bind = new Binding("SumListBuyStoneOrderRecords_RMB")
-            {
-                Mode = BindingMode.OneWay
-            };
-            this.txtSumRMB.SetBinding(TextBox.TextProperty, bind);
-            bind = new Binding("SumListBuyStoneOrderRecords_Stone")
-            {
-                Mode = BindingMode.OneWay
-            };
-            this.txtSumStone.SetBinding(TextBox.TextProperty, bind);
-            bind = new Binding("ListStoneDelegateBuyOrders")
-            {
-                Mode = BindingMode.OneWay
-            };
-            this.dgRecords.SetBinding(DataGrid.ItemsSourceProperty, bind);
 
             this.DataContext = App.StoneDelegateTradeVMObject;
         }
@@ -73,14 +37,13 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         private void Search()
         {
             string buyerUserName = this.txtBuyerUserName.Text.Trim();
-            int orderState = this.cmbOrderState.SelectedIndex;
 
             MyDateTime beginPayTime = this.dpStartPayTime.ValueTime;
             MyDateTime endPayTime = this.dpEndPayTime.ValueTime;
 
             int pageIndex = (int)this.numPageIndex.Value;
 
-            App.StoneDelegateTradeVMObject.AsyncGetStoneDelegateBuyOrderInfo(sellerUserName, orderNumber, buyerUserName, orderState, beginCreateTime, endCreateTime, beginPayTime, endPayTime, GlobalData.PageItemsCount, pageIndex);
+            App.StoneDelegateTradeVMObject.AsyncGetStoneDelegateBuyOrderInfo(buyerUserName, beginPayTime, endPayTime, GlobalData.PageItemsCount, pageIndex);
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
@@ -99,7 +62,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void btnNextPage_Click(object sender, RoutedEventArgs e)
         {
-            if (App.StoneTradeVMObject.ListBuyStoneOrderRecords.Count > 0)
+            if (App.StoneDelegateTradeVMObject.ListStoneDelegateBuyOrders.Count > 0)
             {
                 this.numPageIndex.Value = this.numPageIndex.Value + 1;
                 Search();

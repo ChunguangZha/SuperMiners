@@ -59,9 +59,9 @@ namespace SuperMinersWPF.Wcf.Clients
         #region GetFinishedDelegateSellStoneOrders
 
         public event EventHandler<WebInvokeEventArgs<StoneDelegateSellOrderInfo[]>> GetFinishedDelegateSellStoneOrdersCompleted;
-        public void GetFinishedDelegateSellStoneOrders(MyDateTime myBeginCreateTime, MyDateTime myEndCreateTime, int pageItemCount, int pageIndex, object userState)
+        public void GetFinishedDelegateSellStoneOrders(MyDateTime myBeginFinishedTime, MyDateTime myEndFinishedTime, int pageItemCount, int pageIndex, object userState)
         {
-            this._invoker.InvokeUserState<StoneDelegateSellOrderInfo[]>(this._context, "GetFinishedDelegateSellStoneOrders", this.GetFinishedDelegateSellStoneOrdersCompleted, userState, GlobalData.Token, myBeginCreateTime, myEndCreateTime, pageItemCount, pageIndex);
+            this._invoker.InvokeUserState<StoneDelegateSellOrderInfo[]>(this._context, "GetFinishedDelegateSellStoneOrders", this.GetFinishedDelegateSellStoneOrdersCompleted, userState, GlobalData.Token, myBeginFinishedTime, myEndFinishedTime, pageItemCount, pageIndex);
         }
 
         #endregion

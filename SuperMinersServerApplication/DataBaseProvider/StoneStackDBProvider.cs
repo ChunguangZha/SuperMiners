@@ -369,7 +369,7 @@ namespace DataBaseProvider
             }
         }
 
-        public StoneDelegateSellOrderInfo[] GetAllFinishedStoneDelegateSellOrderInfoByPlayer(string userName, MetaData.MyDateTime myBeginCreateTime, MetaData.MyDateTime myEndCreateTime, int pageItemCount, int pageIndex)
+        public StoneDelegateSellOrderInfo[] GetAllFinishedStoneDelegateSellOrderInfoByPlayer(string userName, MetaData.MyDateTime myBeginFinishedTime, MetaData.MyDateTime myEndFinishedTime, int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = MyDBHelper.Instance.CreateConnection();
             MySqlCommand mycmd = null;
@@ -382,23 +382,23 @@ namespace DataBaseProvider
                 if (!string.IsNullOrEmpty(userName))
                 {
                     builder.Append(" n.UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ");
-                    mycmd.Parameters.AddWithValue("@UserName", userName);
+                    mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
-                if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
+                if (myBeginFinishedTime != null && !myBeginFinishedTime.IsNull && myEndFinishedTime != null && !myEndFinishedTime.IsNull)
                 {
                     if (builder.Length != 0)
                     {
                         builder.Append(" and ");
                     }
-                    DateTime beginCreateTime = myBeginCreateTime.ToDateTime();
-                    DateTime endCreateTime = myEndCreateTime.ToDateTime();
-                    if (beginCreateTime >= endCreateTime)
+                    DateTime beginFinishedTime = myBeginFinishedTime.ToDateTime();
+                    DateTime endFinishedTime = myEndFinishedTime.ToDateTime();
+                    if (beginFinishedTime >= endFinishedTime)
                     {
                         return null;
                     }
-                    builder.Append(" n.DelegateTime >= @beginCreateTime and n.DelegateTime < @endCreateTime ");
-                    mycmd.Parameters.AddWithValue("@beginCreateTime", beginCreateTime);
-                    mycmd.Parameters.AddWithValue("@endCreateTime", endCreateTime);
+                    builder.Append(" n.FinishedTime >= @beginFinishedTime and n.FinishedTime < @endFinishedTime ");
+                    mycmd.Parameters.AddWithValue("@beginFinishedTime", beginFinishedTime);
+                    mycmd.Parameters.AddWithValue("@endFinishedTime", endFinishedTime);
                 }
                 string sqlWhere = "";
                 if (builder.Length > 0)
@@ -746,7 +746,7 @@ namespace DataBaseProvider
                 if (!string.IsNullOrEmpty(userName))
                 {
                     builder.Append(" n.UserID = ( select id from   playersimpleinfo where UserName = @UserName ) ");
-                    mycmd.Parameters.AddWithValue("@UserName", userName);
+                    mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
                 }
                 if (myBeginCreateTime != null && !myBeginCreateTime.IsNull && myEndCreateTime != null && !myEndCreateTime.IsNull)
                 {

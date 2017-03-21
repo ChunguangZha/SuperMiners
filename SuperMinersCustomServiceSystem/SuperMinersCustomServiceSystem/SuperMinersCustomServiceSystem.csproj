@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -279,6 +279,9 @@
     <Compile Include="View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>StoneDelegateBuyTradeHistoryRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Controls\TradeSystem\StoneDelegateSellTradeHistoryRecordControl.xaml.cs">
+      <DependentUpon>StoneDelegateSellTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\TradeSystem\StoneNotFinishedTradeRecordControl.xaml.cs">
       <DependentUpon>StoneNotFinishedTradeRecordControl.xaml</DependentUpon>
     </Compile>
@@ -467,6 +470,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\StoneDelegateSellTradeHistoryRecordControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

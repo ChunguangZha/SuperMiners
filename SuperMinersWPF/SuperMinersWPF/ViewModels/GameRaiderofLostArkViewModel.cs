@@ -191,9 +191,12 @@ namespace SuperMinersWPF.ViewModels
                     this.ListHistoryRaiderRoundRecords.Clear();
                 }
 
-                foreach (var item in e.Result)
+                if (e.Result != null)
                 {
-                    this.ListHistoryRaiderRoundRecords.Add(new RaiderRoundMetaDataInfoUIModel(item));
+                    foreach (var item in e.Result)
+                    {
+                        this.ListHistoryRaiderRoundRecords.Add(new RaiderRoundMetaDataInfoUIModel(item));
+                    }
                 }
             }
             catch (Exception exc)

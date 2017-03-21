@@ -23,6 +23,7 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
+                NotifyPropertyChange("BuyerUserName");
                 NotifyPropertyChange("OrderNumber");
                 NotifyPropertyChange("Price");
                 NotifyPropertyChange("TradeStoneHandCount");
@@ -38,6 +39,14 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
+        public string BuyerUserName
+        {
+            get
+            {
+                return this._parentObject.UserName;
+            }
+        }
+
         public string OrderNumber
         {
             get
@@ -50,6 +59,10 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get
             {
+                if (this._parentObject.BuyUnit == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.BuyUnit.Price;
             }
         }
@@ -58,6 +71,10 @@ namespace SuperMinersCustomServiceSystem.Model
         {
             get
             {
+                if (this._parentObject.BuyUnit == null)
+                {
+                    return 0;
+                }
                 return this._parentObject.BuyUnit.TradeStoneHandCount;
             }
         }

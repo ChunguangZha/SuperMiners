@@ -117,6 +117,8 @@
             <tradeControl:WithdrawRMBShowImageControl x:Name="controlStoneTradeShowImage" Visibility="Collapsed"/>
             <tradeControl:AlipayHistoryRecordControl x:Name="controlAlipayRecordHistory" Visibility="Collapsed"/>
             <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
+            <tradeControl:StoneDelegateBuyTradeHistoryRecordControl x:Name="controlStoneDelegateBuyTrade" Visibility="Collapsed"/>
+            <tradeControl:StoneDelegateSellTradeHistoryRecordControl x:Name="controlStoneDelegateSellTrade" Visibility="Collapsed"/>
             <gameControl:RouletteActiveWinRealAwardListControl x:Name="controlRouletteActiveWinRealAwardRecords" Visibility="Collapsed"/>
             <gameControl:RouletteWinAwardRecordHistoryControl x:Name="controlRouletteWinAwardHistoryRecords" Visibility="Collapsed"/>
             <gameControl:RouletteAwardItemListControl x:Name="controlRouletteRouletteAwardItemListControl" Visibility="Collapsed"/>
