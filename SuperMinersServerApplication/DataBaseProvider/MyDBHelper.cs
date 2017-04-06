@@ -102,7 +102,10 @@ namespace DataBaseProvider
             }
             finally
             {
-                myTrans.Dispose();
+                if (myTrans != null)
+                {
+                    myTrans.Dispose();
+                }
             }
         }
 

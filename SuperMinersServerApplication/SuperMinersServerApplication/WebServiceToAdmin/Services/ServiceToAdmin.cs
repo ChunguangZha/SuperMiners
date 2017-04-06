@@ -3,6 +3,7 @@ using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
 using SuperMinersServerApplication.Controller;
+using SuperMinersServerApplication.Controller.Shopping;
 using SuperMinersServerApplication.Controller.Trade;
 using SuperMinersServerApplication.Encoder;
 using SuperMinersServerApplication.Model;
@@ -1206,6 +1207,189 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetStoneDelegateSellOrderInfo Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int HandlePlayerRemoteService(string token, string actionPassword, string playerUserName, string serviceContent, MyDateTime serviceTime, string engineerName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    int result = UserRemoteServerController.Instance.HandlePlayerRemoteService(admin.UserName, playerUserName, serviceContent, serviceTime, engineerName);
+                    if (result == OperResult.RESULTCODE_TRUE)
+                    {
+                        LogHelper.Instance.AddInfoLog("玩家[" + playerUserName + "] 完成一次远程协助服务，服务内容：" + serviceContent + "。服务时间：" + serviceTime.ToString() + "。工程师：" + engineerName + "。管理员：" + admin.UserName);
+                    }
+
+                    return result;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("HandlePlayerRemoteService Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public UserRemoteServerBuyRecord[] GetUserRemoteServerBuyRecords(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.UserRemoteServerDBProvider.GetUserRemoteServerBuyRecords(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetUserRemoteServerBuyRecords Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public UserRemoteHandleServiceRecord[] GetUserRemoteHandleServiceRecords(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.UserRemoteServerDBProvider.GetUserRemoteHandleServiceRecords(playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetUserRemoteHandleServiceRecords Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+
+        public int AddVirtualShoppingItem(string token, string actionPassword, MetaData.Shopping.VirtualShoppingItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    LogHelper.Instance.AddInfoLog("管理员["+admin.UserName+"]在虚拟商城里添加一项虚拟商品：" + item.Name);
+                    bool isOK = VirtualShoppingController.Instance.AddVirtualShoppingItem(item);
+                    if (isOK) return OperResult.RESULTCODE_TRUE;
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("AddVirtualShoppingItem Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int UpdateVirtualShoppingItem(string token, string actionPassword, MetaData.Shopping.VirtualShoppingItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]修改了虚拟商品：" + item.Name);
+                    bool isOK = VirtualShoppingController.Instance.UpdateVirtualShoppingItem(item);
+                    if (isOK) return OperResult.RESULTCODE_TRUE;
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UpdateVirtualShoppingItem Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Shopping.VirtualShoppingItem[] GetVirtualShoppingItems(string token, bool getAllItem, MetaData.Shopping.SellState state)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return VirtualShoppingController.Instance.GetVirtualShoppingItems(getAllItem, state);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetVirtualShoppingItems Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Shopping.PlayerBuyVirtualShoppingItemRecord[] GetPlayerBuyVirtualShoppingItemRecord(string token, string playerUserName, string shoppingItemName, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return VirtualShoppingController.Instance.GetPlayerBuyVirtualShoppingItemRecordByName(playerUserName, shoppingItemName, beginBuyTime, endBuyTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetPlayerBuyVirtualShoppingItemRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

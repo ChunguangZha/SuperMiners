@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Game.StoneStack;
+using MetaData.Shopping;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -320,7 +321,61 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         StoneDelegateSellOrderInfo[] GetStoneDelegateSellOrderInfo(string token, string playerUserName, MyDateTime beginFinishedTime, MyDateTime endFinishedTime, int pageItemCount, int pageIndex);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandlePlayerRemoteService",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int HandlePlayerRemoteService(string token, string actionPassword, string playerUserName, string serviceContent, MyDateTime serviceTime, string engineerName);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetUserRemoteServerBuyRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        UserRemoteServerBuyRecord[] GetUserRemoteServerBuyRecords(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetUserRemoteHandleServiceRecords",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        UserRemoteHandleServiceRecord[] GetUserRemoteHandleServiceRecords(string token, string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/AddVirtualShoppingItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int AddVirtualShoppingItem(string token, string actionPassword, VirtualShoppingItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdateVirtualShoppingItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int UpdateVirtualShoppingItem(string token, string actionPassword, VirtualShoppingItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetVirtualShoppingItems",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        VirtualShoppingItem[] GetVirtualShoppingItems(string token, bool getAllItem, SellState state);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetPlayerBuyVirtualShoppingItemRecord",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PlayerBuyVirtualShoppingItemRecord[] GetPlayerBuyVirtualShoppingItemRecord(string token, string playerUserName, string shoppingItemName, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex);
 
     }
 }

@@ -1,0 +1,29 @@
+﻿<Window x:Class="SuperMinersCustomServiceSystem.View.Windows.EditPlayerRemoteServiceHandleWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:myControl="clr-namespace:SuperMinersCustomServiceSystem.MyControl"
+        Title="EditPlayerRemoteServiceHandleWindow" Height="300" Width="400" WindowStyle="ToolWindow" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="玩家用户名：" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Name="txtPlayerUserName" IsReadOnly="True" Margin="10" VerticalAlignment="Center" MaxLength="150"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="服务工程师：" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="txtWorkerName" Margin="10" VerticalAlignment="Center" MaxLength="150"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="服务时间：" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <myControl:MyDateTimePickerControl Grid.Row="2" Grid.Column="1" x:Name="myTimeServiceTime" Margin="10" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="服务内容：" Margin="10" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Name="txtServiceContent" Margin="10" TextWrapping="Wrap" MaxLines="10000" AcceptsReturn="True" AcceptsTab="True"/>
+        <Button Grid.Row="4" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="100" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
+        <Button Grid.Row="4" Grid.ColumnSpan="2" Name="btnOK" Content="确定" Width="100" Margin="10,10,130,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
+    </Grid>
+</Window>

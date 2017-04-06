@@ -186,14 +186,15 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into userremotehandleservicerecord " +
-                    "(`UserID`, `ServiceTime`,`WorkerName`,`ServiceContent`) " +
-                    " values (@UserID, @ServiceTime, @WorkerName,@ServiceContent)";
+                    "(`UserID`, `ServiceTime`,`WorkerName`,`ServiceContent`,`AdminUserName`) " +
+                    " values (@UserID, @ServiceTime, @WorkerName,@ServiceContent,@AdminUserName)";
                 mycmd.CommandText = sqlText;
 
                 mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@ServiceTime", record.ServiceTime);
                 mycmd.Parameters.AddWithValue("@WorkerName", DESEncrypt.EncryptDES(record.WorkerName));
                 mycmd.Parameters.AddWithValue("@ServiceContent", DESEncrypt.EncryptDES(record.ServiceContent));
+                mycmd.Parameters.AddWithValue("@AdminUserName", DESEncrypt.EncryptDES(record.AdminUserName));
                 mycmd.ExecuteNonQuery();
                 return true;
             }

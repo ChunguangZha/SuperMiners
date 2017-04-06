@@ -33,11 +33,13 @@ namespace SuperMinersCustomServiceSystem
             {
                 this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵一区" + "  --" + GlobalData.CurrentAdmin.UserName;
                 this.tvL1TransferManager.Visibility = System.Windows.Visibility.Visible;
+                this.tvL2_TS_RemoteService.Visibility = System.Windows.Visibility.Collapsed;
             }
             else
             {
                 this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵二区" + "  --" + GlobalData.CurrentAdmin.UserName;
                 this.tvL1TransferManager.Visibility = System.Windows.Visibility.Collapsed;
+                this.tvL2_TS_RemoteService.Visibility = System.Windows.Visibility.Visible;
             }
             //this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
@@ -58,8 +60,28 @@ namespace SuperMinersCustomServiceSystem
             this.controlPlayerManager.ViewPlayerLockedStoneOrderRecords += controlPlayerManager_ViewPlayerLockedStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerSellStoneOrderRecords += controlPlayerManager_ViewPlayerSellStoneOrderRecords;
             this.controlPlayerManager.ViewPlayerRMBWithdrawRecords += controlPlayerManager_ViewPlayerRMBWithdrawRecords;
+            this.controlPlayerManager.ViewPlayerRemoteServiceBuyRecords += controlPlayerManager_ViewPlayerRemoteServiceBuyRecords;
+            this.controlPlayerManager.ViewPlayerRemoteServiceHandleRecords += controlPlayerManager_ViewPlayerRemoteServiceHandleRecords;
 
             this.controlRouletteCurrentAwardItem.RegisterEvents();
+        }
+
+        void controlPlayerManager_ViewPlayerRemoteServiceHandleRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Visible;
+            this.controlUserHandleRemoteServiceRecordsControl.SetUserName(obj);
+            this.tvL2_TS_RemoteService_HandleRecord.IsSelected = true;
+            this.tvL2_TS_RemoteService_HandleRecord.IsExpanded = true;
+        }
+
+        void controlPlayerManager_ViewPlayerRemoteServiceBuyRecords(string obj)
+        {
+            this.HideAllControls();
+            this.controlUserBuyRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Visible;
+            this.controlUserBuyRemoteServiceRecordsControl.SetUserName(obj);
+            this.tvL2_TS_RemoteService_BuyRecord.IsSelected = true;
+            this.tvL2_TS_RemoteService_BuyRecord.IsExpanded = true;
         }
 
         private void btnRefreshTotalInfo_Click(object sender, RoutedEventArgs e)
@@ -184,6 +206,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlTransferServerManage.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneDelegateBuyTrade.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStoneDelegateSellTrade.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlUserBuyRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -340,6 +364,18 @@ namespace SuperMinersCustomServiceSystem
             HideAllControls();
             this.controlTransferServerManage.Visibility = System.Windows.Visibility.Visible;
             this.controlTransferServerManage.RefreshDB();
+        }
+
+        private void tvL2_TS_RemoteService_BuyRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlUserBuyRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_RemoteService_HandleRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

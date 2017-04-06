@@ -25,11 +25,16 @@ namespace SuperMinersServerApplication.WebService.Services
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    return DBProvider.GameRaiderofLostArkDBProvider.GetPlayerRaiderRoundHistoryRecordInfo(userName, pageItemCount, pageIndex);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserName(userName);
+                    if (player == null)
+                    {
+                        return null;
+                    }
+                    return DBProvider.GameRaiderofLostArkDBProvider.GetPlayerRaiderRoundHistoryRecordInfo(player.SimpleInfo.UserID, pageItemCount, pageIndex);
                 }
                 catch (Exception exc)
                 {
-                    LogHelper.Instance.AddErrorLog("GetCurrentRaiderRoundInfo Exception UserName: " + userName, exc);
+                    LogHelper.Instance.AddErrorLog("GetPlayerRaiderRoundHistoryRecordInfo Exception UserName: " + userName, exc);
                     return null;
                 }
             }

@@ -122,14 +122,14 @@ namespace SuperMinersServerApplication.Controller.Trade
                     var parent1PlayerRunner = PlayerController.Instance.GetRunnable(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                     if (parent1PlayerRunner != null)
                     {
-                        parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyShoppingCreditsAwardConfig[0], myTrans);
+                        parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[0], myTrans);
 
                         if (!string.IsNullOrEmpty(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
                         {
                             var parent2PlayerRunner = PlayerController.Instance.GetRunnable(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                             if (parent2PlayerRunner != null)
                             {
-                                parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyShoppingCreditsAwardConfig[1], myTrans);
+                                parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[1], myTrans);
 
                             }
                         }
@@ -139,7 +139,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                 UserRemoteServerBuyRecord buyRecord = new UserRemoteServerBuyRecord()
                 {
                     UserID = playerRunner.BasePlayer.SimpleInfo.UserID,
-                    UserName = playerRunner.BasePlayer.SimpleInfo.UserName,
+                    UserName = playerRunner.BasePlayer.SimpleInfo.UserLoginName,
                     OrderNumber = alipay.out_trade_no,
                     BuyRemoteServerTime = new MyDateTime(DateTime.Now),
                     ServerType = serverType,
@@ -156,6 +156,42 @@ namespace SuperMinersServerApplication.Controller.Trade
             {
                 LogHelper.Instance.AddErrorLog("远程协助服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
                 result = OperResult.RESULTCODE_EXCEPTION;
+            });
+
+            return result;
+        }
+
+        public int HandlePlayerRemoteService(string adminUserName, string playerUserName, string serviceContent, MyDateTime serviceTime, string engineerName)
+        {
+            var player = PlayerController.Instance.GetRunnable(playerUserName);
+            if (player == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            UserRemoteHandleServiceRecord record = new UserRemoteHandleServiceRecord()
+            {
+                AdminUserName = adminUserName,
+                ServiceContent = serviceContent,
+                ServiceTime = serviceTime,
+                UserName = playerUserName,
+                UserID = player.BasePlayer.SimpleInfo.UserID,
+                WorkerName = engineerName
+            };
+
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                int innerResult = player.HandlePlayerRemoteService(serviceTime, myTrans);
+                if (innerResult != OperResult.RESULTCODE_TRUE)
+                {
+                    return innerResult;
+                }
+
+                DBProvider.UserRemoteServerDBProvider.AddUserRemoteHandleServiceRecord(record, myTrans);
+                return OperResult.RESULTCODE_TRUE;
+            },
+            exc =>
+            {
+                LogHelper.Instance.AddErrorLog("HandlePlayerRemoteService Exception. adminUserName:" + adminUserName + ";playerUserName:" + playerUserName + ";serviceContent:" + serviceContent + ";serviceTime:" + serviceTime.ToString() + ";engineerName:" + engineerName, exc);
             });
 
             return result;

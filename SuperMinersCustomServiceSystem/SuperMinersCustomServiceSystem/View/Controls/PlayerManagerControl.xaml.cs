@@ -59,6 +59,18 @@ namespace SuperMinersCustomServiceSystem.View.Controls
 
             this.panelPlayersManager.SetBinding(GroupBox.DataContextProperty, bind);
 
+            if (GlobalData.ServerType == ServerType.Server2)
+            {
+                MenuItem mitem1 = new MenuItem() { Header = "查看玩家远程服务购买记录" };
+                mitem1.Click += PlayerListContextMenu_ViewRemoteServiceBuyRecordItem_Click;
+                this.cmenuDataGridPlayer.Items.Add(mitem1);
+
+                MenuItem mitem2 = new MenuItem() { Header = "查看玩家远程完成记录" };
+                mitem2.Click += PlayerListContextMenu_ViewRemoteServiceHandleRecordItem_Click;
+                this.cmenuDataGridPlayer.Items.Add(mitem2);
+
+                this.btnAddNewRemoteServiceHandled.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
@@ -341,6 +353,25 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             }
         }
 
+        private void btnAddNewRemoteServiceHandled_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+
+                    EditPlayerRemoteServiceHandleWindow win = new EditPlayerRemoteServiceHandleWindow();
+                    win.AddNewRecord(player.UserName);
+                    win.ShowDialog();
+                }
+            }
+            catch (Exception exc)
+            {
+
+            }
+        }
+
         void PlayerListContextMenu_ViewBuyMineRecordItem_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -352,7 +383,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (this.ViewPlayerBuyMineRecords != null)
                         {
-                            this.ViewPlayerBuyMineRecords(player.UserLoginName);
+                            this.ViewPlayerBuyMineRecords(player.UserName);
                         }
                     }
                 }
@@ -374,7 +405,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (this.ViewPlayerBuyGoldCoinRecords != null)
                         {
-                            this.ViewPlayerBuyGoldCoinRecords(player.UserLoginName);
+                            this.ViewPlayerBuyGoldCoinRecords(player.UserName);
                         }
                     }
                 }
@@ -396,7 +427,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerBuyMinerRecords != null)
                         {
-                            this.ViewPlayerBuyMinerRecords(player.UserLoginName);
+                            this.ViewPlayerBuyMinerRecords(player.UserName);
                         }
                     }
                 }
@@ -418,7 +449,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerSellStoneOrderRecords != null)
                         {
-                            ViewPlayerSellStoneOrderRecords(player.UserLoginName);
+                            ViewPlayerSellStoneOrderRecords(player.UserName);
                         }
                     }
                 }
@@ -440,7 +471,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerLockedStoneOrderRecords != null)
                         {
-                            ViewPlayerLockedStoneOrderRecords(player.UserLoginName);
+                            ViewPlayerLockedStoneOrderRecords(player.UserName);
                         }
                     }
                 }
@@ -462,7 +493,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerBuyStoneOrderRecords != null)
                         {
-                            ViewPlayerBuyStoneOrderRecords(player.UserLoginName);
+                            ViewPlayerBuyStoneOrderRecords(player.UserName);
                         }
                     }
                 }
@@ -484,7 +515,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerAlipayRechargeRecords != null)
                         {
-                            ViewPlayerAlipayRechargeRecords(player.UserLoginName);
+                            ViewPlayerAlipayRechargeRecords(player.UserName);
                         }
                     }
                 }
@@ -506,7 +537,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     {
                         if (ViewPlayerRMBWithdrawRecords != null)
                         {
-                            ViewPlayerRMBWithdrawRecords(player.UserLoginName);
+                            ViewPlayerRMBWithdrawRecords(player.UserName);
                         }
                     }
                 }
@@ -518,6 +549,50 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         }
 
 
+        private void PlayerListContextMenu_ViewRemoteServiceBuyRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (player != null)
+                    {
+                        if (ViewPlayerRemoteServiceBuyRecords != null)
+                        {
+                            ViewPlayerRemoteServiceBuyRecords(player.UserName);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private void PlayerListContextMenu_ViewRemoteServiceHandleRecordItem_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.datagridPlayerInfos.SelectedItem is PlayerInfoUIModel)
+                {
+                    PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
+                    if (player != null)
+                    {
+                        if (ViewPlayerRemoteServiceHandleRecords != null)
+                        {
+                            ViewPlayerRemoteServiceHandleRecords(player.UserName);
+                        }
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
         public event Action<string> ViewPlayerSellStoneOrderRecords;
         public event Action<string> ViewPlayerLockedStoneOrderRecords;
         public event Action<string> ViewPlayerBuyStoneOrderRecords;
@@ -526,5 +601,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         public event Action<string> ViewPlayerBuyGoldCoinRecords;
         public event Action<string> ViewPlayerAlipayRechargeRecords;
         public event Action<string> ViewPlayerRMBWithdrawRecords;
+        public event Action<string> ViewPlayerRemoteServiceBuyRecords;
+        public event Action<string> ViewPlayerRemoteServiceHandleRecords;
     }
 }

@@ -5,6 +5,7 @@ using MetaData.Game.GambleStone;
 using MetaData.Game.RaideroftheLostArk;
 using MetaData.Game.Roulette;
 using MetaData.Game.StoneStack;
+using MetaData.Shopping;
 using MetaData.Trade;
 using MetaData.User;
 using MySql.Data.MySqlClient;
@@ -792,6 +793,7 @@ namespace DataBaseProvider
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 UserRemoteHandleServiceRecord record = new UserRemoteHandleServiceRecord();
+                record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 record.WorkerName = DESEncrypt.DecryptDES(dt.Rows[i]["WorkerName"].ToString());
@@ -1218,6 +1220,64 @@ namespace DataBaseProvider
             }
 
             return items;
+        }
+
+        internal static VirtualShoppingItem[] GetVirtualShoppingItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            VirtualShoppingItem[] items = new VirtualShoppingItem[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                VirtualShoppingItem item = new VirtualShoppingItem();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.Name = dt.Rows[i]["Name"].ToString();
+                item.Remark = dt.Rows[i]["Remark"].ToString();
+                item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
+                item.PlayerMaxBuyableCount = Convert.ToInt32(dt.Rows[i]["PlayerMaxBuyableCount"]);
+                item.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
+                item.GainExp = Convert.ToDecimal(dt.Rows[i]["GainExp"]);
+                item.GainRMB = Convert.ToDecimal(dt.Rows[i]["GainRMB"]);
+                item.GainGoldCoin = Convert.ToDecimal(dt.Rows[i]["GainGoldCoin"]);
+                item.GainMine_StoneReserves = Convert.ToDecimal(dt.Rows[i]["GainMine_StoneReserves"]);
+                item.GainMiner = Convert.ToDecimal(dt.Rows[i]["GainMiner"]);
+                item.GainStone = Convert.ToDecimal(dt.Rows[i]["GainStone"]);
+                item.GainDiamond = Convert.ToDecimal(dt.Rows[i]["GainDiamond"]);
+                item.GainShoppingCredits = Convert.ToDecimal(dt.Rows[i]["GainShoppingCredits"]);
+                item.GainGravel = Convert.ToDecimal(dt.Rows[i]["GainGravel"]);
+                item.IconBuffer = (byte[])dt.Rows[i]["IconBuffer"];
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static PlayerBuyVirtualShoppingItemRecord[] GetPlayerBuyVirtualShoppingItemRecordFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            PlayerBuyVirtualShoppingItemRecord[] records = new PlayerBuyVirtualShoppingItemRecord[dt.Rows.Count];
+            for (int i = 0; i < records.Length; i++)
+            {
+                PlayerBuyVirtualShoppingItemRecord record = new PlayerBuyVirtualShoppingItemRecord();
+                record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.VirtualShoppingItemID = Convert.ToInt32(dt.Rows[i]["VirtualShoppingItemID"]);
+                record.UserName = dt.Rows[i]["UserName"].ToString();
+                record.VirtualShoppingItemName = dt.Rows[i]["VirtualShoppingItemName"].ToString();
+                record.BuyTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["BuyTime"]));
+
+                records[i] = record;
+            }
+
+            return records;
         }
     }
 }

@@ -8,11 +8,11 @@ F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication
 SuperMinersServerApplication
 none
 false
-TRACE;Encrypt, -Delay, -V1
+TRACE;Encrypt, -Delay, V1
 F:\My Work\SuperMiners\SuperMinersServerApplication\SuperMinersServerApplication\App.xaml
 5-2118715400
 
-107492492554
+1101108966163
 24-1034926519
 MainWindow.xaml;Utility\WinInputPassword.xaml;Views\AddNoticeWindow.xaml;Views\DeleteAllStoneSellOrderWindow.xaml;Views\EditAdminWindow.xaml;
 

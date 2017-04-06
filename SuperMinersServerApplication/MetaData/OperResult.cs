@@ -82,6 +82,16 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_USERLOGINNAME_EXIST = 107;
 
         /// <summary>
+        /// 管理员不存在
+        /// </summary>
+        public const int RESULTCODE_ADMIN_USER_NOT_EXIST = 200;
+
+        /// <summary>
+        /// 管理员操作密码错误
+        /// </summary>
+        public const int RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR = 201;
+
+        /// <summary>
         /// 用户不存在
         /// </summary>
         public const int RESULTCODE_USER_NOT_EXIST = 300;
@@ -177,6 +187,11 @@ namespace MetaData
         public const int RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR = 512;
 
         /// <summary>
+        /// 处理玩家远程协助服务失败，玩家不在服务有效期
+        /// </summary>
+        public const int RESULTCODE_REMOTESERVICE_HANDLEFAILED_TIMEOUT = 513;
+
+        /// <summary>
         /// 玩家神灵许愿次数超限
         /// </summary>
         public const int RESULTCODE_MAKEAVOWTIMESOUT = 523;
@@ -227,6 +242,11 @@ namespace MetaData
         /// 矿石出售券不足
         /// </summary>
         public const int RESULTCODE_ORDER_SELLSTONEQUAN_LACK = 612;
+
+        /// <summary>
+        /// 玩家已无法再购买该虚拟商品
+        /// </summary>
+        public const int RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM = 613;
 
         /// <summary>
         /// 支付订单时，支付金额不足
@@ -348,6 +368,10 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_BUYREMOTESERVER_FAILED_PAYEDMONEYERROR, "支付金额错误");
             _resultCode_Msg.Add(RESULTCODE_MAKEAVOWTIMESOUT, "您许愿次数超限，每天最多可以许3次");
             _resultCode_Msg.Add(RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE, "矿石量不足十万，不够支付手续费");
+            _resultCode_Msg.Add(RESULTCODE_REMOTESERVICE_HANDLEFAILED_TIMEOUT, "玩家不在远程协助服务有效期内");
+            _resultCode_Msg.Add(RESULTCODE_ADMIN_USER_NOT_EXIST, "管理员不存在");
+            _resultCode_Msg.Add(RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR, "管理员操作密码错误");
+            _resultCode_Msg.Add(RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM, "您已经不能再购买该商品");
         }
 
         public static string GetMsg(int resultCode)

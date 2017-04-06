@@ -85,6 +85,10 @@
                     <TreeViewItem Name="tvL2_TS_Alipay_ExceptionRecord" Header="充值异常记录" MouseDoubleClick="tvL2_TS_Alipay_ExceptionRecord_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_Alipay_HistoryRecord" Header="历史记录" MouseDoubleClick="tvL2_TS_Alipay_HistoryRecord_MouseDoubleClick"/>
                 </TreeViewItem>
+                <TreeViewItem Name="tvL2_TS_RemoteService" Header="远程服务" Style="{StaticResource TVItemL2Style}">
+                    <TreeViewItem Name="tvL2_TS_RemoteService_BuyRecord" Header="远程服务购买记录" MouseDoubleClick="tvL2_TS_RemoteService_BuyRecord_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_RemoteService_HandleRecord" Header="远程服务完成记录" MouseDoubleClick="tvL2_TS_RemoteService_HandleRecord_MouseDoubleClick"/>
+                </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Header="幸运大转盘" Name="tvL2_FS_Roulette" Style="{StaticResource TVItemL2Style}">
@@ -119,6 +123,8 @@
             <tradeControl:AlipayExceptionRecordListControl x:Name="controlAlipayExceptionRecords" Visibility="Collapsed"/>
             <tradeControl:StoneDelegateBuyTradeHistoryRecordControl x:Name="controlStoneDelegateBuyTrade" Visibility="Collapsed"/>
             <tradeControl:StoneDelegateSellTradeHistoryRecordControl x:Name="controlStoneDelegateSellTrade" Visibility="Collapsed"/>
+            <tradeControl:UserHandleRemoteServiceRecordsControl x:Name="controlUserHandleRemoteServiceRecordsControl" Visibility="Collapsed"/>
+            <tradeControl:UserBuyRemoteServiceRecordsControl x:Name="controlUserBuyRemoteServiceRecordsControl" Visibility="Collapsed"/>
             <gameControl:RouletteActiveWinRealAwardListControl x:Name="controlRouletteActiveWinRealAwardRecords" Visibility="Collapsed"/>
             <gameControl:RouletteWinAwardRecordHistoryControl x:Name="controlRouletteWinAwardHistoryRecords" Visibility="Collapsed"/>
             <gameControl:RouletteAwardItemListControl x:Name="controlRouletteRouletteAwardItemListControl" Visibility="Collapsed"/>

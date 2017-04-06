@@ -268,6 +268,24 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo, newUserLoginName, newPassword);
         }
 
+        public event EventHandler<WebInvokeEventArgs<int>> HandlePlayerRemoteServiceCompleted;
+        public void HandlePlayerRemoteService(string actionPassword, string playerUserName, string serviceContent, MyDateTime serviceTime, string engineerName)
+        {
+            this._invoker.Invoke<int>(this._context, "HandlePlayerRemoteService", this.HandlePlayerRemoteServiceCompleted, GlobalData.Token, actionPassword, playerUserName, serviceContent, serviceTime, engineerName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<UserRemoteServerBuyRecord[]>> GetUserRemoteServerBuyRecordsCompleted;
+        public void GetUserRemoteServerBuyRecords(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            this._invoker.Invoke<UserRemoteServerBuyRecord[]>(this._context, "GetUserRemoteServerBuyRecords", this.GetUserRemoteServerBuyRecordsCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<UserRemoteHandleServiceRecord[]>> GetUserRemoteHandleServiceRecordsCompleted;
+        public void GetUserRemoteHandleServiceRecords(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
+        {
+            this._invoker.Invoke<UserRemoteHandleServiceRecord[]>(this._context, "GetUserRemoteHandleServiceRecords", this.GetUserRemoteHandleServiceRecordsCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
+        }
+
         #endregion
     }
 }

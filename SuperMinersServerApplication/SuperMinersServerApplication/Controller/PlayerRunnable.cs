@@ -2,6 +2,7 @@
 using MetaData;
 using MetaData.Game.Roulette;
 using MetaData.Game.StoneStack;
+using MetaData.Shopping;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -1107,11 +1108,12 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public bool BuyShoppingCreditAwardParent(decimal awardShoppingCreditsValue, CustomerMySqlTransaction trans)
+        public bool BuyShoppingCreditAwardParent(decimal awardRMBValue, CustomerMySqlTransaction trans)
         {
             lock (_lockFortuneAction)
             {
-                BasePlayer.FortuneInfo.ShoppingCreditsEnabled += (int)awardShoppingCreditsValue;
+                //20170326 改成返灵币
+                BasePlayer.FortuneInfo.RMB += (int)awardRMBValue;
                 this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, trans);
             }
 
@@ -1349,10 +1351,69 @@ namespace SuperMinersServerApplication.Controller
 
         public int WinGambleStone(int winnedStone, CustomerMySqlTransaction myTrans)
         {
-            this.BasePlayer.FortuneInfo.StockOfStones += winnedStone;
-            bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+            lock (_lockFortuneAction)
+            {
+                this.BasePlayer.FortuneInfo.StockOfStones += winnedStone;
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
 
-            return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+            }
+        }
+        //
+        public int HandlePlayerRemoteService(MyDateTime serviceTime, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.IsLongTermRemoteServiceUser)
+                {
+                    if (this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime == null)
+                    {
+                        return OperResult.RESULTCODE_REMOTESERVICE_HANDLEFAILED_TIMEOUT;
+                    }
+                    if (this.BasePlayer.FortuneInfo.UserRemoteServerValidStopTime.ToDateTime() < serviceTime.ToDateTime())
+                    {
+                        return OperResult.RESULTCODE_REMOTESERVICE_HANDLEFAILED_TIMEOUT;
+                    }
+                }
+                else
+                {
+                    if (this.BasePlayer.FortuneInfo.UserRemoteServiceValidTimes <= 0)
+                    {
+                        return OperResult.RESULTCODE_REMOTESERVICE_HANDLEFAILED_TIMEOUT;
+                    }
+
+                    this.BasePlayer.FortuneInfo.UserRemoteServiceValidTimes--;
+                    SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        public int BuyVirtualShoppingItem(VirtualShoppingItem shoppingItem, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.RMB < shoppingItem.ValueRMB)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.RMB -= shoppingItem.ValueRMB;
+                this.BasePlayer.FortuneInfo.StockOfDiamonds += shoppingItem.GainDiamond;
+                this.BasePlayer.FortuneInfo.Exp += shoppingItem.GainExp;
+                this.BasePlayer.FortuneInfo.GoldCoin += shoppingItem.GainGoldCoin;
+                this.BasePlayer.GravelInfo.Gravel += (int)shoppingItem.GainGravel;
+                this.BasePlayer.FortuneInfo.StonesReserves += shoppingItem.GainMine_StoneReserves;
+                this.BasePlayer.FortuneInfo.MinersCount += shoppingItem.GainMiner;
+                this.BasePlayer.FortuneInfo.RMB += shoppingItem.GainRMB;
+                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled += (int)shoppingItem.GainShoppingCredits;
+                this.BasePlayer.FortuneInfo.StockOfStones += shoppingItem.GainStone;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
+
+                return OperResult.RESULTCODE_TRUE;
+            }
         }
     }
 }

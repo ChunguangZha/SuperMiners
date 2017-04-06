@@ -71,7 +71,7 @@ namespace SuperMinersServerApplication
 
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
 
-        public static decimal[] BuyShoppingCreditsAwardConfig = new decimal[] { 0.05m, 0.01m };
+        public static decimal[] BuyRemoteServiceAwardRMBConfig = new decimal[] { 0.05m, 0.01m };
 
         public static RouletteConfig RouletteConfig = new RouletteConfig();
 

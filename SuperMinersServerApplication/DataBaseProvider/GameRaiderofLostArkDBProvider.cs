@@ -12,7 +12,7 @@ namespace DataBaseProvider
 {
     public class GameRaiderofLostArkDBProvider
     {
-        public PlayerRaiderRoundHistoryRecordInfo[] GetPlayerRaiderRoundHistoryRecordInfo(string userName, int pageItemCount, int pageIndex)
+        public PlayerRaiderRoundHistoryRecordInfo[] GetPlayerRaiderRoundHistoryRecordInfo(int userID, int pageItemCount, int pageIndex)
         {
             MySqlConnection myconn = null;
             MySqlCommand mycmd = null;
@@ -28,15 +28,15 @@ namespace DataBaseProvider
                 }
 
                 string sqlTextA = "select ttt.*, r.* from " +
-                                    " (SELECT b.RaiderRoundID, b.UserName, sum(b.BetStones) as AllBetStones " + 
+                                    " (SELECT b.RaiderRoundID, sum(b.BetStones) as AllBetStones " + 
                                     " FROM  raiderplayerbetinfo b " +  
-                                    " where b.UserName = @UserName " +
+                                    " where b.UserID = @UserID " +
                                     " group by b.RaiderRoundID  " + sqlOrderLimit + " ) ttt " +
                                     "  left join   raiderroundmetadatainfo r  on ttt.RaiderRoundID = r.id ";
 
                 mycmd = myconn.CreateCommand();
                 mycmd.CommandText = sqlTextA;
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(userName));
+                mycmd.Parameters.AddWithValue("@UserID", userID);
                 myconn.Open();
 
                 DataTable table = new DataTable();

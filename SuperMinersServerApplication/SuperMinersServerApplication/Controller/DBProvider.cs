@@ -58,6 +58,8 @@ namespace SuperMinersServerApplication.Controller
         public static UserRemoteServerDBProvider UserRemoteServerDBProvider = new UserRemoteServerDBProvider();
 
         public static OldPlayerTransferDBProvider OldPlayerTransferDBProvider = new OldPlayerTransferDBProvider();
+
+        public static VirtualShoppingItemDBProvider VirtualShoppingItemDBProvider = new VirtualShoppingItemDBProvider();
         
     }
 }

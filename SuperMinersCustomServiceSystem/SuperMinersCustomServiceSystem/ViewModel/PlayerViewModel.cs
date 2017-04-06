@@ -320,6 +320,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             GlobalData.Client.UnlockPlayerCompleted += Client_UnlockPlayerCompleted;
             GlobalData.Client.GetPlayerCompleted += Client_GetPlayerCompleted;
             GlobalData.Client.GetPlayerTransferRecordsCompleted += Client_GetPlayerTransferRecordsCompleted;
+            
             //GlobalData.Client.GetUserLoginLogCompleted += Client_GetUserLoginLogCompleted;
         }
 

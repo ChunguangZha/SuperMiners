@@ -33,7 +33,7 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>1.1.1.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -134,6 +134,18 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
       <Link>Wcf\Datas\OperResult.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\DiamondShoppingItem.cs">
+      <Link>Wcf\Datas\DiamondShoppingItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\PlayerBuyDiamondShoppingItemRecord.cs">
+      <Link>Wcf\Datas\PlayerBuyDiamondShoppingItemRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\PlayerBuyVirtualShoppingItemRecord.cs">
+      <Link>Wcf\Datas\PlayerBuyVirtualShoppingItemRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\VirtualShoppingItem.cs">
+      <Link>Wcf\Datas\VirtualShoppingItem.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
@@ -181,6 +193,15 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\TradeType.cs">
       <Link>Wcf\Datas\TradeType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\UserRemoteHandleServiceRecord.cs">
+      <Link>Wcf\Datas\UserRemoteHandleServiceRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\UserRemoteServerBuyRecord.cs">
+      <Link>Wcf\Datas\UserRemoteServerBuyRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\UserRemoteServerItem.cs">
+      <Link>Wcf\Datas\UserRemoteServerItem.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Trade\WithdrawRMBRecord.cs">
       <Link>Wcf\Datas\WithdrawRMBRecord.cs</Link>
@@ -245,6 +266,7 @@
     <Compile Include="Model\MinersBuyRecordUIModel.cs" />
     <Compile Include="Model\MinesBuyRecordUIModel.cs" />
     <Compile Include="Model\OldPlayerTransferRegisterInfoUIModel.cs" />
+    <Compile Include="Model\PlayerBuyVirtualShoppingItemRecordUIModel.cs" />
     <Compile Include="Model\PlayerLoginInfoUIModel.cs" />
     <Compile Include="Model\RouletteAwardItemUIModel.cs" />
     <Compile Include="Model\RouletteRoundInfoUIModel.cs" />
@@ -252,8 +274,13 @@
     <Compile Include="Model\StoneDelegateBuyOrderInfoUIModel.cs" />
     <Compile Include="Model\StoneDelegateSellOrderInfoUIModel.cs" />
     <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
+    <Compile Include="Model\UserRemoteHandleServiceRecordUIModel.cs" />
+    <Compile Include="Model\UserRemoteServerBuyRecordUIModel.cs" />
+    <Compile Include="Model\VirtualShoppingItemUIModel.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />
+    <Compile Include="ViewModel\RemoteServiceViewModel.cs" />
+    <Compile Include="ViewModel\ShoppingViewModel.cs" />
     <Compile Include="ViewModel\StoneDelegateTradeViewModel.cs" />
     <Compile Include="View\Controls\DeletedPlayerInfoControl.xaml.cs">
       <DependentUpon>DeletedPlayerInfoControl.xaml</DependentUpon>
@@ -287,6 +314,15 @@
     </Compile>
     <Compile Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>StoneSellTradeHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\UserBuyRemoteServiceRecordsControl.xaml.cs">
+      <DependentUpon>UserBuyRemoteServiceRecordsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\UserHandleRemoteServiceRecordsControl.xaml.cs">
+      <DependentUpon>UserHandleRemoteServiceRecordsControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\VirtualShoppingItemListControl.xaml.cs">
+      <DependentUpon>VirtualShoppingItemListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TransferServerManagerControl.xaml.cs">
       <DependentUpon>TransferServerManagerControl.xaml</DependentUpon>
@@ -396,11 +432,17 @@
     <Compile Include="View\Windows\EditPlayerPasswordWindow.xaml.cs">
       <DependentUpon>EditPlayerPasswordWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\EditPlayerRemoteServiceHandleWindow.xaml.cs">
+      <DependentUpon>EditPlayerRemoteServiceHandleWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\EditPlayerStoneWindow.xaml.cs">
       <DependentUpon>EditPlayerStoneWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\EditRouletteAwardItemWindow.xaml.cs">
       <DependentUpon>EditRouletteAwardItemWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EditVirtualShoppingItemWindow.xaml.cs">
+      <DependentUpon>EditVirtualShoppingItemWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\GameRouletteWinAwardWindow.xaml.cs">
       <DependentUpon>GameRouletteWinAwardWindow.xaml</DependentUpon>
@@ -435,6 +477,7 @@
     <Compile Include="Wcf\Channel\RestInvoker.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Compile Include="Wcf\Clients\ServerClient.FunnyGame.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Shopping.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
     <Page Include="BusyWindow.xaml">
@@ -482,6 +525,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\StoneSellTradeHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\UserBuyRemoteServiceRecordsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\UserHandleRemoteServiceRecordsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\VirtualShoppingItemListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -639,11 +694,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Windows\EditPlayerRemoteServiceHandleWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Windows\EditPlayerStoneWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EditRouletteAwardItemWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditVirtualShoppingItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

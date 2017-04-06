@@ -51,7 +51,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;Encrypt, -Delay, -V1</DefineConstants>
+    <DefineConstants>TRACE;Encrypt, -Delay, V1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -114,6 +114,7 @@
     <Compile Include="Controller\Game\RouletteAwardController.cs" />
     <Compile Include="Controller\GravelController.cs" />
     <Compile Include="Controller\SchedulerTaskController.cs" />
+    <Compile Include="Controller\Shopping\VirtualShoppingController.cs" />
     <Compile Include="Controller\Stack\StoneStackController.cs" />
     <Compile Include="Controller\Trade\AgentAwardController.cs" />
     <Compile Include="Controller\Trade\GoldCoinOrderController.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.Gravel.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Message.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.Shopping.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Stack.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Trade.cs" />
@@ -224,6 +226,7 @@
     <Compile Include="WebService\Services\ServiceToClient.Gravel.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Message.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.Shopping.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Stack.cs" />
     <Compile Include="WebService\Services\ServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Trade.cs" />

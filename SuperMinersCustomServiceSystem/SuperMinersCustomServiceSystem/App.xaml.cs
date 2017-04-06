@@ -25,6 +25,9 @@ namespace SuperMinersCustomServiceSystem
         public static AlipayRechargeViewModel AlipayRechargeVMObject = new AlipayRechargeViewModel();
         public static GameRouletteViewModel GameRouletteVMObject = new GameRouletteViewModel();
         public static StoneDelegateTradeViewModel StoneDelegateTradeVMObject = new StoneDelegateTradeViewModel();
+        public static RemoteServiceViewModel RemoteServiceVMObject = new RemoteServiceViewModel();
+        public static ShoppingViewModel ShoppingVMObject = new ShoppingViewModel();
+
 
         protected override void OnStartup(StartupEventArgs e)
         {

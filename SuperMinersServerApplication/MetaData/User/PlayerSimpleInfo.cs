@@ -23,7 +23,7 @@ namespace MetaData.User
         public string UserLoginName { get; set; }
 
         /// <summary>
-        /// maxlength=15
+        /// maxlength=15，为了兼容老代码，所以查询还是以UserName为准。
         /// </summary>
         [DataMember]
         public string UserName { get; set; }
