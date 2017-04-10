@@ -553,16 +553,16 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
-                var player = PlayerController.Instance.GetPlayerInfoByUserLoginName(userLoginName);
+                var player = PlayerController.Instance.GetRunnable(userLoginName);
                 if (player == null)
                 {
                     return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
                 }
-                if (player.SimpleInfo.Password != password)
+                if (player.BasePlayer.SimpleInfo.Password != password)
                 {
                     return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
                 }
-                if (player.SimpleInfo.Alipay != alipayAccount || player.SimpleInfo.AlipayRealName != alipayRealName)
+                if (player.BasePlayer.SimpleInfo.Alipay != alipayAccount || player.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
                 {
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR;
                 }
@@ -571,9 +571,11 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
                 {
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
                 }
-                if (player.FortuneInfo.StockOfStones < 100000)
+
+                int result = player.LockPlayerToTransfer();
+                if (result != OperResult.RESULTCODE_TRUE)
                 {
-                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE;
+                    return result;
                 }
                 
                 DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()

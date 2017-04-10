@@ -36,7 +36,7 @@ namespace SuperMinersServerApplication.Controller
         public event Action PlayerActionAdded;
         
         private List<PlayerActionLog> list = new List<PlayerActionLog>();
-        private int maxListCount = 100;
+        private int maxListCount = 3000;
         private object _lockList = new object();
 
         public void AddLog(string userName, ActionType actionType, decimal operNumber, string remark = "")

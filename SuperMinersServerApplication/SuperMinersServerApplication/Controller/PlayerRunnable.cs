@@ -111,6 +111,21 @@ namespace SuperMinersServerApplication.Controller
             //return isOK;
         }
 
+        public int LockPlayerToTransfer()
+        {
+            lock (this._lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfStones < 100000)
+                {
+                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE;
+                }
+                this.BasePlayer.FortuneInfo.StockOfStones -= 100000;
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo);
+            }
+
+            return OperResult.RESULTCODE_TRUE;
+        }
+
         public bool LogoutPlayer()
         {
             BasePlayer.SimpleInfo.LastLogOutTime = DateTime.Now;

@@ -44,24 +44,6 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
-        public void AsyncAddVirtualShoppingItem(string actionPassword, MetaData.Shopping.VirtualShoppingItem item)
-        {
-            if (GlobalData.Client != null)
-            {
-                App.BusyToken.ShowBusyWindow("正在添加新的虚拟商品...");
-                GlobalData.Client.AddVirtualShoppingItem(actionPassword, item);
-            }
-        }
-
-        public void AsyncUpdateVirtualShoppingItem(string actionPassword, MetaData.Shopping.VirtualShoppingItem item)
-        {
-            if (GlobalData.Client != null)
-            {
-                App.BusyToken.ShowBusyWindow("正在修改虚拟商品...");
-                GlobalData.Client.UpdateVirtualShoppingItem(actionPassword, item);
-            }
-        }
-
         public void AsyncGetPlayerBuyVirtualShoppingItemRecord(string playerUserName, string shoppingItemName, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
         {
             if (GlobalData.Client != null)
@@ -73,9 +55,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public ShoppingViewModel()
         {
-            GlobalData.Client.AddVirtualShoppingItemCompleted += Client_AddVirtualShoppingItemCompleted;
             GlobalData.Client.GetVirtualShoppingItemsCompleted += Client_GetVirtualShoppingItemsCompleted;
-            GlobalData.Client.UpdateVirtualShoppingItemCompleted += Client_UpdateVirtualShoppingItemCompleted;
             GlobalData.Client.GetPlayerBuyVirtualShoppingItemRecordCompleted += Client_GetPlayerBuyVirtualShoppingItemRecordCompleted;
         }
 
@@ -128,60 +108,6 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             catch (Exception exc)
             {
                 MessageBox.Show("查询所有虚拟商品回调处理异常。" + exc.Message);
-            }
-        }
-
-        void Client_AddVirtualShoppingItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
-        {
-            try
-            {
-                App.BusyToken.CloseBusyWindow();
-                if (e.Error != null)
-                {
-                    MessageBox.Show("添加新的虚拟商品失败。" + e.Error.Message);
-                    return;
-                }
-
-                if (e.Result == OperResult.RESULTCODE_TRUE)
-                {
-                    MessageBox.Show("虚拟商品添加成功。");
-                    this.AsyncGetAllVirtualShoppingItems();
-                }
-                else
-                {
-                    MessageBox.Show("添加新的虚拟商品失败。原因为：" + OperResult.GetMsg(e.Result));
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("添加新的虚拟商品回调处理异常。" + exc.Message);
-            }
-        }
-
-        void Client_UpdateVirtualShoppingItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
-        {
-            try
-            {
-                App.BusyToken.CloseBusyWindow();
-                if (e.Error != null)
-                {
-                    MessageBox.Show("修改虚拟商品失败。" + e.Error.Message);
-                    return;
-                }
-
-                if (e.Result == OperResult.RESULTCODE_TRUE)
-                {
-                    MessageBox.Show("虚拟商品修改成功。");
-                    this.AsyncGetAllVirtualShoppingItems();
-                }
-                else
-                {
-                    MessageBox.Show("修改虚拟商品失败。原因为：" + OperResult.GetMsg(e.Result));
-                }
-            }
-            catch (Exception exc)
-            {
-                MessageBox.Show("修改虚拟商品回调处理异常。" + exc.Message);
             }
         }
 

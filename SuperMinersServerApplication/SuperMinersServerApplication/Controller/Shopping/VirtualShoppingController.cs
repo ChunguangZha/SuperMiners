@@ -58,9 +58,10 @@ namespace SuperMinersServerApplication.Controller.Shopping
 
         public bool CheckVirtualShoppingItemBuyable(int userID, VirtualShoppingItem item)
         {
-            if (item.PlayerMaxBuyableCount < 0)
+            //小于等于0表示不限购
+            if (item.PlayerMaxBuyableCount <= 0)
             {
-                return false;
+                return true;
             }
             int buyCount = DBProvider.VirtualShoppingItemDBProvider.GetPlayerBuyVirtualShoppingItemCount(userID, item.ID);
 

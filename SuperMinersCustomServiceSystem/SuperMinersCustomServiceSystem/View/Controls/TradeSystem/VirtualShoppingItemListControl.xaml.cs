@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.View.Windows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +45,14 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
+            EditVirtualShoppingItemWindow win = new EditVirtualShoppingItemWindow();
+            win.Closed += win_Closed;
+            win.ShowDialog();
+        }
 
+        void win_Closed(object sender, EventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetAllVirtualShoppingItems();
         }
 
         private void btnUpdateItem_Click(object sender, RoutedEventArgs e)
@@ -53,6 +62,17 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
                 MessageBox.Show("请选择需要修改的虚拟商品");
                 return;
             }
+
+            VirtualShoppingItemUIModel item = this.dgRecords.SelectedItem as VirtualShoppingItemUIModel;
+            if (item == null)
+            {
+                MessageBox.Show("请选择需要修改的虚拟商品");
+                return;
+            }
+
+            EditVirtualShoppingItemWindow win = new EditVirtualShoppingItemWindow(item);
+            win.Closed += win_Closed;
+            win.ShowDialog();
         }
     }
 }

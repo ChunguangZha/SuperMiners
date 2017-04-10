@@ -29,7 +29,7 @@ namespace MetaData.Shopping
         public SellState SellState;
 
         /// <summary>
-        /// 玩家最多可以购买该商品次数
+        /// 玩家最多可以购买该商品次数，小于等于0表示不限购
         /// </summary>
         [DataMember]
         public int PlayerMaxBuyableCount;
