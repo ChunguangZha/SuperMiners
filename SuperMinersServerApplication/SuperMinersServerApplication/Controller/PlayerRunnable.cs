@@ -50,7 +50,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (this._lockFortuneAction)
             {
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, null);
+                bool isOK = this.SaveUserFortuneInfoToDB(fortuneInfo, null);
                 if (isOK)
                 {
                     this.BasePlayer.FortuneInfo = fortuneInfo;
@@ -1115,7 +1115,7 @@ namespace SuperMinersServerApplication.Controller
             LogHelper.Instance.AddInfoLog("玩家财富信息变动：" + fortuneInfo.ToString());
             if (myTrans == null)
             {
-                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo);
+                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo);
             }
             else
             {

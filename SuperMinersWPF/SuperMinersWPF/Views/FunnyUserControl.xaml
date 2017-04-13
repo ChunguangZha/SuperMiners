@@ -11,7 +11,7 @@
             <TabItem >
                 <TabItem.Header>
                     <Grid Width="100">
-                        <TextBlock Text="幸运大转盘" HorizontalAlignment="Center"/>
+                        <TextBlock Text="幸运大转盘" HorizontalAlignment="Center" Margin="5"/>
                     </Grid>
                 </TabItem.Header>
                 <Grid>
@@ -21,7 +21,7 @@
             <TabItem>
                 <TabItem.Header>
                     <Grid Width="100">
-                        <TextBlock Text="夺宝奇兵" HorizontalAlignment="Center"/>
+                        <TextBlock Text="夺宝奇兵" HorizontalAlignment="Center" Margin="5"/>
                     </Grid>
                 </TabItem.Header>
                 <Grid>
@@ -31,7 +31,7 @@
             <TabItem>
                 <TabItem.Header>
                     <Grid Width="100">
-                        <TextBlock Text="疯狂猜石" HorizontalAlignment="Center"/>
+                        <TextBlock Text="疯狂猜石" HorizontalAlignment="Center" Margin="5"/>
                     </Grid>
                 </TabItem.Header>
                 <Grid>

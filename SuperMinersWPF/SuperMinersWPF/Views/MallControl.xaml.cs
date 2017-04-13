@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersWPF.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,25 @@ namespace SuperMinersWPF.Views
         public MallControl()
         {
             InitializeComponent();
+            BindUI();
+        }
+
+        public void BindUI()
+        {
+            this.lvVirtualMall.ItemsSource = App.ShoppingVMObject.ListVirtualShoppingItem;
+        }
+
+        private void ButtonBuyVirtualShopping_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            VirtualShoppingItemUIModel shoppingItem = btn.DataContext as VirtualShoppingItemUIModel;
+            if (shoppingItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要购买的商品");
+                return;
+            }
+
+            App.ShoppingVMObject.AsyncBuyVirtualShoppingItem(shoppingItem.ParentObject);
         }
     }
 }

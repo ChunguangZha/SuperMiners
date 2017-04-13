@@ -1310,9 +1310,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     }
 
                     LogHelper.Instance.AddInfoLog("管理员["+admin.UserName+"]在虚拟商城里添加一项虚拟商品：" + item.Name);
-                    bool isOK = VirtualShoppingController.Instance.AddVirtualShoppingItem(item);
-                    if (isOK) return OperResult.RESULTCODE_TRUE;
-                    return OperResult.RESULTCODE_FALSE;
+                    return VirtualShoppingController.Instance.AddVirtualShoppingItem(item);
                 }
                 catch (Exception exc)
                 {
@@ -1343,9 +1341,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     }
 
                     LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]修改了虚拟商品：" + item.Name);
-                    bool isOK = VirtualShoppingController.Instance.UpdateVirtualShoppingItem(item);
-                    if (isOK) return OperResult.RESULTCODE_TRUE;
-                    return OperResult.RESULTCODE_FALSE;
+                    return VirtualShoppingController.Instance.UpdateVirtualShoppingItem(item);
                 }
                 catch (Exception exc)
                 {

@@ -14,7 +14,6 @@ CREATE TABLE `xunlingmine2`.`virtualshoppingitem` (
   `GainDiamond` FLOAT NOT NULL,
   `GainShoppingCredits` FLOAT NOT NULL,
   `GainGravel` FLOAT NOT NULL,
-  `IconBuffer` BLOB NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC));
@@ -28,7 +27,6 @@ CREATE TABLE `xunlingmine2`.`diamondshoppingitem` (
   `Remark` TEXT NOT NULL,
   `SellState` INT NOT NULL,
   `ValueDiamonds` FLOAT NOT NULL,
-  `IconBuffer` BLOB NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC),
   UNIQUE INDEX `Name_UNIQUE` (`Name` ASC));
@@ -77,6 +75,12 @@ CREATE TABLE `xunlingmine2`.`playerbuydiamondshoppingitemrecord` (
     REFERENCES `xunlingmine2`.`diamondshoppingitem` (`ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+-- -----------------------------------------------------
+
+ALTER TABLE `xunlingmine2`.`playerbuyvirtualshoppingitemrecord` 
+ADD COLUMN `OrderNumber` VARCHAR(35) NOT NULL AFTER `ID`,
+ADD UNIQUE INDEX `OrderNumber_UNIQUE` (`OrderNumber` ASC);
 
 
 -- -----------------------------------------------------

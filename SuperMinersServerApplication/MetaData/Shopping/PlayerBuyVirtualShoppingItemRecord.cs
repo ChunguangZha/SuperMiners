@@ -14,6 +14,9 @@ namespace MetaData.Shopping
         public int ID;
 
         [DataMember]
+        public string OrderNumber;
+
+        [DataMember]
         public int UserID;
 
         [DataMember]

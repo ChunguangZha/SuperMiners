@@ -1,4 +1,7 @@
 ﻿using MetaData.Shopping;
+#if Client
+using SuperMinersWPF.Models;
+#endif
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +26,7 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 _parentObject = value;
                 NotifyPropertyChange("ID");
+                NotifyPropertyChange("OrderNumber");
                 NotifyPropertyChange("UserName");
                 NotifyPropertyChange("VirtualShoppingItemName");
                 NotifyPropertyChange("BuyTimeText");
@@ -34,6 +38,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.ID;
+            }
+        }
+
+        public string OrderNumber
+        {
+            get
+            {
+                return this._parentObject.OrderNumber;
             }
         }
 

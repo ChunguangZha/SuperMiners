@@ -124,9 +124,13 @@ namespace SuperMinersServerApplication
                 {
                     Directory.CreateDirectory(GlobalData.UserActionFolder);
                 }
-                if (!Directory.Exists(GlobalData.UserWithdrawRMBImagesFolder))
+                if (!Directory.Exists(GlobalData.VirtualShoppingImageFolder))
                 {
-                    Directory.CreateDirectory(GlobalData.UserWithdrawRMBImagesFolder);
+                    Directory.CreateDirectory(GlobalData.VirtualShoppingImageFolder);
+                }
+                if (!Directory.Exists(GlobalData.CreditShoppingImageFolder))
+                {
+                    Directory.CreateDirectory(GlobalData.CreditShoppingImageFolder);
                 }
                 if (!Directory.Exists(GlobalData.ConfigFolder))
                 {

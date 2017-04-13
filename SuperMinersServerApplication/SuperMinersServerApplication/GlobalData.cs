@@ -24,7 +24,9 @@ namespace SuperMinersServerApplication
         public static readonly string ClientVersionFile = Path.Combine(ConfigFolder, "clientVersion.xml");
         public static readonly string UserActionFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "UserAction");
         public static readonly string UserActionLogFile = Path.Combine(UserActionFolder, "actionLogs.xml");
-        public static readonly string UserWithdrawRMBImagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WithdrawRMBImages");
+        //public static readonly string UserWithdrawRMBImagesFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "WithdrawRMBImages");
+        public static readonly string VirtualShoppingImageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "VirtualShopping");
+        public static readonly string CreditShoppingImageFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CreditShopping");
         public static readonly string NoticeFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Notice");
 
         public const string TestInvitationCode = "1000";

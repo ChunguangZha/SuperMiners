@@ -800,4 +800,12 @@
     <Time>2017-02-20T02:05:01</Time>
     <LastLoginTimeString>2017/2/20 2:05:01</LastLoginTimeString>
   </PlayerActionLog>
+  <PlayerActionLog>
+    <UserName>小开心2017</UserName>
+    <ActionType>Login</ActionType>
+    <OperNumber>0</OperNumber>
+    <Remark />
+    <Time>2017-04-13T23:31:36.2645758+08:00</Time>
+    <LastLoginTimeString>2017/4/13 23:31:36</LastLoginTimeString>
+  </PlayerActionLog>
 </ArrayOfPlayerActionLog>

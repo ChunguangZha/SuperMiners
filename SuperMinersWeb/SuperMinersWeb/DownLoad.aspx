@@ -4,6 +4,6 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <div class="downloadtext">
-        迅灵矿场 <span>2.0.3.7</span> ：<a href="http://game.xlwinfo.com/">在线安装</a>
+        迅灵矿场 <span>2.0.3.10</span> ：<a href="http://game.xlwinfo.com/">在线安装</a>
     </div>
 </asp:Content>

@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,10 +18,10 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "insert into virtualshoppingitem " + 
-                    "`Name`,`Remark`,`SellState`,`PlayerMaxBuyableCount`,`ValueRMB`,`GainExp`,`GainRMB`,`GainGoldCoin`,"+
-                    "`GainMine_StoneReserves`,`GainMiner`,`GainStone`,`GainDiamond`,`GainShoppingCredits`,`GainGravel`,`IconBuffer` " +
+                    "(`Name`,`Remark`,`SellState`,`PlayerMaxBuyableCount`,`ValueRMB`,`GainExp`,`GainRMB`,`GainGoldCoin`,"+
+                    "`GainMine_StoneReserves`,`GainMiner`,`GainStone`,`GainDiamond`,`GainShoppingCredits`,`GainGravel`) " +
                     " values (@Name,@Remark,@SellState,@PlayerMaxBuyableCount,@ValueRMB,@GainExp,@GainRMB,@GainGoldCoin," +
-                    "@GainMine_StoneReserves,@GainMiner,@GainStone,@GainDiamond,@GainShoppingCredits,@GainGravel,@IconBuffer )";
+                    "@GainMine_StoneReserves,@GainMiner,@GainStone,@GainDiamond,@GainShoppingCredits,@GainGravel )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
@@ -36,7 +37,6 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@GainDiamond", item.GainDiamond);
                 mycmd.Parameters.AddWithValue("@GainShoppingCredits", item.GainShoppingCredits);
                 mycmd.Parameters.AddWithValue("@GainGravel", item.GainGravel);
-                mycmd.Parameters.AddWithValue("@IconBuffer", item.IconBuffer);
 
                 mycmd.ExecuteNonQuery();
 
@@ -51,7 +51,7 @@ namespace DataBaseProvider
                     " set `Name`=@Name,`Remark`=@Remark,`SellState`=@SellState,`PlayerMaxBuyableCount`=@PlayerMaxBuyableCount,"+
                     "`ValueRMB`=@ValueRMB,`GainExp`=@GainExp,`GainRMB`=@GainRMB,`GainGoldCoin`=@GainGoldCoin," +
                     "`GainMine_StoneReserves`=@GainMine_StoneReserves,`GainMiner`=@GainMiner,`GainStone`=@GainStone,"+
-                    "`GainDiamond`=@GainDiamond,`GainShoppingCredits`=@GainShoppingCredits,`GainGravel`=@GainGravel,`IconBuffer`=@IconBuffer " +
+                    "`GainDiamond`=@GainDiamond,`GainShoppingCredits`=@GainShoppingCredits,`GainGravel`=@GainGravel " +
                     " where `ID`=@ID;";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
@@ -68,7 +68,6 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@GainDiamond", item.GainDiamond);
                 mycmd.Parameters.AddWithValue("@GainShoppingCredits", item.GainShoppingCredits);
                 mycmd.Parameters.AddWithValue("@GainGravel", item.GainGravel);
-                mycmd.Parameters.AddWithValue("@IconBuffer", item.IconBuffer);
                 mycmd.Parameters.AddWithValue("@ID", item.ID);
 
                 mycmd.ExecuteNonQuery();
@@ -128,10 +127,11 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "insert into playerbuyvirtualshoppingitemrecord " +
-                    "`UserID`,`VirtualShoppingItemID`,`BuyTime` " +
-                    " values (@UserID,@VirtualShoppingItemID,@BuyTime )";
+                    "(`OrderNumber`,`UserID`,`VirtualShoppingItemID`,`BuyTime`) " +
+                    " values (@OrderNumber,@UserID,@VirtualShoppingItemID,@BuyTime )";
                 mycmd.CommandText = sqlText;
-                mycmd.Parameters.AddWithValue("@UserID", record.VirtualShoppingItemID);
+                mycmd.Parameters.AddWithValue("@OrderNumber", record.OrderNumber);
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@VirtualShoppingItemID", record.VirtualShoppingItemID);
                 mycmd.Parameters.AddWithValue("@BuyTime", record.BuyTime.ToDateTime());
 

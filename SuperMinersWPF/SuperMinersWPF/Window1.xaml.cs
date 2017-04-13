@@ -407,6 +407,7 @@ namespace SuperMinersWPF
         private void btnMall_Click(object sender, RoutedEventArgs e)
         {
             CloseAllControl();
+            App.ShoppingVMObject.AsyncGetVirtualShoppingItem();
             this.controlMall.Visibility = System.Windows.Visibility.Visible;
         }
 

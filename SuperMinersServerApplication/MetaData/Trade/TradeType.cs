@@ -38,7 +38,7 @@ namespace MetaData.Trade
 
         StackStoneBuy = 30,
 
-        StackStoneSell=31,
+        StackStoneSell = 31,
 
         RemoteServerOnce = 40,
 
@@ -48,6 +48,9 @@ namespace MetaData.Trade
 
         RemoteServerOneYear = 43,
 
+        VirtualShopping = 44,
+
+        DiamondShopping = 45,
 
 
     }

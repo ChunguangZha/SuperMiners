@@ -1,7 +1,10 @@
 ﻿using MetaData;
 using MetaData.Shopping;
+using MetaData.Trade;
+using SuperMinersServerApplication.Controller.Trade;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,28 +27,80 @@ namespace SuperMinersServerApplication.Controller.Shopping
 
         #endregion
         
-        public bool AddVirtualShoppingItem(VirtualShoppingItem item)
+        public int AddVirtualShoppingItem(VirtualShoppingItem item)
         {
-            return DBProvider.VirtualShoppingItemDBProvider.AddVirtualShoppingItem(item);
+            string filePath = Path.Combine(GlobalData.VirtualShoppingImageFolder, item.Name + ".jpg");
+            if (File.Exists(filePath))
+            {
+                return OperResult.RESULTCODE_SHOPPINGNAME_EXISTED;
+            }
+
+            bool isOK = DBProvider.VirtualShoppingItemDBProvider.AddVirtualShoppingItem(item);
+            if (isOK)
+            {
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    stream.Write(item.IconBuffer, 0, item.IconBuffer.Length);
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
         }
-        
-        public bool UpdateVirtualShoppingItem(VirtualShoppingItem item)
+
+        public int UpdateVirtualShoppingItem(VirtualShoppingItem item)
         {
-            return DBProvider.VirtualShoppingItemDBProvider.UpdateVirtualShoppingItem(item);
+            string filePath = Path.Combine(GlobalData.VirtualShoppingImageFolder, item.Name + ".jpg");
+
+            bool isOK = DBProvider.VirtualShoppingItemDBProvider.UpdateVirtualShoppingItem(item);
+            if (isOK)
+            {
+                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                {
+                    stream.Write(item.IconBuffer, 0, item.IconBuffer.Length);
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+
+            return OperResult.RESULTCODE_FALSE;
         }
 
         public VirtualShoppingItem[] GetVirtualShoppingItems(bool getAllItem, SellState state)
         {
-            return DBProvider.VirtualShoppingItemDBProvider.GetVirtualShoppingItems(getAllItem, state);
+            VirtualShoppingItem[] items = DBProvider.VirtualShoppingItemDBProvider.GetVirtualShoppingItems(getAllItem, state);
+            if (items == null)
+            {
+                return items;
+            }
+
+            foreach (var item in items)
+            {
+                string filePath = Path.Combine(GlobalData.VirtualShoppingImageFolder, item.Name + ".jpg");
+
+                if (File.Exists(filePath))
+                {
+                    using (FileStream stream = new FileStream(filePath, FileMode.Open))
+                    {
+                        item.IconBuffer = new byte[stream.Length];
+                        stream.Read(item.IconBuffer, 0, (int)stream.Length);
+                    }
+                }
+            }
+
+            return items;
         }
 
-        public int BuyVirtualShoppingItem(int userID, int itemID)
+        public int BuyVirtualShoppingItem(int userID, string userName, int itemID)
         {
+            DateTime time = DateTime.Now;
             PlayerBuyVirtualShoppingItemRecord record = new PlayerBuyVirtualShoppingItemRecord()
             {
+                OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.VirtualShopping),
                 UserID = userID,
                 VirtualShoppingItemID = itemID,
-                BuyTime = new MetaData.MyDateTime(DateTime.Now)
+                BuyTime = new MetaData.MyDateTime(time)
             };
 
             bool isOK = DBProvider.VirtualShoppingItemDBProvider.AddPlayerBuyVirtualShoppingItemRecord(record);

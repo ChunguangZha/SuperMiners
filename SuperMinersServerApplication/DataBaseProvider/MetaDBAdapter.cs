@@ -1248,7 +1248,6 @@ namespace DataBaseProvider
                 item.GainDiamond = Convert.ToDecimal(dt.Rows[i]["GainDiamond"]);
                 item.GainShoppingCredits = Convert.ToDecimal(dt.Rows[i]["GainShoppingCredits"]);
                 item.GainGravel = Convert.ToDecimal(dt.Rows[i]["GainGravel"]);
-                item.IconBuffer = (byte[])dt.Rows[i]["IconBuffer"];
 
                 items[i] = item;
             }
@@ -1268,6 +1267,7 @@ namespace DataBaseProvider
             {
                 PlayerBuyVirtualShoppingItemRecord record = new PlayerBuyVirtualShoppingItemRecord();
                 record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
                 record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.VirtualShoppingItemID = Convert.ToInt32(dt.Rows[i]["VirtualShoppingItemID"]);
                 record.UserName = dt.Rows[i]["UserName"].ToString();

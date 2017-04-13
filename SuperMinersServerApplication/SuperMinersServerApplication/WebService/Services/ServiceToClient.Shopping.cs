@@ -59,11 +59,12 @@ namespace SuperMinersServerApplication.WebService.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
+                PlayerRunnable playerrunner = null;
                 string userName = "";
                 try
                 {
                     userName = ClientManager.GetClientUserName(token);
-                    var playerrunner = PlayerController.Instance.GetRunnable(userName);
+                    playerrunner = PlayerController.Instance.GetRunnable(userName);
                     if (playerrunner == null)
                     {
                         return OperResult.RESULTCODE_USER_NOT_EXIST;
@@ -82,10 +83,15 @@ namespace SuperMinersServerApplication.WebService.Services
                             return innerResult;
                         }
 
-                        return VirtualShoppingController.Instance.BuyVirtualShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, shoppingItem.ID);
+                        return VirtualShoppingController.Instance.BuyVirtualShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, userName, shoppingItem.ID);
                     },
                     exc =>
                     {
+                        if (playerrunner != null)
+                        {
+                            playerrunner.RefreshFortune();
+                        }
+
                         LogHelper.Instance.AddErrorLog("玩家[" + userName + "]购买虚拟商品[" + shoppingItem.Name + "]异常", exc);
                     });
 

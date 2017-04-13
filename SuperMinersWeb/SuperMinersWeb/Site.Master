@@ -58,10 +58,10 @@
                         </div>
                         <div class="menusplit"><div class="split"></div></div>
                         <div class="menuitem" style="background-image: url('../Images/menu-background_05.png');">
-                            <a id="A4" runat="server" href="~/TransferPage.aspx">
+                            <a id="A4" runat="server" href="http://goto.xlore.net/Register.aspx">
                                 <div class="linkcontent">
                                     <div>
-                                        转区申请
+                                        注册
                                     </div>
                                     <div class="link_subline">
 

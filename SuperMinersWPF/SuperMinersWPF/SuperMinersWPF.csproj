@@ -32,7 +32,7 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>2.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -125,8 +125,14 @@
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\MinesBuyRecordUIModel.cs">
       <Link>Models\MinesBuyRecordUIModel.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\PlayerBuyVirtualShoppingItemRecordUIModel.cs">
+      <Link>Models\PlayerBuyVirtualShoppingItemRecordUIModel.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\RouletteWinnerRecordUIModel.cs">
       <Link>Models\RouletteWinnerRecordUIModel.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\VirtualShoppingItemUIModel.cs">
+      <Link>Models\VirtualShoppingItemUIModel.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Model\WithdrawRMBRecordUIModel.cs">
       <Link>Models\WithdrawRMBRecordUIModel.cs</Link>
@@ -187,6 +193,18 @@
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\OperResult.cs">
       <Link>Wcf\Datas\OperResult.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\DiamondShoppingItem.cs">
+      <Link>Wcf\Datas\DiamondShoppingItem.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\PlayerBuyDiamondShoppingItemRecord.cs">
+      <Link>Wcf\Datas\PlayerBuyDiamondShoppingItemRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\PlayerBuyVirtualShoppingItemRecord.cs">
+      <Link>Wcf\Datas\PlayerBuyVirtualShoppingItemRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\VirtualShoppingItem.cs">
+      <Link>Wcf\Datas\VirtualShoppingItem.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
@@ -317,6 +335,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Order.cs">
       <Link>Wcf\Contracts\IServiceToClient.Order.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Shopping.cs">
+      <Link>Wcf\Contracts\IServiceToClient.Shopping.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Stack.cs">
       <Link>Wcf\Contracts\IServiceToClient.Stack.cs</Link>
     </Compile>
@@ -383,6 +404,7 @@
     <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
+    <Compile Include="ViewModels\ShoppingViewModel.cs" />
     <Compile Include="ViewModels\StackStoneViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
@@ -559,6 +581,7 @@
     <Compile Include="Wcf\Clients\ServerClient.Message.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Order.cs" />
     <Compile Include="Wcf\Clients\ServerClient.RaiderofLostArk.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.Shopping.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Stack.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />

@@ -249,6 +249,11 @@ namespace MetaData
         public const int RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM = 613;
 
         /// <summary>
+        /// 商品名称已经存在，无法添加
+        /// </summary>
+        public const int RESULTCODE_SHOPPINGNAME_EXISTED = 614;
+
+        /// <summary>
         /// 支付订单时，支付金额不足
         /// </summary>
         public const int RESULTCODE_ORDER_PAYMONEY_LESS = 660;
@@ -372,6 +377,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_ADMIN_USER_NOT_EXIST, "管理员不存在");
             _resultCode_Msg.Add(RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR, "管理员操作密码错误");
             _resultCode_Msg.Add(RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM, "您已经不能再购买该商品");
+            _resultCode_Msg.Add(RESULTCODE_SHOPPINGNAME_EXISTED, "商品名已经存在，请换个名称");
         }
 
         public static string GetMsg(int resultCode)

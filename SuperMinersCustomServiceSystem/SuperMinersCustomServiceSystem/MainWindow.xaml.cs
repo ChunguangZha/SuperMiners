@@ -208,6 +208,8 @@ namespace SuperMinersCustomServiceSystem
             this.controlStoneDelegateSellTrade.Visibility = System.Windows.Visibility.Collapsed;
             this.controlUserBuyRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlVirtualShoppingBuyRecordControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlVirtualShoppingItemControl.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -376,6 +378,19 @@ namespace SuperMinersCustomServiceSystem
         {
             HideAllControls();
             this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_VirtualShopping_Items_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            App.ShoppingVMObject.AsyncGetAllVirtualShoppingItems();
+            this.controlVirtualShoppingItemControl.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_TS_VirtualShopping_BuyRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            this.controlVirtualShoppingBuyRecordControl.Visibility = System.Windows.Visibility.Visible;
         }
 
     }
