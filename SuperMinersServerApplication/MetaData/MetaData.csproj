@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;MetaData, V1</DefineConstants>
+    <DefineConstants>TRACE;MetaData, -V1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -59,7 +59,6 @@
     <Compile Include="Game\StoneStack\StoneHandSellInfo.cs" />
     <Compile Include="Game\StoneStack\StoneStackDailyRecordInfo.cs" />
     <Compile Include="Game\StoneStack\TodayStoneStackTradeRecordInfo.cs" />
-    <Compile Include="NumberUtility.cs" />
     <Compile Include="OperResult.cs" />
     <Compile Include="Shopping\DiamondShoppingItem.cs" />
     <Compile Include="Shopping\PlayerBuyDiamondShoppingItemRecord.cs" />
@@ -102,6 +101,7 @@
     <Compile Include="User\PlayerLockedInfo.cs" />
     <Compile Include="User\PlayerLogInfo.cs" />
     <Compile Include="User\PlayerWeiXinUserOpenId.cs" />
+    <Compile Include="User\PostAddress.cs" />
     <Compile Include="User\TopListInfo.cs" />
     <Compile Include="User\PlayerFortuneInfo.cs" />
     <Compile Include="User\PlayerInfo.cs" />

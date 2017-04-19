@@ -29,6 +29,33 @@ namespace MetaData.Shopping
         public string VirtualShoppingItemName;
 
         [DataMember]
+        public string SendAddress;
+
+        [DataMember]
         public MyDateTime BuyTime;
+
+        /// <summary>
+        /// 是否已发货
+        /// </summary>
+        [DataMember]
+        public bool IsSend;
+
+        /// <summary>
+        /// 快递公司
+        /// </summary>
+        [DataMember]
+        public string ExpressCompany;
+
+        /// <summary>
+        /// 快递单号
+        /// </summary>
+        [DataMember]
+        public string ExpressNumber;
+
+        /// <summary>
+        /// 操作管理员
+        /// </summary>
+        [DataMember]
+        public string OperAdmin;
     }
 }

@@ -128,9 +128,9 @@ namespace SuperMinersServerApplication
                 {
                     Directory.CreateDirectory(GlobalData.VirtualShoppingImageFolder);
                 }
-                if (!Directory.Exists(GlobalData.CreditShoppingImageFolder))
+                if (!Directory.Exists(GlobalData.DiamondShoppingImageFolder))
                 {
-                    Directory.CreateDirectory(GlobalData.CreditShoppingImageFolder);
+                    Directory.CreateDirectory(GlobalData.DiamondShoppingImageFolder);
                 }
                 if (!Directory.Exists(GlobalData.ConfigFolder))
                 {

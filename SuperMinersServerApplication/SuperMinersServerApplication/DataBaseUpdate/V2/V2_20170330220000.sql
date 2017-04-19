@@ -35,6 +35,7 @@ CREATE TABLE `xunlingmine2`.`diamondshoppingitem` (
 
 CREATE TABLE `xunlingmine2`.`playerbuyvirtualshoppingitemrecord` (
   `ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `OrderNumber` VARCHAR(35) NOT NULL,
   `UserID` INT UNSIGNED NOT NULL,
   `VirtualShoppingItemID` INT UNSIGNED NOT NULL,
   `BuyTime` DATETIME NOT NULL,
@@ -53,11 +54,11 @@ CREATE TABLE `xunlingmine2`.`playerbuyvirtualshoppingitemrecord` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-
 -- --------------------------------------------------
 
 CREATE TABLE `xunlingmine2`.`playerbuydiamondshoppingitemrecord` (
   `ID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `OrderNumber` VARCHAR(35) NOT NULL,
   `UserID` INT UNSIGNED NOT NULL,
   `DiamondShoppingItemID` INT UNSIGNED NOT NULL,
   `BuyTime` DATETIME NOT NULL,
@@ -84,6 +85,12 @@ ADD UNIQUE INDEX `OrderNumber_UNIQUE` (`OrderNumber` ASC);
 
 
 -- -----------------------------------------------------
+
+ALTER TABLE `xunlingmine2`.`playerbuydiamondshoppingitemrecord` 
+CHANGE COLUMN `IsSend` `ShoppingState` INT(10) NOT NULL DEFAULT '0' ,
+ADD COLUMN `OperTime` DATETIME NULL AFTER `OperAdmin`;
+
+-- ------------------------------------------------------
 
 UPDATE `xunlingmine2`.`paramtable` SET `ParamValue`='V2_20170330220000' WHERE `id`='2';
 

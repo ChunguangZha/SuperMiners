@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Shopping;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -1386,6 +1387,139 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetPlayerBuyVirtualShoppingItemRecord Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+        
+        public int AddDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]在钻石商城里添加一项商品：" + item.Name);
+                    return DiamondShoppingController.Instance.AddDiamondShoppingItem(item);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("AddDiamondShoppingItem Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int UpdateDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]修改了钻石商城里的商品：" + item.Name);
+                    return DiamondShoppingController.Instance.UpdateDiamondShoppingItem(item);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UpdateDiamondShoppingItem Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, MetaData.Shopping.SellState state)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(getAllItem, state);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetDiamondShoppingItems Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int HandleBuyDiamondShopping(string token, string actionPassword, PlayerBuyDiamondShoppingItemRecord record)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var admin = AdminManager.GetClient(token);
+                    if (admin == null)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_USER_NOT_EXIST;
+                    }
+                    if (admin.ActionPassword != actionPassword)
+                    {
+                        return OperResult.RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR;
+                    }
+
+                    LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]处理了钻石商城订单，订单号为：" + record.OrderNumber);
+                    return DiamondShoppingController.Instance.HandleBuyDiamondShopping(record);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("HandleBuyDiamondShopping Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public MetaData.Shopping.PlayerBuyDiamondShoppingItemRecord[] GetPlayerBuyDiamondShoppingItemRecordByName(string token, string playerUserName, string shoppingItemName, int shoppingStateInt, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DiamondShoppingController.Instance.GetPlayerBuyDiamondShoppingItemRecordByName(playerUserName, shoppingItemName, shoppingStateInt, beginBuyTime, endBuyTime, pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetPlayerBuyDiamondShoppingItemRecordByName Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

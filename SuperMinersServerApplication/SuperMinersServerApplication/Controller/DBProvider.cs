@@ -60,6 +60,8 @@ namespace SuperMinersServerApplication.Controller
         public static OldPlayerTransferDBProvider OldPlayerTransferDBProvider = new OldPlayerTransferDBProvider();
 
         public static VirtualShoppingItemDBProvider VirtualShoppingItemDBProvider = new VirtualShoppingItemDBProvider();
+
+        public static DiamondShoppingDBProvider DiamondShoppingDBProvider = new DiamondShoppingDBProvider();
         
     }
 }

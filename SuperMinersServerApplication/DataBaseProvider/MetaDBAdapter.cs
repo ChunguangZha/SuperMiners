@@ -1255,6 +1255,30 @@ namespace DataBaseProvider
             return items;
         }
 
+        internal static DiamondShoppingItem[] GetDiamondShoppingItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            DiamondShoppingItem[] items = new DiamondShoppingItem[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                DiamondShoppingItem item = new DiamondShoppingItem();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.Name = dt.Rows[i]["Name"].ToString();
+                item.Remark = dt.Rows[i]["Remark"].ToString();
+                item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
+                item.Type = (DiamondsShoppingItemType)Convert.ToInt32(dt.Rows[i]["Type"]);
+                item.ValueDiamonds = Convert.ToDecimal(dt.Rows[i]["ValueDiamonds"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
         internal static PlayerBuyVirtualShoppingItemRecord[] GetPlayerBuyVirtualShoppingItemRecordFromDataTable(DataTable dt)
         {
             if (dt == null || dt.Rows.Count == 0)
@@ -1270,7 +1294,7 @@ namespace DataBaseProvider
                 record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
                 record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 record.VirtualShoppingItemID = Convert.ToInt32(dt.Rows[i]["VirtualShoppingItemID"]);
-                record.UserName = dt.Rows[i]["UserName"].ToString();
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 record.VirtualShoppingItemName = dt.Rows[i]["VirtualShoppingItemName"].ToString();
                 record.BuyTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["BuyTime"]));
 
@@ -1279,5 +1303,49 @@ namespace DataBaseProvider
 
             return records;
         }
+
+        internal static PlayerBuyDiamondShoppingItemRecord[] GetPlayerBuyDiamondShoppingItemRecordFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            PlayerBuyDiamondShoppingItemRecord[] records = new PlayerBuyDiamondShoppingItemRecord[dt.Rows.Count];
+            for (int i = 0; i < records.Length; i++)
+            {
+                PlayerBuyDiamondShoppingItemRecord record = new PlayerBuyDiamondShoppingItemRecord();
+                record.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                record.OrderNumber = dt.Rows[i]["OrderNumber"].ToString();
+                record.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                record.DiamondShoppingItemID = Convert.ToInt32(dt.Rows[i]["DiamondShoppingItemID"]);
+                record.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
+                record.DiamondShoppingItemName = dt.Rows[i]["DiamondShoppingItemName"].ToString();
+                record.SendAddress = DESEncrypt.DecryptDES(dt.Rows[i]["SendAddress"].ToString());
+                record.BuyTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["BuyTime"]));
+                record.ShoppingState = (DiamondShoppingState)Convert.ToInt32(dt.Rows[i]["ShoppingState"]);
+                if (dt.Rows[i]["ExpressCompany"] != DBNull.Value)
+                {
+                    record.ExpressCompany = dt.Rows[i]["ExpressCompany"].ToString();
+                }
+                if (dt.Rows[i]["ExpressNumber"] != DBNull.Value)
+                {
+                    record.ExpressNumber = dt.Rows[i]["ExpressNumber"].ToString();
+                }
+                if (dt.Rows[i]["OperAdmin"] != DBNull.Value)
+                {
+                    record.OperAdmin = dt.Rows[i]["OperAdmin"].ToString();
+                }
+                if (dt.Rows[i]["OperTime"] != DBNull.Value)
+                {
+                    record.OperTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["OperTime"]));
+                }
+
+                records[i] = record;
+            }
+
+            return records;
+        }
+
     }
 }

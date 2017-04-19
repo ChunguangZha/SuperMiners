@@ -118,6 +118,11 @@ namespace MetaData
         public const int RESULTCODE_USERLOGIN_ISTESTUSER_LOGINLIMIT = 306;
 
         /// <summary>
+        /// 需要选择邮寄地址
+        /// </summary>
+        public const int RESULTCODE_NEEDPOSTADDRESS = 307;
+
+        /// <summary>
         /// 微信绑定时，该迅灵用户已经被其它微信用户绑定
         /// </summary>
         public const int RESULTCODE_WEIXIN_USERBINDEDBYOTHER = 350;
@@ -378,6 +383,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_ADMIN_ACTIONPASSWORD_ERROR, "管理员操作密码错误");
             _resultCode_Msg.Add(RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM, "您已经不能再购买该商品");
             _resultCode_Msg.Add(RESULTCODE_SHOPPINGNAME_EXISTED, "商品名已经存在，请换个名称");
+            _resultCode_Msg.Add(RESULTCODE_NEEDPOSTADDRESS, "需要选择邮寄地址");
         }
 
         public static string GetMsg(int resultCode)

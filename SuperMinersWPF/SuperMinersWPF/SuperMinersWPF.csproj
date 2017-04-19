@@ -269,6 +269,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerSimpleInfo.cs">
       <Link>Wcf\Datas\PlayerSimpleInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PostAddress.cs">
+      <Link>Wcf\Datas\PostAddress.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\TopListInfo.cs">
       <Link>Wcf\Datas\TopListInfo.cs</Link>
     </Compile>

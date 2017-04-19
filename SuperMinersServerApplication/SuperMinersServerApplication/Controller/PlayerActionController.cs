@@ -75,7 +75,7 @@ namespace SuperMinersServerApplication.Controller
         }
 
         /// <summary>
-        /// 最多返回100条记录
+        /// 
         /// </summary>
         /// <param name="year"></param>
         /// <param name="month"></param>
@@ -91,24 +91,21 @@ namespace SuperMinersServerApplication.Controller
             lock (this._lockList)
             {
                 List<PlayerActionLog> listSearchResults = new List<PlayerActionLog>();
-                foreach (var item in list)
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
+                    var item = list[i];
                     if (item.Time > time)
                     {
                         listSearchResults.Add(item);
                     }
+
+                    if (listSearchResults.Count > 200)
+                    {
+                        break;
+                    }
                 }
 
-                PlayerActionLog[] actions = listSearchResults.ToArray();
-                if (actions.Length > 0)
-                {
-                    PlayerActionLog lastLog = actions[actions.Length - 1];
-                    //lastLog.SystemAllPlayerCount = DBProvider.UserDBProvider.GetAllPlayerCount();
-                    //lastLog.SystemAllMinerCount = (int)DBProvider.UserDBProvider.GetAllMinersCount();
-                    //lastLog.SystemAllOutputStoneCount = DBProvider.UserDBProvider.GetAllOutputStonesCount();
-                }
-
-                return actions;
+                return listSearchResults.ToArray();
             }
         }
 

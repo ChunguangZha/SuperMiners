@@ -49,7 +49,7 @@ namespace SuperMinersWPF.ViewModels
                 if (ListPlayerActionLog.Count == 0)
                 {
                     //取24小时之前的消息
-                    dtLast = DateTime.Now.AddDays(-1);
+                    dtLast = DateTime.Now.AddDays(-5);
                 }
                 else
                 {

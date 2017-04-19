@@ -377,5 +377,44 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PlayerBuyVirtualShoppingItemRecord[] GetPlayerBuyVirtualShoppingItemRecord(string token, string playerUserName, string shoppingItemName, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/AddDiamondShoppingItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int AddDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdateDiamondShoppingItem",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int UpdateDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetDiamondShoppingItems",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, SellState state);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleBuyDiamondShopping",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int HandleBuyDiamondShopping(string token, string actionPassword, PlayerBuyDiamondShoppingItemRecord record);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetPlayerBuyDiamondShoppingItemRecordByName",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PlayerBuyDiamondShoppingItemRecord[] GetPlayerBuyDiamondShoppingItemRecordByName(string token, string playerUserName, string shoppingItemName, int shoppingStateInt, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex);
     }
 }

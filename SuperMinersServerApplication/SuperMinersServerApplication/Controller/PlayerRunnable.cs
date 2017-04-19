@@ -1430,5 +1430,21 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_TRUE;
             }
         }
+        
+        public int BuyDiamondShoppingItem(DiamondShoppingItem shoppingItem, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.StockOfDiamonds < shoppingItem.ValueDiamonds)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfDiamonds -= shoppingItem.ValueDiamonds;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
     }
 }

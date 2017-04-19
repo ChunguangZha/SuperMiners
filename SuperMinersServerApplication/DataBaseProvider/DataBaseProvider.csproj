@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;V1</DefineConstants>
+    <DefineConstants>TRACE;-V1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -51,6 +51,7 @@
     <Compile Include="BuyMinerRecordDBProvider.cs" />
     <Compile Include="DeletedPlayerInfoDBProvider.cs" />
     <Compile Include="DESEncrypt.cs" />
+    <Compile Include="DiamondShoppingDBProvider.cs" />
     <Compile Include="ExpChangeRecordDBProvider.cs" />
     <Compile Include="GambleStoneDBProvider.cs" />
     <Compile Include="GameRaiderofLostArkDBProvider.cs" />
