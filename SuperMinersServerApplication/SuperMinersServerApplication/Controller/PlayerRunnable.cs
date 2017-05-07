@@ -1409,12 +1409,15 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if (this.BasePlayer.FortuneInfo.RMB < shoppingItem.ValueRMB)
+                if (this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled < shoppingItem.ValueShoppingCredits)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                this.BasePlayer.FortuneInfo.RMB -= shoppingItem.ValueRMB;
+                //每消费10积分增长一点贡献值
+                this.BasePlayer.FortuneInfo.Exp += (int)(shoppingItem.ValueShoppingCredits / 10);
+
+                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= shoppingItem.ValueShoppingCredits;
                 this.BasePlayer.FortuneInfo.StockOfDiamonds += shoppingItem.GainDiamond;
                 this.BasePlayer.FortuneInfo.Exp += shoppingItem.GainExp;
                 this.BasePlayer.FortuneInfo.GoldCoin += shoppingItem.GainGoldCoin;
@@ -1422,7 +1425,7 @@ namespace SuperMinersServerApplication.Controller
                 this.BasePlayer.FortuneInfo.StonesReserves += shoppingItem.GainMine_StoneReserves;
                 this.BasePlayer.FortuneInfo.MinersCount += shoppingItem.GainMiner;
                 this.BasePlayer.FortuneInfo.RMB += shoppingItem.GainRMB;
-                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled += (int)shoppingItem.GainShoppingCredits;
+                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled += shoppingItem.GainShoppingCredits;
                 this.BasePlayer.FortuneInfo.StockOfStones += shoppingItem.GainStone;
                 SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
                 DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);

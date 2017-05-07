@@ -20,7 +20,7 @@ namespace MetaData.User
         public string Token;
 
         [DataMember]
-        public int ShoppingCredits;
+        public decimal ShoppingCredits;
 
         [DataMember]
         public MyDateTime UserRemoteServerValidStopTime = null;

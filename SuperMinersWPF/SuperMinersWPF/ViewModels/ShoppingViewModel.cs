@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Shopping;
+using MetaData.User;
 using SuperMinersCustomServiceSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -32,10 +33,44 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.BuyVirtualShoppingItem(shoppingItem);
         }
 
+        public void AsyncBuyDiamondShoppingItem(DiamondShoppingItem shoppingItem, PostAddress address)
+        {
+            App.BusyToken.ShowBusyWindow("正在提交服务器...");
+            GlobalData.Client.BuyDiamondShoppingItem(shoppingItem, address);
+        }
+
         public ShoppingViewModel()
         {
             GlobalData.Client.GetVirtualShoppingItemsCompleted += Client_GetVirtualShoppingItemsCompleted;
             GlobalData.Client.BuyVirtualShoppingItemCompleted += Client_BuyVirtualShoppingItemCompleted;
+            GlobalData.Client.BuyDiamondShoppingItemCompleted += Client_BuyDiamondShoppingItemCompleted;
+        }
+
+        void Client_BuyDiamondShoppingItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("购买商品失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MessageBox.Show("购买商品成功");
+                    App.UserVMObject.AsyncGetPlayerInfo();
+                }
+                else
+                {
+                    MessageBox.Show("购买商品失败，原因为：" + OperResult.GetMsg(e.Result));
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("购买商品失败，回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_BuyVirtualShoppingItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)

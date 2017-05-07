@@ -92,5 +92,38 @@ namespace SuperMinersServerApplication.WebService.Contracts
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         XunLingMineStateInfo GetAllXunLingMineFortuneState(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/GetPlayerPostAddressList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PostAddress[] GetPlayerPostAddressList(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/AddAddress",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int AddAddress(string token, PostAddress address);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/UpdateAddress",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int UpdateAddress(string token, PostAddress newAddress);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebService/DeleteAddress",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int DeleteAddress(string token, int postAddressID);
+
     }
 }

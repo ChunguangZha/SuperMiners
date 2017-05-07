@@ -197,6 +197,9 @@ namespace MetaData.User
         [DataMember]
         public string ReferrerUserName { get; set; }
 
+        [DataMember]
+        public PostAddress[] AddressList { get; set; }
+
     }
 
     public enum PlayerGroupType

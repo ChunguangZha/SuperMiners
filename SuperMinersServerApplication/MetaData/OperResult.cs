@@ -82,6 +82,11 @@ namespace MetaData
         public const int RESULTCODE_REGISTER_USERLOGINNAME_EXIST = 107;
 
         /// <summary>
+        /// 注册用户时_身份证号错误
+        /// </summary>
+        public const int RESULTCODE_REGISTER_IDCARD_ERROR = 108;
+
+        /// <summary>
         /// 管理员不存在
         /// </summary>
         public const int RESULTCODE_ADMIN_USER_NOT_EXIST = 200;
@@ -384,6 +389,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_VIRTUALSHOPPING_PLAYERCANOTBUY_THISITEM, "您已经不能再购买该商品");
             _resultCode_Msg.Add(RESULTCODE_SHOPPINGNAME_EXISTED, "商品名已经存在，请换个名称");
             _resultCode_Msg.Add(RESULTCODE_NEEDPOSTADDRESS, "需要选择邮寄地址");
+            _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARD_ERROR, "身份证号错误");
         }
 
         public static string GetMsg(int resultCode)

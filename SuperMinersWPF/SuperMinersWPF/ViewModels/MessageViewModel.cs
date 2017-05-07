@@ -161,8 +161,7 @@ namespace SuperMinersWPF.ViewModels
                     return;
                 }
 
-                //服务器返回的记录是按时间升序排列。
-                //需要将其降序显示
+                //服务器返回的记录是按时间降序排列。
                 var lastLogFromServer = e.Result[e.Result.Length - 1];
 
                 if (ListPlayerActionLog.Count >= this.LogMaxCount)
@@ -187,7 +186,7 @@ namespace SuperMinersWPF.ViewModels
                     var newLog = e.Result[i];
                     if (!this.JudgeLogExists(newLog))
                     {
-                        ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(newLog));
+                        ListPlayerActionLog.Add(new PlayerActionLogUIModel(newLog));
                     }
                 }
 

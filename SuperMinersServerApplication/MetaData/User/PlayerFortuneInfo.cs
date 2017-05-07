@@ -149,13 +149,13 @@ namespace MetaData.User
         /// 可用积分
         /// </summary>
         [DataMember]
-        public int ShoppingCreditsEnabled { get; set; }
+        public decimal ShoppingCreditsEnabled { get; set; }
 
         /// <summary>
         /// 冻结积分
         /// </summary>
         [DataMember]
-        public int ShoppingCreditsFreezed { get; set; }
+        public decimal ShoppingCreditsFreezed { get; set; }
 
         [DataMember]
         public MyDateTime UserRemoteServerValidStopTime { get; set; }

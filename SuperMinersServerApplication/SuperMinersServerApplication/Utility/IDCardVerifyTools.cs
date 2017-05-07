@@ -16,7 +16,7 @@ namespace SuperMinersServerApplication.Utility
         {
             if (string.IsNullOrEmpty(IDCardText))
             {
-                return false;
+                return true;
             }
             bool matchValue = Regex.IsMatch(IDCardText, @"^([1-9][0-9]*X{0,1})$");
             if (!matchValue)

@@ -1,7 +1,7 @@
 ﻿<Window x:Class="SuperMinersCustomServiceSystem.EditPlayerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="修改玩家信息" Height="500" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
+        Title="修改玩家信息" Height="600" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterOwner">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

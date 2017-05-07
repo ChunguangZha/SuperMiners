@@ -408,7 +408,7 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.FortuneInfo.StoneSellQuan; }
         }
 
-        public int ShoppingCreditsEnabled
+        public decimal ShoppingCreditsEnabled
         {
             get
             {
@@ -416,7 +416,7 @@ namespace SuperMinersWPF.Models
             }
         }
 
-        public int ShoppingCreditsFreezed
+        public decimal ShoppingCreditsFreezed
         {
             get
             {

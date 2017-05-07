@@ -459,5 +459,104 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
+
+
+        public PostAddress[] GetPlayerPostAddressList(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var playerUserName = ClientManager.GetClientUserName(token);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserName(playerUserName);
+                    return DBProvider.UserDBProvider.GetPlayerPostAddressList(player.SimpleInfo.UserID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetPlayerPostAddressList Exception. ", exc);
+
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int AddAddress(string token, PostAddress address)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var playerUserName = ClientManager.GetClientUserName(token);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserName(playerUserName);
+                    if (player.SimpleInfo.UserID != address.UserID)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+                    return DBProvider.UserDBProvider.AddAddress(address);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("AddAddress Exception. ", exc);
+
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int UpdateAddress(string token, PostAddress newAddress)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    var playerUserName = ClientManager.GetClientUserName(token);
+                    var player = PlayerController.Instance.GetPlayerInfoByUserName(playerUserName);
+                    if (player.SimpleInfo.UserID != newAddress.UserID)
+                    {
+                        return OperResult.RESULTCODE_USER_NOT_EXIST;
+                    }
+                    return DBProvider.UserDBProvider.UpdateAddress(newAddress);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("UpdateAddress Exception. ", exc);
+
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int DeleteAddress(string token, int postAddressID)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.UserDBProvider.DeleteAddress(postAddressID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("DeleteAddress Exception. ", exc);
+
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
     }
 }

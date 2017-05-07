@@ -37,6 +37,9 @@ namespace SuperMinersWPF.Views.Controls
         private List<StoneStackDailyRecordInfo> _listTodayMinuteTradeRecords = new List<StoneStackDailyRecordInfo>();
         private StoneStackDailyRecordInfo _firstItem = null;
         private StoneStackDailyRecordInfo _lastItem = null;
+        int _firstItemIndex;
+        int _lastItemIndex;
+
         private decimal _maxPrice = 0;
         private decimal _minPrice = decimal.MaxValue;
         private decimal _priceRange = 0;
@@ -174,14 +177,14 @@ namespace SuperMinersWPF.Views.Controls
                 this._drawableItemsCount = this._listTodayMinuteTradeRecords.Count;
             }
 
-            int lastItemIndex = this._listTodayMinuteTradeRecords.Count - 1 - this._viewStartIndexOffset;
-            int firstItemIndex = lastItemIndex - this._drawableItemsCount;
-            if (firstItemIndex < 0)
+            _lastItemIndex = this._listTodayMinuteTradeRecords.Count - 1 - this._viewStartIndexOffset;
+            _firstItemIndex = _lastItemIndex - this._drawableItemsCount;
+            if (_firstItemIndex < 0)
             {
-                firstItemIndex = 0;
+                _firstItemIndex = 0;
             }
-            this._lastItem = this._listTodayMinuteTradeRecords[lastItemIndex];
-            this._firstItem = this._listTodayMinuteTradeRecords[firstItemIndex];
+            this._lastItem = this._listTodayMinuteTradeRecords[_lastItemIndex];
+            this._firstItem = this._listTodayMinuteTradeRecords[_firstItemIndex];
         }
 
         private void DrawBaseLine()
@@ -219,9 +222,9 @@ namespace SuperMinersWPF.Views.Controls
         private void DrawItem()
         {
             //从左往右画
-            for (int i = 0; i < this._listTodayMinuteTradeRecords.Count; i++)
+            for (int i = _firstItemIndex; i <= _lastItemIndex; i++)
             {
-                Polygon pgon = CreatePolygon(i, this._listTodayMinuteTradeRecords[i]);
+                Polygon pgon = CreatePolygon(i - _firstItemIndex, this._listTodayMinuteTradeRecords[i]);
                 this.canvas.Children.Add(pgon);
             }
         }

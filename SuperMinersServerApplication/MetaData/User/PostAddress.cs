@@ -1,23 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MetaData.User
 {
+    [DataContract]
     public class PostAddress
     {
+        [DataMember]
+        public int ID;
+
+        [DataMember]
+        public int UserID;
+
+        [DataMember]
         public string Province = "";
 
+        [DataMember]
         public string City = "";
 
+        [DataMember]
         public string County = "";
 
+        [DataMember]
         public string DetailAddress = "";
 
+        [DataMember]
         public string ReceiverName = "";
 
+        [DataMember]
         public string PhoneNumber = "";
 
         /// <summary>

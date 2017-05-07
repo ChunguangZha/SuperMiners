@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace MetaData.Shopping
 {
+    /// <summary>
+    /// 积分商城，全部商品用积分购买
+    /// </summary>
     [DataContract]
     public class VirtualShoppingItem
     {
@@ -35,10 +38,10 @@ namespace MetaData.Shopping
         public int PlayerMaxBuyableCount;
 
         /// <summary>
-        /// 价值灵币
+        /// 价值积分
         /// </summary>
         [DataMember]
-        public decimal ValueRMB;
+        public decimal ValueShoppingCredits;
 
         [DataMember]
         public decimal GainExp;

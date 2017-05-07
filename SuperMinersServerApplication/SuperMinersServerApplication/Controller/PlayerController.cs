@@ -203,7 +203,8 @@ namespace SuperMinersServerApplication.Controller
         {
             if (string.IsNullOrEmpty(IDCardNo))
             {
-                return OperResult.RESULTCODE_PARAM_INVALID;
+                return OperResult.RESULTCODE_FALSE;
+                //return OperResult.RESULTCODE_PARAM_INVALID;
             }
             int count = DBProvider.UserDBProvider.GetPlayerCountByIDCardNo(IDCardNo);
             if (count == 0)
@@ -275,7 +276,7 @@ namespace SuperMinersServerApplication.Controller
             //}
             if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
             {
-                return OperResult.RESULTCODE_PARAM_INVALID;
+                return OperResult.RESULTCODE_REGISTER_IDCARD_ERROR;
             }
             if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
             {
@@ -636,16 +637,16 @@ namespace SuperMinersServerApplication.Controller
             return null;
         }
 
-        public PlayerInfo GetOnlinePlayerInfo(string userName)
-        {
-            PlayerRunnable playerrun = null;
-            if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
-            {
-                return playerrun.BasePlayer;
-            }
+        //public PlayerInfo GetOnlinePlayerInfo(string userName)
+        //{
+        //    PlayerRunnable playerrun = null;
+        //    if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
+        //    {
+        //        return playerrun.BasePlayer;
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
         public PlayerInfo GetPlayerInfoByUserID(int userID)
         {
@@ -721,6 +722,8 @@ namespace SuperMinersServerApplication.Controller
 
         private void LoadPlayerLastGravelInfo(PlayerInfo player)
         {
+            CheckPlayerMakeAVowTimes(player);
+
             var lastGravelRecord = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecord(player.SimpleInfo.UserID);
             if (lastGravelRecord == null)
             {
@@ -796,10 +799,19 @@ namespace SuperMinersServerApplication.Controller
             PlayerRunnable playerrun = null;
             if (this._dicOnlinePlayerRuns.TryGetValue(userName, out playerrun))
             {
+                CheckPlayerMakeAVowTimes(playerrun.BasePlayer);
                 return playerrun;
             }
 
             return null;
+        }
+
+        private void CheckPlayerMakeAVowTimes(PlayerInfo playerinfo)
+        {
+            if (playerinfo.FortuneInfo.MakeAVowToGodTime_DayofYear != DateTime.Now.DayOfYear)
+            {
+                playerinfo.FortuneInfo.MakeAVowToGodTimesLastDay = 0;
+            }
         }
 
         public bool ChangePassword(string userName, string oldPassword, string newPassword)
@@ -850,6 +862,10 @@ namespace SuperMinersServerApplication.Controller
 
             if (IDCardNo != playerrun.BasePlayer.SimpleInfo.IDCardNo)
             {
+                if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
+                {
+                    return OperResult.RESULTCODE_REGISTER_IDCARD_ERROR;
+                }
                 if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
                 {
                     return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;

@@ -17,17 +17,17 @@ namespace DataBaseProvider
         {
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
-                string sqlText = "insert into virtualshoppingitem " + 
-                    "(`Name`,`Remark`,`SellState`,`PlayerMaxBuyableCount`,`ValueRMB`,`GainExp`,`GainRMB`,`GainGoldCoin`,"+
+                string sqlText = "insert into virtualshoppingitem " +
+                    "(`Name`,`Remark`,`SellState`,`PlayerMaxBuyableCount`,`ValueShoppingCredits`,`GainExp`,`GainRMB`,`GainGoldCoin`," +
                     "`GainMine_StoneReserves`,`GainMiner`,`GainStone`,`GainDiamond`,`GainShoppingCredits`,`GainGravel`) " +
-                    " values (@Name,@Remark,@SellState,@PlayerMaxBuyableCount,@ValueRMB,@GainExp,@GainRMB,@GainGoldCoin," +
+                    " values (@Name,@Remark,@SellState,@PlayerMaxBuyableCount,@ValueShoppingCredits,@GainExp,@GainRMB,@GainGoldCoin," +
                     "@GainMine_StoneReserves,@GainMiner,@GainStone,@GainDiamond,@GainShoppingCredits,@GainGravel )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", item.SellState);
                 mycmd.Parameters.AddWithValue("@PlayerMaxBuyableCount", item.PlayerMaxBuyableCount);
-                mycmd.Parameters.AddWithValue("@ValueRMB", item.ValueRMB);
+                mycmd.Parameters.AddWithValue("@ValueShoppingCredits", item.ValueShoppingCredits);
                 mycmd.Parameters.AddWithValue("@GainExp", item.GainExp);
                 mycmd.Parameters.AddWithValue("@GainRMB", item.GainRMB);
                 mycmd.Parameters.AddWithValue("@GainGoldCoin", item.GainGoldCoin);
@@ -49,7 +49,7 @@ namespace DataBaseProvider
             {
                 string sqlText = "update virtualshoppingitem " +
                     " set `Name`=@Name,`Remark`=@Remark,`SellState`=@SellState,`PlayerMaxBuyableCount`=@PlayerMaxBuyableCount,"+
-                    "`ValueRMB`=@ValueRMB,`GainExp`=@GainExp,`GainRMB`=@GainRMB,`GainGoldCoin`=@GainGoldCoin," +
+                    "`ValueShoppingCredits`=@ValueShoppingCredits,`GainExp`=@GainExp,`GainRMB`=@GainRMB,`GainGoldCoin`=@GainGoldCoin," +
                     "`GainMine_StoneReserves`=@GainMine_StoneReserves,`GainMiner`=@GainMiner,`GainStone`=@GainStone,"+
                     "`GainDiamond`=@GainDiamond,`GainShoppingCredits`=@GainShoppingCredits,`GainGravel`=@GainGravel " +
                     " where `ID`=@ID;";
@@ -58,7 +58,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", item.SellState);
                 mycmd.Parameters.AddWithValue("@PlayerMaxBuyableCount", item.PlayerMaxBuyableCount);
-                mycmd.Parameters.AddWithValue("@ValueRMB", item.ValueRMB);
+                mycmd.Parameters.AddWithValue("@ValueShoppingCredits", item.ValueShoppingCredits);
                 mycmd.Parameters.AddWithValue("@GainExp", item.GainExp);
                 mycmd.Parameters.AddWithValue("@GainRMB", item.GainRMB);
                 mycmd.Parameters.AddWithValue("@GainGoldCoin", item.GainGoldCoin);

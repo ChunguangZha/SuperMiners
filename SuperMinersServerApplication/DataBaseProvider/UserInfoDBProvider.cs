@@ -624,8 +624,9 @@ namespace DataBaseProvider
                 dt.Clear();
                 dt.Dispose();
                 adapter.Dispose();
-
                 mycmd.Dispose();
+
+                //player.SimpleInfo.AddressList = this.GetPlayerPostAddressList(player.SimpleInfo.UserID);
 
                 return player;
             }
@@ -664,7 +665,7 @@ namespace DataBaseProvider
 
                 mycmd.Dispose();
 
-                //var lastGravelRecord = 
+                //player.SimpleInfo.AddressList = this.GetPlayerPostAddressList(player.SimpleInfo.UserID);
 
                 return player;
             }
@@ -703,7 +704,7 @@ namespace DataBaseProvider
 
                 mycmd.Dispose();
 
-                //var lastGravelRecord = 
+                //player.SimpleInfo.AddressList = this.GetPlayerPostAddressList(player.SimpleInfo.UserID);
 
                 return player;
             }
@@ -715,6 +716,85 @@ namespace DataBaseProvider
             {
                 MyDBHelper.Instance.DisposeConnection(myconn);
             }
+        }
+
+        public PostAddress[] GetPlayerPostAddressList(int userID)
+        {
+            PostAddress[] listAddress = null;
+
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from postaddress where `UserID`=@UserID ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                adapter.Dispose();
+                listAddress = MetaDBAdapter<PostAddress>.GetPlayerPostAddressList(table);
+            });
+
+            return listAddress;
+        }
+
+        public int AddAddress(PostAddress address)
+        {
+            bool isOK = MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "insert into postaddress " +
+                                " (`UserID`,`Province`,`City`,`County`,`DetailAddress`,`ReceiverName`,`PhoneNumber`)" +
+                                " values (@UserID,@Province,@City,@County,@DetailAddress,@ReceiverName,@PhoneNumber)";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", address.UserID);
+                mycmd.Parameters.AddWithValue("@Province", DESEncrypt.EncryptDES(address.Province));
+                mycmd.Parameters.AddWithValue("@City", DESEncrypt.EncryptDES(address.City));
+                mycmd.Parameters.AddWithValue("@County", DESEncrypt.EncryptDES(address.County));
+                mycmd.Parameters.AddWithValue("@DetailAddress", DESEncrypt.EncryptDES(address.DetailAddress));
+                mycmd.Parameters.AddWithValue("@ReceiverName", DESEncrypt.EncryptDES(address.ReceiverName));
+                mycmd.Parameters.AddWithValue("@PhoneNumber", address.PhoneNumber);
+                mycmd.ExecuteNonQuery();
+            });
+
+            if (isOK) return OperResult.RESULTCODE_TRUE;
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public int UpdateAddress(PostAddress newAddress)
+        {
+            bool isOK = MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "update postaddress " +
+                                " set `UserID`=@UserID,`Province`=@Province,`City`=@City,`County`=@County,`DetailAddress`=@DetailAddress,`ReceiverName`=@ReceiverName,`PhoneNumber`=@PhoneNumber " +
+                                " where id=@id";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", newAddress.UserID);
+                mycmd.Parameters.AddWithValue("@Province", DESEncrypt.EncryptDES(newAddress.Province));
+                mycmd.Parameters.AddWithValue("@City", DESEncrypt.EncryptDES(newAddress.City));
+                mycmd.Parameters.AddWithValue("@County", DESEncrypt.EncryptDES(newAddress.County));
+                mycmd.Parameters.AddWithValue("@DetailAddress", DESEncrypt.EncryptDES(newAddress.DetailAddress));
+                mycmd.Parameters.AddWithValue("@ReceiverName", DESEncrypt.EncryptDES(newAddress.ReceiverName));
+                mycmd.Parameters.AddWithValue("@PhoneNumber", newAddress.PhoneNumber);
+                mycmd.Parameters.AddWithValue("@id", newAddress.ID);
+                mycmd.ExecuteNonQuery();
+            });
+
+            if (isOK) return OperResult.RESULTCODE_TRUE;
+            return OperResult.RESULTCODE_FALSE;
+        }
+
+        public int DeleteAddress(int postAddressID)
+        {
+            bool isOK = MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "delete from postaddress " +
+                                " where id=@id";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@id", postAddressID);
+                mycmd.ExecuteNonQuery();
+            });
+
+            if (isOK) return OperResult.RESULTCODE_TRUE;
+            return OperResult.RESULTCODE_FALSE;
         }
 
         public PlayerGravelInfo GetPlayerGravelInfo(int userID)

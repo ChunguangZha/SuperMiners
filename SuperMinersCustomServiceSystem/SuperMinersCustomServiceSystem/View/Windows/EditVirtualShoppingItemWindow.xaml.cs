@@ -37,7 +37,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         {
             InitializeComponent();
             GlobalData.Client.AddVirtualShoppingItemCompleted += Client_AddVirtualShoppingItemCompleted;
-            this.Title = "添加虚拟商品";
+            this.Title = "添加积分商品";
             isAdd = true;
 
             _syn = SynchronizationContext.Current;
@@ -48,7 +48,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             InitializeComponent();
             GlobalData.Client.UpdateVirtualShoppingItemCompleted += Client_UpdateVirtualShoppingItemCompleted;
             isAdd = false;
-            this.Title = "修改虚拟商品";
+            this.Title = "修改积分商品";
             this.oldID = item.ID;
             this.txtID.Text = item.ID.ToString();
             this.txtName.Text = item.Name;
@@ -56,7 +56,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
             this.cmbItemState.SelectedIndex = (int)item.SellState;
             this.txtPlayerMaxBuyCount.Value = item.PlayerMaxBuyableCount;
-            this.txtPriceRMB.Value = (double)item.ValueRMB;
+            this.txtPriceRMB.Value = (double)item.ValueShoppingCredits;
             this.txtGainExp.Value = (double)item.GainExp;
             this.txtGainRMB.Value = (double)item.GainRMB;
             this.txtGainGoldCoin.Value = (double)item.GainGoldCoin;
@@ -76,7 +76,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         {
             if (GlobalData.Client != null)
             {
-                App.BusyToken.ShowBusyWindow("正在添加新的虚拟商品...");
+                App.BusyToken.ShowBusyWindow("正在添加新的积分商品...");
                 GlobalData.Client.AddVirtualShoppingItem(actionPassword, item);
             }
         }
@@ -85,7 +85,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         {
             if (GlobalData.Client != null)
             {
-                App.BusyToken.ShowBusyWindow("正在修改虚拟商品...");
+                App.BusyToken.ShowBusyWindow("正在修改积分商品...");
                 GlobalData.Client.UpdateVirtualShoppingItem(actionPassword, item);
             }
         }
@@ -155,7 +155,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                 IconBuffer = this._iconBuffer,
                 PlayerMaxBuyableCount = (int)this.txtPlayerMaxBuyCount.Value,
                 SellState = (SellState)this.cmbItemState.SelectedIndex,
-                ValueRMB = (decimal)this.txtPriceRMB.Value
+                ValueShoppingCredits = (decimal)this.txtPriceRMB.Value
             };
 
             InputActionPasswordWindow winActionPassword = new InputActionPasswordWindow();

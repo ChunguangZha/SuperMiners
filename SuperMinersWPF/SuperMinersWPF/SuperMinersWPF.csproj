@@ -32,8 +32,8 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>11</ApplicationRevision>
-    <ApplicationVersion>2.0.3.%2a</ApplicationVersion>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>2.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -363,6 +363,7 @@
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\PlayerBetInfoUIModel.cs" />
     <Compile Include="Models\PlayerRaiderRoundHistoryRecordInfoUIModel.cs" />
+    <Compile Include="Models\PostAddressUIModel.cs" />
     <Compile Include="Models\RaiderRoundMetaDataInfoUIModel.cs" />
     <Compile Include="Models\RouletteAwardItemUIModel.cs" />
     <Compile Include="Models\SellStonesOrderUIModel.cs" />
@@ -407,6 +408,7 @@
     <Compile Include="ViewModels\GameRouletteViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\NoticeViewModel.cs" />
+    <Compile Include="ViewModels\ObservableCollection.cs" />
     <Compile Include="ViewModels\ShoppingViewModel.cs" />
     <Compile Include="ViewModels\StackStoneViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
@@ -549,6 +551,9 @@
     </Compile>
     <Compile Include="Views\Windows\DelegateSellStoneWindows.xaml.cs">
       <DependentUpon>DelegateSellStoneWindows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\EditPostAddressWindow.xaml.cs">
+      <DependentUpon>EditPostAddressWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MyRaiderBetRecordsWindow.xaml.cs">
       <DependentUpon>MyRaiderBetRecordsWindow.xaml</DependentUpon>
@@ -802,6 +807,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\DelegateSellStoneWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\EditPostAddressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

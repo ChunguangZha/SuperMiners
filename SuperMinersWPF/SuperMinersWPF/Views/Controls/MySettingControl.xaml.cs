@@ -1,6 +1,8 @@
 ﻿using MetaData;
 using SuperMinersServerApplication.Utility;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
+using SuperMinersWPF.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +37,11 @@ namespace SuperMinersWPF.Views.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            if (GlobalData.ServerType == ServerType.Server2)
+            {
+                this.lvPostAddress.ItemsSource = App.UserVMObject.ListPostAddress;
+                this.tabitemPostAddress.Visibility = System.Windows.Visibility.Visible;
+            }
         }
 
         public void Init()
@@ -72,6 +79,11 @@ namespace SuperMinersWPF.Views.Controls
 
             //GlobalData.Client.CheckUserAlipayExistCompleted += Client_CheckUserAlipayExistCompleted;
             GlobalData.Client.ChangePlayerSimpleInfoCompleted += Client_ChangePlayerSimpleInfoCompleted;
+
+            if (GlobalData.ServerType == ServerType.Server2)
+            {
+                App.UserVMObject.AsyncGetPostAddressList();
+            }
         }
 
         void Client_ChangePlayerSimpleInfoCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -207,6 +219,45 @@ namespace SuperMinersWPF.Views.Controls
         {
             App.BusyToken.ShowBusyWindow("正在提交服务器...");
             GlobalData.Client.ChangePlayerSimpleInfo(alipayAccount, alipayRealName, IDCardNo, email, qq, new string[] { alipayAccount, alipayRealName });
+        }
+
+        private void btnDeleteAddress_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.lvPostAddress.SelectedItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要删除的地址");
+                return;
+            }
+
+            if (MyMessageBox.ShowQuestionOKCancel("请确认要删除该地址？此操作不可恢复！") == System.Windows.Forms.DialogResult.OK)
+            {
+                PostAddressUIModel address = this.lvPostAddress.SelectedItem as PostAddressUIModel;
+                if (address == null)
+                {
+                    MyMessageBox.ShowInfo("请选择要删除的地址");
+                    return;
+                }
+                App.UserVMObject.AsyncDeletePostAddress(address.ParentObject.ID);
+            }
+        }
+
+        private void btnUpdateAddress_Click(object sender, RoutedEventArgs e)
+        {
+            PostAddressUIModel address = this.lvPostAddress.SelectedItem as PostAddressUIModel;
+            if (address == null)
+            {
+                MyMessageBox.ShowInfo("请选择要修改的地址");
+                return;
+            }
+
+            EditPostAddressWindow win = new EditPostAddressWindow(address);
+            win.ShowDialog();
+        }
+
+        private void btnAddNewAddress_Click(object sender, RoutedEventArgs e)
+        {
+            EditPostAddressWindow win = new EditPostAddressWindow();
+            win.ShowDialog();
         }
 
     }

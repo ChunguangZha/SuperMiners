@@ -139,11 +139,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                         MyMessageBox.ShowInfo("没有选中的用户信息。");
                         return;
                     }
-                    if (e.Result.FortuneInfo.StockOfStones + e.Result.FortuneInfo.FreezingStones < 100000)
-                    {
-                        MyMessageBox.ShowInfo("玩家["+e.Result.SimpleInfo.UserLoginName+"] 矿石量不足十万，无法进行转区！");
-                        return;
-                    }
+                    //if (e.Result.FortuneInfo.StockOfStones + e.Result.FortuneInfo.FreezingStones < 100000)
+                    //{
+                    //    MyMessageBox.ShowInfo("玩家["+e.Result.SimpleInfo.UserLoginName+"] 矿石量不足十万，无法进行转区！");
+                    //    return;
+                    //}
                     string serverUri2 = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
                     GlobalData.Client.Init(serverUri2);
                     GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;

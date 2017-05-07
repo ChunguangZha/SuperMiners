@@ -36,7 +36,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("SellState");
                 NotifyPropertyChange("SellStateText");
                 NotifyPropertyChange("PlayerMaxBuyableCount");
-                NotifyPropertyChange("ValueRMB");
+                NotifyPropertyChange("ValueShoppingCredits");
                 NotifyPropertyChange("GainExp");
                 NotifyPropertyChange("GainRMB");
                 NotifyPropertyChange("GainGoldCoin");
@@ -142,18 +142,18 @@ namespace SuperMinersCustomServiceSystem.Model
         }
 
         /// <summary>
-        /// 价值灵币
+        /// 价值积分
         /// </summary>
-        public decimal ValueRMB
+        public decimal ValueShoppingCredits
         {
             get
             {
-                return this._parentObject.ValueRMB;
+                return this._parentObject.ValueShoppingCredits;
             }
             set
             {
-                this._parentObject.ValueRMB = value;
-                NotifyPropertyChange("ValueRMB");
+                this._parentObject.ValueShoppingCredits = value;
+                NotifyPropertyChange("ValueShoppingCredits");
             }
         }
 

@@ -1143,7 +1143,12 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                         simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
                     if (result != OperResult.RESULTCODE_TRUE)
                     {
-                        return result;
+                        result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName + "xl", simpleInfo.UserName + "xl", simpleInfo.Password, simpleInfo.Alipay,
+                            simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                        if (result != OperResult.RESULTCODE_TRUE)
+                        {
+                            return result;
+                        }
                     }
 
                     newUserLoginName = simpleInfo.UserName;
@@ -1520,6 +1525,26 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetPlayerBuyDiamondShoppingItemRecordByName Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public PostAddress[] GetPlayerPostAddressList(string token, int userID)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.UserDBProvider.GetPlayerPostAddressList(userID);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetPlayerPostAddressList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

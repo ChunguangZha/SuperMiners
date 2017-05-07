@@ -134,6 +134,58 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #endregion
 
+        #region GetPlayerPostAddressList
+
+        public event EventHandler<WebInvokeEventArgs<PostAddress[]>> GetPlayerPostAddressListCompleted;
+        public void GetPlayerPostAddressList()
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<PostAddress[]>(this._context, "GetPlayerPostAddressList", this.GetPlayerPostAddressListCompleted, GlobalData.Token);
+            }
+        }
+
+        #endregion
+
+        #region AddAddress
+
+        public event EventHandler<WebInvokeEventArgs<int>> AddAddressCompleted;
+        public void AddAddress(PostAddress address)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<int>(this._context, "AddAddress", this.AddAddressCompleted, GlobalData.Token, address);
+            }
+        }
+
+        #endregion
+
+        #region UpdateAddress
+
+        public event EventHandler<WebInvokeEventArgs<int>> UpdateAddressCompleted;
+        public void UpdateAddress(PostAddress newAddress)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<int>(this._context, "UpdateAddress", this.UpdateAddressCompleted, GlobalData.Token, newAddress);
+            }
+        }
+
+        #endregion
+
+        #region DeleteAddress
+
+        public event EventHandler<WebInvokeEventArgs<int>> DeleteAddressCompleted;
+        public void DeleteAddress(int postAddressID)
+        {
+            if (GlobalData.IsLogined)
+            {
+                this._invoker.Invoke<int>(this._context, "DeleteAddress", this.DeleteAddressCompleted, GlobalData.Token, postAddressID);
+            }
+        }
+
+        #endregion
+
         #region Callback
 
         public void RaiseOnKickout()

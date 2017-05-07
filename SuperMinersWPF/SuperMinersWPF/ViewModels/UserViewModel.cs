@@ -1,8 +1,10 @@
 ﻿using MetaData;
 using MetaData.User;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,6 +14,8 @@ namespace SuperMinersWPF.ViewModels
 {
     class UserViewModel
     {
+        public ObservableCollection<PostAddressUIModel> ListPostAddress = new ObservableCollection<PostAddressUIModel>();
+
         public event EventHandler GetPlayerInfoCompleted;
 
         bool isStartedListen = false;
@@ -163,6 +167,19 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.MakeAVowToGod();
         }
 
+        public void AsyncGetPostAddressList()
+        {
+            App.BusyToken.ShowBusyWindow("正在获取地址...");
+            GlobalData.Client.GetPlayerPostAddressList();
+        }
+
+        public void AsyncDeletePostAddress(int addressID)
+        {
+            App.BusyToken.ShowBusyWindow("正在删除地址...");
+            GlobalData.Client.DeleteAddress(addressID);
+        }
+
+
         public void RegisterEvent()
         {
             GlobalData.Client.GetPlayerInfoCompleted += Client_GetPlayerInfoCompleted;
@@ -172,6 +189,63 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.RequestGravelCompleted += Client_RequestGravelCompleted;
             GlobalData.Client.GetGravelCompleted += Client_GetGravelCompleted;
             GlobalData.Client.MakeAVowToGodCompleted += Client_MakeAVowToGodCompleted;
+            GlobalData.Client.GetPlayerPostAddressListCompleted += Client_GetPlayerPostAddressListCompleted;
+            GlobalData.Client.DeleteAddressCompleted += Client_DeleteAddressCompleted;
+        }
+
+        void Client_DeleteAddressCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("删除地址失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result == OperResult.RESULTCODE_TRUE)
+                {
+                    MyMessageBox.ShowInfo("删除地址成功");
+                    this.AsyncGetPostAddressList();
+                }
+                else
+                {
+                    MyMessageBox.ShowInfo("删除地址失败。原因为：" + OperResult.GetMsg(e.Result));
+                }
+
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("删除地址失败。信息为：" + exc.Message);
+            }
+        }
+
+        void Client_GetPlayerPostAddressListCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<PostAddress[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+
+                this.ListPostAddress.Clear();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("获取地址失败。" + e.Error.Message);
+                    return;
+                }
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListPostAddress.Add(new PostAddressUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("获取地址失败。信息为：" + exc.Message);
+            }
         }
 
         void Client_MakeAVowToGodCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MakeAVowToGodResult> e)
@@ -179,6 +253,12 @@ namespace SuperMinersWPF.ViewModels
             try
             {
                 App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MyMessageBox.ShowInfo("神灵许愿失败。" + e.Error.Message);
+                    return;
+                }
+
                 if (e.Result != null && e.Result.OperResultCode == OperResult.RESULTCODE_TRUE)
                 {
                     MyMessageBox.ShowInfo("许愿显灵，获取" + e.Result.GravelResult + "碎片");
@@ -186,13 +266,13 @@ namespace SuperMinersWPF.ViewModels
                 }
                 else
                 {
-                    MyMessageBox.ShowInfo("碎片领取失败，原因为：" + OperResult.GetMsg(e.Result.OperResultCode));
+                    MyMessageBox.ShowInfo("神灵许愿失败，原因为：" + OperResult.GetMsg(e.Result.OperResultCode));
                 }
 
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+                MyMessageBox.ShowInfo("神灵许愿失败。原因为：" + exc.Message);
             }
         }
 
@@ -213,7 +293,7 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+                MyMessageBox.ShowInfo("碎片领取失败。原因为：" + exc.Message);
             }
         }
 
@@ -234,7 +314,7 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取信息失败。信息为：" + exc.Message);
+                MyMessageBox.ShowInfo("碎片申请失败。原因为：" + exc.Message);
             }
         }
 
@@ -260,7 +340,7 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MyMessageBox.ShowInfo("获取代理信息失败。信息为：" + exc.Message);
+                MyMessageBox.ShowInfo("获取代理信息失败。原因为：" + exc.Message);
             }
         }
 

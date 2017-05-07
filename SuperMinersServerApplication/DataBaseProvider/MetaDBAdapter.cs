@@ -240,8 +240,8 @@ namespace DataBaseProvider
 
 #if !V1
 
-                player.FortuneInfo.ShoppingCreditsEnabled = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsEnabled"]);
-                player.FortuneInfo.ShoppingCreditsFreezed = Convert.ToInt32(dt.Rows[i]["ShoppingCreditsFreezed"]);
+                player.FortuneInfo.ShoppingCreditsEnabled = Convert.ToDecimal(dt.Rows[i]["ShoppingCreditsEnabled"]);
+                player.FortuneInfo.ShoppingCreditsFreezed = Convert.ToDecimal(dt.Rows[i]["ShoppingCreditsFreezed"]);
                 if (dt.Rows[i]["UserRemoteServerValidStopTime"] != DBNull.Value)
                 {
                     player.FortuneInfo.UserRemoteServerValidStopTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["UserRemoteServerValidStopTime"]));
@@ -1238,7 +1238,7 @@ namespace DataBaseProvider
                 item.Remark = dt.Rows[i]["Remark"].ToString();
                 item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
                 item.PlayerMaxBuyableCount = Convert.ToInt32(dt.Rows[i]["PlayerMaxBuyableCount"]);
-                item.ValueRMB = Convert.ToDecimal(dt.Rows[i]["ValueRMB"]);
+                item.ValueShoppingCredits = Convert.ToDecimal(dt.Rows[i]["ValueShoppingCredits"]);
                 item.GainExp = Convert.ToDecimal(dt.Rows[i]["GainExp"]);
                 item.GainRMB = Convert.ToDecimal(dt.Rows[i]["GainRMB"]);
                 item.GainGoldCoin = Convert.ToDecimal(dt.Rows[i]["GainGoldCoin"]);
@@ -1345,6 +1345,31 @@ namespace DataBaseProvider
             }
 
             return records;
+        }
+
+        internal static PostAddress[] GetPlayerPostAddressList(DataTable dt)
+        {
+            if (dt == null)
+            {
+                return null;
+            }
+            PostAddress[] listAddress = new PostAddress[dt.Rows.Count];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                PostAddress address = new PostAddress();
+                address.ID = Convert.ToInt32(dt.Rows[i]["id"]);
+                address.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                address.Province = DESEncrypt.DecryptDES(dt.Rows[i]["Province"].ToString());
+                address.City = DESEncrypt.DecryptDES(dt.Rows[i]["City"].ToString());
+                address.County = DESEncrypt.DecryptDES(dt.Rows[i]["County"].ToString());
+                address.DetailAddress = DESEncrypt.DecryptDES(dt.Rows[i]["DetailAddress"].ToString());
+                address.ReceiverName = DESEncrypt.DecryptDES(dt.Rows[i]["ReceiverName"].ToString());
+                address.PhoneNumber = dt.Rows[i]["PhoneNumber"].ToString();
+
+                listAddress[i] = address;
+            }
+
+            return listAddress;
         }
 
     }
