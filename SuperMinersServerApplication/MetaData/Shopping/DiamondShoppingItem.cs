@@ -53,27 +53,27 @@ namespace MetaData.Shopping
         /// <summary>
         /// 生活用品
         /// </summary>
-        LiveThing,
+        LiveThing = 1,
 
         /// <summary>
         /// 数码产品
         /// </summary>
-        Digital,
+        Digital = 2,
 
         /// <summary>
         /// 食品专区
         /// </summary>
-        Food,
+        Food = 3,
 
         /// <summary>
         /// 家用电器
         /// </summary>
-        HomeAppliances,
+        HomeAppliances = 4,
 
         /// <summary>
         /// 话费充值
         /// </summary>
-        PhoneFee,
+        PhoneFee = 5,
 
     }
 

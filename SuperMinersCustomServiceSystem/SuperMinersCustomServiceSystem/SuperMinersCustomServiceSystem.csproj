@@ -264,6 +264,7 @@
     <Compile Include="BusyWindow.xaml.cs">
       <DependentUpon>BusyWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\DiamondShoppingItemUIModel.cs" />
     <Compile Include="Model\ExpChangeRecordUIModel.cs" />
     <Compile Include="Model\GoldCoinRechargeRecordUIModel.cs" />
     <Compile Include="Model\MinersBuyRecordUIModel.cs" />
@@ -422,6 +423,9 @@
     </Compile>
     <Compile Include="View\Windows\EditAgentInfoWindow.xaml.cs">
       <DependentUpon>EditAgentInfoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\EditDiamondShoppingItemWindow.xaml.cs">
+      <DependentUpon>EditDiamondShoppingItemWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\EditPlayerDiamondsWindow.xaml.cs">
       <DependentUpon>EditPlayerDiamondsWindow.xaml</DependentUpon>
@@ -684,6 +688,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\EditAgentInfoWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\EditDiamondShoppingItemWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
