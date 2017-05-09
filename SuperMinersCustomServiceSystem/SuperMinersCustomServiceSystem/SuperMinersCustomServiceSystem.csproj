@@ -221,6 +221,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PlayerLogInfo.cs">
       <Link>Wcf\Datas\PlayerLogInfo.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\User\PostAddress.cs">
+      <Link>Wcf\Datas\PostAddress.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Utility\JsonSerializeTest.cs">
       <Link>Wcf\Datas\JsonSerializeTest.cs</Link>
     </Compile>
@@ -302,6 +305,9 @@
     </Compile>
     <Compile Include="View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml.cs">
       <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\TradeSystem\DiamondShoppingItemListControl.xaml.cs">
+      <DependentUpon>DiamondShoppingItemListControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\StoneDelegateBuyTradeHistoryRecordControl.xaml.cs">
       <DependentUpon>StoneDelegateBuyTradeHistoryRecordControl.xaml</DependentUpon>
@@ -512,6 +518,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\TradeSystem\DiamondShoppingItemListControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

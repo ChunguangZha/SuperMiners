@@ -89,9 +89,15 @@
                     <TreeViewItem Name="tvL2_TS_RemoteService_BuyRecord" Header="远程服务购买记录" MouseDoubleClick="tvL2_TS_RemoteService_BuyRecord_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_RemoteService_HandleRecord" Header="远程服务完成记录" MouseDoubleClick="tvL2_TS_RemoteService_HandleRecord_MouseDoubleClick"/>
                 </TreeViewItem>
+            </TreeViewItem>
+            <TreeViewItem Name="tvL1Mall" Header="商城管理" Style="{StaticResource TVItemL1Style}">
                 <TreeViewItem Name="tvL2_TS_VirtualShopping" Header="积分商城" Style="{StaticResource TVItemL2Style}">
                     <TreeViewItem Name="tvL2_TS_VirtualShopping_Items" Header="积分商品项管理 " MouseDoubleClick="tvL2_TS_VirtualShopping_Items_MouseDoubleClick"/>
                     <TreeViewItem Name="tvL2_TS_VirtualShopping_BuyRecord" Header="积分商品购买记录" MouseDoubleClick="tvL2_TS_VirtualShopping_BuyRecord_MouseDoubleClick"/>
+                </TreeViewItem>
+                <TreeViewItem Name="tvL2_TS_DiamondShopping" Header="钻石商城" Style="{StaticResource TVItemL2Style}">
+                    <TreeViewItem Name="tvL2_TS_DiamondShopping_Items" Header="钻石商品项管理 " MouseDoubleClick="tvL2_TS_DiamondShopping_Items_MouseDoubleClick"/>
+                    <TreeViewItem Name="tvL2_TS_DiamondShopping_BuyRecord" Header="钻石商品购买记录" MouseDoubleClick="tvL2_TS_DiamondShopping_BuyRecord_MouseDoubleClick"/>
                 </TreeViewItem>
             </TreeViewItem>
             <TreeViewItem Name="tvL1FunnySystem" Header="娱乐系统" Style="{StaticResource TVItemL1Style}">

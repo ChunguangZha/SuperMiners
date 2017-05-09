@@ -1,0 +1,34 @@
+﻿<Window x:Class="SuperMinersWPF.Views.Windows.DiamondShoppingItemDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="钻石商品--" Height="600" Width="700" MinWidth="700" MinHeight="600" WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="240"/>
+            <RowDefinition Height="350*"/>
+        </Grid.RowDefinitions>
+        <Image Source="/SuperMinersWPF;component/Resources/supor.jpg"/>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="苏泊尔 电压力锅CYSB50YC1－100双胆" FontSize="16" FontWeight="Bold" Margin="10,5"/>
+            <TextBlock Grid.Row="1" Text="产品描述" Margin="10,5"/>
+            <TextBlock Grid.Row="2" Text="需要钻石：88888块" Margin="10,5"/>
+            <Button Grid.Row="3" Name="btnBuy" Content="立即购买" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left"/>
+            <Button Grid.Row="3" Name="btnAddToShoppingCart" Content="加入购物车" FontSize="18" Margin="180,10,10,10" Width="120" Height="50" HorizontalAlignment="Left"/>
+        </Grid>
+        <ListView Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListViewItem>
+                <Image Margin="5" Source="/SuperMinersWPF;component/Resources/supor.jpg" Stretch="UniformToFill"/>
+            </ListViewItem>
+        </ListView>
+    </Grid>
+</Window>

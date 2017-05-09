@@ -34,5 +34,41 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<int>(this._context, "AddVirtualShoppingItem", this.AddVirtualShoppingItemCompleted, GlobalData.Token, actionPassword, item);
         }
 
+        public event EventHandler<WebInvokeEventArgs<int>> AddDiamondShoppingItemCompleted;
+        public void AddDiamondShoppingItem(string actionPassword, DiamondShoppingItem item, byte[][] detailImagesBuffer)
+        {
+            this._invoker.Invoke<int>(this._context, "AddDiamondShoppingItem", this.AddDiamondShoppingItemCompleted, GlobalData.Token, actionPassword, item, detailImagesBuffer);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> UpdateDiamondShoppingItemCompleted;
+        public void UpdateDiamondShoppingItem(string actionPassword, DiamondShoppingItem item, byte[][] detailImagesBuffer)
+        {
+            this._invoker.Invoke<int>(this._context, "UpdateDiamondShoppingItem", this.UpdateDiamondShoppingItemCompleted, GlobalData.Token, actionPassword, item, detailImagesBuffer);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<DiamondShoppingItem[]>> GetDiamondShoppingItemsCompleted;
+        public void GetDiamondShoppingItems(bool getAllItem, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
+        {
+            this._invoker.Invoke<DiamondShoppingItem[]>(this._context, "GetDiamondShoppingItems", this.GetDiamondShoppingItemsCompleted, GlobalData.Token, getAllItem, state, itemType);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<byte[][]>> GetDiamondShoppingItemDetailImageBufferCompleted;
+        public void GetDiamondShoppingItemDetailImageBuffer(string diamondShoppingItemName)
+        {
+            this._invoker.Invoke<byte[][]>(this._context, "GetDiamondShoppingItemDetailImageBuffer", this.GetDiamondShoppingItemDetailImageBufferCompleted, GlobalData.Token, diamondShoppingItemName);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<int>> HandleBuyDiamondShoppingCompleted;
+        public void HandleBuyDiamondShopping(string actionPassword, PlayerBuyDiamondShoppingItemRecord record)
+        {
+            this._invoker.Invoke<int>(this._context, "HandleBuyDiamondShopping", this.HandleBuyDiamondShoppingCompleted, GlobalData.Token, actionPassword, record);
+        }
+
+        public event EventHandler<WebInvokeEventArgs<PlayerBuyDiamondShoppingItemRecord[]>> GetPlayerBuyDiamondShoppingItemRecordByNameCompleted;
+        public void GetPlayerBuyDiamondShoppingItemRecordByName(string playerUserName, string shoppingItemName, int shoppingStateInt, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        {
+            this._invoker.Invoke<PlayerBuyDiamondShoppingItemRecord[]>(this._context, "GetPlayerBuyDiamondShoppingItemRecordByName", this.GetPlayerBuyDiamondShoppingItemRecordByNameCompleted, GlobalData.Token, playerUserName, shoppingItemName, shoppingStateInt, beginBuyTime, endBuyTime, pageItemCount, pageIndex);
+        }
+
     }
 }

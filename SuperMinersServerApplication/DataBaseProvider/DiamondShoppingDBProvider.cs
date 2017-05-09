@@ -17,14 +17,31 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "insert into diamondshoppingitem " +
-                    "(`Name`,`Type`,`Remark`,`SellState`,`ValueDiamonds` ) " +
-                    " values (@Name,@Type,@Remark,@SellState,@ValueDiamonds )";
+                    "(`Name`,`Type`,`Remark`,`SellState`,`ValueDiamonds`,`DetailText`,`DetailImageNames` ) " +
+                    " values (@Name,@Type,@Remark,@SellState,@ValueDiamonds,@DetailText,@DetailImageNames )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Type", (int)item.Type);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);
+                mycmd.Parameters.AddWithValue("@DetailText", item.DetailText);
+
+                StringBuilder builderDetailImageNames = new StringBuilder();
+                if (item.DetailImageNames != null)
+                {
+                    for (int i = 0; i < item.DetailImageNames.Length; i++)
+                    {
+                        builderDetailImageNames.Append(item.DetailImageNames[i]);
+                        builderDetailImageNames.Append(";");
+                    }
+                }
+                string detailImageNames = "";
+                if (builderDetailImageNames.Length > 0)
+                {
+                    detailImageNames = builderDetailImageNames.ToString(0, builderDetailImageNames.Length - 1);
+                }
+                mycmd.Parameters.AddWithValue("@DetailImageNames", detailImageNames);
 
                 mycmd.ExecuteNonQuery();
 
@@ -36,13 +53,31 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "update diamondshoppingitem " +
-                    "set `Name`=@Name,`Type`=@Type,`Remark`=@Remark,`SellState`=@SellState,`ValueDiamonds`=@ValueDiamonds where `ID`=@ID;";
+                    "set `Name`=@Name,`Type`=@Type,`Remark`=@Remark,`SellState`=@SellState,`ValueDiamonds`=@ValueDiamonds,`DetailText`=@DetailText,`DetailImageNames`=@DetailImageNames where `ID`=@ID;";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Type", (int)item.Type);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);
+                mycmd.Parameters.AddWithValue("@DetailText", item.DetailText);
+
+                StringBuilder builderDetailImageNames = new StringBuilder();
+                if (item.DetailImageNames != null)
+                {
+                    for (int i = 0; i < item.DetailImageNames.Length; i++)
+                    {
+                        builderDetailImageNames.Append(item.DetailImageNames[i]);
+                        builderDetailImageNames.Append(";");
+                    }
+                }
+                string detailImageNames = "";
+                if (builderDetailImageNames.Length > 0)
+                {
+                    detailImageNames = builderDetailImageNames.ToString(0, builderDetailImageNames.Length - 1);
+                }
+                mycmd.Parameters.AddWithValue("@DetailImageNames", detailImageNames);
+
                 mycmd.Parameters.AddWithValue("@ID", item.ID);
 
                 mycmd.ExecuteNonQuery();
@@ -50,15 +85,16 @@ namespace DataBaseProvider
             });
         }
 
-        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state)
+        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state, DiamondsShoppingItemType itemType)
         {
             DiamondShoppingItem[] items = null;
             MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
             {
-                string sqlText = "select * from diamondshoppingitem ";
+                string sqlText = "select * from diamondshoppingitem where `Type`=@Type ";
+                mycmd.Parameters.AddWithValue("@Type", (int)itemType);
                 if (!getAllItem)
                 {
-                    sqlText += " where SellState=@SellState ";
+                    sqlText += " and SellState=@SellState ";
                     mycmd.Parameters.AddWithValue("@SellState", (int)state);
                 }
                 mycmd.CommandText = sqlText;

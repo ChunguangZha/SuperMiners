@@ -383,7 +383,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int AddDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item);
+        int AddDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item, byte[][] detailImagesBuffer);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/UpdateDiamondShoppingItem",
@@ -391,7 +391,15 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int UpdateDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item);
+        int UpdateDiamondShoppingItem(string token, string actionPassword, DiamondShoppingItem item, byte[][] detailImagesBuffer);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetDiamondShoppingItemDetailImageBuffer",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetDiamondShoppingItems",
@@ -399,7 +407,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, SellState state);
+        DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, SellState state, DiamondsShoppingItemType itemType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleBuyDiamondShopping",

@@ -19,6 +19,12 @@ namespace MetaData.Shopping
         [DataMember]
         public DiamondsShoppingItemType Type;
 
+        ///// <summary>
+        ///// 库存量
+        ///// </summary>
+        //[DataMember]
+        //public int Stocks;
+
         /// <summary>
         /// MaxLength:2000
         /// </summary>
@@ -34,13 +40,39 @@ namespace MetaData.Shopping
         [DataMember]
         public byte[] IconBuffer;
 
+        [DataMember]
+        public string DetailText;
 
+        [DataMember]
+        public string[] DetailImageNames;
 
     }
 
     public enum DiamondsShoppingItemType
     {
-        RealThing,
+        /// <summary>
+        /// 生活用品
+        /// </summary>
+        LiveThing,
+
+        /// <summary>
+        /// 数码产品
+        /// </summary>
+        Digital,
+
+        /// <summary>
+        /// 食品专区
+        /// </summary>
+        Food,
+
+        /// <summary>
+        /// 家用电器
+        /// </summary>
+        HomeAppliances,
+
+        /// <summary>
+        /// 话费充值
+        /// </summary>
         PhoneFee,
 
     }

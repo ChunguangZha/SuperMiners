@@ -1,5 +1,7 @@
 ﻿using SuperMinersCustomServiceSystem.Model;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
+using SuperMinersWPF.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,12 +27,25 @@ namespace SuperMinersWPF.Views
         public MallControl()
         {
             InitializeComponent();
+            if (GlobalData.ServerType == ServerType.Server2)
+            {
+                this.lvPostAddress.ItemsSource = App.UserVMObject.ListPostAddress;
+            }
             BindUI();
         }
 
         public void BindUI()
         {
             this.lvVirtualMall.ItemsSource = App.ShoppingVMObject.ListVirtualShoppingItem;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (GlobalData.ServerType == ServerType.Server2)
+            {
+                App.UserVMObject.AsyncGetPostAddressList();
+            }
+
         }
 
         private void ButtonBuyVirtualShopping_Click(object sender, RoutedEventArgs e)
@@ -44,6 +59,45 @@ namespace SuperMinersWPF.Views
             }
 
             App.ShoppingVMObject.AsyncBuyVirtualShoppingItem(shoppingItem.ParentObject);
+        }
+
+        private void btnDeleteAddress_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.lvPostAddress.SelectedItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要删除的地址");
+                return;
+            }
+
+            if (MyMessageBox.ShowQuestionOKCancel("请确认要删除该地址？此操作不可恢复！") == System.Windows.Forms.DialogResult.OK)
+            {
+                PostAddressUIModel address = this.lvPostAddress.SelectedItem as PostAddressUIModel;
+                if (address == null)
+                {
+                    MyMessageBox.ShowInfo("请选择要删除的地址");
+                    return;
+                }
+                App.UserVMObject.AsyncDeletePostAddress(address.ParentObject.ID);
+            }
+        }
+
+        private void btnUpdateAddress_Click(object sender, RoutedEventArgs e)
+        {
+            PostAddressUIModel address = this.lvPostAddress.SelectedItem as PostAddressUIModel;
+            if (address == null)
+            {
+                MyMessageBox.ShowInfo("请选择要修改的地址");
+                return;
+            }
+
+            EditPostAddressWindow win = new EditPostAddressWindow(address);
+            win.ShowDialog();
+        }
+
+        private void btnAddNewAddress_Click(object sender, RoutedEventArgs e)
+        {
+            EditPostAddressWindow win = new EditPostAddressWindow();
+            win.ShowDialog();
         }
     }
 }

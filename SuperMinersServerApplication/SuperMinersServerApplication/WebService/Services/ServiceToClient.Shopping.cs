@@ -121,18 +121,38 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
-        
-        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token)
+
+        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, DiamondsShoppingItemType itemType)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(false, SellState.OnSell);
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(false, SellState.OnSell, itemType);
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetDiamondShoppingItems Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetDiamondShoppingItemDetailImageBuffer Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

@@ -552,6 +552,9 @@
     <Compile Include="Views\Windows\DelegateSellStoneWindows.xaml.cs">
       <DependentUpon>DelegateSellStoneWindows.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\DiamondShoppingItemDetailWindow.xaml.cs">
+      <DependentUpon>DiamondShoppingItemDetailWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\EditPostAddressWindow.xaml.cs">
       <DependentUpon>EditPostAddressWindow.xaml</DependentUpon>
     </Compile>
@@ -810,6 +813,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\DiamondShoppingItemDetailWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\EditPostAddressWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1002,6 +1009,7 @@
     <Content Include="Resources\Server2GameHelper.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\supor.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

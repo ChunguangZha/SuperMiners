@@ -29,20 +29,35 @@ namespace SuperMinersServerApplication.Controller.Shopping
 
         #endregion
 
-        public int AddDiamondShoppingItem(DiamondShoppingItem item)
+        public int AddDiamondShoppingItem(DiamondShoppingItem item, byte[][] detailImagesBuffer)
         {
-            string filePath = Path.Combine(GlobalData.DiamondShoppingImageFolder, item.Name + ".jpg");
-            if (File.Exists(filePath))
+            string dirPath = GetShoppingItemDirPath(item.Name);
+            if (Directory.Exists(dirPath))
             {
                 return OperResult.RESULTCODE_SHOPPINGNAME_EXISTED;
             }
 
+            //创建商品文件夹
+            Directory.CreateDirectory(dirPath);
+
             bool isOK = DBProvider.DiamondShoppingDBProvider.AddDiamondShoppingItem(item);
             if (isOK)
             {
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                //保存首页
+                string titleImgFilePath = Path.Combine(dirPath, item.Name.GetHashCode().ToString() + ".jpg");
+                using (FileStream stream = new FileStream(titleImgFilePath, FileMode.Create))
                 {
                     stream.Write(item.IconBuffer, 0, item.IconBuffer.Length);
+                }
+
+                //保存详情图
+                for (int i = 0; i < item.DetailImageNames.Length; i++)
+                {
+                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i].GetHashCode().ToString() + ".jpg");
+                    using (FileStream stream = new FileStream(detailImgFilePath, FileMode.Create))
+                    {
+                        stream.Write(detailImagesBuffer[i], 0, detailImagesBuffer[i].Length);
+                    }
                 }
 
                 return OperResult.RESULTCODE_TRUE;
@@ -51,16 +66,29 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public int UpdateDiamondShoppingItem(DiamondShoppingItem item)
+        public int UpdateDiamondShoppingItem(DiamondShoppingItem item, byte[][] detailImagesBuffer)
         {
-            string filePath = Path.Combine(GlobalData.DiamondShoppingImageFolder, item.Name + ".jpg");
+            string dirPath = GetShoppingItemDirPath(item.Name);
+            //删除所有图片，重新保存
+            Directory.Delete(dirPath);
+            Directory.CreateDirectory(dirPath);
 
             bool isOK = DBProvider.DiamondShoppingDBProvider.UpdateDiamondShoppingItem(item);
             if (isOK)
             {
-                using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                string titleImgFilePath = Path.Combine(dirPath, item.Name.GetHashCode().ToString() + ".jpg");
+                using (FileStream stream = new FileStream(titleImgFilePath, FileMode.Create))
                 {
                     stream.Write(item.IconBuffer, 0, item.IconBuffer.Length);
+                }
+
+                for (int i = 0; i < item.DetailImageNames.Length; i++)
+                {
+                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i].GetHashCode().ToString() + ".jpg");
+                    using (FileStream stream = new FileStream(detailImgFilePath, FileMode.Create))
+                    {
+                        stream.Write(detailImagesBuffer[i], 0, detailImagesBuffer[i].Length);
+                    }
                 }
 
                 return OperResult.RESULTCODE_TRUE;
@@ -69,9 +97,47 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state)
+        public string GetShoppingItemDirPath(string itemName)
         {
-            DiamondShoppingItem[] items = DBProvider.DiamondShoppingDBProvider.GetDiamondShoppingItems(getAllItem, state);
+            string dirPath = Path.Combine(GlobalData.DiamondShoppingImageFolder, "item" + itemName.GetHashCode().ToString());
+            return dirPath;
+        }
+
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string diamondShoppingItemName)
+        {
+            string dirPath = GetShoppingItemDirPath(diamondShoppingItemName);
+            if (!Directory.Exists(dirPath))
+            {
+                return null;
+            }
+
+            string[] files = Directory.GetFiles(dirPath);
+            if (files == null || files.Length == 0)
+            {
+                return null;
+            }
+
+            List<byte[]> listImageBuffers = new List<byte[]>();
+            foreach (var fileName in files)
+            {
+                FileInfo fileInfo = new FileInfo(fileName);
+                if (fileInfo.Extension == ".jpg")
+                {
+                    using (FileStream stream = File.OpenRead(fileName))
+                    {
+                        byte[] buffer = new byte[stream.Length];
+                        stream.Read(buffer, 0, buffer.Length);
+                        listImageBuffers.Add(buffer);
+                    }
+                }
+            }
+
+            return listImageBuffers.ToArray();
+        }
+
+        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state, DiamondsShoppingItemType itemType)
+        {
+            DiamondShoppingItem[] items = DBProvider.DiamondShoppingDBProvider.GetDiamondShoppingItems(getAllItem, state, itemType);
             if (items == null)
             {
                 return items;
@@ -79,7 +145,7 @@ namespace SuperMinersServerApplication.Controller.Shopping
 
             foreach (var item in items)
             {
-                string filePath = Path.Combine(GlobalData.DiamondShoppingImageFolder, item.Name + ".jpg");
+                string filePath = Path.Combine(GetShoppingItemDirPath(item.Name), item.Name.GetHashCode().ToString() + ".jpg");
 
                 if (File.Exists(filePath))
                 {

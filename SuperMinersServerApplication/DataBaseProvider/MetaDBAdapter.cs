@@ -1272,6 +1272,12 @@ namespace DataBaseProvider
                 item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
                 item.Type = (DiamondsShoppingItemType)Convert.ToInt32(dt.Rows[i]["Type"]);
                 item.ValueDiamonds = Convert.ToDecimal(dt.Rows[i]["ValueDiamonds"]);
+                item.DetailText = dt.Rows[i]["DetailText"].ToString();
+                string detailImageNames = dt.Rows[i]["DetailImageNames"].ToString();
+                if (!string.IsNullOrEmpty(detailImageNames))
+                {
+                    item.DetailImageNames = detailImageNames.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                }
 
                 items[i] = item;
             }

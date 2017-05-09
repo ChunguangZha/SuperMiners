@@ -286,6 +286,12 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<UserRemoteHandleServiceRecord[]>(this._context, "GetUserRemoteHandleServiceRecords", this.GetUserRemoteHandleServiceRecordsCompleted, GlobalData.Token, playerUserName, beginCreateTime, endCreateTime, pageItemCount, pageIndex);
         }
 
+        public event EventHandler<WebInvokeEventArgs<PostAddress[]>> GetPlayerPostAddressListCompleted;
+        public void GetPlayerPostAddressList(int userID)
+        {
+            this._invoker.Invoke<PostAddress[]>(this._context, "GetPlayerPostAddressList", this.GetPlayerPostAddressListCompleted, GlobalData.Token, userID);
+        }
+
         #endregion
     }
 }

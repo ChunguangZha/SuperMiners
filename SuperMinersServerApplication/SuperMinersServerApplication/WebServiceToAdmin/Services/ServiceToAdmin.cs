@@ -1400,8 +1400,8 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 throw new Exception();
             }
         }
-        
-        public int AddDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item)
+
+        public int AddDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item, byte[][] detailImagesBuffer)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -1418,7 +1418,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     }
 
                     LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]在钻石商城里添加一项商品：" + item.Name);
-                    return DiamondShoppingController.Instance.AddDiamondShoppingItem(item);
+                    return DiamondShoppingController.Instance.AddDiamondShoppingItem(item, detailImagesBuffer);
                 }
                 catch (Exception exc)
                 {
@@ -1432,7 +1432,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public int UpdateDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item)
+        public int UpdateDiamondShoppingItem(string token, string actionPassword, MetaData.Shopping.DiamondShoppingItem item, byte[][] detailImagesBuffer)
         {
             if (RSAProvider.LoadRSA(token))
             {
@@ -1449,7 +1449,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                     }
 
                     LogHelper.Instance.AddInfoLog("管理员[" + admin.UserName + "]修改了钻石商城里的商品：" + item.Name);
-                    return DiamondShoppingController.Instance.UpdateDiamondShoppingItem(item);
+                    return DiamondShoppingController.Instance.UpdateDiamondShoppingItem(item, detailImagesBuffer);
                 }
                 catch (Exception exc)
                 {
@@ -1463,17 +1463,37 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, MetaData.Shopping.SellState state)
+        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(getAllItem, state);
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(getAllItem, state, itemType);
                 }
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetDiamondShoppingItems Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemName);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetDiamondShoppingItemDetailImageBuffer Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

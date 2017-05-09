@@ -18,6 +18,14 @@ CREATE TABLE `xunlingmine2`.`postaddress` (
 
 -- ---------------------------
 
+ALTER TABLE `xunlingmine2`.`diamondshoppingitem` 
+ADD COLUMN `DetailText` VARCHAR(500) NOT NULL DEFAULT '' AFTER `ValueDiamonds`,
+ADD COLUMN `DetailImageNames` VARCHAR(1000) NOT NULL DEFAULT '' AFTER `DetailText`;
+
+
+-- ---------------------------
+
+
 UPDATE `xunlingmine2`.`paramtable` SET `ParamValue`='V2_20170506225500' WHERE `id`='2';
 
 
