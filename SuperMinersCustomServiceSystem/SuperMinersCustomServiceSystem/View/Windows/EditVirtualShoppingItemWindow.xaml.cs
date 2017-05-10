@@ -103,7 +103,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                         stream.Read(_iconBuffer, 0, (int)stream.Length);
                     }
 
-                    this.imgIcon.Source = VirtualShoppingItemUIModel.GetIconSource(_iconBuffer);
+                    this.imgIcon.Source = MyImageConverter.GetIconSource(_iconBuffer);
                 }
             }
             catch (Exception exc)

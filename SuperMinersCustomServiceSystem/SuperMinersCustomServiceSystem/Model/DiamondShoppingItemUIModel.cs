@@ -1,4 +1,5 @@
 ﻿using MetaData.Shopping;
+using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,6 +26,8 @@ namespace SuperMinersCustomServiceSystem.Model
             set
             {
                 _parentObject = value;
+                this._icon = MyImageConverter.GetIconSource(this._parentObject.IconBuffer);
+
                 NotifyPropertyChange("ID");
                 NotifyPropertyChange("Name");
                 NotifyPropertyChange("Type");
@@ -162,37 +165,7 @@ namespace SuperMinersCustomServiceSystem.Model
         public void SetIcon(byte[] buffer)
         {
             this._parentObject.IconBuffer = buffer;
-            this._icon = GetIconSource(buffer);
-        }
-
-        public static BitmapSource GetIconSource(byte[] buffer)
-        {
-            if (buffer == null)
-            {
-                return null;
-            }
-
-            IntPtr ptr = IntPtr.Zero;
-            try
-            {
-                System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(new MemoryStream(buffer));
-                ptr = bmp.GetHbitmap();
-
-                return System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                      ptr, IntPtr.Zero, Int32Rect.Empty,
-                      BitmapSizeOptions.FromEmptyOptions());
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            finally
-            {
-                if (ptr != IntPtr.Zero)
-                {
-                    DeleteObject(ptr);
-                }
-            }
+            this._icon = MyImageConverter.GetIconSource(buffer);
         }
 
         private BitmapSource _icon = null;
@@ -204,9 +177,6 @@ namespace SuperMinersCustomServiceSystem.Model
                 return _icon;
             }
         }
-
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject);
 
         public string DetailText
         {

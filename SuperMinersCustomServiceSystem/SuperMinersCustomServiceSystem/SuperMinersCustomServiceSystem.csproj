@@ -281,6 +281,7 @@
     <Compile Include="Model\UserRemoteHandleServiceRecordUIModel.cs" />
     <Compile Include="Model\UserRemoteServerBuyRecordUIModel.cs" />
     <Compile Include="Model\VirtualShoppingItemUIModel.cs" />
+    <Compile Include="Uility\ImageConverter.cs" />
     <Compile Include="Uility\MyMessageBox.cs" />
     <Compile Include="ViewModel\GameRouletteViewModel.cs" />
     <Compile Include="ViewModel\RemoteServiceViewModel.cs" />

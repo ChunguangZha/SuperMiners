@@ -393,5 +393,15 @@ namespace SuperMinersCustomServiceSystem
             this.controlVirtualShoppingBuyRecordControl.Visibility = System.Windows.Visibility.Visible;
         }
 
+        private void tvL2_TS_DiamondShopping_BuyRecord_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void tvL2_TS_DiamondShopping_Items_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
     }
 }

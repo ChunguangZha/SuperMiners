@@ -44,14 +44,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="534528">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="548864">
       <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>p9aIyI2Rvfh0tzrZ+AF5+8ePlriozelSlH4jEY2S1Pw=</dsig:DigestValue>
+        <dsig:DigestValue>jPFeCHWnzBTG48pgYvYDwWr6GwQWgXmFtpKwJTLiRYc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

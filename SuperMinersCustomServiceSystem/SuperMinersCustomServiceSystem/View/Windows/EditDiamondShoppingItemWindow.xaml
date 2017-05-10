@@ -1,34 +1,76 @@
 ﻿<Window x:Class="SuperMinersCustomServiceSystem.View.Windows.EditDiamondShoppingItemWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="修改钻石商品" Height="700" Width="700" MinWidth="700" MinHeight="600" WindowStartupLocation="CenterScreen">
+        xmlns:myc="clr-namespace:SuperMinersWPF.MyControl"
+        Title="修改钻石商品" Height="700" Width="800" MinWidth="800" MinHeight="700" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="240"/>
-            <RowDefinition Height="350*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Image Source="/SuperMinersWPF;component/Resources/supor.jpg"/>
-        <Grid Grid.Column="1">
+        <TextBlock Text="首图" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10"/>
+        <Button Name="btnUploadFirstImage" Content="上传首图" Margin="10,50,10,10" VerticalAlignment="Top" Click="btnUploadFirstImage_Click"/>
+        <Image Grid.Column="1" Name="imgIcon" Height="200" Width="200" Margin="5"/>
+        <Grid Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="苏泊尔 电压力锅CYSB50YC1－100双胆" FontSize="16" FontWeight="Bold" Margin="10,5"/>
-            <TextBlock Grid.Row="1" Text="产品描述" Margin="10,5"/>
-            <TextBlock Grid.Row="2" Text="需要钻石：88888块" Margin="10,5"/>
-            <Button Grid.Row="3" Name="btnBuy" Content="立即购买" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left"/>
-            <Button Grid.Row="3" Name="btnAddToShoppingCart" Content="加入购物车" FontSize="18" Margin="180,10,10,10" Width="120" Height="50" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Column="0" Text="编号" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtID" IsReadOnly="True" Margin="10,5" MaxLength="20" VerticalAlignment="Top"/>
+            <TextBlock  Grid.Row="1" Grid.Column="0" Text="标题" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtTitle" Margin="10,5" MaxLength="20" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="产品描述" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="txtRemark" Margin="10,5" Height="70" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="价格" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbItemType" Margin="10,5" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" Margin="10,5" VerticalAlignment="Top" SelectedIndex="0">
+                <ComboBoxItem Content="上架"/>
+                <ComboBoxItem Content="下架"/>
+            </ComboBox>
         </Grid>
-        <ListView Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListViewItem>
-                <Image Margin="5" Source="/SuperMinersWPF;component/Resources/supor.jpg" Stretch="UniformToFill"/>
-            </ListViewItem>
-        </ListView>
+        <TextBlock Grid.Row="1" Text="产品详情文本" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="txtDetailText" Height="50" Margin="10" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <TextBlock Grid.Row="2" Text="产品详情图片" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+        <Grid Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <ListView HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Single" Margin="10">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding DetailImage}" Margin="5"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Grid.Column="1" Name="btnAddDetailImage" Content="添加详情图片" Width="120" Margin="10" VerticalAlignment="Top" Click="btnAddDetailImage_Click"/>
+            <Button Grid.Column="1" Name="btnMoveUpDetailImage" Content="上移选中图片" Width="120" Margin="10,50,10,10" VerticalAlignment="Top" Click="btnMoveUpDetailImage_Click"/>
+            <Button Grid.Column="1" Name="btnMoveDownDetailImage" Content="下移选中图片" Width="120" Margin="10,90,10,10" VerticalAlignment="Top" Click="btnMoveDownDetailImage_Click"/>
+            <Button Grid.Column="1" Name="btnDeleteDetailImage" Content="删除选中图片" Width="120" Margin="10,130,10,10" VerticalAlignment="Top" Click="btnDeleteDetailImage_Click"/>
+            
+        </Grid>
+        <Button Grid.Row="3" Grid.ColumnSpan="4" Name="btnCancel" Content="取消" Width="100" VerticalAlignment="Center" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
+        <Button Grid.Row="3" Grid.ColumnSpan="4" Name="btnSave" Content="保存" Width="100" VerticalAlignment="Center" Margin="10,10,140,10" HorizontalAlignment="Right" Click="btnSave_Click"/>
     </Grid>
 </Window>
