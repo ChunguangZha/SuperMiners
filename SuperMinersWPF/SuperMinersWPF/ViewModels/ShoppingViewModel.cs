@@ -2,6 +2,7 @@
 using MetaData.Shopping;
 using MetaData.User;
 using SuperMinersCustomServiceSystem.Model;
+using SuperMinersWPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,6 +20,13 @@ namespace SuperMinersWPF.ViewModels
         public ObservableCollection<VirtualShoppingItemUIModel> ListVirtualShoppingItem
         {
             get { return _listVirtualShoppingItem; }
+        }
+
+        private ObservableCollection<DiamondShoppingItemUIModel> _listDiamondShoppingItem = new ObservableCollection<DiamondShoppingItemUIModel>();
+
+        public ObservableCollection<DiamondShoppingItemUIModel> ListDiamondShoppingItem
+        {
+            get { return _listDiamondShoppingItem; }
         }
 
         public void AsyncGetVirtualShoppingItem()
@@ -43,7 +51,36 @@ namespace SuperMinersWPF.ViewModels
         {
             GlobalData.Client.GetVirtualShoppingItemsCompleted += Client_GetVirtualShoppingItemsCompleted;
             GlobalData.Client.BuyVirtualShoppingItemCompleted += Client_BuyVirtualShoppingItemCompleted;
+
+            GlobalData.Client.GetDiamondShoppingItemsCompleted += Client_GetDiamondShoppingItemsCompleted;
             GlobalData.Client.BuyDiamondShoppingItemCompleted += Client_BuyDiamondShoppingItemCompleted;
+        }
+
+        void Client_GetDiamondShoppingItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<DiamondShoppingItem[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("加载钻石商品失败。" + e.Error.Message);
+                    return;
+                }
+
+                this.ListDiamondShoppingItem.Clear();
+
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        this.ListDiamondShoppingItem.Add(new DiamondShoppingItemUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("加载钻石商品失败，回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_BuyDiamondShoppingItemCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
@@ -107,7 +144,7 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
-                    MessageBox.Show("加载虚拟商品失败。" + e.Error.Message);
+                    MessageBox.Show("加载钻石商品失败。" + e.Error.Message);
                     return;
                 }
 
@@ -123,7 +160,7 @@ namespace SuperMinersWPF.ViewModels
             }
             catch (Exception exc)
             {
-                MessageBox.Show("加载虚拟商品失败，回调处理异常。" + exc.Message);
+                MessageBox.Show("加载钻石商品失败，回调处理异常。" + exc.Message);
             }
         }
     }

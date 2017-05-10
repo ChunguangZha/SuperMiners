@@ -81,8 +81,15 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 decimal rechargeYuan = DBProvider.AlipayRecordDBProvider.GetPlayerAlipayRechargeMoneyYuan(player.SimpleInfo.UserName, new AlipayTradeInType[] { AlipayTradeInType.BuyGoldCoin, AlipayTradeInType.BuyMine });
-                if(rechargeYuan==0)
+                if(rechargeYuan<30)
                 {
+                    if (player.FortuneInfo.StonesReserves == 0)//表示20170107之后注册，没有赠送矿石储量的玩家
+                    {
+                        if (rechargeYuan > 0)
+                        {
+                            continue;
+                        }
+                    }
                     if (player.SimpleInfo.LastLoginTime == null)
                     {
                         if ((DateTime.Now - player.SimpleInfo.RegisterTime).TotalDays > 7)
@@ -93,7 +100,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     else
                     {
-                        if ((DateTime.Now - player.SimpleInfo.LastLoginTime.Value).TotalDays > 30)
+                        if ((DateTime.Now - player.SimpleInfo.LastLoginTime.Value).TotalDays > 20)
                         {
                             listUserID_toDelete.Add(player);
                             continue;

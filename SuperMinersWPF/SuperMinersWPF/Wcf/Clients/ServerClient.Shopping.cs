@@ -35,6 +35,12 @@ namespace SuperMinersWPF.Wcf.Clients
             this._invoker.Invoke<DiamondShoppingItem[]>(this._context, "GetDiamondShoppingItems", this.GetDiamondShoppingItemsCompleted, GlobalData.Token);
         }
 
+        public event EventHandler<WebInvokeEventArgs<byte[][]>> GetDiamondShoppingItemDetailImageBufferCompleted;
+        public void GetDiamondShoppingItemDetailImageBuffer(string diamondShoppingItemName)
+        {
+            this._invoker.Invoke<byte[][]>(this._context, "GetDiamondShoppingItemDetailImageBuffer", this.GetDiamondShoppingItemDetailImageBufferCompleted, GlobalData.Token, diamondShoppingItemName);
+        }
+
         public event EventHandler<WebInvokeEventArgs<int>> BuyDiamondShoppingItemCompleted;
         public void BuyDiamondShoppingItem(DiamondShoppingItem shoppingItem, PostAddress address)
         {

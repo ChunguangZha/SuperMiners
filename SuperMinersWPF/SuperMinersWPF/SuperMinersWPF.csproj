@@ -140,6 +140,9 @@
     <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\MyControl\MyDateTimePickerControl.xaml.cs">
       <Link>MyControl\MyDateTimePickerControl.xaml.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\Uility\ImageConverter.cs">
+      <Link>Utility\ImageConverter.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\ActionLog\PlayerActionLog.cs">
       <Link>Wcf\Datas\PlayerActionLog.cs</Link>
     </Compile>
@@ -356,6 +359,7 @@
     <Compile Include="GlobalData.cs" />
     <Compile Include="LotteryTicket\IoCLotteryTicketInterface.cs" />
     <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\DiamondShoppingItemUIModel.cs" />
     <Compile Include="Models\GambleStoneInningInfoUIModel.cs" />
     <Compile Include="Models\GambleStonePlayerBetRecordUIModel.cs" />
     <Compile Include="Models\GambleStoneRoundInfoUIModel.cs" />

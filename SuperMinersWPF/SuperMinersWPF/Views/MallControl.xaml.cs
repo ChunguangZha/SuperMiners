@@ -99,5 +99,20 @@ namespace SuperMinersWPF.Views
             EditPostAddressWindow win = new EditPostAddressWindow();
             win.ShowDialog();
         }
+
+        private void ButtonBuyDiamondShopping_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            DiamondShoppingItemUIModel shoppingItem = btn.DataContext as DiamondShoppingItemUIModel;
+            if (shoppingItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要购买的商品");
+                return;
+            }
+
+            DiamondShoppingItemDetailWindow win = new DiamondShoppingItemDetailWindow(shoppingItem);
+            win.Show();
+
+        }
     }
 }

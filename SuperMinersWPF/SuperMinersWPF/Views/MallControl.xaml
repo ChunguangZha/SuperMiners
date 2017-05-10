@@ -86,13 +86,63 @@
                     <TextBlock Text="钻石商城" Margin="20,5"/>
                 </TabItem.Header>
                 <Grid>
-
+                    <ListView x:Name="lvDiamondMall" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border MinWidth="100" Margin="10" BorderThickness="1" BorderBrush="LightBlue" ToolTip="{Binding Remark}">
+                                    <Border.Triggers>
+                                        <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <!--<DoubleAnimation From="0" To="1" Duration="0:0:0.1" Storyboard.TargetName="borderRemark" Storyboard.TargetProperty="Opacity" />-->
+                                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.1" Storyboard.TargetName="borderBuy" Storyboard.TargetProperty="Opacity" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                        <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <!--<DoubleAnimation From="1" To="0" Duration="0:0:0.1" Storyboard.TargetName="borderRemark" Storyboard.TargetProperty="Opacity" />-->
+                                                    <DoubleAnimation From="1" To="0" Duration="0:0:0.1" Storyboard.TargetName="borderBuy" Storyboard.TargetProperty="Opacity" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+                                    </Border.Triggers>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Disabled" >
+                                            <Image Width="180" Height="180" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{Binding Icon}"/>
+                                            <Border Name="borderRemark" Background="#FFB83CDC" Opacity="0">
+                                                <TextBlock Grid.Row="3" Text="{Binding Remark}" Foreground="White" Padding="10"/>
+                                            </Border>
+                                        </Grid>
+                                        <TextBlock Grid.Row="1" FontSize="16" Margin="5" Foreground="Red" HorizontalAlignment="Center">
+                                            <Run Text="钻石："/>
+                                            <Run Text="{Binding ValueDiamonds}"/>
+                                        </TextBlock>
+                                        <Grid Grid.Row="2">
+                                            <TextBlock Text="{Binding Name}" Margin="10,5" HorizontalAlignment="Center"/>
+                                            <Border Name="borderBuy" Margin="10,5" Background="White" Opacity="0">
+                                                <Button Width="100" Content="购买" VerticalAlignment="Center" HorizontalAlignment="Center" Click="ButtonBuyDiamondShopping_Click"/>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </Grid>
-            </TabItem>
-            <TabItem>
-                <TabItem.Header>
-                    <TextBlock Text="购物车" Margin="20,5"/>
-                </TabItem.Header>
             </TabItem>
             <TabItem>
                 <TabItem.Header>

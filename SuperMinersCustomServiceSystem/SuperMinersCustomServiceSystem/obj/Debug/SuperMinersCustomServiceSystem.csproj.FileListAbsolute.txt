@@ -257,3 +257,8 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\VirtualShoppingBuyRecordControl.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\VirtualShoppingItemListControl.baml
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditVirtualShoppingItemWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\SuperMinersCustomServiceSystem.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\DiamondShoppingItemListControl.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditDiamondShoppingItemWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\TradeSystem\DiamondShoppingItemListControl.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Windows\EditDiamondShoppingItemWindow.baml
