@@ -1137,44 +1137,197 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             int result = OperResult.RESULTCODE_FALSE;
             try
             {
-                if (string.IsNullOrEmpty(newUserLoginName) || string.IsNullOrEmpty(newPassword))
+                simpleInfo.IDCardNo = null;
+                fortuneInfo.StockOfDiamonds = 0;
+                fortuneInfo.FreezingDiamonds = 0;
+
+                //bool isOK = false;
+
+                var playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(simpleInfo.UserLoginName);
+                if (playerRunner !=null && playerRunner.BasePlayer.SimpleInfo.UserName == simpleInfo.UserName && playerRunner.BasePlayer.SimpleInfo.Alipay == simpleInfo.Alipay && playerRunner.BasePlayer.SimpleInfo.AlipayRealName == simpleInfo.AlipayRealName)
                 {
-                    result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
-                        simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
-                    if (result != OperResult.RESULTCODE_TRUE)
+                    playerRunner.SetFortuneInfo(fortuneInfo);
+                    LogHelper.Instance.AddInfoLog("转区1 一区玩家[" + simpleInfo.UserID + "] " + simpleInfo.UserLoginName);
+                    return OperResult.RESULTCODE_TRUE;
+                }
+                else
+                {
+                    playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(simpleInfo.UserLoginName + "xl");
+                    if (playerRunner != null &&playerRunner.BasePlayer.SimpleInfo.Password == simpleInfo.Password)
                     {
-                        result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName + "xl", simpleInfo.UserName + "xl", simpleInfo.Password, simpleInfo.Alipay,
-                            simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
-                        if (result != OperResult.RESULTCODE_TRUE)
-                        {
-                            return result;
-                        }
+                        playerRunner.SetFortuneInfo(fortuneInfo);
+                        LogHelper.Instance.AddInfoLog("转区2 一区玩家[" + simpleInfo.UserID + "] " + simpleInfo.UserLoginName);
+                        return OperResult.RESULTCODE_TRUE;
                     }
-
-                    newUserLoginName = simpleInfo.UserName;
-                }
-                var playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(newUserLoginName);
-                if (playerRunner == null || playerRunner.BasePlayer.SimpleInfo.Password != newPassword)
-                {                    
-                    result = OperResult.RESULTCODE_USER_NOT_EXIST;
-                    return result;
                 }
 
-                bool isOK = playerRunner.ChangePlayerSimpleInfo(simpleInfo.Alipay, simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ);
-                isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                LogHelper.Instance.AddInfoLog("转区3 一区玩家[" + simpleInfo.UserID + "] " + simpleInfo.UserLoginName);
+                return OperResult.RESULTCODE_FALSE;
 
-                result = isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
-                return result;
+                //var playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(simpleInfo.UserLoginName);
+                //if (playerRunner == null)
+                //{
+                //    var playerInfo = DBProvider.UserDBProvider.GetPlayerByAlipay(simpleInfo.Alipay);
+                //    if (playerInfo == null)
+                //    {
+                //        //按原名注册新账户
+                //        result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
+                //            simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                //        if (result != OperResult.RESULTCODE_TRUE)
+                //        {
+                //            if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
+                //            {
+                //                result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName + DateTime.Now.Second.ToString(), simpleInfo.Password, simpleInfo.Alipay,
+                //                    simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+
+                //                if (result != OperResult.RESULTCODE_TRUE)
+                //                {
+                //                    return result;
+                //                }
+                //            }
+                //        }
+
+                //        playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(simpleInfo.UserLoginName);
+                //        if (playerRunner == null)
+                //        {
+                //            return OperResult.RESULTCODE_USER_NOT_EXIST;
+                //        }
+
+                //        isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                //    }
+                //    else
+                //    {
+                //        if (!string.IsNullOrEmpty(simpleInfo.AlipayRealName) && playerInfo.SimpleInfo.AlipayRealName == simpleInfo.AlipayRealName)
+                //        {
+                //            //支付宝，真实姓名重复的，使用一区账户密码登陆，一二区数据合并保留
+                //            playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(playerInfo.SimpleInfo.UserLoginName);
+                //            playerRunner.ChangePassword(simpleInfo.Password);
+                //            playerRunner.SetFortuneInfo(fortuneInfo);
+                //        }
+                //        else
+                //        {
+                //            //支付宝重复，真实姓名不重复的账户，一区支付宝绑定信息将被清空，二区的保留
+                //            //按原名注册新账户
+                //            result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, null,
+                //                null, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                //            if (result != OperResult.RESULTCODE_TRUE)
+                //            {
+                //                if (result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
+                //                {
+                //                    result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName + DateTime.Now.Second.ToString(), simpleInfo.Password, null,
+                //                        null, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+
+                //                    if (result != OperResult.RESULTCODE_TRUE)
+                //                    {
+                //                        return result;
+                //                    }
+                //                }
+                //            }
+
+                //            playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(simpleInfo.UserLoginName);
+                //            if (playerRunner == null)
+                //            {
+                //                return OperResult.RESULTCODE_USER_NOT_EXIST;
+                //            }
+
+                //            isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                //        }
+                //    }
+                //}
+                //else
+                //{
+                //    if (playerRunner.BasePlayer.SimpleInfo.Alipay == simpleInfo.Alipay || playerRunner.BasePlayer.SimpleInfo.AlipayRealName == simpleInfo.AlipayRealName)
+                //    {
+                //        //账户重复的，并支付宝，真实姓名一致的合并其数据，使用二区账户密码登陆
+                //        //直接合并
+                //        isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                //    }
+                //    else
+                //    {
+                //        //账户重复的，支付宝及真实姓名不一致的，一区账户末尾加xl，密码不变
+                //        string loginUserName = simpleInfo.UserLoginName + "xl";
+                //        //加后缀注册新账户
+                //        result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, loginUserName, simpleInfo.UserName + "xl", simpleInfo.Password, simpleInfo.Alipay,
+                //            simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                //        if (result != OperResult.RESULTCODE_TRUE)
+                //        {
+                //            if (result == OperResult.RESULTCODE_REGISTER_USERLOGINNAME_EXIST || result == OperResult.RESULTCODE_REGISTER_USERNAME_EXIST)
+                //            {
+                //                loginUserName = simpleInfo.UserLoginName + "xlxl";
+                //                result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, loginUserName, simpleInfo.UserName + "xlxl", simpleInfo.Password, simpleInfo.Alipay,
+                //                    simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+
+                //                if (result != OperResult.RESULTCODE_TRUE)
+                //                {
+                //                    return result;
+                //                }
+                //            }
+                //            else if (result == OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST || result == OperResult.RESULTCODE_REGISTER_ALIPAYREALNAME_EXIST)
+                //            {
+                //                result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, loginUserName, simpleInfo.UserName + "xlxl", simpleInfo.Password, null,
+                //                    null, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+
+                //                if (result != OperResult.RESULTCODE_TRUE)
+                //                {
+                //                    return result;
+                //                }
+                //            }
+                //        }
+
+                //        playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(loginUserName);
+                //        if (playerRunner == null)
+                //        {
+                //            return OperResult.RESULTCODE_USER_NOT_EXIST;
+                //        }
+
+                //        isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+                //    }
+                //}
+
+                //return OperResult.RESULTCODE_TRUE;
+
+
+
+
+
+                //if (string.IsNullOrEmpty(newUserLoginName) || string.IsNullOrEmpty(newPassword))
+                //{
+                //    result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName, simpleInfo.UserName, simpleInfo.Password, simpleInfo.Alipay,
+                //        simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                //    if (result != OperResult.RESULTCODE_TRUE)
+                //    {
+                //        result = PlayerController.Instance.RegisterUser(simpleInfo.RegisterIP, simpleInfo.UserLoginName + "xl", simpleInfo.UserName + "xl", simpleInfo.Password, simpleInfo.Alipay,
+                //            simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ, "");
+                //        if (result != OperResult.RESULTCODE_TRUE)
+                //        {
+                //            return result;
+                //        }
+                //    }
+
+                //    newUserLoginName = simpleInfo.UserName;
+                //}
+                //playerRunner = PlayerController.Instance.GetRunnableByUserLoginName(newUserLoginName);
+                //if (playerRunner == null || playerRunner.BasePlayer.SimpleInfo.Password != newPassword)
+                //{                    
+                //    result = OperResult.RESULTCODE_USER_NOT_EXIST;
+                //    return result;
+                //}
+
+                //bool isOK = playerRunner.ChangePlayerSimpleInfo(simpleInfo.Alipay, simpleInfo.AlipayRealName, simpleInfo.IDCardNo, simpleInfo.Email, simpleInfo.QQ);
+                //isOK = playerRunner.SetFortuneInfo(fortuneInfo);
+
+                //result = isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                //return result;
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("管理员 TransferPlayerTo 异常", exc);
+                LogHelper.Instance.AddErrorLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "] 异常", exc);
                 result = OperResult.RESULTCODE_EXCEPTION;
                 return result;
             }
             finally
             {
-                LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "] " + "，操作结果为：" + OperResult.GetMsg(result) + "。 newUserLoginName=" + newUserLoginName + "; newPassword=" + newPassword + "; fortuneInfo=" + fortuneInfo.ToString());
+                LogHelper.Instance.AddInfoLog("管理员[" + adminUserName + "] 从一区转入玩家[" + simpleInfo.UserLoginName + "] " + "，操作结果为：" + OperResult.GetMsg(result) + "; fortuneInfo=" + fortuneInfo.ToString());
             }
 
         }
@@ -1463,13 +1616,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
+        public MetaData.Shopping.DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllSellState, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(getAllItem, state, itemType);
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItems(getAllSellState, state, itemType);
                 }
                 catch (Exception exc)
                 {
@@ -1483,13 +1636,13 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
             }
         }
 
-        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName)
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, int diamondShoppingItemID)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemName);
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemID);
                 }
                 catch (Exception exc)
                 {

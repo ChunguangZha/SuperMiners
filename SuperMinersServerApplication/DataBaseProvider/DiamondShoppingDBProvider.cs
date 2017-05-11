@@ -85,14 +85,14 @@ namespace DataBaseProvider
             });
         }
 
-        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state, DiamondsShoppingItemType itemType)
+        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllSellState, SellState state, DiamondsShoppingItemType itemType)
         {
             DiamondShoppingItem[] items = null;
             MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
             {
                 string sqlText = "select * from diamondshoppingitem where `Type`=@Type ";
                 mycmd.Parameters.AddWithValue("@Type", (int)itemType);
-                if (!getAllItem)
+                if (!getAllSellState)
                 {
                     sqlText += " and SellState=@SellState ";
                     mycmd.Parameters.AddWithValue("@SellState", (int)state);
@@ -107,6 +107,29 @@ namespace DataBaseProvider
             });
 
             return items;
+        }
+
+        public DiamondShoppingItem GetDiamondShoppingItem(int itemID)
+        {
+            DiamondShoppingItem[] items = null;
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from diamondshoppingitem where `ID`=@ID ";
+                mycmd.Parameters.AddWithValue("@ID", itemID);
+                mycmd.CommandText = sqlText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                items = MetaDBAdapter<DiamondShoppingItem>.GetDiamondShoppingItemFromDataTable(table);
+                table.Dispose();
+                adapter.Dispose();
+            });
+
+            if (items == null || items.Length == 0)
+            {
+                return null;
+            }
+            return items[0];
         }
 
         public bool AddPlayerBuyDiamondShoppingItemRecord(PlayerBuyDiamondShoppingItemRecord record, CustomerMySqlTransaction myTrans)

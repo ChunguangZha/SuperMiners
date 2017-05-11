@@ -120,7 +120,7 @@ namespace SuperMinersServerApplication.Controller
                     return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE;
                 }
                 this.BasePlayer.FortuneInfo.StockOfStones -= 100000;
-                DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.FortuneInfo);
+                DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.SimpleInfo.UserID, this.BasePlayer.FortuneInfo);
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -1115,11 +1115,11 @@ namespace SuperMinersServerApplication.Controller
             LogHelper.Instance.AddInfoLog("玩家财富信息变动：" + fortuneInfo.ToString());
             if (myTrans == null)
             {
-                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo);
+                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.SimpleInfo.UserID, fortuneInfo);
             }
             else
             {
-                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(fortuneInfo, myTrans);
+                return DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.SimpleInfo.UserID, fortuneInfo, myTrans);
             }
         }
 

@@ -1,4 +1,7 @@
 ﻿using MetaData.Shopping;
+using SuperMinersCustomServiceSystem.Model;
+using SuperMinersCustomServiceSystem.Uility;
+using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,20 +42,31 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
 
             this.cmbItemType.ItemsSource = dicItemTypeItemsSource;
             this.cmbItemType.SelectedIndex = 0;
+
+            this.dgRecords.ItemsSource = App.ShoppingVMObject.ListDiamondShoppingItems;
         }
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItems((MetaData.Shopping.DiamondsShoppingItemType)this.cmbItemType.SelectedValue);
         }
 
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
-
+            EditDiamondShoppingItemWindow win = new EditDiamondShoppingItemWindow((MetaData.Shopping.DiamondsShoppingItemType)this.cmbItemType.SelectedValue);
+            win.ShowDialog();
         }
 
         private void btnUpdateItem_Click(object sender, RoutedEventArgs e)
         {
+            if (this.dgRecords.SelectedItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要修改的商品");
+                return;
+            }
+
+            EditDiamondShoppingItemWindow win = new EditDiamondShoppingItemWindow(this.dgRecords.SelectedItem as DiamondShoppingItemUIModel);
+            win.ShowDialog();
 
         }
     }

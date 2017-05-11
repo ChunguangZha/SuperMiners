@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.Shopping;
 using SuperMinersCustomServiceSystem.Model;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,14 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             get { return _listVirtualShoppingBuyRecords; }
         }
 
+        private ObservableCollection<DiamondShoppingItemUIModel> _listDiamondShoppingItems = new ObservableCollection<DiamondShoppingItemUIModel>();
+
+        public ObservableCollection<DiamondShoppingItemUIModel> ListDiamondShoppingItems 
+        {
+            get { return _listDiamondShoppingItems; }
+        }
+
+
 
         public void AsyncGetAllVirtualShoppingItems()
         {
@@ -53,10 +62,47 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
+        public void AsyncGetDiamondShoppingItems(DiamondsShoppingItemType itemType)
+        {
+            if (GlobalData.Client != null)
+            {
+                App.BusyToken.ShowBusyWindow("正在加载虚拟商品...");
+                GlobalData.Client.GetDiamondShoppingItems(true, SellState.OnSell, itemType);
+            }
+        }
+
         public ShoppingViewModel()
         {
             GlobalData.Client.GetVirtualShoppingItemsCompleted += Client_GetVirtualShoppingItemsCompleted;
             GlobalData.Client.GetPlayerBuyVirtualShoppingItemRecordCompleted += Client_GetPlayerBuyVirtualShoppingItemRecordCompleted;
+
+            GlobalData.Client.GetDiamondShoppingItemsCompleted += Client_GetDiamondShoppingItemsCompleted;
+        }
+
+        void Client_GetDiamondShoppingItemsCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<DiamondShoppingItem[]> e)
+        {
+            try
+            {
+                App.BusyToken.CloseBusyWindow();
+                if (e.Error != null)
+                {
+                    MessageBox.Show("查询钻石商品失败。" + e.Error.Message);
+                    return;
+                }
+
+                this.ListDiamondShoppingItems.Clear();
+                if (e.Result != null)
+                {
+                    foreach (var item in e.Result)
+                    {
+                        ListDiamondShoppingItems.Add(new DiamondShoppingItemUIModel(item));
+                    }
+                }
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show("查询钻石商品回调处理异常。" + exc.Message);
+            }
         }
 
         void Client_GetPlayerBuyVirtualShoppingItemRecordCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<MetaData.Shopping.PlayerBuyVirtualShoppingItemRecord[]> e)

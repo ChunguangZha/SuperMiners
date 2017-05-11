@@ -274,7 +274,7 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SavePlayerFortuneInfo(PlayerFortuneInfo playerFortune, CustomerMySqlTransaction trans)
+        public bool SavePlayerFortuneInfo(int userID, PlayerFortuneInfo playerFortune, CustomerMySqlTransaction trans)
         {
             MySqlCommand mycmd = null;
             try
@@ -302,7 +302,7 @@ namespace DataBaseProvider
 
 #endif
 
-                    + " WHERE `UserID`=(SELECT b.id FROM playersimpleinfo b where b.UserName = @UserName);";
+                    + " WHERE `UserID`=@UserID;";
 
                 mycmd = trans.CreateCommand();
                 mycmd.CommandText = cmdTextA + cmdTextB;
@@ -350,7 +350,7 @@ namespace DataBaseProvider
 
 #endif
 
-                mycmd.Parameters.AddWithValue("@UserName", DESEncrypt.EncryptDES(playerFortune.UserName));
+                mycmd.Parameters.AddWithValue("@UserID", userID);
 
                 mycmd.ExecuteNonQuery();
 
@@ -362,12 +362,12 @@ namespace DataBaseProvider
             }
         }
 
-        public bool SavePlayerFortuneInfo(PlayerFortuneInfo playerFortune)
+        public bool SavePlayerFortuneInfo(int userID, PlayerFortuneInfo playerFortune)
         {
             var trans = MyDBHelper.Instance.CreateTrans();
             try
             {
-                bool isOK = SavePlayerFortuneInfo(playerFortune, trans);
+                bool isOK = SavePlayerFortuneInfo(userID, playerFortune, trans);
                 trans.Commit();
                 return isOK;
             }

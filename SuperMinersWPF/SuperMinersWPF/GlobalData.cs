@@ -23,7 +23,7 @@ namespace SuperMinersWPF
     {
         public static readonly string DebugServer = "localhost";
 
-        public static ServerType ServerType;
+        public static ServerType ServerType = SuperMinersWPF.ServerType.Server2;
 
         public const int PageItemsCount = 30;
 

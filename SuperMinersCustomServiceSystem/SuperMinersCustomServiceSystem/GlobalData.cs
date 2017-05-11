@@ -22,7 +22,7 @@ namespace SuperMinersCustomServiceSystem
 
         public static readonly ServerClient Client = new ServerClient();
 
-        public static ServerType ServerType;
+        public static ServerType ServerType = SuperMinersCustomServiceSystem.ServerType.Server2;
 
         public static AdminInfo CurrentAdmin
         {

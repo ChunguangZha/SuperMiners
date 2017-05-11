@@ -281,14 +281,14 @@ namespace SuperMinersServerApplication.Controller
             //{
             //    return OperResult.RESULTCODE_REGISTER_ALIPAY_EXIST;
             //}
-            if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
-            {
-                return OperResult.RESULTCODE_REGISTER_IDCARD_ERROR;
-            }
-            if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
-            {
-                return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
-            }
+            //if (!IDCardVerifyTools.VerifyIDCard(IDCardNo))
+            //{
+            //    return OperResult.RESULTCODE_REGISTER_IDCARD_ERROR;
+            //}
+            //if (this.CheckUserIDCardNoExist(IDCardNo) == OperResult.RESULTCODE_TRUE)
+            //{
+            //    return OperResult.RESULTCODE_REGISTER_IDCARDNO_EXIST;
+            //}
 
             bool Awardable = false;
             userCount = DBProvider.UserDBProvider.GetPlayerCountByRegisterIP(clientIP);

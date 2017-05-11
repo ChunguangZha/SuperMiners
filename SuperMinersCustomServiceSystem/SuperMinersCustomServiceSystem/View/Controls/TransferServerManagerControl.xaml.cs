@@ -147,7 +147,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     string serverUri2 = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
                     GlobalData.Client.Init(serverUri2);
                     GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;
-                    GlobalData.Client.TransferPlayerTo(e.Result.SimpleInfo, e.Result.FortuneInfo, selectedPlayer.ParentObject.NewServerUserLoginName, selectedPlayer.ParentObject.NewServerPassword);
+                    GlobalData.Client.TransferPlayerTo(e.Result.SimpleInfo, e.Result.FortuneInfo, selectedPlayer.ParentObject.NewServerUserLoginName, selectedPlayer.ParentObject.NewServerPassword, null);
                 }
             }
             catch (Exception exc)

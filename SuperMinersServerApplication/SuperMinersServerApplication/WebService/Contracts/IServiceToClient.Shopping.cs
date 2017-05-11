@@ -51,7 +51,7 @@ namespace SuperMinersServerApplication.WebService.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName);
+        byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, int diamondShoppingItemID);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebService/BuyDiamondShoppingItem",

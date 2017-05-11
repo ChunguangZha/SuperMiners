@@ -2,6 +2,7 @@
 using SuperMinersCustomServiceSystem.Uility;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -165,5 +166,14 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        private ObservableCollection<BitmapSource> _listDetailImages = new ObservableCollection<BitmapSource>();
+
+        public ObservableCollection<BitmapSource> ListDetailImages
+        {
+            get
+            {
+                return this._listDetailImages;
+            }
+        }
     }
 }

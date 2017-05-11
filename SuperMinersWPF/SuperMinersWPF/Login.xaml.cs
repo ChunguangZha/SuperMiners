@@ -188,16 +188,16 @@ namespace SuperMinersWPF
 
 #else
 
-            if (this.cmbServer.SelectedIndex == 0)
-            {
-                serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
-                GlobalData.ServerType = ServerType.Server1;
-            }
-            else
-            {
+            //if (this.cmbServer.SelectedIndex == 0)
+            //{
+            //    serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
+            //    GlobalData.ServerType = ServerType.Server1;
+            //}
+            //else
+            //{
                 serverUri = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
                 GlobalData.ServerType = ServerType.Server2;
-            }
+            //}
 
 #endif
 
@@ -295,18 +295,18 @@ namespace SuperMinersWPF
             }
         }
 
-        private void cmbServer_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (this.cmbServer.SelectedIndex == 0)
-            {
-                this.txtRegister.Visibility = System.Windows.Visibility.Collapsed;
-                GlobalData.ServerType = ServerType.Server1;
-            }
-            else
-            {
-                this.txtRegister.Visibility = System.Windows.Visibility.Visible;
-                GlobalData.ServerType = ServerType.Server2;
-            }
-        }
+        //private void cmbServer_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    if (this.cmbServer.SelectedIndex == 0)
+        //    {
+        //        this.txtRegister.Visibility = System.Windows.Visibility.Collapsed;
+        //        GlobalData.ServerType = ServerType.Server1;
+        //    }
+        //    else
+        //    {
+        //        this.txtRegister.Visibility = System.Windows.Visibility.Visible;
+        //        GlobalData.ServerType = ServerType.Server2;
+        //    }
+        //}
     }
 }

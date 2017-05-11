@@ -29,18 +29,18 @@ namespace SuperMinersCustomServiceSystem
         {
             InitializeComponent();
 
-            if (GlobalData.ServerType == ServerType.Server1)
-            {
-                this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵一区" + "  --" + GlobalData.CurrentAdmin.UserName;
-                this.tvL1TransferManager.Visibility = System.Windows.Visibility.Visible;
-                this.tvL2_TS_RemoteService.Visibility = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
+            //if (GlobalData.ServerType == ServerType.Server1)
+            //{
+            //    this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵一区" + "  --" + GlobalData.CurrentAdmin.UserName;
+            //    this.tvL1TransferManager.Visibility = System.Windows.Visibility.Visible;
+            //    this.tvL2_TS_RemoteService.Visibility = System.Windows.Visibility.Collapsed;
+            //}
+            //else
+            //{
                 this.Title += "迅灵矿场管理系统 " + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "    迅灵二区" + "  --" + GlobalData.CurrentAdmin.UserName;
-                this.tvL1TransferManager.Visibility = System.Windows.Visibility.Collapsed;
+                //this.tvL1TransferManager.Visibility = System.Windows.Visibility.Collapsed;
                 this.tvL2_TS_RemoteService.Visibility = System.Windows.Visibility.Visible;
-            }
+            //}
             //this.Title += "内测版   --" + GlobalData.CurrentAdmin.UserName;
         }
 
@@ -210,6 +210,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlUserHandleRemoteServiceRecordsControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlVirtualShoppingBuyRecordControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlVirtualShoppingItemControl.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlDiamondShoppingItemListControl.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -400,7 +401,9 @@ namespace SuperMinersCustomServiceSystem
 
         private void tvL2_TS_DiamondShopping_Items_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-
+            HideAllControls();
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItems(MetaData.Shopping.DiamondsShoppingItemType.LiveThing);
+            this.controlDiamondShoppingItemListControl.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

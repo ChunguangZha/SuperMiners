@@ -43,7 +43,7 @@
             <TextBlock Grid.Row="3" Grid.Column="0" Text="价格（钻石）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Top"/>
             <TextBlock Grid.Row="4" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbItemType" Margin="10,5" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="10,5" VerticalAlignment="Top"/>
             <TextBlock Grid.Row="5" Grid.Column="0" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbSellState" Margin="10,5" VerticalAlignment="Top" SelectedIndex="0">
                 <ComboBoxItem Content="上架"/>

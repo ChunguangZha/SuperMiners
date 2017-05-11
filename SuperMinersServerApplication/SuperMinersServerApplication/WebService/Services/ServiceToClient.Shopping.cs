@@ -142,13 +142,13 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName)
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, int diamondShoppingItemID)
         {
             if (RSAProvider.LoadRSA(token))
             {
                 try
                 {
-                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemName);
+                    return DiamondShoppingController.Instance.GetDiamondShoppingItemDetailImageBuffer(diamondShoppingItemID);
                 }
                 catch (Exception exc)
                 {

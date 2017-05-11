@@ -47,15 +47,15 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
         }
 
         public event EventHandler<WebInvokeEventArgs<DiamondShoppingItem[]>> GetDiamondShoppingItemsCompleted;
-        public void GetDiamondShoppingItems(bool getAllItem, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
+        public void GetDiamondShoppingItems(bool getAllSellState, MetaData.Shopping.SellState state, DiamondsShoppingItemType itemType)
         {
-            this._invoker.Invoke<DiamondShoppingItem[]>(this._context, "GetDiamondShoppingItems", this.GetDiamondShoppingItemsCompleted, GlobalData.Token, getAllItem, state, itemType);
+            this._invoker.Invoke<DiamondShoppingItem[]>(this._context, "GetDiamondShoppingItems", this.GetDiamondShoppingItemsCompleted, GlobalData.Token, getAllSellState, state, itemType);
         }
 
         public event EventHandler<WebInvokeEventArgs<byte[][]>> GetDiamondShoppingItemDetailImageBufferCompleted;
-        public void GetDiamondShoppingItemDetailImageBuffer(string diamondShoppingItemName)
+        public void GetDiamondShoppingItemDetailImageBuffer(int diamondShoppingItemID)
         {
-            this._invoker.Invoke<byte[][]>(this._context, "GetDiamondShoppingItemDetailImageBuffer", this.GetDiamondShoppingItemDetailImageBufferCompleted, GlobalData.Token, diamondShoppingItemName);
+            this._invoker.Invoke<byte[][]>(this._context, "GetDiamondShoppingItemDetailImageBuffer", this.GetDiamondShoppingItemDetailImageBufferCompleted, GlobalData.Token, diamondShoppingItemID);
         }
 
         public event EventHandler<WebInvokeEventArgs<int>> HandleBuyDiamondShoppingCompleted;

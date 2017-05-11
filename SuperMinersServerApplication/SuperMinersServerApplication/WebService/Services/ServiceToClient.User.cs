@@ -67,6 +67,13 @@ namespace SuperMinersServerApplication.WebService.Services
 
             OperResultObject resultObj = new OperResultObject();
 
+#if V1
+
+            resultObj.OperResultCode = OperResult.RESULTCODE_FALSE;
+            return resultObj;
+
+#endif
+
             if (String.IsNullOrEmpty(UserLoginName) || String.IsNullOrEmpty(password))
             {
                 resultObj.OperResultCode = OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;

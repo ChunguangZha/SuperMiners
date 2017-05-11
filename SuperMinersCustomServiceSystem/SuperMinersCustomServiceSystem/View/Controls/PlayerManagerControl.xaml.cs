@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using MetaData;
+using Microsoft.Win32;
 using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.Uility;
 using SuperMinersCustomServiceSystem.View.Windows;
@@ -48,6 +49,8 @@ namespace SuperMinersCustomServiceSystem.View.Controls
             //    this.btnSetPlayerAsAgent.IsEnabled = false;
             //    this.btnUnLockPlayer.IsEnabled = false;
             //}
+
+            //GlobalData.Client.TransferPlayerToCompleted += Client_TransferPlayerToCompleted;
         }
 
         private void BindUI()
@@ -603,5 +606,74 @@ namespace SuperMinersCustomServiceSystem.View.Controls
         public event Action<string> ViewPlayerRMBWithdrawRecords;
         public event Action<string> ViewPlayerRemoteServiceBuyRecords;
         public event Action<string> ViewPlayerRemoteServiceHandleRecords;
+
+
+        //private List<int> listTransferFailedUserID = new List<int>();
+        //private List<int> listTransferOKUserID = new List<int>();
+
+        //private void btnAutoTransferServer_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string serverUri2 = System.Configuration.ConfigurationManager.AppSettings["ServerUri2"];
+        //    GlobalData.Client.Init(serverUri2);
+        //    this.listOutput.Items.Add("正在自动转区");
+
+        //    for (int i = 0; i < App.PlayerVMObject.ListAllPlayers.Count; i++)
+        //    {
+        //        var player = App.PlayerVMObject.ListAllPlayers[i];
+        //        if (!player.IsLocked)
+        //        {
+        //            this.listOutput.Items.Add("正在转移第" + (i + 1) + "个玩家：" + player.UserID + " -- " + player.UserLoginName);
+        //            GlobalData.Client.TransferPlayerTo(player.ParentObject.SimpleInfo, player.ParentObject.FortuneInfo, "","", player.UserID);
+        //        }
+        //    }
+
+        //    string serverUri1 = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
+        //    GlobalData.Client.Init(serverUri1);
+
+        //    List<string> listToDeleteUserName = new List<string>();
+        //    foreach (var userID in listTransferOKUserID)
+        //    {
+        //        var player = App.PlayerVMObject.ListAllPlayers.FirstOrDefault(p => p.UserID == userID);
+        //        listToDeleteUserName.Add(player.UserName);
+        //    }
+
+        //    MyMessageBox.ShowInfo("一共" + App.PlayerVMObject.ListAllPlayers.Count + "个玩家，自动转移成功" + listTransferOKUserID.Count + "个");
+
+        //    App.PlayerVMObject.AsyncDeletePlayerInfos(listToDeleteUserName.ToArray(), GlobalData.CurrentAdmin.ActionPassword);
+
+        //}
+
+        //void Client_TransferPlayerToCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<int> e)
+        //{
+        //    try
+        //    {
+        //        int userID = Convert.ToInt32(e.UserState);
+        //        //string serverUri1 = System.Configuration.ConfigurationManager.AppSettings["ServerUri1"];
+        //        //GlobalData.Client.Init(serverUri1);
+
+        //        GlobalData.Client.TransferPlayerToCompleted -= Client_TransferPlayerToCompleted;
+        //        if (e.Error != null)
+        //        {
+        //            this.listOutput.Items.Add("玩家[" + userID + "] 转移失败，原因为：" + e.Error.Message);
+        //            listTransferFailedUserID.Add(userID);
+        //            return;
+        //        }
+        //        if (e.Result != OperResult.RESULTCODE_TRUE)
+        //        {
+        //            this.listOutput.Items.Add("玩家[" + userID + "] 转移失败，原因为：" + OperResult.GetMsg(e.Result));
+        //            listTransferFailedUserID.Add(userID);
+        //            return;
+        //        }
+
+        //        this.listOutput.Items.Add("玩家[" + userID + "] 转移成功");
+        //        this.listTransferOKUserID.Add(userID);
+
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        MyMessageBox.ShowInfo(exc.Message);
+        //    }
+        //}
+
     }
 }

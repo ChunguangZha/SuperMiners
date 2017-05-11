@@ -53,7 +53,7 @@ namespace SuperMinersServerApplication.Controller.Shopping
                 //保存详情图
                 for (int i = 0; i < item.DetailImageNames.Length; i++)
                 {
-                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i].GetHashCode().ToString() + ".jpg");
+                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i] + ".jpg");
                     using (FileStream stream = new FileStream(detailImgFilePath, FileMode.Create))
                     {
                         stream.Write(detailImagesBuffer[i], 0, detailImagesBuffer[i].Length);
@@ -84,7 +84,7 @@ namespace SuperMinersServerApplication.Controller.Shopping
 
                 for (int i = 0; i < item.DetailImageNames.Length; i++)
                 {
-                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i].GetHashCode().ToString() + ".jpg");
+                    string detailImgFilePath = Path.Combine(dirPath, item.DetailImageNames[i] + ".jpg");
                     using (FileStream stream = new FileStream(detailImgFilePath, FileMode.Create))
                     {
                         stream.Write(detailImagesBuffer[i], 0, detailImagesBuffer[i].Length);
@@ -103,9 +103,15 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return dirPath;
         }
 
-        public byte[][] GetDiamondShoppingItemDetailImageBuffer(string diamondShoppingItemName)
+        public byte[][] GetDiamondShoppingItemDetailImageBuffer(int diamondShoppingItemID)
         {
-            string dirPath = GetShoppingItemDirPath(diamondShoppingItemName);
+            DiamondShoppingItem item = GetDiamondShoppingItem(diamondShoppingItemID);
+            if (item == null || item.DetailImageNames == null)
+            {
+                return null;
+            }
+
+            string dirPath = GetShoppingItemDirPath(item.Name);
             if (!Directory.Exists(dirPath))
             {
                 return null;
@@ -118,16 +124,22 @@ namespace SuperMinersServerApplication.Controller.Shopping
             }
 
             List<byte[]> listImageBuffers = new List<byte[]>();
-            foreach (var fileName in files)
+
+            //返回ImageBuffer的序列和item.DetailImageNames中名称的顺序完全一致！！
+            foreach (var imageFileName in item.DetailImageNames)
             {
-                FileInfo fileInfo = new FileInfo(fileName);
-                if (fileInfo.Extension == ".jpg")
+                foreach (var fileName in files)
                 {
-                    using (FileStream stream = File.OpenRead(fileName))
+                    FileInfo fileInfo = new FileInfo(fileName);
+                    if (fileInfo.Name == imageFileName && fileInfo.Extension == ".jpg")
                     {
-                        byte[] buffer = new byte[stream.Length];
-                        stream.Read(buffer, 0, buffer.Length);
-                        listImageBuffers.Add(buffer);
+                        using (FileStream stream = File.OpenRead(fileName))
+                        {
+                            byte[] buffer = new byte[stream.Length];
+                            stream.Read(buffer, 0, buffer.Length);
+                            listImageBuffers.Add(buffer);
+                        }
+                        break;
                     }
                 }
             }
@@ -135,9 +147,14 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return listImageBuffers.ToArray();
         }
 
-        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllItem, SellState state, DiamondsShoppingItemType itemType)
+        public DiamondShoppingItem GetDiamondShoppingItem(int itemID)
         {
-            DiamondShoppingItem[] items = DBProvider.DiamondShoppingDBProvider.GetDiamondShoppingItems(getAllItem, state, itemType);
+            return DBProvider.DiamondShoppingDBProvider.GetDiamondShoppingItem(itemID);
+        }
+
+        public DiamondShoppingItem[] GetDiamondShoppingItems(bool getAllSellState, SellState state, DiamondsShoppingItemType itemType)
+        {
+            DiamondShoppingItem[] items = DBProvider.DiamondShoppingDBProvider.GetDiamondShoppingItems(getAllSellState, state, itemType);
             if (items == null)
             {
                 return items;

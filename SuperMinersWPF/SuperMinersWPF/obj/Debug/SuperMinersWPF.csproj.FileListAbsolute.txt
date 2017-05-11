@@ -32,7 +32,6 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\GatherStones
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\InvitationFriendsWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\OrderRecordListBuyControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\OrderRecordListSellControl.baml
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SettingWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\TopListUserControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\ViewSingleNoticeWindow.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Login.g.cs
@@ -49,7 +48,6 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\InvitationFr
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\OrderRecordListBuyControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\OrderRecordListSellControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SellStonesWindow.g.cs
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\SettingWindow.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\StonesMarketUserControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\TopListUserControl.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\ViewSingleNoticeWindow.g.cs
@@ -295,3 +293,9 @@ F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Resources\Server2
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\EditPostAddressWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\EditPostAddressWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\EditPostAddressWindow.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\EditPostAddressWindow.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF_Content.g.cs
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Resources\Server2GameHelper.txt

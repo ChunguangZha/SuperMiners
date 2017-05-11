@@ -399,7 +399,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, string diamondShoppingItemName);
+        byte[][] GetDiamondShoppingItemDetailImageBuffer(string token, int diamondShoppingItemID);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetDiamondShoppingItems",
@@ -407,7 +407,7 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             ResponseFormat = WebMessageFormat.Json,
             RequestFormat = WebMessageFormat.Json,
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllItem, SellState state, DiamondsShoppingItemType itemType);
+        DiamondShoppingItem[] GetDiamondShoppingItems(string token, bool getAllSellState, SellState state, DiamondsShoppingItemType itemType);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/HandleBuyDiamondShopping",

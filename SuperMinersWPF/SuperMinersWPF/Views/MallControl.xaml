@@ -86,6 +86,7 @@
                     <TextBlock Text="钻石商城" Margin="20,5"/>
                 </TabItem.Header>
                 <Grid>
+                    
                     <ListView x:Name="lvDiamondMall" SelectionMode="Single" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListView.ItemsPanel>
                             <ItemsPanelTemplate>

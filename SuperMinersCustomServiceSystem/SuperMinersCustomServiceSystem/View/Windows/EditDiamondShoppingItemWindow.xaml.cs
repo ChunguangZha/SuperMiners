@@ -84,7 +84,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                 this.IsEnabled = false;
 
                 App.BusyToken.ShowBusyWindow("正在加载钻石商品详细信息...");
-                GlobalData.Client.GetDiamondShoppingItemDetailImageBuffer(this._oldItem.Name);
+                GlobalData.Client.GetDiamondShoppingItemDetailImageBuffer(this._oldItem.ID);
             }
         }
 
@@ -251,63 +251,69 @@ namespace SuperMinersCustomServiceSystem.View.Windows
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            string name = this.txtTitle.Text.Trim();
-            string remark = this.txtRemark.Text.Trim();
+            try
+            {
+                string name = this.txtTitle.Text.Trim();
+                string remark = this.txtRemark.Text.Trim();
 
-            if (name == "")
-            {
-                MyMessageBox.ShowInfo("请填写名称");
-                return;
-            }
-            if (remark == "")
-            {
-                MyMessageBox.ShowInfo("请填写说明");
-                return;
-            }
-            if (this.imgIcon.Source == null || _iconBuffer == null)
-            {
-                MyMessageBox.ShowInfo("请上传图标");
-                return;
-            }
-            if (this.numPrice.Value == 0)
-            {
-                MyMessageBox.ShowInfo("请设置价格");
-                return;
-            }
-
-            if (MyMessageBox.ShowQuestionOKCancel("请确认奖项信息填写正确") != System.Windows.Forms.DialogResult.OK)
-            {
-                return;
-            }
-
-            DiamondShoppingItem item = new DiamondShoppingItem()
-            {
-                ID = this.oldID,
-                Name = this.txtTitle.Text.Trim(),
-                Remark = this.txtRemark.Text.Trim(),
-                IconBuffer = this._iconBuffer,
-                Type = (DiamondsShoppingItemType)(int)this.cmbItemType.SelectedValue,
-                SellState = (SellState)(int)this.cmbSellState.SelectedValue,
-                ValueDiamonds = (decimal)this.numPrice.Value,
-                DetailText = this.txtDetailText.Text.Trim(),
-                DetailImageNames = this.ListDetailImageNames.ToArray()
-            };
-
-            InputActionPasswordWindow winActionPassword = new InputActionPasswordWindow();
-            if (winActionPassword.ShowDialog() == true)
-            {
-                string password = winActionPassword.ActionPassword;
-                if (isAdd)
+                if (name == "")
                 {
-                    this.AsyncAddDiamondShoppingItem(password, item);
+                    MyMessageBox.ShowInfo("请填写名称");
+                    return;
                 }
-                else
+                if (remark == "")
                 {
-                    item.ID = this.oldID;
-                    this.AsyncUpdateDiamondShoppingItem(password, item);
+                    MyMessageBox.ShowInfo("请填写说明");
+                    return;
+                }
+                if (this.imgIcon.Source == null || _iconBuffer == null)
+                {
+                    MyMessageBox.ShowInfo("请上传图标");
+                    return;
+                }
+                if (this.numPrice.Value == 0)
+                {
+                    MyMessageBox.ShowInfo("请设置价格");
+                    return;
+                }
+
+                if (MyMessageBox.ShowQuestionOKCancel("请确认奖项信息填写正确") != System.Windows.Forms.DialogResult.OK)
+                {
+                    return;
+                }
+
+                DiamondShoppingItem item = new DiamondShoppingItem()
+                {
+                    ID = this.oldID,
+                    Name = this.txtTitle.Text.Trim(),
+                    Remark = this.txtRemark.Text.Trim(),
+                    IconBuffer = this._iconBuffer,
+                    Type = (DiamondsShoppingItemType)(int)this.cmbItemType.SelectedValue,
+                    SellState = (SellState)(int)this.cmbSellState.SelectedValue,
+                    ValueDiamonds = (decimal)this.numPrice.Value,
+                    DetailText = this.txtDetailText.Text.Trim(),
+                    DetailImageNames = this.ListDetailImageNames.ToArray()
+                };
+
+                InputActionPasswordWindow winActionPassword = new InputActionPasswordWindow();
+                if (winActionPassword.ShowDialog() == true)
+                {
+                    string password = winActionPassword.ActionPassword;
+                    if (isAdd)
+                    {
+                        this.AsyncAddDiamondShoppingItem(password, item);
+                    }
+                    else
+                    {
+                        item.ID = this.oldID;
+                        this.AsyncUpdateDiamondShoppingItem(password, item);
+                    }
                 }
             }
-
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("保存失败。原因为：" + exc.Message);
+            }
         }
 
         public void AsyncAddDiamondShoppingItem(string password, DiamondShoppingItem item)

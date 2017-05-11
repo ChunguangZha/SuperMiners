@@ -408,6 +408,7 @@ namespace SuperMinersWPF
         {
             CloseAllControl();
             App.ShoppingVMObject.AsyncGetVirtualShoppingItem();
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem();
             this.controlMall.Visibility = System.Windows.Visibility.Visible;
         }
 

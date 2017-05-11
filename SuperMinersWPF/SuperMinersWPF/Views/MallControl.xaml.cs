@@ -37,6 +37,7 @@ namespace SuperMinersWPF.Views
         public void BindUI()
         {
             this.lvVirtualMall.ItemsSource = App.ShoppingVMObject.ListVirtualShoppingItem;
+            this.lvDiamondMall.ItemsSource = App.ShoppingVMObject.ListDiamondShoppingItem;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

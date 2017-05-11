@@ -12,6 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock Text="玩家管理" FontSize="18" FontWeight="Bold" Margin="10"/>
         <Grid Grid.Row="1">
@@ -132,6 +133,8 @@
         <StackPanel Grid.Row="4" Orientation="Horizontal">
             <Button Name="btnViewPlayerExpRecords" Content="查看贡献值记录" Width="100" Margin="10" Click="btnViewPlayerExpRecords_Click"/>
             <Button Grid.Row="3" Name="btnAddNewRemoteServiceHandled" Content="添加远程协助服务完成记录" Visibility="Collapsed" Width="220" Margin="10" HorizontalAlignment="Right" Click="btnAddNewRemoteServiceHandled_Click"/>
+            <Button Name="btnAutoTransferServer" Content="自动转区" Visibility="Collapsed" Width="100" Margin="10" />
         </StackPanel>
+        <ListBox Grid.Row="5" Name="listOutput" Visibility="Collapsed" Height="200" Margin="5" />
     </Grid>
 </UserControl>

@@ -9,26 +9,31 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="240"/>
+            <RowDefinition Height="250"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="350*"/>
         </Grid.RowDefinitions>
-        <Image Source="/SuperMinersWPF;component/Resources/supor.jpg"/>
+        <Image Margin="5" Source="{Binding Icon}"/>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="苏泊尔 电压力锅CYSB50YC1－100双胆" FontSize="16" FontWeight="Bold" Margin="10,5"/>
-            <TextBlock Grid.Row="1" Text="产品描述" Margin="10,5"/>
-            <TextBlock Grid.Row="2" Text="需要钻石：88888块" Margin="10,5"/>
-            <Button Grid.Row="3" Name="btnBuy" Content="立即购买" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left"/>
-            <Button Grid.Row="3" Name="btnAddToShoppingCart" Content="加入购物车" FontSize="18" Margin="180,10,10,10" Width="120" Height="50" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="10,5"/>
+            <TextBlock Grid.Row="1" Text="{Binding Remark}" Margin="10,5"/>
+            <TextBlock Grid.Row="2" Foreground="Red" Margin="10,5">
+                <Run Text="需要钻石："/>
+                <Run Text="{Binding ValueDiamonds}"/>
+                <Run Text="块"/>
+            </TextBlock>
+            <Button Grid.Row="3" Name="btnBuy" Content="立即购买" IsEnabled="False" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left" Click="btnBuy_Click"/>
         </Grid>
-        <ListView Grid.Row="1" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Margin="10"/>
+        <ListView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding ListDetailImages}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListViewItem>
-                <Image Margin="5" Source="/SuperMinersWPF;component/Resources/supor.jpg" Stretch="UniformToFill"/>
+                <Image Margin="5" Source="{Binding}" Stretch="UniformToFill"/>
             </ListViewItem>
         </ListView>
     </Grid>

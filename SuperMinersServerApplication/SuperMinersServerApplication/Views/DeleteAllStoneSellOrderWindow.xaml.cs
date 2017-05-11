@@ -68,7 +68,7 @@ namespace SuperMinersServerApplication.Views
             {
                 foreach (var item in dicPlayers.Values)
                 {
-                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(item.FortuneInfo, trans);
+                    DBProvider.UserDBProvider.SavePlayerFortuneInfo(item.SimpleInfo.UserID, item.FortuneInfo, trans);
                 }
 
                 DBProvider.StoneOrderDBProvider.UpdateAllSellOrderState(SellOrderState.Wait, SellOrderState.Finish, trans);
