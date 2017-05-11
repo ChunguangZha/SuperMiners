@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="SuperMinersWPF.exe" version="2.1.0.5" publicKeyToken="7371f256af154de9" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="Logo128.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="SuperMinersWPF.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="3471872">
+      <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>K5kGTVgeP0O7kqivL1zoSLvbGwfPA6gYi1iGU1S/eNs=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Logo128.ico" size="67646">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>3ELOb+t3lsKPdNgF8CJ44YsBFwqdaIhW8evg7hdwZX4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Resources\Server2GameHelper.txt" size="2631">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>PEb+U2n90SV1OFQll1l+CGwS+v2+rFkJgKYEhDSon7o=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="SuperMinersWPF.exe.config" size="1481">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>w8bto1qlYih0tW7bbrZIhRvQVH45JTE8MuLfsOYECdo=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=TONYZHA\Chunguang" issuerKeyHash="03fb4b1cb15b0578b84e541448baf45cc419a0ae" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>96t2TyEWRlKsXC/UU8kZ+qihEFYeC4pjqJtF/7rO1LI=</DigestValue></Reference></SignedInfo><SignatureValue>0DfnP54ASBG3OlnLptcOOd6y3vVDuvp5D+BBe/UGeIObxsa2Zwd4E56a8+H6QJQIzrniVQ7r+DcFzbKUxE05uthDsxU3+HNZg0/sIGUozqkN7E8P9gEzaZckc6HE+H0BXS1Hi5XffkRziShx9revtGEnkstLb0JN8/0OVEsY0BA=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>0g3BrcLDWdwD4eEbQhqABUs+bYwLYt0YzSnZpDaPoFTV0KrN9nSUmD21vGXoqmmpiI1D+YQ60RuP7scF5tT7XMAsuH7kCVa2UwbgKTjWkf+wLRSn36gAAkJIyk5mMYc/VvalGxfXKEl1RTLqjmQUR844FXzhx69DnyctZ8It7G0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="b2d4cebaff459ba8638a0b1e5610a1a8fa19c953d42f5cac524616214f76abf7" Description="" Url=""><as:assemblyIdentity name="SuperMinersWPF.exe" version="2.1.0.5" publicKeyToken="7371f256af154de9" language="zh-CN" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=TONYZHA\Chunguang</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>ssv1LyKiMSW1ywYoFjjeBrMHs/x6Ou2+qzgTBAvtvXk=</DigestValue></Reference></SignedInfo><SignatureValue>CmdMPcpRCCVLAtJymYDU6IUhdHkiMrU9/3vyjsNDac81BQ1TAUwLmyhJHo+U7PCGSMYtp14v4rCnHK9B4vWhlVYzGoCFmbSuWIyzpQZd8tD4ie5cbS/d9fk215GTw5ahV/94y6ps8fZrf5dmco4eU6ts5dhabHqd+sRcnbVSbLs=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>0g3BrcLDWdwD4eEbQhqABUs+bYwLYt0YzSnZpDaPoFTV0KrN9nSUmD21vGXoqmmpiI1D+YQ60RuP7scF5tT7XMAsuH7kCVa2UwbgKTjWkf+wLRSn36gAAkJIyk5mMYc/VvalGxfXKEl1RTLqjmQUR844FXzhx69DnyctZ8It7G0=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB3TCCAUagAwIBAgIQUVvMM1jdKLFH40tkVdjMgzANBgkqhkiG9w0BAQsFADAtMSswKQYDVQQDHiIAVABPAE4AWQBaAEgAQQBcAEMAaAB1AG4AZwB1AGEAbgBnMB4XDTE2MDUxNjEyMTc1N1oXDTE3MDUxNjE4MTc1N1owLTErMCkGA1UEAx4iAFQATwBOAFkAWgBIAEEAXABDAGgAdQBuAGcAdQBhAG4AZzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA0g3BrcLDWdwD4eEbQhqABUs+bYwLYt0YzSnZpDaPoFTV0KrN9nSUmD21vGXoqmmpiI1D+YQ60RuP7scF5tT7XMAsuH7kCVa2UwbgKTjWkf+wLRSn36gAAkJIyk5mMYc/VvalGxfXKEl1RTLqjmQUR844FXzhx69DnyctZ8It7G0CAwEAATANBgkqhkiG9w0BAQsFAAOBgQCC4pZdrpZDorY229s0vUrTf+GEf8o77LFASiQLBeWhcluFk2icE3PPwOcfPQTggG1R3H66z92z7dtVE5n1SyXhPspY+ilB5qklkePSRbwDy012lkysL8YSOOKahOxbNO6tSNJVnCLbY2Bcisal6szjs72kqV2tNaF6fI7r+NbQUQ==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

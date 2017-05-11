@@ -1,4 +1,5 @@
-﻿using SuperMinersWPF.Models;
+﻿using MetaData.Shopping;
+using SuperMinersWPF.Models;
 using SuperMinersWPF.StringResources;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views;
@@ -39,27 +40,27 @@ namespace SuperMinersWPF
 
             this._syn = System.Threading.SynchronizationContext.Current;
 
-            if (GlobalData.ServerType == ServerType.Server1)
-            {
-                this.btnMall.Visibility = System.Windows.Visibility.Collapsed;
-                this.lblGravel.Visibility = System.Windows.Visibility.Collapsed;
-                this.txtGravel.Visibility = System.Windows.Visibility.Collapsed;
-                this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
-                this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
-                this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
-                this.lblMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
+            //if (GlobalData.ServerType == ServerType.Server1)
+            //{
+            //    this.btnMall.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.lblGravel.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.txtGravel.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.btnRequestGravel.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.btnInvitationFriends.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.btnMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.lblMakeAVowToGod.Visibility = System.Windows.Visibility.Collapsed;
 
-                this.lblShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
-                this.txtShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
-                this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.lblShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.txtShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
+            //    this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Collapsed;
 
-                this.btnGetMoney.IsEnabled = true;
-                this.btnStonesSell.IsEnabled = true;
+            //    this.btnGetMoney.IsEnabled = true;
+            //    this.btnStonesSell.IsEnabled = true;
                 
-                this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵一区";
-            }
-            else
-            {
+            //    this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵一区";
+            //}
+            //else
+            //{
                 this.btnMall.Visibility = System.Windows.Visibility.Visible;
                 this.lblGravel.Visibility = System.Windows.Visibility.Visible;
                 this.txtGravel.Visibility = System.Windows.Visibility.Visible;
@@ -75,8 +76,8 @@ namespace SuperMinersWPF
                 this.btnGetMoney.IsEnabled = false;
                 this.btnStonesSell.IsEnabled = false;
 
-                this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵二区";
-            }
+                this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵矿场";
+            //}
 
             GlobalData.Client.SetContext(this._syn);
             GlobalData.Client.Error += new EventHandler(Client_Error);
@@ -408,7 +409,8 @@ namespace SuperMinersWPF
         {
             CloseAllControl();
             App.ShoppingVMObject.AsyncGetVirtualShoppingItem();
-            App.ShoppingVMObject.AsyncGetDiamondShoppingItem();
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.LiveThing);
+            App.UserVMObject.AsyncGetPostAddressList();
             this.controlMall.Visibility = System.Windows.Visibility.Visible;
         }
 

@@ -17,7 +17,7 @@ namespace MetaData.Shopping
         public string Name;
 
         [DataMember]
-        public DiamondsShoppingItemType Type;
+        public DiamondsShoppingItemType ItemType;
 
         ///// <summary>
         ///// 库存量

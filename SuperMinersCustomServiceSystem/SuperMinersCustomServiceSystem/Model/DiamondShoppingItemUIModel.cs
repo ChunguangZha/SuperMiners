@@ -59,10 +59,10 @@ namespace SuperMinersCustomServiceSystem.Model
 
         public DiamondsShoppingItemType Type
         {
-            get { return this._parentObject.Type; }
+            get { return this._parentObject.ItemType; }
             set
             {
-                this._parentObject.Type = value;
+                this._parentObject.ItemType = value;
                 NotifyPropertyChange("Type");
                 NotifyPropertyChange("ItemTypeText");
             }

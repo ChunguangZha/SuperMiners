@@ -51,9 +51,9 @@ namespace SuperMinersWPF.Models
             get { return this._parentObject.Name; }
         }
 
-        public DiamondsShoppingItemType Type
+        public DiamondsShoppingItemType ItemType
         {
-            get { return this._parentObject.Type; }
+            get { return this._parentObject.ItemType; }
         }
 
         public string ItemTypeText
@@ -61,7 +61,7 @@ namespace SuperMinersWPF.Models
             get
             {
                 string text = "";
-                switch (this.Type)
+                switch (this.ItemType)
                 {
                     case DiamondsShoppingItemType.LiveThing:
                         text = "生活用品";

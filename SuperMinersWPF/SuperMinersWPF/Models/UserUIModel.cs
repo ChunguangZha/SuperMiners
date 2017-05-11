@@ -455,6 +455,10 @@ namespace SuperMinersWPF.Models
         {
             get
             {
+                if (Exp >= 50)
+                {
+                    return false;
+                }
                 if (this._parentObject.GravelInfo == null)
                 {
                     return false;
@@ -509,7 +513,7 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                return (SurplusMakeAVowTimes > 0);
+                return Exp < 50 && (SurplusMakeAVowTimes > 0);
             }
         }
     }

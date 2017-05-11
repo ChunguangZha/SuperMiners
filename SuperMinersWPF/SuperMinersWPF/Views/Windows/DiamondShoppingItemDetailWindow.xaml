@@ -3,38 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Loaded="Window_Loaded"
         Title="钻石商品--" Height="600" Width="700" MinWidth="700" MinHeight="600" WindowStartupLocation="CenterScreen">
-    <Grid Margin="10">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="250"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="350*"/>
-        </Grid.RowDefinitions>
-        <Image Margin="5" Source="{Binding Icon}"/>
-        <Grid Grid.Column="1">
+    <ScrollViewer Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="250"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="350*"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="10,5"/>
-            <TextBlock Grid.Row="1" Text="{Binding Remark}" Margin="10,5"/>
-            <TextBlock Grid.Row="2" Foreground="Red" Margin="10,5">
+            <Image Margin="5" Source="{Binding Icon}"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="10,5"/>
+                <TextBlock Grid.Row="1" Text="{Binding Remark}" Margin="10,5"/>
+                <TextBlock Grid.Row="2" Foreground="Red" Margin="10,5">
                 <Run Text="需要钻石："/>
-                <Run Text="{Binding ValueDiamonds}"/>
+                <Run Text="{Binding ValueDiamonds, Mode=OneWay}"/>
                 <Run Text="块"/>
-            </TextBlock>
-            <Button Grid.Row="3" Name="btnBuy" Content="立即购买" IsEnabled="False" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left" Click="btnBuy_Click"/>
+                </TextBlock>
+                <Button Grid.Row="3" Name="btnBuy" Content="立即购买" IsEnabled="False" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left" Click="btnBuy_Click"/>
+            </Grid>
+            <TextBlock Grid.Row="1" Text="宝贝描述" FontSize="16" FontWeight="Bold" Margin="10"/>
+            <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding DetailText}" Margin="50,10"/>
+            <ListView Grid.Row="3" Grid.ColumnSpan="2" ItemsSource="{Binding ListDetailImages}" Margin="50,10" HorizontalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Image Margin="5" Source="{Binding}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding DetailText}" Margin="10"/>
-        <ListView Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding ListDetailImages}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListViewItem>
-                <Image Margin="5" Source="{Binding}" Stretch="UniformToFill"/>
-            </ListViewItem>
-        </ListView>
-    </Grid>
+    </ScrollViewer>
 </Window>

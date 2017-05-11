@@ -21,7 +21,7 @@ namespace DataBaseProvider
                     " values (@Name,@Type,@Remark,@SellState,@ValueDiamonds,@DetailText,@DetailImageNames )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
-                mycmd.Parameters.AddWithValue("@Type", (int)item.Type);
+                mycmd.Parameters.AddWithValue("@Type", (int)item.ItemType);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);
@@ -56,7 +56,7 @@ namespace DataBaseProvider
                     "set `Name`=@Name,`Type`=@Type,`Remark`=@Remark,`SellState`=@SellState,`ValueDiamonds`=@ValueDiamonds,`DetailText`=@DetailText,`DetailImageNames`=@DetailImageNames where `ID`=@ID;";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
-                mycmd.Parameters.AddWithValue("@Type", (int)item.Type);
+                mycmd.Parameters.AddWithValue("@Type", (int)item.ItemType);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);

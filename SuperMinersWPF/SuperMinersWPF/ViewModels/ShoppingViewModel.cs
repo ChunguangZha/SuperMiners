@@ -41,10 +41,10 @@ namespace SuperMinersWPF.ViewModels
             GlobalData.Client.BuyVirtualShoppingItem(shoppingItem);
         }
 
-        public void AsyncGetDiamondShoppingItem()
+        public void AsyncGetDiamondShoppingItem(DiamondsShoppingItemType itemType)
         {
             App.BusyToken.ShowBusyWindow("正在加载钻石商品...");
-            GlobalData.Client.GetDiamondShoppingItems(DiamondsShoppingItemType.Digital);
+            GlobalData.Client.GetDiamondShoppingItems(itemType);
         }
         
         public void AsyncBuyDiamondShoppingItem(DiamondShoppingItem shoppingItem, PostAddress address)

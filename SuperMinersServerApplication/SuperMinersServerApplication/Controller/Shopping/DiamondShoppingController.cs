@@ -131,7 +131,7 @@ namespace SuperMinersServerApplication.Controller.Shopping
                 foreach (var fileName in files)
                 {
                     FileInfo fileInfo = new FileInfo(fileName);
-                    if (fileInfo.Name == imageFileName && fileInfo.Extension == ".jpg")
+                    if (fileInfo.Name == imageFileName + ".jpg")
                     {
                         using (FileStream stream = File.OpenRead(fileName))
                         {

@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using MetaData.Shopping;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersWPF.Models;
 using SuperMinersWPF.Utility;
 using SuperMinersWPF.Views.Windows;
@@ -42,11 +43,6 @@ namespace SuperMinersWPF.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            if (GlobalData.ServerType == ServerType.Server2)
-            {
-                App.UserVMObject.AsyncGetPostAddressList();
-            }
-
         }
 
         private void ButtonBuyVirtualShopping_Click(object sender, RoutedEventArgs e)
@@ -114,6 +110,31 @@ namespace SuperMinersWPF.Views
             DiamondShoppingItemDetailWindow win = new DiamondShoppingItemDetailWindow(shoppingItem);
             win.Show();
 
+        }
+
+        private void rbtnLiveThing_Click(object sender, RoutedEventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.LiveThing);
+        }
+
+        private void btnDigital_Click(object sender, RoutedEventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.Digital);
+        }
+
+        private void btnFood_Click(object sender, RoutedEventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.Food);
+        }
+
+        private void btnHomeAppliances_Click(object sender, RoutedEventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.HomeAppliances);
+        }
+
+        private void btnPhoneFee_Click(object sender, RoutedEventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.PhoneFee);
         }
     }
 }

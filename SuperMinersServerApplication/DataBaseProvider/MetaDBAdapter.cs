@@ -1270,7 +1270,7 @@ namespace DataBaseProvider
                 item.Name = dt.Rows[i]["Name"].ToString();
                 item.Remark = dt.Rows[i]["Remark"].ToString();
                 item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
-                item.Type = (DiamondsShoppingItemType)Convert.ToInt32(dt.Rows[i]["Type"]);
+                item.ItemType = (DiamondsShoppingItemType)Convert.ToInt32(dt.Rows[i]["Type"]);
                 item.ValueDiamonds = Convert.ToDecimal(dt.Rows[i]["ValueDiamonds"]);
                 item.DetailText = dt.Rows[i]["DetailText"].ToString();
                 string detailImageNames = dt.Rows[i]["DetailImageNames"].ToString();
