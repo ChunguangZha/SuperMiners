@@ -65,7 +65,7 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border MinWidth="100" Margin="10" BorderThickness="1" BorderBrush="LightBlue" ToolTip="{Binding Remark}">
+                                <Border Width="300" Margin="10" BorderThickness="1" BorderBrush="LightBlue" ToolTip="{Binding Remark}">
                                     <Border.Triggers>
                                         <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                                             <BeginStoryboard>
@@ -139,12 +139,11 @@
                         </ListView.ItemsPanel>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border MinWidth="100" Margin="10" BorderThickness="1" BorderBrush="LightBlue" ToolTip="{Binding Remark}">
-                                    <Border.Triggers>
+                                <Border Width="300" Margin="10" BorderThickness="1" BorderBrush="LightBlue" ToolTip="{Binding Remark}" MouseUp="DiamondShoppingItem_MouseDown">
+                                    <!--<Border.Triggers>
                                         <EventTrigger RoutedEvent="FrameworkElement.MouseEnter">
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <!--<DoubleAnimation From="0" To="1" Duration="0:0:0.1" Storyboard.TargetName="borderRemark" Storyboard.TargetProperty="Opacity" />-->
                                                     <DoubleAnimation From="0" To="1" Duration="0:0:0.1" Storyboard.TargetName="borderBuy" Storyboard.TargetProperty="Opacity" />
                                                 </Storyboard>
                                             </BeginStoryboard>
@@ -152,12 +151,11 @@
                                         <EventTrigger RoutedEvent="FrameworkElement.MouseLeave">
                                             <BeginStoryboard>
                                                 <Storyboard>
-                                                    <!--<DoubleAnimation From="1" To="0" Duration="0:0:0.1" Storyboard.TargetName="borderRemark" Storyboard.TargetProperty="Opacity" />-->
                                                     <DoubleAnimation From="1" To="0" Duration="0:0:0.1" Storyboard.TargetName="borderBuy" Storyboard.TargetProperty="Opacity" />
                                                 </Storyboard>
                                             </BeginStoryboard>
                                         </EventTrigger>
-                                    </Border.Triggers>
+                                    </Border.Triggers>-->
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto"/>
@@ -178,9 +176,9 @@
                                         </TextBlock>
                                         <Grid Grid.Row="2">
                                             <TextBlock Text="{Binding Name}" Margin="10,5" HorizontalAlignment="Center"/>
-                                            <Border Name="borderBuy" Margin="10,5" Background="White" Opacity="0">
-                                                <Button Width="100" Content="购买" VerticalAlignment="Center" HorizontalAlignment="Center" Click="ButtonBuyDiamondShopping_Click"/>
-                                            </Border>
+                                            <!--<Border Name="borderBuy" Margin="10,5" Background="White" Opacity="0">
+                                                <Button Width="100" Content="购买" VerticalAlignment="Center" HorizontalAlignment="Center" Click=""/>
+                                            </Border>-->
                                         </Grid>
                                     </Grid>
                                 </Border>

@@ -57,13 +57,13 @@ namespace SuperMinersCustomServiceSystem.Model
             }
         }
 
-        public DiamondsShoppingItemType Type
+        public DiamondsShoppingItemType ItemType
         {
             get { return this._parentObject.ItemType; }
             set
             {
                 this._parentObject.ItemType = value;
-                NotifyPropertyChange("Type");
+                NotifyPropertyChange("ItemType");
                 NotifyPropertyChange("ItemTypeText");
             }
         }
@@ -73,7 +73,7 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 string text = "";
-                switch (this.Type)
+                switch (this.ItemType)
                 {
                     case DiamondsShoppingItemType.LiveThing:
                         text = "生活用品";
@@ -150,7 +150,13 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 this._parentObject.ValueDiamonds = value;
                 NotifyPropertyChange("ValueDiamonds");
+                NotifyPropertyChange("ValueRMBYuan");
             }
+        }
+
+        public decimal ValueRMBYuan
+        {
+            get { return Math.Round(this._parentObject.ValueDiamonds * 0.375M, 2); }
         }
 
         public byte[] IconBuffer

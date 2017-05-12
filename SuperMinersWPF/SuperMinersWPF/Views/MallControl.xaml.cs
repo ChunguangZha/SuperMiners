@@ -97,21 +97,6 @@ namespace SuperMinersWPF.Views
             win.ShowDialog();
         }
 
-        private void ButtonBuyDiamondShopping_Click(object sender, RoutedEventArgs e)
-        {
-            Button btn = sender as Button;
-            DiamondShoppingItemUIModel shoppingItem = btn.DataContext as DiamondShoppingItemUIModel;
-            if (shoppingItem == null)
-            {
-                MyMessageBox.ShowInfo("请选择要购买的商品");
-                return;
-            }
-
-            DiamondShoppingItemDetailWindow win = new DiamondShoppingItemDetailWindow(shoppingItem);
-            win.Show();
-
-        }
-
         private void rbtnLiveThing_Click(object sender, RoutedEventArgs e)
         {
             App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.LiveThing);
@@ -135,6 +120,21 @@ namespace SuperMinersWPF.Views
         private void btnPhoneFee_Click(object sender, RoutedEventArgs e)
         {
             App.ShoppingVMObject.AsyncGetDiamondShoppingItem(DiamondsShoppingItemType.PhoneFee);
+        }
+
+        private void DiamondShoppingItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Border btn = sender as Border;
+            DiamondShoppingItemUIModel shoppingItem = btn.DataContext as DiamondShoppingItemUIModel;
+            if (shoppingItem == null)
+            {
+                MyMessageBox.ShowInfo("请选择要购买的商品");
+                return;
+            }
+
+            DiamondShoppingItemDetailWindow win = new DiamondShoppingItemDetailWindow(shoppingItem);
+            win.Show();
+
         }
     }
 }

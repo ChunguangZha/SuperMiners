@@ -112,7 +112,7 @@ namespace SuperMinersWPF.Views.Windows
                 FileInfo file = new FileInfo(fileFullPath);
                 if (file != null && file.Extension == ".jpg")
                 {
-                    int index = GetIndexFromDetailImageNames(file.Name);
+                    int index = GetIndexFromDetailImageNames(file.Name.Substring(0, file.Name.Length - 4));
                     if (index >= 0)
                     {
                         using (FileStream stream = File.OpenRead(fileFullPath))

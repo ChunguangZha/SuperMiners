@@ -40,6 +40,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridTextColumn Header="价格(人民币)" Width="100" Binding="{Binding ValueRMBYuan, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="价格(钻石)" Width="70" Binding="{Binding ValueDiamonds, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="说明" Width="*" Binding="{Binding Remark, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="状态" Width="70" Binding="{Binding SellStateText, Mode=OneWay}" IsReadOnly="True"/>

@@ -70,7 +70,10 @@ namespace SuperMinersServerApplication.Controller.Shopping
         {
             string dirPath = GetShoppingItemDirPath(item.Name);
             //删除所有图片，重新保存
-            Directory.Delete(dirPath);
+            if (Directory.Exists(dirPath))
+            {
+                Directory.Delete(dirPath, true);
+            }
             Directory.CreateDirectory(dirPath);
 
             bool isOK = DBProvider.DiamondShoppingDBProvider.UpdateDiamondShoppingItem(item);

@@ -1438,12 +1438,12 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                if (this.BasePlayer.FortuneInfo.StockOfDiamonds < shoppingItem.ValueDiamonds)
+                if (this.BasePlayer.FortuneInfo.StockOfDiamonds < (decimal)shoppingItem.ValueDiamonds)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
 
-                this.BasePlayer.FortuneInfo.StockOfDiamonds -= shoppingItem.ValueDiamonds;
+                this.BasePlayer.FortuneInfo.StockOfDiamonds -= (decimal)shoppingItem.ValueDiamonds;
                 SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
 
                 return OperResult.RESULTCODE_TRUE;

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:myc="clr-namespace:SuperMinersWPF.MyControl"
         Loaded="Window_Loaded"
+        Closed="Window_Closed"
         Title="修改钻石商品" Height="700" Width="800" MinWidth="800" MinHeight="700" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
@@ -21,7 +22,7 @@
         <Image Grid.Column="1" Name="imgIcon" Height="200" Width="200" Margin="5"/>
         <Grid Grid.Column="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="110"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -40,12 +41,16 @@
             <TextBox Grid.Row="1" Grid.Column="1" Name="txtTitle" Margin="10,5" MaxLength="20" VerticalAlignment="Top"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="产品描述" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
             <TextBox Grid.Row="2" Grid.Column="1" Name="txtRemark" Margin="10,5" Height="70" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="价格（钻石）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <ComboBox Grid.Row="4" Grid.Column="1" Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="10,5" VerticalAlignment="Top"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbSellState" Margin="10,5" VerticalAlignment="Top" SelectedIndex="0">
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="价格（人民币）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPriceYuan" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5,200,5" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPriceYuan_ValueChanged"/>
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="元" Margin="120,5,5,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="价格（钻石）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <myc:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPrice_ValueChanged"/>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="块" Margin="120,5,5,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Width="100" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <ComboBox Grid.Row="6" Grid.Column="1" Name="cmbSellState" Margin="10,5" VerticalAlignment="Top" SelectedIndex="0" Width="100" HorizontalAlignment="Left">
                 <ComboBoxItem Content="上架"/>
                 <ComboBoxItem Content="下架"/>
             </ComboBox>

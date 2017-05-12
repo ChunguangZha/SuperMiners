@@ -54,6 +54,7 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
             EditDiamondShoppingItemWindow win = new EditDiamondShoppingItemWindow((MetaData.Shopping.DiamondsShoppingItemType)this.cmbItemType.SelectedValue);
+            win.Closed += win_Closed;
             win.ShowDialog();
         }
 
@@ -66,8 +67,14 @@ namespace SuperMinersCustomServiceSystem.View.Controls.TradeSystem
             }
 
             EditDiamondShoppingItemWindow win = new EditDiamondShoppingItemWindow(this.dgRecords.SelectedItem as DiamondShoppingItemUIModel);
+            win.Closed += win_Closed;
             win.ShowDialog();
 
+        }
+
+        void win_Closed(object sender, EventArgs e)
+        {
+            App.ShoppingVMObject.AsyncGetDiamondShoppingItems((MetaData.Shopping.DiamondsShoppingItemType)this.cmbItemType.SelectedValue);
         }
     }
 }

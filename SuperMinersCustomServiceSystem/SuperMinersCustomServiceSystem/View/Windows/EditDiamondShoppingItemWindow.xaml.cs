@@ -68,11 +68,12 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             this.numPrice.Value = (double)oldItem.ValueDiamonds;
             this.txtDetailText.Text = oldItem.DetailText;
             this.imgIcon.Source = oldItem.Icon;
+            this._iconBuffer = oldItem.IconBuffer;
             if (oldItem.DetailImageNames != null)
             {
                 this.ListDetailImageNames = new ObservableCollection<string>(oldItem.DetailImageNames);
             }
-            this.cmbItemType.SelectedValue = (int)oldItem.Type;
+            this.cmbItemType.SelectedValue = (int)oldItem.ItemType;
 
             GlobalData.Client.UpdateDiamondShoppingItemCompleted += Client_UpdateDiamondShoppingItemCompleted;
         }
@@ -87,6 +88,12 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                 App.BusyToken.ShowBusyWindow("正在加载钻石商品详细信息...");
                 GlobalData.Client.GetDiamondShoppingItemDetailImageBuffer(this._oldItem.ID);
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            GlobalData.Client.UpdateDiamondShoppingItemCompleted -= Client_UpdateDiamondShoppingItemCompleted;
+            GlobalData.Client.AddDiamondShoppingItemCompleted -= Client_AddDiamondShoppingItemCompleted;
         }
 
         void Client_GetDiamondShoppingItemDetailImageBufferCompleted(object sender, Wcf.Clients.WebInvokeEventArgs<byte[][]> e)
@@ -291,24 +298,19 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                     IconBuffer = this._iconBuffer,
                     ItemType = (DiamondsShoppingItemType)(int)this.cmbItemType.SelectedValue,
                     SellState = (SellState)(int)this.cmbSellState.SelectedIndex,
-                    ValueDiamonds = (decimal)this.numPrice.Value,
+                    ValueDiamonds = Math.Round((decimal)this.numPrice.Value, 2),
                     DetailText = this.txtDetailText.Text.Trim(),
                     DetailImageNames = this.ListDetailImageNames.ToArray()
                 };
 
-                InputActionPasswordWindow winActionPassword = new InputActionPasswordWindow();
-                if (winActionPassword.ShowDialog() == true)
+                if (isAdd)
                 {
-                    string password = winActionPassword.ActionPassword;
-                    if (isAdd)
-                    {
-                        this.AsyncAddDiamondShoppingItem(password, item);
-                    }
-                    else
-                    {
-                        item.ID = this.oldID;
-                        this.AsyncUpdateDiamondShoppingItem(password, item);
-                    }
+                    this.AsyncAddDiamondShoppingItem(GlobalData.CurrentAdmin.ActionPassword, item);
+                }
+                else
+                {
+                    item.ID = this.oldID;
+                    this.AsyncUpdateDiamondShoppingItem(GlobalData.CurrentAdmin.ActionPassword, item);
                 }
             }
             catch (Exception exc)
@@ -392,6 +394,16 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void numPriceYuan_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.numPrice.Value = this.numPriceYuan.Value / 0.375;
+        }
+
+        private void numPrice_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            this.numPriceYuan.Value = this.numPrice.Value * 0.375;
         }
     }
 }
