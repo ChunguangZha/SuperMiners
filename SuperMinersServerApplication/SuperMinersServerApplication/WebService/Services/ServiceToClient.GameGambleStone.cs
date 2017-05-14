@@ -18,9 +18,17 @@ namespace SuperMinersServerApplication.WebService.Services
     {
         #region IServiceToClient Members
 
-
+        /// <summary>
+        /// 下注赌石游戏
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="color"></param>
+        /// <param name="stoneCount">矿石</param>
+        /// <param name="gravelCount">碎片</param>
+        /// <returns></returns>
         public GambleStonePlayerBetInResult GambleStoneBetIn(string token, GambleStoneItemColor color, int stoneCount, int gravelCount)
         {
+            //优先使用碎片
             if (RSAProvider.LoadRSA(token))
             {
                 string userName = null;
@@ -35,22 +43,31 @@ namespace SuperMinersServerApplication.WebService.Services
 
                     userName = ClientManager.GetClientUserName(token);
 
+                    if (!GambleStoneController.Instance.CheckBetInable())
+                    {
+                        betResult.ResultCode = OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
+                        return betResult;
+                    }
+
                     int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                     {
-                        int innerResult = PlayerController.Instance.GambleBetIn(userName, stoneCount, gravelCount, myTrans);
+                        int innerResult = PlayerController.Instance.GambleBetIn(userName, color, stoneCount, gravelCount, myTrans);
                         if (innerResult == OperResult.RESULTCODE_TRUE)
                         {
                             var playerInfo = PlayerController.Instance.GetPlayerInfoByUserName(userName);
                             betResult = GambleStoneController.Instance.BetIn(color, stoneCount + gravelCount, playerInfo.SimpleInfo.UserID, userName);
+                            innerResult = betResult.ResultCode;
                         }
 
                         return innerResult;
                     },
                     exc =>
                     {
+                        PlayerController.Instance.RollbackUserFromDB(userName);
                         LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 Inner异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; gravelCount: " + gravelCount.ToString(), exc);
                     });
 
+                    betResult.ResultCode = result;
                     return betResult;
                 }
                 catch (Exception exc)

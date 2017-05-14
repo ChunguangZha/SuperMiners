@@ -100,6 +100,7 @@
     <Compile Include="User\PlayerGravelRequsetRecordInfo.cs" />
     <Compile Include="User\PlayerLockedInfo.cs" />
     <Compile Include="User\PlayerLogInfo.cs" />
+    <Compile Include="User\PlayerStoneFactoryAccountInfo.cs" />
     <Compile Include="User\PlayerWeiXinUserOpenId.cs" />
     <Compile Include="User\PostAddress.cs" />
     <Compile Include="User\TopListInfo.cs" />

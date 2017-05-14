@@ -289,21 +289,21 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         OldPlayerTransferRegisterInfo[] GetPlayerTransferRecords(string token);
 
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerFrom",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int TransferPlayerFrom(string token, int recordID, string userName, string adminUserName);
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerFrom",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //int TransferPlayerFrom(string token, int recordID, string userName, string adminUserName);
 
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerTo",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword);
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebServiceAdmin/TransferPlayerTo",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //int TransferPlayerTo(string adminUserName, PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword);
 
         [OperationContract]
         [WebInvoke(UriTemplate = "/WebServiceAdmin/GetStoneDelegateBuyOrderInfo",

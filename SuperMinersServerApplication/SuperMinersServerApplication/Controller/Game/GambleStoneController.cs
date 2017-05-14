@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.Controller.Game
         
         public static readonly int WaitBetInTimeSeconds = 40;
         public static readonly int ReadyTimeSeconds = 5;
-        public static readonly int OpenPriceTimeSeconds = 5;
+        public static readonly int OpenPriceTimeSeconds = 8;
 
         private Thread _thrGamble = null;
         private bool isListening = false;
@@ -85,7 +85,7 @@ namespace SuperMinersServerApplication.Controller.Game
                 LoadFromDB();
                 this.CreateNewInning();
 
-                LogHelper.Instance.AddInfoLog("GambleStoneController Init Succeed");
+                LogHelper.Instance.AddInfoLog("赌石娱乐 Init Succeed");
                 this.isListening = true;
                 this.isRunning = true;
                 _thrGamble.Start();
@@ -93,7 +93,7 @@ namespace SuperMinersServerApplication.Controller.Game
             }
             catch (Exception exc)
             {
-                LogHelper.Instance.AddErrorLog("GambleStoneController Init Failed", exc);
+                LogHelper.Instance.AddErrorLog("赌石娱乐 Init Failed", exc);
                 return false;
             }
         }
@@ -102,7 +102,7 @@ namespace SuperMinersServerApplication.Controller.Game
         {
             this.isRunning = false;
             StopEventX.WaitOne();
-            LogHelper.Instance.AddInfoLog("Gamble Stopped");
+            LogHelper.Instance.AddInfoLog("赌石娱乐停止");
         }
 
         public GambleStoneRound_InningInfo GetCurrentInningInfo()
@@ -242,6 +242,18 @@ namespace SuperMinersServerApplication.Controller.Game
             }
         }
 
+        public bool CheckBetInable()
+        {
+            if (!this.isListening || this.CurrentInningRunner == null)
+                return false;
+            if (this.CurrentInningRunner.InningInfo.State != GambleStoneInningStatusType.BetInWaiting)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public GambleStonePlayerBetInResult BetIn(GambleStoneItemColor color, int stoneCount, int userID, string userName)
         {
             GambleStonePlayerBetInResult result = new GambleStonePlayerBetInResult();
@@ -273,6 +285,8 @@ namespace SuperMinersServerApplication.Controller.Game
 
         private Dictionary<int, GambleStonePlayerBetRecord> _dicPlayerBetRecord = new Dictionary<int, GambleStonePlayerBetRecord>();
 
+        private object _lockBetIn = new object();
+
         private bool _isRandomOpen = false;
 
         private Random _random = new Random();
@@ -295,90 +309,94 @@ namespace SuperMinersServerApplication.Controller.Game
 
         public GambleStonePlayerBetInResult BetIn(int roundID, GambleStoneItemColor color, int stoneCount, int userID, string userName)
         {
-            GambleStonePlayerBetInResult result = new GambleStonePlayerBetInResult();
-
-            if (this._inningInfo.CountDownSeconds == 0)
+            lock (_lockBetIn)
             {
-                result.ResultCode = OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
+                GambleStonePlayerBetInResult result = new GambleStonePlayerBetInResult();
+
+                //LogHelper.Instance.AddInfoLog("State: " + this._inningInfo.State.ToString());
+                if (this._inningInfo.CountDownSeconds == 0 || this._inningInfo.State != GambleStoneInningStatusType.BetInWaiting)
+                {
+                    result.ResultCode = OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
+                    return result;
+                }
+
+                GambleStonePlayerBetRecord betrecord = null;
+                if (this._dicPlayerBetRecord.ContainsKey(userID))
+                {
+                    betrecord = this._dicPlayerBetRecord[userID];
+                }
+                else
+                {
+                    betrecord = new GambleStonePlayerBetRecord()
+                    {
+                        UserID = userID,
+                        UserName = userName,
+                        InningID = this._inningInfo.ID,
+                        InningIndex = this._inningInfo.InningIndex,
+                        RoundID = roundID,
+                        Time = new MyDateTime(DateTime.Now)
+                    };
+                    this._dicPlayerBetRecord.Add(userID, betrecord);
+                }
+
+                switch (color)
+                {
+                    case GambleStoneItemColor.Red:
+                        betrecord.BetRedStone += stoneCount;
+                        this._inningInfo.BetRedStone += stoneCount;
+                        if (this._dicPlayerBetRedStone.ContainsKey(userID))
+                        {
+                            this._dicPlayerBetRedStone[userID] += stoneCount;
+                        }
+                        else
+                        {
+                            this._dicPlayerBetRedStone.Add(userID, stoneCount);
+                        }
+                        break;
+                    case GambleStoneItemColor.Green:
+                        betrecord.BetGreenStone += stoneCount;
+                        this._inningInfo.BetGreenStone += stoneCount;
+                        if (this._dicPlayerBetGreenStone.ContainsKey(userID))
+                        {
+                            this._dicPlayerBetGreenStone[userID] += stoneCount;
+                        }
+                        else
+                        {
+                            this._dicPlayerBetGreenStone.Add(userID, stoneCount);
+                        }
+                        break;
+                    case GambleStoneItemColor.Blue:
+                        betrecord.BetBlueStone += stoneCount;
+                        this._inningInfo.BetBlueStone += stoneCount;
+                        if (this._dicPlayerBetBlueStone.ContainsKey(userID))
+                        {
+                            this._dicPlayerBetBlueStone[userID] += stoneCount;
+                        }
+                        else
+                        {
+                            this._dicPlayerBetBlueStone.Add(userID, stoneCount);
+                        }
+                        break;
+                    case GambleStoneItemColor.Purple:
+                        betrecord.BetPurpleStone += stoneCount;
+                        this._inningInfo.BetPurpleStone += stoneCount;
+                        if (this._dicPlayerBetPurpleStone.ContainsKey(userID))
+                        {
+                            this._dicPlayerBetPurpleStone[userID] += stoneCount;
+                        }
+                        else
+                        {
+                            this._dicPlayerBetPurpleStone.Add(userID, stoneCount);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                result.PlayerBetRecord = betrecord;
+                result.ResultCode = OperResult.RESULTCODE_TRUE;
                 return result;
             }
-
-            GambleStonePlayerBetRecord betrecord = null;
-            if (this._dicPlayerBetRecord.ContainsKey(userID))
-            {
-                betrecord = this._dicPlayerBetRecord[userID];
-            }
-            else
-            {
-                betrecord = new GambleStonePlayerBetRecord()
-                {
-                    UserID = userID,
-                    UserName = userName,
-                    InningID = this._inningInfo.ID,
-                    InningIndex = this._inningInfo.InningIndex,
-                    RoundID = roundID,
-                    Time = new MyDateTime(DateTime.Now)
-                };
-                this._dicPlayerBetRecord.Add(userID, betrecord);
-            }
-
-            switch (color)
-            {
-                case GambleStoneItemColor.Red:
-                    betrecord.BetRedStone += stoneCount;
-                    this._inningInfo.BetRedStone += stoneCount;
-                    if (this._dicPlayerBetRedStone.ContainsKey(userID))
-                    {
-                        this._dicPlayerBetRedStone[userID] += stoneCount;
-                    }
-                    else
-                    {
-                        this._dicPlayerBetRedStone.Add(userID, stoneCount);
-                    }
-                    break;
-                case GambleStoneItemColor.Green:
-                    betrecord.BetGreenStone += stoneCount;
-                    this._inningInfo.BetGreenStone += stoneCount;
-                    if (this._dicPlayerBetGreenStone.ContainsKey(userID))
-                    {
-                        this._dicPlayerBetGreenStone[userID] += stoneCount;
-                    }
-                    else
-                    {
-                        this._dicPlayerBetGreenStone.Add(userID, stoneCount);
-                    }
-                    break;
-                case GambleStoneItemColor.Blue:
-                    betrecord.BetBlueStone += stoneCount;
-                    this._inningInfo.BetBlueStone += stoneCount;
-                    if (this._dicPlayerBetBlueStone.ContainsKey(userID))
-                    {
-                        this._dicPlayerBetBlueStone[userID] += stoneCount;
-                    }
-                    else
-                    {
-                        this._dicPlayerBetBlueStone.Add(userID, stoneCount);
-                    }
-                    break;
-                case GambleStoneItemColor.Purple:
-                    betrecord.BetPurpleStone += stoneCount;
-                    this._inningInfo.BetPurpleStone += stoneCount;
-                    if (this._dicPlayerBetPurpleStone.ContainsKey(userID))
-                    {
-                        this._dicPlayerBetPurpleStone[userID] += stoneCount;
-                    }
-                    else
-                    {
-                        this._dicPlayerBetPurpleStone.Add(userID, stoneCount);
-                    }
-                    break;
-                default:
-                    break;
-            }
-
-            result.PlayerBetRecord = betrecord;
-            result.ResultCode = OperResult.RESULTCODE_TRUE;
-            return result;
         }
 
         public bool CountDownDecrease()
@@ -386,6 +404,7 @@ namespace SuperMinersServerApplication.Controller.Game
             this._inningInfo.CountDownSeconds--;
             if (this._inningInfo.CountDownSeconds == 0)
             {
+                //LogHelper.Instance.AddInfoLog("CountDownDecrease. State: " + this._inningInfo.State.ToString());
                 if (this._inningInfo.State == GambleStoneInningStatusType.Readying)
                 {
                     this._inningInfo.State = GambleStoneInningStatusType.BetInWaiting;
@@ -395,13 +414,23 @@ namespace SuperMinersServerApplication.Controller.Game
                 {
                     this._inningInfo.State = GambleStoneInningStatusType.Opening;
                     this._inningInfo.CountDownSeconds = GambleStoneController.OpenPriceTimeSeconds;
-                    FinishInning();
-                    SaveInningInfoToDB();
+                    //FinishInning();
+                    //SaveInningInfoToDB();
                 }
                 else if (this._inningInfo.State == GambleStoneInningStatusType.Opening)
                 {
                     this._inningInfo.State = GambleStoneInningStatusType.Finished;
                     return true;
+                }
+            }
+
+            //为了防止临截止时玩家下注，延迟2秒开奖
+            if (this._inningInfo.State == GambleStoneInningStatusType.Opening && this._inningInfo.CountDownSeconds == 5)
+            {
+                lock (_lockBetIn)
+                {
+                    FinishInning();
+                    SaveInningInfoToDB();
                 }
             }
 

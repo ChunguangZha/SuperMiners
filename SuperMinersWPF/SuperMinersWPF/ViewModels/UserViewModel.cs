@@ -21,11 +21,6 @@ namespace SuperMinersWPF.ViewModels
         bool isStartedListen = false;
         bool isSuspendListen = false;
         
-        /// <summary>
-        /// 每秒执行一次
-        /// </summary>
-        private System.Timers.Timer _timerUpdateStoneOutput = new System.Timers.Timer(1000);
-
         public void StartListen()
         {
             if (!isStartedListen)

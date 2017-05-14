@@ -18,6 +18,7 @@ using MetaData.Game.Roulette;
 using MetaData.AgentUser;
 using SuperMinersServerApplication.Controller.Trade;
 using MetaData.Game.StoneStack;
+using MetaData.Game.GambleStone;
 
 namespace SuperMinersServerApplication.Controller
 {
@@ -896,7 +897,7 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo)
+        public bool ChangePlayerFortuneInfo(PlayerFortuneInfo fortuneinfo, string operMessage)
         {
             var playerrun = this.GetRunnable(fortuneinfo.UserName);
             if (playerrun == null)
@@ -904,7 +905,7 @@ namespace SuperMinersServerApplication.Controller
                 return false;
             }
 
-            bool isOK = playerrun.SetFortuneInfo(fortuneinfo);
+            bool isOK = playerrun.SetFortuneInfo(fortuneinfo, operMessage);
             if (isOK)
             {
                 NotifyPlayerClient(playerrun.BasePlayer);
@@ -1384,7 +1385,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public int GambleBetIn(string userName, int stoneCount, int gravelCount, CustomerMySqlTransaction myTrans)
+        public int GambleBetIn(string userName, GambleStoneItemColor color, int stoneCount, int gravelCount, CustomerMySqlTransaction myTrans)
         {
             PlayerRunnable playerrun = this.GetRunnable(userName);
             if (playerrun == null)
@@ -1392,7 +1393,7 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
 
-            return playerrun.BetInGambleStone(stoneCount, gravelCount, myTrans);
+            return playerrun.BetInGambleStone(color, stoneCount, gravelCount, myTrans);
         }
 
         public int WinGambleStone(string userName, int winnedStone, CustomerMySqlTransaction myTrans)

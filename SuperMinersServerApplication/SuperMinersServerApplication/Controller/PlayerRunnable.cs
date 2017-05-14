@@ -1,5 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.Game.GambleStone;
 using MetaData.Game.Roulette;
 using MetaData.Game.StoneStack;
 using MetaData.Shopping;
@@ -46,11 +47,11 @@ namespace SuperMinersServerApplication.Controller
             WeiXinOpenid = openid;
         }
 
-        public bool SetFortuneInfo(PlayerFortuneInfo fortuneInfo)
+        public bool SetFortuneInfo(PlayerFortuneInfo fortuneInfo, string operMessage)
         {
             lock (this._lockFortuneAction)
             {
-                bool isOK = this.SaveUserFortuneInfoToDB(fortuneInfo, null);
+                bool isOK = this.SaveUserFortuneInfoToDB(fortuneInfo, operMessage, null);
                 if (isOK)
                 {
                     this.BasePlayer.FortuneInfo = fortuneInfo;
@@ -199,7 +200,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 BasePlayer.FortuneInfo.TempOutputStones = 0;
                 BasePlayer.FortuneInfo.TempOutputStonesStartTime = stopTime;
-                this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, null);
+                this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家收取临时产出的矿石：" + stones.ToString(), null);
                 result.OperResult = OperResult.RESULTCODE_GATHERSTONE_NOSTONES;
                 return result;
             }
@@ -247,7 +248,7 @@ namespace SuperMinersServerApplication.Controller
 
                     //将零头从矿石储量中减去！
                     BasePlayer.FortuneInfo.TotalProducedStonesCount += computeTempOutput;
-                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, null);
+                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家收取临时产出的矿石：" + computeTempOutput.ToString(), null);
 
                     result.GatherStoneCount = IntTempOutput;
                 }
@@ -290,7 +291,7 @@ namespace SuperMinersServerApplication.Controller
                 try
                 {
                     trans = MyDBHelper.Instance.CreateTrans();
-                    if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, trans))
+                    if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家购买矿工：" + minersCount.ToString(), trans))
                     {
                         trans.Rollback();
                         RefreshFortune();
@@ -349,7 +350,7 @@ namespace SuperMinersServerApplication.Controller
 
                 result.OperResultCode = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                 {
-                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家神灵许愿，奖励碎片：" + gravelValue.ToString(), myTrans);
                     DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
                     return OperResult.RESULTCODE_TRUE;
                 },
@@ -384,7 +385,7 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
                 BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
                 BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + valueCredits.ToString() + "积分购买矿山，获取矿山：" + buyRecord.GainMinesCount.ToString() + "，矿石储量：" + buyRecord.GainStonesReserves.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -412,7 +413,7 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.StockOfDiamonds -= valueDiamond;
                 BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
                 BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + valueDiamond.ToString() + "钻石购买矿山，获取矿山：" + buyRecord.GainMinesCount.ToString() + "，矿石储量：" + buyRecord.GainStonesReserves.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -439,7 +440,7 @@ namespace SuperMinersServerApplication.Controller
                 BasePlayer.FortuneInfo.RMB -= buyRecord.SpendRMB;
                 BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
                 BasePlayer.FortuneInfo.StonesReserves += buyRecord.GainStonesReserves;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + buyRecord.SpendRMB.ToString() + "灵币购买矿山，获取矿山：" + buyRecord.GainMinesCount.ToString() + "，矿石储量：" + buyRecord.GainStonesReserves.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -472,7 +473,7 @@ namespace SuperMinersServerApplication.Controller
                     OperContent = "玩家支付宝充值金币奖励"
                 };
 
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用支付宝充值" + buyRecord.SpendRMB.ToString() + "灵币购买矿山，获取矿山：" + buyRecord.GainMinesCount.ToString() + "，矿石储量：" + buyRecord.GainStonesReserves.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -524,7 +525,7 @@ namespace SuperMinersServerApplication.Controller
                         break;
                 }
 
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家购买远程协助服务：" + serverType.ToString() + "支付宝订单号：" + alipay.alipay_trade_no, myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -551,7 +552,7 @@ namespace SuperMinersServerApplication.Controller
 
                 BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + valueCredits.ToString() + "积分充值金币" + goldcoinValue.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -584,7 +585,7 @@ namespace SuperMinersServerApplication.Controller
 
                 BasePlayer.FortuneInfo.StockOfDiamonds -= valueDiamond;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + valueDiamond.ToString() + "钻石充值金币" + goldcoinValue.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -616,7 +617,7 @@ namespace SuperMinersServerApplication.Controller
 
                 BasePlayer.FortuneInfo.RMB -= rmbValue;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用" + rmbValue.ToString() + "灵币充值金币" + goldcoinValue.ToString(), myTrans))
                 {
                     RefreshFortune();
                     return OperResult.RESULTCODE_FALSE;
@@ -656,7 +657,7 @@ namespace SuperMinersServerApplication.Controller
                     OperContent = "玩家支付宝充值金币奖励"
                 };
 
-                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, myTrans))
+                if (!this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "玩家使用支付宝充值金币" + goldcoinValue.ToString(), myTrans))
                 {
                     LogHelper.Instance.AddInfoLog(this.BasePlayer.SimpleInfo.UserName + " ---支付宝充值金币，保存玩家信息失败");
                     RefreshFortune();
@@ -695,7 +696,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.CreditValue += order.StonesOrder.SellStonesCount;
                 fortuneInfo.StoneSellQuan++;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家成功购买矿石，订单号：" + order.StonesOrder.OrderNumber, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -721,7 +722,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.StockOfStones -= order.StonesOrder.SellStonesCount;
                 fortuneInfo.FreezingStones -= order.StonesOrder.SellStonesCount;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家成功出售矿石，订单号：" + order.StonesOrder.OrderNumber, trans);
 
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
@@ -744,7 +745,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.StockOfStones -= allStones;
                 fortuneInfo.FreezingStones -= allStones;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家通过股市完成出售矿石，订单号：" + order.OrderNumber, trans);
 
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
@@ -783,7 +784,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.GoldCoin += buyOrder.AwardGoldCoin;
                 //fortuneInfo.CreditValue += buyOrder.StonesOrder.SellStonesCount;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家通过股市完成购买矿石，订单号：" + buyOrder.OrderNumber, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -810,7 +811,7 @@ namespace SuperMinersServerApplication.Controller
                     var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                     fortuneInfo.StockOfDiamonds -= allNeedDiamand;
                     fortuneInfo.FreezingDiamonds += allNeedDiamand;
-                    this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                    this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家通过股市申请购买矿石，使用钻石支付，订单号：" + buyOrder.OrderNumber, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                 }
                 else if (buyOrder.PayType == PayType.RMB)
@@ -818,7 +819,7 @@ namespace SuperMinersServerApplication.Controller
                     var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                     fortuneInfo.RMB -= allNeedRMB;
                     fortuneInfo.FreezingRMB += allNeedRMB;
-                    this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                    this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家通过股市申请购买矿石，使用灵币支付，订单号：" + buyOrder.OrderNumber, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                 }
             }
@@ -842,7 +843,7 @@ namespace SuperMinersServerApplication.Controller
                     var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                     fortuneInfo.StockOfDiamonds += allNeedDiamand;
                     fortuneInfo.FreezingDiamonds -= allNeedDiamand;
-                    this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                    this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家取消股市申请购买矿石，使用钻石支付，订单号：" + buyOrder.OrderNumber, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                 }
                 else if (buyOrder.PayType == PayType.RMB)
@@ -851,7 +852,7 @@ namespace SuperMinersServerApplication.Controller
                     var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                     fortuneInfo.RMB += allNeedRMB;
                     fortuneInfo.FreezingRMB -= allNeedRMB;
-                    this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                    this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家取消股市申请购买矿石，使用灵币支付，订单号：" + buyOrder.OrderNumber, trans);
                     BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                 }
                 else if (buyOrder.PayType == PayType.Alipay)
@@ -872,7 +873,7 @@ namespace SuperMinersServerApplication.Controller
                         //确实已充值，将其退回到灵币账户，没有冻结项。
                         var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                         fortuneInfo.RMB += allNeedRMB;
-                        this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                        this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家取消股市申请购买矿石，使用支付宝支付，订单号：" + buyOrder.OrderNumber, trans);
                         BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
                     }
                 }
@@ -903,7 +904,7 @@ namespace SuperMinersServerApplication.Controller
                 fortuneInfo.FreezingStones += sellStoneCount;
                 fortuneInfo.StockOfStones -= feeStoneCount;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家通过股市申请出售矿石" + sellStoneCount + "，手续费：" + feeStoneCount, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -923,7 +924,7 @@ namespace SuperMinersServerApplication.Controller
                 }
                 fortuneInfo.FreezingStones -= sellStoneCount;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "玩家取消股市申请出售矿石，订单号：" + sellOrder.OrderNumber, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -955,7 +956,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     fortuneInfo.StoneSellQuan--;
                 }
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "旧版出售矿石，订单号：" + order.OrderNumber, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -969,7 +970,7 @@ namespace SuperMinersServerApplication.Controller
                 var fortuneInfo = BasePlayer.FortuneInfo.CopyTo();
                 fortuneInfo.FreezingStones -= order.SellStonesCount;
 
-                this.SaveUserFortuneInfoToDB(fortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(fortuneInfo, "旧版取消出售矿石，订单号：" + order.OrderNumber, trans);
                 BasePlayer.FortuneInfo.CopyFrom(fortuneInfo);
             }
 
@@ -1019,7 +1020,7 @@ namespace SuperMinersServerApplication.Controller
                     this.BasePlayer.FortuneInfo.FreezingRMB += getRMBCount;
 
                     myTrans = MyDBHelper.Instance.CreateTrans();
-                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家申请提现" + getRMBCount + " 灵币", myTrans);
                     DBProvider.WithdrawRMBRecordDBProvider.AddWithdrawRMBRecord(record, myTrans);
 
                     myTrans.Commit();
@@ -1081,7 +1082,7 @@ namespace SuperMinersServerApplication.Controller
                     }
 
                     myTrans = MyDBHelper.Instance.CreateTrans();
-                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家灵币提现申请通过", myTrans);
                     DBProvider.WithdrawRMBRecordDBProvider.ConfirmWithdrawRMB(record, myTrans);
 
                     myTrans.Commit();
@@ -1110,9 +1111,9 @@ namespace SuperMinersServerApplication.Controller
 
         }
 
-        private bool SaveUserFortuneInfoToDB(PlayerFortuneInfo fortuneInfo, CustomerMySqlTransaction myTrans)
+        private bool SaveUserFortuneInfoToDB(PlayerFortuneInfo fortuneInfo, string operMessage, CustomerMySqlTransaction myTrans)
         {
-            LogHelper.Instance.AddInfoLog("玩家财富信息变动：" + fortuneInfo.ToString());
+            LogHelper.Instance.AddInfoLog(operMessage +"。玩家财富信息变动为：" + fortuneInfo.ToString());
             if (myTrans == null)
             {
                 return DBProvider.UserDBProvider.SavePlayerFortuneInfo(this.BasePlayer.SimpleInfo.UserID, fortuneInfo);
@@ -1129,7 +1130,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 //20170326 改成返灵币
                 BasePlayer.FortuneInfo.RMB += (int)awardRMBValue;
-                this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, trans);
+                this.SaveUserFortuneInfoToDB(BasePlayer.FortuneInfo, "子玩家充值积分奖励父玩家" + (int)awardRMBValue + "灵币", trans);
             }
 
             return true;
@@ -1137,44 +1138,47 @@ namespace SuperMinersServerApplication.Controller
 
         public bool ReferAward(AwardReferrerConfig awardConfig, string newUserName, CustomerMySqlTransaction trans)
         {
-            bool isOK = false;
-            lock (_lockFortuneAction)
-            {
-                PlayerFortuneInfo newFortuneInfo = null;
-                //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
-                newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
+            //王老板修改，推荐注册不再给奖励
+            return true;
 
-                //按王忠岩要求，无限涨长 20161013
-                //if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
-                //{
-                    newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
-                //}
-                newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
-                newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
-                newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
-                newFortuneInfo.StonesReserves += awardConfig.AwardReferrerMines * GlobalConfig.GameConfig.StonesReservesPerMines;
-                newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
+            //bool isOK = false;
+            //lock (_lockFortuneAction)
+            //{
+            //    PlayerFortuneInfo newFortuneInfo = null;
+            //    //此处不直接修改内存对象，先修改数据库，如果成功，重新从数据库加载，否则不动内存！
+            //    newFortuneInfo = BasePlayer.FortuneInfo.CopyTo();
 
-                isOK = this.SaveUserFortuneInfoToDB(newFortuneInfo, trans);
-                BasePlayer.FortuneInfo.CopyFrom(newFortuneInfo);
-            }
+            //    //按王忠岩要求，无限涨长 20161013
+            //    //if (newFortuneInfo.Exp < GlobalConfig.GameConfig.CanExchangeMinExp)
+            //    //{
+            //        newFortuneInfo.Exp += awardConfig.AwardReferrerExp;
+            //    //}
+            //    newFortuneInfo.GoldCoin += awardConfig.AwardReferrerGoldCoin;
+            //    newFortuneInfo.MinersCount += awardConfig.AwardReferrerMiners;
+            //    newFortuneInfo.MinesCount += awardConfig.AwardReferrerMines;
+            //    newFortuneInfo.StonesReserves += awardConfig.AwardReferrerMines * GlobalConfig.GameConfig.StonesReservesPerMines;
+            //    newFortuneInfo.StockOfStones += awardConfig.AwardReferrerStones;
 
-            DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(new ExpChangeRecord()
-            {
-                UserID = this.BasePlayer.SimpleInfo.UserID,
-                UserName = this.BasePlayer.SimpleInfo.UserName,
-                AddExp = awardConfig.AwardReferrerExp,
-                NewExp = this.BasePlayer.FortuneInfo.Exp,
-                OperContent = "邀请玩家[" + newUserName + "]注册，并登录成功。获取" + awardConfig.ReferLevel + "级奖励",
-                Time = MyDateTime.FromDateTime(DateTime.Now)
-            }, trans);
+            //    isOK = this.SaveUserFortuneInfoToDB(newFortuneInfo, trans);
+            //    BasePlayer.FortuneInfo.CopyFrom(newFortuneInfo);
+            //}
 
-            if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardConfig.AwardReferrerExp < 50))
-            {
-                AgentAwardController.Instance.PlayerRechargeRMB(this.BasePlayer, AgentAwardType.PlayerAgentExp, 0, trans);
-            }
+            //DBProvider.ExpChangeRecordDBProvider.AddExpChangeRecord(new ExpChangeRecord()
+            //{
+            //    UserID = this.BasePlayer.SimpleInfo.UserID,
+            //    UserName = this.BasePlayer.SimpleInfo.UserName,
+            //    AddExp = awardConfig.AwardReferrerExp,
+            //    NewExp = this.BasePlayer.FortuneInfo.Exp,
+            //    OperContent = "邀请玩家[" + newUserName + "]注册，并登录成功。获取" + awardConfig.ReferLevel + "级奖励",
+            //    Time = MyDateTime.FromDateTime(DateTime.Now)
+            //}, trans);
 
-            return isOK;
+            //if (this.BasePlayer.FortuneInfo.Exp >= 50 && (this.BasePlayer.FortuneInfo.Exp - awardConfig.AwardReferrerExp < 50))
+            //{
+            //    AgentAwardController.Instance.PlayerRechargeRMB(this.BasePlayer, AgentAwardType.PlayerAgentExp, 0, trans);
+            //}
+
+            //return isOK;
         }
 
         public int RouletteSpendStone(int stoneCount)
@@ -1187,8 +1191,8 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, null);
-                
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家参与幸运大转盘花费" + stoneCount + "矿石", null);
+
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
         }
@@ -1242,7 +1246,7 @@ namespace SuperMinersServerApplication.Controller
 
                     }
 
-                    isOK = this.SaveUserFortuneInfoToDB(newFortuneInfo, trans);
+                    isOK = this.SaveUserFortuneInfoToDB(newFortuneInfo, "玩家幸运大转盘中奖：" + awardItem.ID.ToString() + ":" + awardItem.AwardName, trans);
                     trans.Commit();
 
                     BasePlayer.FortuneInfo.CopyFrom(newFortuneInfo);
@@ -1276,7 +1280,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 this.BasePlayer.FortuneInfo.StockOfStones -= betStoneCount;
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家参与夺宝奇兵，下注" + betStoneCount + "矿石", myTrans);
 
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
@@ -1292,7 +1296,7 @@ namespace SuperMinersServerApplication.Controller
                 //}
 
                 this.BasePlayer.FortuneInfo.StockOfStones += winStoneCount;
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家赢得夺宝奇兵" + winStoneCount + "矿石", myTrans);
 
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
@@ -1338,7 +1342,7 @@ namespace SuperMinersServerApplication.Controller
             this.BasePlayer.GravelInfo = DBProvider.UserDBProvider.GetPlayerGravelInfo(this.BasePlayer.SimpleInfo.UserID);
         }
 
-        public int BetInGambleStone(int stoneCount, int gravelCount, CustomerMySqlTransaction myTrans)
+        public int BetInGambleStone(GambleStoneItemColor color, int stoneCount, int gravelCount, CustomerMySqlTransaction myTrans)
         {
             if (gravelCount > 0)
             {
@@ -1349,6 +1353,7 @@ namespace SuperMinersServerApplication.Controller
 
                 this.BasePlayer.GravelInfo.Gravel -= gravelCount;
                 DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
+                LogHelper.Instance.AddInfoLog("玩家参与赌石，下注：" + color.ToString() + stoneCount + "矿石+" + gravelCount + "碎片");
             }
             if (stoneCount > 0)
             {
@@ -1358,7 +1363,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家参与赌石，下注：" + color.ToString() + stoneCount.ToString() + "矿石+" + gravelCount.ToString() + "碎片", myTrans);
             }
 
             return OperResult.RESULTCODE_TRUE;
@@ -1369,7 +1374,7 @@ namespace SuperMinersServerApplication.Controller
             lock (_lockFortuneAction)
             {
                 this.BasePlayer.FortuneInfo.StockOfStones += winnedStone;
-                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                bool isOK = this.SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家参与赌石，赢得：" + winnedStone.ToString() + "矿石", myTrans);
 
                 return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
             }
@@ -1398,7 +1403,7 @@ namespace SuperMinersServerApplication.Controller
                     }
 
                     this.BasePlayer.FortuneInfo.UserRemoteServiceValidTimes--;
-                    SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                    SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家使用一次远程服务", myTrans);
                 }
 
                 return OperResult.RESULTCODE_TRUE;
@@ -1427,7 +1432,7 @@ namespace SuperMinersServerApplication.Controller
                 this.BasePlayer.FortuneInfo.RMB += shoppingItem.GainRMB;
                 this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled += shoppingItem.GainShoppingCredits;
                 this.BasePlayer.FortuneInfo.StockOfStones += shoppingItem.GainStone;
-                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家购买虚拟商品：" + shoppingItem.Name, myTrans);
                 DBProvider.UserDBProvider.SavePlayerGravelInfo(this.BasePlayer.GravelInfo, myTrans);
 
                 return OperResult.RESULTCODE_TRUE;
@@ -1444,7 +1449,7 @@ namespace SuperMinersServerApplication.Controller
                 }
 
                 this.BasePlayer.FortuneInfo.StockOfDiamonds -= (decimal)shoppingItem.ValueDiamonds;
-                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, myTrans);
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家购买钻石商品：" + shoppingItem.Name, myTrans);
 
                 return OperResult.RESULTCODE_TRUE;
             }

@@ -74,6 +74,8 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
+        private int LogMaxCount = 200;
+
         /// <summary>
         /// 
         /// </summary>
@@ -91,17 +93,13 @@ namespace SuperMinersServerApplication.Controller
             lock (this._lockList)
             {
                 List<PlayerActionLog> listSearchResults = new List<PlayerActionLog>();
-                for (int i = list.Count - 1; i >= 0; i--)
+                int count = list.Count < LogMaxCount ? list.Count : LogMaxCount;
+                for (int i = list.Count - 1; i >= list.Count - count; i--)
                 {
                     var item = list[i];
                     if (item.Time > time)
                     {
-                        listSearchResults.Add(item);
-                    }
-
-                    if (listSearchResults.Count > 200)
-                    {
-                        break;
+                        listSearchResults.Insert(0, item);
                     }
                 }
 
@@ -129,7 +127,10 @@ namespace SuperMinersServerApplication.Controller
                     }
                 }
             }
-            catch (Exception) { }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("加载用户操作日志异常。", exc);
+            }
         }
 
         public void SaveActionLogs()

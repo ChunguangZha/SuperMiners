@@ -23,7 +23,7 @@ namespace SuperMinersWPF.ViewModels
         }
 
 
-        private int LogMaxCount = 100;
+        private int LogMaxCount = 200;
         private ObservableCollection<PlayerActionLogUIModel> _listPlayerActionLog = new ObservableCollection<PlayerActionLogUIModel>();
 
         public ObservableCollection<PlayerActionLogUIModel> ListPlayerActionLog
@@ -161,12 +161,12 @@ namespace SuperMinersWPF.ViewModels
                     return;
                 }
 
-                //服务器返回的记录是按时间降序排列。
+                //服务器返回的记录是按时间升序排列，需要降序添加。
                 var lastLogFromServer = e.Result[e.Result.Length - 1];
 
                 if (ListPlayerActionLog.Count >= this.LogMaxCount)
                 {
-                    int deleteLastNo = ListPlayerActionLog.Count - e.Result.Length;
+                    int deleteLastNo = ListPlayerActionLog.Count - (e.Result.Length + 5);
                     if (deleteLastNo < 0) deleteLastNo = 0;
 
                     //从后往前删
@@ -181,19 +181,22 @@ namespace SuperMinersWPF.ViewModels
                 //{
                 //    lastLogFromClient = ListPlayerActionLog[0];
                 //}
-                for (int i = 0; i < e.Result.Length; i++)
+
+                int count = e.Result.Length < this.LogMaxCount ? e.Result.Length : this.LogMaxCount;
+
+                for (int i = 0; i < count; i++)
                 {
                     var newLog = e.Result[i];
                     if (!this.JudgeLogExists(newLog))
                     {
-                        ListPlayerActionLog.Add(new PlayerActionLogUIModel(newLog));
+                        ListPlayerActionLog.Insert(0, new PlayerActionLogUIModel(newLog));
                     }
                 }
 
-                if (GetPlayerActionCompleted != null)
-                {
-                    GetPlayerActionCompleted(null, null);
-                }
+                //if (GetPlayerActionCompleted != null)
+                //{
+                //    GetPlayerActionCompleted(null, null);
+                //}
             }
             catch (Exception exc)
             {

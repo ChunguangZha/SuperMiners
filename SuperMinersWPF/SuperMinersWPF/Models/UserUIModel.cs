@@ -34,7 +34,7 @@ namespace SuperMinersWPF.Models
             set
             {
                 this._parentObject = value;
-                if (this._parentObject.FortuneInfo.TempOutputStones != 0)
+                if (this._parentObject.FortuneInfo.TempOutputStones > this.TempOutputStones)
                 {
                     this.TempOutputStones = this._parentObject.FortuneInfo.TempOutputStones;
                 }

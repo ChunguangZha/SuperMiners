@@ -35,17 +35,17 @@ namespace SuperMinersWPF.Views
                 return;
             }
 
-            App.MessageVMObject.GetPlayerActionCompleted += MessageVMObject_GetPlayerActionCompleted;
+            //App.MessageVMObject.GetPlayerActionCompleted += MessageVMObject_GetPlayerActionCompleted;
         }
 
-        void MessageVMObject_GetPlayerActionCompleted(object sender, EventArgs e)
-        {
-            if (App.MessageVMObject.ListPlayerActionLog.Count > 0)
-            {
-                PlayerActionLogUIModel lastActionLog = App.MessageVMObject.ListPlayerActionLog[App.MessageVMObject.ListPlayerActionLog.Count - 1];
-                //this.listboxActionMessage.ScrollIntoView(lastActionLog);
-            }
-        }
+        //void MessageVMObject_GetPlayerActionCompleted(object sender, EventArgs e)
+        //{
+        //    if (App.MessageVMObject.ListPlayerActionLog.Count > 0)
+        //    {
+        //        PlayerActionLogUIModel lastActionLog = App.MessageVMObject.ListPlayerActionLog[App.MessageVMObject.ListPlayerActionLog.Count - 1];
+        //        //this.listboxActionMessage.ScrollIntoView(lastActionLog);
+        //    }
+        //}
 
     }
 }

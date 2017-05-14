@@ -263,17 +263,17 @@ namespace SuperMinersWeb.Wcf
         }
 
 
-        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
-        {
-            try
-            {
-                return base.Channel.TransferOldUser(userLoginName, password, alipayAccount, alipayRealName, email, newServerUserLoginName, newServerPassword);
-            }
-            catch (Exception exc)
-            {
-                Console.WriteLine(exc);
-                return OperResult.RESULTCODE_EXCEPTION;
-            }
-        }
+        //public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
+        //{
+        //    try
+        //    {
+        //        return base.Channel.TransferOldUser(userLoginName, password, alipayAccount, alipayRealName, email, newServerUserLoginName, newServerPassword);
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        Console.WriteLine(exc);
+        //        return OperResult.RESULTCODE_EXCEPTION;
+        //    }
+        //}
     }
 }

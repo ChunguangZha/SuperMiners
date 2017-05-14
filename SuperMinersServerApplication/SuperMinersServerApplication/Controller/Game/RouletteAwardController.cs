@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace SuperMinersServerApplication.Controller.Game
 {
+    /// <summary>
+    /// 幸运大转盘
+    /// </summary>
     public class RouletteAwardController
     {
         #region Single

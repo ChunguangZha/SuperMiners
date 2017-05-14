@@ -549,59 +549,59 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
-        public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
-        {
-            try
-            {
-                var player = PlayerController.Instance.GetRunnable(userLoginName);
-                if (player == null)
-                {
-                    return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
-                }
-                if (player.BasePlayer.SimpleInfo.Password != password)
-                {
-                    return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
-                }
-                if (player.BasePlayer.SimpleInfo.Alipay != alipayAccount || player.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
-                {
-                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR;
-                }
-                int count = DBProvider.OldPlayerTransferDBProvider.GetRegisteredCountByUserLoginName(userLoginName);
-                if (count > 0)
-                {
-                    return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
-                }
+        //public int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword)
+        //{
+        //    try
+        //    {
+        //        var player = PlayerController.Instance.GetRunnable(userLoginName);
+        //        if (player == null)
+        //        {
+        //            return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+        //        }
+        //        if (player.BasePlayer.SimpleInfo.Password != password)
+        //        {
+        //            return OperResult.RESULTCODE_USERNAME_PASSWORD_ERROR;
+        //        }
+        //        if (player.BasePlayer.SimpleInfo.Alipay != alipayAccount || player.BasePlayer.SimpleInfo.AlipayRealName != alipayRealName)
+        //        {
+        //            return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_ALIPAYINFOERROR;
+        //        }
+        //        int count = DBProvider.OldPlayerTransferDBProvider.GetRegisteredCountByUserLoginName(userLoginName);
+        //        if (count > 0)
+        //        {
+        //            return OperResult.RESULTCODE_TRANSFEROLDPLAYER_FAILED_REGISTED;
+        //        }
 
-                int result = player.LockPlayerToTransfer();
-                if (result != OperResult.RESULTCODE_TRUE)
-                {
-                    return result;
-                }
+        //        int result = player.LockPlayerToTransfer();
+        //        if (result != OperResult.RESULTCODE_TRUE)
+        //        {
+        //            return result;
+        //        }
                 
-                DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
-                {
-                    UserLoginName = userLoginName,
-                    AlipayAccount = alipayAccount,
-                    AlipayRealName = alipayRealName,
-                    Email = email,
-                    NewServerUserLoginName = newServerUserLoginName,
-                    NewServerPassword = newServerPassword,
-                    isTransfered = false,
-                    SubmitTime = new MyDateTime(DateTime.Now)
-                });
+        //        DBProvider.OldPlayerTransferDBProvider.AddOldPlayerTransferRecord(new OldPlayerTransferRegisterInfo()
+        //        {
+        //            UserLoginName = userLoginName,
+        //            AlipayAccount = alipayAccount,
+        //            AlipayRealName = alipayRealName,
+        //            Email = email,
+        //            NewServerUserLoginName = newServerUserLoginName,
+        //            NewServerPassword = newServerPassword,
+        //            isTransfered = false,
+        //            SubmitTime = new MyDateTime(DateTime.Now)
+        //        });
 
-                LogHelper.Instance.AddInfoLog("玩家 [" + userLoginName + "] 登记跨区转移账户。");
-                return OperResult.RESULTCODE_TRUE;
-            }
-            catch (Exception exc)
-            {
-                LogHelper.Instance.AddErrorLog("TransferOldUser Exception. " +
-                                            " userLoginName: " + userLoginName + ";" +
-                                            " alipayAccount: " + alipayAccount + ";" +
-                                            " alipayRealName: " + alipayRealName, exc);
+        //        LogHelper.Instance.AddInfoLog("玩家 [" + userLoginName + "] 登记跨区转移账户。");
+        //        return OperResult.RESULTCODE_TRUE;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        LogHelper.Instance.AddErrorLog("TransferOldUser Exception. " +
+        //                                    " userLoginName: " + userLoginName + ";" +
+        //                                    " alipayAccount: " + alipayAccount + ";" +
+        //                                    " alipayRealName: " + alipayRealName, exc);
 
-                return OperResult.RESULTCODE_FALSE;
-            }
-        }
+        //        return OperResult.RESULTCODE_FALSE;
+        //    }
+        //}
     }
 }

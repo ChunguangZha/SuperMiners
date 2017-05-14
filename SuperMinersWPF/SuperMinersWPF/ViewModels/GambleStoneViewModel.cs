@@ -38,6 +38,11 @@ namespace SuperMinersWPF.ViewModels
             }
         }
 
+        private bool _currentBetInRed = false;
+        private bool _currentBetInGreen = false;
+        private bool _currentBetInBlue = false;
+
+
         private GambleStonePlayerBetRecordUIModel _currentInningPlayerBetRecord = new GambleStonePlayerBetRecordUIModel(new GambleStonePlayerBetRecord());
 
         public GambleStonePlayerBetRecordUIModel CurrentInningPlayerBetRecord
@@ -106,6 +111,37 @@ namespace SuperMinersWPF.ViewModels
 
         public void AsyncBetIn(GambleStoneItemColor color, int stoneCount, int gravelCount)
         {
+            switch (color)
+            {
+                case GambleStoneItemColor.Red:
+                    if (this._currentBetInBlue && this._currentBetInGreen)
+                    {
+                        MyMessageBox.ShowInfo("红、绿、蓝，同时最多只能下注两种。");
+                        return;
+                    }
+                    this._currentBetInRed = true;
+                    break;
+                case GambleStoneItemColor.Green:
+                    if (this._currentBetInBlue && this._currentBetInRed)
+                    {
+                        MyMessageBox.ShowInfo("红、绿、蓝，同时最多只能下注两种。");
+                        return;
+                    }
+                    this._currentBetInGreen = true;
+                    break;
+                case GambleStoneItemColor.Blue:
+                    if (this._currentBetInGreen && this._currentBetInRed)
+                    {
+                        MyMessageBox.ShowInfo("红、绿、蓝，同时最多只能下注两种。");
+                        return;
+                    }
+                    this._currentBetInBlue = true;
+                    break;
+                case GambleStoneItemColor.Purple:
+                    break;
+                default:
+                    break;
+            }
             //App.BusyToken.ShowBusyWindow("正在下注...");
             GlobalData.Client.GambleStoneBetIn(color, stoneCount, gravelCount, null);
         }
@@ -158,9 +194,31 @@ namespace SuperMinersWPF.ViewModels
             {
                 if (e.Error != null)
                 {
-                    LogHelper.Instance.AddErrorLog("获取疯狂猜石Inning信息，服务器返回失败。", e.Error);
+                    this._currentBetInRed = false;
+                    this._currentBetInGreen = false;
+                    this._currentBetInBlue = false;
+
+                    LogHelper.Instance.AddErrorLog("获取疯狂猜石局信息，服务器返回失败。", e.Error);
                     this.CurrentInningInfo.ParentObject = null;
                     return;
+                }
+
+                if (e.Result == null)
+                {
+                    this._currentBetInRed = false;
+                    this._currentBetInGreen = false;
+                    this._currentBetInBlue = false;
+
+                }
+                else
+                {
+                    if (e.Result.InningIndex != this.CurrentInningInfo.InningIndex)
+                    {
+                        this._currentBetInRed = false;
+                        this._currentBetInGreen = false;
+                        this._currentBetInBlue = false;
+
+                    }
                 }
 
                 this.CurrentInningInfo.ParentObject = e.Result;
@@ -176,7 +234,7 @@ namespace SuperMinersWPF.ViewModels
             catch (Exception exc)
             {
                 MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
-                LogHelper.Instance.AddErrorLog("获取疯狂猜石Inning信息失败。", exc);
+                LogHelper.Instance.AddErrorLog("获取疯狂猜石局信息失败。", exc);
             }
         }
 
@@ -187,7 +245,7 @@ namespace SuperMinersWPF.ViewModels
                 App.BusyToken.CloseBusyWindow();
                 if (e.Error != null)
                 {
-                    LogHelper.Instance.AddErrorLog("获取疯狂猜石Round信息，服务器返回失败。", e.Error);
+                    LogHelper.Instance.AddErrorLog("获取疯狂猜石轮信息，服务器返回失败。", e.Error);
                     this.CurrentRoundInfo.ParentObject = null;
                     return;
                 }
@@ -201,7 +259,7 @@ namespace SuperMinersWPF.ViewModels
             catch (Exception exc)
             {
                 MyMessageBox.ShowInfo("获取疯狂猜石信息失败。");
-                LogHelper.Instance.AddErrorLog("获取疯狂猜石Round信息失败。", exc);
+                LogHelper.Instance.AddErrorLog("获取疯狂猜石轮信息失败。", exc);
             }
         }
 
@@ -254,7 +312,7 @@ namespace SuperMinersWPF.ViewModels
                 }
                 if (e.Result.ResultCode != OperResult.RESULTCODE_TRUE)
                 {
-                    //MyMessageBox.ShowInfo("赌石娱乐下游失败。原因为：" + OperResult.GetMsg(e.Result.ResultCode));
+                    MyMessageBox.ShowInfo("赌石娱乐下注失败。原因为：" + OperResult.GetMsg(e.Result.ResultCode));
                     return;
                 }
 

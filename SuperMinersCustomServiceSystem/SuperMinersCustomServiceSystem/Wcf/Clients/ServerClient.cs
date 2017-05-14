@@ -256,17 +256,17 @@ namespace SuperMinersCustomServiceSystem.Wcf.Clients
             this._invoker.Invoke<OldPlayerTransferRegisterInfo[]>(this._context, "GetPlayerTransferRecords", this.GetPlayerTransferRecordsCompleted, GlobalData.Token);
         }
 
-        public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerFromCompleted;
-        public void TransferPlayerFrom(int recordID, string userName, string adminUserName)
-        {
-            this._invoker.Invoke<int>(this._context, "TransferPlayerFrom", this.TransferPlayerFromCompleted, GlobalData.Token, recordID, userName, adminUserName);
-        }
+        //public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerFromCompleted;
+        //public void TransferPlayerFrom(int recordID, string userName, string adminUserName)
+        //{
+        //    this._invoker.Invoke<int>(this._context, "TransferPlayerFrom", this.TransferPlayerFromCompleted, GlobalData.Token, recordID, userName, adminUserName);
+        //}
 
-        public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerToCompleted;
-        public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword, object userState)
-        {
-            this._invoker.InvokeUserState<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, userState, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo, newUserLoginName, newPassword);
-        }
+        //public event EventHandler<WebInvokeEventArgs<int>> TransferPlayerToCompleted;
+        //public void TransferPlayerTo(PlayerSimpleInfo simpleInfo, PlayerFortuneInfo fortuneInfo, string newUserLoginName, string newPassword, object userState)
+        //{
+        //    this._invoker.InvokeUserState<int>(this._context, "TransferPlayerTo", this.TransferPlayerToCompleted, userState, GlobalData.CurrentAdmin.UserName, simpleInfo, fortuneInfo, newUserLoginName, newPassword);
+        //}
 
         public event EventHandler<WebInvokeEventArgs<int>> HandlePlayerRemoteServiceCompleted;
         public void HandlePlayerRemoteService(string actionPassword, string playerUserName, string serviceContent, MyDateTime serviceTime, string engineerName)

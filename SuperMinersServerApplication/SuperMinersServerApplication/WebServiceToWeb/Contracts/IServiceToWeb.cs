@@ -117,8 +117,8 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         [OperationContract]
         int CheckAlipayOrderBeHandled(string userName, string out_trade_no, string alipay_trade_no, decimal total_fee, string buyer_email, string pay_time);
 
-        [OperationContract]
-        int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword);
+        //[OperationContract]
+        //int TransferOldUser(string userLoginName, string password, string alipayAccount, string alipayRealName, string email, string newServerUserLoginName, string newServerPassword);
 
     }
 }

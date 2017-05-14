@@ -117,13 +117,17 @@ namespace SuperMinersServerApplication.Controller.Trade
                     LogHelper.Instance.AddInfoLog("玩家 [" + alipay.user_name + "] 支付宝充值购买远程协助服务失败4，原因为：" + OperResult.GetMsg(result));
                     return result;
                 }
+
+                //玩家购买远程服务充值三层返利，
                 if (!string.IsNullOrEmpty(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
                 {
+                    //上一级
                     var parent1PlayerRunner = PlayerController.Instance.GetRunnable(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                     if (parent1PlayerRunner != null)
                     {
                         parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[0], myTrans);
 
+                        //上二级
                         if (!string.IsNullOrEmpty(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
                         {
                             var parent2PlayerRunner = PlayerController.Instance.GetRunnable(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
@@ -131,6 +135,15 @@ namespace SuperMinersServerApplication.Controller.Trade
                             {
                                 parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[1], myTrans);
 
+                                if (!string.IsNullOrEmpty(parent2PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
+                                {
+                                    var parent3PlayerRunner = PlayerController.Instance.GetRunnable(parent2PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
+                                    if (parent3PlayerRunner != null)
+                                    {
+                                        parent3PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[2], myTrans);
+
+                                    }
+                                }
                             }
                         }
                     }

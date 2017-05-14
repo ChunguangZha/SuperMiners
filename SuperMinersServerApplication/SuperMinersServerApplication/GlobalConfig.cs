@@ -71,7 +71,10 @@ namespace SuperMinersServerApplication
 
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
 
-        public static decimal[] BuyRemoteServiceAwardRMBConfig = new decimal[] { 0.05m, 0.01m };
+        /// <summary>
+        /// 玩家购买远程服务三层返利，按积分值比例返灵币
+        /// </summary>
+        public static decimal[] BuyRemoteServiceAwardRMBConfig = new decimal[] { 0.08m, 0.05m, 0.03m };
 
         public static RouletteConfig RouletteConfig = new RouletteConfig();
 

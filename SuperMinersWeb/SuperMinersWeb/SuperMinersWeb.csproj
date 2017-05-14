@@ -229,7 +229,6 @@
     <Content Include="Shopping\MineTrade.aspx" />
     <Content Include="ShopList.aspx" />
     <Content Include="Shopping\StoneTrade.aspx" />
-    <Content Include="TransferPage.aspx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -383,13 +382,6 @@
     </Compile>
     <Compile Include="Site.Master.designer.cs">
       <DependentUpon>Site.Master</DependentUpon>
-    </Compile>
-    <Compile Include="TransferPage.aspx.cs">
-      <DependentUpon>TransferPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="TransferPage.aspx.designer.cs">
-      <DependentUpon>TransferPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Utility\LogHelper.cs" />
     <Compile Include="Utility\Tools.cs" />

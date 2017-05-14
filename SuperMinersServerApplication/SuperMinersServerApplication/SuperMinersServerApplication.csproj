@@ -117,6 +117,7 @@
     <Compile Include="Controller\Shopping\DiamondShoppingController.cs" />
     <Compile Include="Controller\Shopping\VirtualShoppingController.cs" />
     <Compile Include="Controller\Stack\StoneStackController.cs" />
+    <Compile Include="Controller\StoneFactoryController.cs" />
     <Compile Include="Controller\Trade\AgentAwardController.cs" />
     <Compile Include="Controller\Trade\GoldCoinOrderController.cs" />
     <Compile Include="Controller\Trade\MineOrderController.cs" />

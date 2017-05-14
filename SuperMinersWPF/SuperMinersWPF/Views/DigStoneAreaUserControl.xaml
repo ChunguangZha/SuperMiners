@@ -27,14 +27,14 @@
                                 <Run Text="{Binding Strings.Miner, Mode=OneWay, Source={StaticResource Language}}"/>
                     </TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
+                <!--<StackPanel Orientation="Horizontal">
                     <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
                                 <Run Text="共生产： "/>
                                 <Run Text="{Binding AllSystemState.AllProducedStonesCount, StringFormat='F0', Mode=OneWay}"/>
                                 <Run Text="{Binding Strings.Stone, Mode=OneWay, Source={StaticResource Language}}"/>
                     </TextBlock>
-                </StackPanel>
+                </StackPanel>-->
                 <StackPanel Orientation="Horizontal">
                     <Image Width="20" Height="20" Margin="30,5,10,5" Source="/SuperMinersWPF;component/Resources/m.png"/>
                     <TextBlock VerticalAlignment="Center" Margin="5,0" Foreground="White">
