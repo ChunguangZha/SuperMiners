@@ -66,7 +66,10 @@ namespace SuperMinersServerApplication.WebService.Services
                         PlayerController.Instance.RollbackUserFromDB(userName);
                         LogHelper.Instance.AddErrorLog("玩家[ " + userName + " ] 下注赌石游戏 Inner异常。color： " + color.ToString() + "; stoneCount: " + stoneCount.ToString() + "; gravelCount: " + gravelCount.ToString(), exc);
                     });
-
+                    if (result != OperResult.RESULTCODE_TRUE)
+                    {
+                        LogHelper.Instance.AddInfoLog("玩家[ " + userName + " ] 下注赌石游戏失败，数据库操作已回滚");
+                    }
                     betResult.ResultCode = result;
                     return betResult;
                 }

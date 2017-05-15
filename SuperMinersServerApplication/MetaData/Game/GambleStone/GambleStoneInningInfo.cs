@@ -100,7 +100,7 @@ namespace MetaData.Game.GambleStone
         Readying,
         BetInWaiting,
         Opening,
-        Finished = 9
+        Finished = 7
     }
 
     [DataContract]

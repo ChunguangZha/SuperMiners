@@ -125,7 +125,7 @@ namespace SuperMinersWPF.Models
                 switch (this._parenObject.State)
                 {
                     case GambleStoneInningStatusType.Readying:
-                        return Visibility.Visible;
+                        return Visibility.Collapsed;
                     case GambleStoneInningStatusType.BetInWaiting:
                         return Visibility.Visible;
                     case GambleStoneInningStatusType.Opening:
@@ -162,7 +162,7 @@ namespace SuperMinersWPF.Models
         {
             get
             {
-                return this._parenObject.State == GambleStoneInningStatusType.BetInWaiting && this.CountDownSeconds > 0;
+                return this._parenObject.State == GambleStoneInningStatusType.BetInWaiting && this.CountDownSeconds >= 5;
             }
         }
 

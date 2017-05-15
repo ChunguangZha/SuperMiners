@@ -226,10 +226,10 @@ namespace SuperMinersWPF.ViewModels
                 {
                     AsyncGetCurrentGambleStoneRoundInfo();
                 }
-                if (GambleStoneInningChanged != null)
-                {
-                    GambleStoneInningChanged(e.Result);
-                }
+                //if (GambleStoneInningChanged != null)
+                //{
+                //    GambleStoneInningChanged(e.Result);
+                //}
             }
             catch (Exception exc)
             {

@@ -229,7 +229,7 @@ namespace SuperMinersWPF.Views.Controls
             int offsetX = _destImgLocationX - currentXPixel;
             int offsetY = _destImgLocationY - currentYPixel;
 
-            Console.WriteLine("index = " + index + "; xIndex = " + xIndex + "; yIndex = " + yIndex + "; currentXPixel = " + currentXPixel + "; currentYPixel = " + currentYPixel + "; offsetX = " + offsetX + "; offsetY = " + offsetY);
+            //Console.WriteLine("index = " + index + "; xIndex = " + xIndex + "; yIndex = " + yIndex + "; currentXPixel = " + currentXPixel + "; currentYPixel = " + currentYPixel + "; offsetX = " + offsetX + "; offsetY = " + offsetY);
 
 
             Storyboard.SetTarget(keyFrameTransX, this._WinnedColorItem[index]);
@@ -369,6 +369,14 @@ namespace SuperMinersWPF.Views.Controls
 
         private void BetIn(GambleStoneItemColor itemColor)
         {
+            if (App.GambleStoneVMObject.CurrentInningInfo == null)
+            {
+                return;
+            }
+            if (App.GambleStoneVMObject.CurrentInningInfo.CountDownSeconds < 5)
+            {
+                return;
+            }
             int stoneCount = 0;
             int gravelCount = 0;
 

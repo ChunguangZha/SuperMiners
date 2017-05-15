@@ -42,7 +42,7 @@ namespace SuperMinersServerApplication.Controller.Game
         
         public static readonly int WaitBetInTimeSeconds = 40;
         public static readonly int ReadyTimeSeconds = 5;
-        public static readonly int OpenPriceTimeSeconds = 8;
+        public static readonly int OpenPriceTimeSeconds = 3;
 
         private Thread _thrGamble = null;
         private bool isListening = false;
@@ -246,7 +246,7 @@ namespace SuperMinersServerApplication.Controller.Game
         {
             if (!this.isListening || this.CurrentInningRunner == null)
                 return false;
-            if (this.CurrentInningRunner.InningInfo.State != GambleStoneInningStatusType.BetInWaiting)
+            if (this.CurrentInningRunner.InningInfo.State != GambleStoneInningStatusType.BetInWaiting && this.CurrentInningRunner.InningInfo.State != GambleStoneInningStatusType.Opening)
             {
                 return false;
             }
@@ -313,9 +313,10 @@ namespace SuperMinersServerApplication.Controller.Game
             {
                 GambleStonePlayerBetInResult result = new GambleStonePlayerBetInResult();
 
-                //LogHelper.Instance.AddInfoLog("State: " + this._inningInfo.State.ToString());
-                if (this._inningInfo.CountDownSeconds == 0 || this._inningInfo.State != GambleStoneInningStatusType.BetInWaiting)
+                //客户端倒计时5秒内，不再允许下游。以防止计算错误
+                if (this._inningInfo.State != GambleStoneInningStatusType.BetInWaiting)
                 {
+                    LogHelper.Instance.AddInfoLog("State: " + this._inningInfo.State.ToString());
                     result.ResultCode = OperResult.RESULTCODE_GAME_GAMBLE_INNINGFINISHED;
                     return result;
                 }
@@ -414,8 +415,8 @@ namespace SuperMinersServerApplication.Controller.Game
                 {
                     this._inningInfo.State = GambleStoneInningStatusType.Opening;
                     this._inningInfo.CountDownSeconds = GambleStoneController.OpenPriceTimeSeconds;
-                    //FinishInning();
-                    //SaveInningInfoToDB();
+                    FinishInning();
+                    SaveInningInfoToDB();
                 }
                 else if (this._inningInfo.State == GambleStoneInningStatusType.Opening)
                 {
@@ -424,15 +425,15 @@ namespace SuperMinersServerApplication.Controller.Game
                 }
             }
 
-            //为了防止临截止时玩家下注，延迟2秒开奖
-            if (this._inningInfo.State == GambleStoneInningStatusType.Opening && this._inningInfo.CountDownSeconds == 5)
-            {
-                lock (_lockBetIn)
-                {
-                    FinishInning();
-                    SaveInningInfoToDB();
-                }
-            }
+            ////为了防止临截止时玩家下注，延迟2秒开奖
+            //if (this._inningInfo.State == GambleStoneInningStatusType.Opening && this._inningInfo.CountDownSeconds == 5)
+            //{
+            //    lock (_lockBetIn)
+            //    {
+            //        FinishInning();
+            //        SaveInningInfoToDB();
+            //    }
+            //}
 
             return false;
         }

@@ -216,16 +216,6 @@
                             <RowDefinition Height="16"/>
                         </Grid.RowDefinitions>
                         <Grid Margin="8,0">
-                            <!--<Image Name="imgCurrentWinnedColor" Visibility="Collapsed" Margin="20" RenderTransformOrigin="0,0" Source="/SuperMinersWPF;component/Resources/gambleblue.png">
-                                <Image.RenderTransform>
-                                    <TransformGroup>
-                                        <ScaleTransform ScaleX="1" ScaleY="1"/>
-                                        <SkewTransform/>
-                                        <RotateTransform/>
-                                        <TranslateTransform X="-0" Y="0"/>
-                                    </TransformGroup>
-                                </Image.RenderTransform>
-                            </Image>-->
                         </Grid>
                         <TextBlock Grid.Row="1" HorizontalAlignment="Center">
                             <Run Text="{Binding CurrentInningInfo.InningIndex, Mode=OneWay}"/>
