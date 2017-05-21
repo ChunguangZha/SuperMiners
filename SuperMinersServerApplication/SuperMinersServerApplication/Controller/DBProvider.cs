@@ -62,6 +62,8 @@ namespace SuperMinersServerApplication.Controller
         public static VirtualShoppingItemDBProvider VirtualShoppingItemDBProvider = new VirtualShoppingItemDBProvider();
 
         public static DiamondShoppingDBProvider DiamondShoppingDBProvider = new DiamondShoppingDBProvider();
+
+        public static PlayerStoneFactoryDBProvider PlayerStoneFactoryDBProvider = new PlayerStoneFactoryDBProvider();
         
     }
 }

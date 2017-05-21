@@ -1454,5 +1454,22 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_TRUE;
             }
         }
+
+        public int OpenFactory(CustomerMySqlTransaction myTrans)
+        {
+            //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled < GlobalConfig.GameConfig.OpenFactoryNeedShoppingCredit)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= GlobalConfig.GameConfig.OpenFactoryNeedShoppingCredit;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家开启矿石加工厂，花费了" + GlobalConfig.GameConfig.OpenFactoryNeedShoppingCredit + "积分", myTrans);
+
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
     }
 }

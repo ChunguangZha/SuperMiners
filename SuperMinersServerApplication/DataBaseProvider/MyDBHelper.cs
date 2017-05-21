@@ -91,6 +91,7 @@ namespace DataBaseProvider
                 else
                 {
                     myTrans.Rollback();
+                    FaileOper(null);
                 }
                 return result;
             }

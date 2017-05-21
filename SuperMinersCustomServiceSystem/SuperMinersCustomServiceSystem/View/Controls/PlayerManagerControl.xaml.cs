@@ -144,9 +144,9 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                         string ActionPassword = win.ActionPassword;
                         PlayerInfoUIModel player = this.datagridPlayerInfos.SelectedItem as PlayerInfoUIModel;
 
-                        if (MessageBox.Show("删除玩家【" + player.UserLoginName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+                        if (MessageBox.Show("删除玩家【" + player.UserName + "】？该操作不可恢复，请确认？", "请确认", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
                         {
-                            App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserLoginName }, ActionPassword);
+                            App.PlayerVMObject.AsyncDeletePlayerInfos(new string[] { player.UserName }, ActionPassword);
                         }
                     }
                 }

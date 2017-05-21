@@ -95,10 +95,10 @@ namespace MetaData.SystemConfig
         public int MaxStonesReservesPerMine_NormalPlayer = 110000;
 
         /// <summary>
-        /// 可开采矿山储量下限值，低于50000时可见，可开采
+        /// 可开采矿山储量下限值，低于20000时可见，可开采
         /// </summary>
         [DataMember]
-        public int WorkableReservesVisibleLimitDown = 50000;
+        public int WorkableReservesVisibleLimitDown = 20000;
 
         /// <summary>
         /// 临时生产矿石有效记录时间（小时），超出时间且没有收取，则不记生产。
@@ -185,10 +185,10 @@ namespace MetaData.SystemConfig
         public decimal RaiderExpense = 0.1m;
 
         /// <summary>
-        /// 系统矿场总储量一千万
+        /// 系统矿场总储量五千万
         /// </summary>
         [DataMember]
-        public int LimitStoneCount = 10000000;
+        public int LimitStoneCount = 50000000;
 
         /// <summary>
         /// VIP级别间距（贡献值）
@@ -252,5 +252,11 @@ namespace MetaData.SystemConfig
         /// </summary>
         [DataMember]
         public int MaxMakeAVowTimesOfOneDay = 3;
+
+        /// <summary>
+        /// 开启一次矿石加工厂，需要1000积分
+        /// </summary>
+        [DataMember]
+        public int OpenFactoryNeedShoppingCredit = 1000;
     }
 }

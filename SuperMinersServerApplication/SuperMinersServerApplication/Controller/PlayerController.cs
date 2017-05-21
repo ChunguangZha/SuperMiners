@@ -1407,6 +1407,20 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.WinGambleStone(winnedStone, myTrans);
         }
 
+        public int OpenFactory(int userID, string userName, CustomerMySqlTransaction myTrans)
+        {
+            //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
+            PlayerRunnable playerrun = this.GetRunnable(userName);
+            if (playerrun == null || playerrun.BasePlayer.SimpleInfo.UserID != userID)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+
+            return playerrun.OpenFactory(CustomerMySqlTransaction myTrans);
+
+        }
+
+
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;
     }
 }

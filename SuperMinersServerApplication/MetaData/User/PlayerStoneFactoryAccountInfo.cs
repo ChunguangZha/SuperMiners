@@ -15,14 +15,21 @@ namespace MetaData.User
     [DataContract]
     public class PlayerStoneFactoryAccountInfo
     {
+        [DataMember]
+        public int UserID;
+
         /// <summary>
         /// 工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
         /// </summary>
-        public bool FactoryIsOpening = false;
-        
-
         [DataMember]
-        public int UserID;
+        public bool FactoryIsOpening = false;
+
+        /// <summary>
+        /// 工厂剩余可用天数，默认值为3天，当0点检查时，如果工厂状态开启，又没有可用的矿石或奴隶，则该值减一天。直到减为0，工厂关闭。
+        /// 
+        /// </summary>
+        [DataMember]
+        public int FactoryLiveDays = 3;
 
         /// <summary>
         /// 1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
@@ -43,6 +50,12 @@ namespace MetaData.User
         public int Food;
 
         /// <summary>
+        /// 前一天有效矿石，每天0点计算前一天有效矿石（即前一天之前存入的矿石和前一天前存入的存活的奴隶），每天14点，会开出前一天盈利点，按盈利点*LastDayValidStone，得出前一天收益。
+        /// </summary>
+        [DataMember]
+        public float LastDayValidStone;
+
+        /// <summary>
         /// 只保存没有被提取的记录
         /// </summary>
         [DataMember]
@@ -50,14 +63,14 @@ namespace MetaData.User
 
         /// <summary>
         /// 总计生产出的灵币值
-        /// 该值每天都在变化（有进有出）
+        /// 该值每天都在变化（每天14点进账，只增不减）
         /// </summary>
         [DataMember]
         public int TotalSumTempRMB;
 
         /// <summary>
         /// 当前可提取的灵币值（18天前生产出的灵币）
-        /// 该值每天都在变化（有进有出）
+        /// （每天14点进账，玩家提取时减值）
         /// </summary>
         [DataMember]
         public int CurrentWithdrawableTempRMB;
@@ -71,30 +84,67 @@ namespace MetaData.User
 
     }
 
+    public class StoneFactoryStoneJoinRecord
+    {
+        [DataMember]
+        public int ID;
+
+        [DataMember]
+        public int JoinStoneCount;
+
+        [DataMember]
+        public MyDateTime Time;
+    }
+
     /// <summary>
-    /// 加工厂每天生产出灵币记录信息，每天一条记录
+    /// 加工厂每天生产出收益（灵币）记录信息，每天一条记录
     /// </summary>
     [DataContract]
     public class StoneFactoryOutputRMBRecord
     {
+        [DataMember]
+        public int ID;
+
         /// <summary>
-        /// 加工厂生产出的灵币
+        /// 加工厂生产出的收益（灵币）
         /// </summary>
         [DataMember]
         public int OutputRMB;
 
-        /// <summary>
-        /// 生产时间
-        /// </summary>
         [DataMember]
-        public MyDateTime OutputTime;
+        public FactoryProfitType ProfitType;
 
         /// <summary>
-        /// 是否已经提现
+        /// 产出时间（年）
         /// </summary>
         [DataMember]
-        public bool IsWithdrawed;
+        public int Year;
 
+        /// <summary>
+        /// 产出时间（月）
+        /// </summary>
+        [DataMember]
+        public int Month;
+
+        /// <summary>
+        /// 产出时间（日）
+        /// </summary>
+        [DataMember]
+        public int Day;
+
+    }
+
+    public enum FactoryProfitType
+    {
+        /// <summary>
+        /// 加工厂自行产出收益
+        /// </summary>
+        FactoryOutput,
+
+        /// <summary>
+        /// 推荐奖励收益
+        /// </summary>
+        ReferenceAward
     }
 
     /// <summary>
