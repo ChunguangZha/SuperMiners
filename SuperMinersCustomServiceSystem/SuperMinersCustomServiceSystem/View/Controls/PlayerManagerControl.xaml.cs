@@ -166,7 +166,8 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                 string fileName = saveDig.FileName;
 
                 StringBuilder builder = new StringBuilder();
-                builder.AppendLine("用户名,昵称,支付宝账户,支付宝真实姓名,注册时间,注册IP,推荐人,邀请码,上一次登录时间,上一次收取矿石时间,是否被锁定,锁定时间,是否在线,当前登录IP,贡献值,灵币,金币,矿石储量,累计总产出,矿石量,矿工数,钻石量");
+                builder.AppendLine("用户名,昵称,支付宝账户,支付宝真实姓名,注册时间,注册IP,推荐人,邀请码,上一次登录时间,上一次收取矿石时间,"+
+                    "是否被锁定,锁定时间,锁定天数,是否在线,当前登录IP,贡献值,信誉值,灵币,冻结灵币,金币,矿石储量,累计总产出,矿石量,冻结矿石,矿工数,钻石量");
                 foreach (var item in App.PlayerVMObject.ListFilteredPlayers)
                 {
                     #region
@@ -202,7 +203,11 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     builder.Append(",");
                     builder.Append(item.Exp);
                     builder.Append(",");
+                    builder.Append(item.CreditValue);
+                    builder.Append(",");
                     builder.Append(item.RMB);
+                    builder.Append(",");
+                    builder.Append(item.FreezingRMB);
                     builder.Append(",");
                     builder.Append(item.GoldCoin);
                     builder.Append(",");
@@ -211,6 +216,8 @@ namespace SuperMinersCustomServiceSystem.View.Controls
                     builder.Append(item.TotalProducedStonesCount);
                     builder.Append(",");
                     builder.Append(item.StockOfStones);
+                    builder.Append(",");
+                    builder.Append(item.FreezingStones);
                     builder.Append(",");
                     builder.Append(item.MinersCount);
                     builder.Append(",");

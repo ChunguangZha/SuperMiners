@@ -49,15 +49,99 @@ namespace SuperMinersServerApplication.Controller
             return result;
         }
 
-        public int AddStone(int userID, int stoneCount)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="userName"></param>
+        /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
+        /// <returns></returns>
+        public int AddStone(int userID, string userName, int stoneStackCount)
         {
             //1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
+            PlayerRunnable playerrunner = PlayerController.Instance.GetRunnable(userName);
+            if (playerrunner == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            if (playerrunner.BasePlayer.FortuneInfo.StockOfStones - playerrunner.BasePlayer.FortuneInfo.FreezingStones < (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack))
+            {
+                return OperResult.RESULTCODE_LACK_OF_BALANCE;
+            }
+
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                result = playerrunner.JoinStoneToFactory(stoneStackCount, myTrans);
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.JoinInStone(userID, stoneStackCount, myTrans);
+                    if (isOK)
+                    {
+                        isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, stoneStackCount, myTrans);
+                        if (isOK)
+                        {
+                            return OperResult.RESULTCODE_TRUE;
+                        }
+                        return OperResult.RESULTCODE_FALSE;
+                    }
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                return result;
+            },
+            exc =>
+            {
+                PlayerController.Instance.RollbackUserFromDB(userName);
+            });
 
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public int RemoveStone(int userID, int stoneCount)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
+        /// <returns></returns>
+        public int RemoveStone(int userID, string userName, int stoneStackCount)
         {
+            PlayerRunnable playerrunner = PlayerController.Instance.GetRunnable(userName);
+            if (playerrunner == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            var playerFactoryAccountInfo = this.GetPlayerStoneFactoryAccountInfo(userID);
+            if (playerFactoryAccountInfo == null)
+            {
+                return OperResult.RESULTCODE_STONEFACTORYISCLOSED;
+            }
+
+            if (playerFactoryAccountInfo.WithdrawableStackCount < stoneStackCount)
+            {
+                return OperResult.RESULTCODE_LACK_OF_BALANCE;
+            }
+
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                playerFactoryAccountInfo.WithdrawableStackCount -= stoneStackCount;
+                playerFactoryAccountInfo.TotalStackCount -= stoneStackCount;
+
+                result = playerrunner.WithdrawStoneFromFactory(stoneStackCount, myTrans);
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, -stoneStackCount, myTrans);
+                    if (isOK)
+                    {
+                        return OperResult.RESULTCODE_TRUE;
+                    }
+                    return OperResult.RESULTCODE_FALSE;
+                }
+                return result;
+            },
+            exc =>
+            {
+                PlayerController.Instance.RollbackUserFromDB(userName);
+            });
+
 
             return OperResult.RESULTCODE_FALSE;
         }

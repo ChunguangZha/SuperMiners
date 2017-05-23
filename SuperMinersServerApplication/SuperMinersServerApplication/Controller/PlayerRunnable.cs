@@ -1471,5 +1471,39 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_TRUE;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
+        /// <param name="myTrans"></param>
+        /// <returns></returns>
+        public int JoinStoneToFactory(int stoneStackCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                int stoneCount = (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack);
+                if (this.BasePlayer.FortuneInfo.StockOfStones - this.BasePlayer.FortuneInfo.FreezingStones < stoneCount)
+                {
+                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
+                }
+
+                this.BasePlayer.FortuneInfo.StockOfStones -= stoneCount;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家向矿石工厂投入" + stoneCount + "矿石", myTrans);
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        public int WithdrawStoneFromFactory(int stoneStackCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                int stoneCount = (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack);
+
+                this.BasePlayer.FortuneInfo.StockOfStones += stoneCount;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家从矿石工厂提取" + stoneCount + "矿石", myTrans);
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
     }
 }

@@ -25,5 +25,30 @@ namespace DataBaseProvider
             //需先检查数据库中是否存在工厂信息，如果没有则添加
             return false;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
+        /// <param name="myTrans"></param>
+        /// <returns></returns>
+        public bool JoinInStone(int userID, int stoneStackCount, CustomerMySqlTransaction myTrans)
+        {
+
+        }
+
+        public bool WithdrawStone(int userID, 
+
+        public bool AddNewStackChangeRecord(int userID, int stoneStackCount, CustomerMySqlTransaction myTrans)
+        {
+            StoneFactoryStackChangeRecord record = new StoneFactoryStackChangeRecord()
+            {
+                UserID = userID,
+                JoinStoneStackCount = stoneStackCount,
+                Time = new MyDateTime()
+            };
+
+        }
     }
 }

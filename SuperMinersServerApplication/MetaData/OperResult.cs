@@ -323,6 +323,11 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_TRANSFEROLDPLAYER_FAILED_STONEOUTOFLANCE = 902;
 
+        /// <summary>
+        /// 矿石加工厂没有开启
+        /// </summary>
+        public const int RESULTCODE_STONEFACTORYISCLOSED = 1001;
+
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
 
@@ -390,6 +395,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_SHOPPINGNAME_EXISTED, "商品名已经存在，请换个名称");
             _resultCode_Msg.Add(RESULTCODE_NEEDPOSTADDRESS, "需要选择邮寄地址");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARD_ERROR, "身份证号错误");
+            _resultCode_Msg.Add(RESULTCODE_STONEFACTORYISCLOSED, "矿石加工厂没有开启");
         }
 
         public static string GetMsg(int resultCode)

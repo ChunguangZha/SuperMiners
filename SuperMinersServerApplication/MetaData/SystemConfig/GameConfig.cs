@@ -258,5 +258,11 @@ namespace MetaData.SystemConfig
         /// </summary>
         [DataMember]
         public int OpenFactoryNeedShoppingCredit = 1000;
+
+        /// <summary>
+        /// 矿石加工厂投入一万矿石为一股
+        /// </summary>
+        [DataMember]
+        public int StoneFactoryStone_Stack = 10000;
     }
 }

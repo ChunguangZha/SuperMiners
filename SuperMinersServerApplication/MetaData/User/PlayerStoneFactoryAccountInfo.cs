@@ -32,10 +32,16 @@ namespace MetaData.User
         public int FactoryLiveDays = 3;
 
         /// <summary>
-        /// 1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
+        /// 总股数。1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
         /// </summary>
         [DataMember]
-        public int StackCount;
+        public int TotalStackCount;
+
+        /// <summary>
+        /// 可以提取的股数。1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
+        /// </summary>
+        [DataMember]
+        public int WithdrawableStackCount;
 
         /// <summary>
         /// 凝练10000矿石需要100矿工，需把矿工转入加工厂不可转回，加工厂的矿工为苦力，每48小时需要喂食一次食物（积分商城卖食物），超过48小时苦力将会死亡。。。
@@ -84,13 +90,19 @@ namespace MetaData.User
 
     }
 
-    public class StoneFactoryStoneJoinRecord
+    /// <summary>
+    /// 加工厂股权变更记录，入出都记录（正数为投入；负数为提取）
+    /// </summary>
+    public class StoneFactoryStackChangeRecord
     {
         [DataMember]
         public int ID;
 
         [DataMember]
-        public int JoinStoneCount;
+        public int UserID;
+
+        [DataMember]
+        public int JoinStoneStackCount;
 
         [DataMember]
         public MyDateTime Time;
