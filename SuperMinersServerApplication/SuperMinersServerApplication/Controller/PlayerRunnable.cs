@@ -1505,5 +1505,29 @@ namespace SuperMinersServerApplication.Controller
                 return OperResult.RESULTCODE_TRUE;
             }
         }
+
+        public int TransferMinersToFactory(int minersCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                if (this.BasePlayer.FortuneInfo.MinersCount < minersCount)
+                {
+                    return OperResult.RESULTCODE_MINERS_LACK_OF_BALANCE;
+                }
+                this.BasePlayer.FortuneInfo.MinersCount -= minersCount;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家将" + minersCount + "矿工投入到加工厂", myTrans);
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
+
+        public int WithdrawRMBFromFactory(int rmbCount, CustomerMySqlTransaction myTrans)
+        {
+            lock (_lockFortuneAction)
+            {
+                this.BasePlayer.FortuneInfo.RMB += rmbCount;
+                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家从加工厂提现" + rmbCount + "灵币", myTrans);
+                return OperResult.RESULTCODE_TRUE;
+            }
+        }
     }
 }

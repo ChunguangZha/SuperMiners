@@ -1,5 +1,6 @@
 ﻿using DataBaseProvider;
 using MetaData;
+using MetaData.StoneFactory;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace SuperMinersServerApplication.Controller
             return DBProvider.PlayerStoneFactoryDBProvider.GetPlayerStoneFactoryAccountInfo(userID);
         }
 
-        public StoneFactoryOutputRMBRecord[] GetProfitRecords(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
         {
             return DBProvider.PlayerStoneFactoryDBProvider.GetProfitRecords(userID, beginBuyTime, endBuyTime, pageItemCount, pageIndex);
         }
@@ -74,15 +75,10 @@ namespace SuperMinersServerApplication.Controller
                 result = playerrunner.JoinStoneToFactory(stoneStackCount, myTrans);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.JoinInStone(userID, stoneStackCount, myTrans);
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, true, stoneStackCount, myTrans);
                     if (isOK)
                     {
-                        isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, stoneStackCount, myTrans);
-                        if (isOK)
-                        {
-                            return OperResult.RESULTCODE_TRUE;
-                        }
-                        return OperResult.RESULTCODE_FALSE;
+                        return OperResult.RESULTCODE_TRUE;
                     }
                     return OperResult.RESULTCODE_FALSE;
                 }
@@ -128,7 +124,7 @@ namespace SuperMinersServerApplication.Controller
                 result = playerrunner.WithdrawStoneFromFactory(stoneStackCount, myTrans);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, -stoneStackCount, myTrans);
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(userID, false, stoneStackCount, myTrans);
                     if (isOK)
                     {
                         return OperResult.RESULTCODE_TRUE;
@@ -146,22 +142,81 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public int AddMiners(int userID, int minersCount)
+        public int AddMiners(int userID, string userName, int minersCount)
         {
+            PlayerRunnable playerrunner = PlayerController.Instance.GetRunnable(userName);
+            if (playerrunner == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            if (playerrunner.BasePlayer.FortuneInfo.MinersCount <= minersCount)
+            {
+                return OperResult.RESULTCODE_MINERS_LACK_OF_BALANCE;
+            }
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                result = playerrunner.TransferMinersToFactory(minersCount, myTrans);
+                if (result == OperResult.RESULTCODE_TRUE)
+                {
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddMiners(userID, minersCount, myTrans);
+                    return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
+                }
 
-            return OperResult.RESULTCODE_FALSE;
+                return result;
+            },
+            exc =>
+            {
+                PlayerController.Instance.RollbackUserFromDB(userName);
+            });
+
+            return result;
         }
 
-        public int AddFoods(int userID, int foodsCount)
+        public int AddFoods(int userID, int foodsCount, CustomerMySqlTransaction myTrans)
         {
-
-            return OperResult.RESULTCODE_FALSE;
+            bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddFoods(userID, foodsCount, myTrans);
+            return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
         }
 
-        public int WithdrawOutputRMB(int userID, int withdrawRMBCount)
+        public int WithdrawOutputRMB(int userID, string userName, int withdrawRMBCount)
+        {
+            PlayerRunnable playerrunner = PlayerController.Instance.GetRunnable(userName);
+            if (playerrunner == null)
+            {
+                return OperResult.RESULTCODE_USER_NOT_EXIST;
+            }
+            var playerFactoryAccountInfo = this.GetPlayerStoneFactoryAccountInfo(userID);
+            if (playerFactoryAccountInfo == null)
+            {
+                return OperResult.RESULTCODE_STONEFACTORYISCLOSED;
+            }
+            if (playerFactoryAccountInfo.CurrentWithdrawableTempRMB < withdrawRMBCount)
+            {
+                return OperResult.RESULTCODE_LACK_OF_BALANCE;
+            }
+
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+            {
+                bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddProfitRMBChangedRecord(userID, withdrawRMBCount, FactoryProfitOperType.WithdrawRMB, myTrans);
+                if (isOK)
+                {
+                    return playerrunner.WithdrawRMBFromFactory(withdrawRMBCount, myTrans);
+                }
+
+                return OperResult.RESULTCODE_FALSE;
+            },
+            exc =>
+            {
+                PlayerController.Instance.RollbackUserFromDB(userName);
+            });
+
+
+            return result;
+        }
+
+        public int AdminSetProfitRate(decimal profitRate)
         {
 
-            return OperResult.RESULTCODE_FALSE;
         }
 
     }

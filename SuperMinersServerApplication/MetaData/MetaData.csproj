@@ -64,6 +64,11 @@
     <Compile Include="Shopping\PlayerBuyDiamondShoppingItemRecord.cs" />
     <Compile Include="Shopping\PlayerBuyVirtualShoppingItemRecord.cs" />
     <Compile Include="Shopping\VirtualShoppingItem.cs" />
+    <Compile Include="StoneFactory\PlayerStoneFactoryAccountInfo.cs" />
+    <Compile Include="StoneFactory\StoneFactoryOneGroupSlave.cs" />
+    <Compile Include="StoneFactory\StoneFactoryProfitRMBChangedRecord.cs" />
+    <Compile Include="StoneFactory\StoneFactoryStackChangeRecord.cs" />
+    <Compile Include="StoneFactory\StoneFactorySystemDailyProfit.cs" />
     <Compile Include="SystemConfig\CreditLevelConfig.cs" />
     <Compile Include="SystemConfig\RouletteConfig.cs" />
     <Compile Include="Trade\AlipayRechargeRecord.cs" />
@@ -100,7 +105,6 @@
     <Compile Include="User\PlayerGravelRequsetRecordInfo.cs" />
     <Compile Include="User\PlayerLockedInfo.cs" />
     <Compile Include="User\PlayerLogInfo.cs" />
-    <Compile Include="User\PlayerStoneFactoryAccountInfo.cs" />
     <Compile Include="User\PlayerWeiXinUserOpenId.cs" />
     <Compile Include="User\PostAddress.cs" />
     <Compile Include="User\TopListInfo.cs" />

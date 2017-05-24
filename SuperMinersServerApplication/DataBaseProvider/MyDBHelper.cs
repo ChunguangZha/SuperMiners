@@ -91,14 +91,20 @@ namespace DataBaseProvider
                 else
                 {
                     myTrans.Rollback();
-                    FaileOper(null);
+                    if (FaileOper != null)
+                    {
+                        FaileOper(null);
+                    }
                 }
                 return result;
             }
             catch (Exception exc)
             {
                 myTrans.Rollback();
-                FaileOper(exc);
+                if (FaileOper != null)
+                {
+                    FaileOper(exc);
+                }
                 return OperResult.RESULTCODE_FALSE;
             }
             finally

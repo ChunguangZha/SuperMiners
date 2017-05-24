@@ -1,4 +1,5 @@
 ﻿using MetaData;
+using MetaData.StoneFactory;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,12 @@ namespace DataBaseProvider
             return null;
         }
 
-        public StoneFactoryOutputRMBRecord[] GetProfitRecords(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
+        {
+            return null;
+        }
+
+        public StoneFactoryStackChangeRecord[] GetFactoryStackChangedRecord(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
         {
             return null;
         }
@@ -30,25 +36,55 @@ namespace DataBaseProvider
         /// 
         /// </summary>
         /// <param name="userID"></param>
-        /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
+        /// <param name="isJoinIn">true表示投入；false表示提取</param>
+        /// <param name="stoneStackCount"></param>
         /// <param name="myTrans"></param>
         /// <returns></returns>
-        public bool JoinInStone(int userID, int stoneStackCount, CustomerMySqlTransaction myTrans)
-        {
-
-        }
-
-        public bool WithdrawStone(int userID, 
-
-        public bool AddNewStackChangeRecord(int userID, int stoneStackCount, CustomerMySqlTransaction myTrans)
+        public bool AddNewStackChangeRecord(int userID, bool isJoinIn, int stoneStackCount, CustomerMySqlTransaction myTrans)
         {
             StoneFactoryStackChangeRecord record = new StoneFactoryStackChangeRecord()
             {
                 UserID = userID,
-                JoinStoneStackCount = stoneStackCount,
+                JoinStoneStackCount = isJoinIn ? stoneStackCount : -stoneStackCount,
                 Time = new MyDateTime()
             };
 
+            return false;
         }
+
+        public bool AddMiners(int userID, int minersCount, CustomerMySqlTransaction myTrans)
+        {
+            StoneFactoryOneGroupSlave slave = new StoneFactoryOneGroupSlave()
+            {
+                UserID = userID,
+                ChargeTime = new MyDateTime(),
+                JoinInSlaveCount = minersCount,
+                isLive = true,
+                LifeDays = 2,
+                LiveSlaveCount = minersCount
+            };
+
+            return false;
+        }
+
+        public bool AddFoods(int userID, int foodsCount, CustomerMySqlTransaction myTrans)
+        {
+            //直接修改字段值
+            return false;
+        }
+
+        public bool AddProfitRMBChangedRecord(int userID, int operRMB, FactoryProfitOperType operType, CustomerMySqlTransaction myTrans)
+        {
+            StoneFactoryProfitRMBChangedRecord record = new StoneFactoryProfitRMBChangedRecord()
+            {
+                UserID = userID,
+                OperRMB = operType == FactoryProfitOperType.WithdrawRMB? -operRMB : operRMB,
+                OperTime = new MyDateTime(),
+                ProfitType = operType
+            };
+
+            return false;
+        }
+
     }
 }

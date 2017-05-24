@@ -327,6 +327,10 @@ namespace MetaData
         /// 矿石加工厂没有开启
         /// </summary>
         public const int RESULTCODE_STONEFACTORYISCLOSED = 1001;
+        /// <summary>
+        /// 矿工不足
+        /// </summary>
+        public const int RESULTCODE_MINERS_LACK_OF_BALANCE = 1002;
 
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
@@ -396,6 +400,7 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_NEEDPOSTADDRESS, "需要选择邮寄地址");
             _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARD_ERROR, "身份证号错误");
             _resultCode_Msg.Add(RESULTCODE_STONEFACTORYISCLOSED, "矿石加工厂没有开启");
+            _resultCode_Msg.Add(RESULTCODE_MINERS_LACK_OF_BALANCE, "矿工不足");
         }
 
         public static string GetMsg(int resultCode)
