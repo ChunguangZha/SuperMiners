@@ -314,3 +314,4 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\Ed
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF_Content.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DiamondShoppingItemDetailWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DiamondShoppingItemDetailWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache

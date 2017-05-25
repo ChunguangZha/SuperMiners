@@ -18,6 +18,9 @@ namespace MetaData.StoneFactory
         [DataMember]
         public int UserID;
 
+        /// <summary>
+        /// （正数为投入；负数为提取）
+        /// </summary>
         [DataMember]
         public int JoinStoneStackCount;
 
