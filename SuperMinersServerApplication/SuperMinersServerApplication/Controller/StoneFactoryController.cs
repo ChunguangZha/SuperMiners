@@ -1,6 +1,7 @@
 ﻿using DataBaseProvider;
 using MetaData;
 using MetaData.StoneFactory;
+using MetaData.SystemConfig;
 using MetaData.User;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
-            if (playerrunner.BasePlayer.FortuneInfo.StockOfStones - playerrunner.BasePlayer.FortuneInfo.FreezingStones < (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack))
+            if (playerrunner.BasePlayer.FortuneInfo.StockOfStones - playerrunner.BasePlayer.FortuneInfo.FreezingStones < (stoneStackCount * StoneFactoryConfig.StoneFactoryStone_Stack))
             {
                 return OperResult.RESULTCODE_LACK_OF_BALANCE;
             }
@@ -75,6 +76,7 @@ namespace SuperMinersServerApplication.Controller
                 result = playerrunner.JoinStoneToFactory(stoneStackCount, myTrans);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
+                    //只需要添加矿石存入记录。
                     StoneFactoryStackChangeRecord record = new StoneFactoryStackChangeRecord()
                     {
                         UserID = userID,
@@ -104,7 +106,7 @@ namespace SuperMinersServerApplication.Controller
         /// <param name="userID"></param>
         /// <param name="stoneStackCount">矿石股数（一万矿石为一股）</param>
         /// <returns></returns>
-        public int RemoveStone(int userID, string userName, int stoneStackCount)
+        public int WithdrawStone(int userID, string userName, int stoneStackCount)
         {
             PlayerRunnable playerrunner = PlayerController.Instance.GetRunnable(userName);
             if (playerrunner == null)
@@ -130,6 +132,7 @@ namespace SuperMinersServerApplication.Controller
                 result = playerrunner.WithdrawStoneFromFactory(stoneStackCount, myTrans);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
+                    //添加矿石取出记录
                     StoneFactoryStackChangeRecord record = new StoneFactoryStackChangeRecord()
                     {
                         UserID = userID,
@@ -154,9 +157,16 @@ namespace SuperMinersServerApplication.Controller
             return OperResult.RESULTCODE_FALSE;
         }
 
-        public int AddMiners(int userID, string userName, int minersCount)
+        /// <summary>
+        /// 100个矿工为一组奴隶
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="userName"></param>
+        /// <param name="minersGroupCount">100个矿工为一组奴隶</param>
+        /// <returns></returns>
+        public int AddMiners(int userID, string userName, int minersGroupCount)
         {
-            if (minersCount < 100)
+            if (minersGroupCount < 1)
             {
                 return OperResult.RESULTCODE_PARAM_INVALID;
             }
@@ -165,7 +175,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
-            if (playerrunner.BasePlayer.FortuneInfo.MinersCount <= minersCount)
+            if (playerrunner.BasePlayer.FortuneInfo.MinersCount <= minersGroupCount * StoneFactoryConfig.OneGroupSlaveHasMiners)
             {
                 return OperResult.RESULTCODE_MINERS_LACK_OF_BALANCE;
             }
@@ -178,12 +188,12 @@ namespace SuperMinersServerApplication.Controller
 
             int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
-                result = playerrunner.TransferMinersToFactory(minersCount, myTrans);
+                result = playerrunner.TransferMinersToFactory(minersGroupCount * StoneFactoryConfig.OneGroupSlaveHasMiners, myTrans);
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    factoryAccount.FreezingSlavesCount += minersCount;
+                    factoryAccount.FreezingSlaveGroupCount += minersGroupCount;
                     //新增奴隶自带2天食物
-                    factoryAccount.Food += (minersCount * 2);
+                    factoryAccount.Food += (minersGroupCount * StoneFactoryConfig.SlaveDefaultLiveDays);
 
                     bool isOK = DBProvider.PlayerStoneFactoryDBProvider.SavePlayerStoneFactoryAccountInfo(factoryAccount, myTrans);
                     return isOK ? OperResult.RESULTCODE_TRUE : OperResult.RESULTCODE_FALSE;
@@ -232,6 +242,7 @@ namespace SuperMinersServerApplication.Controller
 
             int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
+                //添加提现记录
                 StoneFactoryProfitRMBChangedRecord record = new StoneFactoryProfitRMBChangedRecord()
                 {
                     UserID = userID,
@@ -257,9 +268,29 @@ namespace SuperMinersServerApplication.Controller
             return result;
         }
 
+        public void DailyCheck()
+        {
+            PlayerStoneFactoryAccountInfo[] listAllFactories = DBProvider.PlayerStoneFactoryDBProvider.GetAllPlayerStoneFactoryAccountInfos();
+            foreach (var item in listAllFactories)
+            {
+                int needFoods = item.EnableSlavesGroupCount;
+
+
+                int workableGroupSlaveCount = item.EnableSlavesGroupCount < item.Food ? item.EnableSlavesGroupCount : item.Food;
+                //一组奴隶，对应开发10000矿石。
+                item.LastDayValidStoneStack = workableGroupSlaveCount < item.TotalStackCount ? workableGroupSlaveCount : item.TotalStackCount;
+                item.EnableSlavesGroupCount += item.FreezingSlaveGroupCount;
+                item.FreezingSlaveGroupCount = 0;
+                item.Food -= workableGroupSlaveCount;
+
+                DBProvider.PlayerStoneFactoryDBProvider.SavePlayerStoneFactoryAccountInfo(item, );
+            }
+
+        }
+
         public int AdminSetProfitRate(decimal profitRate)
         {
-
+            
         }
 
     }

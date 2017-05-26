@@ -253,16 +253,5 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int MaxMakeAVowTimesOfOneDay = 3;
 
-        /// <summary>
-        /// 开启一次矿石加工厂，需要1000积分
-        /// </summary>
-        [DataMember]
-        public int OpenFactoryNeedShoppingCredit = 1000;
-
-        /// <summary>
-        /// 矿石加工厂投入一万矿石为一股
-        /// </summary>
-        [DataMember]
-        public int StoneFactoryStone_Stack = 10000;
     }
 }

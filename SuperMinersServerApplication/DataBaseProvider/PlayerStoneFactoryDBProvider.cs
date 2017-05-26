@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.StoneFactory;
+using MetaData.SystemConfig;
 using MetaData.User;
 using MySql.Data.MySqlClient;
 using System;
@@ -32,7 +33,7 @@ namespace DataBaseProvider
                     //mycmd.Parameters.Clear();
                     //mycmd.Parameters.AddWithValue("@UserID", userID);
                     mycmd.Parameters.AddWithValue("@FactoryIsOpening", true);
-                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", 3);
+                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", StoneFactoryConfig.FactoryLiveDays);
                     mycmd.Parameters.AddWithValue("@Food", 0);
                     mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", 0);
                     mycmd.Parameters.AddWithValue("@FreezingSlavesCount", 0);
@@ -47,7 +48,7 @@ namespace DataBaseProvider
                     //mycmd.Parameters.Clear();
                     //mycmd.Parameters.AddWithValue("@UserID", userID);
                     mycmd.Parameters.AddWithValue("@FactoryIsOpening", true);
-                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", 3);
+                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", StoneFactoryConfig.FactoryLiveDays);
                     mycmd.ExecuteNonQuery();
 
                 }
@@ -64,15 +65,15 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlavesCount`=@FreezingSlavesCount,`SlavesCount`=@SlavesCount where `ID`=@ID ";
+                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlaveGroupCount`=@FreezingSlaveGroupCount,`EnableSlavesGroupCount`=@EnableSlavesGroupCount where `ID`=@ID ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@ID", account.ID);
                 mycmd.Parameters.AddWithValue("@FactoryIsOpening", account.FactoryIsOpening);
                 mycmd.Parameters.AddWithValue("@FactoryLiveDays", account.FactoryLiveDays);
                 mycmd.Parameters.AddWithValue("@Food", account.Food);
                 mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", account.LastDayValidStoneStack);
-                mycmd.Parameters.AddWithValue("@FreezingSlavesCount", account.FreezingSlavesCount);
-                mycmd.Parameters.AddWithValue("@SlavesCount", account.SlavesCount);
+                mycmd.Parameters.AddWithValue("@FreezingSlaveGroupCount", account.FreezingSlaveGroupCount);
+                mycmd.Parameters.AddWithValue("@EnableSlavesGroupCount", account.EnableSlavesGroupCount);
                 mycmd.ExecuteNonQuery();
             }
             finally
@@ -83,6 +84,11 @@ namespace DataBaseProvider
                 }
             }
             return true;
+        }
+
+        public PlayerStoneFactoryAccountInfo[] GetAllPlayerStoneFactoryAccountInfos()
+        {
+            return null;
         }
 
         public PlayerStoneFactoryAccountInfo GetPlayerStoneFactoryAccountInfo(int userID)
@@ -145,7 +151,7 @@ namespace DataBaseProvider
                     else
                     {
                         sumProfitRMB += item.OperRMB;
-                        if ((timeNow - item.OperTime.ToDateTime()).TotalDays > 18)
+                        if ((timeNow - item.OperTime.ToDateTime()).TotalDays > StoneFactoryConfig.ProfitRMBWithdrawLimitDays)
                         {
                             sumWithdrawableProfitRMB += item.OperRMB;
                         }
@@ -169,24 +175,41 @@ namespace DataBaseProvider
             table.Dispose();
             adapter.Dispose();
 
-            int sumStoneStack = 0;
+            int sumEnableStoneStack = 0;
+            int sumFreezingStoneStack = 0;
             int sumWithdrawableStoneStack = 0;
+            int sumWithdrawedStoneStack = 0;
 
             if (items != null && items.Length != 0)
             {
                 DateTime timeNow = DateTime.Now;
                 foreach (var item in items)
                 {
-                    sumStoneStack += item.JoinStoneStackCount;
-                    if ((timeNow - item.Time.ToDateTime()).TotalDays >= 30)
+                    if (item.Time.Year != timeNow.Year && item.Time.Month != timeNow.Month && item.Time.Day != timeNow.Day)
                     {
+                        //可用矿石
+                        sumEnableStoneStack += item.JoinStoneStackCount;
+                    }
+                    else
+                    {
+                        sumFreezingStoneStack += item.JoinStoneStackCount;
+                    }
+                    if (item.JoinStoneStackCount > 0 && (timeNow - item.Time.ToDateTime()).TotalDays > StoneFactoryConfig.StoneStackWithdrawLimitDays)
+                    {
+                        //可提现的矿石（没有减去已经提走的灵币）
                         sumWithdrawableStoneStack += item.JoinStoneStackCount;
+                    }
+                    if (item.JoinStoneStackCount < 0)
+                    {
+                        //已提取的灵币
+                        sumWithdrawedStoneStack += item.JoinStoneStackCount;
                     }
                 }
             }
 
-            account.TotalStackCount = sumStoneStack;
-            account.WithdrawableStackCount = sumWithdrawableStoneStack;
+            account.TotalStackCount = sumEnableStoneStack;
+            account.WithdrawableStackCount = sumWithdrawableStoneStack - sumWithdrawedStoneStack;
+            account.FreezingStackCount = sumFreezingStoneStack;
         }
 
         public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)

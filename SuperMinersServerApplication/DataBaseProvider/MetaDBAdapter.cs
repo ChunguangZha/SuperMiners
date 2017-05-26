@@ -1396,8 +1396,8 @@ namespace DataBaseProvider
                 item.FactoryLiveDays = Convert.ToInt32(dt.Rows[i]["FactoryLiveDays"]);
                 item.Food = Convert.ToInt32(dt.Rows[i]["Food"]);
                 item.LastDayValidStoneStack = Convert.ToInt32(dt.Rows[i]["LastDayValidStoneStack"]);
-                item.FreezingSlavesCount = Convert.ToInt32(dt.Rows[i]["FreezingSlavesCount"]);
-                item.SlavesCount = Convert.ToInt32(dt.Rows[i]["SlavesCount"]);
+                item.FreezingSlaveGroupCount = Convert.ToInt32(dt.Rows[i]["FreezingSlaveGroupCount"]);
+                item.EnableSlavesGroupCount = Convert.ToInt32(dt.Rows[i]["EnableSlavesGroupCount"]);
 
                 items[i] = item;
             }

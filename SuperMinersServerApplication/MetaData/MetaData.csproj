@@ -71,6 +71,7 @@
     <Compile Include="StoneFactory\StoneFactorySystemDailyProfit.cs" />
     <Compile Include="SystemConfig\CreditLevelConfig.cs" />
     <Compile Include="SystemConfig\RouletteConfig.cs" />
+    <Compile Include="SystemConfig\StoneFactoryConfig.cs" />
     <Compile Include="Trade\AlipayRechargeRecord.cs" />
     <Compile Include="Trade\BuyStonesOrder.cs" />
     <Compile Include="DatabaseFieldAttribute.cs" />
