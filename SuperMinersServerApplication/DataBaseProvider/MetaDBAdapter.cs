@@ -6,6 +6,7 @@ using MetaData.Game.RaideroftheLostArk;
 using MetaData.Game.Roulette;
 using MetaData.Game.StoneStack;
 using MetaData.Shopping;
+using MetaData.StoneFactory;
 using MetaData.Trade;
 using MetaData.User;
 using MySql.Data.MySqlClient;
@@ -1376,6 +1377,77 @@ namespace DataBaseProvider
             }
 
             return listAddress;
+        }
+
+        internal static PlayerStoneFactoryAccountInfo[] GetPlayerStoneFactoryAccountInfoItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            PlayerStoneFactoryAccountInfo[] items = new PlayerStoneFactoryAccountInfo[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                PlayerStoneFactoryAccountInfo item = new PlayerStoneFactoryAccountInfo();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.FactoryIsOpening = Convert.ToBoolean(dt.Rows[i]["FactoryIsOpening"]);
+                item.FactoryLiveDays = Convert.ToInt32(dt.Rows[i]["FactoryLiveDays"]);
+                item.Food = Convert.ToInt32(dt.Rows[i]["Food"]);
+                item.LastDayValidStoneStack = Convert.ToInt32(dt.Rows[i]["LastDayValidStoneStack"]);
+                item.FreezingSlavesCount = Convert.ToInt32(dt.Rows[i]["FreezingSlavesCount"]);
+                item.SlavesCount = Convert.ToInt32(dt.Rows[i]["SlavesCount"]);
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static StoneFactoryStackChangeRecord[] GetStoneFactoryStackChangeRecordItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            StoneFactoryStackChangeRecord[] items = new StoneFactoryStackChangeRecord[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneFactoryStackChangeRecord item = new StoneFactoryStackChangeRecord();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.JoinStoneStackCount = Convert.ToInt32(dt.Rows[i]["JoinStoneStackCount"]);
+                item.Time = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Time"]));
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+
+        internal static StoneFactoryProfitRMBChangedRecord[] GetStoneFactoryProfitRMBChangedRecordItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            StoneFactoryProfitRMBChangedRecord[] items = new StoneFactoryProfitRMBChangedRecord[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneFactoryProfitRMBChangedRecord item = new StoneFactoryProfitRMBChangedRecord();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.OperRMB = Convert.ToInt32(dt.Rows[i]["OperRMB"]);
+                item.ProfitType = (FactoryProfitOperType)Convert.ToInt32(dt.Rows[i]["ProfitType"]);
+                item.OperTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["OperTime"]));
+
+                items[i] = item;
+            }
+
+            return items;
         }
 
     }
