@@ -16,6 +16,9 @@ namespace MetaData.StoneFactory
     public class PlayerStoneFactoryAccountInfo
     {
         [DataMember]
+        public int ID;
+
+        [DataMember]
         public int UserID;
 
         /// <summary>
@@ -32,6 +35,30 @@ namespace MetaData.StoneFactory
         public int FactoryLiveDays = 3;
 
         /// <summary>
+        /// 冻结奴隶数。当天存入的奴隶先保存到冻结奴隶中。第二天0时结算时再加入到可用奴隶中。
+        /// </summary>
+        [DataMember]
+        public int FreezingSlavesCount;
+
+        /// <summary>
+        /// 奴隶数。凝练10000矿石需要100矿工，需把矿工转入加工厂不可转回，加工厂的矿工为苦力，每48小时需要喂食一次食物（积分商城卖食物），超过48小时苦力将会死亡。。。
+        /// </summary>
+        [DataMember]
+        public int SlavesCount;
+
+        /// <summary>
+        /// 食物（以100奴隶一天口粮为单位），该值每天0时需按奴隶值检查减值，充值时相应增加，每次投入奴隶时，会自动增加本次奴隶两天的食物。
+        /// </summary>
+        [DataMember]
+        public int Food;
+
+        /// <summary>
+        /// 前一天有效矿石，每天0点计算前一天有效矿石（即前一天之前存入的矿石和前一天前存入的存活的奴隶），每天14点，会开出前一天盈利点，按盈利点*LastDayValidStone，得出前一天收益。
+        /// </summary>
+        [DataMember]
+        public float LastDayValidStoneStack;
+
+        /// <summary>
         /// 总股数（该值不存入数据库，每次查询数据库中所有股权变更记录累计得出）。1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
         /// </summary>
         [DataMember]
@@ -44,40 +71,22 @@ namespace MetaData.StoneFactory
         public int WithdrawableStackCount;
 
         /// <summary>
-        /// 奴隶数（该值不存入数据库，每次查询数据库中所有奴隶记录累计得出）。凝练10000矿石需要100矿工，需把矿工转入加工厂不可转回，加工厂的矿工为苦力，每48小时需要喂食一次食物（积分商城卖食物），超过48小时苦力将会死亡。。。
-        /// </summary>
-        [DataMember]
-        public int SlavesCount;
-
-        /// <summary>
-        /// 食物，该值每天0时需按奴隶值检查减值，充值时相应增加。
-        /// </summary>
-        [DataMember]
-        public int Food;
-
-        /// <summary>
-        /// 前一天有效矿石，每天0点计算前一天有效矿石（即前一天之前存入的矿石和前一天前存入的存活的奴隶），每天14点，会开出前一天盈利点，按盈利点*LastDayValidStone，得出前一天收益。
-        /// </summary>
-        [DataMember]
-        public float LastDayValidStoneStack;
-
-        /// <summary>
         /// 总计生产出的灵币值（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
         /// </summary>
         [DataMember]
-        public int TotalSumTempRMB;
+        public int TotalProfitRMB;
 
         /// <summary>
         /// 当前可提取的灵币值（18天前生产出的灵币）（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
         /// </summary>
         [DataMember]
-        public int CurrentWithdrawableTempRMB;
+        public int WithdrawableProfitRMB;
 
-        /// <summary>
-        /// 当前不可提取的灵币值（18天内（含）生产出的灵币）（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
-        /// </summary>
-        [DataMember]
-        public int CurrentCanotWithdrawableTempRMB;
+        ///// <summary>
+        ///// 当前不可提取的灵币值（18天内（含）生产出的灵币）（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
+        ///// </summary>
+        //[DataMember]
+        //public int CurrentCanotWithdrawableTempRMB;
 
     }
 

@@ -1,8 +1,10 @@
 ﻿using MetaData;
 using MetaData.StoneFactory;
 using MetaData.User;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,25 +13,200 @@ namespace DataBaseProvider
 {
     public class PlayerStoneFactoryDBProvider
     {
-        public PlayerStoneFactoryAccountInfo GetPlayerStoneFactoryAccountInfo(int userID)
-        {
-            return null;
-        }
-
-        public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
-        {
-            return null;
-        }
-
-        public StoneFactoryStackChangeRecord[] GetFactoryStackChangedRecord(int userID, MyDateTime beginBuyTime, MyDateTime endBuyTime, int pageItemCount, int pageIndex)
-        {
-            return null;
-        }
-
         public bool OpenFactory(int userID, CustomerMySqlTransaction myTrans)
         {
             //需先检查数据库中是否存在工厂信息，如果没有则添加
-            return false;
+            bool isOK = MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "select count(ID) from playerstonefactoryaccountinfo where `UserID`=@UserID ";
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                mycmd.CommandText = sqlText;
+                object objResult = Convert.ToInt32(mycmd.ExecuteScalar());
+                if (objResult == DBNull.Value || Convert.ToInt32(objResult) == 0)
+                {
+                    //添加新记录
+                    sqlText = "insert into playerstonefactoryaccountinfo " +
+                        "(`UserID`,`FactoryIsOpening`,`FactoryLiveDays`,`Food`,`LastDayValidStoneStack`,`FreezingSlavesCount`,`SlavesCount`) " +
+                        " values (@UserID,@FactoryIsOpening,@FactoryLiveDays,@Food,@LastDayValidStoneStack,@FreezingSlavesCount,@SlavesCount) ";
+                    mycmd.CommandText = sqlText;
+                    //mycmd.Parameters.Clear();
+                    //mycmd.Parameters.AddWithValue("@UserID", userID);
+                    mycmd.Parameters.AddWithValue("@FactoryIsOpening", true);
+                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", 3);
+                    mycmd.Parameters.AddWithValue("@Food", 0);
+                    mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", 0);
+                    mycmd.Parameters.AddWithValue("@FreezingSlavesCount", 0);
+                    mycmd.Parameters.AddWithValue("@SlavesCount", 0);
+                    mycmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    //修改原记录
+                    sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays where `UserID`=@UserID ";
+                    mycmd.CommandText = sqlText;
+                    //mycmd.Parameters.Clear();
+                    //mycmd.Parameters.AddWithValue("@UserID", userID);
+                    mycmd.Parameters.AddWithValue("@FactoryIsOpening", true);
+                    mycmd.Parameters.AddWithValue("@FactoryLiveDays", 3);
+                    mycmd.ExecuteNonQuery();
+
+                }
+
+            });
+            
+            return isOK;
+        }
+
+        public bool SavePlayerStoneFactoryAccountInfo(PlayerStoneFactoryAccountInfo account, CustomerMySqlTransaction myTrans)
+        {
+            MySqlCommand mycmd = null;
+            try
+            {
+                mycmd = myTrans.CreateCommand();
+
+                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlavesCount`=@FreezingSlavesCount,`SlavesCount`=@SlavesCount where `ID`=@ID ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@ID", account.ID);
+                mycmd.Parameters.AddWithValue("@FactoryIsOpening", account.FactoryIsOpening);
+                mycmd.Parameters.AddWithValue("@FactoryLiveDays", account.FactoryLiveDays);
+                mycmd.Parameters.AddWithValue("@Food", account.Food);
+                mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", account.LastDayValidStoneStack);
+                mycmd.Parameters.AddWithValue("@FreezingSlavesCount", account.FreezingSlavesCount);
+                mycmd.Parameters.AddWithValue("@SlavesCount", account.SlavesCount);
+                mycmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+            }
+            return true;
+        }
+
+        public PlayerStoneFactoryAccountInfo GetPlayerStoneFactoryAccountInfo(int userID)
+        {
+            PlayerStoneFactoryAccountInfo account = null;
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from playerstonefactoryaccountinfo where `UserID`=@UserID ";
+                mycmd.Parameters.AddWithValue("@UserID", userID);
+                mycmd.CommandText = sqlText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+
+                var items = MetaDBAdapter<PlayerStoneFactoryAccountInfo>.GetPlayerStoneFactoryAccountInfoItemFromDataTable(table);
+                table.Dispose();
+                adapter.Dispose();
+
+                if (items == null || items.Length == 0)
+                {
+                    return;
+                }
+                account = items[0];
+
+                SumUserAccountStoneStackCount(account, mycmd);
+                SumUserAccountProfitRMBCount(account, mycmd);
+
+            });
+
+            return account;
+        }
+
+        private void SumUserAccountProfitRMBCount(PlayerStoneFactoryAccountInfo account, MySqlCommand mycmd)
+        {
+            string sqlText = "select * from stonefactoryprofitrmbchangedrecord where `UserID`=@UserID ";
+            mycmd.CommandText = sqlText;
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+            adapter.Fill(table);
+
+            StoneFactoryProfitRMBChangedRecord[] items = MetaDBAdapter<StoneFactoryProfitRMBChangedRecord>.GetStoneFactoryProfitRMBChangedRecordItemFromDataTable(table);
+            table.Dispose();
+            adapter.Dispose();
+
+            int sumProfitRMB = 0;
+            int sumWithdrawableProfitRMB = 0;
+
+            //已经提现的收益灵币（该值为负数）
+            int sumWithdrawedProfitRMB = 0;
+
+            if (items != null && items.Length != 0)
+            {
+                DateTime timeNow = DateTime.Now;
+                foreach (var item in items)
+                {
+                    if (item.ProfitType == FactoryProfitOperType.WithdrawRMB)
+                    {
+                        sumWithdrawedProfitRMB += item.OperRMB;
+                    }
+                    else
+                    {
+                        sumProfitRMB += item.OperRMB;
+                        if ((timeNow - item.OperTime.ToDateTime()).TotalDays > 18)
+                        {
+                            sumWithdrawableProfitRMB += item.OperRMB;
+                        }
+                    }
+                }
+            }
+
+            account.TotalProfitRMB = sumProfitRMB;
+            account.WithdrawableProfitRMB = sumWithdrawableProfitRMB + sumWithdrawedProfitRMB;
+        }
+
+        private void SumUserAccountStoneStackCount(PlayerStoneFactoryAccountInfo account, MySqlCommand mycmd)
+        {
+            string sqlText = "select * from stonefactorystackchangerecord where `UserID`=@UserID ";
+            mycmd.CommandText = sqlText;
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+            adapter.Fill(table);
+
+            StoneFactoryStackChangeRecord[] items = MetaDBAdapter<StoneFactoryStackChangeRecord>.GetStoneFactoryStackChangeRecordItemFromDataTable(table);
+            table.Dispose();
+            adapter.Dispose();
+
+            int sumStoneStack = 0;
+            int sumWithdrawableStoneStack = 0;
+
+            if (items != null && items.Length != 0)
+            {
+                DateTime timeNow = DateTime.Now;
+                foreach (var item in items)
+                {
+                    sumStoneStack += item.JoinStoneStackCount;
+                    if ((timeNow - item.Time.ToDateTime()).TotalDays >= 30)
+                    {
+                        sumWithdrawableStoneStack += item.JoinStoneStackCount;
+                    }
+                }
+            }
+
+            account.TotalStackCount = sumStoneStack;
+            account.WithdrawableStackCount = sumWithdrawableStoneStack;
+        }
+
+        public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
+        {
+            return null;
+        }
+
+        public StoneFactoryStackChangeRecord[] GetFactoryStackChangedRecord(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
+        {
+            return null;
+        }
+
+        public StoneFactoryOneGroupSlave[] GetFactorySlaveGroupInfos(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
+        {
+            return null;
+        }
+
+        public StoneFactorySystemDailyProfit[] GetFactorySystemDailyProfitRecords(int pageItemCount, int pageIndex)
+        {
+            return null;
         }
 
         /// <summary>
@@ -40,49 +217,55 @@ namespace DataBaseProvider
         /// <param name="stoneStackCount"></param>
         /// <param name="myTrans"></param>
         /// <returns></returns>
-        public bool AddNewStackChangeRecord(int userID, bool isJoinIn, int stoneStackCount, CustomerMySqlTransaction myTrans)
+        public bool AddNewStackChangeRecord(StoneFactoryStackChangeRecord record, CustomerMySqlTransaction myTrans)
         {
-            StoneFactoryStackChangeRecord record = new StoneFactoryStackChangeRecord()
+            MySqlCommand mycmd = null;
+            try
             {
-                UserID = userID,
-                JoinStoneStackCount = isJoinIn ? stoneStackCount : -stoneStackCount,
-                Time = new MyDateTime()
-            };
+                mycmd = myTrans.CreateCommand();
+                string sqlText = "insert into stonefactorystackchangerecord " +
+                        "(`UserID`,`JoinStoneStackCount`,`Time`) " +
+                        " values (@UserID,@JoinStoneStackCount,@Time) ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
+                mycmd.Parameters.AddWithValue("@JoinStoneStackCount", record.JoinStoneStackCount);
+                mycmd.Parameters.AddWithValue("@Time", record.Time.ToDateTime());
+                mycmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+            }
 
-            return false;
+            return true;
         }
 
-        public bool AddMiners(int userID, int minersCount, CustomerMySqlTransaction myTrans)
+        //public bool AddMiners(int userID, int minersCount, CustomerMySqlTransaction myTrans)
+        //{
+        //    StoneFactoryOneGroupSlave slave = new StoneFactoryOneGroupSlave()
+        //    {
+        //        UserID = userID,
+        //        ChargeTime = new MyDateTime(),
+        //        JoinInSlaveCount = minersCount,
+        //        isLive = true,
+        //        LifeDays = 2,
+        //        LiveSlaveCount = minersCount
+        //    };
+
+        //    return false;
+        //}
+
+        //public bool AddFoods(int userID, int foodsCount, CustomerMySqlTransaction myTrans)
+        //{
+        //    //直接修改字段值
+        //    return false;
+        //}
+
+        public bool AddProfitRMBChangedRecord(StoneFactoryProfitRMBChangedRecord record, CustomerMySqlTransaction myTrans)
         {
-            StoneFactoryOneGroupSlave slave = new StoneFactoryOneGroupSlave()
-            {
-                UserID = userID,
-                ChargeTime = new MyDateTime(),
-                JoinInSlaveCount = minersCount,
-                isLive = true,
-                LifeDays = 2,
-                LiveSlaveCount = minersCount
-            };
-
-            return false;
-        }
-
-        public bool AddFoods(int userID, int foodsCount, CustomerMySqlTransaction myTrans)
-        {
-            //直接修改字段值
-            return false;
-        }
-
-        public bool AddProfitRMBChangedRecord(int userID, int operRMB, FactoryProfitOperType operType, CustomerMySqlTransaction myTrans)
-        {
-            StoneFactoryProfitRMBChangedRecord record = new StoneFactoryProfitRMBChangedRecord()
-            {
-                UserID = userID,
-                OperRMB = operType == FactoryProfitOperType.WithdrawRMB? -operRMB : operRMB,
-                OperTime = new MyDateTime(),
-                ProfitType = operType
-            };
-
             return false;
         }
 
