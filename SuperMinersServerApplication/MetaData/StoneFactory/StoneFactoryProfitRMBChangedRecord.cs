@@ -23,7 +23,7 @@ namespace MetaData.StoneFactory
         /// 操作灵币，即包括加工厂生产出的收益入账、推荐注册的三级内玩家收获奖励入账，也包括提现出账（出账时值为负数）
         /// </summary>
         [DataMember]
-        public int OperRMB;
+        public decimal OperRMB;
 
         [DataMember]
         public FactoryProfitOperType ProfitType;

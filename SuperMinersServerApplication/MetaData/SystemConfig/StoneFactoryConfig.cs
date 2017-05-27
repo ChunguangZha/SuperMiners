@@ -43,5 +43,15 @@ namespace MetaData.SystemConfig
         /// </summary>
         public static int StoneStackWithdrawLimitDays = 30;
 
+        /// <summary>
+        /// 新加入的矿石需冻结24小时后，才可以投入生产
+        /// </summary>
+        public static int StoneFactoryStoneFreezingHours = 24;
+
+        /// <summary>
+        /// 工厂收益，给上级玩家反利点（返三级）
+        /// </summary>
+        public static decimal[] FactoryOutputProfitAwardRMBConfig = new decimal[] { 0.08m, 0.05m, 0.03m };
+
     }
 }

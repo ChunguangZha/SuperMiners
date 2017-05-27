@@ -150,7 +150,6 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoSc
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\MyControl\MyAutoScrollTextBlock.g.cs
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\MySettingControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\MySettingControl.g.cs
-F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.config
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.exe.manifest
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\SuperMinersWPF.application
@@ -301,3 +300,5 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Resources\Server2G
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StoneFactoryControl.baml
+F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StoneFactoryControl.g.cs

@@ -271,6 +271,16 @@
                         <TextBlock Grid.Column="1" Text="商城" FontSize="16"/>
                     </Grid>
                 </RadioButton>
+                <RadioButton x:Name="btnStoneFactory" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnStoneFactory_Checked">
+                    <Grid Margin="10,10,15,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Image Source="Resources/f1.png" Stretch="None" Margin="5"/>
+                        <TextBlock Grid.Column="1" Text="矿石工厂" FontSize="16"/>
+                    </Grid>
+                </RadioButton>
                 <RadioButton x:Name="btnShowMySuperMiners" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowMySuperMiners_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
@@ -291,6 +301,7 @@
             <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
             <Views:MallControl x:Name="controlMall" Visibility="Collapsed"/>
             <Views:StackMarketControl x:Name="controlStack" Visibility="Collapsed"/>
+            <Views:StoneFactoryControl x:Name="controlStoneFactory" Visibility="Collapsed"/>
         </Grid>
 
     </Grid>

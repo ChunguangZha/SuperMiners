@@ -25,7 +25,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;MetaData, V1</DefineConstants>
+    <DefineConstants>TRACE;MetaData, -V1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -81,7 +81,6 @@
     <Compile Include="NoticeInfo.cs" />
     <Compile Include="SystemConfig\AwardReferrerConfig.cs" />
     <Compile Include="SystemConfig\RegisterUserConfig.cs" />
-    <Compile Include="SystemConfig\IncomeMoneyAccount.cs" />
     <Compile Include="Trade\LockSellStonesOrder.cs" />
     <Compile Include="Trade\MinersBuyRecord.cs" />
     <Compile Include="Trade\MinesBuyRecord.cs" />

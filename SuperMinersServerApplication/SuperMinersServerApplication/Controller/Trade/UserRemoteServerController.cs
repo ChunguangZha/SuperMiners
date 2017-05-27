@@ -125,7 +125,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                     var parent1PlayerRunner = PlayerController.Instance.GetRunnable(playerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                     if (parent1PlayerRunner != null)
                     {
-                        parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[0], myTrans);
+                        parent1PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.GameConfig.BuyRemoteServiceAwardRMBConfig[0], myTrans);
 
                         //上二级
                         if (!string.IsNullOrEmpty(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
@@ -133,14 +133,15 @@ namespace SuperMinersServerApplication.Controller.Trade
                             var parent2PlayerRunner = PlayerController.Instance.GetRunnable(parent1PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                             if (parent2PlayerRunner != null)
                             {
-                                parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[1], myTrans);
+                                parent2PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.GameConfig.BuyRemoteServiceAwardRMBConfig[1], myTrans);
 
+                                //上三级
                                 if (!string.IsNullOrEmpty(parent2PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName))
                                 {
                                     var parent3PlayerRunner = PlayerController.Instance.GetRunnable(parent2PlayerRunner.BasePlayer.SimpleInfo.ReferrerUserName);
                                     if (parent3PlayerRunner != null)
                                     {
-                                        parent3PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.BuyRemoteServiceAwardRMBConfig[2], myTrans);
+                                        parent3PlayerRunner.BuyShoppingCreditAwardParent(getShoppingCredits * GlobalConfig.GameConfig.BuyRemoteServiceAwardRMBConfig[2], myTrans);
 
                                     }
                                 }

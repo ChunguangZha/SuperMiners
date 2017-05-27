@@ -88,7 +88,32 @@ namespace DataBaseProvider
 
         public PlayerStoneFactoryAccountInfo[] GetAllPlayerStoneFactoryAccountInfos()
         {
-            return null;
+            List<PlayerStoneFactoryAccountInfo> listFactories = new List<PlayerStoneFactoryAccountInfo>();
+            MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlText = "select * from playerstonefactoryaccountinfo";
+                mycmd.CommandText = sqlText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+
+                var items = MetaDBAdapter<PlayerStoneFactoryAccountInfo>.GetPlayerStoneFactoryAccountInfoItemFromDataTable(table);
+                table.Dispose();
+                adapter.Dispose();
+
+                if (items == null || items.Length == 0)
+                {
+                    return;
+                }
+                PlayerStoneFactoryAccountInfo account = items[0];
+
+                SumUserAccountStoneStackCount(account, mycmd);
+                SumUserAccountProfitRMBCount(account, mycmd);
+
+                listFactories.Add(account);
+            });
+
+            return listFactories.ToArray();
         }
 
         public PlayerStoneFactoryAccountInfo GetPlayerStoneFactoryAccountInfo(int userID)
@@ -133,11 +158,11 @@ namespace DataBaseProvider
             table.Dispose();
             adapter.Dispose();
 
-            int sumProfitRMB = 0;
-            int sumWithdrawableProfitRMB = 0;
+            decimal sumProfitRMB = 0;
+            decimal sumWithdrawableProfitRMB = 0;
 
             //已经提现的收益灵币（该值为负数）
-            int sumWithdrawedProfitRMB = 0;
+            decimal sumWithdrawedProfitRMB = 0;
 
             if (items != null && items.Length != 0)
             {
@@ -185,7 +210,7 @@ namespace DataBaseProvider
                 DateTime timeNow = DateTime.Now;
                 foreach (var item in items)
                 {
-                    if (item.Time.Year != timeNow.Year && item.Time.Month != timeNow.Month && item.Time.Day != timeNow.Day)
+                    if ((timeNow - item.Time.ToDateTime()).TotalHours > StoneFactoryConfig.StoneFactoryStoneFreezingHours)
                     {
                         //可用矿石
                         sumEnableStoneStack += item.JoinStoneStackCount;
@@ -230,6 +255,22 @@ namespace DataBaseProvider
         public StoneFactorySystemDailyProfit[] GetFactorySystemDailyProfitRecords(int pageItemCount, int pageIndex)
         {
             return null;
+        }
+
+        public bool AddStoneFactorySystemDailyProfit(StoneFactorySystemDailyProfit profit)
+        {
+            bool isOK = MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "insert into stonefactorysystemdailyprofit " +
+                        "(`profitRate`,`Day`) " +
+                        " values (@profitRate,@Day) ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@profitRate", profit.profitRate);
+                mycmd.Parameters.AddWithValue("@Day", profit.Day.ToDateTime());
+                mycmd.ExecuteNonQuery();
+            });
+
+            return isOK;
         }
 
         /// <summary>

@@ -24,14 +24,14 @@ namespace SuperMinersWPF.Wcf.Clients
 
         #region GetIncomeMoneyAccount
 
-        public event EventHandler<WebInvokeEventArgs<IncomeMoneyAccount>> GetIncomeMoneyAccountCompleted;
-        public void GetIncomeMoneyAccount()
-        {
-            if (GlobalData.IsLogined)
-            {
-                this._invoker.Invoke<IncomeMoneyAccount>(this._context, "GetIncomeMoneyAccount", this.GetIncomeMoneyAccountCompleted, GlobalData.Token);
-            }
-        }
+        //public event EventHandler<WebInvokeEventArgs<IncomeMoneyAccount>> GetIncomeMoneyAccountCompleted;
+        //public void GetIncomeMoneyAccount()
+        //{
+        //    if (GlobalData.IsLogined)
+        //    {
+        //        this._invoker.Invoke<IncomeMoneyAccount>(this._context, "GetIncomeMoneyAccount", this.GetIncomeMoneyAccountCompleted, GlobalData.Token);
+        //    }
+        //}
 
         #endregion
     }

@@ -1482,7 +1482,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                int stoneCount = (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack);
+                int stoneCount = (stoneStackCount * StoneFactoryConfig.StoneFactoryStone_Stack);
                 if (this.BasePlayer.FortuneInfo.StockOfStones - this.BasePlayer.FortuneInfo.FreezingStones < stoneCount)
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
@@ -1498,7 +1498,7 @@ namespace SuperMinersServerApplication.Controller
         {
             lock (_lockFortuneAction)
             {
-                int stoneCount = (stoneStackCount * GlobalConfig.GameConfig.StoneFactoryStone_Stack);
+                int stoneCount = (stoneStackCount * StoneFactoryConfig.StoneFactoryStone_Stack);
 
                 this.BasePlayer.FortuneInfo.StockOfStones += stoneCount;
                 SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家从矿石工厂提取" + stoneCount + "矿石", myTrans);

@@ -28,27 +28,7 @@ namespace SuperMinersServerApplication
                 }
             }
         }
-
-        private static object _lockIncomeMoneyAccount = new object();
-        private static IncomeMoneyAccount _incomeMoneyAccount = null;
-        public static IncomeMoneyAccount IncomeMoneyAccount
-        {
-            get
-            {
-                lock (_lockIncomeMoneyAccount)
-                {
-                    return _incomeMoneyAccount;
-                }
-            }
-            set
-            {
-                lock (_lockIncomeMoneyAccount)
-                {
-                    _incomeMoneyAccount = value;
-                }
-            }
-        }
-
+        
         private static object _lockRegisterUserConfig = new object();
         private static RegisterUserConfig _registerUserConfig = null;
         public static RegisterUserConfig RegisterPlayerConfig
@@ -70,11 +50,6 @@ namespace SuperMinersServerApplication
         }
 
         public static AwardReferrerLevelConfig AwardReferrerLevelConfig;
-
-        /// <summary>
-        /// 玩家购买远程服务三层返利，按积分值比例返灵币
-        /// </summary>
-        public static decimal[] BuyRemoteServiceAwardRMBConfig = new decimal[] { 0.08m, 0.05m, 0.03m };
 
         public static RouletteConfig RouletteConfig = new RouletteConfig();
 

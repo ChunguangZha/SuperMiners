@@ -209,6 +209,21 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\VirtualShoppingItem.cs">
       <Link>Wcf\Datas\VirtualShoppingItem.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\PlayerStoneFactoryAccountInfo.cs">
+      <Link>Wcf\Datas\PlayerStoneFactoryAccountInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryOneGroupSlave.cs">
+      <Link>Wcf\Datas\StoneFactoryOneGroupSlave.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryProfitRMBChangedRecord.cs">
+      <Link>Wcf\Datas\StoneFactoryProfitRMBChangedRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryStackChangeRecord.cs">
+      <Link>Wcf\Datas\StoneFactoryStackChangeRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactorySystemDailyProfit.cs">
+      <Link>Wcf\Datas\StoneFactorySystemDailyProfit.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
@@ -218,14 +233,14 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Datas\GameConfig.cs</Link>
     </Compile>
-    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\IncomeMoneyAccount.cs">
-      <Link>Wcf\Datas\IncomeMoneyAccount.cs</Link>
-    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
       <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RouletteConfig.cs">
       <Link>Wcf\Datas\RouletteConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\StoneFactoryConfig.cs">
+      <Link>Wcf\Datas\StoneFactoryConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
@@ -474,6 +489,9 @@
     <Compile Include="Views\Controls\StackMarketControl.xaml.cs">
       <DependentUpon>StackMarketControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Controls\StoneFactoryControl.xaml.cs">
+      <DependentUpon>StoneFactoryControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MallControl.xaml.cs">
       <DependentUpon>MallControl.xaml</DependentUpon>
     </Compile>
@@ -706,6 +724,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\StackMarketControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\StoneFactoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -253,5 +253,10 @@ namespace MetaData.SystemConfig
         [DataMember]
         public int MaxMakeAVowTimesOfOneDay = 3;
 
+        /// <summary>
+        /// 玩家购买远程服务三层返利，按积分值比例返灵币
+        /// </summary>
+        public decimal[] BuyRemoteServiceAwardRMBConfig = new decimal[] { 0.08m, 0.05m, 0.03m };
+
     }
 }

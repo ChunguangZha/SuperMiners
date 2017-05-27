@@ -38,16 +38,16 @@ namespace SuperMinersServerApplication.WebService.Services
             }
         }
 
-        public IncomeMoneyAccount GetIncomeMoneyAccount(string token)
-        {
-            if (RSAProvider.LoadRSA(token))
-            {
-                return GlobalConfig.IncomeMoneyAccount;
-            }
-            else
-            {
-                throw new Exception();
-            }
-        }
+        //public IncomeMoneyAccount GetIncomeMoneyAccount(string token)
+        //{
+        //    if (RSAProvider.LoadRSA(token))
+        //    {
+        //        return GlobalConfig.IncomeMoneyAccount;
+        //    }
+        //    else
+        //    {
+        //        throw new Exception();
+        //    }
+        //}
     }
 }

@@ -3,6 +3,7 @@ using MetaData;
 using MetaData.StoneFactory;
 using MetaData.SystemConfig;
 using MetaData.User;
+using SuperMinersServerApplication.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -81,7 +82,7 @@ namespace SuperMinersServerApplication.Controller
                     {
                         UserID = userID,
                         JoinStoneStackCount = stoneStackCount,
-                        Time = new MyDateTime()
+                        Time = new MyDateTime(DateTime.Now)
                     };
                     bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(record, myTrans);
                     if (isOK)
@@ -137,7 +138,7 @@ namespace SuperMinersServerApplication.Controller
                     {
                         UserID = userID,
                         JoinStoneStackCount = -stoneStackCount,
-                        Time = new MyDateTime()
+                        Time = new MyDateTime(DateTime.Now)
                     };
                     bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddNewStackChangeRecord(record, myTrans);
                     if (isOK)
@@ -247,7 +248,7 @@ namespace SuperMinersServerApplication.Controller
                 {
                     UserID = userID,
                     OperRMB = -withdrawRMBCount,
-                    OperTime = new MyDateTime(),
+                    OperTime = new MyDateTime(DateTime.Now),
                     ProfitType = FactoryProfitOperType.WithdrawRMB
                 };
 
@@ -271,26 +272,152 @@ namespace SuperMinersServerApplication.Controller
         public void DailyCheck()
         {
             PlayerStoneFactoryAccountInfo[] listAllFactories = DBProvider.PlayerStoneFactoryDBProvider.GetAllPlayerStoneFactoryAccountInfos();
-            foreach (var item in listAllFactories)
+
+            int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
-                int needFoods = item.EnableSlavesGroupCount;
+                foreach (var factory in listAllFactories)
+                {
+                    if (factory.FactoryIsOpening && factory.FactoryLiveDays > 0)
+                    {
+                        //1份食物：1组奴隶：1股矿石
+                        //计算前一天存活的奴隶
+                        int workableGroupSlaveCount = factory.EnableSlavesGroupCount < factory.Food ? factory.EnableSlavesGroupCount : factory.Food;
+                        int deadGroupSlaveCount = factory.EnableSlavesGroupCount - workableGroupSlaveCount;
+                        //计算前一天有效矿石。
+                        factory.LastDayValidStoneStack = workableGroupSlaveCount < factory.TotalStackCount ? workableGroupSlaveCount : factory.TotalStackCount;
 
+                        //减去前一天没有食物死掉的奴隶
+                        factory.EnableSlavesGroupCount -= deadGroupSlaveCount;
+                        //将前一天存入的冻结中的奴隶转成可用
+                        factory.EnableSlavesGroupCount += factory.FreezingSlaveGroupCount;
+                        factory.FreezingSlaveGroupCount = 0;
+                        factory.Food -= workableGroupSlaveCount;
 
-                int workableGroupSlaveCount = item.EnableSlavesGroupCount < item.Food ? item.EnableSlavesGroupCount : item.Food;
-                //一组奴隶，对应开发10000矿石。
-                item.LastDayValidStoneStack = workableGroupSlaveCount < item.TotalStackCount ? workableGroupSlaveCount : item.TotalStackCount;
-                item.EnableSlavesGroupCount += item.FreezingSlaveGroupCount;
-                item.FreezingSlaveGroupCount = 0;
-                item.Food -= workableGroupSlaveCount;
+                        //检查工厂状态，如果没有奴隶和矿工则工厂生存天数自减1，如果生存天数为0，则工厂关闭。
+                        if (factory.EnableSlavesGroupCount == 0 && factory.FreezingSlaveGroupCount == 0 && factory.TotalStackCount == 0 && factory.FreezingStackCount == 0)
+                        {
+                            factory.FactoryLiveDays--;
+                            if (factory.FactoryLiveDays <= 0)
+                            {
+                                factory.FactoryIsOpening = false;
+                            }
+                        }
+                        else
+                        {
+                            factory.FactoryLiveDays = StoneFactoryConfig.FactoryLiveDays;
+                        }
 
-                DBProvider.PlayerStoneFactoryDBProvider.SavePlayerStoneFactoryAccountInfo(item, );
-            }
+                        DBProvider.PlayerStoneFactoryDBProvider.SavePlayerStoneFactoryAccountInfo(factory, myTrans);
+                    }
+                }
+
+                return OperResult.RESULTCODE_TRUE;
+            },
+            exc =>
+            {
+                LogHelper.Instance.AddErrorLog("矿石工厂零时处理异常", exc);
+            });
 
         }
 
         public int AdminSetProfitRate(decimal profitRate)
         {
-            
+            DBProvider.PlayerStoneFactoryDBProvider.AddStoneFactorySystemDailyProfit(new StoneFactorySystemDailyProfit() { Day = new MyDateTime(DateTime.Now), profitRate = profitRate });
+
+            PlayerStoneFactoryAccountInfo[] listAllFactories = DBProvider.PlayerStoneFactoryDBProvider.GetAllPlayerStoneFactoryAccountInfos();
+            foreach (var factory in listAllFactories)
+            {
+                if (!factory.FactoryIsOpening || factory.FactoryLiveDays <= 0)
+                {
+                    continue;
+                }
+
+                PlayerInfo currentPlayer = DBProvider.UserDBProvider.GetPlayerByUserID(factory.UserID);
+                PlayerInfo Level1ReferPlayerInfo = null;
+                PlayerInfo Level2ReferPlayerInfo = null;
+                PlayerInfo Level3ReferPlayerInfo = null;
+                if (!string.IsNullOrEmpty(currentPlayer.SimpleInfo.ReferrerUserName))
+                {
+                    Level1ReferPlayerInfo = DBProvider.UserDBProvider.GetPlayerByUserName(currentPlayer.SimpleInfo.ReferrerUserName);
+                    if (Level1ReferPlayerInfo != null && !string.IsNullOrEmpty(Level1ReferPlayerInfo.SimpleInfo.ReferrerUserName))
+                    {
+                        Level2ReferPlayerInfo = DBProvider.UserDBProvider.GetPlayerByUserName(Level1ReferPlayerInfo.SimpleInfo.ReferrerUserName);
+                        if (Level2ReferPlayerInfo != null && !string.IsNullOrEmpty(Level2ReferPlayerInfo.SimpleInfo.ReferrerUserName))
+                        {
+                            Level3ReferPlayerInfo = DBProvider.UserDBProvider.GetPlayerByUserName(Level2ReferPlayerInfo.SimpleInfo.ReferrerUserName);
+                        }
+                    }
+                }
+
+                decimal profitRMB = factory.LastDayValidStoneStack * profitRate;
+
+                MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
+                {
+                    bool isOK = DBProvider.PlayerStoneFactoryDBProvider.AddProfitRMBChangedRecord(new StoneFactoryProfitRMBChangedRecord()
+                    {
+                        UserID = factory.UserID,
+                        ProfitType = FactoryProfitOperType.FactoryOutput,
+                        OperRMB = profitRMB,
+                        OperTime = new MyDateTime(DateTime.Now)
+                    }, myTrans);
+                    if (!isOK)
+                    {
+                        return OperResult.RESULTCODE_FALSE;
+                    }
+
+                    if (Level1ReferPlayerInfo != null)
+                    {
+                        isOK = DBProvider.PlayerStoneFactoryDBProvider.AddProfitRMBChangedRecord(new StoneFactoryProfitRMBChangedRecord()
+                        {
+                            UserID = Level1ReferPlayerInfo.SimpleInfo.UserID,
+                            ProfitType = FactoryProfitOperType.ReferenceAward,
+                            OperRMB = profitRMB * StoneFactoryConfig.FactoryOutputProfitAwardRMBConfig[0],
+                            OperTime = new MyDateTime(DateTime.Now)
+                        }, myTrans);
+                        if (!isOK)
+                        {
+                            return OperResult.RESULTCODE_FALSE;
+                        }
+                    }
+                    if (Level2ReferPlayerInfo != null)
+                    {
+                        isOK = DBProvider.PlayerStoneFactoryDBProvider.AddProfitRMBChangedRecord(new StoneFactoryProfitRMBChangedRecord()
+                        {
+                            UserID = Level2ReferPlayerInfo.SimpleInfo.UserID,
+                            ProfitType = FactoryProfitOperType.ReferenceAward,
+                            OperRMB = profitRMB * StoneFactoryConfig.FactoryOutputProfitAwardRMBConfig[1],
+                            OperTime = new MyDateTime(DateTime.Now)
+                        }, myTrans);
+                        if (!isOK)
+                        {
+                            return OperResult.RESULTCODE_FALSE;
+                        }
+                    }
+                    if (Level3ReferPlayerInfo != null)
+                    {
+                        isOK = DBProvider.PlayerStoneFactoryDBProvider.AddProfitRMBChangedRecord(new StoneFactoryProfitRMBChangedRecord()
+                        {
+                            UserID = Level3ReferPlayerInfo.SimpleInfo.UserID,
+                            ProfitType = FactoryProfitOperType.ReferenceAward,
+                            OperRMB = profitRMB * StoneFactoryConfig.FactoryOutputProfitAwardRMBConfig[2],
+                            OperTime = new MyDateTime(DateTime.Now)
+                        }, myTrans);
+                        if (!isOK)
+                        {
+                            return OperResult.RESULTCODE_FALSE;
+                        }
+                    }
+
+                    return OperResult.RESULTCODE_TRUE;
+                },
+                exc =>
+                {
+                    LogHelper.Instance.AddErrorLog("管理员设置工厂收益异常，玩家ID：" + factory.UserID, exc);
+                });
+
+            }
+
+            return OperResult.RESULTCODE_TRUE;
         }
 
     }

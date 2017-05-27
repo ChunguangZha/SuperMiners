@@ -127,32 +127,32 @@ namespace SuperMinersServerApplication.UIModel
             return byteArray;
         }
 
-        public static IncomeMoneyAccountUIModel CreateFromDBObject(IncomeMoneyAccount parent)
-        {
-            if (parent == null)
-            {
-                return new IncomeMoneyAccountUIModel();
-            }
-            IncomeMoneyAccountUIModel uiConfig = new IncomeMoneyAccountUIModel()
-            {
-                _alipay2DCode = parent.Alipay2DCode,
-                IncomeMoneyAlipay = parent.IncomeMoneyAlipay,
-                IncomeMoneyAlipayRealName = parent.IncomeMoneyAlipayRealName
-            };
+        //public static IncomeMoneyAccountUIModel CreateFromDBObject(IncomeMoneyAccount parent)
+        //{
+        //    if (parent == null)
+        //    {
+        //        return new IncomeMoneyAccountUIModel();
+        //    }
+        //    IncomeMoneyAccountUIModel uiConfig = new IncomeMoneyAccountUIModel()
+        //    {
+        //        _alipay2DCode = parent.Alipay2DCode,
+        //        IncomeMoneyAlipay = parent.IncomeMoneyAlipay,
+        //        IncomeMoneyAlipayRealName = parent.IncomeMoneyAlipayRealName
+        //    };
 
-            return uiConfig;
-        }
+        //    return uiConfig;
+        //}
 
-        public IncomeMoneyAccount ToDBObject()
-        {
-            IncomeMoneyAccount dbConfig = new IncomeMoneyAccount()
-            {
-                Alipay2DCode = this._alipay2DCode,
-                IncomeMoneyAlipay = this.IncomeMoneyAlipay,
-                IncomeMoneyAlipayRealName = this.IncomeMoneyAlipayRealName
-            };
+        //public IncomeMoneyAccount ToDBObject()
+        //{
+        //    IncomeMoneyAccount dbConfig = new IncomeMoneyAccount()
+        //    {
+        //        Alipay2DCode = this._alipay2DCode,
+        //        IncomeMoneyAlipay = this.IncomeMoneyAlipay,
+        //        IncomeMoneyAlipayRealName = this.IncomeMoneyAlipayRealName
+        //    };
 
-            return dbConfig;
-        }
+        //    return dbConfig;
+        //}
     }
 }

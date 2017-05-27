@@ -110,77 +110,77 @@ namespace DataBaseProvider
 
         #region IncomeMoneyAccount
 
-        public IncomeMoneyAccount GetIncomeMoneyAccountConfig()
-        {
-            IncomeMoneyAccount config = null;
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public IncomeMoneyAccount GetIncomeMoneyAccountConfig()
+        //{
+        //    IncomeMoneyAccount config = null;
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                DataTable table = new DataTable();
+        //        DataTable table = new DataTable();
 
-                string cmdText = "SELECT * FROM incomemoneyaccount";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
-                adapter.Fill(table);
-                if (table.Rows.Count != 0)
-                {
-                    config = new IncomeMoneyAccount();
-                    config.IncomeMoneyAlipay = Convert.ToString(table.Rows[0]["IncomeMoneyAlipay"]);
-                    config.IncomeMoneyAlipayRealName = Convert.ToString(table.Rows[0]["IncomeMoneyAlipayRealName"]);
-                    config.Alipay2DCode = (byte[])table.Rows[0]["Alipay2DCode"];
-                }
+        //        string cmdText = "SELECT * FROM incomemoneyaccount";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+        //        adapter.Fill(table);
+        //        if (table.Rows.Count != 0)
+        //        {
+        //            config = new IncomeMoneyAccount();
+        //            config.IncomeMoneyAlipay = Convert.ToString(table.Rows[0]["IncomeMoneyAlipay"]);
+        //            config.IncomeMoneyAlipayRealName = Convert.ToString(table.Rows[0]["IncomeMoneyAlipayRealName"]);
+        //            config.Alipay2DCode = (byte[])table.Rows[0]["Alipay2DCode"];
+        //        }
 
-                table.Clear();
-                table.Dispose();
-                adapter.Dispose();
+        //        table.Clear();
+        //        table.Dispose();
+        //        adapter.Dispose();
 
-                mycmd.Dispose();
+        //        mycmd.Dispose();
 
-                return config;
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        return config;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
-        public bool SaveIncomeMoneyAccountConfig(IncomeMoneyAccount config)
-        {
-            MySqlConnection myconn = null;
-            try
-            {
-                myconn = MyDBHelper.Instance.CreateConnection();
-                myconn.Open();
+        //public bool SaveIncomeMoneyAccountConfig(IncomeMoneyAccount config)
+        //{
+        //    MySqlConnection myconn = null;
+        //    try
+        //    {
+        //        myconn = MyDBHelper.Instance.CreateConnection();
+        //        myconn.Open();
 
-                string cmdText = "delete from incomemoneyaccount; " +
-                    "insert into incomemoneyaccount (IncomeMoneyAlipay, IncomeMoneyAlipayRealName, Alipay2DCode) values " +
-                                        " (@IncomeMoneyAlipay, @IncomeMoneyAlipayRealName, @Alipay2DCode)";
-                MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
-                mycmd.Parameters.AddWithValue("@IncomeMoneyAlipay", config.IncomeMoneyAlipay);
-                mycmd.Parameters.AddWithValue("@IncomeMoneyAlipayRealName", config.IncomeMoneyAlipayRealName);
-                mycmd.Parameters.AddWithValue("@Alipay2DCode", config.Alipay2DCode);
+        //        string cmdText = "delete from incomemoneyaccount; " +
+        //            "insert into incomemoneyaccount (IncomeMoneyAlipay, IncomeMoneyAlipayRealName, Alipay2DCode) values " +
+        //                                " (@IncomeMoneyAlipay, @IncomeMoneyAlipayRealName, @Alipay2DCode)";
+        //        MySqlCommand mycmd = new MySqlCommand(cmdText, myconn);
+        //        mycmd.Parameters.AddWithValue("@IncomeMoneyAlipay", config.IncomeMoneyAlipay);
+        //        mycmd.Parameters.AddWithValue("@IncomeMoneyAlipayRealName", config.IncomeMoneyAlipayRealName);
+        //        mycmd.Parameters.AddWithValue("@Alipay2DCode", config.Alipay2DCode);
                 
-                mycmd.ExecuteNonQuery();
-                mycmd.Dispose();
+        //        mycmd.ExecuteNonQuery();
+        //        mycmd.Dispose();
 
-                return true;
-            }
-            catch (Exception exc)
-            {
-                throw exc;
-            }
-            finally
-            {
-                MyDBHelper.Instance.DisposeConnection(myconn);
-            }
-        }
+        //        return true;
+        //    }
+        //    catch (Exception exc)
+        //    {
+        //        throw exc;
+        //    }
+        //    finally
+        //    {
+        //        MyDBHelper.Instance.DisposeConnection(myconn);
+        //    }
+        //}
 
         #endregion
 

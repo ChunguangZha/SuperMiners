@@ -19,13 +19,13 @@ namespace SuperMinersServerApplication.WebService.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         SystemConfigin1 GetGameConfig(string token);
 
-        [OperationContract]
-        [WebInvoke(UriTemplate = "/WebService/GetIncomeMoneyAccount",
-            Method = "POST",
-            ResponseFormat = WebMessageFormat.Json,
-            RequestFormat = WebMessageFormat.Json,
-            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
-        IncomeMoneyAccount GetIncomeMoneyAccount(string token);
+        //[OperationContract]
+        //[WebInvoke(UriTemplate = "/WebService/GetIncomeMoneyAccount",
+        //    Method = "POST",
+        //    ResponseFormat = WebMessageFormat.Json,
+        //    RequestFormat = WebMessageFormat.Json,
+        //    BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        //IncomeMoneyAccount GetIncomeMoneyAccount(string token);
 
     }
 }

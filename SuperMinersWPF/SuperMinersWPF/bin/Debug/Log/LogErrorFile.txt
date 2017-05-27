@@ -1,11 +1,3 @@
-Error:  [2017/5/20 21:05:01] ---- Log: RestClient ReceiveCallback 3
-Exc.Message: 基础连接已经关闭: 服务器关闭了本应保持活动状态的连接。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
-   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
------------------------------------------------------
-
-Error:  [2017/5/20 21:05:01] ---- Log: RestClient ReceiveCallback 4
------------------------------------------------------
-
-Error:  [2017/5/20 21:05:03] ---- Log: 客户端小开心2017已退出.
+Error:  [2017/5/27 17:46:12] ---- Log: 客户端小开心xl已退出.
 -----------------------------------------------------
 

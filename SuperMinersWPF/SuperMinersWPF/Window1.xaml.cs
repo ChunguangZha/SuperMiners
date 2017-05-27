@@ -337,6 +337,7 @@ namespace SuperMinersWPF
             this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStack.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlStoneFactory.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowDigStonesArea_Checked(object sender, RoutedEventArgs e)
@@ -457,6 +458,17 @@ namespace SuperMinersWPF
         private void btnMakeAVowToGod_Click(object sender, RoutedEventArgs e)
         {
             App.UserVMObject.AsyncMakeAVowToGod();
+        }
+
+        private void btnStoneFactory_Checked(object sender, RoutedEventArgs e)
+        {
+            if (this.controlDigStoneArea == null)
+            {
+                return;
+            }
+
+            CloseAllControl();
+            this.controlStoneFactory.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

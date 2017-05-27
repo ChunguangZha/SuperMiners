@@ -1440,7 +1440,7 @@ namespace DataBaseProvider
                 StoneFactoryProfitRMBChangedRecord item = new StoneFactoryProfitRMBChangedRecord();
                 item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
-                item.OperRMB = Convert.ToInt32(dt.Rows[i]["OperRMB"]);
+                item.OperRMB = Convert.ToDecimal(dt.Rows[i]["OperRMB"]);
                 item.ProfitType = (FactoryProfitOperType)Convert.ToInt32(dt.Rows[i]["ProfitType"]);
                 item.OperTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["OperTime"]));
 

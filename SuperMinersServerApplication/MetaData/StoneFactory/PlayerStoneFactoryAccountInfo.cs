@@ -56,7 +56,7 @@ namespace MetaData.StoneFactory
         /// 前一天有效矿石，每天0点计算前一天有效矿石（即前一天之前存入的矿石和前一天前存入的存活的奴隶），每天14点，会开出前一天盈利点，按盈利点*LastDayValidStone，得出前一天收益。
         /// </summary>
         [DataMember]
-        public float LastDayValidStoneStack;
+        public int LastDayValidStoneStack;
 
         /// <summary>
         /// 总可用股数，不包含冻结矿石（该值不存入数据库，每次查询数据库中所有股权变更记录累计得出）。1万矿石可以投入一股，30天后，可撤回到玩家矿石账户
@@ -80,13 +80,13 @@ namespace MetaData.StoneFactory
         /// 总计生产出的灵币值（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
         /// </summary>
         [DataMember]
-        public int TotalProfitRMB;
+        public decimal TotalProfitRMB;
 
         /// <summary>
         /// 当前可提取的灵币值（18天前生产出的灵币）（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
         /// </summary>
         [DataMember]
-        public int WithdrawableProfitRMB;
+        public decimal WithdrawableProfitRMB;
 
         ///// <summary>
         ///// 当前不可提取的灵币值（18天内（含）生产出的灵币）（该值不存入数据库，每次查询数据库中所有灵币收益变更记录累计得出）
