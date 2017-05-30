@@ -23,7 +23,9 @@
         <Grid Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="140*"/>
+                <ColumnDefinition Width="91*"/>
+                <ColumnDefinition Width="121*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -35,25 +37,27 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Text="编号" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5"/>
-            <TextBox Grid.Row="0" Grid.Column="1" Name="txtID" IsReadOnly="True" Margin="10,5" MaxLength="20" VerticalAlignment="Top"/>
+            <TextBlock Grid.Column="0" Text="编号" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10,5"/>
+            <TextBox Grid.Row="0" Grid.Column="1" Name="txtID" IsReadOnly="True" Margin="10,5,10,0" MaxLength="20" VerticalAlignment="Center" Grid.ColumnSpan="3"/>
             <TextBlock  Grid.Row="1" Grid.Column="0" Text="标题" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10,5"/>
-            <TextBox Grid.Row="1" Grid.Column="1" Name="txtTitle" Margin="10,5" MaxLength="20" VerticalAlignment="Top"/>
+            <TextBox Grid.Row="1" Grid.Column="1" Name="txtTitle" Margin="10,5,10,0" MaxLength="20" VerticalAlignment="Top" Grid.ColumnSpan="3"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="产品描述" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Name="txtRemark" Margin="10,5" Height="70" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="价格（人民币）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPriceYuan" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5,200,5" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPriceYuan_ValueChanged"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Name="txtRemark" Margin="10,5" Height="70" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3"/>
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="价格（人民币）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <myc:NumericTextBox Grid.Row="3" Grid.Column="1" x:Name="numPriceYuan" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPriceYuan_ValueChanged"/>
             <TextBlock Grid.Row="3" Grid.Column="1" Text="元" Margin="120,5,5,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="价格（钻石）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <myc:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPrice_ValueChanged"/>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="价格（钻石）" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <myc:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numPrice" DecimalPlaces="2" Width="100" Maximum="100000" Minimum="0" Margin="10,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" ValueChanged="numPrice_ValueChanged"/>
             <TextBlock Grid.Row="4" Grid.Column="1" Text="块" Margin="120,5,5,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+            <TextBlock Grid.Row="5" Grid.Column="0" Text="类别" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
             <ComboBox Grid.Row="5" Grid.Column="1" Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Width="100" Margin="10,5" VerticalAlignment="Top" HorizontalAlignment="Left"/>
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-            <ComboBox Grid.Row="6" Grid.Column="1" Name="cmbSellState" Margin="10,5" VerticalAlignment="Top" SelectedIndex="0" Width="100" HorizontalAlignment="Left">
+            <TextBlock Grid.Row="5" Grid.Column="2" Text="出售状态" Margin="10,5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+            <ComboBox Grid.Row="5" Grid.Column="3" Name="cmbSellState" Margin="10,5" VerticalAlignment="Center" SelectedIndex="0" Width="100" HorizontalAlignment="Left">
                 <ComboBoxItem Content="上架"/>
                 <ComboBoxItem Content="下架"/>
             </ComboBox>
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="库存" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+            <myc:NumericTextBox Grid.Row="6" Grid.Column="1" x:Name="numStockCount" Width="100" Maximum="100000" Minimum="0" Margin="10,5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
         </Grid>
         <TextBlock Grid.Row="1" Text="产品详情文本" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Top"/>
         <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Name="txtDetailText" Height="50" Margin="10" MaxLength="200" AcceptsReturn="True" AcceptsTab="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
@@ -74,7 +78,7 @@
             <Button Grid.Column="1" Name="btnMoveUpDetailImage" Content="上移选中图片" Width="120" Margin="10,50,10,10" VerticalAlignment="Top" Click="btnMoveUpDetailImage_Click"/>
             <Button Grid.Column="1" Name="btnMoveDownDetailImage" Content="下移选中图片" Width="120" Margin="10,90,10,10" VerticalAlignment="Top" Click="btnMoveDownDetailImage_Click"/>
             <Button Grid.Column="1" Name="btnDeleteDetailImage" Content="删除选中图片" Width="120" Margin="10,130,10,10" VerticalAlignment="Top" Click="btnDeleteDetailImage_Click"/>
-            
+
         </Grid>
         <Button Grid.Row="3" Grid.ColumnSpan="4" Name="btnCancel" Content="取消" Width="100" VerticalAlignment="Center" Margin="10" HorizontalAlignment="Right" Click="btnCancel_Click"/>
         <Button Grid.Row="3" Grid.ColumnSpan="4" Name="btnSave" Content="保存" Width="100" VerticalAlignment="Center" Margin="10,10,140,10" HorizontalAlignment="Right" Click="btnSave_Click"/>

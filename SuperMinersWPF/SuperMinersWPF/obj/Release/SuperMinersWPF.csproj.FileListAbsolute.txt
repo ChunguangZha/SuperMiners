@@ -314,4 +314,13 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\Ed
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF_Content.g.cs
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DiamondShoppingItemDetailWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\DiamondShoppingItemDetailWindow.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryJoinInSlaveWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryJoinInStoneWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryProfitRMBWithdrawWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryStoneWithdrawWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryJoinInSlaveWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryJoinInStoneWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryProfitRMBWithdrawWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Release\Views\Windows\StoneFactoryStoneWithdrawWindow.baml

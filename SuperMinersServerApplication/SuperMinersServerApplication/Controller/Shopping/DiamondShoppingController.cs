@@ -180,18 +180,20 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return items;
         }
 
-        public int BuyDiamondShoppingItem(int userID, string userName, int itemID, PostAddress address, CustomerMySqlTransaction myTrans)
+        public int BuyDiamondShoppingItem(int userID, string userName, DiamondShoppingItem shoppingItem, PostAddress address, CustomerMySqlTransaction myTrans)
         {
             DateTime time = DateTime.Now;
-            PlayerBuyDiamondShoppingItemRecord record = new PlayerBuyDiamondShoppingItemRecord()
-            {
-                OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.DiamondShopping),
-                UserID = userID,
-                DiamondShoppingItemID = itemID,
-                BuyTime = new MetaData.MyDateTime(time),
-                SendAddress = address.ToString(),
-                ShoppingState = DiamondShoppingState.Payed
-            };
+            PlayerBuyDiamondShoppingItemRecord record = null;
+
+                record = new PlayerBuyDiamondShoppingItemRecord()
+                {
+                    OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.DiamondShopping),
+                    UserID = userID,
+                    DiamondShoppingItemID = shoppingItem.ID,
+                    BuyTime = new MetaData.MyDateTime(time),
+                    SendAddress = address.ToString(),
+                    ShoppingState = DiamondShoppingState.Payed
+                };
 
             bool isOK = DBProvider.DiamondShoppingDBProvider.AddPlayerBuyDiamondShoppingItemRecord(record, myTrans);
             if (isOK)

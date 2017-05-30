@@ -93,7 +93,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     if (player.SimpleInfo.LastLoginTime == null)
                     {
-                        if ((DateTime.Now - player.SimpleInfo.RegisterTime).TotalDays > 7)
+                        if ((DateTime.Now - player.SimpleInfo.RegisterTime).Days > 7)
                         {
                             listUserID_toDelete.Add(player);
                             continue;
@@ -101,7 +101,7 @@ namespace SuperMinersServerApplication.Controller
                     }
                     else
                     {
-                        if ((DateTime.Now - player.SimpleInfo.LastLoginTime.Value).TotalDays > 20)
+                        if ((DateTime.Now - player.SimpleInfo.LastLoginTime.Value).Days > 20)
                         {
                             listUserID_toDelete.Add(player);
                             continue;
@@ -110,7 +110,7 @@ namespace SuperMinersServerApplication.Controller
 
                     PlayerLockedInfo lockedInfo = DBProvider.PlayerLockedInfoDBProvider.GetPlayerLockedInfo(player.SimpleInfo.UserID);
                     if (lockedInfo != null && lockedInfo.ExpireDays > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays 
-                        && (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays)
+                        && (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).Days > GlobalConfig.GameConfig.DeleteUser_WhenLockedExpireDays)
                     {
                         listUserID_toDelete.Add(player);
                     }
@@ -524,7 +524,7 @@ namespace SuperMinersServerApplication.Controller
                     return resultObj;
                 }
 
-                double lockedDays = (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).TotalDays;
+                int lockedDays = (DateTime.Now - lockedInfo.LockedLoginTime.ToDateTime()).Days;
                 if (lockedDays > lockedInfo.ExpireDays)
                 {
                     DBProvider.PlayerLockedInfoDBProvider.DeletePlayerLockedInfo(userID);
@@ -735,7 +735,7 @@ namespace SuperMinersServerApplication.Controller
             var lastGravelRecord = DBProvider.GravelDBProvider.GetLastDayPlayerGravelRequsetRecord(player.SimpleInfo.UserID);
             if (lastGravelRecord == null)
             {
-                if ((DateTime.Now - player.SimpleInfo.RegisterTime).TotalDays > 7)
+                if ((DateTime.Now - player.SimpleInfo.RegisterTime).Days > 7)
                 {
                     player.GravelInfo.GravelState = PlayerGravelState.Disable;
                 }
@@ -1407,17 +1407,17 @@ namespace SuperMinersServerApplication.Controller
             return playerrun.WinGambleStone(winnedStone, myTrans);
         }
 
-        public int OpenFactory(int userID, string userName, CustomerMySqlTransaction myTrans)
-        {
-            //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
-            PlayerRunnable playerrun = this.GetRunnable(userName);
-            if (playerrun == null || playerrun.BasePlayer.SimpleInfo.UserID != userID)
-            {
-                return OperResult.RESULTCODE_USER_NOT_EXIST;
-            }
+        //public int OpenFactory(int userID, string userName, CustomerMySqlTransaction myTrans)
+        //{
+        //    //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
+        //    PlayerRunnable playerrun = this.GetRunnable(userName);
+        //    if (playerrun == null || playerrun.BasePlayer.SimpleInfo.UserID != userID)
+        //    {
+        //        return OperResult.RESULTCODE_USER_NOT_EXIST;
+        //    }
 
-            return playerrun.OpenFactory(myTrans);
-        }
+        //    return playerrun.OpenFactory(myTrans);
+        //}
 
 
         public event Action<WithdrawRMBRecord> SomebodyWithdrawRMB;

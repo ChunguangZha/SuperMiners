@@ -116,7 +116,7 @@ namespace SuperMinersWPF.MyControl
                     changeAgain = true;
                 }
 
-                tb.Text = value.ToString(tb.StringFormat + tb.DecimalPlaces, System.Globalization.CultureInfo.InvariantCulture);
+                //tb.Text = value.ToString(tb.StringFormat + tb.DecimalPlaces, System.Globalization.CultureInfo.InvariantCulture);
                 if (changeAgain)
                 {
                     try
@@ -209,36 +209,66 @@ namespace SuperMinersWPF.MyControl
 
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
-            this.ChangeValue(this.Text);
+            //this.ChangeValue(this.Text);
         }
 
         protected override void OnKeyDown(System.Windows.Input.KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (e.Key == Key.D0 || e.Key == Key.D1 || e.Key == Key.D2 || e.Key == Key.D3 || e.Key == Key.D4 || 
+                e.Key == Key.D5 || e.Key == Key.D6 || e.Key == Key.D7 || e.Key == Key.D8 || e.Key == Key.D9 ||
+                e.Key == Key.NumPad0 || e.Key == Key.NumPad1 || e.Key == Key.NumPad2 || e.Key == Key.NumPad3 || e.Key == Key.NumPad4 || 
+                e.Key == Key.NumPad5 || e.Key == Key.NumPad6 || e.Key == Key.NumPad7 || e.Key == Key.NumPad8 || e.Key == Key.NumPad9)
             {
-                if (FocusWindow == null)
+                if (this.Text == "0")
                 {
-                    if (FocusControl == null)
-                    {
-                        this.ChangeValue(this.Text);
-                    }
-                    else
-                    {
-                        if (!FocusControl.Focus())
-                        {
-                            this.ChangeValue(this.Text);
-                        }
-                    }
+                    this.Text = "";
+                }
+            }
+            else if (e.Key == Key.OemPeriod ||e.Key == Key.Decimal)
+            {
+                if (this.DecimalPlaces <= 0)
+                {
+                    e.Handled = true;
                 }
                 else
                 {
-                    if (!FocusWindow.Focus())
+                    if (this.Text.Contains('.'))
                     {
-                        this.ChangeValue(this.Text);
+                        e.Handled = true;
                     }
                 }
+            }
+            else
+            {
                 e.Handled = true;
             }
+
+
+            //if (e.Key == Key.Enter)
+            //{
+            //    if (FocusWindow == null)
+            //    {
+            //        if (FocusControl == null)
+            //        {
+            //            this.ChangeValue(this.Text);
+            //        }
+            //        else
+            //        {
+            //            if (!FocusControl.Focus())
+            //            {
+            //                this.ChangeValue(this.Text);
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        if (!FocusWindow.Focus())
+            //        {
+            //            this.ChangeValue(this.Text);
+            //        }
+            //    }
+            //    e.Handled = true;
+            //}
 
             base.OnKeyDown(e);
         }

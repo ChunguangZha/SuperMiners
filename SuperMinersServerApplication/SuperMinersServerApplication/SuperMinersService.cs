@@ -86,6 +86,7 @@ namespace SuperMinersServerApplication
                 RaidersofLostArkController.Instance.Init();
                 GravelController.Instance.Init();
                 GambleStoneController.Instance.Init();
+                StoneFactoryController.Instance.Init();
 
                 if (!InitServiceToClient())
                 {

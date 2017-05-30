@@ -1,4 +1,5 @@
-﻿using SuperMinersCustomServiceSystem.Model;
+﻿using MetaData.Shopping;
+using SuperMinersCustomServiceSystem.Model;
 using SuperMinersCustomServiceSystem.View.Windows;
 using System;
 using System.Collections.Generic;

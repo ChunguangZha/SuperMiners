@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:winForm="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         xmlns:Views="clr-namespace:SuperMinersWPF.Views" x:Class="SuperMinersWPF.Window1"
+        xmlns:myControl="clr-namespace:SuperMinersWPF.MyControl"
         Loaded="Window_Loaded"
         Height="660" Width="1100" Icon="Logo128.ico" MinHeight="620" MinWidth="1000">
     <Window.Resources>
@@ -181,11 +182,11 @@
                 <TextBox Grid.Row="14" Grid.Column="1" Text="{Binding TempOutputStonesString, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource UserInfoTextBoxStyle}"/>
                 <Button Grid.Row="14" Grid.Column="2" x:Name="btnGatherStones" Content="收取" Style="{StaticResource UserInfoButtonStyle}" Click="btnGatherStones_Click"/>
 
-                <TextBlock Visibility="Collapsed" Grid.Row="15" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="{Binding Strings.Dope, Mode=OneWay, Source={StaticResource Language}}"/><Run Text=" "/><Run Text=""/></TextBlock>
-                <TextBox Visibility="Collapsed" Grid.Row="15" Grid.Column="1" Text="0天 00:00:00" Style="{StaticResource UserInfoTextBoxStyle}"/>
-                <Button Visibility="Collapsed" Grid.Row="15" Grid.Column="2" x:Name="btnBuyDope" Content="购买" Style="{StaticResource UserInfoButtonStyle}" Click="btnBuyDope_Click"/>
-                <Button Visibility="Collapsed" Grid.Row="16" Grid.ColumnSpan="3" x:Name="btnUseDope" Content="启用" Style="{StaticResource UserInfoRedButtonStyle}" Click="btnUseDope_Click"/>
-
+                <TextBlock Grid.Row="15" Grid.ColumnSpan="3" Text="加工厂" HorizontalAlignment="Center" Style="{StaticResource UserInfoTextBlockStyle}" FontWeight="Bold" Margin="5"/>
+                <TextBlock Grid.Row="16" Grid.Column="0" Text="昨日收益" Style="{StaticResource UserInfoTextBlockStyle}"/>
+                <TextBox Grid.Row="16" Grid.Column="1" x:Name="txtYesterdayProfit" Text="{Binding YesterdayFactoryProfitRate, Mode=OneWay}" IsReadOnly="True" Style="{StaticResource UserInfoTextBoxStyle}"/>
+                <Button Grid.Row="16" Grid.Column="2" x:Name="btnFactory" Content="进入工厂" Style="{StaticResource UserInfoButtonStyle}" Click="btnFactory_Click"/>
+                
                 <TextBlock Visibility="Collapsed" Grid.Row="17" Style="{StaticResource UserInfoTextBlockStyle}" Margin="0,5,5,5"><Run Text="有效时间"/><Run Text=" "/><Run Text=""/></TextBlock>
                 <StackPanel Visibility="Collapsed" Grid.Row="17" Grid.Column="1" Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBox Text="0 天 00:00:00" FontSize="28" Style="{StaticResource UserInfoTextBoxStyle}" Width="Auto"/>
@@ -271,16 +272,6 @@
                         <TextBlock Grid.Column="1" Text="商城" FontSize="16"/>
                     </Grid>
                 </RadioButton>
-                <RadioButton x:Name="btnStoneFactory" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnStoneFactory_Checked">
-                    <Grid Margin="10,10,15,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Image Source="Resources/f1.png" Stretch="None" Margin="5"/>
-                        <TextBlock Grid.Column="1" Text="矿石工厂" FontSize="16"/>
-                    </Grid>
-                </RadioButton>
                 <RadioButton x:Name="btnShowMySuperMiners" Style="{StaticResource RadioButtonStyle1}" BorderThickness="0" GroupName="ShowPanel" Checked="btnShowMySuperMiners_Checked">
                     <Grid Margin="10,10,15,5">
                         <Grid.ColumnDefinitions>
@@ -301,7 +292,6 @@
             <Views:FunnyUserControl x:Name="controlFunny" Visibility="Collapsed"/>
             <Views:MallControl x:Name="controlMall" Visibility="Collapsed"/>
             <Views:StackMarketControl x:Name="controlStack" Visibility="Collapsed"/>
-            <Views:StoneFactoryControl x:Name="controlStoneFactory" Visibility="Collapsed"/>
         </Grid>
 
     </Grid>

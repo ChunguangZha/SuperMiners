@@ -27,6 +27,7 @@ namespace SuperMinersCustomServiceSystem
         public static StoneDelegateTradeViewModel StoneDelegateTradeVMObject = new StoneDelegateTradeViewModel();
         public static RemoteServiceViewModel RemoteServiceVMObject = new RemoteServiceViewModel();
         public static ShoppingViewModel ShoppingVMObject = new ShoppingViewModel();
+        public static StoneFactoryViewModel StoneFactoryVMObject = new StoneFactoryViewModel();
 
 
         protected override void OnStartup(StartupEventArgs e)

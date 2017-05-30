@@ -1,4 +1,5 @@
-﻿using MetaData;
+﻿using DataBaseProvider;
+using MetaData;
 using MetaData.Shopping;
 using MetaData.Trade;
 using SuperMinersServerApplication.Controller.Trade;
@@ -92,18 +93,58 @@ namespace SuperMinersServerApplication.Controller.Shopping
             return items;
         }
 
-        public int BuyVirtualShoppingItem(int userID, string userName, int itemID)
+        public int BuyVirtualShoppingItem(int userID, string userName, VirtualShoppingItem shoppingItem, CustomerMySqlTransaction myTrans)
         {
+            PlayerBuyVirtualShoppingItemRecord record = null;
             DateTime time = DateTime.Now;
-            PlayerBuyVirtualShoppingItemRecord record = new PlayerBuyVirtualShoppingItemRecord()
+            if (shoppingItem.ItemType == VirtualShoppingItemType.FactorySlaveFoods30Days)
             {
-                OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.VirtualShopping),
-                UserID = userID,
-                VirtualShoppingItemID = itemID,
-                BuyTime = new MetaData.MyDateTime(time)
-            };
+                int result = StoneFactoryController.Instance.AddFoods(userID, 30, myTrans);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
 
-            bool isOK = DBProvider.VirtualShoppingItemDBProvider.AddPlayerBuyVirtualShoppingItemRecord(record);
+                record = new PlayerBuyVirtualShoppingItemRecord()
+                {
+                    OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.VirtualShopping),
+                    UserID = userID,
+                    VirtualShoppingItemID = shoppingItem.ID,
+                    VirtualShoppingItemName = shoppingItem.Name,
+                    BuyTime = new MetaData.MyDateTime(time),
+                    UserName = userName,
+                };
+            }
+            else if (shoppingItem.ItemType == VirtualShoppingItemType.FactoryOpenTool)
+            {
+                int result = StoneFactoryController.Instance.OpenFactory(userID, myTrans);
+                if (result != OperResult.RESULTCODE_TRUE)
+                {
+                    return result;
+                }
+
+                record = new PlayerBuyVirtualShoppingItemRecord()
+                {
+                    OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.VirtualShopping),
+                    UserID = userID,
+                    VirtualShoppingItemID = shoppingItem.ID,
+                    VirtualShoppingItemName = shoppingItem.Name,
+                    BuyTime = new MetaData.MyDateTime(time),
+                    UserName = userName,
+                };
+            }
+            else
+            {
+                record = new PlayerBuyVirtualShoppingItemRecord()
+                {
+                    OrderNumber = OrderController.Instance.CreateOrderNumber(userName, time, AlipayTradeInType.VirtualShopping),
+                    UserID = userID,
+                    VirtualShoppingItemID = shoppingItem.ID,
+                    BuyTime = new MetaData.MyDateTime(time)
+                };
+            }
+
+            bool isOK = DBProvider.VirtualShoppingItemDBProvider.AddPlayerBuyVirtualShoppingItemRecord(record, myTrans);
             if (isOK)
             {
                 return OperResult.RESULTCODE_TRUE;

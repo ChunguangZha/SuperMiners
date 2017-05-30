@@ -332,6 +332,16 @@ namespace MetaData
         /// </summary>
         public const int RESULTCODE_MINERS_LACK_OF_BALANCE = 1002;
 
+        /// <summary>
+        /// 矿石工厂中正结算中
+        /// </summary>
+        public const int RESULTCODE_STONEFACTORYISCLEARING = 1003;
+
+        /// <summary>
+        /// 矿石工厂中，食物不足
+        /// </summary>
+        public const int RESULTCODE_FACTORY_FOOD_LACKOFBALANCE = 1004;
+
         
         private static Dictionary<int, string> _resultCode_Msg = new Dictionary<int, string>();
 
@@ -401,6 +411,8 @@ namespace MetaData
             _resultCode_Msg.Add(RESULTCODE_REGISTER_IDCARD_ERROR, "身份证号错误");
             _resultCode_Msg.Add(RESULTCODE_STONEFACTORYISCLOSED, "矿石加工厂没有开启");
             _resultCode_Msg.Add(RESULTCODE_MINERS_LACK_OF_BALANCE, "矿工不足");
+            _resultCode_Msg.Add(RESULTCODE_STONEFACTORYISCLEARING, "23：50至次日1：00为矿石工厂结算时间，无法进行操作");
+            _resultCode_Msg.Add(RESULTCODE_FACTORY_FOOD_LACKOFBALANCE, "氪金不足，无法投喂");
         }
 
         public static string GetMsg(int resultCode)

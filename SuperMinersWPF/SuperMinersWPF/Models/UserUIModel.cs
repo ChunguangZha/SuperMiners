@@ -85,6 +85,14 @@ namespace SuperMinersWPF.Models
             }
         }
 
+        public int UserID
+        {
+            get
+            {
+                return this._parentObject.SimpleInfo.UserID;
+            }
+        }
+
         public string UserName
         {
             get { return this._parentObject.SimpleInfo.UserName; }
@@ -516,5 +524,22 @@ namespace SuperMinersWPF.Models
                 return Exp < 50 && (SurplusMakeAVowTimes > 0);
             }
         }
+
+        private decimal _yesterdayFactoryProfitRate = 0;
+
+        public decimal YesterdayFactoryProfitRate
+        {
+            get
+            {
+                return _yesterdayFactoryProfitRate;
+            }
+            set
+            {
+                this._yesterdayFactoryProfitRate = value;
+                NotifyPropertyChange("YesterdayFactoryProfitRate");
+            }
+        }
+
+
     }
 }

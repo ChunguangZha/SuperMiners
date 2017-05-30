@@ -27,6 +27,7 @@ namespace SuperMinersWPF
         internal static GameRaiderofLostArkViewModel GameRaiderofLostArkVMObject = new GameRaiderofLostArkViewModel();
         internal static GambleStoneViewModel GambleStoneVMObject = new GambleStoneViewModel();
         internal static ShoppingViewModel ShoppingVMObject = new ShoppingViewModel();
+        internal static StoneFactoryViewModel StoneFactoryVMObject = new StoneFactoryViewModel();
         internal static BusyToken BusyToken = new BusyToken();
 
         protected override void OnStartup(StartupEventArgs e)

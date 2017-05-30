@@ -73,8 +73,8 @@ namespace SuperMinersWPF
                 this.txtShoppingCredits.Visibility = System.Windows.Visibility.Visible;
                 this.btnGetShoppingCredits.Visibility = System.Windows.Visibility.Visible;
                 
-                this.btnGetMoney.IsEnabled = false;
-                this.btnStonesSell.IsEnabled = false;
+                //this.btnGetMoney.IsEnabled = false;
+                //this.btnStonesSell.IsEnabled = false;
 
                 this.Title = Strings.Title + System.Configuration.ConfigurationManager.AppSettings["softwareversion"] + "     迅灵矿场";
             //}
@@ -102,6 +102,7 @@ namespace SuperMinersWPF
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            App.StoneFactoryVMObject.PlayerFactoryAccountGetCompleted += StoneFactoryVMObject_PlayerFactoryAccountGetCompleted;
             App.NoticeVMObject.LastNoticeChanged += NoticeVMObject_LastNoticeChanged;
             GlobalData.Client.LogoutCompleted += Client_LogoutCompleted;
             App.NoticeVMObject.AsyncGetNewNotices();
@@ -121,6 +122,7 @@ namespace SuperMinersWPF
             App.StackStoneVMObject.AsyncGetAllStoneStackDailyRecords();
             App.GameRaiderofLostArkVMObject.AsyncGetHistoryRaiderRoundRecords(GlobalData.PageItemsCount, 1);
             App.GameRaiderofLostArkVMObject.AsyncGetCurrentRaiderRoundInfo();
+            App.StoneFactoryVMObject.AsyncGetStoneFactorySystemDailyProfitList(GlobalData.PageItemsCount, 1);
             App.GambleStoneVMObject.Init();
 
             this.controlMySuperMiners.Init();
@@ -337,7 +339,6 @@ namespace SuperMinersWPF
             this.controlMySuperMiners.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFunny.Visibility = System.Windows.Visibility.Collapsed;
             this.controlStack.Visibility = System.Windows.Visibility.Collapsed;
-            this.controlStoneFactory.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnShowDigStonesArea_Checked(object sender, RoutedEventArgs e)
@@ -460,15 +461,25 @@ namespace SuperMinersWPF
             App.UserVMObject.AsyncMakeAVowToGod();
         }
 
-        private void btnStoneFactory_Checked(object sender, RoutedEventArgs e)
+        private void btnFactory_Click(object sender, RoutedEventArgs e)
         {
-            if (this.controlDigStoneArea == null)
-            {
-                return;
-            }
+            App.StoneFactoryVMObject.AsyncGetPlayerFactoryAccountInfo();
+        }
 
-            CloseAllControl();
-            this.controlStoneFactory.Visibility = System.Windows.Visibility.Visible;
+        bool IsStoneFactoryWindowShowed = false;
+
+        void StoneFactoryVMObject_PlayerFactoryAccountGetCompleted()
+        {
+            if (!IsStoneFactoryWindowShowed)
+            {
+                this._syn.Post(o =>
+                {
+                    IsStoneFactoryWindowShowed = true;
+                    StoneFactoryWindow win = new StoneFactoryWindow();
+                    win.ShowDialog();
+                    IsStoneFactoryWindowShowed = false;
+                }, null);
+            }
         }
 
     }

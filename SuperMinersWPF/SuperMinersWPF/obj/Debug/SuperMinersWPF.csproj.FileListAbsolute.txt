@@ -299,6 +299,16 @@ F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF_Con
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\bin\Debug\Resources\Server2GameHelper.txt
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.baml
 F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\DiamondShoppingItemDetailWindow.g.cs
-F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StoneFactoryControl.baml
 F:\GitHub\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Controls\StoneFactoryControl.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\SuperMinersWPF.csprojResolveAssemblyReference.cache
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryJoinInSlaveWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryJoinInStoneWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryProfitRMBWithdrawWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryStoneWithdrawWindow.g.cs
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryJoinInSlaveWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryJoinInStoneWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryProfitRMBWithdrawWindow.baml
+F:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\obj\Debug\Views\Windows\StoneFactoryStoneWithdrawWindow.baml

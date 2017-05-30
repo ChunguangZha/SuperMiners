@@ -1,0 +1,26 @@
+﻿<Window x:Class="SuperMinersWPF.Views.Windows.StoneFactoryJoinInSlaveWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:myControl="clr-namespace:SuperMinersWPF.MyControl"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        Title="向加工厂中增加苦力" Height="200" Width="300">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="可用矿工：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Name="txtTotalMinersCount" IsReadOnly="True" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Text="本次增加：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <myControl:NumericTextBox Grid.Row="1" Grid.Column="1" x:Name="numAddToFactorySlaveGroupCount" Margin="5" Width="100" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="百矿工" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="120,5,5,5"/>
+        <Button Grid.Row="2" Grid.Column="2" Name="btnCancel" Content="取消" Width="100" Height="30" Margin="10" HorizontalAlignment="Right" VerticalAlignment="Center" Click="btnCancel_Click"/>
+        <Button Grid.Row="2" Grid.ColumnSpan="2" Name="btnOK" Content="确定" Width="100" Height="30" Margin="10,10,130,10" HorizontalAlignment="Right" Click="btnOK_Click"/>
+    </Grid>
+</Window>

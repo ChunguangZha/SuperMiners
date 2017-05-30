@@ -50,9 +50,11 @@
             <ComboBoxItem Content="上架"/>
             <ComboBoxItem Content="下架"/>
         </ComboBox>
-        <TextBlock Grid.Row="9" Text="限购量：" Margin="5" HorizontalAlignment="Right"/>
-        <MyControl:NumericTextBox Grid.Row="9" Grid.Column="1" x:Name="txtPlayerMaxBuyCount" Margin="5" Minimum="-1"/>
-        <TextBlock Grid.Row="10" Grid.Column="1" Text="限购量小于等于0表示不限购" Margin="5" Foreground="Red"/>
+        <TextBlock Grid.Row="9" Text="商品类型：" Margin="5" HorizontalAlignment="Right"/>
+        <ComboBox Grid.Row="9" Grid.Column="1" Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="5"/>
+        <TextBlock Grid.Row="10" Text="限购量：" Margin="5" HorizontalAlignment="Right"/>
+        <MyControl:NumericTextBox Grid.Row="10" Grid.Column="1" x:Name="txtPlayerMaxBuyCount" Margin="5" Minimum="-1"/>
+        <TextBlock Grid.Row="11" Grid.Column="1" Text="限购量小于等于0表示不限购" Margin="5" Foreground="Red"/>
         
 
         <TextBlock Grid.Row="0" Grid.Column="3" Text="价格(积分)：" Foreground="Red" Margin="5" HorizontalAlignment="Right"/>

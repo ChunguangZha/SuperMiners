@@ -44,14 +44,25 @@ namespace MetaData.StoneFactory
         FactoryOutput,
 
         /// <summary>
-        /// 推荐奖励收益
-        /// </summary>
-        ReferenceAward,
-
-        /// <summary>
         /// 灵币提现
         /// </summary>
         WithdrawRMB,
+
+        /// <summary>
+        /// 推荐奖励收益
+        /// </summary>
+        Level1ReferenceAward,
+
+        /// <summary>
+        /// 推荐奖励收益
+        /// </summary>
+        Level2ReferenceAward,
+
+        /// <summary>
+        /// 推荐奖励收益
+        /// </summary>
+        Level3ReferenceAward,
+
     }
 
 }

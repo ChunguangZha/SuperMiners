@@ -19,11 +19,11 @@ namespace MetaData.Shopping
         [DataMember]
         public DiamondsShoppingItemType ItemType;
 
-        ///// <summary>
-        ///// 库存量
-        ///// </summary>
-        //[DataMember]
-        //public int Stocks;
+        /// <summary>
+        /// 库存量
+        /// </summary>
+        [DataMember]
+        public int Stocks;
 
         /// <summary>
         /// MaxLength:2000
@@ -74,7 +74,6 @@ namespace MetaData.Shopping
         /// 话费充值
         /// </summary>
         PhoneFee = 5,
-
     }
 
     public enum SellState

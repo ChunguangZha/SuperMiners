@@ -27,8 +27,8 @@ namespace DataBaseProvider
                 {
                     //添加新记录
                     sqlText = "insert into playerstonefactoryaccountinfo " +
-                        "(`UserID`,`FactoryIsOpening`,`FactoryLiveDays`,`Food`,`LastDayValidStoneStack`,`FreezingSlavesCount`,`SlavesCount`) " +
-                        " values (@UserID,@FactoryIsOpening,@FactoryLiveDays,@Food,@LastDayValidStoneStack,@FreezingSlavesCount,@SlavesCount) ";
+                        "(`UserID`,`FactoryIsOpening`,`FactoryLiveDays`,`Food`,`LastDayValidStoneStack`,`FreezingSlaveGroupCount`,`EnableSlavesGroupCount`) " +
+                        " values (@UserID,@FactoryIsOpening,@FactoryLiveDays,@Food,@LastDayValidStoneStack,@FreezingSlaveGroupCount,@EnableSlavesGroupCount) ";
                     mycmd.CommandText = sqlText;
                     //mycmd.Parameters.Clear();
                     //mycmd.Parameters.AddWithValue("@UserID", userID);
@@ -36,8 +36,8 @@ namespace DataBaseProvider
                     mycmd.Parameters.AddWithValue("@FactoryLiveDays", StoneFactoryConfig.FactoryLiveDays);
                     mycmd.Parameters.AddWithValue("@Food", 0);
                     mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", 0);
-                    mycmd.Parameters.AddWithValue("@FreezingSlavesCount", 0);
-                    mycmd.Parameters.AddWithValue("@SlavesCount", 0);
+                    mycmd.Parameters.AddWithValue("@FreezingSlaveGroupCount", 0);
+                    mycmd.Parameters.AddWithValue("@EnableSlavesGroupCount", 0);
                     mycmd.ExecuteNonQuery();
                 }
                 else
@@ -65,12 +65,13 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlaveGroupCount`=@FreezingSlaveGroupCount,`EnableSlavesGroupCount`=@EnableSlavesGroupCount where `ID`=@ID ";
+                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastFeedSlaveTime`=@LastFeedSlaveTime,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlaveGroupCount`=@FreezingSlaveGroupCount,`EnableSlavesGroupCount`=@EnableSlavesGroupCount where `ID`=@ID ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@ID", account.ID);
                 mycmd.Parameters.AddWithValue("@FactoryIsOpening", account.FactoryIsOpening);
                 mycmd.Parameters.AddWithValue("@FactoryLiveDays", account.FactoryLiveDays);
                 mycmd.Parameters.AddWithValue("@Food", account.Food);
+                mycmd.Parameters.AddWithValue("@LastFeedSlaveTime", account.LastFeedSlaveTime == null? DBNull.Value: (object)account.LastFeedSlaveTime.ToDateTime());
                 mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", account.LastDayValidStoneStack);
                 mycmd.Parameters.AddWithValue("@FreezingSlaveGroupCount", account.FreezingSlaveGroupCount);
                 mycmd.Parameters.AddWithValue("@EnableSlavesGroupCount", account.EnableSlavesGroupCount);
@@ -91,7 +92,7 @@ namespace DataBaseProvider
             List<PlayerStoneFactoryAccountInfo> listFactories = new List<PlayerStoneFactoryAccountInfo>();
             MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
             {
-                string sqlText = "select * from playerstonefactoryaccountinfo";
+                string sqlText = "select f.*, s.UserName from playerstonefactoryaccountinfo f left join playersimpleinfo s on f.UserID = s.id ";
                 mycmd.CommandText = sqlText;
                 DataTable table = new DataTable();
                 MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
@@ -107,6 +108,15 @@ namespace DataBaseProvider
                 }
                 PlayerStoneFactoryAccountInfo account = items[0];
 
+                if (account.LastFeedSlaveTime != null)
+                {
+                    account.SlaveLiveDiscountms = StoneFactoryConfig.OnceFeedFoodSlaveCanLivems - (int)(DateTime.Now - account.LastFeedSlaveTime.ToDateTime()).TotalSeconds;
+                }
+                else
+                {
+                    account.SlaveLiveDiscountms = 0;
+                }
+
                 SumUserAccountStoneStackCount(account, mycmd);
                 SumUserAccountProfitRMBCount(account, mycmd);
 
@@ -121,7 +131,9 @@ namespace DataBaseProvider
             PlayerStoneFactoryAccountInfo account = null;
             MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
             {
-                string sqlText = "select * from playerstonefactoryaccountinfo where `UserID`=@UserID ";
+                string sqlText = "select ttt.*, s.UserName from "+
+                                    " (select f.* from playerstonefactoryaccountinfo f where f.`UserID`=@UserID ) ttt "+
+                                    " left join playersimpleinfo s on ttt.UserID = s.id  ";
                 mycmd.Parameters.AddWithValue("@UserID", userID);
                 mycmd.CommandText = sqlText;
                 DataTable table = new DataTable();
@@ -138,12 +150,37 @@ namespace DataBaseProvider
                 }
                 account = items[0];
 
+                if (account.LastFeedSlaveTime != null)
+                {
+                    account.SlaveLiveDiscountms = StoneFactoryConfig.OnceFeedFoodSlaveCanLivems - (int)(DateTime.Now - account.LastFeedSlaveTime.ToDateTime()).TotalSeconds;
+                }
+                else
+                {
+                    account.SlaveLiveDiscountms = 0;
+                }
                 SumUserAccountStoneStackCount(account, mycmd);
                 SumUserAccountProfitRMBCount(account, mycmd);
 
             });
 
             return account;
+        }
+
+        public int GetSumLastDayValidStoneStack()
+        {
+            int result = 0;
+            MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            {
+                string sqlText = "select sum(LastDayValidStoneStack) as sumLastDayValidStoneStack from playerstonefactoryaccountinfo ";
+                mycmd.CommandText = sqlText;
+                object objResult = mycmd.ExecuteScalar();
+                if (objResult != DBNull.Value)
+                {
+                    result = Convert.ToInt32(objResult);
+                }
+            });
+
+            return result;
         }
 
         private void SumUserAccountProfitRMBCount(PlayerStoneFactoryAccountInfo account, MySqlCommand mycmd)
@@ -164,6 +201,9 @@ namespace DataBaseProvider
             //已经提现的收益灵币（该值为负数）
             decimal sumWithdrawedProfitRMB = 0;
 
+            decimal sumYesterdayProfitRMB = 0;
+
+            //按时间顺序
             if (items != null && items.Length != 0)
             {
                 DateTime timeNow = DateTime.Now;
@@ -176,14 +216,37 @@ namespace DataBaseProvider
                     else
                     {
                         sumProfitRMB += item.OperRMB;
-                        if ((timeNow - item.OperTime.ToDateTime()).TotalDays > StoneFactoryConfig.ProfitRMBWithdrawLimitDays)
+                        DateTime itemOperTime = item.OperTime.ToDateTime();
+                        if ((timeNow.Date - itemOperTime.Date).Days >= StoneFactoryConfig.ProfitRMBWithdrawLimitDays)
                         {
                             sumWithdrawableProfitRMB += item.OperRMB;
                         }
+                        else
+                        {
+                            if (timeNow.Hour < 14)
+                            {
+                                //14点之前只能取到前天的记录。
+                                if ((timeNow.Date - itemOperTime.Date).Days == 2)
+                                {
+                                    sumYesterdayProfitRMB += item.OperRMB;
+                                }
+                            }
+                            else
+                            {
+                                //14点以后可以取到昨天记录
+                                if ((timeNow.Date - itemOperTime.Date).Days == 1)
+                                {
+                                    sumYesterdayProfitRMB += item.OperRMB;
+                                }
+                            }
+
+                        }
                     }
                 }
+
             }
 
+            account.YesterdayTotalProfitRMB = sumYesterdayProfitRMB;
             account.TotalProfitRMB = sumProfitRMB;
             account.WithdrawableProfitRMB = sumWithdrawableProfitRMB + sumWithdrawedProfitRMB;
         }
@@ -210,7 +273,7 @@ namespace DataBaseProvider
                 DateTime timeNow = DateTime.Now;
                 foreach (var item in items)
                 {
-                    if ((timeNow - item.Time.ToDateTime()).TotalHours > StoneFactoryConfig.StoneFactoryStoneFreezingHours)
+                    if ((timeNow.Date - item.Time.ToDateTime().Date).Days >= StoneFactoryConfig.StoneFactoryStoneFreezingDays)
                     {
                         //可用矿石
                         sumEnableStoneStack += item.JoinStoneStackCount;
@@ -219,7 +282,7 @@ namespace DataBaseProvider
                     {
                         sumFreezingStoneStack += item.JoinStoneStackCount;
                     }
-                    if (item.JoinStoneStackCount > 0 && (timeNow - item.Time.ToDateTime()).TotalDays > StoneFactoryConfig.StoneStackWithdrawLimitDays)
+                    if (item.JoinStoneStackCount > 0 && (timeNow.Date - item.Time.ToDateTime().Date).Days >= StoneFactoryConfig.StoneStackWithdrawLimitDays)
                     {
                         //可提现的矿石（没有减去已经提走的灵币）
                         sumWithdrawableStoneStack += item.JoinStoneStackCount;
@@ -239,22 +302,98 @@ namespace DataBaseProvider
 
         public StoneFactoryProfitRMBChangedRecord[] GetProfitRecords(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
         {
-            return null;
+            StoneFactoryProfitRMBChangedRecord[] items = null;
+            bool isOK = MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlTextA = "SELECT n.* FROM  stonefactoryprofitrmbchangedrecord n ";
+
+                StringBuilder builder = new StringBuilder();
+                if (userID > 0)
+                {
+                    builder.Append(" n.UserID = @UserID ");
+                    mycmd.Parameters.AddWithValue("@UserID", userID);
+                }
+                if (beginTime != null && !beginTime.IsNull && endTime != null && !endTime.IsNull)
+                {
+                    if (builder.Length != 0)
+                    {
+                        builder.Append(" and ");
+                    }
+                    DateTime bTime = beginTime.ToDateTime();
+                    DateTime eTime = endTime.ToDateTime();
+                    if (bTime >= eTime)
+                    {
+                        return;
+                    }
+                    builder.Append(" n.OperTime >= @beginTime and n.OperTime < @endTime ");
+                    mycmd.Parameters.AddWithValue("@beginTime", bTime);
+                    mycmd.Parameters.AddWithValue("@endTime", eTime);
+                }
+                string sqlWhere = "";
+                if (builder.Length > 0)
+                {
+                    sqlWhere = " where " + builder.ToString();
+                }
+
+                string sqlOrderLimit = " order by n.ID desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlWhere + sqlOrderLimit;
+
+                mycmd.CommandText = sqlAllText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                items = MetaDBAdapter<StoneFactoryProfitRMBChangedRecord>.GetStoneFactoryProfitRMBChangedRecordItemFromDataTable(table);
+                table.Dispose();
+                adapter.Dispose();
+            });
+
+            return items;
         }
 
-        public StoneFactoryStackChangeRecord[] GetFactoryStackChangedRecord(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
-        {
-            return null;
-        }
+        //public StoneFactoryStackChangeRecord[] GetFactoryStackChangedRecord(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
+        //{
+        //    return null;
+        //}
 
-        public StoneFactoryOneGroupSlave[] GetFactorySlaveGroupInfos(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
-        {
-            return null;
-        }
+        //public StoneFactoryOneGroupSlave[] GetFactorySlaveGroupInfos(int userID, MyDateTime beginTime, MyDateTime endTime, int pageItemCount, int pageIndex)
+        //{
+        //    return null;
+        //}
 
         public StoneFactorySystemDailyProfit[] GetFactorySystemDailyProfitRecords(int pageItemCount, int pageIndex)
         {
-            return null;
+            StoneFactorySystemDailyProfit[] items = null;
+            bool isOK = MyDBHelper.Instance.ConnectionCommandSelect(mycmd =>
+            {
+                string sqlTextA = "SELECT n.* FROM  stonefactorysystemdailyprofit n ";
+
+                StringBuilder builder = new StringBuilder();
+
+                string sqlOrderLimit = " order by n.ID desc ";
+                if (pageItemCount > 0)
+                {
+                    int start = pageIndex <= 0 ? 0 : (pageIndex - 1) * pageItemCount;
+                    sqlOrderLimit += " limit " + start.ToString() + ", " + pageItemCount;
+                }
+
+                string sqlAllText = sqlTextA + sqlOrderLimit;
+
+                mycmd.CommandText = sqlAllText;
+                DataTable table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(table);
+                items = MetaDBAdapter<StoneFactorySystemDailyProfit>.GetStoneFactorySystemDailyProfitItemFromDataTable(table);
+                table.Dispose();
+                adapter.Dispose();
+            });
+
+            return items;
         }
 
         public bool AddStoneFactorySystemDailyProfit(StoneFactorySystemDailyProfit profit)
@@ -330,7 +469,29 @@ namespace DataBaseProvider
 
         public bool AddProfitRMBChangedRecord(StoneFactoryProfitRMBChangedRecord record, CustomerMySqlTransaction myTrans)
         {
-            return false;
+            MySqlCommand mycmd = null;
+            try
+            {
+                mycmd = myTrans.CreateCommand();
+                string sqlText = "insert into stonefactoryprofitrmbchangedrecord " +
+                        "(`UserID`,`OperRMB`,`ProfitType`,`OperTime`) " +
+                        " values (@UserID,@OperRMB,@ProfitType,@OperTime) ";
+                mycmd.CommandText = sqlText;
+                mycmd.Parameters.AddWithValue("@UserID", record.UserID);
+                mycmd.Parameters.AddWithValue("@OperRMB", record.OperRMB);
+                mycmd.Parameters.AddWithValue("@ProfitType", (int)record.ProfitType);
+                mycmd.Parameters.AddWithValue("@OperTime", record.OperTime.ToDateTime());
+                mycmd.ExecuteNonQuery();
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+            }
+
+            return true;
         }
 
     }

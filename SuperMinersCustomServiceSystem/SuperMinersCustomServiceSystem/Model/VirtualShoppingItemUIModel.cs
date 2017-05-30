@@ -34,6 +34,9 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("ID");
                 NotifyPropertyChange("Name");
                 NotifyPropertyChange("Remark");
+                NotifyPropertyChange("ItemType");
+                NotifyPropertyChange("ItemTypeIndex");
+                NotifyPropertyChange("ItemTypeText");
                 NotifyPropertyChange("SellState");
                 NotifyPropertyChange("SellStateText");
                 NotifyPropertyChange("PlayerMaxBuyableCount");
@@ -88,6 +91,53 @@ namespace SuperMinersCustomServiceSystem.Model
             {
                 this._parentObject.Remark = value;
                 NotifyPropertyChange("Remark");
+            }
+        }
+
+        public int ItemTypeIndex
+        {
+            get { return (int)this.ItemType; }
+            set
+            {
+                this.ItemType = (VirtualShoppingItemType)value;
+            }
+        }
+
+        public VirtualShoppingItemType ItemType
+        {
+            get
+            {
+                return this._parentObject.ItemType;
+            }
+            set
+            {
+                this._parentObject.ItemType = value;
+                NotifyPropertyChange("ItemType");
+                NotifyPropertyChange("ItemTypeIndex");
+                NotifyPropertyChange("ItemTypeText");
+            }
+        }
+
+        public string ItemTypeText
+        {
+            get
+            {
+                string text = "";
+                switch (this.ItemType)
+                {
+                    case VirtualShoppingItemType.Normal:
+                        text = "普通商品";
+                        break;
+                    case VirtualShoppingItemType.FactoryOpenTool:
+                        text = "开启工厂";
+                        break;
+                    case VirtualShoppingItemType.FactorySlaveFoods30Days:
+                        text = "苦力30天食物";
+                        break;
+                    default:
+                        break;
+                }
+                return text;
             }
         }
 

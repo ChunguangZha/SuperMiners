@@ -29,6 +29,9 @@ namespace MetaData.Shopping
         public string Remark;
 
         [DataMember]
+        public VirtualShoppingItemType ItemType;
+
+        [DataMember]
         public SellState SellState;
 
         /// <summary>
@@ -77,5 +80,20 @@ namespace MetaData.Shopping
         {
             return base.ToString();
         }
+    }
+
+    public enum VirtualShoppingItemType
+    {
+        Normal = 0,
+
+        /// <summary>
+        /// 加工厂开启道具
+        /// </summary>
+        FactoryOpenTool = 6,
+
+        /// <summary>
+        /// 加工厂一组奴隶（100人）30天食物
+        /// </summary>
+        FactorySlaveFoods30Days = 7,
     }
 }

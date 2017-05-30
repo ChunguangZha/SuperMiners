@@ -31,6 +31,8 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("Name");
                 NotifyPropertyChange("Type");
                 NotifyPropertyChange("ItemTypeText");
+                NotifyPropertyChange("Stocks");
+                NotifyPropertyChange("ShoppingBuyable");
                 NotifyPropertyChange("Remark");
                 NotifyPropertyChange("SellState");
                 NotifyPropertyChange("SellStateText");
@@ -83,6 +85,22 @@ namespace SuperMinersWPF.Models
                 }
 
                 return text;
+            }
+        }
+
+        public int Stocks
+        {
+            get { return this._parentObject.Stocks; }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public bool ShoppingBuyable
+        {
+            get
+            {
+                return this.Stocks > 0;
             }
         }
 

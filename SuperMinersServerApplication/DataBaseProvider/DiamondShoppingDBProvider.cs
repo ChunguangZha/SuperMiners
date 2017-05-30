@@ -17,11 +17,12 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "insert into diamondshoppingitem " +
-                    "(`Name`,`Type`,`Remark`,`SellState`,`ValueDiamonds`,`DetailText`,`DetailImageNames` ) " +
-                    " values (@Name,@Type,@Remark,@SellState,@ValueDiamonds,@DetailText,@DetailImageNames )";
+                    "(`Name`,`Type`,`Stocks`,`Remark`,`SellState`,`ValueDiamonds`,`DetailText`,`DetailImageNames` ) " +
+                    " values (@Name,@Type,@Stocks,@Remark,@SellState,@ValueDiamonds,@DetailText,@DetailImageNames )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Type", (int)item.ItemType);
+                mycmd.Parameters.AddWithValue("@Stocks", item.Stocks);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);
@@ -53,10 +54,11 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "update diamondshoppingitem " +
-                    "set `Name`=@Name,`Type`=@Type,`Remark`=@Remark,`SellState`=@SellState,`ValueDiamonds`=@ValueDiamonds,`DetailText`=@DetailText,`DetailImageNames`=@DetailImageNames where `ID`=@ID;";
+                    "set `Name`=@Name,`Type`=@Type,`Stocks`=@Stocks,`Remark`=@Remark,`SellState`=@SellState,`ValueDiamonds`=@ValueDiamonds,`DetailText`=@DetailText,`DetailImageNames`=@DetailImageNames where `ID`=@ID;";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Type", (int)item.ItemType);
+                mycmd.Parameters.AddWithValue("@Stocks", item.Stocks);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
                 mycmd.Parameters.AddWithValue("@SellState", (int)item.SellState);
                 mycmd.Parameters.AddWithValue("@ValueDiamonds", item.ValueDiamonds);

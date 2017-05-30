@@ -1455,22 +1455,22 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public int OpenFactory(CustomerMySqlTransaction myTrans)
-        {
-            //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
-            lock (_lockFortuneAction)
-            {
-                if (this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled < StoneFactoryConfig.OpenFactoryNeedShoppingCredit)
-                {
-                    return OperResult.RESULTCODE_LACK_OF_BALANCE;
-                }
+        //public int OpenFactory(CustomerMySqlTransaction myTrans)
+        //{
+        //    //工厂开启状态。开启一次 1000积分。72小时 没有存入矿石和苦力 就 在关闭
+        //    lock (_lockFortuneAction)
+        //    {
+        //        if (this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled < StoneFactoryConfig.OpenFactoryNeedShoppingCredit)
+        //        {
+        //            return OperResult.RESULTCODE_LACK_OF_BALANCE;
+        //        }
 
-                this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= StoneFactoryConfig.OpenFactoryNeedShoppingCredit;
-                SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家开启矿石加工厂，花费了" + StoneFactoryConfig.OpenFactoryNeedShoppingCredit + "积分", myTrans);
+        //        this.BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= StoneFactoryConfig.OpenFactoryNeedShoppingCredit;
+        //        SaveUserFortuneInfoToDB(this.BasePlayer.FortuneInfo, "玩家开启矿石加工厂，花费了" + StoneFactoryConfig.OpenFactoryNeedShoppingCredit + "积分", myTrans);
 
-                return OperResult.RESULTCODE_TRUE;
-            }
-        }
+        //        return OperResult.RESULTCODE_TRUE;
+        //    }
+        //}
 
         /// <summary>
         /// 
@@ -1520,7 +1520,7 @@ namespace SuperMinersServerApplication.Controller
             }
         }
 
-        public int WithdrawRMBFromFactory(int rmbCount, CustomerMySqlTransaction myTrans)
+        public int WithdrawRMBFromFactory(decimal rmbCount, CustomerMySqlTransaction myTrans)
         {
             lock (_lockFortuneAction)
             {

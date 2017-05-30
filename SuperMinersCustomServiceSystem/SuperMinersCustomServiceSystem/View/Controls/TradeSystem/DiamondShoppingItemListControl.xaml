@@ -24,7 +24,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="2" Orientation="Horizontal">
                 <TextBlock Text="商品类型：" Margin="10"/>
-                <ComboBox Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="10" Width="200"/>
+                <ComboBox Name="cmbItemType" DisplayMemberPath="Value" SelectedValuePath="Key" Margin="10" Width="250"/>
                 <Button Name="btnSearch" Content="查询" Width="100" Margin="10" VerticalAlignment="Center" Click="btnSearch_Click"/>
             </StackPanel>
         </Grid>
@@ -42,6 +42,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="价格(人民币)" Width="100" Binding="{Binding ValueRMBYuan, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="价格(钻石)" Width="70" Binding="{Binding ValueDiamonds, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="库存" Width="70" Binding="{Binding StocksCount, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="说明" Width="*" Binding="{Binding Remark, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="状态" Width="70" Binding="{Binding SellStateText, Mode=OneWay}" IsReadOnly="True"/>
             </DataGrid.Columns>

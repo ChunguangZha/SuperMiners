@@ -33,8 +33,8 @@
     <SuiteName>迅灵矿场</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>8</ApplicationRevision>
-    <ApplicationVersion>1.1.3.%2a</ApplicationVersion>
+    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationVersion>1.2.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -146,6 +146,21 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\Shopping\VirtualShoppingItem.cs">
       <Link>Wcf\Datas\VirtualShoppingItem.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\PlayerStoneFactoryAccountInfo.cs">
+      <Link>Wcf\Datas\PlayerStoneFactoryAccountInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryOneGroupSlave.cs">
+      <Link>Wcf\Datas\StoneFactoryOneGroupSlave.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryProfitRMBChangedRecord.cs">
+      <Link>Wcf\Datas\StoneFactoryProfitRMBChangedRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactoryStackChangeRecord.cs">
+      <Link>Wcf\Datas\StoneFactoryStackChangeRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\StoneFactory\StoneFactorySystemDailyProfit.cs">
+      <Link>Wcf\Datas\StoneFactorySystemDailyProfit.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\AwardReferrerConfig.cs">
       <Link>Wcf\Datas\AwardReferrerConfig.cs</Link>
     </Compile>
@@ -155,14 +170,14 @@
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\GameConfig.cs">
       <Link>Wcf\Datas\GameConfig.cs</Link>
     </Compile>
-    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\IncomeMoneyAccount.cs">
-      <Link>Wcf\Datas\IncomeMoneyAccount.cs</Link>
-    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RegisterUserConfig.cs">
       <Link>Wcf\Datas\RegisterUserConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\RouletteConfig.cs">
       <Link>Wcf\Datas\RouletteConfig.cs</Link>
+    </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\StoneFactoryConfig.cs">
+      <Link>Wcf\Datas\StoneFactoryConfig.cs</Link>
     </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\MetaData\SystemConfig\SystemConfigin1.cs">
       <Link>Wcf\Datas\SystemConfigin1.cs</Link>
@@ -277,6 +292,7 @@
     <Compile Include="Model\RouletteWinnerRecordUIModel.cs" />
     <Compile Include="Model\StoneDelegateBuyOrderInfoUIModel.cs" />
     <Compile Include="Model\StoneDelegateSellOrderInfoUIModel.cs" />
+    <Compile Include="Model\StoneFactorySystemDailyProfitUIModel.cs" />
     <Compile Include="Model\StoneOrderNotFinishedRecordUIModel.cs" />
     <Compile Include="Model\UserRemoteHandleServiceRecordUIModel.cs" />
     <Compile Include="Model\UserRemoteServerBuyRecordUIModel.cs" />
@@ -287,6 +303,7 @@
     <Compile Include="ViewModel\RemoteServiceViewModel.cs" />
     <Compile Include="ViewModel\ShoppingViewModel.cs" />
     <Compile Include="ViewModel\StoneDelegateTradeViewModel.cs" />
+    <Compile Include="ViewModel\StoneFactoryViewModel.cs" />
     <Compile Include="View\Controls\DeletedPlayerInfoControl.xaml.cs">
       <DependentUpon>DeletedPlayerInfoControl.xaml</DependentUpon>
     </Compile>
@@ -304,6 +321,12 @@
     </Compile>
     <Compile Include="View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.xaml.cs">
       <DependentUpon>RouletteWinAwardRecordHistoryControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\StoneFactory\FactorySystemProfitListControl.xaml.cs">
+      <DependentUpon>FactorySystemProfitListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\StoneFactory\StoneFactorySetYesterdayProfitWindow.xaml.cs">
+      <DependentUpon>StoneFactorySetYesterdayProfitWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\TradeSystem\AlipayHistoryRecordControl.xaml.cs">
       <DependentUpon>AlipayHistoryRecordControl.xaml</DependentUpon>
@@ -492,6 +515,7 @@
     <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Compile Include="Wcf\Clients\ServerClient.FunnyGame.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Shopping.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.StoneFactory.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
     <Compile Include="Wcf\Clients\ServerClient.WithdrawRMB.cs" />
     <Page Include="BusyWindow.xaml">
@@ -519,6 +543,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Controls\GameFunny\RouletteWinAwardRecordHistoryControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\StoneFactory\FactorySystemProfitListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\StoneFactory\StoneFactorySetYesterdayProfitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

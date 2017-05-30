@@ -18,13 +18,14 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "insert into virtualshoppingitem " +
-                    "(`Name`,`Remark`,`SellState`,`PlayerMaxBuyableCount`,`ValueShoppingCredits`,`GainExp`,`GainRMB`,`GainGoldCoin`," +
+                    "(`Name`,`Remark`,`ItemType`,`SellState`,`PlayerMaxBuyableCount`,`ValueShoppingCredits`,`GainExp`,`GainRMB`,`GainGoldCoin`," +
                     "`GainMine_StoneReserves`,`GainMiner`,`GainStone`,`GainDiamond`,`GainShoppingCredits`,`GainGravel`) " +
-                    " values (@Name,@Remark,@SellState,@PlayerMaxBuyableCount,@ValueShoppingCredits,@GainExp,@GainRMB,@GainGoldCoin," +
+                    " values (@Name,@Remark,@ItemType,@SellState,@PlayerMaxBuyableCount,@ValueShoppingCredits,@GainExp,@GainRMB,@GainGoldCoin," +
                     "@GainMine_StoneReserves,@GainMiner,@GainStone,@GainDiamond,@GainShoppingCredits,@GainGravel )";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
+                mycmd.Parameters.AddWithValue("@ItemType", (int)item.ItemType);
                 mycmd.Parameters.AddWithValue("@SellState", item.SellState);
                 mycmd.Parameters.AddWithValue("@PlayerMaxBuyableCount", item.PlayerMaxBuyableCount);
                 mycmd.Parameters.AddWithValue("@ValueShoppingCredits", item.ValueShoppingCredits);
@@ -48,7 +49,7 @@ namespace DataBaseProvider
             return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
             {
                 string sqlText = "update virtualshoppingitem " +
-                    " set `Name`=@Name,`Remark`=@Remark,`SellState`=@SellState,`PlayerMaxBuyableCount`=@PlayerMaxBuyableCount,"+
+                    " set `Name`=@Name,`Remark`=@Remark,`ItemType`=@ItemType,`SellState`=@SellState,`PlayerMaxBuyableCount`=@PlayerMaxBuyableCount," +
                     "`ValueShoppingCredits`=@ValueShoppingCredits,`GainExp`=@GainExp,`GainRMB`=@GainRMB,`GainGoldCoin`=@GainGoldCoin," +
                     "`GainMine_StoneReserves`=@GainMine_StoneReserves,`GainMiner`=@GainMiner,`GainStone`=@GainStone,"+
                     "`GainDiamond`=@GainDiamond,`GainShoppingCredits`=@GainShoppingCredits,`GainGravel`=@GainGravel " +
@@ -56,6 +57,7 @@ namespace DataBaseProvider
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@Name", item.Name);
                 mycmd.Parameters.AddWithValue("@Remark", item.Remark);
+                mycmd.Parameters.AddWithValue("@ItemType", (int)item.ItemType);
                 mycmd.Parameters.AddWithValue("@SellState", item.SellState);
                 mycmd.Parameters.AddWithValue("@PlayerMaxBuyableCount", item.PlayerMaxBuyableCount);
                 mycmd.Parameters.AddWithValue("@ValueShoppingCredits", item.ValueShoppingCredits);
@@ -122,10 +124,12 @@ namespace DataBaseProvider
             return items[0];
         }
 
-        public bool AddPlayerBuyVirtualShoppingItemRecord(PlayerBuyVirtualShoppingItemRecord record)
+        public bool AddPlayerBuyVirtualShoppingItemRecord(PlayerBuyVirtualShoppingItemRecord record, CustomerMySqlTransaction myTrans)
         {
-            return MyDBHelper.Instance.ConnectionCommandExecuteNonQuery(mycmd =>
+            MySqlCommand mycmd = null;
+            try
             {
+                mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into playerbuyvirtualshoppingitemrecord " +
                     "(`OrderNumber`,`UserID`,`VirtualShoppingItemID`,`BuyTime`) " +
                     " values (@OrderNumber,@UserID,@VirtualShoppingItemID,@BuyTime )";
@@ -137,7 +141,16 @@ namespace DataBaseProvider
 
                 mycmd.ExecuteNonQuery();
 
-            });
+                return true;
+            }
+            finally
+            {
+                if (mycmd != null)
+                {
+                    mycmd.Dispose();
+                }
+
+            }
         }
 
         public int GetPlayerBuyVirtualShoppingItemCount(int userID, int itemID)

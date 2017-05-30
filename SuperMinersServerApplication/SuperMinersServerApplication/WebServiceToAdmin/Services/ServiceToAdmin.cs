@@ -1,5 +1,6 @@
 ﻿using MetaData;
 using MetaData.Shopping;
+using MetaData.StoneFactory;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -1718,6 +1719,106 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
                 catch (Exception exc)
                 {
                     LogHelper.Instance.AddErrorLog("GetPlayerPostAddressList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int AdminSetStoneFactoryProfitRate(string token, decimal profitRate)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return StoneFactoryController.Instance.AdminSetProfitRate(profitRate);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("AdminSetStoneFactoryProfitRate Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return OperResult.RESULTCODE_EXCEPTION;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public PlayerStoneFactoryAccountInfo[] GetAllPlayerStoneFactoryAccountInfos(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.PlayerStoneFactoryDBProvider.GetAllPlayerStoneFactoryAccountInfos();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetAllPlayerStoneFactoryAccountInfos Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public int GetSumLastDayValidStoneStack(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.PlayerStoneFactoryDBProvider.GetSumLastDayValidStoneStack();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetSumLastDayValidStoneStack Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return 0;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public StoneFactorySystemDailyProfit[] GetStoneFactorySystemDailyProfitList(string token, int pageItemCount, int pageIndex)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return DBProvider.PlayerStoneFactoryDBProvider.GetFactorySystemDailyProfitRecords(pageItemCount, pageIndex);
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetStoneFactorySystemDailyProfitList Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                    return null;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        public StoneFactorySystemDailyProfit GetYesterdayFactoryProfitRate(string token)
+        {
+            if (RSAProvider.LoadRSA(token))
+            {
+                try
+                {
+                    return StoneFactoryController.Instance.GetYesterdayFactoryProfitRate();
+                }
+                catch (Exception exc)
+                {
+                    LogHelper.Instance.AddErrorLog("GetYesterdayFactoryProfitRate Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
                     return null;
                 }
             }

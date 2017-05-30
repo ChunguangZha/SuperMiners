@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SuperMinersWPF.exe" version="2.1.0.11" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
-  <description asmv2:iconFile="Logo128.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <asmv1:assemblyIdentity name="SuperMinersWPF.exe" version="2.2.0.4" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="Logo128.ico" asmv2:publisher="迅灵信息" asmv2:product="迅灵矿场" asmv2:supportUrl="http://www.xlore.net/" co.v1:errorReportUrl="http://www.xlore.net/" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
     <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
     <commandLine file="SuperMinersWPF.exe" parameters="" />
   </entryPoint>
+  <co.v1:useManifestForTrust xmlns="urn:schemas-microsoft-com:asm.v1" />
   <trustInfo>
     <security>
       <applicationRequestMinimum>
@@ -43,14 +44,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="3471360">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersWPF.exe" size="3529216">
       <assemblyIdentity name="SuperMinersWPF" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>sb1OQHVh3M6wMa29FcxSq9mw/MYENM8Qxs24QgkDHxo=</dsig:DigestValue>
+        <dsig:DigestValue>MtTuaxE5KoBT1CJbCv3Xmi9A9vnn+36wRNy+z2IfH4I=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -72,13 +73,13 @@
       <dsig:DigestValue>PEb+U2n90SV1OFQll1l+CGwS+v2+rFkJgKYEhDSon7o=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="SuperMinersWPF.exe.config" size="1482">
+  <file name="SuperMinersWPF.exe.config" size="1481">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>iH9QgyOLFbBv7WwMpfTxReTm1+ew2vvhMW3TkLr2TZ8=</dsig:DigestValue>
+      <dsig:DigestValue>AtBh8c3jcL/D8ruX/wiUukxSAzv7sllcr4+9o1J2TvU=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

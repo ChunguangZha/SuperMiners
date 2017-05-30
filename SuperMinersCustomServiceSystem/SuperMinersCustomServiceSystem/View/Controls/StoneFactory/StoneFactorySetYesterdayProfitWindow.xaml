@@ -1,0 +1,28 @@
+﻿<Window x:Class="SuperMinersCustomServiceSystem.View.Controls.StoneFactory.StoneFactorySetYesterdayProfitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:myControl="clr-namespace:SuperMinersWPF.MyControl"
+        WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow"
+        Title="设置矿石工厂昨日收益率" Height="200" Width="300">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="203*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="昨日总矿石机数：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Column="1" Name="txtTotalValidStoneCount" Margin="5" IsReadOnly="True" VerticalAlignment="Center"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="设置单机收益（人民币）：" Margin="5" VerticalAlignment="Center"/> 
+        <myControl:NumericTextBox Grid.Row="1" Grid.Column="1" x:Name="numSetProfitYuan" DecimalPlaces="2" Maximum="100000" Margin="5" VerticalAlignment="Center" ValueChanged="numSetProfitYuan_ValueChanged"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="换算单机收益（灵币）：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Name="txtProfitRMB" IsReadOnly="True" Margin="5" VerticalAlignment="Center"/>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Name="btnCancel" Content="取消" Width="100" Height="30" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnCancel_Click"/>
+        <Button Grid.Row="3" Grid.ColumnSpan="2" Name="btnOK" Content="确定" Width="100" Height="30" Margin="10,10,130,10" VerticalAlignment="Center" HorizontalAlignment="Right" Click="btnOK_Click"/>
+        
+    </Grid>
+</Window>

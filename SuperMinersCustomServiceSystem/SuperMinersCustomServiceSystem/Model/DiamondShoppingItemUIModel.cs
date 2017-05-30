@@ -36,6 +36,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("SellState");
                 NotifyPropertyChange("SellStateText");
                 NotifyPropertyChange("ValueDiamonds");
+                NotifyPropertyChange("StocksCount");
                 NotifyPropertyChange("DetailText");
                 NotifyPropertyChange("DetailImageNames");
                 NotifyPropertyChange("Icon");
@@ -157,6 +158,16 @@ namespace SuperMinersCustomServiceSystem.Model
         public decimal ValueRMBYuan
         {
             get { return Math.Round(this._parentObject.ValueDiamonds * 0.375M, 2); }
+        }
+
+        public int StocksCount
+        {
+            get { return this._parentObject.Stocks; }
+            set
+            {
+                this._parentObject.Stocks = value;
+                NotifyPropertyChange("StocksCount");
+            }
         }
 
         public byte[] IconBuffer

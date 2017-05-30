@@ -91,7 +91,7 @@ namespace SuperMinersServerApplication.WebService.Services
                             return innerResult;
                         }
 
-                        return VirtualShoppingController.Instance.BuyVirtualShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, userName, shoppingItem.ID);
+                        return VirtualShoppingController.Instance.BuyVirtualShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, userName, shoppingItem, myTrans);
                     },
                     exc =>
                     {
@@ -190,7 +190,7 @@ namespace SuperMinersServerApplication.WebService.Services
                             return innerResult;
                         }
 
-                        return DiamondShoppingController.Instance.BuyDiamondShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, userName, shoppingItem.ID, address, myTrans);
+                        return DiamondShoppingController.Instance.BuyDiamondShoppingItem(playerrunner.BasePlayer.SimpleInfo.UserID, userName, shoppingItem, address, myTrans);
                     },
                     exc =>
                     {

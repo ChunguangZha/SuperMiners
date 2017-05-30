@@ -39,6 +39,7 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="价格(积分)" Width="70" Binding="{Binding ValueRMB, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="说明" Width="200" Binding="{Binding Remark, Mode=OneWay}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="类型" Width="70" Binding="{Binding ItemTypeText, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="状态" Width="70" Binding="{Binding SellStateText, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="限购量" Width="70" Binding="{Binding PlayerMaxBuyableCount, Mode=OneWay}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="含贡献值" Width="70" Binding="{Binding GainExp, Mode=OneWay}" IsReadOnly="True"/>

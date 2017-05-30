@@ -36,6 +36,9 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         public EditVirtualShoppingItemWindow()
         {
             InitializeComponent();
+
+            this.cmbItemType.SelectedValue = (int)VirtualShoppingItemType.Normal;
+            this.cmbItemType.ItemsSource = App.ShoppingVMObject.DicVirtualItemTypeItemsSource;
             GlobalData.Client.AddVirtualShoppingItemCompleted += Client_AddVirtualShoppingItemCompleted;
             this.Title = "添加积分商品";
             isAdd = true;
@@ -46,6 +49,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
         public EditVirtualShoppingItemWindow(VirtualShoppingItemUIModel item)
         {
             InitializeComponent();
+            this.cmbItemType.ItemsSource = App.ShoppingVMObject.DicVirtualItemTypeItemsSource;
             GlobalData.Client.UpdateVirtualShoppingItemCompleted += Client_UpdateVirtualShoppingItemCompleted;
             isAdd = false;
             this.Title = "修改积分商品";
@@ -54,6 +58,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             this.txtName.Text = item.Name;
             this.txtRemark.Text = item.Remark;
 
+            this.cmbItemType.SelectedValue = (int)item.ItemType;
             this.cmbItemState.SelectedIndex = (int)item.SellState;
             this.txtPlayerMaxBuyCount.Value = item.PlayerMaxBuyableCount;
             this.txtPriceRMB.Value = (double)item.ValueShoppingCredits;
@@ -143,6 +148,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             {
                 Name = name,
                 Remark = remark,
+                ItemType = (VirtualShoppingItemType)this.cmbItemType.SelectedValue,
                 GainDiamond = (decimal)this.txtGainDiamond.Value,
                 GainExp = (decimal)this.txtGainExp.Value,
                 GainGoldCoin = (decimal)this.txtGainGoldCoin.Value,

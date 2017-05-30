@@ -67,6 +67,7 @@ namespace SuperMinersCustomServiceSystem.View.Windows
             this.txtRemark.Text = oldItem.Remark;
             this.numPrice.Value = (double)oldItem.ValueDiamonds;
             this.txtDetailText.Text = oldItem.DetailText;
+            this.numStockCount.Value = oldItem.StocksCount;
             this.imgIcon.Source = oldItem.Icon;
             this._iconBuffer = oldItem.IconBuffer;
             if (oldItem.DetailImageNames != null)
@@ -300,7 +301,8 @@ namespace SuperMinersCustomServiceSystem.View.Windows
                     SellState = (SellState)(int)this.cmbSellState.SelectedIndex,
                     ValueDiamonds = Math.Round((decimal)this.numPrice.Value, 2),
                     DetailText = this.txtDetailText.Text.Trim(),
-                    DetailImageNames = this.ListDetailImageNames.ToArray()
+                    DetailImageNames = this.ListDetailImageNames.ToArray(),
+                    Stocks = (int)this.numStockCount.Value
                 };
 
                 if (isAdd)

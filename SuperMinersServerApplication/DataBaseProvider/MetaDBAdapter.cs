@@ -1237,6 +1237,7 @@ namespace DataBaseProvider
                 item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 item.Name = dt.Rows[i]["Name"].ToString();
                 item.Remark = dt.Rows[i]["Remark"].ToString();
+                item.ItemType = (VirtualShoppingItemType)Convert.ToInt32(dt.Rows[i]["ItemType"]);
                 item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
                 item.PlayerMaxBuyableCount = Convert.ToInt32(dt.Rows[i]["PlayerMaxBuyableCount"]);
                 item.ValueShoppingCredits = Convert.ToDecimal(dt.Rows[i]["ValueShoppingCredits"]);
@@ -1270,6 +1271,7 @@ namespace DataBaseProvider
                 item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 item.Name = dt.Rows[i]["Name"].ToString();
                 item.Remark = dt.Rows[i]["Remark"].ToString();
+                item.Stocks = Convert.ToInt32(dt.Rows[i]["Stocks"]);
                 item.SellState = (SellState)Convert.ToInt32(dt.Rows[i]["SellState"]);
                 item.ItemType = (DiamondsShoppingItemType)Convert.ToInt32(dt.Rows[i]["Type"]);
                 item.ValueDiamonds = Convert.ToDecimal(dt.Rows[i]["ValueDiamonds"]);
@@ -1392,9 +1394,14 @@ namespace DataBaseProvider
                 PlayerStoneFactoryAccountInfo item = new PlayerStoneFactoryAccountInfo();
                 item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
+                item.UserName = DESEncrypt.DecryptDES(dt.Rows[i]["UserName"].ToString());
                 item.FactoryIsOpening = Convert.ToBoolean(dt.Rows[i]["FactoryIsOpening"]);
                 item.FactoryLiveDays = Convert.ToInt32(dt.Rows[i]["FactoryLiveDays"]);
                 item.Food = Convert.ToInt32(dt.Rows[i]["Food"]);
+                if (dt.Rows[i]["LastFeedSlaveTime"] != DBNull.Value)
+                {
+                    item.LastFeedSlaveTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["LastFeedSlaveTime"]));
+                }
                 item.LastDayValidStoneStack = Convert.ToInt32(dt.Rows[i]["LastDayValidStoneStack"]);
                 item.FreezingSlaveGroupCount = Convert.ToInt32(dt.Rows[i]["FreezingSlaveGroupCount"]);
                 item.EnableSlavesGroupCount = Convert.ToInt32(dt.Rows[i]["EnableSlavesGroupCount"]);
@@ -1450,5 +1457,26 @@ namespace DataBaseProvider
             return items;
         }
 
+        internal static StoneFactorySystemDailyProfit[] GetStoneFactorySystemDailyProfitItemFromDataTable(DataTable dt)
+        {
+            if (dt == null || dt.Rows.Count == 0)
+            {
+                return null;
+            }
+
+            StoneFactorySystemDailyProfit[] items = new StoneFactorySystemDailyProfit[dt.Rows.Count];
+            for (int i = 0; i < items.Length; i++)
+            {
+                StoneFactorySystemDailyProfit item = new StoneFactorySystemDailyProfit();
+                item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                item.profitRate = Convert.ToDecimal(dt.Rows[i]["profitRate"]);
+                item.Day = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["Day"]));
+
+                items[i] = item;
+            }
+
+            return items;
+        }
+        
     }
 }

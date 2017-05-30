@@ -175,7 +175,13 @@ namespace SuperMinersWPF.Views.Windows
 
         private void btnBuy_Click(object sender, RoutedEventArgs e)
         {
+            if (GlobalData.CurrentUser.StockOfDiamonds < this.shoppingItem.ValueDiamonds)
+            {
+                MyMessageBox.ShowInfo("您的钻石不足");
+                return;
+            }
 
+            MyMessageBox.ShowInfo("该商品暂时不能购买");
         }
     }
 }

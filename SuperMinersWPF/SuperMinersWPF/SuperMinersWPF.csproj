@@ -32,9 +32,9 @@
     <ProductName>迅灵矿场</ProductName>
     <PublisherName>迅灵信息</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>11</ApplicationRevision>
-    <ApplicationVersion>2.1.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
+    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationVersion>2.2.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -61,10 +61,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D1FB441FF15056C916AD6D71DA4771B40566189E</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>E7D8EEFDEC9156C021DBA0000D3B4A124C5FD8B4</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>SuperMinersWPF_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>SuperMinersWPF_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -362,6 +362,9 @@
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.Stack.cs">
       <Link>Wcf\Contracts\IServiceToClient.Stack.cs</Link>
     </Compile>
+    <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.StoneFactory.cs">
+      <Link>Wcf\Contracts\IServiceToClient.StoneFactory.cs</Link>
+    </Compile>
     <Compile Include="..\..\SuperMinersServerApplication\SuperMinersServerApplication\WebService\Contracts\IServiceToClient.SystemConfig.cs">
       <Link>Wcf\Contracts\IServiceToClient.SystemConfig.cs</Link>
     </Compile>
@@ -382,6 +385,7 @@
     <Compile Include="Models\PlayerActionLogUIModel.cs" />
     <Compile Include="Models\PlayerBetInfoUIModel.cs" />
     <Compile Include="Models\PlayerRaiderRoundHistoryRecordInfoUIModel.cs" />
+    <Compile Include="Models\PlayerStoneFactoryAccountInfoUIModel.cs" />
     <Compile Include="Models\PostAddressUIModel.cs" />
     <Compile Include="Models\RaiderRoundMetaDataInfoUIModel.cs" />
     <Compile Include="Models\RouletteAwardItemUIModel.cs" />
@@ -389,6 +393,8 @@
     <Compile Include="Models\StackTradeUnitUIModel.cs" />
     <Compile Include="Models\StoneDelegateBuyOrderInfoUIModel.cs" />
     <Compile Include="Models\StoneDelegateSellOrderInfoUIModel.cs" />
+    <Compile Include="Models\StoneFactoryProfitRMBChangedRecordUIModel.cs" />
+    <Compile Include="Models\StoneFactorySystemDailyProfitUIModel.cs" />
     <Compile Include="Models\TodayStoneStackTradeRecordInfoUIModel.cs" />
     <Compile Include="Models\TopListInfoUIModel.cs" />
     <Compile Include="Models\UserReferrerTreeItemUIModel.cs" />
@@ -430,6 +436,7 @@
     <Compile Include="ViewModels\ObservableCollection.cs" />
     <Compile Include="ViewModels\ShoppingViewModel.cs" />
     <Compile Include="ViewModels\StackStoneViewModel.cs" />
+    <Compile Include="ViewModels\StoneFactoryViewModel.cs" />
     <Compile Include="ViewModels\StoneOrderViewModel.cs" />
     <Compile Include="ViewModels\TopListViewModel.cs" />
     <Compile Include="ViewModels\TradeHistoryViewModel.cs" />
@@ -488,9 +495,6 @@
     </Compile>
     <Compile Include="Views\Controls\StackMarketControl.xaml.cs">
       <DependentUpon>StackMarketControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Controls\StoneFactoryControl.xaml.cs">
-      <DependentUpon>StoneFactoryControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MallControl.xaml.cs">
       <DependentUpon>MallControl.xaml</DependentUpon>
@@ -592,6 +596,21 @@
     <Compile Include="Views\Windows\RouletteWinAwardTakeWindow.xaml.cs">
       <DependentUpon>RouletteWinAwardTakeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Windows\StoneFactoryJoinInSlaveWindow.xaml.cs">
+      <DependentUpon>StoneFactoryJoinInSlaveWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StoneFactoryJoinInStoneWindow.xaml.cs">
+      <DependentUpon>StoneFactoryJoinInStoneWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StoneFactoryProfitRMBWithdrawWindow.xaml.cs">
+      <DependentUpon>StoneFactoryProfitRMBWithdrawWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StoneFactoryStoneWithdrawWindow.xaml.cs">
+      <DependentUpon>StoneFactoryStoneWithdrawWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\StoneFactoryWindow.xaml.cs">
+      <DependentUpon>StoneFactoryWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\ViewGambleStoneUserBetInRecordWindow.xaml.cs">
       <DependentUpon>ViewGambleStoneUserBetInRecordWindow.xaml</DependentUpon>
     </Compile>
@@ -616,6 +635,7 @@
     <Compile Include="Wcf\Clients\ServerClient.RaiderofLostArk.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Shopping.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Stack.cs" />
+    <Compile Include="Wcf\Clients\ServerClient.StoneFactory.cs" />
     <Compile Include="Wcf\Clients\ServerClient.SystemConfig.cs" />
     <Compile Include="Wcf\Clients\ServerClient.cs" />
     <Compile Include="Wcf\Clients\ServerClient.Trade.cs" />
@@ -724,10 +744,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Controls\StackMarketControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Controls\StoneFactoryControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -863,6 +879,26 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Windows\StoneFactoryJoinInSlaveWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\StoneFactoryJoinInStoneWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\StoneFactoryProfitRMBWithdrawWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\StoneFactoryStoneWithdrawWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\StoneFactoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Windows\ViewGambleStoneUserBetInRecordWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -903,7 +939,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="SuperMinersWPF_TemporaryKey.pfx" />
+    <None Include="SuperMinersWPF_1_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

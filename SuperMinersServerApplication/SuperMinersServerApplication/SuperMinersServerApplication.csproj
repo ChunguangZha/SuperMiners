@@ -210,6 +210,7 @@
     <Compile Include="WebService\Contracts\IServiceToClient.Order.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Shopping.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Stack.cs" />
+    <Compile Include="WebService\Contracts\IServiceToClient.StoneFactory.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.Trade.cs" />
     <Compile Include="WebService\Contracts\IServiceToClient.User.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="WebService\Services\ServiceToClient.Order.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Shopping.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Stack.cs" />
+    <Compile Include="WebService\Services\ServiceToClient.StoneFactory.cs" />
     <Compile Include="WebService\Services\ServiceToClient.SystemConfig.cs" />
     <Compile Include="WebService\Services\ServiceToClient.Trade.cs" />
     <Compile Include="WebService\Services\ServiceToClient.User.cs" />

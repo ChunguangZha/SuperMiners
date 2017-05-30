@@ -22,15 +22,20 @@
                     <RowDefinition/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold" Margin="10,5"/>
                 <TextBlock Grid.Row="1" Text="{Binding Remark}" Margin="10,5"/>
-                <TextBlock Grid.Row="2" Foreground="Red" Margin="10,5">
-                <Run Text="需要钻石："/>
-                <Run Text="{Binding ValueDiamonds, Mode=OneWay}"/>
-                <Run Text="块"/>
+                <TextBlock Grid.Row="2" Margin="10,5">
+                    <Run Text="剩余库存："/>
+                    <Run Text="{Binding Stocks, Mode=OneWay}"/>
                 </TextBlock>
-                <Button Grid.Row="3" Name="btnBuy" Content="立即购买" IsEnabled="False" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left" Click="btnBuy_Click"/>
+                <TextBlock Grid.Row="3" Foreground="Red" Margin="10,5">
+                    <Run Text="需要钻石："/>
+                    <Run Text="{Binding ValueDiamonds, Mode=OneWay}"/>
+                    <Run Text="块"/>
+                </TextBlock>
+                <Button Grid.Row="4" Name="btnBuy" Content="立即购买" IsEnabled="{Binding ShoppingBuyable}" FontSize="18" Margin="20,10" Width="120" Height="50" HorizontalAlignment="Left" Click="btnBuy_Click"/>
             </Grid>
             <TextBlock Grid.Row="1" Text="宝贝描述" FontSize="16" FontWeight="Bold" Margin="10"/>
             <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="{Binding DetailText}" Margin="50,10"/>

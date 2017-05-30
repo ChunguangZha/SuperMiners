@@ -1,6 +1,7 @@
 ﻿using MetaData;
 using MetaData.Game.StoneStack;
 using MetaData.Shopping;
+using MetaData.StoneFactory;
 using MetaData.SystemConfig;
 using MetaData.Trade;
 using MetaData.User;
@@ -433,5 +434,44 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Contracts
             BodyStyle = WebMessageBodyStyle.WrappedRequest)]
         PostAddress[] GetPlayerPostAddressList(string token, int userID);
 
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/AdminSetStoneFactoryProfitRate",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int AdminSetStoneFactoryProfitRate(string token, decimal profitRate);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetAllPlayerStoneFactoryAccountInfos",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        PlayerStoneFactoryAccountInfo[] GetAllPlayerStoneFactoryAccountInfos(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetSumLastDayValidStoneStack",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        int GetSumLastDayValidStoneStack(string token);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetStoneFactorySystemDailyProfitList",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        StoneFactorySystemDailyProfit[] GetStoneFactorySystemDailyProfitList(string token, int pageItemCount, int pageIndex);
+
+        [OperationContract]
+        [WebInvoke(UriTemplate = "/WebServiceAdmin/GetYesterdayFactoryProfitRate",
+            Method = "POST",
+            ResponseFormat = WebMessageFormat.Json,
+            RequestFormat = WebMessageFormat.Json,
+            BodyStyle = WebMessageBodyStyle.WrappedRequest)]
+        StoneFactorySystemDailyProfit GetYesterdayFactoryProfitRate(string token);
     }
 }

@@ -21,6 +21,19 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             }
         }
 
+        private Dictionary<int, string> _dicVirtualItemTypeItemsSource = new Dictionary<int, string>();
+        public Dictionary<int, string> DicVirtualItemTypeItemsSource
+        {
+            get { return this._dicVirtualItemTypeItemsSource; }
+        }
+
+        private void Init()
+        {
+            _dicVirtualItemTypeItemsSource.Add((int)VirtualShoppingItemType.Normal, "普通商品");
+            _dicVirtualItemTypeItemsSource.Add((int)VirtualShoppingItemType.FactoryOpenTool, "开启工厂");
+            _dicVirtualItemTypeItemsSource.Add((int)VirtualShoppingItemType.FactorySlaveFoods30Days, "苦力30天食物");
+        }
+
         private ObservableCollection<VirtualShoppingItemUIModel> _listVirtualShoppingItems = new ObservableCollection<VirtualShoppingItemUIModel>();
 
         public ObservableCollection<VirtualShoppingItemUIModel> ListVirtualShoppingItems
@@ -73,6 +86,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
 
         public ShoppingViewModel()
         {
+            Init();
             GlobalData.Client.GetVirtualShoppingItemsCompleted += Client_GetVirtualShoppingItemsCompleted;
             GlobalData.Client.GetPlayerBuyVirtualShoppingItemRecordCompleted += Client_GetPlayerBuyVirtualShoppingItemRecordCompleted;
 

@@ -29,6 +29,11 @@ namespace MetaData.SystemConfig
         public static int SlaveDefaultLiveDays = 2;
 
         /// <summary>
+        /// 给奴隶投喂一次食物，可以存活秒数(两天)
+        /// </summary>
+        public static int OnceFeedFoodSlaveCanLivems = 172800;
+
+        /// <summary>
         /// 工厂在没有矿石和奴隶的情况下，寿命3天
         /// </summary>
         public static int FactoryLiveDays = 3;
@@ -44,14 +49,19 @@ namespace MetaData.SystemConfig
         public static int StoneStackWithdrawLimitDays = 30;
 
         /// <summary>
-        /// 新加入的矿石需冻结24小时后，才可以投入生产
+        /// 新加入的矿石需冻结1天后，才可以投入生产
         /// </summary>
-        public static int StoneFactoryStoneFreezingHours = 24;
+        public static int StoneFactoryStoneFreezingDays = 1;
 
         /// <summary>
         /// 工厂收益，给上级玩家反利点（返三级）
         /// </summary>
         public static decimal[] FactoryOutputProfitAwardRMBConfig = new decimal[] { 0.08m, 0.05m, 0.03m };
+
+        /// <summary>
+        /// 每一万矿石每天最小收益灵币
+        /// </summary>
+        public static decimal DailyMinProfit = 0m;
 
     }
 }
