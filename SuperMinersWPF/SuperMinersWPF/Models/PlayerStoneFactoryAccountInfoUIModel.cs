@@ -33,17 +33,16 @@ namespace SuperMinersWPF.Models
                 NotifyPropertyChange("EnableSlavesGroupCount");
                 NotifyPropertyChange("EnableSlavesCount");
                 NotifyPropertyChange("Food");
-                NotifyPropertyChange("FoodUsableDays");
                 NotifyPropertyChange("LastDayValidStoneStack");
                 NotifyPropertyChange("TotalStackCount");
                 NotifyPropertyChange("TotalStoneCount");
                 NotifyPropertyChange("FreezingStackCount");
                 NotifyPropertyChange("FreezingStoneCount");
-                NotifyPropertyChange("WithdrawableStackCount");
                 NotifyPropertyChange("WithdrawableStoneEnable");
+                NotifyPropertyChange("WithdrawableStackCount");
+                NotifyPropertyChange("WithdrawableStoneCount");
                 NotifyPropertyChange("TotalProfitRMB");
                 NotifyPropertyChange("WithdrawableProfitRMB");
-                NotifyPropertyChange("WithdrawableStoneCount");
                 NotifyPropertyChange("WithdrawProfitRMBEnable");
                 NotifyPropertyChange("YesterdayTotalProfitRMB");
                 NotifyPropertyChange("YesterdayFactoryProfitRate");
@@ -135,18 +134,6 @@ namespace SuperMinersWPF.Models
             get
             {
                 return this._parentObject.Food;
-            }
-        }
-
-        public int FoodUsableDays
-        {
-            get
-            {
-                if (this.EnableSlavesGroupCount == 0 && this.FreezingSlaveGroupCount == 0)
-                {
-                    return 0;
-                }
-                return (int)Math.Ceiling((float)this.Food / (this.EnableSlavesGroupCount + this.FreezingSlaveGroupCount));
             }
         }
 

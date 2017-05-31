@@ -159,9 +159,10 @@ namespace SuperMinersWPF.Views.Controls
             }
             if (this.canvas.ActualWidth > 0 && this.canvas.ActualHeight > 0)
             {
-                marketOpeningHours = GlobalData.GameConfig.StackMarketMorningCloseTime - GlobalData.GameConfig.StackMarketMorningOpenTime +
-                                        GlobalData.GameConfig.StackMarketAfternoonCloseTime - GlobalData.GameConfig.StackMarketAfternoonOpenTime +
-                                        GlobalData.GameConfig.StackMarketNightCloseTime - GlobalData.GameConfig.StackMarketNightOpenTime;
+                //marketOpeningHours = GlobalData.GameConfig.StackMarketMorningCloseTime - GlobalData.GameConfig.StackMarketMorningOpenTime +
+                //                        GlobalData.GameConfig.StackMarketAfternoonCloseTime - GlobalData.GameConfig.StackMarketAfternoonOpenTime +
+                //                        GlobalData.GameConfig.StackMarketNightCloseTime - GlobalData.GameConfig.StackMarketNightOpenTime;
+                marketOpeningHours = GlobalData.GameConfig.StackMarketNightCloseTime - GlobalData.GameConfig.StackMarketMorningOpenTime;
                 marketOpeningMinutes = marketOpeningHours * 60;
 
                 startY = this.canvas.ActualHeight / 2;
@@ -211,14 +212,14 @@ namespace SuperMinersWPF.Views.Controls
         private Point ConvertStoneStackDailyRecordInfoToPoint(StoneStackDailyRecordInfo item)
         {
             int Hours = item.Day.Hour - GlobalData.GameConfig.StackMarketMorningOpenTime;
-            if (item.Day.Hour >= GlobalData.GameConfig.StackMarketNightOpenTime)
-            {
-                Hours -= 2;
-            }
-            else if (item.Day.Hour >= GlobalData.GameConfig.StackMarketAfternoonOpenTime)
-            {
-                Hours -= 1;
-            }
+            //if (item.Day.Hour >= GlobalData.GameConfig.StackMarketNightOpenTime)
+            //{
+            //    Hours -= 2;
+            //}
+            //else if (item.Day.Hour >= GlobalData.GameConfig.StackMarketAfternoonOpenTime)
+            //{
+            //    Hours -= 1;
+            //}
             int Minutes = Hours * 60 + item.Day.Minute;
             double pointX = Minutes * xOffsetUnit;
             double Value = (double)(item.ClosePrice - item.OpenPrice);

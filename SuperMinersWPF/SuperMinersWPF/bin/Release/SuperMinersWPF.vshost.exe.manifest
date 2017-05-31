@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="SuperMinersWPF.exe" version="2.2.0.4" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="SuperMinersWPF.exe" version="2.2.0.5" publicKeyToken="0000000000000000" language="zh-CN" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="Logo128.ico" asmv2:publisher="迅灵信息" asmv2:product="迅灵矿场" asmv2:supportUrl="http://www.xlore.net/" co.v1:errorReportUrl="http://www.xlore.net/" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
@@ -51,7 +51,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MtTuaxE5KoBT1CJbCv3Xmi9A9vnn+36wRNy+z2IfH4I=</dsig:DigestValue>
+        <dsig:DigestValue>gVH1VclNsv+xUUeWjlGC5D3icPUaWYiq/3aB0NDhnYg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -79,7 +79,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>AtBh8c3jcL/D8ruX/wiUukxSAzv7sllcr4+9o1J2TvU=</dsig:DigestValue>
+      <dsig:DigestValue>R70dr4BCxrYc7eMIdiwef6d2Oh4euVy/OtaBaw/JjcY=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

@@ -285,3 +285,5 @@ F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSy
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\StoneFactory\FactorySystemProfitListControl.g.cs
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\StoneFactory\StoneFactorySetYesterdayProfitWindow.g.cs
 F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\StoneFactory\StoneFactorySetYesterdayProfitWindow.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\StoneFactory\PlayerFactoryAccountInfoListControl.baml
+F:\My Work\SuperMiners\SuperMinersCustomServiceSystem\SuperMinersCustomServiceSystem\obj\Debug\View\Controls\StoneFactory\PlayerFactoryAccountInfoListControl.g.cs

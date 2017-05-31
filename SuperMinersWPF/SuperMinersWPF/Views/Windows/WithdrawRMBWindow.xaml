@@ -38,9 +38,9 @@
         <TextBlock Grid.Row="4" Grid.Column="0" Text="提现" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         <my:NumericTextBox Grid.Row="4" Grid.Column="1" x:Name="numWithdrawRMB" VerticalAlignment="Center" Margin="5" ValueChanged="numRechargeRMB_ValueChanged" Maximum="100000"/>
         <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding Strings.RMB, Mode=OneWay, Source={StaticResource Language}}" Margin="5" VerticalAlignment="Center"/>
-        <TextBlock Grid.Row="6" Grid.Column="0" Text="可获得" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-        <my:NumericTextBox Grid.Row="6" Grid.Column="1" x:Name="numGainYuan" IsReadOnly="True" Margin="5" VerticalAlignment="Center" Maximum="1000000" DecimalPlaces="2"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Text="元 人民币" Margin="5" VerticalAlignment="Center"/>
+        <TextBlock Visibility="Collapsed" Grid.Row="6" Grid.Column="0" Text="可获得" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        <my:NumericTextBox Visibility="Collapsed" Grid.Row="6" Grid.Column="1" x:Name="numGainYuan" IsReadOnly="True" Margin="5" VerticalAlignment="Center" Maximum="1000000" DecimalPlaces="2"/>
+        <TextBlock Visibility="Collapsed" Grid.Row="6" Grid.Column="2" Text="元 人民币" Margin="5" VerticalAlignment="Center"/>
 
         <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnOK" Content="确定" Width="75" Margin="5,5,110,5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnOK_Click"/>
         <Button Grid.Row="8" Grid.ColumnSpan="3" Name="btnCancel" Content="取消" Width="75" Margin="5" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnCancel_Click"/>

@@ -212,6 +212,7 @@ namespace SuperMinersCustomServiceSystem
             this.controlVirtualShoppingItemControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlDiamondShoppingItemListControl.Visibility = System.Windows.Visibility.Collapsed;
             this.controlFactoryDailyProfit.Visibility = System.Windows.Visibility.Collapsed;
+            this.controlPlayerFactoryAccountListControl.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void tvL1PlayerManager_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -412,6 +413,13 @@ namespace SuperMinersCustomServiceSystem
             HideAllControls();
             App.StoneFactoryVMObject.AsyncGetStoneFactorySystemDailyProfitList(GlobalData.PageItemsCount, 1);
             this.controlFactoryDailyProfit.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void tvL2_StoneFactory_AllFactoryAccount_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            HideAllControls();
+            App.StoneFactoryVMObject.AsyncGetAllPlayerStoneFactoryAccountInfos();
+            this.controlPlayerFactoryAccountListControl.Visibility = System.Windows.Visibility.Visible;
         }
 
     }

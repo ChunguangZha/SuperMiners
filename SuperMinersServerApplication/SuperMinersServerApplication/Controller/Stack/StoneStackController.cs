@@ -184,30 +184,30 @@ namespace SuperMinersServerApplication.Controller.Stack
                 DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningOpenTime, 0, 0),
                 Task = MarketOpen
             });
-            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            {
-                //DailyTime = DateTime.Now.AddMinutes(22),
-                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningCloseTime, 0, 0),
-                Task = MarketSuspend
-            });
-            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            {
-                //DailyTime = DateTime.Now.AddMinutes(32),
-                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonOpenTime, 0, 0),
-                Task = MarketResume
-            });
-            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            {
-                //DailyTime = DateTime.Now.AddMinutes(42),
-                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonCloseTime, 0, 0),
-                Task = MarketSuspend
-            });
-            SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
-            {
-                //DailyTime = DateTime.Now.AddMinutes(52),
-                DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightOpenTime, 0, 0),
-                Task = MarketResume
-            });
+            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            //{
+            //    //DailyTime = DateTime.Now.AddMinutes(22),
+            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketMorningCloseTime, 0, 0),
+            //    Task = MarketSuspend
+            //});
+            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            //{
+            //    //DailyTime = DateTime.Now.AddMinutes(32),
+            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonOpenTime, 0, 0),
+            //    Task = MarketResume
+            //});
+            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            //{
+            //    //DailyTime = DateTime.Now.AddMinutes(42),
+            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketAfternoonCloseTime, 0, 0),
+            //    Task = MarketSuspend
+            //});
+            //SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
+            //{
+            //    //DailyTime = DateTime.Now.AddMinutes(52),
+            //    DailyTime = new DateTime(2000, 1, 1, GlobalConfig.GameConfig.StackMarketNightOpenTime, 0, 0),
+            //    Task = MarketResume
+            //});
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
                 //DailyTime = DateTime.Now.AddMinutes(62),

@@ -138,6 +138,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MyMessageBox.ShowInfo("成功向工厂增加苦力");
                     this.AsyncGetPlayerFactoryAccountInfo();
+                    App.UserVMObject.AsyncGetPlayerInfo();
                 }
                 else
                 {
@@ -164,6 +165,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MyMessageBox.ShowInfo("成功从工厂中取回矿石");
                     this.AsyncGetPlayerFactoryAccountInfo();
+                    App.UserVMObject.AsyncGetPlayerInfo();
                 }
                 else
                 {
@@ -190,6 +192,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MyMessageBox.ShowInfo("成功从工厂中提取灵币");
                     this.AsyncGetPlayerFactoryAccountInfo();
+                    App.UserVMObject.AsyncGetPlayerInfo();
                 }
                 else
                 {
@@ -216,6 +219,7 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MyMessageBox.ShowInfo("成功向工厂添加矿石");
                     this.AsyncGetPlayerFactoryAccountInfo();
+                    App.UserVMObject.AsyncGetPlayerInfo();
                 }
                 else
                 {

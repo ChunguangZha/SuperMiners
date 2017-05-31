@@ -114,6 +114,7 @@
 
             </TreeViewItem>
             <TreeViewItem Name="tvL1StoneFactory" Header="矿石工厂" Style="{StaticResource TVItemL1Style}">
+                <TreeViewItem Header="玩家工厂信息" Name="tvL2_StoneFactory_AllFactoryAccount" Style="{StaticResource TVItemL2Style}" MouseDoubleClick="tvL2_StoneFactory_AllFactoryAccount_MouseDoubleClick"/>
                 <TreeViewItem Header="设置昨日收益" Name="tvL2_StoneFactory_SetYesterdayProfit" Style="{StaticResource TVItemL2Style}" MouseDoubleClick="tvL2_StoneFactory_SetYesterdayProfit_MouseDoubleClick"/>
             </TreeViewItem>
         </TreeView>
@@ -151,6 +152,7 @@
             <Controls:DeletedPlayerInfoControl x:Name="controlDeletedPlayerManage" Visibility="Collapsed"/>
             <Controls:TransferServerManagerControl x:Name="controlTransferServerManage" Visibility="Collapsed"/>
             <factorycontrol:FactorySystemProfitListControl x:Name="controlFactoryDailyProfit" Visibility="Collapsed"/>
+            <factorycontrol:PlayerFactoryAccountInfoListControl x:Name="controlPlayerFactoryAccountListControl" Visibility="Collapsed"/>
         </Grid>
     </Grid>
 </Window>

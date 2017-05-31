@@ -115,10 +115,8 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="氪金总数：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Column="1" Name="txtFoodsCount" Text="{Binding Food, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}" Margin="5" IsReadOnly="True"/>
                     <TextBlock Grid.Row="1" Text="可用天数：" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Name="txtFoodUsableDays" Text="{Binding FoodUsableDays, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}" Margin="5" IsReadOnly="True"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Name="txtFoodUsableDays" Text="{Binding Food, Mode=OneWay}" Style="{StaticResource UserInfoTextBoxStyle}" Margin="5" IsReadOnly="True"/>
                     <Button Grid.Row="3" Grid.ColumnSpan="2" Name="btnBuyFoods" Content="购买氪金" Background="{StaticResource PlayerInfoBackground}" Foreground="White" Width="100" Height="30"  Margin="20,5,5,5" HorizontalAlignment="Left" Click="btnBuyFoods_Click"/>
                     <Button Grid.Row="3" Grid.ColumnSpan="2" Name="btnFeedSlave" Content="投喂苦力" Background="{StaticResource PlayerInfoBackground}" Foreground="White" Width="100" Height="30" Margin="5,5,20,5" HorizontalAlignment="Right" Click="btnFeedSlave_Click"/>
                 </Grid>
