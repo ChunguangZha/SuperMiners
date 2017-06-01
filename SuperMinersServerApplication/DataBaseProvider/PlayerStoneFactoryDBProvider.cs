@@ -106,21 +106,24 @@ namespace DataBaseProvider
                 {
                     return;
                 }
-                PlayerStoneFactoryAccountInfo account = items[0];
 
-                if (account.LastFeedSlaveTime != null)
+                foreach (var account in items)
                 {
-                    account.SlaveLiveDiscountms = StoneFactoryConfig.OnceFeedFoodSlaveCanLivems - (int)(DateTime.Now - account.LastFeedSlaveTime.ToDateTime()).TotalSeconds;
-                }
-                else
-                {
-                    account.SlaveLiveDiscountms = 0;
+                    if (account.LastFeedSlaveTime != null)
+                    {
+                        account.SlaveLiveDiscountms = StoneFactoryConfig.OnceFeedFoodSlaveCanLivems - (int)(DateTime.Now - account.LastFeedSlaveTime.ToDateTime()).TotalSeconds;
+                    }
+                    else
+                    {
+                        account.SlaveLiveDiscountms = 0;
+                    }
+
+                    SumUserAccountStoneStackCount(account, mycmd);
+                    SumUserAccountProfitRMBCount(account, mycmd);
+
+                    listFactories.Add(account);
                 }
 
-                SumUserAccountStoneStackCount(account, mycmd);
-                SumUserAccountProfitRMBCount(account, mycmd);
-
-                listFactories.Add(account);
             });
 
             return listFactories.ToArray();
@@ -187,6 +190,8 @@ namespace DataBaseProvider
         {
             string sqlText = "select * from stonefactoryprofitrmbchangedrecord where `UserID`=@UserID ";
             mycmd.CommandText = sqlText;
+            mycmd.Parameters.Clear();
+            mycmd.Parameters.AddWithValue("@UserID", account.UserID);
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
             adapter.Fill(table);
@@ -255,6 +260,8 @@ namespace DataBaseProvider
         {
             string sqlText = "select * from stonefactorystackchangerecord where `UserID`=@UserID ";
             mycmd.CommandText = sqlText;
+            mycmd.Parameters.Clear();
+            mycmd.Parameters.AddWithValue("@UserID", account.UserID);
             DataTable table = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
             adapter.Fill(table);

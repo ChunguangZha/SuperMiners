@@ -62,6 +62,8 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("LastGatherStoneTime");
                 NotifyPropertyChange("LastGatherStoneTime");
                 NotifyPropertyChange("StoneSellQuan");
+                NotifyPropertyChange("ShoppingCreditsEnabled");
+                NotifyPropertyChange("ShoppingCreditsFreezed");
             }
         }
 
@@ -315,6 +317,16 @@ namespace SuperMinersCustomServiceSystem.Model
         public decimal FreezingRMB
         {
             get { return this._parentObject.FortuneInfo.FreezingRMB; }
+        }
+
+        public decimal ShoppingCreditsEnabled
+        {
+            get { return this._parentObject.FortuneInfo.ShoppingCreditsEnabled; }
+        }
+
+        public decimal ShoppingCreditsFreezed
+        {
+            get { return this._parentObject.FortuneInfo.ShoppingCreditsFreezed; }
         }
 
         /// <summary>

@@ -99,6 +99,8 @@
                     <DataGridTextColumn Binding="{Binding CreditValue}" Header="信誉值"/>
                     <DataGridTextColumn Binding="{Binding RMB}" ClipboardContentBinding="{x:Null}" Header="灵币"/>
                     <DataGridTextColumn Binding="{Binding FreezingRMB}" ClipboardContentBinding="{x:Null}" Header="冻结灵币"/>
+                    <DataGridTextColumn Binding="{Binding ShoppingCreditsEnabled}" Header="可用积分"/>
+                    <DataGridTextColumn Binding="{Binding ShoppingCreditsFreezed}" Header="冻结积分"/>
                     <DataGridTextColumn Binding="{Binding GoldCoin}" ClipboardContentBinding="{x:Null}" Header="金币"/>
                     <DataGridTextColumn Binding="{Binding StonesReserves}" ClipboardContentBinding="{x:Null}" Header="矿石储量"/>
                     <DataGridTextColumn Binding="{Binding TotalProducedStonesCount}" ClipboardContentBinding="{x:Null}" Header="累计总产出"/>

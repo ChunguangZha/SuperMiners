@@ -39,7 +39,7 @@ namespace SuperMinersServerApplication.Controller
         {
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
-                DailyTime = new DateTime(2000, 1, 1, 0, 5, 0),
+                DailyTime = new DateTime(2000, 1, 1, 0, 16, 0),
                 Task = DailyCheckFactoryState
             });
 
@@ -419,6 +419,8 @@ namespace SuperMinersServerApplication.Controller
                     _lastExeCheckFactoryStateTime = DateTime.Now;
                 }
 
+                LogHelper.Instance.AddInfoLog("开始执行         DailyCheckFactoryState");
+
                 PlayerStoneFactoryAccountInfo[] listAllFactories = DBProvider.PlayerStoneFactoryDBProvider.GetAllPlayerStoneFactoryAccountInfos();
 
                 int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
@@ -442,9 +444,12 @@ namespace SuperMinersServerApplication.Controller
                             //减去前一天没有食物死掉的奴隶
                             //factory.EnableSlavesGroupCount -= deadGroupSlaveCount;
                             //将前一天存入的冻结中的奴隶转成可用
-                            factory.EnableSlavesGroupCount += factory.FreezingSlaveGroupCount;
-                            factory.FreezingSlaveGroupCount = 0;
-                            //factory.Food -= workableGroupSlaveCount;
+                            if (factory.FreezingSlaveGroupCount > 0)
+                            {
+                                factory.EnableSlavesGroupCount += factory.FreezingSlaveGroupCount;
+                                factory.FreezingSlaveGroupCount = 0;
+                                factory.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
+                            }
 
                             //检查工厂状态，如果没有奴隶和矿工则工厂生存天数自减1，如果生存天数为0，则工厂关闭。
                             if (factory.EnableSlavesGroupCount == 0 && factory.FreezingSlaveGroupCount == 0 && factory.TotalStackCount == 0 && factory.FreezingStackCount == 0)
@@ -470,6 +475,9 @@ namespace SuperMinersServerApplication.Controller
                 {
                     LogHelper.Instance.AddErrorLog("矿石工厂零时处理异常", exc);
                 });
+
+                LogHelper.Instance.AddInfoLog("矿石工厂零时处理执行完毕         DailyCheckFactoryState");
+
             }
             catch (Exception exc)
             {

@@ -39,20 +39,20 @@
         <GroupBox Grid.Row="2" Name="panelPlayersManager" Margin="5">
             <DataGrid Name="datagridPlayerInfos" ItemsSource="{Binding ListFiltedPlayerFactoryInfos}" SelectionMode="Single" AutoGenerateColumns="False" FrozenColumnCount="2" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding UserID}" Header="用户ID"/>
-                    <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名"/>
-                    <DataGridTextColumn Binding="{Binding FactoryIsOpening}" Header="工厂状态"/>
-                    <DataGridTextColumn Binding="{Binding FactoryIsOpening}" Header="工厂寿命天数"/>
-                    <DataGridTextColumn Binding="{Binding FreezingSlavesCount}" Header="运输中苦力"/>
-                    <DataGridTextColumn Binding="{Binding EnableSlavesCount}" Header="劳动中苦力"/>
+                    <DataGridTextColumn Binding="{Binding UserID}" Header="用户ID" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding UserName}" ClipboardContentBinding="{x:Null}" Header="用户名" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding FactoryIsOpening}" Header="工厂状态" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding FactoryIsOpening}" Header="工厂寿命天数" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding FreezingSlavesCount}" Header="运输中苦力" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding EnableSlavesCount}" Header="劳动中苦力" Width="*"/>
                     <DataGridTextColumn Binding="{Binding Food}" Header="食物存量"/>
-                    <DataGridTextColumn Binding="{Binding LastDayValidStoneStack}" Header="昨日凝练完成矿石"/>
-                    <DataGridTextColumn Binding="{Binding TotalStoneCount}" Header="凝练中矿石"/>
-                    <DataGridTextColumn Binding="{Binding FreezingStoneCount}" Header="运输中矿石"/>
-                    <DataGridTextColumn Binding="{Binding WithdrawableStoneCount}" Header="可取回矿石"/>
-                    <DataGridTextColumn Binding="{Binding TotalProfitRMB}" Header="累计总收益"/>
-                    <DataGridTextColumn Binding="{Binding WithdrawableProfitRMB}" Header="可提取的收益"/>
-                    <DataGridTextColumn Binding="{Binding YesterdayTotalProfitRMB}" Header="昨日总收益"/>
+                    <DataGridTextColumn Binding="{Binding LastDayValidStoneCount}" Header="昨日凝练完成矿石"/>
+                    <DataGridTextColumn Binding="{Binding TotalStoneCount}" Header="凝练中矿石" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding FreezingStoneCount}" Header="运输中矿石" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding WithdrawableStoneCount}" Header="可取回矿石" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding TotalProfitRMB}" Header="累计总收益" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding WithdrawableProfitRMB}" Header="可提取的收益" Width="*"/>
+                    <DataGridTextColumn Binding="{Binding YesterdayTotalProfitRMB}" Header="昨日总收益" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>

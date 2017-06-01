@@ -35,6 +35,7 @@ namespace SuperMinersCustomServiceSystem.Model
                 NotifyPropertyChange("EnableSlavesCount");
                 NotifyPropertyChange("Food");
                 NotifyPropertyChange("LastDayValidStoneStack");
+                NotifyPropertyChange("LastDayValidStoneCount");
                 NotifyPropertyChange("TotalStackCount");
                 NotifyPropertyChange("TotalStoneCount");
                 NotifyPropertyChange("FreezingStackCount");
@@ -204,6 +205,14 @@ namespace SuperMinersCustomServiceSystem.Model
             get
             {
                 return this._parentObject.LastDayValidStoneStack;
+            }
+        }
+
+        public int LastDayValidStoneCount
+        {
+            get
+            {
+                return this.LastDayValidStoneStack * StoneFactoryConfig.StoneFactoryStone_Stack;
             }
         }
 
