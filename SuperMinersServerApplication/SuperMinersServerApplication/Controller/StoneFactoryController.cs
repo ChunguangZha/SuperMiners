@@ -57,7 +57,7 @@ namespace SuperMinersServerApplication.Controller
         public PlayerStoneFactoryAccountInfo GetPlayerStoneFactoryAccountInfo(int userID)
         {
             PlayerStoneFactoryAccountInfo account = DBProvider.PlayerStoneFactoryDBProvider.GetPlayerStoneFactoryAccountInfo(userID);
-            if (account.SlaveLiveDiscountms <= 0 && account.EnableSlavesGroupCount > 0)
+            if (account != null && account.SlaveLiveDiscountms <= 0 && account.EnableSlavesGroupCount > 0)
             {
                 int oldSlaveCount = account.EnableSlavesGroupCount;
                 account.SlaveLiveDiscountms = 0;
