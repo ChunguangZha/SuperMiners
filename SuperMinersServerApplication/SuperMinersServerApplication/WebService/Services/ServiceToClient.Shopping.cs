@@ -100,7 +100,10 @@ namespace SuperMinersServerApplication.WebService.Services
                             playerrunner.RefreshFortune();
                         }
 
-                        LogHelper.Instance.AddErrorLog("玩家[" + userName + "]购买虚拟商品[" + shoppingItem.Name + "]异常", exc);
+                        if (exc != null)
+                        {
+                            LogHelper.Instance.AddErrorLog("玩家[" + userName + "]购买虚拟商品[" + shoppingItem.Name + "]异常", exc);
+                        }
                     });
 
                     if (result == OperResult.RESULTCODE_TRUE)
@@ -199,7 +202,10 @@ namespace SuperMinersServerApplication.WebService.Services
                             playerrunner.RefreshFortune();
                         }
 
-                        LogHelper.Instance.AddErrorLog("玩家[" + userName + "]购买钻石商品[" + shoppingItem.Name + "]异常", exc);
+                        if (exc != null)
+                        {
+                            LogHelper.Instance.AddErrorLog("玩家[" + userName + "]购买钻石商品[" + shoppingItem.Name + "]异常", exc);
+                        }
                     });
 
                     if (result == OperResult.RESULTCODE_TRUE)

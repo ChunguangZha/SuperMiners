@@ -79,6 +79,18 @@ namespace SuperMinersCustomServiceSystem.Model
                     case AlipayTradeInType.StackStoneSell:
                         tradeTypeText = "委托出售矿石";
                         break;
+                    case AlipayTradeInType.RemoteServerOnce:
+                        tradeTypeText = "购买一次远程服务";
+                        break;
+                    case AlipayTradeInType.RemoteServerOneMonth:
+                        tradeTypeText = "购买一个月远程服务";
+                        break;
+                    case AlipayTradeInType.RemoteServerThreeMonth:
+                        tradeTypeText = "购买一季度远程服务";
+                        break;
+                    case AlipayTradeInType.RemoteServerOneYear:
+                        tradeTypeText = "购买一年远程服务";
+                        break;
                     default:
                         break;
                 }

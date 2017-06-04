@@ -239,7 +239,7 @@ namespace DataBaseProvider
                             else
                             {
                                 //14点以后可以取到昨天记录
-                                if ((timeNow.Date - itemOperTime.Date).Days == 1)
+                                if ((timeNow.Date - itemOperTime.Date).Days == 0)
                                 {
                                     sumYesterdayProfitRMB += item.OperRMB;
                                 }
@@ -481,11 +481,12 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
                 string sqlText = "insert into stonefactoryprofitrmbchangedrecord " +
-                        "(`UserID`,`OperRMB`,`ProfitType`,`OperTime`) " +
-                        " values (@UserID,@OperRMB,@ProfitType,@OperTime) ";
+                        "(`UserID`,`OperRMB`,`ValidStoneCount`,`ProfitType`,`OperTime`) " +
+                        " values (@UserID,@OperRMB,@ValidStoneCount,@ProfitType,@OperTime) ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@UserID", record.UserID);
                 mycmd.Parameters.AddWithValue("@OperRMB", record.OperRMB);
+                mycmd.Parameters.AddWithValue("@ValidStoneCount", record.ValidStoneCount);
                 mycmd.Parameters.AddWithValue("@ProfitType", (int)record.ProfitType);
                 mycmd.Parameters.AddWithValue("@OperTime", record.OperTime.ToDateTime());
                 mycmd.ExecuteNonQuery();

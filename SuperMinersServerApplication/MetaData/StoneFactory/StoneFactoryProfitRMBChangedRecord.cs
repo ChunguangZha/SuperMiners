@@ -25,6 +25,12 @@ namespace MetaData.StoneFactory
         [DataMember]
         public decimal OperRMB;
 
+        /// <summary>
+        /// 凝练出的有效矿石数
+        /// </summary>
+        [DataMember]
+        public decimal ValidStoneCount;
+
         [DataMember]
         public FactoryProfitOperType ProfitType;
 

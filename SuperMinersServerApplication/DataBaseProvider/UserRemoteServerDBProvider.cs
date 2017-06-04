@@ -100,6 +100,58 @@ namespace DataBaseProvider
             }
         }
 
+        public UserRemoteServerBuyRecord GetUserLastBuyOnceRemoteServiceRecord(string playerUserName)
+        {
+            UserRemoteServerBuyRecord[] records = null;
+            MySqlConnection myconn = null;
+            try
+            {
+                DataTable dt = new DataTable();
+
+                myconn = MyDBHelper.Instance.CreateConnection();
+                myconn.Open();
+                MySqlCommand mycmd = myconn.CreateCommand();
+
+                string sqlTextA = "select a.* from userremoteserverbuyrecord a  " +
+                                    " where a.UserID = ( select id from  playersimpleinfo where UserName = @UserName ) " +
+                                    " and a.`ServerType`=@ServerType order by a.`ID` desc limit 1 ";
+                string encryptUserName = DESEncrypt.EncryptDES(playerUserName);
+                mycmd.Parameters.AddWithValue("@UserName", encryptUserName);
+                mycmd.Parameters.AddWithValue("@ServerType", (int)RemoteServerType.Once);
+
+                string sqlAllText = "select ttt.*, s.UserName as UserName from " +
+                                    " ( " + sqlTextA +
+                                    " ) ttt " +
+                                    "  left join   playersimpleinfo s  on ttt.UserID = s.id ";
+
+
+                mycmd.CommandText = sqlAllText;
+
+                MySqlDataAdapter adapter = new MySqlDataAdapter(mycmd);
+                adapter.Fill(dt);
+                if (dt != null || dt.Rows.Count != 0)
+                {
+                    records = MetaDBAdapter<UserRemoteServerBuyRecord>.GetUserRemoteServerBuyRecordListFromDataTable(dt);
+                }
+                dt.Clear();
+                dt.Dispose();
+                adapter.Dispose();
+
+                mycmd.Dispose();
+
+                if (records == null || records.Length == 0)
+                {
+                    return null;
+                }
+
+                return records[0];
+            }
+            finally
+            {
+                MyDBHelper.Instance.DisposeConnection(myconn);
+            }
+        }
+
         public UserRemoteServerBuyRecord[] GetUserRemoteServerBuyRecords(string playerUserName, MyDateTime beginCreateTime, MyDateTime endCreateTime, int pageItemCount, int pageIndex)
         {
             UserRemoteServerBuyRecord[] records = null;

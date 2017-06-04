@@ -39,7 +39,7 @@ namespace SuperMinersServerApplication.Controller
         {
             SchedulerTaskController.Instance.JoinTask(new DailyTimerTask()
             {
-                DailyTime = new DateTime(2000, 1, 1, 0, 16, 0),
+                DailyTime = new DateTime(2000, 1, 1, 0, 10, 0),
                 Task = DailyCheckFactoryState
             });
 
@@ -70,12 +70,15 @@ namespace SuperMinersServerApplication.Controller
                 },
                 exc =>
                 {
-                    LogHelper.Instance.AddErrorLog("矿石工厂信息：玩家ID：[" + userID + "] 由于投喂不及时，将矿石工厂中" + oldSlaveCount + "苦力饿死。保存工厂信息异常，", exc);
+                    if (exc != null)
+                    {
+                        LogHelper.Instance.AddErrorLog("矿石工厂信息：玩家ID：[" + userID + "] 由于投喂不及时，将矿石工厂中" + oldSlaveCount + "00苦力饿死。保存工厂信息异常，", exc);
+                    }
                 });
 
                 if (result == OperResult.RESULTCODE_TRUE)
                 {
-                    LogHelper.Instance.AddInfoLog("矿石工厂信息：玩家ID：[" + userID + "] 由于投喂不及时，将矿石工厂中" + oldSlaveCount + "苦力饿死。");
+                    LogHelper.Instance.AddInfoLog("矿石工厂信息：玩家ID：[" + userID + "] 由于投喂不及时，将矿石工厂中" + oldSlaveCount + "00苦力饿死。");
                 }
             }
 
@@ -97,13 +100,6 @@ namespace SuperMinersServerApplication.Controller
         private int CheckTime()
         {
             DateTime time = DateTime.Now;
-            if (time.Hour == 23)
-            {
-                if (new DateTime(time.Year, time.Month, time.Day, 23, 50, 0) < time)
-                {
-                    return OperResult.RESULTCODE_STONEFACTORYISCLEARING;
-                }
-            }
             if (time.Hour == 0)
             {
                 if (time < new DateTime(time.Year, time.Month, time.Day, 1, 0, 0))
@@ -258,7 +254,7 @@ namespace SuperMinersServerApplication.Controller
             {
                 return OperResult.RESULTCODE_USER_NOT_EXIST;
             }
-            if (playerrunner.BasePlayer.FortuneInfo.MinersCount <= minersGroupCount * StoneFactoryConfig.OneGroupSlaveHasMiners)
+            if (playerrunner.BasePlayer.FortuneInfo.MinersCount < minersGroupCount * StoneFactoryConfig.OneGroupSlaveHasMiners)
             {
                 return OperResult.RESULTCODE_MINERS_LACK_OF_BALANCE;
             }
@@ -324,7 +320,10 @@ namespace SuperMinersServerApplication.Controller
             }
             , exc =>
             {
-                LogHelper.Instance.AddErrorLog("矿石工厂，玩家ID[" + userID + "] 投喂苦力异常", exc);
+                if (exc != null)
+                {
+                    LogHelper.Instance.AddErrorLog("矿石工厂，玩家ID[" + userID + "] 投喂苦力异常", exc);
+                }
             });
 
             if (result == OperResult.RESULTCODE_TRUE)
@@ -433,8 +432,20 @@ namespace SuperMinersServerApplication.Controller
                             //计算前一天存活的奴隶
                             if (factory.SlaveLiveDiscountms <= 0)
                             {
-                                factory.EnableSlavesGroupCount = 0;
-                                factory.SlaveLiveDiscountms = 0;
+                                if (factory.Food < StoneFactoryConfig.AutoFeedNeedFoods)
+                                {
+                                    LogHelper.Instance.AddInfoLog("矿石工厂零时处理，玩家[" + factory.UserName + "] 由于玩家没有及时投喂，" + factory.EnableSlavesGroupCount.ToString() + "苦力被饿死。");
+
+                                    factory.EnableSlavesGroupCount = 0;
+                                    factory.SlaveLiveDiscountms = 0;
+                                }
+                                else
+                                {
+                                    factory.Food -= StoneFactoryConfig.AutoFeedNeedFoods;
+                                    factory.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
+                                    LogHelper.Instance.AddInfoLog("矿石工厂零时处理，系统自动为玩家[" + factory.UserName + "]苦力投喂食物，玩家还剩" + factory.Food.ToString() + "食物。");
+
+                                }
                             }
                             //int workableGroupSlaveCount = factory.EnableSlavesGroupCount < factory.Food ? factory.EnableSlavesGroupCount : factory.Food;
                             //int deadGroupSlaveCount = factory.EnableSlavesGroupCount - workableGroupSlaveCount;
@@ -473,7 +484,10 @@ namespace SuperMinersServerApplication.Controller
                 },
                 exc =>
                 {
-                    LogHelper.Instance.AddErrorLog("矿石工厂零时处理异常", exc);
+                    if (exc != null)
+                    {
+                        LogHelper.Instance.AddErrorLog("矿石工厂零时处理异常", exc);
+                    }
                 });
 
                 LogHelper.Instance.AddInfoLog("矿石工厂零时处理执行完毕         DailyCheckFactoryState");
@@ -631,6 +645,7 @@ namespace SuperMinersServerApplication.Controller
                             UserID = factory.UserID,
                             ProfitType = FactoryProfitOperType.FactoryOutput,
                             OperRMB = profitRMB,
+                            ValidStoneCount = factory.LastDayValidStoneStack,
                             OperTime = new MyDateTime(DateTime.Now)
                         }, myTrans);
                         if (!isOK)
@@ -709,7 +724,10 @@ namespace SuperMinersServerApplication.Controller
                     },
                     exc =>
                     {
-                        LogHelper.Instance.AddErrorLog("管理员设置工厂收益异常，玩家ID：" + factory.UserID, exc);
+                        if (exc != null)
+                        {
+                            LogHelper.Instance.AddErrorLog("管理员设置工厂收益异常，玩家ID：" + factory.UserID, exc);
+                        }
                     });
 
                 }

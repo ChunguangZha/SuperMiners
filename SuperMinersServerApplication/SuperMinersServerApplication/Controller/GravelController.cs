@@ -90,7 +90,10 @@ namespace SuperMinersServerApplication.Controller
                 },
                 exc =>
                 {
-                    LogHelper.Instance.AddErrorLog("GravelController.DistributeGravel Save ToDB Transaction Exception", exc);
+                    if (exc != null)
+                    {
+                        LogHelper.Instance.AddErrorLog("GravelController.DistributeGravel Save ToDB Transaction Exception", exc);
+                    }
                 });
 
                 if (PlayerGravelInfoChanged != null)

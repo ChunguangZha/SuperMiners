@@ -80,7 +80,10 @@ namespace SuperMinersServerApplication.Controller.Trade
             },
             exc =>
             {
-                LogHelper.Instance.AddErrorLog("远程协助1服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
+                if (exc != null)
+                {
+                    LogHelper.Instance.AddErrorLog("远程协助1服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
+                }
                 result = OperResult.RESULTCODE_EXCEPTION;
             });
             if (result != OperResult.RESULTCODE_TRUE)
@@ -168,7 +171,10 @@ namespace SuperMinersServerApplication.Controller.Trade
             },
             exc =>
             {
-                LogHelper.Instance.AddErrorLog("远程协助服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
+                if (exc != null)
+                {
+                    LogHelper.Instance.AddErrorLog("远程协助服务付款回调异常，AlipayInfo: " + alipay.ToString() + "; serverType: " + serverType.ToString(), exc);
+                }
                 result = OperResult.RESULTCODE_EXCEPTION;
             });
 
@@ -205,7 +211,10 @@ namespace SuperMinersServerApplication.Controller.Trade
             },
             exc =>
             {
-                LogHelper.Instance.AddErrorLog("HandlePlayerRemoteService Exception. adminUserName:" + adminUserName + ";playerUserName:" + playerUserName + ";serviceContent:" + serviceContent + ";serviceTime:" + serviceTime.ToString() + ";engineerName:" + engineerName, exc);
+                if (exc != null)
+                {
+                    LogHelper.Instance.AddErrorLog("HandlePlayerRemoteService Exception. adminUserName:" + adminUserName + ";playerUserName:" + playerUserName + ";serviceContent:" + serviceContent + ";serviceTime:" + serviceTime.ToString() + ";engineerName:" + engineerName, exc);
+                }
             });
 
             return result;

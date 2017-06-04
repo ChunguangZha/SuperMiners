@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.2.0.7" publicKeyToken="5aa34b9ea52959dd" language="zh-CN" processorArchitecture="msil" type="win32" />
+  <description asmv2:publisher="迅灵信息" co.v1:suiteName="迅灵矿场" asmv2:product="迅灵矿场管理系统" asmv2:supportUrl="http://www.xlore.net/" co.v1:errorReportUrl="http://www.xlore.net/" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="SuperMinersCustomServiceSystem.exe" parameters="" />
+  </entryPoint>
+  <co.v1:useManifestForTrust xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          UAC Manifest Options
+          If you want to change the Windows User Account Control level replace the 
+          requestedExecutionLevel node with one of the following.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         If you want to utilize File and Registry Virtualization for backward 
+         compatibility then delete the requestedExecutionLevel node.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="SuperMinersCustomServiceSystem.exe" size="586240">
+      <assemblyIdentity name="SuperMinersCustomServiceSystem" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>QrREVV1EajoeACbeZ+5jRoLdJKDGn36wsDH7/Cz91KI=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="SuperMinersCustomServiceSystem.exe.config" size="578">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>m1E5t9Iq6/wkANodZznmNq4OZ/DFiuZc6UOC7uo7iNk=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=TONYZHA\Chunguang" issuerKeyHash="3f0c34b27b831a970b8e929c9a789a416939888f" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>X19Od95QIrLx2BUmEbLYu2yoj9w/cjaVX1p2110Iyyw=</DigestValue></Reference></SignedInfo><SignatureValue>hiPIx6xfc6ZbPkUCLW3lyzbgPWL6MCye+/Wf3Ty1MvtwK6B0phvxDD9QzugSG9fqYM7J5MXHqVj5Ex7tktMfA9pUsQcTijKFfBbJHeH1IXQp+12RI2oxzZtsvvIYg+aF0M598msKiB+K1vzZgl2WkxE9zdI2lvcC7lwZD2v/mWA=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>o6BiVHfR1VqxRaxQp9fttR160TY5X4l0WRhO7xLKFUf/aLj6ZC5sch+wthbuZ6rpH0ZNRmr1Q7ASy0ddLYCK0jmiHiB9fEiLpNwopK/PbKy8mE0MoIoQVTUStUcJV+mizGnAxrzXkVakhfQTYriYSyhPXkGj+30zPzHPf87Z6Os=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="2ccb085dd7765a5f9536723fdc8fa86cbbd8b2112615d8f1b22250de774e5f5f" Description="" Url=""><as:assemblyIdentity name="SuperMinersCustomServiceSystem.exe" version="1.2.0.7" publicKeyToken="5aa34b9ea52959dd" language="zh-CN" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=TONYZHA\Chunguang</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>0/us8WBZP8ByU06f7+CEgkvn0gHH+ONORxnORuM0LL4=</DigestValue></Reference></SignedInfo><SignatureValue>FXT6jZl4s+08X1d09YpeOorRxtL5CLhhM8awZ8aMcvsXGlFwkoqe1Ii2vAWfStIGQoiOBsmFGLH9Ae60s+28uJ7UAdZ+CHxZ7B02SdZy5Co8WaJKWxeWCgy/N3s3b8KUIKrfaE5oj2dWQ9OzZ7Yr0LyPo26jte6DBMWOyeIODnU=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>o6BiVHfR1VqxRaxQp9fttR160TY5X4l0WRhO7xLKFUf/aLj6ZC5sch+wthbuZ6rpH0ZNRmr1Q7ASy0ddLYCK0jmiHiB9fEiLpNwopK/PbKy8mE0MoIoQVTUStUcJV+mizGnAxrzXkVakhfQTYriYSyhPXkGj+30zPzHPf87Z6Os=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB3TCCAUagAwIBAgIQFC7X5f77AIJCag17jKvNqTANBgkqhkiG9w0BAQsFADAtMSswKQYDVQQDHiIAVABPAE4AWQBaAEgAQQBcAEMAaAB1AG4AZwB1AGEAbgBnMB4XDTE2MDcxNTE3MzkzNVoXDTE3MDcxNTIzMzkzNVowLTErMCkGA1UEAx4iAFQATwBOAFkAWgBIAEEAXABDAGgAdQBuAGcAdQBhAG4AZzCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAo6BiVHfR1VqxRaxQp9fttR160TY5X4l0WRhO7xLKFUf/aLj6ZC5sch+wthbuZ6rpH0ZNRmr1Q7ASy0ddLYCK0jmiHiB9fEiLpNwopK/PbKy8mE0MoIoQVTUStUcJV+mizGnAxrzXkVakhfQTYriYSyhPXkGj+30zPzHPf87Z6OsCAwEAATANBgkqhkiG9w0BAQsFAAOBgQBwYeqD4mLyXRnls6o1Z703w9zsogS/JpPysF0VhUj7eB9alaMeTIS97fnDWGRKaXti1Uu+UGSfdpOM9SntwmOShlR5Hok4JhuBY3MAJd4dd6Gz6xdsXN4G5l0EvwYJdP+DpSrVU0oqTpqfriO1A+wan86BuFJ379Ep9pwD+P+D0A==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>

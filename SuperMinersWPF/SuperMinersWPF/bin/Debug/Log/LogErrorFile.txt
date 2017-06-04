@@ -1,11 +1,23 @@
-Error:  [2017/6/1 23:46:26] ---- Log: RestClient ReceiveCallback 3
-Exc.Message: 基础连接已经关闭: 服务器关闭了本应保持活动状态的连接。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
+Error:  [2017/6/2 23:43:42] ---- Log: RestClient ReceiveCallback 3
+Exc.Message: 基础连接已经关闭: 接收时发生错误。Exc.Stack:    在 System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)
    在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass38.<ReceiveCallback>b__2f(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 293
 -----------------------------------------------------
 
-Error:  [2017/6/1 23:46:26] ---- Log: RestClient ReceiveCallback 4
+Error:  [2017/6/2 23:43:42] ---- Log: RestClient ReceiveCallback 4
 -----------------------------------------------------
 
-Error:  [2017/6/1 23:46:34] ---- Log: 客户端小开心2017已退出.
+Error:  [2017/6/2 23:43:46] ---- Log: Client_GetTodayStoneStackInfoCompleted Exception1
+Exc.Message: 无法连接到远程服务器Exc.Stack:    在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult, TransportContext& context)
+   在 System.Net.HttpWebRequest.EndGetRequestStream(IAsyncResult asyncResult)
+   在 SuperMinersWPF.Wcf.Channel.RestClient.<>c__DisplayClass12.<Send>b__e(IAsyncResult result) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Channel\RestClient.cs:行号 182
+-----------------------------------------------------
+
+Error:  [2017/6/2 23:43:46] ---- Log: Client_GetTodayStoneStackInfoCompleted Exception
+Exc.Message: 操作过程中出现异常，结果无效。  有关异常的详细信息，请查看 InnerException。Exc.Stack:    在 System.ComponentModel.AsyncCompletedEventArgs.RaiseExceptionIfNecessary()
+   在 SuperMinersWPF.Wcf.Clients.WebInvokeEventArgs`1.get_Result() 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\Wcf\Clients\ServerClient.cs:行号 69
+   在 SuperMinersWPF.ViewModels.StackStoneViewModel.Client_GetTodayStoneStackInfoCompleted(Object sender, WebInvokeEventArgs`1 e) 位置 f:\My Work\SuperMiners\SuperMinersWPF\SuperMinersWPF\ViewModels\StackStoneViewModel.cs:行号 370
+-----------------------------------------------------
+
+Error:  [2017/6/2 23:43:59] ---- Log: 客户端小开心xl已退出.
 -----------------------------------------------------
 

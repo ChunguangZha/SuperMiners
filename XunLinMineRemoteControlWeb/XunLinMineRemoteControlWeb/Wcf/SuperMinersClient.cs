@@ -279,6 +279,19 @@ namespace XunLinMineRemoteControlWeb.Wcf
             }
         }
 
+        public bool CheckOnceRemoveServiceCanBuyable(string token, string userName)
+        {
+            try
+            {
+                return base.Channel.CheckOnceRemoveServiceCanBuyable(token, userName);
+            }
+            catch (Exception exc)
+            {
+                Console.WriteLine(exc);
+                return false;
+            }
+        }
+
         public string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType)
         {
             try

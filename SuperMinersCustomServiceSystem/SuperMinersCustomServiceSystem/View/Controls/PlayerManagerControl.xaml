@@ -22,15 +22,17 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <StackPanel Orientation="Horizontal">
+                <TextBlock Text="登录名：" HorizontalAlignment="Right" Margin="5"/>
+                <TextBox Name="txtUserLoginName" Margin="5" Width="100" VerticalAlignment="Center"/>
                 <TextBlock Text="用户名：" HorizontalAlignment="Right" Margin="5"/>
                 <TextBox Name="txtUserName" Margin="5" Width="100" VerticalAlignment="Center"/>
-                <TextBlock Text="用户组" Margin="5"/>
+                <!--<TextBlock Text="用户组" Margin="5"/>
                 <ComboBox Name="cmbUserGroup" SelectedIndex="0" Margin="5" Width="100">
                     <ComboBoxItem Content="全部"/>
                     <ComboBoxItem Content="普通玩家"/>
                     <ComboBoxItem Content="测试玩家"/>
                     <ComboBoxItem Content="代理玩家"/>
-                </ComboBox>
+                </ComboBox>-->
                 <TextBlock Text="支付宝账户：" HorizontalAlignment="Right" Margin="5"/>
                 <TextBox Name="txtAlipayAccount" Margin="5" Width="150" VerticalAlignment="Center"/>
                 <TextBlock Text="锁定状态：" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>

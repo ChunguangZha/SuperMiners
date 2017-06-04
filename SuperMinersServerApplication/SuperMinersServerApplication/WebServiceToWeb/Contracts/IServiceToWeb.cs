@@ -27,6 +27,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Contracts
         UserRemoteServerItem[] GetUserRemoteServerItems(string token, string userName);
 
         [OperationContract]
+        bool CheckOnceRemoveServiceCanBuyable(string token, string userName);
+
+        [OperationContract]
         string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType);
 
         /// <summary>

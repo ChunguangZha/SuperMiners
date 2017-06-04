@@ -15,7 +15,7 @@ namespace XunLinMineRemoteControlWeb.Core
 
         public string Token;
 
-        public int ShoppingCredits;
+        public decimal ShoppingCredits;
 
         public string UserRemoteServerValidStopTimeText = "";
 

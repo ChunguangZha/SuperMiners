@@ -127,37 +127,64 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
             }
         }
 
+        public bool CheckOnceRemoveServiceCanBuyable(string token, string userName)
+        {
+            try
+            {
+                var record = DBProvider.UserRemoteServerDBProvider.GetUserLastBuyOnceRemoteServiceRecord(userName);
+                if (record != null && (DateTime.Now - record.BuyRemoteServerTime.ToDateTime()).TotalHours < 24)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("WEB CheckOnceRemoveServiceCanBuyable [" + userName + "] 异常", exc);
+                return false;
+            }
+        }
+
         public string CreateBuyRemoteServerAlipayLink(string token, string userName, RemoteServerType serverType)
         {
-            AlipayTradeInType alipayType;
-            switch (serverType)
+            try
             {
-                case RemoteServerType.Once:
-                    alipayType = AlipayTradeInType.RemoteServerOnce;
-                    break;
-                case RemoteServerType.OneMonth:
-                    alipayType = AlipayTradeInType.RemoteServerOneMonth;
-                    break;
-                case RemoteServerType.ThreeMonth:
-                    alipayType = AlipayTradeInType.RemoteServerThreeMonth;
-                    break;
-                case RemoteServerType.OneYear:
-                    alipayType = AlipayTradeInType.RemoteServerOneYear;
-                    break;
-                default:
-                    return null;
-            }
+                AlipayTradeInType alipayType;
+                switch (serverType)
+                {
+                    case RemoteServerType.Once:
+                        alipayType = AlipayTradeInType.RemoteServerOnce;
+                        break;
+                    case RemoteServerType.OneMonth:
+                        alipayType = AlipayTradeInType.RemoteServerOneMonth;
+                        break;
+                    case RemoteServerType.ThreeMonth:
+                        alipayType = AlipayTradeInType.RemoteServerThreeMonth;
+                        break;
+                    case RemoteServerType.OneYear:
+                        alipayType = AlipayTradeInType.RemoteServerOneYear;
+                        break;
+                    default:
+                        return null;
+                }
 
-            var serverItem = UserRemoteServerController.Instance.GetUserRemoteServerItem(serverType);
-            if(serverItem==null){
+                var serverItem = UserRemoteServerController.Instance.GetUserRemoteServerItem(serverType);
+                if (serverItem == null)
+                {
+                    return null;
+                }
+
+                DateTime time = DateTime.Now;
+                string orderNumber = OrderController.Instance.CreateOrderNumber(userName, time, alipayType);
+                string alipayLink = OrderController.Instance.CreateAlipayLink(userName, orderNumber, serverItem.ShopName, serverItem.PayMoneyYuan * GlobalConfig.GameConfig.Yuan_RMB, serverItem.Description);
+                return alipayLink;
+            }
+            catch (Exception exc)
+            {
+                LogHelper.Instance.AddErrorLog("WEB CreateBuyRemoteServerAlipayLink [" + userName + "] 异常", exc);
                 return null;
             }
-
-            DateTime time = DateTime.Now;
-            string orderNumber = OrderController.Instance.CreateOrderNumber(userName, time, alipayType);
-            string alipayLink = OrderController.Instance.CreateAlipayLink(userName, orderNumber, serverItem.ShopName, serverItem.PayMoneyYuan * GlobalConfig.GameConfig.Yuan_RMB, serverItem.Description);
-            return alipayLink;
-
         }
 
 

@@ -34,6 +34,11 @@ namespace MetaData.SystemConfig
         public static int OnceFeedFoodSlaveCanLivems = 172800;
 
         /// <summary>
+        /// 系统自动投喂苦力需要10分食物
+        /// </summary>
+        public static int AutoFeedNeedFoods = 10;
+
+        /// <summary>
         /// 工厂在没有矿石和奴隶的情况下，寿命3天
         /// </summary>
         public static int FactoryLiveDays = 3;

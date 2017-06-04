@@ -24,6 +24,13 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
+            bool isBuyable = Wcf.WcfClient.Instance.CheckOnceRemoveServiceCanBuyable(principal.UserData.Token, principal.UserData.UserName);
+            if (!isBuyable)
+            {
+                Response.Write("<script>alert('24小时内只能购买一次')</script>");
+                return;
+            }
+
             string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, MetaData.Trade.RemoteServerType.Once);
             if (!string.IsNullOrEmpty(alipayLink))
             {
@@ -58,7 +65,7 @@ namespace XunLinMineRemoteControlWeb
                 return;
             }
 
-            string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, MetaData.Trade.RemoteServerType.OneMonth);
+            string alipayLink = Wcf.WcfClient.Instance.CreateBuyRemoteServerAlipayLink(principal.UserData.Token, principal.UserData.UserName, MetaData.Trade.RemoteServerType.ThreeMonth);
             if (!string.IsNullOrEmpty(alipayLink))
             {
                 Response.Redirect(alipayLink);

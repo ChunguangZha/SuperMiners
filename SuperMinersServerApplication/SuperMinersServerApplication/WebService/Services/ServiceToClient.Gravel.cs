@@ -88,7 +88,10 @@ namespace SuperMinersServerApplication.WebService.Services
                     },
                     exc =>
                     {
-                        LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetGravel Transaction Oper Exception", exc);
+                        if (exc != null)
+                        {
+                            LogHelper.Instance.AddErrorLog("玩家[" + userName + "] GetGravel Transaction Oper Exception", exc);
+                        }
                     });
 
                     if (result == OperResult.RESULTCODE_TRUE)

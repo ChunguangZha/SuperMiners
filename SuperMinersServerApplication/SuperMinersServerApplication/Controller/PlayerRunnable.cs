@@ -357,7 +357,10 @@ namespace SuperMinersServerApplication.Controller
                 exc =>
                 {
                     this.RefreshFortune();
-                    LogHelper.Instance.AddErrorLog("玩家[ " + this.BasePlayer.SimpleInfo.UserName + "] Save MakeAVowToGod Failed ", exc);
+                    if (exc != null)
+                    {
+                        LogHelper.Instance.AddErrorLog("玩家[ " + this.BasePlayer.SimpleInfo.UserName + "] Save MakeAVowToGod Failed ", exc);
+                    }
                 });
 
                 result.GravelResult = gravelValue;
@@ -381,6 +384,9 @@ namespace SuperMinersServerApplication.Controller
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
+
+                //每消费10积分增长一点贡献值
+                this.BasePlayer.FortuneInfo.Exp += (int)(valueCredits / 10f);
 
                 BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
                 BasePlayer.FortuneInfo.MinesCount += buyRecord.GainMinesCount;
@@ -549,6 +555,9 @@ namespace SuperMinersServerApplication.Controller
                 {
                     return OperResult.RESULTCODE_LACK_OF_BALANCE;
                 }
+
+                //每消费10积分增长一点贡献值
+                this.BasePlayer.FortuneInfo.Exp += (int)(valueCredits / 10f);
 
                 BasePlayer.FortuneInfo.ShoppingCreditsEnabled -= valueCredits;
                 BasePlayer.FortuneInfo.GoldCoin += goldcoinValue;

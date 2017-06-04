@@ -177,13 +177,15 @@ namespace SuperMinersCustomServiceSystem.ViewModel
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userLoginName"></param>
         /// <param name="userName"></param>
         /// <param name="userAlipayAccount"></param>
         /// <param name="referrerUserName"></param>
         /// <param name="isLocked">0表示全部，1表示已锁定，2表示非锁定</param>
         /// <param name="isOnline">0表示全部，1表示在线，2表示离线</param>
-        public void SearchPlayers(string userName, int groupType, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline, string loginIP, string loginMac)
+        public void SearchPlayers(string userLoginName, string userName, int groupType, string userAlipayAccount, string referrerUserName, string invitationCode, int isLocked, int isOnline, string loginIP, string loginMac)
         {
+            bool checkUserLoginNameOK = false;
             bool checkUserNameOK = false;
             bool checkGroupType = false;
             bool checkUserAlipayOK = false;
@@ -199,7 +201,11 @@ namespace SuperMinersCustomServiceSystem.ViewModel
             {
                 checkUserNameOK = checkGroupType = checkUserAlipayOK = checkUserReferrerOK = checkInvitationCodeOK = checkLockedStateOK = checkOnlineStateOK = checkLoginIPOK = checkLoginMacOK = false;
 
-                if (string.IsNullOrEmpty(userName) || item.UserLoginName.Contains(userName))
+                if (string.IsNullOrEmpty(userLoginName) || item.UserLoginName.Contains(userLoginName))
+                {
+                    checkUserLoginNameOK = true;
+                }
+                if (string.IsNullOrEmpty(userName) || item.UserName.Contains(userName))
                 {
                     checkUserNameOK = true;
                 }
@@ -270,7 +276,7 @@ namespace SuperMinersCustomServiceSystem.ViewModel
                     checkLoginMacOK = true;
                 }
 
-                if (checkUserNameOK && checkGroupType && checkUserAlipayOK && checkUserReferrerOK 
+                if (checkUserLoginNameOK && checkUserNameOK && checkGroupType && checkUserAlipayOK && checkUserReferrerOK 
                     && checkInvitationCodeOK && checkLockedStateOK && checkOnlineStateOK
                     && checkLoginIPOK && checkLoginMacOK)
                 {

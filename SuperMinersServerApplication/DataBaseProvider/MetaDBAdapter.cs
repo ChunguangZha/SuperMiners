@@ -1448,6 +1448,7 @@ namespace DataBaseProvider
                 item.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
                 item.UserID = Convert.ToInt32(dt.Rows[i]["UserID"]);
                 item.OperRMB = Convert.ToDecimal(dt.Rows[i]["OperRMB"]);
+                item.ValidStoneCount = Convert.ToDecimal(dt.Rows[i]["ValidStoneCount"]);
                 item.ProfitType = (FactoryProfitOperType)Convert.ToInt32(dt.Rows[i]["ProfitType"]);
                 item.OperTime = new MyDateTime(Convert.ToDateTime(dt.Rows[i]["OperTime"]));
 

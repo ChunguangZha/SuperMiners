@@ -655,7 +655,10 @@ namespace SuperMinersServerApplication.Controller.Game
             },
             exc =>
             {
-                LogHelper.Instance.AddErrorLog("赌石游戏，保存异常。局信息：" + this.InningInfo.ToString(), exc);
+                if (exc != null)
+                {
+                    LogHelper.Instance.AddErrorLog("赌石游戏，保存异常。局信息：" + this.InningInfo.ToString(), exc);
+                }
                 if (dicWinnedPlayerBetStoneCount != null)
                 {
                     foreach (var userID in dicWinnedPlayerBetStoneCount.Keys)

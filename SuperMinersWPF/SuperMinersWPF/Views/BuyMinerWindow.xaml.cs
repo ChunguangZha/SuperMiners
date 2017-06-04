@@ -65,7 +65,7 @@ namespace SuperMinersWPF.Views
                     App.UserVMObject.AsyncGetPlayerInfo();
                     _syn.Post(p =>
                     {
-                        this.DialogResult = true;
+                        this.Close();
                     }, null);
                 }
                 else
