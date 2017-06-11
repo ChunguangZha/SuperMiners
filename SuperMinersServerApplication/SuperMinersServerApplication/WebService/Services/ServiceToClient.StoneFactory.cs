@@ -172,6 +172,5 @@ namespace SuperMinersServerApplication.WebService.Services
                 throw new Exception();
             }
         }
-
     }
 }

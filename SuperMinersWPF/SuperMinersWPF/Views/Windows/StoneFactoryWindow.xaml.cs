@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuperMinersWPF.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,13 +29,22 @@ namespace SuperMinersWPF.Views.Windows
             this.DataContext = App.StoneFactoryVMObject.FactoryAccount;
             this.lvProfitList.ItemsSource = App.StoneFactoryVMObject.ListProfitRecords;
 
+            App.ShoppingVMObject.VirtualShoppingBuySucceed += ShoppingVMObject_VirtualShoppingBuySucceed;
+
             Thread thr = new Thread(ThreadDownStart);
             thr.IsBackground = true;
             thr.Start();
         }
 
+        void ShoppingVMObject_VirtualShoppingBuySucceed()
+        {
+            App.StoneFactoryVMObject.AsyncGetPlayerFactoryAccountInfo();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
+            App.ShoppingVMObject.VirtualShoppingBuySucceed -= ShoppingVMObject_VirtualShoppingBuySucceed;
+
             isClosed = true;
         }
 
@@ -92,12 +102,33 @@ namespace SuperMinersWPF.Views.Windows
 
         private void btnBuyFoods_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                var foodsShoppingItem = App.ShoppingVMObject.ListVirtualShoppingItem.FirstOrDefault(s => s.ItemType == MetaData.Shopping.VirtualShoppingItemType.FactorySlaveFoods30Days);
+                if (foodsShoppingItem != null)
+                {
+                    if (foodsShoppingItem.ValueShoppingCredits > GlobalData.CurrentUser.ShoppingCreditsEnabled)
+                    {
+                        MyMessageBox.ShowInfo("您的积分不足，无法购买。");
+                        return;
+                    }
+                    App.ShoppingVMObject.AsyncBuyVirtualShoppingItem(foodsShoppingItem.ParentObject);
+                }
+            }
+            catch (Exception exc)
+            {
+                MyMessageBox.ShowInfo("购买失败。");
+            }
         }
 
         private void btnFeedSlave_Click(object sender, RoutedEventArgs e)
         {
             App.StoneFactoryVMObject.AsyncFeedSlave();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            App.StoneFactoryVMObject.AsyncGetStoneFactoryProfitRMBChangedRecordList(null, null, GlobalData.PageItemsCount, 1);
         }
     }
 }

@@ -65,7 +65,7 @@ namespace DataBaseProvider
             {
                 mycmd = myTrans.CreateCommand();
 
-                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastFeedSlaveTime`=@LastFeedSlaveTime,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlaveGroupCount`=@FreezingSlaveGroupCount,`EnableSlavesGroupCount`=@EnableSlavesGroupCount where `ID`=@ID ";
+                string sqlText = "update playerstonefactoryaccountinfo set `FactoryIsOpening`=@FactoryIsOpening,`FactoryLiveDays`=@FactoryLiveDays,`Food`=@Food,`LastFeedSlaveTime`=@LastFeedSlaveTime,`LastDayValidStoneStack`=@LastDayValidStoneStack,`FreezingSlaveGroupCount`=@FreezingSlaveGroupCount,`EnableSlavesGroupCount`=@EnableSlavesGroupCount,`AutoFeedSumTimes`=@AutoFeedSumTimes where `ID`=@ID ";
                 mycmd.CommandText = sqlText;
                 mycmd.Parameters.AddWithValue("@ID", account.ID);
                 mycmd.Parameters.AddWithValue("@FactoryIsOpening", account.FactoryIsOpening);
@@ -75,6 +75,7 @@ namespace DataBaseProvider
                 mycmd.Parameters.AddWithValue("@LastDayValidStoneStack", account.LastDayValidStoneStack);
                 mycmd.Parameters.AddWithValue("@FreezingSlaveGroupCount", account.FreezingSlaveGroupCount);
                 mycmd.Parameters.AddWithValue("@EnableSlavesGroupCount", account.EnableSlavesGroupCount);
+                mycmd.Parameters.AddWithValue("@AutoFeedSumTimes", account.AutoFeedSumTimes);
                 mycmd.ExecuteNonQuery();
             }
             finally
@@ -228,23 +229,10 @@ namespace DataBaseProvider
                         }
                         else
                         {
-                            if (timeNow.Hour < 14)
+                            if ((timeNow - itemOperTime).TotalHours <= 24)
                             {
-                                //14点之前只能取到前天的记录。
-                                if ((timeNow.Date - itemOperTime.Date).Days == 2)
-                                {
-                                    sumYesterdayProfitRMB += item.OperRMB;
-                                }
+                                sumYesterdayProfitRMB += item.OperRMB;
                             }
-                            else
-                            {
-                                //14点以后可以取到昨天记录
-                                if ((timeNow.Date - itemOperTime.Date).Days == 0)
-                                {
-                                    sumYesterdayProfitRMB += item.OperRMB;
-                                }
-                            }
-
                         }
                     }
                 }

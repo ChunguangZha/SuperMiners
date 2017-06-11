@@ -59,20 +59,7 @@ namespace SuperMinersServerApplication.Controller
             PlayerStoneFactoryAccountInfo account = DBProvider.PlayerStoneFactoryDBProvider.GetPlayerStoneFactoryAccountInfo(userID);
             if (account != null && account.SlaveLiveDiscountms <= 0 && account.EnableSlavesGroupCount > 0)
             {
-                if (account.Food < StoneFactoryConfig.AutoFeedNeedFoods)
-                {
-                    LogHelper.Instance.AddInfoLog("矿石工厂加载处理，玩家[" + account.UserName + "] 由于玩家没有及时投喂，" + account.EnableSlavesGroupCount.ToString() + "苦力被饿死。");
-
-                    account.EnableSlavesGroupCount = 0;
-                    account.SlaveLiveDiscountms = 0;
-                }
-                else
-                {
-                    account.Food -= StoneFactoryConfig.AutoFeedNeedFoods;
-                    account.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
-                    LogHelper.Instance.AddInfoLog("矿石工厂加载处理，系统自动为玩家[" + account.UserName + "]苦力投喂食物，玩家还剩" + account.Food.ToString() + "食物。");
-
-                }
+                AutoFeedSlave(account);
 
                 int result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
                 {
@@ -319,6 +306,7 @@ namespace SuperMinersServerApplication.Controller
 
             factoryAccount.Food -= StoneFactoryConfig.SlaveDefaultLiveDays;
             factoryAccount.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
+            factoryAccount.AutoFeedSumTimes = 0;
 
             result = MyDBHelper.Instance.TransactionDataBaseOper(myTrans =>
             {
@@ -440,29 +428,13 @@ namespace SuperMinersServerApplication.Controller
                             if (factory.FreezingStackCount == 0 && factory.TotalStackCount == 0)
                             {
                                 //如果没有矿石，则将矿工冻结
+                                LogHelper.Instance.AddInfoLog("矿石工厂零时处理。玩家[" + factory.UserName + "]没有矿石，将其" + factory.EnableSlavesGroupCount + "00矿工冻结");
                                 factory.FreezingSlaveGroupCount += factory.EnableSlavesGroupCount;
+                                factory.EnableSlavesGroupCount = 0;
                             }
 
-                            if (factory.EnableSlavesGroupCount > 0)
-                            {
-                                if (factory.SlaveLiveDiscountms <= 0)
-                                {
-                                    if (factory.Food < StoneFactoryConfig.AutoFeedNeedFoods)
-                                    {
-                                        LogHelper.Instance.AddInfoLog("矿石工厂零时处理，玩家[" + factory.UserName + "] 由于玩家没有及时投喂，" + factory.EnableSlavesGroupCount.ToString() + "苦力被饿死。");
+                            AutoFeedSlave(factory);
 
-                                        factory.EnableSlavesGroupCount = 0;
-                                        factory.SlaveLiveDiscountms = 0;
-                                    }
-                                    else
-                                    {
-                                        factory.Food -= StoneFactoryConfig.AutoFeedNeedFoods;
-                                        factory.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
-                                        LogHelper.Instance.AddInfoLog("矿石工厂零时处理，系统自动为玩家[" + factory.UserName + "]苦力投喂食物，玩家还剩" + factory.Food.ToString() + "食物。");
-
-                                    }
-                                }
-                            }
                             //int workableGroupSlaveCount = factory.EnableSlavesGroupCount < factory.Food ? factory.EnableSlavesGroupCount : factory.Food;
                             //int deadGroupSlaveCount = factory.EnableSlavesGroupCount - workableGroupSlaveCount;
                             //计算前一天有效矿石。
@@ -514,6 +486,40 @@ namespace SuperMinersServerApplication.Controller
             catch (Exception exc)
             {
                 LogHelper.Instance.AddErrorLog("矿石加工厂DailyCheckFactoryState异常", exc);
+            }
+        }
+
+        private void AutoFeedSlave(PlayerStoneFactoryAccountInfo factory)
+        {
+            if (factory.EnableSlavesGroupCount > 0)
+            {
+                if (factory.SlaveLiveDiscountms <= 0)
+                {
+                    //每三次累计翻倍
+                    int countTimes = 1;
+                    if (factory.AutoFeedSumTimes != 0)
+                    {
+                        countTimes = (int)((factory.AutoFeedSumTimes - 1) / 3f) + 1;
+                    }
+
+                    int autofeedNeedFoods = countTimes * StoneFactoryConfig.AutoFeedNeedFoods;
+
+                    if (factory.Food < autofeedNeedFoods)
+                    {
+                        LogHelper.Instance.AddInfoLog("矿石工厂自动投喂处理，玩家[" + factory.UserName + "] 由于玩家没有及时投喂，" + factory.EnableSlavesGroupCount.ToString() + "苦力被饿死。");
+
+                        factory.EnableSlavesGroupCount = 0;
+                        factory.SlaveLiveDiscountms = 0;
+                    }
+                    else
+                    {
+                        factory.Food -= autofeedNeedFoods;
+                        factory.LastFeedSlaveTime = new MyDateTime(DateTime.Now);
+                        factory.AutoFeedSumTimes++;
+                        LogHelper.Instance.AddInfoLog("矿石工厂自动投喂处理，系统自动为玩家[" + factory.UserName + "]苦力投喂食物，消耗玩家" + autofeedNeedFoods.ToString() + "食物。还剩" + factory.Food.ToString() + "食物。");
+
+                    }
+                }
             }
         }
 

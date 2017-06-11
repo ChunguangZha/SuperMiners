@@ -62,6 +62,12 @@ namespace MetaData.StoneFactory
         public MyDateTime LastFeedSlaveTime;
 
         /// <summary>
+        /// 自动投喂连续累计次数，每满三次，下一次自动投喂累计翻倍
+        /// </summary>
+        [DataMember]
+        public int AutoFeedSumTimes;
+
+        /// <summary>
         /// 奴隶寿命倒计时（秒）
         /// </summary>
         [DataMember]

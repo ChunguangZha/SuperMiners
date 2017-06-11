@@ -131,6 +131,11 @@ namespace SuperMinersWPF.ViewModels
                 {
                     MessageBox.Show("购买商品成功");
                     App.UserVMObject.AsyncGetPlayerInfo();
+
+                    if (VirtualShoppingBuySucceed != null)
+                    {
+                        VirtualShoppingBuySucceed();
+                    }
                 }
                 else
                 {
@@ -169,5 +174,7 @@ namespace SuperMinersWPF.ViewModels
                 MessageBox.Show("加载钻石商品失败，回调处理异常。" + exc.Message);
             }
         }
+
+        public event Action VirtualShoppingBuySucceed;
     }
 }

@@ -167,7 +167,6 @@ namespace DataBaseProvider
                 }
             }
         }
-
     }
 
     public delegate int TransactionDBOperDelegte(CustomerMySqlTransaction myTrans);

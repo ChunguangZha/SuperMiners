@@ -464,6 +464,7 @@ namespace SuperMinersWPF
         private void btnFactory_Click(object sender, RoutedEventArgs e)
         {
             App.StoneFactoryVMObject.AsyncGetPlayerFactoryAccountInfo();
+            App.ShoppingVMObject.AsyncGetVirtualShoppingItem();
         }
 
         bool IsStoneFactoryWindowShowed = false;

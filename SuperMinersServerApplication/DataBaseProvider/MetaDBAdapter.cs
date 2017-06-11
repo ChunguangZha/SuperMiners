@@ -1405,6 +1405,7 @@ namespace DataBaseProvider
                 item.LastDayValidStoneStack = Convert.ToInt32(dt.Rows[i]["LastDayValidStoneStack"]);
                 item.FreezingSlaveGroupCount = Convert.ToInt32(dt.Rows[i]["FreezingSlaveGroupCount"]);
                 item.EnableSlavesGroupCount = Convert.ToInt32(dt.Rows[i]["EnableSlavesGroupCount"]);
+                item.AutoFeedSumTimes = Convert.ToInt32(dt.Rows[i]["AutoFeedSumTimes"]);
 
                 items[i] = item;
             }
@@ -1477,7 +1478,6 @@ namespace DataBaseProvider
             }
 
             return items;
-        }
-        
+        }        
     }
 }

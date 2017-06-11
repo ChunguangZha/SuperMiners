@@ -4,6 +4,7 @@
         WindowStartupLocation="CenterScreen"
         Background="#FF478F61"
         Foreground="White"
+        Loaded="Window_Loaded"
         Closed="Window_Closed"
         Title="加工厂" Height="600" Width="600">
     <Window.Resources>
@@ -126,19 +127,21 @@
             <ListView Grid.Column="1" Grid.Row="1" Name="lvProfitList" Margin="5" HorizontalContentAlignment="Stretch">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Background="{Binding Background}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding OperTimeText}" Margin="5"/>
-                            <TextBlock Grid.Column="1" Margin="5">
-                            <Run Text="{Binding OperRMBText}"/>
+                        <Border BorderThickness="0,0,0,1" BorderBrush="{StaticResource PlayerInfoBackground}">
+                            <Grid Background="{Binding Background}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding OperTimeText, Mode=OneWay}" Margin="5"/>
+                                <TextBlock Grid.Column="1" Margin="5">
+                            <Run Text="{Binding OperRMBText, Mode=OneWay}"/>
                             <Run Text="灵币"/>
-                            </TextBlock>
-                            <TextBlock Grid.Column="2" Text="ProfitTypeText" Margin="5"/>
-                        </Grid>
+                                </TextBlock>
+                                <TextBlock Grid.Column="2" Text="{Binding ProfitTypeText, Mode=OneWay}" Margin="5"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
