@@ -36,11 +36,11 @@ namespace SuperMinersServerApplication.WebService.Services
             PlayerActionController.Instance.PlayerActionAdded += Instance_PlayerActionAdded;
             GameSystemConfigController.Instance.GameConfigChanged += Instance_GameConfigChanged;
             NoticeController.Instance.NoticeChanged += Instance_NoticeChanged;
-            OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
-            OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
+            //OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifyBuyer += Instance_StoneOrderPaySucceedNotifyBuyer;
+            //OrderController.Instance.StoneOrderController.StoneOrderPaySucceedNotifySeller += Instance_StoneOrderPaySucceedNotifySeller;
             OrderController.Instance.GoldCoinOrderController.GoldCoinOrderPaySucceedNotify += GoldCoinOrderController_GoldCoinOrderPaySucceedNotify;
             OrderController.Instance.MineOrderController.MineOrderPaySucceedNotify += MineOrderController_MineOrderPaySucceedNotify;
-            OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
+            //OrderController.Instance.StoneOrderController.StoneOrderAppealFailed += StoneOrderController_StoneOrderAppealFailed;
             OrderController.Instance.StoneStackController.DelegateStoneOrderTradeSucceedNotifyPlayer += StoneStackController_DelegateStoneOrderTradeSucceedNotifyPlayer;
             OrderController.Instance.StoneStackController.DelegateBuyStoneOrderAlipayPaySucceedNotify += StoneStackController_DelegateBuyStoneOrderAlipayPaySucceedNotify;
             RaidersofLostArkController.Instance.NotifyAllPlayerRaiderWinnerEvent += NotifyAllPlayerRaiderWinner;

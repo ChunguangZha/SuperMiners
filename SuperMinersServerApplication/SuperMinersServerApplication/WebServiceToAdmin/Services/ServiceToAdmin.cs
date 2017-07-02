@@ -810,15 +810,17 @@ namespace SuperMinersServerApplication.WebServiceToAdmin.Services
         {
             if (RSAProvider.LoadRSA(token))
             {
-                try
-                {
-                    return OrderController.Instance.StoneOrderController.RejectExceptionStoneOrder(orderNumber);
-                }
-                catch (Exception exc)
-                {
-                    LogHelper.Instance.AddErrorLog("RejectExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
-                    return OperResult.RESULTCODE_EXCEPTION;
-                }
+                return OperResult.RESULTCODE_TRUE;
+
+                //try
+                //{
+                //    return OrderController.Instance.StoneOrderController.RejectExceptionStoneOrder(orderNumber);
+                //}
+                //catch (Exception exc)
+                //{
+                //    LogHelper.Instance.AddErrorLog("RejectExceptionStoneOrder Exception. ClientIP=" + ClientManager.GetClientIP(token), exc);
+                //    return OperResult.RESULTCODE_EXCEPTION;
+                //}
             }
             else
             {

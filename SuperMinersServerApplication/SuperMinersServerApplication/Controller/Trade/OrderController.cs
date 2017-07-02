@@ -28,14 +28,14 @@ namespace SuperMinersServerApplication.Controller.Trade
 
         #endregion
 
-        public StoneOrderController StoneOrderController = new StoneOrderController();
+        //public StoneOrderController StoneOrderController = new StoneOrderController();
         public GoldCoinOrderController GoldCoinOrderController = new GoldCoinOrderController();
         public MineOrderController MineOrderController = new MineOrderController();
         public StoneStackController StoneStackController = new StoneStackController();
 
         public void Init()
         {
-            StoneOrderController.Init();
+            //StoneOrderController.Init();
             MineOrderController.Init();
             GoldCoinOrderController.Init();
             StoneStackController.Init();
@@ -100,7 +100,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.BuyRMB:
                     break;
                 case AlipayTradeInType.BuyStone:
-                    result = this.StoneOrderController.AlipayCallback(alipayRecord);
+                    //result = this.StoneOrderController.AlipayCallback(alipayRecord);
                     break;
                 case AlipayTradeInType.StackStoneBuy:
                     result = this.StoneStackController.AlipayCallback(alipayRecord);
@@ -146,7 +146,7 @@ namespace SuperMinersServerApplication.Controller.Trade
                 case AlipayTradeInType.BuyRMB:
                     break;
                 case AlipayTradeInType.BuyStone:
-                    isOK = this.StoneOrderController.CheckAlipayOrderBeHandled(userName, out_trade_no);
+                    //isOK = this.StoneOrderController.CheckAlipayOrderBeHandled(userName, out_trade_no);
                     break;
                 default:
                     isOK = false;

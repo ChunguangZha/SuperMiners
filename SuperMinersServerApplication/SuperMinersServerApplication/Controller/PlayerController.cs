@@ -631,7 +631,7 @@ namespace SuperMinersServerApplication.Controller
 
             playerrun.LogoutPlayer();
             //为了兼容微信端，退出时不再移除
-            //this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
+            this._dicOnlinePlayerRuns.TryRemove(userName, out playerrun);
         }
 
         public MetaData.User.PlayerInfo GetPlayerByWeiXinOpenID(string openid)

@@ -471,11 +471,11 @@ namespace SuperMinersServerApplication
             {
                 foreach (var item in waitOrderDBObjects)
                 {
-                    int result = OrderController.Instance.StoneOrderController.CancelSellOrder(item.SellerUserName, item.OrderNumber);
-                    if (result != OperResult.RESULTCODE_TRUE)
-                    {
-                        MessageBox.Show(OperResult.GetMsg(result));
-                    }
+                    //int result = OrderController.Instance.StoneOrderController.CancelSellOrder(item.SellerUserName, item.OrderNumber);
+                    //if (result != OperResult.RESULTCODE_TRUE)
+                    //{
+                    //    MessageBox.Show(OperResult.GetMsg(result));
+                    //}
                 }
 
                 MessageBox.Show("成功拒绝矿石出售订单：" + waitOrderDBObjects.Length.ToString());

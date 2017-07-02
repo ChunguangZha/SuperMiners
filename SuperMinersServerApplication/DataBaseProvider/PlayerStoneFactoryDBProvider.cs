@@ -291,7 +291,7 @@ namespace DataBaseProvider
             }
 
             account.TotalStackCount = sumEnableStoneStack;
-            account.WithdrawableStackCount = sumWithdrawableStoneStack - sumWithdrawedStoneStack;
+            account.WithdrawableStackCount = sumWithdrawableStoneStack + sumWithdrawedStoneStack;
             account.FreezingStackCount = sumFreezingStoneStack;
         }
 

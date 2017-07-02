@@ -323,74 +323,74 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
 
         public int SellStones(string userName, int stoneCount)
         {
-            if (stoneCount <= 0)
-            {
+            //if (stoneCount <= 0)
+            //{
                 return OperResult.RESULTCODE_FALSE;
-            }
+            //}
 
-            SellStonesOrder order = null;
-            CustomerMySqlTransaction trans = null;
-            try
-            {
-                trans = MyDBHelper.Instance.CreateTrans();
-                PlayerRunnable playerrun = PlayerController.Instance.GetRunnable(userName);
-                if (playerrun == null)
-                {
-                    return OperResult.RESULTCODE_USER_NOT_EXIST;
-                }
+            //SellStonesOrder order = null;
+            //CustomerMySqlTransaction trans = null;
+            //try
+            //{
+            //    trans = MyDBHelper.Instance.CreateTrans();
+            //    PlayerRunnable playerrun = PlayerController.Instance.GetRunnable(userName);
+            //    if (playerrun == null)
+            //    {
+            //        return OperResult.RESULTCODE_USER_NOT_EXIST;
+            //    }
 
-                bool needUseQuan = OrderController.Instance.StoneOrderController.CheckNeedStoneSellQuan(playerrun.BasePlayer.SimpleInfo.UserID);
+            //    bool needUseQuan = OrderController.Instance.StoneOrderController.CheckNeedStoneSellQuan(playerrun.BasePlayer.SimpleInfo.UserID);
 
-                order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, (int)playerrun.BasePlayer.FortuneInfo.Exp, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
-                if (order.ValueRMB <= 0)
-                {
-                    return OperResult.RESULTCODE_USER_OFFLINE;
-                }
+            //    order = OrderController.Instance.StoneOrderController.CreateSellOrder(userName, (int)playerrun.BasePlayer.FortuneInfo.Exp, playerrun.BasePlayer.FortuneInfo.CreditValue, stoneCount);
+            //    if (order.ValueRMB <= 0)
+            //    {
+            //        return OperResult.RESULTCODE_USER_OFFLINE;
+            //    }
 
-                int result = playerrun.SellStones(order, needUseQuan, trans);
-                if (result != OperResult.RESULTCODE_TRUE)
-                {
-                    trans.Rollback();
-                    return result;
-                }
-                OrderController.Instance.StoneOrderController.AddSellOrder(order, playerrun.BasePlayer.SimpleInfo.UserID, trans);
-                trans.Commit();
-                PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, stoneCount);
+            //    int result = playerrun.SellStones(order, needUseQuan, trans);
+            //    if (result != OperResult.RESULTCODE_TRUE)
+            //    {
+            //        trans.Rollback();
+            //        return result;
+            //    }
+            //    OrderController.Instance.StoneOrderController.AddSellOrder(order, playerrun.BasePlayer.SimpleInfo.UserID, trans);
+            //    trans.Commit();
+            //    PlayerActionController.Instance.AddLog(userName, MetaData.ActionLog.ActionType.SellStone, stoneCount);
 
-                return result;
-            }
-            catch (Exception exc)
-            {
-                string errMessage = "微信端。玩家[" + userName + "] 出售矿石异常。";
-                if (order != null)
-                {
-                    errMessage += " 订单信息:" + order.ToString();
-                }
+            //    return result;
+            //}
+            //catch (Exception exc)
+            //{
+            //    string errMessage = "微信端。玩家[" + userName + "] 出售矿石异常。";
+            //    if (order != null)
+            //    {
+            //        errMessage += " 订单信息:" + order.ToString();
+            //    }
 
-                try
-                {
-                    trans.Rollback();
-                    PlayerController.Instance.RollbackUserFromDB(userName);
-                    if (order != null)
-                    {
-                        OrderController.Instance.StoneOrderController.ClearSellStonesOrder(order);
-                    }
-                    LogHelper.Instance.AddErrorLog(errMessage, exc);
-                }
-                catch (Exception ee)
-                {
-                    LogHelper.Instance.AddErrorLog("A玩家提交矿石销量订单异常。 回滚异常: " + errMessage, ee);
-                }
+            //    try
+            //    {
+            //        trans.Rollback();
+            //        PlayerController.Instance.RollbackUserFromDB(userName);
+            //        if (order != null)
+            //        {
+            //            OrderController.Instance.StoneOrderController.ClearSellStonesOrder(order);
+            //        }
+            //        LogHelper.Instance.AddErrorLog(errMessage, exc);
+            //    }
+            //    catch (Exception ee)
+            //    {
+            //        LogHelper.Instance.AddErrorLog("A玩家提交矿石销量订单异常。 回滚异常: " + errMessage, ee);
+            //    }
 
-                return OperResult.RESULTCODE_EXCEPTION;
-            }
-            finally
-            {
-                if (trans != null)
-                {
-                    trans.Dispose();
-                }
-            }
+            //    return OperResult.RESULTCODE_EXCEPTION;
+            //}
+            //finally
+            //{
+            //    if (trans != null)
+            //    {
+            //        trans.Dispose();
+            //    }
+            //}
         }
 
         public MinesBuyRecord[] GetBuyMineFinishedRecordList(string userName, int pageItemCount, int pageIndex)
@@ -475,7 +475,9 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
-                return OrderController.Instance.StoneOrderController.GetSellOrders((int)SellOrderState.Wait);
+                return null;
+
+                //return OrderController.Instance.StoneOrderController.GetSellOrders((int)SellOrderState.Wait);
             }
             catch (Exception exc)
             {
@@ -488,19 +490,21 @@ namespace SuperMinersServerApplication.WebServiceToWeb.Services
         {
             try
             {
-                var lockedOrder = OrderController.Instance.StoneOrderController.LockSellStone(userName, stoneOrderNumber);
-                if (lockedOrder == null)
-                {
-                    return OperResult.RESULTCODE_ORDER_BE_LOCKED_BY_OTHER;
-                }
+                return OperResult.RESULTCODE_FALSE;
 
-                int result = OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(userName, stoneOrderNumber, lockedOrder.StonesOrder.ValueRMB);
-                if (result != OperResult.RESULTCODE_TRUE)
-                {
-                    OrderController.Instance.StoneOrderController.ReleaseLockSellOrder(stoneOrderNumber);
-                }
+                //var lockedOrder = OrderController.Instance.StoneOrderController.LockSellStone(userName, stoneOrderNumber);
+                //if (lockedOrder == null)
+                //{
+                //    return OperResult.RESULTCODE_ORDER_BE_LOCKED_BY_OTHER;
+                //}
 
-                return result;
+                //int result = OrderController.Instance.StoneOrderController.PayStoneOrderByRMB(userName, stoneOrderNumber, lockedOrder.StonesOrder.ValueRMB);
+                //if (result != OperResult.RESULTCODE_TRUE)
+                //{
+                //    OrderController.Instance.StoneOrderController.ReleaseLockSellOrder(stoneOrderNumber);
+                //}
+
+                //return result;
             }
             catch (Exception exc)
             {
